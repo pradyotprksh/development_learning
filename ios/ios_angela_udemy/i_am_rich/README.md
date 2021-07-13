@@ -1,2 +1,3 @@
-# development_learning
-A repository which will contain all my learning techs as I move forward. Will be learning and adding new projects. Anyone can clone this project and use it for reference. PR is also welcome.
+# I Am Rich
+
+![i-am-rich](https://github.com/pradyotprksh/development_learning/blob/main/ios/ios_angela_udemy/i_am_rich/i-am-rich.png)
