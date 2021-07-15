@@ -1,21 +1,15 @@
 //
-//  ViewController.swift
+//  QuizBrain.swift
 //  Quizzler-iOS13
 //
-//  Created by Angela Yu on 12/07/2019.
-//  Copyright © 2019 The App Brewery. All rights reserved.
+//  Created by Pradyot Prakash on 16/07/21.
+//  Copyright © 2021 The App Brewery. All rights reserved.
 //
 
 import UIKit
+import Foundation
 
-class ViewController: UIViewController {
-    
-    // Outlets in the controller
-    @IBOutlet weak var questionLabel: UILabel!
-    @IBOutlet weak var progressView: UIProgressView!
-    @IBOutlet weak var trueButton: UIButton!
-    @IBOutlet weak var falseButton: UIButton!
-    
+struct QuizBrain {
     // Questions
     let quiz = [
         Question(q: "A slug's blood is green.", a: "True"),
@@ -35,38 +29,36 @@ class ViewController: UIViewController {
     // Current question number
     var currentQuestion = 0
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        updateUi()
-    }
+    // Score
+    var score = 0
     
-    // Actions in the controller
-    //
-    // An action which will be triggered when any one of the answer button is pressed.
-    @IBAction func answerButtonPressed(_ sender: UIButton) {
-        let selectedAnswer = sender.currentTitle
-        if (selectedAnswer == quiz[currentQuestion].answer) {
-            sender.backgroundColor = .green
+    // Check the user selected answer
+    mutating func checkAnswer(userAnswer: String) -> UIColor {
+        if (userAnswer == quiz[currentQuestion].answer) {
+            score += 1
+            return .green
         } else {
-            sender.backgroundColor = .red
-        }
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-            if self.currentQuestion + 1 < self.quiz.count {
-                self.currentQuestion += 1
-            } else {
-                self.currentQuestion = 0
-            }
-            self.updateUi()
+            return .red
         }
     }
     
-    // Update the ui with the new question and also update the progress bar
-    func updateUi() {
-        questionLabel.text = quiz[currentQuestion].text
-        trueButton.backgroundColor = .clear
-        falseButton.backgroundColor = .clear
-        progressView.progress = Float(currentQuestion + 1) / Float(quiz.count)
+    // Get current question
+    func getQuestion() -> String {
+        return quiz[currentQuestion].text
+    }
+    
+    // Get progress
+    func getProgress() -> Float {
+        return Float(currentQuestion + 1) / Float(quiz.count)
+    }
+    
+    // Update question number
+    mutating func updateQuestionNumber() {
+        if currentQuestion + 1 < quiz.count {
+            currentQuestion += 1
+        } else {
+            score = 0
+            currentQuestion = 0
+        }
     }
 }
