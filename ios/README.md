@@ -9,3 +9,4 @@
   - [Calculator-Layout-iOS13](https://github.com/pradyotprksh/development_learning/tree/main/ios/ios_angela_udemy/Calculator-Layout-iOS13)
   - [Xylophone-iOS13](https://github.com/pradyotprksh/development_learning/tree/main/ios/ios_angela_udemy/Xylophone-iOS13)
   - [EggTimer-iOS13](https://github.com/pradyotprksh/development_learning/tree/main/ios/ios_angela_udemy/EggTimer-iOS13)
+  - [Quizzler-iOS13](https://github.com/pradyotprksh/development_learning/tree/main/ios/ios_angela_udemy/Quizzler-iOS13)
