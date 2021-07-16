@@ -13,9 +13,10 @@ class ViewController: UIViewController {
     // Outlets in the controller
     @IBOutlet weak var questionLabel: UILabel!
     @IBOutlet weak var progressView: UIProgressView!
-    @IBOutlet weak var trueButton: UIButton!
-    @IBOutlet weak var falseButton: UIButton!
     @IBOutlet weak var scoreLabel: UILabel!
+    @IBOutlet weak var optionOneButton: UIButton!
+    @IBOutlet weak var optionTwoButton: UIButton!
+    @IBOutlet weak var optionThreeButton: UIButton!
     
     // Quiz brain
     var quizBrain = QuizBrain()
@@ -31,19 +32,27 @@ class ViewController: UIViewController {
     // An action which will be triggered when any one of the answer button is pressed.
     @IBAction func answerButtonPressed(_ sender: UIButton) {
         let selectedAnswer = sender.currentTitle
-        sender.backgroundColor = quizBrain.checkAnswer(userAnswer: selectedAnswer ?? "FALSE")
+        sender.backgroundColor = quizBrain.checkAnswer(userAnswer: selectedAnswer ?? "")
         quizBrain.updateQuestionNumber()
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
             self.updateUi()
         }
     }
     
-    // Update the ui with the new question and also update the progress bar
+    // Update the ui with the new question, options and also update the progress bar
     func updateUi() {
         questionLabel.text = quizBrain.getQuestion()
+        
+        let options = quizBrain.getCurrentOptions()
+        optionOneButton.setTitle(options[0], for: .normal)
+        optionTwoButton.setTitle(options[1], for: .normal)
+        optionThreeButton.setTitle(options[2], for: .normal)
+        
+        optionOneButton.backgroundColor = .clear
+        optionTwoButton.backgroundColor = .clear
+        optionThreeButton.backgroundColor = .clear
+        
         scoreLabel.text = "Score: \(quizBrain.score)"
-        trueButton.backgroundColor = .clear
-        falseButton.backgroundColor = .clear
         progressView.progress = quizBrain.getProgress()
     }
 }
