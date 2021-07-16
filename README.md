@@ -20,3 +20,4 @@ Each project is divided into folders based on the platforms and the courses. And
   - [Quizzler-Multiple-iOS13](https://github.com/pradyotprksh/development_learning/tree/main/ios/ios_angela_udemy/Quizzler-Multiple-iOS13)
   - [Destini-LayoutPractice-iOS13](https://github.com/pradyotprksh/development_learning/tree/main/ios/ios_angela_udemy/Destini-LayoutPractice-iOS13)
   - [BMI-Calculator-iOS13](https://github.com/pradyotprksh/development_learning/tree/main/ios/ios_angela_udemy/BMI-Calculator-iOS13)
+  - [Tipsy-iOS13](https://github.com/pradyotprksh/development_learning/tree/main/ios/ios_angela_udemy/Tipsy-iOS13)
