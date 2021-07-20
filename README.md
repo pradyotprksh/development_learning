@@ -24,3 +24,7 @@ Each project is divided into folders based on the platforms and the courses. And
   - [Clima-iOS13](https://github.com/pradyotprksh/development_learning/blob/main/ios/ios_angela_udemy/Clima-iOS13)
   - [ByteCoin-iOS13](https://github.com/pradyotprksh/development_learning/blob/main/ios/ios_angela_udemy/ByteCoin-iOS13)
   - [Flash-Chat-iOS13](https://github.com/pradyotprksh/development_learning/blob/main/ios/ios_angela_udemy/Flash-Chat-iOS13)
+
+## [Flutter](https://github.com/pradyotprksh/development_learning/tree/main/flutter)
+
+## [Tiberiu_BLoC](https://github.com/pradyotprksh/development_learning/tree/main/flutter/Tiberiu_BLoC)
