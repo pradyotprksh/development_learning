@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import CoreLocation
 
-class WeatherViewController: UIViewController, UITextFieldDelegate, WeatherManagerDelegate {
+class WeatherViewController: UIViewController {
     // Outlets in the controller
     @IBOutlet weak var conditionImageView: UIImageView!
     @IBOutlet weak var temperatureLabel: UILabel!
@@ -16,9 +17,15 @@ class WeatherViewController: UIViewController, UITextFieldDelegate, WeatherManag
     @IBOutlet weak var searchTextField: UITextField!
     
     var weatherManager = WeatherManager()
+    var locationManager = CLLocationManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        locationManager.delegate = self
+        
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.requestLocation()
         
         weatherManager.weatherDelegate = self
         searchTextField.delegate = self
@@ -30,7 +37,16 @@ class WeatherViewController: UIViewController, UITextFieldDelegate, WeatherManag
     @IBAction func searchPressed(_ sender: UIButton) {
         updateTextFieldUI()
     }
-    
+    //
+    // An action which will be triggered when the current location button is pressed
+    @IBAction func getCurrentLocation(_ sender: UIButton) {
+        locationManager.requestLocation()
+    }
+}
+
+//MARK:- UITextFieldDelegate
+
+extension WeatherViewController: UITextFieldDelegate {
     // Whenever the return button of the keyboard is pressed then this method is called
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         updateTextFieldUI()
@@ -61,7 +77,11 @@ class WeatherViewController: UIViewController, UITextFieldDelegate, WeatherManag
         searchTextField.endEditing(true)
         searchTextField.text = ""
     }
-    
+}
+
+//MARK:- WeatherManagerDelegate
+
+extension WeatherViewController: WeatherManagerDelegate {
     func didUpdateWeather(_ weatherManager: WeatherManager, _ weather: WeatherModel) {
         DispatchQueue.main.async {
             self.temperatureLabel.text = weather.temperatureString
@@ -71,6 +91,28 @@ class WeatherViewController: UIViewController, UITextFieldDelegate, WeatherManag
     }
     
     func didFailWithError(_ weatherManager: WeatherManager, _ error: Error) {
+        print(error)
+    }
+}
+
+//MARK:- UILocationManagerDelegate
+
+extension WeatherViewController: CLLocationManagerDelegate {
+    
+    // This method is called when the location manager gets the location details
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if let location = locations.last {
+            locationManager.stopUpdatingLocation()
+            
+            let lat = location.coordinate.latitude
+            let long = location.coordinate.longitude
+            
+            weatherManager.fetchWeather(latitude: lat, longitude: long)
+        }
+    }
+    
+    // This method is called when there is a error
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print(error)
     }
 }
