@@ -15,3 +15,4 @@
   - [Clima-iOS13](https://github.com/pradyotprksh/development_learning/tree/main/ios/angela_udemy/Clima-iOS13)
   - [ByteCoin-iOS13](https://github.com/pradyotprksh/development_learning/tree/main/ios/angela_udemy/ByteCoin-iOS13)
   - [Flash-Chat-iOS13](https://github.com/pradyotprksh/development_learning/tree/main/ios/angela_udemy/Flash-Chat-iOS13)
+  - [I Am Rich Swift UI](https://github.com/pradyotprksh/development_learning/tree/main/ios/angela_udemy/I%20Am%20Rich%20Swift%20UI)
