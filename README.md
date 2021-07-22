@@ -28,6 +28,7 @@ Each project is divided into folders based on the platforms and the courses. And
     - [I Am Rich Swift UI](https://github.com/pradyotprksh/development_learning/tree/main/ios/angela_udemy/SwiftUI/I%20Am%20Rich%20Swift%20UI)
     - [PradyotCard](https://github.com/pradyotprksh/development_learning/tree/main/ios/angela_udemy/SwiftUI/PradyotCard)
     - [Dice-SwiftUI](https://github.com/pradyotprksh/development_learning/tree/main/ios/angela_udemy/SwiftUI/Dice-SwiftUI)
+    - [H4XOR-News](https://github.com/pradyotprksh/development_learning/tree/main/ios/angela_udemy/SwiftUI/H4XOR-News)
 
 
 ## [Flutter](https://github.com/pradyotprksh/development_learning/tree/main/flutter)
