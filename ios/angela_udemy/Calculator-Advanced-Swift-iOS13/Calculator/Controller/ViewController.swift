@@ -15,6 +15,8 @@ class ViewController: UIViewController {
     // This will be used to check when if number button is pressed then how to update the label
     private var isFinishTypingNumber: Bool = true
     
+    private var calculator = CalculatorLogic()
+    
     // Double value of the entered values
     private var displayValue: Double {
         get {
@@ -34,9 +36,12 @@ class ViewController: UIViewController {
     @IBAction func calcButtonPressed(_ sender: UIButton) {
         isFinishTypingNumber = true
         
+        calculator.setNumber(displayValue)
+        
         if let calcMethod = sender.currentTitle {
-            var calculator = CalculatorLogic(num: displayValue)
-            displayValue = calculator.calculate(calcMethod: calcMethod)
+            if let result = calculator.calculate(calcMethod: calcMethod) {
+                displayValue = result
+            }
         }
     }
     //
