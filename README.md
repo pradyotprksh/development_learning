@@ -34,6 +34,6 @@ Each project is divided into folders based on the platforms and the courses. And
 ## [Jetpack Compose](https://github.com/pradyotprksh/development_learning/tree/main/jetpack_compose)
 
 ### Projects
-  - []()
-  - []()
-  - []()
+  - [IAmRich](https://github.com/pradyotprksh/development_learning/tree/main/jetpack_compose/IAmRich)
+  - [Dicee](https://github.com/pradyotprksh/development_learning/tree/main/jetpack_compose/Dicee)
+  - [FlashChat](https://github.com/pradyotprksh/development_learning/tree/main/jetpack_compose/FlashChat)
