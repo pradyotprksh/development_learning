@@ -14,7 +14,7 @@ import com.project.pradyotprakash.flashchat.ui.theme.FlashChatTheme
 import com.project.pradyotprakash.flashchat.view.Authentication
 
 @Composable
-fun navComposeApp() {
+fun NavComposeApp() {
     val navController = rememberNavController()
     val actions = remember(navController) { Action(navController) }
     FlashChatTheme {
@@ -22,7 +22,12 @@ fun navComposeApp() {
             navController = navController,
             startDestination = AuthenticationOption
         ) {
-            composable(AuthenticationOption) { Authentication(register = {}, login = {})}
+            composable(AuthenticationOption) {
+                Authentication(
+                    register = {actions.register},
+                    login = {actions.login}
+                )
+            }
             composable(Register) {}
             composable(Login) {}
             composable(Home) {}
