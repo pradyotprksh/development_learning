@@ -14,8 +14,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.project.pradyotprakash.flashchat.Constants
 
 /**
  * Set of widgets/views which will be used throughout the application.
@@ -89,4 +91,23 @@ fun TextFormField(value: String, onValueChange: (String) -> Unit, label: String,
         singleLine = true,
         visualTransformation = visualTransformation
     )
+}
+
+@Composable
+fun SingleMessage(message: String, isCurrentUser: Boolean) {
+    Card(
+        shape = RoundedCornerShape(16.dp),
+        backgroundColor = if (isCurrentUser) MaterialTheme.colors.primary else Color.White
+    ) {
+        Text(
+            text = message,
+            textAlign =
+            if (isCurrentUser)
+                TextAlign.End
+            else
+                TextAlign.Start,
+            modifier = Modifier.fillMaxWidth().padding(16.dp),
+            color = if (!isCurrentUser) MaterialTheme.colors.primary else Color.White
+        )
+    }
 }

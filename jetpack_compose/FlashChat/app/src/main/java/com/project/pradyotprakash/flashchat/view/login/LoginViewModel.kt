@@ -12,7 +12,7 @@ import java.lang.IllegalArgumentException
  * View model for the login view.
  */
 class LoginViewModel : ViewModel() {
-    private var auth: FirebaseAuth = Firebase.auth
+    private val auth: FirebaseAuth = Firebase.auth
 
     private val _email = MutableLiveData("")
     val email: LiveData<String> = _email
