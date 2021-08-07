@@ -17,6 +17,11 @@ import com.project.pradyotprakash.flashchat.view.Appbar
 import com.project.pradyotprakash.flashchat.view.Buttons
 import com.project.pradyotprakash.flashchat.view.TextFormField
 
+/**
+ * The login view which will help the user to authenticate themselves and go to the
+ * home screen to show and send messages to others.
+ */
+
 @Composable
 fun LoginView(
     home: () -> Unit,

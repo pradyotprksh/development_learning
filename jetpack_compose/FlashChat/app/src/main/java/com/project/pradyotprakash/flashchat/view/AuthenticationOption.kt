@@ -12,6 +12,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import com.project.pradyotprakash.flashchat.ui.theme.FlashChatTheme
 
+/**
+ * The authentication view which will give the user an option to choose between
+ * login and register.
+ */
+
 @Composable
 fun AuthenticationView(register: () -> Unit, login: () -> Unit) {
     FlashChatTheme {

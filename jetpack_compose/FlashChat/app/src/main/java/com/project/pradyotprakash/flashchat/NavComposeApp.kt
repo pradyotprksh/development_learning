@@ -13,8 +13,13 @@ import com.project.pradyotprakash.flashchat.nav.Destination.Login
 import com.project.pradyotprakash.flashchat.nav.Destination.Register
 import com.project.pradyotprakash.flashchat.ui.theme.FlashChatTheme
 import com.project.pradyotprakash.flashchat.view.AuthenticationView
+import com.project.pradyotprakash.flashchat.view.home.HomeView
 import com.project.pradyotprakash.flashchat.view.login.LoginView
 import com.project.pradyotprakash.flashchat.view.register.RegisterView
+
+/**
+ * The main Navigation composable which will handle all the navigation stack.
+ */
 
 @Composable
 fun NavComposeApp() {
@@ -47,7 +52,9 @@ fun NavComposeApp() {
                     back = actions.navigateBack
                 )
             }
-            composable(Home) {}
+            composable(Home) {
+                HomeView()
+            }
         }
     }
 }

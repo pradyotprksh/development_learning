@@ -2,7 +2,6 @@ package com.project.pradyotprakash.flashchat.view.register
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
@@ -17,7 +16,11 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.project.pradyotprakash.flashchat.view.Appbar
 import com.project.pradyotprakash.flashchat.view.Buttons
 import com.project.pradyotprakash.flashchat.view.TextFormField
-import com.project.pradyotprakash.flashchat.view.login.LoginViewModel
+
+/**
+ * The Register view which will be helpful for the user to register themselves into
+ * our database and go to the home screen to see and send messages.
+ */
 
 @Composable
 fun RegisterView(

@@ -17,6 +17,11 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
+/**
+ * Set of widgets/views which will be used throughout the application.
+ * This is used to increase the code usability.
+ */
+
 @Composable
 fun Title(title: String) {
     Text(

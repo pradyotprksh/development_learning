@@ -8,7 +8,9 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import java.lang.IllegalArgumentException
 
-// View model for the login
+/**
+ * View model for the login view.
+ */
 class LoginViewModel : ViewModel() {
     private var auth: FirebaseAuth = Firebase.auth
 
@@ -19,7 +21,7 @@ class LoginViewModel : ViewModel() {
     val password: LiveData<String> = _password
 
     private val _loading = MutableLiveData(false)
-    val loading: LiveData<Boolean> = _loading;
+    val loading: LiveData<Boolean> = _loading
 
     // Update email
     fun updateEmail(newEmail: String) {
