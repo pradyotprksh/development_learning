@@ -13,7 +13,7 @@ import androidx.compose.ui.graphics.Color
 import com.project.pradyotprakash.flashchat.ui.theme.FlashChatTheme
 
 @Composable
-fun Authentication(register: () -> Unit, login: () -> Unit) {
+fun AuthenticationView(register: () -> Unit, login: () -> Unit) {
     FlashChatTheme {
         // A surface container using the 'background' color from the theme
         Surface(color = MaterialTheme.colors.background) {
@@ -29,23 +29,5 @@ fun Authentication(register: () -> Unit, login: () -> Unit) {
                 Buttons(title = "Login", onClick = login, backgroundColor = Color.Magenta)
             }
         }
-    }
-}
-
-// Different set of buttons in this page
-@Composable
-fun Buttons(title: String, onClick: () -> Unit, backgroundColor: Color) {
-    Button(
-        onClick = onClick,
-        colors = ButtonDefaults.buttonColors(
-            backgroundColor = backgroundColor,
-            contentColor = Color.White
-        ),
-        modifier = Modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(0),
-    ) {
-        Text(
-            text = title
-        )
     }
 }

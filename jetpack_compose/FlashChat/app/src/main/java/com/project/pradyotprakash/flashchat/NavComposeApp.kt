@@ -5,13 +5,16 @@ import androidx.compose.runtime.remember
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.google.firebase.auth.FirebaseAuth
 import com.project.pradyotprakash.flashchat.nav.Action
 import com.project.pradyotprakash.flashchat.nav.Destination.AuthenticationOption
 import com.project.pradyotprakash.flashchat.nav.Destination.Home
 import com.project.pradyotprakash.flashchat.nav.Destination.Login
 import com.project.pradyotprakash.flashchat.nav.Destination.Register
 import com.project.pradyotprakash.flashchat.ui.theme.FlashChatTheme
-import com.project.pradyotprakash.flashchat.view.Authentication
+import com.project.pradyotprakash.flashchat.view.AuthenticationView
+import com.project.pradyotprakash.flashchat.view.login.LoginView
+import com.project.pradyotprakash.flashchat.view.register.RegisterView
 
 @Composable
 fun NavComposeApp() {
@@ -20,16 +23,30 @@ fun NavComposeApp() {
     FlashChatTheme {
         NavHost(
             navController = navController,
-            startDestination = AuthenticationOption
+            startDestination =
+            if (FirebaseAuth.getInstance().currentUser != null)
+                Home
+            else
+                AuthenticationOption
         ) {
             composable(AuthenticationOption) {
-                Authentication(
-                    register = {actions.register},
-                    login = {actions.login}
+                AuthenticationView(
+                    register = actions.register,
+                    login = actions.login
                 )
             }
-            composable(Register) {}
-            composable(Login) {}
+            composable(Register) {
+                RegisterView(
+                    home = actions.home,
+                    back = actions.navigateBack
+                )
+            }
+            composable(Login) {
+                LoginView(
+                    home = actions.home,
+                    back = actions.navigateBack
+                )
+            }
             composable(Home) {}
         }
     }
