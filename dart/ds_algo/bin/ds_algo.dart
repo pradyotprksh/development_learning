@@ -4,7 +4,7 @@ import 'package:ds_algo/util/utility.dart';
 
 /// A Data Structure and Algorithms programs written in Dart.
 ///
-/// This is been divided between 3 parts. And each have been maintained in
+/// This is been divided between 2 parts. And each have been maintained in
 /// different directory.
 void main() {
   var dataStructures = DataStructures();
