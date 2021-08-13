@@ -1,0 +1,55 @@
+import com.project.pradyotprakash.whatsappcomse.buildSrc.Libs
+import com.project.pradyotprakash.whatsappcomse.buildSrc.Versions
+
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath Libs.androidGradlePlugin
+        classpath Libs.Kotlin.gradlePlugin
+        classpath Libs.Firebase.firebaseGradlePlugin
+        classpath Libs.Firebase.performanceGradlePlugin
+        classpath Libs.Firebase.crashlyticsGradlePlugin
+    }
+}
+
+plugins {
+    id 'com.diffplug.spotless' version '5.14.2'
+}
+
+subprojects {
+    repositories {
+        google()
+        mavenCentral()
+    }
+
+    apply plugin: 'com.diffplug.spotless'
+    spotless {
+        kotlin {
+            target '**/*.kt'
+            targetExclude("$buildDir/**/*.kt")
+            targetExclude('bin/**/*.kt')
+            ktlint(Versions.ktlint).userData([android: "true"])
+            licenseHeaderFile rootProject.file('spotless/copyright.kt')
+        }
+    }
+
+    tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
+        kotlinOptions {
+            // Treat all Kotlin warnings as errors (disabled by default)
+            allWarningsAsErrors = project.hasProperty("warningsAsErrors") ? project.warningsAsErrors : false
+
+            freeCompilerArgs += '-Xopt-in=kotlin.RequiresOptIn'
+
+            // Enable experimental coroutines APIs, including Flow
+            freeCompilerArgs += '-Xopt-in=kotlinx.coroutines.ExperimentalCoroutinesApi'
+            freeCompilerArgs += '-Xopt-in=kotlinx.coroutines.FlowPreview'
+            freeCompilerArgs += '-Xopt-in=kotlin.Experimental'
+
+            // Set JVM target to 1.8
+            jvmTarget = "1.8"
+        }
+    }
+}
