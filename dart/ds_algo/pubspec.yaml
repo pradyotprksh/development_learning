@@ -1,0 +1,11 @@
+name: ds_algo
+description: A dart module which contains code related to Data Structures and Algorithms
+version: 1.0.0
+
+environment:
+  sdk: '>=2.12.0 <3.0.0'
+
+dev_dependencies:
+  logger: ^1.0.0
+  pedantic: ^1.10.0
+  test: ^1.16.0
