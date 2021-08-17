@@ -14,7 +14,7 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.project.pradyotprakash.whatsappcompose.R
 import com.project.pradyotprakash.whatsappcompose.ui.theme.actionBold
-import com.project.pradyotprakash.whatsappcompose.ui.theme.black15Bold
+import com.project.pradyotprakash.whatsappcompose.ui.theme.black20Bold
 
 /**
  * A snack bar composable which will be used to show message to a user.
@@ -60,7 +60,7 @@ fun SnackbarHost(snackbarHostState: SnackbarHostState) {
                             stringResource(id = R.string.something_went_wrong)
                         else
                             snackbarHostState.currentSnackbarData!!.message,
-                        style = black15Bold
+                        style = black20Bold
                     )
                 }
             },

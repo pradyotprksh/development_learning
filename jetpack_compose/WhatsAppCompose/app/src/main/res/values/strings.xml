@@ -7,4 +7,5 @@
     <string name="otp_empty">Please enter the OTP sent to </string>
     <string name="okay">Okay</string>
     <string name="insert_phone_number">Insert your phone number to continue</string>
+    <string name="image_description">In-App Images</string>
 </resources>

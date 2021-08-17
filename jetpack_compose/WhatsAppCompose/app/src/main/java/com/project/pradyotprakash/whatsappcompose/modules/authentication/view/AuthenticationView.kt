@@ -23,22 +23,40 @@
 */
 package com.project.pradyotprakash.whatsappcompose.modules.authentication.view
 
-import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Scaffold
+import androidx.compose.material.SnackbarHostState
+import androidx.compose.material.Surface
+import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.project.pradyotprakash.whatsappcompose.R
 import com.project.pradyotprakash.whatsappcompose.modules.authentication.viewModel.AuthenticationViewModel
+import com.project.pradyotprakash.whatsappcompose.ui.composables.CircularResourceImage
+import com.project.pradyotprakash.whatsappcompose.ui.composables.SizedBox
+import com.project.pradyotprakash.whatsappcompose.ui.composables.SnackbarHost
 import com.project.pradyotprakash.whatsappcompose.ui.theme.WhatsAppComposeTheme
-import com.project.pradyotprakash.whatsappcompose.ui.theme.black15Bold
-import com.project.pradyotprakash.whatsappcompose.ui.theme.grey12
+import com.project.pradyotprakash.whatsappcompose.ui.theme.black20Bold
+import com.project.pradyotprakash.whatsappcompose.ui.theme.gray20Bold
+import com.project.pradyotprakash.whatsappcompose.ui.theme.gray15
 import kotlinx.coroutines.launch
 
 /**
@@ -58,11 +76,12 @@ fun AuthenticationView(authenticationViewModel: AuthenticationViewModel = viewMo
 
     val loading: Boolean by authenticationViewModel.loading.observeAsState(initial = false)
     val showMessage: Boolean by authenticationViewModel.showMessage.observeAsState(initial = false)
-    val otpSent: Boolean by authenticationViewModel.otpSent.observeAsState(initial = false)
+//    val otpSent: Boolean by authenticationViewModel.otpSent.observeAsState(initial = false)
     val message: String by authenticationViewModel.message.observeAsState(initial = "")
-    val phoneNumber: String by authenticationViewModel.phoneNumber.observeAsState(initial = "")
+//    val phoneNumber: String by authenticationViewModel.phoneNumber.observeAsState(initial = "")
     val countryCode: String by authenticationViewModel.countryCode.observeAsState(initial = "+91")
-    val otp: String by authenticationViewModel.otp.observeAsState(initial = "")
+    val countryFlag: Int by authenticationViewModel.countryFlag.observeAsState(initial = R.drawable.flag_india)
+//    val otp: String by authenticationViewModel.otp.observeAsState(initial = "")
 
     val showSnackbar = {
         coroutineScope.launch {
@@ -93,17 +112,36 @@ fun AuthenticationView(authenticationViewModel: AuthenticationViewModel = viewMo
                             .fillMaxSize()
                             .padding(horizontal = 15.dp, vertical = 50.dp)
                     ) {
-                        Text(
-                            "${stringResource(id = R.string.welcome_to)} ${stringResource(id = R.string.app_name)}",
-                            style = black15Bold
+                        Text(stringResource(id = R.string.welcome_to)
+                                    + " " +
+                                    stringResource(id = R.string.app_name),
+                            style = black20Bold
                         )
                         Text(
                             stringResource(id = R.string.insert_phone_number),
-                            style = grey12
+                            style = gray15
                         )
-                        Spacer(modifier = Modifier.fillMaxSize())
-
-                        Spacer(modifier = Modifier.fillMaxSize())
+                        SizedBox(
+                            sizeFloat = 0.1f
+                        )
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            CircularResourceImage(resourceId = countryFlag, size = 30)
+                            SizedBox(
+                                width = 5
+                            )
+                            Icon(
+                                Icons.Filled.ArrowDropDown,
+                                contentDescription = stringResource(id = R.string.image_description),
+                                modifier = Modifier.size(15.dp),
+                                tint = Color.Gray
+                            )
+                            Text(
+                                countryCode,
+                                style = gray20Bold
+                            )
+                        }
                     }
                 }
                 SnackbarHost(snackbarHostState)

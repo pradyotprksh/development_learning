@@ -72,6 +72,12 @@ class AuthenticationViewModel : ViewModel() {
     val countryCode: LiveData<String> = _countryCode
 
     /**
+     * Country image
+     */
+    private val _countryFlag = MutableLiveData(R.drawable.flag_india)
+    val countryFlag: LiveData<Int> = _countryFlag
+
+    /**
      * Phone number entered by the user.
      */
     private val _phoneNumber = MutableLiveData("")
