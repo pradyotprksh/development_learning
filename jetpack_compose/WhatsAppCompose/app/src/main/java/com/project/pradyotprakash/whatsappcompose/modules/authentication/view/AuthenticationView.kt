@@ -23,19 +23,23 @@
 */
 package com.project.pradyotprakash.whatsappcompose.modules.authentication.view
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
+import androidx.compose.foundation.layout.*
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.project.pradyotprakash.whatsappcompose.R
 import com.project.pradyotprakash.whatsappcompose.modules.authentication.viewModel.AuthenticationViewModel
 import com.project.pradyotprakash.whatsappcompose.ui.theme.WhatsAppComposeTheme
+import com.project.pradyotprakash.whatsappcompose.ui.theme.black15Bold
+import com.project.pradyotprakash.whatsappcompose.ui.theme.grey12
+import kotlinx.coroutines.launch
 
 /**
  * The authentication view which will be used to give the user an option to authenticate
@@ -49,24 +53,60 @@ import com.project.pradyotprakash.whatsappcompose.ui.theme.WhatsAppComposeTheme
 
 @Composable
 fun AuthenticationView(authenticationViewModel: AuthenticationViewModel = viewModel()) {
+    val coroutineScope = rememberCoroutineScope()
+    val snackbarHostState = SnackbarHostState()
+
     val loading: Boolean by authenticationViewModel.loading.observeAsState(initial = false)
     val showMessage: Boolean by authenticationViewModel.showMessage.observeAsState(initial = false)
     val otpSent: Boolean by authenticationViewModel.otpSent.observeAsState(initial = false)
     val message: String by authenticationViewModel.message.observeAsState(initial = "")
     val phoneNumber: String by authenticationViewModel.phoneNumber.observeAsState(initial = "")
+    val countryCode: String by authenticationViewModel.countryCode.observeAsState(initial = "+91")
     val otp: String by authenticationViewModel.otp.observeAsState(initial = "")
+
+    val showSnackbar = {
+        coroutineScope.launch {
+            snackbarHostState.showSnackbar(
+                message = message,
+            )
+        }
+    }
+
+    if (showMessage) {
+        showSnackbar()
+    }
 
     WhatsAppComposeTheme {
         Surface(color = MaterialTheme.colors.background) {
-            Box(
-                contentAlignment = Alignment.Center,
-                modifier = Modifier.fillMaxSize()
+            Scaffold(
+                modifier = Modifier.fillMaxSize(),
             ) {
-                if (loading) {
-                    CircularProgressIndicator()
+                Box(
+                    contentAlignment = Alignment.Center,
+                    modifier = Modifier.fillMaxSize()
+                ) {
+                    if (loading) {
+                        CircularProgressIndicator()
+                    }
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(horizontal = 15.dp, vertical = 50.dp)
+                    ) {
+                        Text(
+                            "${stringResource(id = R.string.welcome_to)} ${stringResource(id = R.string.app_name)}",
+                            style = black15Bold
+                        )
+                        Text(
+                            stringResource(id = R.string.insert_phone_number),
+                            style = grey12
+                        )
+                        Spacer(modifier = Modifier.fillMaxSize())
+
+                        Spacer(modifier = Modifier.fillMaxSize())
+                    }
                 }
-                if (showMessage) {
-                }
+                SnackbarHost(snackbarHostState)
             }
         }
     }

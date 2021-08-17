@@ -64,3 +64,19 @@ val white30Bold = TextStyle(
     fontSize = 30.sp,
     fontWeight = FontWeight.Bold,
 )
+
+val black15Bold = TextStyle(
+    color = Color.Black,
+    fontSize = 15.sp,
+    fontWeight = FontWeight.Bold,
+)
+
+val actionBold = TextStyle(
+    fontWeight = FontWeight.Bold,
+    color = Action
+)
+
+val grey12 = TextStyle(
+    color = Color.Gray,
+    fontSize = 12.sp,
+)

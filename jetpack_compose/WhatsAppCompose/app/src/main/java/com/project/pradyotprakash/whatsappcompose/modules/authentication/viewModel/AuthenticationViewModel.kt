@@ -66,6 +66,12 @@ class AuthenticationViewModel : ViewModel() {
     val otpSent: LiveData<Boolean> = _otpSent
 
     /**
+     * Country code selected by the user
+     */
+    private val _countryCode = MutableLiveData("+91")
+    val countryCode: LiveData<String> = _countryCode
+
+    /**
      * Phone number entered by the user.
      */
     private val _phoneNumber = MutableLiveData("")
@@ -78,7 +84,6 @@ class AuthenticationViewModel : ViewModel() {
     val otp: LiveData<String> = _otp
 
     var storedVerificationId: String? = null
-    var resendToken: PhoneAuthProvider.ForceResendingToken? = null
 
     /**
      * Initiate the OTP for the entered number.
@@ -117,21 +122,14 @@ class AuthenticationViewModel : ViewModel() {
      * Initiate the OTP for the entered number.
      *
      * [currentActivity] is the current activity which will be given to phone number authenticator.
-     *
-     * Throws an exception
      */
-    @Throws(Exception::class)
     private fun startPhoneOTP(currentActivity: AppCompatActivity?) {
-        val activity = currentActivity ?: throw IllegalArgumentException(
-            currentActivity?.getString(
-                R.string.something_went_wrong
-            )
-        )
-        val number = phoneNumber.value
-            ?: throw IllegalArgumentException(activity.getString(R.string.phone_number_empty))
+        val activity = getActivity(currentActivity)
+        val code = getCountryCode(activity)
+        val number = getPhoneNumber(activity)
 
         PhoneAuthenticationUtility.sendOtp(
-            phoneNumber = number,
+            phoneNumber = "$code$number",
             activity = activity,
             callback = object : OtpSentCallbacks {
                 override fun onOtpSent(
@@ -140,7 +138,6 @@ class AuthenticationViewModel : ViewModel() {
                 ) {
                     _loading.value = false
                     storedVerificationId = verificationId
-                    resendToken = token
                 }
 
                 override fun onError(message: String) {
@@ -163,29 +160,13 @@ class AuthenticationViewModel : ViewModel() {
      *
      * [home] is the method which will be used to redirect the user to the home page if the
      * authentication was successful
-     *
-     * Throws an exception
      */
-    @Throws(Exception::class)
     private fun startOTPVerification(currentActivity: AppCompatActivity?, home: () -> Unit) {
-        val verificationId = storedVerificationId ?: throw IllegalArgumentException(
-            currentActivity?.getString(
-                R.string.something_went_wrong
-            )
-        )
-        val number = phoneNumber.value
-            ?: throw IllegalArgumentException(
-                currentActivity?.getString(
-                    R.string.phone_number_empty
-                )
-            )
-        val code = otp.value ?: throw IllegalArgumentException(
-            "${
-            currentActivity?.getString(
-                R.string.otp_empty
-            )
-            } $number"
-        )
+        val activity = getActivity(currentActivity)
+        val verificationId = getVerificationId(activity)
+        val cCode = getCountryCode(activity)
+        val number = getPhoneNumber(activity)
+        val code = getOtpCode(activity, cCode, number)
 
         PhoneAuthenticationUtility.verifyOTP(
             verificationId = verificationId,
@@ -205,6 +186,72 @@ class AuthenticationViewModel : ViewModel() {
                     _message.value = message
                 }
             }
+        )
+    }
+
+    /**
+     * Returns a non-nullable activity
+     *
+     * Throws exception
+     */
+    @Throws(IllegalArgumentException::class)
+    private fun getActivity(currentActivity: AppCompatActivity?): AppCompatActivity {
+        return currentActivity ?: throw IllegalArgumentException(
+            currentActivity?.getString(
+                R.string.something_went_wrong
+            )
+        )
+    }
+
+    /**
+     * Returns a non-nullable country code
+     *
+     * Throws exception
+     */
+    @Throws(IllegalArgumentException::class)
+    private fun getCountryCode(activity: AppCompatActivity): String {
+        return countryCode.value
+            ?: throw IllegalArgumentException(activity.getString(R.string.country_code_empty))
+    }
+
+    /**
+     * Returns a non-nullable phone number
+     *
+     * Throws exception
+     */
+    @Throws(IllegalArgumentException::class)
+    private fun getPhoneNumber(activity: AppCompatActivity): String {
+        return phoneNumber.value
+            ?: throw IllegalArgumentException(activity.getString(R.string.phone_number_empty))
+    }
+
+    /**
+     * Returns a non-nullable verification id
+     *
+     * Throws exception
+     */
+    @Throws(IllegalArgumentException::class)
+    private fun getVerificationId(activity: AppCompatActivity) : String {
+        return storedVerificationId ?: throw IllegalArgumentException(
+            activity.getString(
+                R.string.something_went_wrong
+            )
+        )
+    }
+
+    /**
+     * Return a non-nullable OTP value
+     *
+     * Throws exception
+     */
+    @Throws(IllegalArgumentException::class)
+    private fun getOtpCode(activity: AppCompatActivity, cCode: String, number: String) : String {
+        return otp.value ?: throw IllegalArgumentException(
+            "${
+                activity.getString(
+                    R.string.otp_empty
+                )
+            } $cCode$number"
         )
     }
 }

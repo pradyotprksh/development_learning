@@ -44,6 +44,7 @@ object Libs {
             const val preview = "androidx.compose.ui:ui-tooling-preview:$version"
             const val liveData = "androidx.compose.runtime:runtime-livedata:$version"
             const val material = "androidx.compose.material:material:$version"
+            const val constraintLayout = "androidx.constraintlayout:constraintlayout-compose:1.0.0-beta02"
         }
 
         object Navigation {
@@ -57,5 +58,9 @@ object Libs {
             const val viewmodel = "androidx.lifecycle:lifecycle-viewmodel-ktx:$version"
             const val viewModelCompose = "androidx.lifecycle:lifecycle-viewmodel-compose:1.0.0-alpha07"
         }
+    }
+
+    object ThirdParty {
+        const val countryCodePicker = "com.sinaukoding:cccp:1.0.0"
     }
 }

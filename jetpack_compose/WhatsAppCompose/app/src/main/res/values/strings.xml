@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">WhatsAppCompose</string>
+    <string name="welcome_to">Welcome to</string>
     <string name="phone_number_empty">Please provide a valid phone number</string>
+    <string name="country_code_empty">Please select a country code</string>
     <string name="something_went_wrong">Oops!! Something went wrong. Please try again.</string>
     <string name="otp_empty">Please enter the OTP sent to </string>
+    <string name="okay">Okay</string>
+    <string name="insert_phone_number">Insert your phone number to continue</string>
 </resources>
