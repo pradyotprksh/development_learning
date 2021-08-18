@@ -39,8 +39,10 @@ interface OtpSentCallbacks {
      * OTP is sent on the specified number
      *
      * [verificationId] and [token] are the return values given when the OTP is sent.
+     *
+     * A custom [message] also will be returned to show the user that otp has been sent
      */
-    fun onOtpSent(verificationId: String, token: PhoneAuthProvider.ForceResendingToken)
+    fun onOtpSent(verificationId: String, token: PhoneAuthProvider.ForceResendingToken, message: String)
 
     /**
      * Return an error message whenever there is some error or exception

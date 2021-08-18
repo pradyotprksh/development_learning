@@ -23,18 +23,19 @@
 */
 package com.project.pradyotprakash.whatsappcompose.modules.authentication.viewModel
 
-import androidx.appcompat.app.AppCompatActivity
+import android.app.Activity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.PhoneAuthProvider
 import com.project.pradyotprakash.whatsappcompose.R
+import com.project.pradyotprakash.whatsappcompose.utils.FirestoreUtility
 import com.project.pradyotprakash.whatsappcompose.utils.OtpSentCallbacks
 import com.project.pradyotprakash.whatsappcompose.utils.PhoneAuthenticationUtility
 import com.project.pradyotprakash.whatsappcompose.utils.VerifyOtpCallbacks
-import java.lang.Exception
-import kotlin.jvm.Throws
+import io.github.farhanroy.cccp.CCPCountry
+import io.github.farhanroy.cccp.getLibraryMasterCountriesEnglish
 
 /**
  * A view model for the AuthenticationView which will do all the business logic and update the
@@ -54,6 +55,18 @@ class AuthenticationViewModel : ViewModel() {
     val showMessage: LiveData<Boolean> = _showMessage
 
     /**
+     * Update show message and value when the snack bar is dismissed.
+     *
+     * This is required to let the compose know that the snackbar is being dismissed so when
+     * next time the snackbar needs to be re-build it will do that instead of not re-building it
+     * since the value has not changed.
+     */
+    fun snackbarDismissed() {
+        _showMessage.value = false
+        _message.value = ""
+    }
+
+    /**
      * Is a loader need to be shown to the user.
      */
     private val _loading = MutableLiveData(false)
@@ -66,16 +79,9 @@ class AuthenticationViewModel : ViewModel() {
     val otpSent: LiveData<Boolean> = _otpSent
 
     /**
-     * Country code selected by the user
+     * Selected country details
      */
-    private val _countryCode = MutableLiveData("+91")
-    val countryCode: LiveData<String> = _countryCode
-
-    /**
-     * Country image
-     */
-    private val _countryFlag = MutableLiveData(R.drawable.flag_india)
-    val countryFlag: LiveData<Int> = _countryFlag
+    var country: CCPCountry = getLibraryMasterCountriesEnglish().first()
 
     /**
      * Phone number entered by the user.
@@ -84,10 +90,26 @@ class AuthenticationViewModel : ViewModel() {
     val phoneNumber: LiveData<String> = _phoneNumber
 
     /**
+     * Whenever there is a change in the text field for phone number, then this method will
+     * be used to update the value and the UI state.
+     */
+    fun onPhoneNumberChange(value: String) {
+        _phoneNumber.value = value
+    }
+
+    /**
      * OTP entered by the user.
      */
     private val _otp = MutableLiveData("")
     val otp: LiveData<String> = _otp
+
+    /**
+     * Whenever there is a change in the text field for OTP, then this method will
+     * be used to update the value and the UI state.
+     */
+    fun onOTPChange(value: String) {
+        _otp.value = value
+    }
 
     var storedVerificationId: String? = null
 
@@ -96,13 +118,14 @@ class AuthenticationViewModel : ViewModel() {
      *
      * [currentActivity] is the current activity which will be given to phone number authenticator.
      */
-    fun sentOTPToPhoneNumber(currentActivity: AppCompatActivity?) {
+    fun sendOTPToPhoneNumber(currentActivity: Activity?) {
+        if (loading.value == true) return
         try {
             startPhoneOTP(currentActivity)
         } catch (exception: Exception) {
             _loading.value = false
             _showMessage.value = true
-            _message.value = exception.localizedMessage
+            _message.value = exception.localizedMessage ?: ""
         }
     }
 
@@ -114,13 +137,14 @@ class AuthenticationViewModel : ViewModel() {
      * [home] is the method which will be used to redirect the user to the home page if the
      * authentication was successful
      */
-    fun verifyOTP(currentActivity: AppCompatActivity?, home: () -> Unit) {
+    fun verifyOTP(currentActivity: Activity?, home: () -> Unit) {
+        if (loading.value == true) return
         try {
             startOTPVerification(currentActivity, home)
         } catch (exception: IllegalArgumentException) {
             _loading.value = false
             _showMessage.value = true
-            _message.value = exception.localizedMessage
+            _message.value = exception.localizedMessage ?: ""
         }
     }
 
@@ -129,9 +153,9 @@ class AuthenticationViewModel : ViewModel() {
      *
      * [currentActivity] is the current activity which will be given to phone number authenticator.
      */
-    private fun startPhoneOTP(currentActivity: AppCompatActivity?) {
+    private fun startPhoneOTP(currentActivity: Activity?) {
         val activity = getActivity(currentActivity)
-        val code = getCountryCode(activity)
+        val code = getCountryCode()
         val number = getPhoneNumber(activity)
 
         PhoneAuthenticationUtility.sendOtp(
@@ -140,9 +164,13 @@ class AuthenticationViewModel : ViewModel() {
             callback = object : OtpSentCallbacks {
                 override fun onOtpSent(
                     verificationId: String,
-                    token: PhoneAuthProvider.ForceResendingToken
+                    token: PhoneAuthProvider.ForceResendingToken,
+                    message: String
                 ) {
                     _loading.value = false
+                    _otpSent.value = true
+                    _showMessage.value = true
+                    _message.value = message
                     storedVerificationId = verificationId
                 }
 
@@ -167,10 +195,13 @@ class AuthenticationViewModel : ViewModel() {
      * [home] is the method which will be used to redirect the user to the home page if the
      * authentication was successful
      */
-    private fun startOTPVerification(currentActivity: AppCompatActivity?, home: () -> Unit) {
+    private fun startOTPVerification(
+        currentActivity: Activity?,
+        home: () -> Unit,
+    ) {
         val activity = getActivity(currentActivity)
         val verificationId = getVerificationId(activity)
-        val cCode = getCountryCode(activity)
+        val cCode = getCountryCode()
         val number = getPhoneNumber(activity)
         val code = getOtpCode(activity, cCode, number)
 
@@ -200,13 +231,9 @@ class AuthenticationViewModel : ViewModel() {
      *
      * Throws exception
      */
-    @Throws(IllegalArgumentException::class)
-    private fun getActivity(currentActivity: AppCompatActivity?): AppCompatActivity {
-        return currentActivity ?: throw IllegalArgumentException(
-            currentActivity?.getString(
-                R.string.something_went_wrong
-            )
-        )
+    @kotlin.jvm.Throws(IllegalArgumentException::class)
+    private fun getActivity(currentActivity: Activity?): Activity {
+        return currentActivity ?: throw IllegalArgumentException()
     }
 
     /**
@@ -214,10 +241,9 @@ class AuthenticationViewModel : ViewModel() {
      *
      * Throws exception
      */
-    @Throws(IllegalArgumentException::class)
-    private fun getCountryCode(activity: AppCompatActivity): String {
-        return countryCode.value
-            ?: throw IllegalArgumentException(activity.getString(R.string.country_code_empty))
+    @kotlin.jvm.Throws(IllegalArgumentException::class)
+    private fun getCountryCode(): String {
+        return "+${country.phoneCode}"
     }
 
     /**
@@ -225,10 +251,14 @@ class AuthenticationViewModel : ViewModel() {
      *
      * Throws exception
      */
-    @Throws(IllegalArgumentException::class)
-    private fun getPhoneNumber(activity: AppCompatActivity): String {
-        return phoneNumber.value
+    @kotlin.jvm.Throws(IllegalArgumentException::class)
+    private fun getPhoneNumber(activity: Activity): String {
+        val number = phoneNumber.value
             ?: throw IllegalArgumentException(activity.getString(R.string.phone_number_empty))
+        if (number.isEmpty()) {
+            throw IllegalArgumentException(activity.getString(R.string.phone_number_empty))
+        }
+        return number
     }
 
     /**
@@ -236,8 +266,8 @@ class AuthenticationViewModel : ViewModel() {
      *
      * Throws exception
      */
-    @Throws(IllegalArgumentException::class)
-    private fun getVerificationId(activity: AppCompatActivity) : String {
+    @kotlin.jvm.Throws(IllegalArgumentException::class)
+    private fun getVerificationId(activity: Activity): String {
         return storedVerificationId ?: throw IllegalArgumentException(
             activity.getString(
                 R.string.something_went_wrong
@@ -250,14 +280,24 @@ class AuthenticationViewModel : ViewModel() {
      *
      * Throws exception
      */
-    @Throws(IllegalArgumentException::class)
-    private fun getOtpCode(activity: AppCompatActivity, cCode: String, number: String) : String {
-        return otp.value ?: throw IllegalArgumentException(
+    @kotlin.jvm.Throws(IllegalArgumentException::class)
+    private fun getOtpCode(activity: Activity, cCode: String, number: String): String {
+        val code = otp.value ?: throw IllegalArgumentException(
             "${
                 activity.getString(
                     R.string.otp_empty
                 )
             } $cCode$number"
         )
+        if (code.isEmpty()) {
+            throw IllegalArgumentException(
+                "${
+                    activity.getString(
+                        R.string.otp_empty
+                    )
+                } $cCode$number"
+            )
+        }
+        return code
     }
 }

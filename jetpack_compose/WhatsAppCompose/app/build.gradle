@@ -89,6 +89,7 @@ dependencies {
     implementation Libs.Firebase.crashlytics
     implementation Libs.Firebase.performance
     implementation Libs.Firebase.safetyNet
+    implementation Libs.Firebase.storage
 
     implementation Libs.ThirdParty.countryCodePicker
 

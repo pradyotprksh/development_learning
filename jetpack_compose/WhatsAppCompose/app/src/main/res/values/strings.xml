@@ -8,4 +8,11 @@
     <string name="okay">Okay</string>
     <string name="insert_phone_number">Insert your phone number to continue</string>
     <string name="image_description">In-App Images</string>
+    <string name="phone_helper">98XXXXXX334XX</string>
+    <string name="continue_button">Continue</string>
+    <string name="verify">Verify</string>
+    <string name="please_wait">Please wait…</string>
+    <string name="otp_sent">An OTP has been sent to</string>
+    <string name="enter_otp">Insert the OTP to verify</string>
+    <string name="otp_helper">X X X X X X</string>
 </resources>

@@ -1,5 +1,4 @@
 import com.project.pradyotprakash.whatsappcomse.buildSrc.Libs
-import com.project.pradyotprakash.whatsappcomse.buildSrc.Versions
 
 buildscript {
     repositories {
@@ -31,7 +30,6 @@ subprojects {
             target '**/*.kt'
             targetExclude("$buildDir/**/*.kt")
             targetExclude('bin/**/*.kt')
-            ktlint(Versions.ktlint).userData([android: "true"])
             licenseHeaderFile rootProject.file('spotless/copyright.kt')
         }
     }

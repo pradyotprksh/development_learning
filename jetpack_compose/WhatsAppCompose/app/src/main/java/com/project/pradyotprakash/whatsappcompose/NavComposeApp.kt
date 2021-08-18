@@ -23,16 +23,19 @@
 */
 package com.project.pradyotprakash.whatsappcompose
 
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.project.pradyotprakash.whatsappcompose.modules.authentication.view.AuthenticationView
+import com.project.pradyotprakash.whatsappcompose.modules.edit_profile.view.EditProfileView
 import com.project.pradyotprakash.whatsappcompose.modules.home.view.HomeView
 import com.project.pradyotprakash.whatsappcompose.modules.splash.view.SplashView
 import com.project.pradyotprakash.whatsappcompose.nav.Action
 import com.project.pradyotprakash.whatsappcompose.nav.Destination.Authentication
+import com.project.pradyotprakash.whatsappcompose.nav.Destination.EditProfile
 import com.project.pradyotprakash.whatsappcompose.nav.Destination.Home
 import com.project.pradyotprakash.whatsappcompose.nav.Destination.Splash
 import com.project.pradyotprakash.whatsappcompose.ui.theme.WhatsAppComposeTheme
@@ -40,6 +43,7 @@ import com.project.pradyotprakash.whatsappcompose.ui.theme.WhatsAppComposeTheme
 /**
  * The main Navigation composable which will handle all the navigation stack.
  */
+@ExperimentalAnimationApi
 @Composable
 fun NavComposeApp() {
     val navController = rememberNavController()
@@ -56,10 +60,19 @@ fun NavComposeApp() {
                 )
             }
             composable(Authentication) {
-                AuthenticationView()
+                AuthenticationView(
+                    home = actions.home,
+                )
             }
             composable(Home) {
-                HomeView()
+                HomeView(
+                    editProfile = actions.editProfile
+                )
+            }
+            composable(EditProfile) {
+                EditProfileView(
+                    back = actions.navigateBack
+                )
             }
         }
     }

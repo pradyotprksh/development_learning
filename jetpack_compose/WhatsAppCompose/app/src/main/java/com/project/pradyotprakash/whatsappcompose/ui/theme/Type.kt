@@ -81,8 +81,19 @@ val gray15 = TextStyle(
     fontSize = 15.sp,
 )
 
+val black15 = TextStyle(
+    color = Color.Black,
+    fontSize = 15.sp,
+)
+
 val gray20Bold = TextStyle(
     color = Color.Gray,
+    fontSize = 20.sp,
+    fontWeight = FontWeight.Bold,
+)
+
+val white20Bold = TextStyle(
+    color = Color.White,
     fontSize = 20.sp,
     fontWeight = FontWeight.Bold,
 )

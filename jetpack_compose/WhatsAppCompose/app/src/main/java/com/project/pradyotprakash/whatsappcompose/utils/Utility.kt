@@ -23,10 +23,20 @@
 */
 package com.project.pradyotprakash.whatsappcompose.utils
 
+import android.util.Log
+import com.project.pradyotprakash.whatsappcompose.utils.Constants.application
+
 /**
  * An utility method which will contain the utility methods, helpful for doing the similar methods
  * throughout the application.
  *
  * This will help in better code maintenance.
  */
-object Utility
+object Utility {
+    /**
+     * Show a log message in the console
+     */
+    fun showMessage(message: String) {
+        Log.w(application, message)
+    }
+}

@@ -23,10 +23,33 @@
 */
 package com.project.pradyotprakash.whatsappcompose.modules.home.viewModel
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.project.pradyotprakash.whatsappcompose.models.User
+import com.project.pradyotprakash.whatsappcompose.utils.FirestoreUtility
 
 /**
  * A view model for the HomeView which will do all the business logic and update the
  * ui state as per the requirement.
  */
-class HomeViewModel : ViewModel()
+class HomeViewModel : ViewModel() {
+    private val database: FirestoreUtility = FirestoreUtility()
+
+    /**
+     * Current user details
+     */
+    private val _userDetails = MutableLiveData(User())
+    val userDetails: LiveData<User> = _userDetails
+
+    /**
+     * Check for user details
+     */
+    fun checksForUserDetails(editProfile: () -> Unit) {
+        if (database.isUserDetailsAvailable()) {
+            _userDetails.value = database.getCurrentUserDetails()
+        } else {
+            editProfile()
+        }
+    }
+}

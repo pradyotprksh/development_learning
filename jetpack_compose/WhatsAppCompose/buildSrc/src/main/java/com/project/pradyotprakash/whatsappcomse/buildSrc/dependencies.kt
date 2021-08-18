@@ -1,9 +1,5 @@
 package com.project.pradyotprakash.whatsappcomse.buildSrc
 
-object Versions {
-    const val ktlint = "0.41.0"
-}
-
 object Libs {
     const val androidGradlePlugin = "com.android.tools.build:gradle:7.0.0"
     const val jdkDesugar = "com.android.tools:desugar_jdk_libs:1.1.5"
@@ -21,6 +17,7 @@ object Libs {
         const val firestore = "com.google.firebase:firebase-firestore-ktx"
         const val crashlytics = "com.google.firebase:firebase-crashlytics-ktx"
         const val performance = "com.google.firebase:firebase-perf-ktx"
+        const val storage = "com.google.firebase:firebase-storage-ktx"
         const val safetyNet = "com.google.firebase:firebase-appcheck-safetynet:16.0.0-beta02"
     }
 

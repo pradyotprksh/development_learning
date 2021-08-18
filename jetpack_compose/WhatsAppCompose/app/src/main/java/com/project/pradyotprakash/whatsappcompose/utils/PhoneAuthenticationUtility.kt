@@ -23,12 +23,13 @@
 */
 package com.project.pradyotprakash.whatsappcompose.utils
 
-import androidx.appcompat.app.AppCompatActivity
+import android.app.Activity
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.PhoneAuthCredential
 import com.google.firebase.auth.PhoneAuthOptions
 import com.google.firebase.auth.PhoneAuthProvider
+import com.project.pradyotprakash.whatsappcompose.R
 import java.util.concurrent.TimeUnit
 
 /**
@@ -51,7 +52,7 @@ object PhoneAuthenticationUtility {
      */
     fun sendOtp(
         phoneNumber: String,
-        activity: AppCompatActivity,
+        activity: Activity,
         callback: OtpSentCallbacks
     ) {
         callback.onOtpInitiated()
@@ -61,7 +62,11 @@ object PhoneAuthenticationUtility {
                 verificationId: String,
                 token: PhoneAuthProvider.ForceResendingToken
             ) {
-                callback.onOtpSent(verificationId = verificationId, token = token)
+                callback.onOtpSent(
+                    verificationId = verificationId,
+                    token = token,
+                    message = "${activity.getString(R.string.otp_sent)} $phoneNumber"
+                )
             }
 
             override fun onCodeAutoRetrievalTimeOut(verificationId: String) {
@@ -112,9 +117,13 @@ object PhoneAuthenticationUtility {
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     val user = task.result?.user
-                    user?.let { callback.onVerified(user = it) }
+                    if (user != null) {
+                        callback.onVerified(user = user)
+                    } else {
+                        callback.onError(message = "")
+                    }
                 } else {
-                    task.exception?.localizedMessage?.let { callback.onError(message = it) }
+                    callback.onError(message = task.exception?.localizedMessage ?: "")
                 }
             }
     }

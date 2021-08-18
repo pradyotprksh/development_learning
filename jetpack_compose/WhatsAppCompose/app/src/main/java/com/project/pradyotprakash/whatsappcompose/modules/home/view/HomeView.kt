@@ -24,9 +24,19 @@
 package com.project.pradyotprakash.whatsappcompose.modules.home.view
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.project.pradyotprakash.whatsappcompose.models.User
 import com.project.pradyotprakash.whatsappcompose.modules.home.viewModel.HomeViewModel
 
+/**
+ * A home view which will be used to show all the main features of the application to
+ * an authenticated user.
+ */
 @Composable
-fun HomeView(homeViewModel: HomeViewModel = viewModel()) {
+fun HomeView(editProfile: () -> Unit, homeViewModel: HomeViewModel = viewModel()) {
+    val userDetails: User by homeViewModel.userDetails.observeAsState(initial = User())
+
+    homeViewModel.checksForUserDetails(editProfile)
 }
