@@ -23,7 +23,9 @@
 */
 package com.project.pradyotprakash.whatsappcompose.utils
 
+import android.os.Build
 import android.util.Log
+import com.project.pradyotprakash.whatsappcompose.BuildConfig
 import com.project.pradyotprakash.whatsappcompose.utils.Constants.application
 
 /**
@@ -38,5 +40,40 @@ object Utility {
      */
     fun showMessage(message: String) {
         Log.w(application, message)
+    }
+
+    /**
+     * Get current time stamp
+     */
+    fun currentTimeStamp(): Long {
+        return System.currentTimeMillis()
+    }
+
+    /**
+     * Get application version
+     */
+    fun applicationVersion(): String {
+        return "${BuildConfig.VERSION_NAME}:${BuildConfig.VERSION_CODE}"
+    }
+
+    /**
+     * Get device id
+     */
+    fun getDeviceId(): String {
+        return Build.ID
+    }
+
+    /**
+     * Get device model
+     */
+    fun deviceModel(): String {
+        return  "${Build.MODEL} ${Build.BRAND} ${Build.DEVICE}"
+    }
+
+    /**
+     * Get phone OS
+     */
+    fun systemOS(): String {
+        return  "${Build.ID} ${Build.VERSION.SDK_INT} ${Build.VERSION.CODENAME}"
     }
 }

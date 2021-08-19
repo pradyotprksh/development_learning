@@ -27,6 +27,7 @@ import androidx.compose.material.Typography
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 
@@ -79,6 +80,12 @@ val actionBold = TextStyle(
 val gray15 = TextStyle(
     color = Color.Gray,
     fontSize = 15.sp,
+)
+
+val gray12Italic = TextStyle(
+    color = Color.Gray,
+    fontSize = 15.sp,
+    fontStyle = FontStyle.Italic
 )
 
 val black15 = TextStyle(

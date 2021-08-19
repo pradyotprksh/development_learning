@@ -30,9 +30,13 @@ import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.PhoneAuthProvider
 import com.project.pradyotprakash.whatsappcompose.R
+import com.project.pradyotprakash.whatsappcompose.models.User
+import com.project.pradyotprakash.whatsappcompose.utils.Constants.defaultPic
+import com.project.pradyotprakash.whatsappcompose.utils.FirestoreCallbacks
 import com.project.pradyotprakash.whatsappcompose.utils.FirestoreUtility
 import com.project.pradyotprakash.whatsappcompose.utils.OtpSentCallbacks
 import com.project.pradyotprakash.whatsappcompose.utils.PhoneAuthenticationUtility
+import com.project.pradyotprakash.whatsappcompose.utils.Utility
 import com.project.pradyotprakash.whatsappcompose.utils.VerifyOtpCallbacks
 import io.github.farhanroy.cccp.CCPCountry
 import io.github.farhanroy.cccp.getLibraryMasterCountriesEnglish
@@ -42,6 +46,8 @@ import io.github.farhanroy.cccp.getLibraryMasterCountriesEnglish
  * ui state as per the requirement.
  */
 class AuthenticationViewModel : ViewModel() {
+    private val firestoreUtility: FirestoreUtility = FirestoreUtility()
+
     /**
      * Message to be shown to the user.
      */
@@ -137,10 +143,10 @@ class AuthenticationViewModel : ViewModel() {
      * [home] is the method which will be used to redirect the user to the home page if the
      * authentication was successful
      */
-    fun verifyOTP(currentActivity: Activity?, home: () -> Unit) {
+    fun verifyOTP(currentActivity: Activity?, home: () -> Unit, formFill: () -> Unit) {
         if (loading.value == true) return
         try {
-            startOTPVerification(currentActivity, home)
+            startOTPVerification(currentActivity, home, formFill)
         } catch (exception: IllegalArgumentException) {
             _loading.value = false
             _showMessage.value = true
@@ -198,12 +204,25 @@ class AuthenticationViewModel : ViewModel() {
     private fun startOTPVerification(
         currentActivity: Activity?,
         home: () -> Unit,
+        formFill: () -> Unit
     ) {
         val activity = getActivity(currentActivity)
         val verificationId = getVerificationId(activity)
         val cCode = getCountryCode()
         val number = getPhoneNumber(activity)
         val code = getOtpCode(activity, cCode, number)
+
+        val userDetails = User(
+            phoneNumber = number,
+            countryName = country.name,
+            countryNameCode = country.nameCode,
+            countryPhoneCode = country.phoneCode,
+            lastLoggedIn = Utility.currentTimeStamp(),
+            appVersion = Utility.applicationVersion(),
+            deviceId = Utility.getDeviceId(),
+            deviceModel = Utility.deviceModel(),
+            deviceOs = Utility.systemOS(),
+        )
 
         PhoneAuthenticationUtility.verifyOTP(
             verificationId = verificationId,
@@ -214,7 +233,8 @@ class AuthenticationViewModel : ViewModel() {
                 }
 
                 override fun onVerified(user: FirebaseUser) {
-                    home()
+                    userDetails.userId = user.uid
+                    checkForUserDetails(userDetails, home, formFill)
                 }
 
                 override fun onError(message: String) {
@@ -222,6 +242,69 @@ class AuthenticationViewModel : ViewModel() {
                     _showMessage.value = true
                     _message.value = message
                 }
+            }
+        )
+    }
+
+    /**
+     * Check for user details if it's available or not
+     */
+    private fun checkForUserDetails(userDetails: User, home: () -> Unit, formFill: () -> Unit) {
+        firestoreUtility.checksForUserDetails(
+            callbacks = object : FirestoreCallbacks {
+                override fun isTrue() {
+                    updateUserDetails(userDetails, home, formFill, false)
+                }
+
+                override fun isFalse() {
+                    userDetails.accountCreatedOn = Utility.currentTimeStamp()
+                    userDetails.profilePic = defaultPic
+                    updateUserDetails(userDetails, home, formFill, true)
+                }
+
+                override fun userDetails(user: User) {
+                    updateUserDetails(userDetails, home, formFill, user.isDetailsAdded)
+                }
+
+                override fun onError(message: String) {
+                    _loading.value = false
+                    _showMessage.value = true
+                    _message.value = message
+                }
+            }
+        )
+    }
+
+    /**
+     * Update user details
+     */
+    private fun updateUserDetails(userDetails: User, home: () -> Unit, formFill: () -> Unit, isNewUser: Boolean) {
+        firestoreUtility.setUserDetails(
+            data = userDetails,
+            callbacks = object : FirestoreCallbacks {
+                override fun isTrue() {
+                    _loading.value = false
+                    if (isNewUser) {
+                        formFill()
+                    } else {
+                        home()
+                    }
+                }
+
+                override fun isFalse() {
+                    _loading.value = false
+                }
+
+                override fun userDetails(user: User) {
+                    _loading.value = false
+                }
+
+                override fun onError(message: String) {
+                    _loading.value = false
+                    _showMessage.value = true
+                    _message.value = message
+                }
+
             }
         )
     }
@@ -253,7 +336,7 @@ class AuthenticationViewModel : ViewModel() {
      */
     @kotlin.jvm.Throws(IllegalArgumentException::class)
     private fun getPhoneNumber(activity: Activity): String {
-        val number = phoneNumber.value
+        val number = _phoneNumber.value
             ?: throw IllegalArgumentException(activity.getString(R.string.phone_number_empty))
         if (number.isEmpty()) {
             throw IllegalArgumentException(activity.getString(R.string.phone_number_empty))
@@ -282,7 +365,7 @@ class AuthenticationViewModel : ViewModel() {
      */
     @kotlin.jvm.Throws(IllegalArgumentException::class)
     private fun getOtpCode(activity: Activity, cCode: String, number: String): String {
-        val code = otp.value ?: throw IllegalArgumentException(
+        val code = _otp.value ?: throw IllegalArgumentException(
             "${
                 activity.getString(
                     R.string.otp_empty

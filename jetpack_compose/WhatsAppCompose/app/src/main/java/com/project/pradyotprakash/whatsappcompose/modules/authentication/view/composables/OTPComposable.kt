@@ -59,6 +59,7 @@ import com.project.pradyotprakash.whatsappcompose.ui.theme.gray20Bold
 @Composable
 fun OTPComposable(
     home: () -> Unit,
+    formFill: () -> Unit,
     authenticationViewModel: AuthenticationViewModel = viewModel()
 ) {
     val context = LocalContext.current
@@ -98,7 +99,7 @@ fun OTPComposable(
                     onDone = {
                         focusManager.clearFocus()
                         if (context is Activity) {
-                            authenticationViewModel.verifyOTP(context, home)
+                            authenticationViewModel.verifyOTP(context, home, formFill)
                         }
                     }
                 )

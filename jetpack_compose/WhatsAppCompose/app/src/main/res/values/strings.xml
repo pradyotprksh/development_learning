@@ -15,4 +15,19 @@
     <string name="otp_sent">An OTP has been sent to</string>
     <string name="enter_otp">Insert the OTP to verify</string>
     <string name="otp_helper">X X X X X X</string>
+    <string name="name_helper">Enter your full name</string>
+    <string name="username_helper">Enter a username</string>
+    <string name="email_id_helper">Enter your personal email id</string>
+    <string name="email_id_note">**Will be only used for your friends to find you easily. We will not be spamming you with any mail.</string>
+    <string name="status_helper">Enter a status/bio to tell a bit about yourself</string>
+    <string name="name">Name</string>
+    <string name="emailId">Email Id</string>
+    <string name="username">Username</string>
+    <string name="status">Status</string>
+    <string name="account_created">Account created</string>
+    <string name="account_created_helper">You are finally a member of our family. We still need few more details to know you better.</string>
+    <string name="name_empty">Please provide a name</string>
+    <string name="username_empty">Please provide a username</string>
+    <string name="email_empty">Please provide an email address</string>
+    <string name="status_empty">Please provide a status</string>
 </resources>

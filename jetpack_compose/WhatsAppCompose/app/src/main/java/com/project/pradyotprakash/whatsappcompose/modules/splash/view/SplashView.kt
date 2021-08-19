@@ -53,9 +53,10 @@ import com.project.pradyotprakash.whatsappcompose.ui.theme.white30Bold
 fun SplashView(
     home: () -> Unit,
     authentication: () -> Unit,
+    formFill: () -> Unit,
     splashViewModel: SplashViewModel = viewModel()
 ) {
-    splashViewModel.checkIfUserLoggedIn(home = home, authentication = authentication)
+    splashViewModel.checkIfUserLoggedIn(home = home, authentication = authentication, formFill = formFill)
 
     WhatsAppComposeTheme {
         Surface(color = Action) {

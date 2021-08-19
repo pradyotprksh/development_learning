@@ -85,6 +85,7 @@ import kotlinx.coroutines.launch
 @ExperimentalAnimationApi
 @Composable
 fun AuthenticationView(
+    formFill: () -> Unit,
     home: () -> Unit,
     authenticationViewModel: AuthenticationViewModel = viewModel()
 ) {
@@ -187,7 +188,8 @@ fun AuthenticationView(
                             )
                         )
                         OTPComposable(
-                            home = home
+                            home = home,
+                            formFill = formFill
                         )
                         SizedBox(height = 50)
                         Button(
@@ -197,7 +199,7 @@ fun AuthenticationView(
                                 focusManager.clearFocus()
                                 if (context is Activity) {
                                     if (otpSent) {
-                                        authenticationViewModel.verifyOTP(context, home)
+                                        authenticationViewModel.verifyOTP(context, home, formFill)
                                     } else {
                                         authenticationViewModel.sendOTPToPhoneNumber(context)
                                     }

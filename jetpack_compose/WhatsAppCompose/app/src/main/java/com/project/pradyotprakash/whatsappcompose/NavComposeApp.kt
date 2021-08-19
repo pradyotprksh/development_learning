@@ -30,12 +30,12 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.project.pradyotprakash.whatsappcompose.modules.authentication.view.AuthenticationView
-import com.project.pradyotprakash.whatsappcompose.modules.edit_profile.view.EditProfileView
+import com.project.pradyotprakash.whatsappcompose.modules.formFill.view.FormFillView
 import com.project.pradyotprakash.whatsappcompose.modules.home.view.HomeView
 import com.project.pradyotprakash.whatsappcompose.modules.splash.view.SplashView
 import com.project.pradyotprakash.whatsappcompose.nav.Action
 import com.project.pradyotprakash.whatsappcompose.nav.Destination.Authentication
-import com.project.pradyotprakash.whatsappcompose.nav.Destination.EditProfile
+import com.project.pradyotprakash.whatsappcompose.nav.Destination.FormFill
 import com.project.pradyotprakash.whatsappcompose.nav.Destination.Home
 import com.project.pradyotprakash.whatsappcompose.nav.Destination.Splash
 import com.project.pradyotprakash.whatsappcompose.ui.theme.WhatsAppComposeTheme
@@ -56,23 +56,21 @@ fun NavComposeApp() {
             composable(Splash) {
                 SplashView(
                     home = actions.home,
-                    authentication = actions.authentication
+                    authentication = actions.authentication,
+                    formFill = actions.formFill
                 )
             }
             composable(Authentication) {
                 AuthenticationView(
                     home = actions.home,
+                    formFill = actions.formFill
                 )
             }
             composable(Home) {
-                HomeView(
-                    editProfile = actions.editProfile
-                )
+                HomeView()
             }
-            composable(EditProfile) {
-                EditProfileView(
-                    back = actions.navigateBack
-                )
+            composable(FormFill) {
+                FormFillView(home = actions.home)
             }
         }
     }

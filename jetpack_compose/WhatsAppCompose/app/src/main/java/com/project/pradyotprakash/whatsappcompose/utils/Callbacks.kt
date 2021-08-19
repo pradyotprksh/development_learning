@@ -25,6 +25,7 @@ package com.project.pradyotprakash.whatsappcompose.utils
 
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.PhoneAuthProvider
+import com.project.pradyotprakash.whatsappcompose.models.User
 
 /**
  * Callback for when OTP needs to be generated.
@@ -71,6 +72,31 @@ interface VerifyOtpCallbacks {
      * A callback which will be used to return any error
      *
      * [message] contains the message readable in human form
+     */
+    fun onError(message: String)
+}
+
+/**
+ * Callbacks for Firestore
+ */
+interface FirestoreCallbacks {
+    /**
+     * Will be called if it's true for what we are looking for
+     */
+    fun isTrue()
+
+    /**
+     * Will be called if it's false for what we are looking for
+     */
+    fun isFalse()
+
+    /**
+     * Get user data
+     */
+    fun userDetails(user: User)
+
+    /**
+     * Get the error message
      */
     fun onError(message: String)
 }
