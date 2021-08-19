@@ -29,10 +29,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.project.pradyotprakash.whatsappcompose.R
 import com.project.pradyotprakash.whatsappcompose.models.User
-import com.project.pradyotprakash.whatsappcompose.utils.Constants
 import com.project.pradyotprakash.whatsappcompose.utils.FirestoreCallbacks
 import com.project.pradyotprakash.whatsappcompose.utils.FirestoreUtility
-import com.project.pradyotprakash.whatsappcompose.utils.Utility
 
 /**
  * A view model for the FormFillView which will do all the business logic and update the

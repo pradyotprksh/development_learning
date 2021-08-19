@@ -37,8 +37,6 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.project.pradyotprakash.whatsappcompose.R
@@ -56,9 +54,6 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun SearchView(searchViewModel: SearchViewModel = viewModel()) {
-    val context = LocalContext.current
-    val focusManager = LocalFocusManager.current
-
     val coroutineScope = rememberCoroutineScope()
     val snackbarHostState = SnackbarHostState()
 

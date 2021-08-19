@@ -24,6 +24,7 @@
 package com.project.pradyotprakash.whatsappcompose
 
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.navigation.compose.NavHost
@@ -45,6 +46,7 @@ import com.project.pradyotprakash.whatsappcompose.ui.theme.WhatsAppComposeTheme
 /**
  * The main Navigation composable which will handle all the navigation stack.
  */
+@ExperimentalMaterialApi
 @ExperimentalAnimationApi
 @Composable
 fun NavComposeApp() {

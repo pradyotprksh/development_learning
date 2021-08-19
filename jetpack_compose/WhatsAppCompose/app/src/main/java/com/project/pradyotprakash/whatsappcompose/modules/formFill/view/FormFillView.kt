@@ -160,7 +160,7 @@ fun FormFillView(home: () -> Unit, formFillViewModel: FormFillViewModel = viewMo
                                 )
                             },
                             colors = TextFieldDefaults.textFieldColors(
-                                unfocusedIndicatorColor = Color.Gray
+                                unfocusedIndicatorColor = Color.LightGray
                             ),
                             keyboardOptions = KeyboardOptions(
                                 keyboardType = KeyboardType.Text,
@@ -193,7 +193,7 @@ fun FormFillView(home: () -> Unit, formFillViewModel: FormFillViewModel = viewMo
                                 )
                             },
                             colors = TextFieldDefaults.textFieldColors(
-                                unfocusedIndicatorColor = Color.Gray
+                                unfocusedIndicatorColor = Color.LightGray
                             ),
                             keyboardOptions = KeyboardOptions(
                                 keyboardType = KeyboardType.Text,
@@ -225,7 +225,7 @@ fun FormFillView(home: () -> Unit, formFillViewModel: FormFillViewModel = viewMo
                                 )
                             },
                             colors = TextFieldDefaults.textFieldColors(
-                                unfocusedIndicatorColor = Color.Gray
+                                unfocusedIndicatorColor = Color.LightGray
                             ),
                             keyboardOptions = KeyboardOptions(
                                 keyboardType = KeyboardType.Email,
@@ -261,7 +261,7 @@ fun FormFillView(home: () -> Unit, formFillViewModel: FormFillViewModel = viewMo
                                 )
                             },
                             colors = TextFieldDefaults.textFieldColors(
-                                unfocusedIndicatorColor = Color.Gray
+                                unfocusedIndicatorColor = Color.LightGray
                             ),
                             keyboardOptions = KeyboardOptions(
                                 keyboardType = KeyboardType.Text,

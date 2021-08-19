@@ -172,7 +172,7 @@ fun AuthenticationView(
                                 }
                             },
                             colors = TextFieldDefaults.textFieldColors(
-                                unfocusedIndicatorColor = Color.Gray
+                                unfocusedIndicatorColor = Color.LightGray
                             ),
                             keyboardOptions = KeyboardOptions(
                                 keyboardType = KeyboardType.Number,

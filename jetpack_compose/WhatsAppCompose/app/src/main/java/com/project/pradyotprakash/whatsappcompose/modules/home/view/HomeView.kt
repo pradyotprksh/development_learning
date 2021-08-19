@@ -23,8 +23,10 @@
 */
 package com.project.pradyotprakash.whatsappcompose.modules.home.view
 
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.SnackbarHostState
@@ -36,13 +38,10 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.rememberNavController
 import com.project.pradyotprakash.whatsappcompose.R
-import com.project.pradyotprakash.whatsappcompose.models.User
 import com.project.pradyotprakash.whatsappcompose.modules.home.view.composables.HomeAppBar
 import com.project.pradyotprakash.whatsappcompose.modules.home.view.composables.HomeBottomNavigation
 import com.project.pradyotprakash.whatsappcompose.modules.home.view.composables.HomeNavigation
@@ -58,11 +57,10 @@ import kotlinx.coroutines.launch
  * A home view which will be used to show all the main features of the application to
  * an authenticated user.
  */
+@ExperimentalMaterialApi
+@ExperimentalAnimationApi
 @Composable
 fun HomeView(profile: () -> Unit, homeViewModel: HomeViewModel = viewModel()) {
-    val context = LocalContext.current
-    val focusManager = LocalFocusManager.current
-
     val coroutineScope = rememberCoroutineScope()
     val snackbarHostState = SnackbarHostState()
     val navController = rememberNavController()
@@ -71,7 +69,6 @@ fun HomeView(profile: () -> Unit, homeViewModel: HomeViewModel = viewModel()) {
     val showMessage: Boolean by homeViewModel.showMessage.observeAsState(initial = false)
     val message: String by homeViewModel.message.observeAsState(initial = "")
     val appBarTitle: String by homeViewModel.appBarTitle.observeAsState(initial = chat)
-    val userDetails: User by homeViewModel.userDetails.observeAsState(initial = User())
 
     /**
      * Show snackbar

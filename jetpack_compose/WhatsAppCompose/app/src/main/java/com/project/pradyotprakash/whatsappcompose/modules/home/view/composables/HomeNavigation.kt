@@ -23,6 +23,8 @@
 */
 package com.project.pradyotprakash.whatsappcompose.modules.home.view.composables
 
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -37,6 +39,8 @@ import com.project.pradyotprakash.whatsappcompose.modules.status.view.StatusView
  * bar.
  */
 
+@ExperimentalMaterialApi
+@ExperimentalAnimationApi
 @Composable
 fun HomeNavigation(navController: NavHostController) {
     NavHost(navController, startDestination = NavigationItem.Chat.route) {

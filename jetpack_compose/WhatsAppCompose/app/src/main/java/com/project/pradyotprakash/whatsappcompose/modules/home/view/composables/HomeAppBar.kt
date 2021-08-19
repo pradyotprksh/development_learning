@@ -43,7 +43,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.project.pradyotprakash.whatsappcompose.R
 import com.project.pradyotprakash.whatsappcompose.ui.composables.SizedBox
-import com.project.pradyotprakash.whatsappcompose.ui.theme.black20Bold
+import com.project.pradyotprakash.whatsappcompose.ui.theme.black15Bold
 
 /**
  * A home app bar which will be a composable used at the top of home screen.
@@ -62,7 +62,7 @@ fun HomeAppBar(title: String, profile: () -> Unit) {
                 ) {
                     Text(
                         text = title,
-                        style = black20Bold,
+                        style = black15Bold,
                         textAlign = TextAlign.Center,
                         modifier = Modifier.weight(0.9f)
                     )

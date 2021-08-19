@@ -68,7 +68,9 @@ fun OTPComposable(
     val otpSent: Boolean by authenticationViewModel.otpSent.observeAsState(initial = false)
     val otp: String by authenticationViewModel.otp.observeAsState(initial = "")
 
-    AnimatedVisibility(visible = otpSent) {
+    AnimatedVisibility(
+        visible = otpSent,
+    ) {
         Column {
             SizedBox(height = 20)
             Text(
@@ -89,7 +91,7 @@ fun OTPComposable(
                     )
                 },
                 colors = TextFieldDefaults.textFieldColors(
-                    unfocusedIndicatorColor = Color.Gray
+                    unfocusedIndicatorColor = Color.LightGray
                 ),
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Number,

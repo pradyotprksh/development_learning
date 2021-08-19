@@ -26,8 +26,6 @@ package com.project.pradyotprakash.whatsappcompose.modules.home.viewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.project.pradyotprakash.whatsappcompose.models.User
-import com.project.pradyotprakash.whatsappcompose.utils.Constants
 import com.project.pradyotprakash.whatsappcompose.utils.Constants.chat
 
 /**
@@ -35,12 +33,6 @@ import com.project.pradyotprakash.whatsappcompose.utils.Constants.chat
  * ui state as per the requirement.
  */
 class HomeViewModel : ViewModel() {
-    /**
-     * Current user details
-     */
-    private val _userDetails = MutableLiveData(User())
-    val userDetails: LiveData<User> = _userDetails
-
     /**
      * Message to be shown to the user.
      */

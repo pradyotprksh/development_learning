@@ -258,7 +258,7 @@ class AuthenticationViewModel : ViewModel() {
 
                 override fun isFalse() {
                     userDetails.accountCreatedOn = Utility.currentTimeStamp()
-                    userDetails.profilePic = defaultPic
+                    userDetails.profilePic = defaultPic.shuffled().first()
                     updateUserDetails(userDetails, home, formFill, true)
                 }
 

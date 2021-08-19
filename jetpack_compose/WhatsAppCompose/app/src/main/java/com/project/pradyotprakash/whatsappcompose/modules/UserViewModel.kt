@@ -1,4 +1,4 @@
-package com.project.pradyotprakash.whatsappcompose.modules.profile.viewModel
+package com.project.pradyotprakash.whatsappcompose.modules
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -6,13 +6,13 @@ import androidx.lifecycle.ViewModel
 import com.project.pradyotprakash.whatsappcompose.models.User
 import com.project.pradyotprakash.whatsappcompose.utils.FirestoreCallbacks
 import com.project.pradyotprakash.whatsappcompose.utils.FirestoreUtility
-import com.project.pradyotprakash.whatsappcompose.utils.Utility
 
 /**
- * A view model for the ProfileView which will do all the business logic and update the
- * ui state as per the requirement.
+ * A view model which will handel all the user related business logic
  */
-class ProfileViewModel : ViewModel() {
+class UserViewModel : ViewModel() {
+    private val firestoreUtility: FirestoreUtility = FirestoreUtility()
+
     /**
      * Message to be shown to the user.
      */
@@ -42,4 +42,39 @@ class ProfileViewModel : ViewModel() {
      */
     private val _loading = MutableLiveData(false)
     val loading: LiveData<Boolean> = _loading
+
+    /**
+     * Current user details
+     */
+    private val _userDetails = MutableLiveData(User())
+    val userDetails: LiveData<User> = _userDetails
+
+    /**
+     * Get user details
+     */
+    fun getUserDetails() {
+        _loading.value = true
+        firestoreUtility.userDetailsListener(
+            callbacks = object : FirestoreCallbacks {
+                override fun isTrue() {
+                    _loading.value = false
+                }
+
+                override fun isFalse() {
+                    _loading.value = false
+                }
+
+                override fun userDetails(user: User) {
+                    _loading.value = false
+                    _userDetails.value = user
+                }
+
+                override fun onError(message: String) {
+                    _loading.value = false
+                    _showMessage.value = true
+                    _message.value = message
+                }
+            }
+        )
+    }
 }

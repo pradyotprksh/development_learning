@@ -8,6 +8,7 @@
     <string name="okay">Okay</string>
     <string name="insert_phone_number">Insert your phone number to continue</string>
     <string name="image_description">In-App Images</string>
+    <string name="image_description_network">Network Images</string>
     <string name="phone_helper">98XXXXXX334XX</string>
     <string name="continue_button">Continue</string>
     <string name="verify">Verify</string>
@@ -31,4 +32,7 @@
     <string name="email_empty">Please provide an email address</string>
     <string name="status_empty">Please provide a status</string>
     <string name="search">Search</string>
+    <string name="my_status">My Status</string>
+    <string name="tap_for_status">Tap to add a status update</string>
+    <string name="save">Save</string>
 </resources>
