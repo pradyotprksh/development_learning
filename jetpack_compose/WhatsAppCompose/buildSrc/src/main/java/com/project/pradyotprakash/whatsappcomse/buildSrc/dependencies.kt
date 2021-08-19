@@ -59,5 +59,6 @@ object Libs {
 
     object ThirdParty {
         const val countryCodePicker = "com.sinaukoding:cccp:1.0.0"
+        const val coil = "io.coil-kt:coil-compose:1.3.2"
     }
 }

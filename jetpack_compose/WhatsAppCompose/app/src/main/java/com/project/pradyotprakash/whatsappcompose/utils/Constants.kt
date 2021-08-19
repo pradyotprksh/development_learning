@@ -29,4 +29,7 @@ package com.project.pradyotprakash.whatsappcompose.utils
 object Constants {
     const val application = "TestingDebug"
     const val defaultPic = "https://firebasestorage.googleapis.com/v0/b/whatsappcompose.appspot.com/o/users%2Fprofile_picture%2Fdefault_pic.png?alt=media&token=946d0bac-6001-47f1-adde-887e0e2545e4"
+    const val chat = "Chat"
+    const val search = "Search"
+    const val status = "Status"
 }

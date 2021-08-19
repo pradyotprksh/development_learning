@@ -27,6 +27,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.project.pradyotprakash.whatsappcompose.models.User
+import com.project.pradyotprakash.whatsappcompose.utils.Constants
+import com.project.pradyotprakash.whatsappcompose.utils.Constants.chat
 
 /**
  * A view model for the HomeView which will do all the business logic and update the
@@ -68,4 +70,17 @@ class HomeViewModel : ViewModel() {
      */
     private val _loading = MutableLiveData(false)
     val loading: LiveData<Boolean> = _loading
+
+    /**
+     * Current app bar title.
+     */
+    private val _appBarTitle = MutableLiveData(chat)
+    val appBarTitle: LiveData<String> = _appBarTitle
+
+    /**
+     * Update the value of the app bar title
+     */
+    fun updateTitle(value: String) {
+        _appBarTitle.value = value
+    }
 }

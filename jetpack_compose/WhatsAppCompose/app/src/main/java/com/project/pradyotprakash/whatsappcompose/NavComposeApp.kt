@@ -32,11 +32,13 @@ import androidx.navigation.compose.rememberNavController
 import com.project.pradyotprakash.whatsappcompose.modules.authentication.view.AuthenticationView
 import com.project.pradyotprakash.whatsappcompose.modules.formFill.view.FormFillView
 import com.project.pradyotprakash.whatsappcompose.modules.home.view.HomeView
+import com.project.pradyotprakash.whatsappcompose.modules.profile.view.ProfileView
 import com.project.pradyotprakash.whatsappcompose.modules.splash.view.SplashView
 import com.project.pradyotprakash.whatsappcompose.nav.Action
 import com.project.pradyotprakash.whatsappcompose.nav.Destination.Authentication
 import com.project.pradyotprakash.whatsappcompose.nav.Destination.FormFill
 import com.project.pradyotprakash.whatsappcompose.nav.Destination.Home
+import com.project.pradyotprakash.whatsappcompose.nav.Destination.Profile
 import com.project.pradyotprakash.whatsappcompose.nav.Destination.Splash
 import com.project.pradyotprakash.whatsappcompose.ui.theme.WhatsAppComposeTheme
 
@@ -67,10 +69,17 @@ fun NavComposeApp() {
                 )
             }
             composable(Home) {
-                HomeView()
+                HomeView(
+                    profile = actions.profile
+                )
             }
             composable(FormFill) {
                 FormFillView(home = actions.home)
+            }
+            composable(Profile) {
+                ProfileView(
+                    back = actions.navigateBack
+                )
             }
         }
     }

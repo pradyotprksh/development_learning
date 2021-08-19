@@ -263,7 +263,12 @@ class AuthenticationViewModel : ViewModel() {
                 }
 
                 override fun userDetails(user: User) {
-                    updateUserDetails(userDetails, home, formFill, user.isDetailsAdded)
+                    user.lastLoggedIn = Utility.currentTimeStamp()
+                    user.appVersion = Utility.applicationVersion()
+                    user.deviceId = Utility.getDeviceId()
+                    user.deviceModel = Utility.deviceModel()
+                    user.deviceOs = Utility.systemOS()
+                    updateUserDetails(user, home, formFill, user.isDetailsAdded)
                 }
 
                 override fun onError(message: String) {
@@ -278,7 +283,12 @@ class AuthenticationViewModel : ViewModel() {
     /**
      * Update user details
      */
-    private fun updateUserDetails(userDetails: User, home: () -> Unit, formFill: () -> Unit, isNewUser: Boolean) {
+    private fun updateUserDetails(
+        userDetails: User,
+        home: () -> Unit,
+        formFill: () -> Unit,
+        isNewUser: Boolean
+    ) {
         firestoreUtility.setUserDetails(
             data = userDetails,
             callbacks = object : FirestoreCallbacks {

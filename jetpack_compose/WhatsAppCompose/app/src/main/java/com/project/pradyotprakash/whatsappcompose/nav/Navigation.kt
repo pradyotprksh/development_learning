@@ -27,6 +27,7 @@ import androidx.navigation.NavHostController
 import com.project.pradyotprakash.whatsappcompose.nav.Destination.Authentication
 import com.project.pradyotprakash.whatsappcompose.nav.Destination.FormFill
 import com.project.pradyotprakash.whatsappcompose.nav.Destination.Home
+import com.project.pradyotprakash.whatsappcompose.nav.Destination.Profile
 import com.project.pradyotprakash.whatsappcompose.nav.Destination.Splash
 
 /**
@@ -37,6 +38,10 @@ object Destination {
     const val Authentication = "authentication"
     const val Home = "home"
     const val FormFill = "formFill"
+    const val Profile = "profile"
+    const val Chat = "chat"
+    const val Search = "search"
+    const val Status = "status"
 }
 
 /**
@@ -62,5 +67,6 @@ class Action(navController: NavHostController) {
             popUpTo(Authentication)
         }
     }
+    val profile: () -> Unit = { navController.navigate(Profile) }
     val navigateBack: () -> Unit = { navController.popBackStack() }
 }

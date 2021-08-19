@@ -92,6 +92,7 @@ dependencies {
     implementation Libs.Firebase.storage
 
     implementation Libs.ThirdParty.countryCodePicker
+    implementation Libs.ThirdParty.coil
 
     testImplementation Libs.junit
 }

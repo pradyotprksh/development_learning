@@ -30,4 +30,5 @@
     <string name="username_empty">Please provide a username</string>
     <string name="email_empty">Please provide an email address</string>
     <string name="status_empty">Please provide a status</string>
+    <string name="search">Search</string>
 </resources>
