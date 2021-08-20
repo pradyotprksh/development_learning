@@ -152,10 +152,6 @@ class FormFillViewModel : ViewModel() {
 
         firestoreUtility.checksForUserDetails(
             callbacks = object : FirestoreCallbacks {
-                override fun isTrue() {
-                    _loading.value = false
-                }
-
                 override fun isFalse() {
                     _loading.value = false
                     _showMessage.value = true
@@ -189,16 +185,6 @@ class FormFillViewModel : ViewModel() {
             data = user,
             callbacks = object : FirestoreCallbacks {
                 override fun isTrue() {
-                    _loading.value = false
-                    home()
-                }
-
-                override fun isFalse() {
-                    _loading.value = false
-                    home()
-                }
-
-                override fun userDetails(user: User) {
                     _loading.value = false
                     home()
                 }

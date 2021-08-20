@@ -21,44 +21,56 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
 */
-package com.project.pradyotprakash.whatsappcompose.modules.status.view.composables
+package com.project.pradyotprakash.whatsappcompose.ui.composables
 
-import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import coil.compose.rememberImagePainter
-import coil.transform.RoundedCornersTransformation
-import com.project.pradyotprakash.whatsappcompose.R
 
 /**
- * A composable which will be used to show the user profile image in a rectangle format.
- * With rounded boreder.
+ * A testing composable to check ui before adding it to the main ui
  */
 
 @Composable
-fun ProfileImage(url: String) {
-    Image(
-        painter = rememberImagePainter(
-            data = url,
-            builder = {
-                crossfade(true)
-                transformations(
-                    RoundedCornersTransformation(
-                        topLeft = 20f,
-                        topRight = 20f,
-                        bottomLeft = 20f,
-                        bottomRight = 20f
-                    )
-                )
-            }
-        ),
-        contentDescription = stringResource(id = R.string.image_description_network),
-        modifier = Modifier
-            .size(50.dp),
-        contentScale = ContentScale.Crop
-    )
+fun Stack() {
+    Box(
+        contentAlignment = Alignment.TopStart
+    ) {
+        Box(
+            modifier = Modifier
+                .size(150.dp)
+                .clip(RoundedCornerShape(10.dp))
+                .background(Color.White)
+                .padding(top = 10.dp)
+        )
+        Box(
+            modifier = Modifier
+                .size(145.dp)
+                .clip(RoundedCornerShape(10.dp))
+                .background(Color.Black)
+                .padding(top = 5.dp)
+        )
+        Box(
+            modifier = Modifier
+                .size(140.dp)
+                .clip(RoundedCornerShape(10.dp))
+                .background(Color.Blue)
+                .padding(top = 0.dp)
+        )
+    }
+}
+
+@Preview(showBackground = false)
+@Composable
+fun StackPreview() {
+    Stack()
 }

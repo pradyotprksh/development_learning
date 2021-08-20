@@ -26,12 +26,17 @@ package com.project.pradyotprakash.whatsappcompose.modules.search.viewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.project.pradyotprakash.whatsappcompose.models.User
+import com.project.pradyotprakash.whatsappcompose.utils.FirestoreCallbacks
+import com.project.pradyotprakash.whatsappcompose.utils.FirestoreUtility
 
 /**
  * A view model for the SearchView which will do all the business logic and update the
  * ui state as per the requirement.
  */
 class SearchViewModel : ViewModel() {
+    private val firebaseUtility: FirestoreUtility = FirestoreUtility()
+
     /**
      * Message to be shown to the user.
      */
@@ -61,4 +66,23 @@ class SearchViewModel : ViewModel() {
      */
     private val _loading = MutableLiveData(false)
     val loading: LiveData<Boolean> = _loading
+
+    /**
+     * Get user list
+     */
+    fun getUsers() {
+        firebaseUtility.allUsers(
+            callbacks = object : FirestoreCallbacks {
+                override fun userList(users: List<User>) {
+
+                }
+
+                override fun onError(message: String) {
+                    _loading.value = false
+                    _showMessage.value = true
+                    _message.value = message
+                }
+            }
+        )
+    }
 }

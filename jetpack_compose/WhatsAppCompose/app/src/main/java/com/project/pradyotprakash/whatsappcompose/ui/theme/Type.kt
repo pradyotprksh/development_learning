@@ -111,6 +111,12 @@ val white20Bold = TextStyle(
     fontWeight = FontWeight.Bold,
 )
 
+val white20Bold60 = TextStyle(
+    color = Color.White.copy(alpha = 0.6f),
+    fontSize = 20.sp,
+    fontWeight = FontWeight.Bold,
+)
+
 val link15 = TextStyle(
     color = Color.Blue,
     fontSize = 20.sp,
@@ -119,4 +125,10 @@ val link15 = TextStyle(
 val lightGray15 = TextStyle(
     color = Color.LightGray,
     fontSize = 15.sp,
+)
+
+val red30Bold = TextStyle(
+    color = Color.Red,
+    fontSize = 30.sp,
+    fontWeight = FontWeight.Bold
 )

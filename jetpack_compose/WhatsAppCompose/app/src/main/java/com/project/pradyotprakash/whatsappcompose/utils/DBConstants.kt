@@ -32,5 +32,14 @@ object DBConstants {
      */
     object Collection {
         const val users = "users"
+        const val status = "status"
+    }
+
+    /**
+     * Document field
+     */
+    object DocumentField {
+        const val createdBy = "createdBy"
+        const val name = "name"
     }
 }

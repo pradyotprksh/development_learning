@@ -23,6 +23,8 @@
 */
 package com.project.pradyotprakash.whatsappcompose.models
 
+import com.google.firebase.firestore.DocumentReference
+
 /**
  * User details
  */
@@ -44,4 +46,29 @@ data class User(
     var countryName: String = "",
     var isDetailsAdded: Boolean = false,
     var emailId: String = ""
+)
+
+/**
+ * Status details
+ */
+data class Status(
+    var statusMessage: String = "",
+    var createdBy: DocumentReference? = null,
+    var appVersion: String = "",
+    var deviceId: String = "",
+    var deviceModel: String = "",
+    var deviceOs: String = "",
+    var createdOn: Long = 0,
+    var userName: String = "",
+    var userProfilePic: String = "",
+)
+
+/**
+ * Status division
+ */
+data class StatusDivision(
+    var userName: String = "",
+    var userProfilePic: String = "",
+    var createdBy: DocumentReference? = null,
+    var status: MutableList<Status> = mutableListOf()
 )

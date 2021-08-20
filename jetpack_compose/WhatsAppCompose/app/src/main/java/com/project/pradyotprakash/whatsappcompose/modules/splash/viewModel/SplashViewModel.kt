@@ -48,10 +48,6 @@ class SplashViewModel : ViewModel() {
         if (firestoreUtility.firebaseAuth.currentUser != null) {
             firestoreUtility.checksForUserDetails(
                 callbacks = object : FirestoreCallbacks {
-                    override fun isTrue() {
-                        home()
-                    }
-
                     override fun isFalse() {
                         home()
                     }
@@ -89,14 +85,6 @@ class SplashViewModel : ViewModel() {
             data = user,
             callbacks = object : FirestoreCallbacks {
                 override fun isTrue() {
-                    navigateTo(home, formFill, isUserDetailsAdded)
-                }
-
-                override fun isFalse() {
-                    navigateTo(home, formFill, isUserDetailsAdded)
-                }
-
-                override fun userDetails(user: User) {
                     navigateTo(home, formFill, isUserDetailsAdded)
                 }
 

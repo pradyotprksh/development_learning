@@ -93,6 +93,7 @@ dependencies {
 
     implementation Libs.ThirdParty.countryCodePicker
     implementation Libs.ThirdParty.coil
+    implementation Libs.ThirdParty.timeAgo
 
     testImplementation Libs.junit
 }

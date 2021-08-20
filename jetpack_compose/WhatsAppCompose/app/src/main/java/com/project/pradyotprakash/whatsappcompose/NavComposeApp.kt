@@ -24,6 +24,7 @@
 package com.project.pradyotprakash.whatsappcompose
 
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -46,6 +47,7 @@ import com.project.pradyotprakash.whatsappcompose.ui.theme.WhatsAppComposeTheme
 /**
  * The main Navigation composable which will handle all the navigation stack.
  */
+@ExperimentalFoundationApi
 @ExperimentalMaterialApi
 @ExperimentalAnimationApi
 @Composable
@@ -80,7 +82,8 @@ fun NavComposeApp() {
             }
             composable(Profile) {
                 ProfileView(
-                    back = actions.navigateBack
+                    back = actions.navigateBack,
+                    splash = actions.splash
                 )
             }
         }

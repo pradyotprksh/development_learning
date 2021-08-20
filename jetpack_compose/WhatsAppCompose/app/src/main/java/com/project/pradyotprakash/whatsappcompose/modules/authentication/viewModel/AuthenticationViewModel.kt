@@ -147,7 +147,7 @@ class AuthenticationViewModel : ViewModel() {
         if (loading.value == true) return
         try {
             startOTPVerification(currentActivity, home, formFill)
-        } catch (exception: IllegalArgumentException) {
+        } catch (exception: Exception) {
             _loading.value = false
             _showMessage.value = true
             _message.value = exception.localizedMessage ?: ""
@@ -252,10 +252,6 @@ class AuthenticationViewModel : ViewModel() {
     private fun checkForUserDetails(userDetails: User, home: () -> Unit, formFill: () -> Unit) {
         firestoreUtility.checksForUserDetails(
             callbacks = object : FirestoreCallbacks {
-                override fun isTrue() {
-                    updateUserDetails(userDetails, home, formFill, false)
-                }
-
                 override fun isFalse() {
                     userDetails.accountCreatedOn = Utility.currentTimeStamp()
                     userDetails.profilePic = defaultPic.shuffled().first()
@@ -299,14 +295,6 @@ class AuthenticationViewModel : ViewModel() {
                     } else {
                         home()
                     }
-                }
-
-                override fun isFalse() {
-                    _loading.value = false
-                }
-
-                override fun userDetails(user: User) {
-                    _loading.value = false
                 }
 
                 override fun onError(message: String) {

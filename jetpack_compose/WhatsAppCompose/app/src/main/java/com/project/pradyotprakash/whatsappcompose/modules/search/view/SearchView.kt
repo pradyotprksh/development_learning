@@ -84,6 +84,8 @@ fun SearchView(searchViewModel: SearchViewModel = viewModel()) {
         showSnackbar()
     }
 
+    searchViewModel.getUsers()
+
     WhatsAppComposeTheme {
         Surface(color = MaterialTheme.colors.background) {
             Scaffold(

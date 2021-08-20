@@ -56,7 +56,11 @@ fun SplashView(
     formFill: () -> Unit,
     splashViewModel: SplashViewModel = viewModel()
 ) {
-    splashViewModel.checkIfUserLoggedIn(home = home, authentication = authentication, formFill = formFill)
+    splashViewModel.checkIfUserLoggedIn(
+        home = home,
+        authentication = authentication,
+        formFill = formFill
+    )
 
     WhatsAppComposeTheme {
         Surface(color = Action) {

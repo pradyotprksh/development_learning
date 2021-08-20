@@ -24,6 +24,7 @@
 package com.project.pradyotprakash.whatsappcompose.modules.home.view.composables
 
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
@@ -39,6 +40,7 @@ import com.project.pradyotprakash.whatsappcompose.modules.status.view.StatusView
  * bar.
  */
 
+@ExperimentalFoundationApi
 @ExperimentalMaterialApi
 @ExperimentalAnimationApi
 @Composable

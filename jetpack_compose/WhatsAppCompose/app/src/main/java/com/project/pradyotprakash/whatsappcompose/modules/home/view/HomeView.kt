@@ -24,6 +24,7 @@
 package com.project.pradyotprakash.whatsappcompose.modules.home.view
 
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.ExperimentalMaterialApi
@@ -57,6 +58,7 @@ import kotlinx.coroutines.launch
  * A home view which will be used to show all the main features of the application to
  * an authenticated user.
  */
+@ExperimentalFoundationApi
 @ExperimentalMaterialApi
 @ExperimentalAnimationApi
 @Composable

@@ -25,6 +25,7 @@ package com.project.pradyotprakash.whatsappcompose.utils
 
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.PhoneAuthProvider
+import com.project.pradyotprakash.whatsappcompose.models.Status
 import com.project.pradyotprakash.whatsappcompose.models.User
 
 /**
@@ -83,20 +84,30 @@ interface FirestoreCallbacks {
     /**
      * Will be called if it's true for what we are looking for
      */
-    fun isTrue()
+    fun isTrue() {}
 
     /**
      * Will be called if it's false for what we are looking for
      */
-    fun isFalse()
+    fun isFalse() {}
 
     /**
      * Get user data
      */
-    fun userDetails(user: User)
+    fun userDetails(user: User) {}
 
     /**
      * Get the error message
      */
-    fun onError(message: String)
+    fun onError(message: String) {}
+
+    /**
+     * Status in the data base
+     */
+    fun status(newStatus: List<Status>) {}
+
+    /**
+     * User list
+     */
+    fun userList(users: List<User>) {}
 }

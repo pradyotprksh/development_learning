@@ -2,6 +2,7 @@
     <string name="app_name">WhatsAppCompose</string>
     <string name="welcome_to">Welcome to</string>
     <string name="phone_number_empty">Please provide a valid phone number</string>
+    <string name="user_status_empty">Please provide a valid status message</string>
     <string name="country_code_empty">Please select a country code</string>
     <string name="something_went_wrong">Oops!! Something went wrong. Please try again.</string>
     <string name="otp_empty">Please enter the OTP sent to </string>
@@ -35,4 +36,7 @@
     <string name="my_status">My Status</string>
     <string name="tap_for_status">Tap to add a status update</string>
     <string name="save">Save</string>
+    <string name="what_is_mind">What\'s in your mind? Share with everyone.</string>
+    <string name="recent_status">Recent Status</string>
+    <string name="logout">Sign Out</string>
 </resources>

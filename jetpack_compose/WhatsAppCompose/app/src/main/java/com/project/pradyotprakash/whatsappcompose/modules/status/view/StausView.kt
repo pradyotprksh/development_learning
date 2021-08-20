@@ -24,29 +24,24 @@
 package com.project.pradyotprakash.whatsappcompose.modules.status.view
 
 import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.GridCells
+import androidx.compose.foundation.lazy.LazyVerticalGrid
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.BottomSheetScaffold
 import androidx.compose.material.BottomSheetState
 import androidx.compose.material.BottomSheetValue
 import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.SnackbarHostState
 import androidx.compose.material.SnackbarResult
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
-import androidx.compose.material.TextButton
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.rememberBottomSheetScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -58,20 +53,18 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.project.pradyotprakash.whatsappcompose.R
+import com.project.pradyotprakash.whatsappcompose.models.StatusDivision
 import com.project.pradyotprakash.whatsappcompose.models.User
 import com.project.pradyotprakash.whatsappcompose.modules.UserViewModel
-import com.project.pradyotprakash.whatsappcompose.modules.status.view.composables.ProfileImage
+import com.project.pradyotprakash.whatsappcompose.modules.status.view.composables.CreateStatus
+import com.project.pradyotprakash.whatsappcompose.modules.status.view.composables.SingleStatus
+import com.project.pradyotprakash.whatsappcompose.modules.status.view.composables.StatusSheet
 import com.project.pradyotprakash.whatsappcompose.modules.status.viewModel.StatusViewModel
-import com.project.pradyotprakash.whatsappcompose.ui.composables.BackButton
 import com.project.pradyotprakash.whatsappcompose.ui.composables.CircularIndicatorMessage
 import com.project.pradyotprakash.whatsappcompose.ui.composables.SizedBox
 import com.project.pradyotprakash.whatsappcompose.ui.composables.Snackbar
-import com.project.pradyotprakash.whatsappcompose.ui.theme.Action
-import com.project.pradyotprakash.whatsappcompose.ui.theme.Notification
 import com.project.pradyotprakash.whatsappcompose.ui.theme.WhatsAppComposeTheme
 import com.project.pradyotprakash.whatsappcompose.ui.theme.black20Bold
-import com.project.pradyotprakash.whatsappcompose.ui.theme.lightGray15
-import com.project.pradyotprakash.whatsappcompose.ui.theme.white20Bold
 import com.project.pradyotprakash.whatsappcompose.utils.Utility
 import kotlinx.coroutines.launch
 
@@ -79,6 +72,7 @@ import kotlinx.coroutines.launch
  * A chat view which will allow user to see their status which they have uploaded till now.
  */
 
+@ExperimentalFoundationApi
 @ExperimentalMaterialApi
 @ExperimentalAnimationApi
 @Composable
@@ -92,11 +86,10 @@ fun StatusView(
         bottomSheetState = BottomSheetState(BottomSheetValue.Collapsed)
     )
 
-    var gotUserDetails = false
-
     val loading: Boolean by statusViewModel.loading.observeAsState(initial = false)
     val showMessage: Boolean by statusViewModel.showMessage.observeAsState(initial = false)
     val message: String by statusViewModel.message.observeAsState(initial = "")
+    val allStatus: List<StatusDivision> by statusViewModel.allStatus.observeAsState(initial = emptyList())
 
     /**
      * States from user view model
@@ -106,9 +99,10 @@ fun StatusView(
     val messageUser: String by userViewModel.message.observeAsState(initial = "")
     val userDetails: User by userViewModel.userDetails.observeAsState(initial = User())
 
-    if (!gotUserDetails) {
+    if (!statusViewModel.firstCallDone) {
         userViewModel.getUserDetails()
-        true.also { gotUserDetails = it }
+        statusViewModel.getStatus()
+        statusViewModel.firstCallDone = true
     }
 
     /**
@@ -128,7 +122,6 @@ fun StatusView(
             }
         }
     }
-
     if (showMessage) {
         Utility.showMessage(message = message)
         showSnackbar(message)
@@ -144,41 +137,10 @@ fun StatusView(
                 modifier = Modifier.fillMaxSize(),
                 scaffoldState = bottomSheetScaffoldState,
                 sheetContent = {
-                    Surface(
-                        color = Notification,
-                        modifier = Modifier.fillMaxSize()
-                    ) {
-                        Column(
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .padding(15.dp),
-                            verticalArrangement = Arrangement.SpaceBetween
-                        ) {
-                            Row(
-                                verticalAlignment = Alignment.CenterVertically,
-                                horizontalArrangement = Arrangement.SpaceBetween,
-                                modifier = Modifier.fillMaxWidth()
-                            ) {
-                                BackButton(
-                                    back = {
-                                        coroutineScope.launch {
-                                            bottomSheetScaffoldState.bottomSheetState.collapse()
-                                        }
-                                    },
-                                    icon = Icons.Filled.Close,
-                                    topSpace = 15
-                                )
-                                TextButton(
-                                    onClick = {}
-                                ) {
-                                    Text(
-                                        text = stringResource(id = R.string.save),
-                                        style = white20Bold
-                                    )
-                                }
-                            }
-                        }
-                    }
+                    StatusSheet(
+                        bottomSheetScaffoldState = bottomSheetScaffoldState,
+                        userDetails = userDetails
+                    )
                 }
             ) {
                 Box(
@@ -195,32 +157,22 @@ fun StatusView(
                             style = black20Bold
                         )
                         SizedBox(height = 15)
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .clickable {
-                                    coroutineScope.launch {
-                                        if (bottomSheetScaffoldState.bottomSheetState.isCollapsed) {
-                                            bottomSheetScaffoldState.bottomSheetState.expand()
-                                        } else {
-                                            bottomSheetScaffoldState.bottomSheetState.collapse()
-                                        }
-                                    }
-                                },
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.SpaceBetween
+                        CreateStatus(
+                            coroutineScope = coroutineScope,
+                            bottomSheetScaffoldState = bottomSheetScaffoldState,
+                            userDetails = userDetails
+                        )
+                        SizedBox(height = 15)
+                        Text(
+                            text = stringResource(id = R.string.recent_status),
+                            style = black20Bold
+                        )
+                        SizedBox(height = 15)
+                        LazyVerticalGrid(
+                            cells = GridCells.Fixed(2),
+                            contentPadding = PaddingValues(bottom = 50.dp)
                         ) {
-                            ProfileImage(url = userDetails.profilePic)
-                            Text(
-                                text = stringResource(id = R.string.tap_for_status),
-                                style = lightGray15
-                            )
-                            Icon(
-                                Icons.Filled.Edit,
-                                contentDescription = stringResource(id = R.string.image_description),
-                                modifier = Modifier.size(25.dp),
-                                tint = Action
-                            )
+                            items(allStatus) { SingleStatus(singleStatus = it) }
                         }
                     }
                     if (loading || loadingUser) {

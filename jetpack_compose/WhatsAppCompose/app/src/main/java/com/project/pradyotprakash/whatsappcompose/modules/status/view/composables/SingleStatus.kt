@@ -24,41 +24,57 @@
 package com.project.pradyotprakash.whatsappcompose.modules.status.view.composables
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Card
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberImagePainter
-import coil.transform.RoundedCornersTransformation
 import com.project.pradyotprakash.whatsappcompose.R
+import com.project.pradyotprakash.whatsappcompose.models.StatusDivision
+import com.project.pradyotprakash.whatsappcompose.ui.composables.SizedBox
+import com.project.pradyotprakash.whatsappcompose.ui.theme.Action
 
 /**
- * A composable which will be used to show the user profile image in a rectangle format.
- * With rounded boreder.
+ * A single status composable which show details.
  */
 
 @Composable
-fun ProfileImage(url: String) {
-    Image(
-        painter = rememberImagePainter(
-            data = url,
-            builder = {
-                crossfade(true)
-                transformations(
-                    RoundedCornersTransformation(
-                        topLeft = 20f,
-                        topRight = 20f,
-                        bottomLeft = 20f,
-                        bottomRight = 20f
-                    )
-                )
-            }
-        ),
-        contentDescription = stringResource(id = R.string.image_description_network),
+fun SingleStatus(
+    singleStatus: StatusDivision,
+) {
+    Column(
         modifier = Modifier
-            .size(50.dp),
-        contentScale = ContentScale.Crop
-    )
+            .padding(10.dp)
+            .fillMaxWidth()
+            .height(150.dp),
+    ) {
+        Card(
+            shape = RoundedCornerShape(15.dp),
+            backgroundColor = Action,
+            elevation = 4.dp,
+        ) {
+            Image(
+                painter = rememberImagePainter(
+                    data = singleStatus.userProfilePic,
+                    builder = {
+                        crossfade(true)
+                    }
+                ),
+                contentDescription = stringResource(id = R.string.image_description_network),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(142.dp),
+                contentScale = ContentScale.Crop
+            )
+        }
+        SizedBox(height = 5)
+        Indicator(length = singleStatus.status.size)
+    }
 }

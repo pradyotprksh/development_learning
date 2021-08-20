@@ -23,42 +23,44 @@
 */
 package com.project.pradyotprakash.whatsappcompose.modules.status.view.composables
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
-import coil.compose.rememberImagePainter
-import coil.transform.RoundedCornersTransformation
-import com.project.pradyotprakash.whatsappcompose.R
+import com.project.pradyotprakash.whatsappcompose.ui.composables.SizedBox
+import com.project.pradyotprakash.whatsappcompose.ui.theme.Notification
 
 /**
- * A composable which will be used to show the user profile image in a rectangle format.
- * With rounded boreder.
+ * A composable which generates a indicator with [length]
  */
 
 @Composable
-fun ProfileImage(url: String) {
-    Image(
-        painter = rememberImagePainter(
-            data = url,
-            builder = {
-                crossfade(true)
-                transformations(
-                    RoundedCornersTransformation(
-                        topLeft = 20f,
-                        topRight = 20f,
-                        bottomLeft = 20f,
-                        bottomRight = 20f
-                    )
-                )
-            }
-        ),
-        contentDescription = stringResource(id = R.string.image_description_network),
+fun Indicator(length: Int) {
+    Row(
+        horizontalArrangement = Arrangement.SpaceEvenly,
         modifier = Modifier
-            .size(50.dp),
-        contentScale = ContentScale.Crop
-    )
+            .fillMaxWidth()
+            .height(3.dp)
+    ) {
+        for (i in 0 until length) {
+            Box(
+                modifier = Modifier
+                    .clip(RoundedCornerShape(10.dp))
+                    .weight(1f)
+                    .background(Notification)
+                    .padding(top = 10.dp)
+            )
+            if (i != length - 1) {
+                SizedBox(width = 5)
+            }
+        }
+    }
 }

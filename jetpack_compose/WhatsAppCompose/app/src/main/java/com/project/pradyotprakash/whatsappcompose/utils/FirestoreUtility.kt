@@ -24,10 +24,13 @@
 package com.project.pradyotprakash.whatsappcompose.utils
 
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.SetOptions
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
+import com.project.pradyotprakash.whatsappcompose.models.Status
 import com.project.pradyotprakash.whatsappcompose.models.User
 
 /**
@@ -104,6 +107,76 @@ class FirestoreUtility {
                     } else {
                         callbacks.onError("")
                     }
+                } else {
+                    callbacks.onError("")
+                }
+            }
+    }
+
+    /**
+     * Create a status by the current user
+     */
+    fun createStatus(status: Status, callbacks: FirestoreCallbacks) {
+        db.collection(DBConstants.Collection.status).document().set(status)
+            .addOnCompleteListener { task ->
+                if (task.exception != null) {
+                    callbacks.onError(task.exception?.localizedMessage ?: "")
+                    return@addOnCompleteListener
+                }
+                callbacks.isTrue()
+            }
+    }
+
+    /**
+     * Get current user reference
+     */
+    fun currentUserReference(): DocumentReference {
+        return db.collection(DBConstants.Collection.users).document(getCurrentUserId())
+    }
+
+    /**
+     * Create a listener for status in the application
+     */
+    fun allStatus(callbacks: FirestoreCallbacks) {
+        db.collection(DBConstants.Collection.status)
+            .orderBy(DBConstants.DocumentField.createdBy, Query.Direction.DESCENDING)
+            .addSnapshotListener { value, e ->
+                if (e != null) {
+                    callbacks.onError(e.localizedMessage ?: "")
+                    return@addSnapshotListener
+                }
+
+                val status = ArrayList<Status>()
+                if (value != null) {
+                    for (doc in value) {
+                        status.add(doc.toObject())
+                    }
+
+                    callbacks.status(newStatus = status)
+                } else {
+                    callbacks.onError("")
+                }
+            }
+    }
+
+    /**
+     * Get all user lists
+     */
+    fun allUsers(callbacks: FirestoreCallbacks) {
+        db.collection(DBConstants.Collection.users).orderBy(DBConstants.DocumentField.name)
+            .addSnapshotListener { value, e ->
+                if (e != null) {
+                    callbacks.onError(e.localizedMessage ?: "")
+                    return@addSnapshotListener
+                }
+
+                val users = ArrayList<User>()
+                if (value != null) {
+                    for (doc in value) {
+                        users.add(doc.toObject())
+                    }
+
+                    callbacks.userList(users = users)
                 } else {
                     callbacks.onError("")
                 }
