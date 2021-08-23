@@ -33,6 +33,8 @@ object DBConstants {
     object Collection {
         const val users = "users"
         const val status = "status"
+        const val chats = "chats"
+        const val messages = "messages"
     }
 
     /**
@@ -41,5 +43,7 @@ object DBConstants {
     object DocumentField {
         const val createdBy = "createdBy"
         const val name = "name"
+        const val userId = "userId"
+        const val lastMessageSentOn = "lastMessageSentOn"
     }
 }

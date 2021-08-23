@@ -30,6 +30,8 @@ import com.google.firebase.firestore.SetOptions
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
+import com.project.pradyotprakash.whatsappcompose.models.ChatDetails
+import com.project.pradyotprakash.whatsappcompose.models.MessageDetails
 import com.project.pradyotprakash.whatsappcompose.models.Status
 import com.project.pradyotprakash.whatsappcompose.models.User
 
@@ -86,8 +88,8 @@ class FirestoreUtility {
     /**
      * Get the current user id from firebase
      */
-    private fun getCurrentUserId(): String {
-        return firebaseAuth.currentUser!!.uid
+    fun getCurrentUserId(): String {
+        return firebaseAuth.currentUser?.uid ?: ""
     }
 
     /**
@@ -160,10 +162,11 @@ class FirestoreUtility {
     }
 
     /**
-     * Get all user lists
+     * Get all user lists except the current user
      */
     fun allUsers(callbacks: FirestoreCallbacks) {
-        db.collection(DBConstants.Collection.users).orderBy(DBConstants.DocumentField.name)
+        db.collection(DBConstants.Collection.users)
+            .whereNotEqualTo(DBConstants.DocumentField.userId, getCurrentUserId())
             .addSnapshotListener { value, e ->
                 if (e != null) {
                     callbacks.onError(e.localizedMessage ?: "")
@@ -176,7 +179,191 @@ class FirestoreUtility {
                         users.add(doc.toObject())
                     }
 
+                    users.sortBy { it.name }
+
                     callbacks.userList(users = users)
+                } else {
+                    callbacks.onError("")
+                }
+            }
+    }
+
+    /**
+     * Check if the chat exists already or not
+     *
+     * [toUserId] will be used to check if any chat ever happened between the current user and the
+     * [toUserId].
+     */
+    fun isChatAvailable(toUserId: String, callbacks: FirestoreCallbacks) {
+        db.collection(DBConstants.Collection.chats).document(getCurrentUserId())
+            .collection(DBConstants.Collection.chats).document(toUserId)
+            .addSnapshotListener { task, e ->
+                if (e != null) {
+                    callbacks.onError(e.localizedMessage ?: "")
+                    return@addSnapshotListener
+                }
+                if (task != null) {
+                    if (task.exists()) {
+                        callbacks.isTrue()
+                        val chatDetails = task.toObject<ChatDetails>()
+                        if (chatDetails != null) {
+                            callbacks.chatDetails(chatDetails = chatDetails)
+                        }
+                    } else {
+                        callbacks.isFalse()
+                    }
+                }
+            }
+    }
+
+    /**
+     * Get user details for the [userId]
+     */
+    fun getUserDetails(userId: String, callbacks: FirestoreCallbacks) {
+        db.collection(DBConstants.Collection.users).document(userId).get()
+            .addOnCompleteListener { task ->
+                if (task.exception != null) {
+                    callbacks.onError(task.exception?.localizedMessage ?: "")
+                    return@addOnCompleteListener
+                }
+                if (task.result.exists()) {
+                    val userDetails = task.result.toObject<User>()
+                    if (userDetails != null) {
+                        callbacks.userDetails(user = userDetails)
+                    } else {
+                        callbacks.onError("")
+                    }
+                } else {
+                    callbacks.onError("")
+                }
+            }
+    }
+
+    /**
+     * Send messages to [toUserId]
+     */
+    fun sendMessage(
+        toUserId: String,
+        chatDetails: ChatDetails,
+        messageDetails: MessageDetails? = null,
+        callbacks: FirestoreCallbacks,
+        isFirstMessage: Boolean = false
+    ) {
+        if (isFirstMessage) {
+            chatDetails.members = listOf(
+                currentUserReference(),
+                db.collection(DBConstants.Collection.users).document(toUserId)
+            )
+        }
+
+        /**
+         * Update current user message option
+         */
+        val currentChatRef =
+            db.collection(DBConstants.Collection.chats).document(getCurrentUserId())
+                .collection(DBConstants.Collection.chats).document(toUserId)
+        val currentMessageRef =
+            db.collection(DBConstants.Collection.chats).document(getCurrentUserId())
+                .collection(DBConstants.Collection.chats).document(toUserId)
+                .collection(DBConstants.Collection.messages).document()
+
+        /**
+         * Update to user message details
+         */
+        val toChatRef = db.collection(DBConstants.Collection.chats).document(toUserId)
+            .collection(DBConstants.Collection.chats).document(getCurrentUserId())
+        val toMessageRef = db.collection(DBConstants.Collection.chats).document(toUserId)
+            .collection(DBConstants.Collection.chats).document(getCurrentUserId())
+            .collection(DBConstants.Collection.messages).document()
+
+        /**
+         * Update the details in batch
+         */
+        db.runBatch {
+            it.set(currentChatRef, chatDetails)
+            it.set(toChatRef, chatDetails)
+
+            if (messageDetails != null) {
+                it.set(currentMessageRef, messageDetails)
+                it.set(toMessageRef, messageDetails)
+            }
+        }.addOnCompleteListener { task ->
+            if (task.exception != null) {
+                callbacks.onError(message = task.exception?.localizedMessage ?: "")
+                return@addOnCompleteListener
+            }
+            if (task.isSuccessful) {
+                callbacks.isTrue()
+            } else {
+                callbacks.onError(message = "")
+            }
+        }
+    }
+
+    /**
+     * Listen to current user message lists
+     */
+    fun currentUserChatList(callbacks: FirestoreCallbacks) {
+        db.collection(DBConstants.Collection.chats).document(getCurrentUserId())
+            .collection(DBConstants.Collection.chats)
+            .orderBy(DBConstants.DocumentField.lastMessageSentOn, Query.Direction.DESCENDING)
+            .addSnapshotListener { value, e ->
+                if (e != null) {
+                    callbacks.onError(e.localizedMessage ?: "")
+                    return@addSnapshotListener
+                }
+                if (value != null) {
+                    val chatList = ArrayList<ChatDetails>()
+                    for (doc in value) {
+                        val chatDetails = doc.toObject<ChatDetails>()
+
+                        // Update the values which will be needed while showing the data
+                        chatDetails.lastMessageSentOnString =
+                            Utility.getTimeAgo(chatDetails.lastMessageSentOn)
+
+                        // If last message was sent by current user
+                        if (chatDetails.lastMessageSentBy != null) {
+                            chatDetails.isLastMessageByCurrentUser =
+                                chatDetails.lastMessageSentBy!!.id == getCurrentUserId()
+                        }
+
+                        // Is last message read
+                        chatDetails.isLastMessageRead =
+                            !chatDetails.isLastMessageRead && !chatDetails.isLastMessageByCurrentUser
+
+                        // Get members details in the list
+                        if (chatDetails.members != null) {
+                            for (member in chatDetails.members!!) {
+                                db.document(chatDetails.lastMessageSentBy!!.path).get()
+                                    .addOnCompleteListener { task ->
+                                        if (task.exception != null) {
+                                            callbacks.onError(
+                                                task.exception?.localizedMessage ?: ""
+                                            )
+                                            return@addOnCompleteListener
+                                        }
+                                        val details = task.result?.toObject<User>()
+
+                                        if (details != null) {
+
+                                            /*
+                                            If current loop user is not same as the current user
+                                            then save the details
+                                             */
+                                            if (member.id != getCurrentUserId()) {
+                                                chatDetails.otherUserDetails = details
+                                            }
+
+                                            chatDetails.membersUser.add(details)
+                                        }
+                                    }
+                            }
+                        }
+
+                        chatList.add(chatDetails)
+                    }
+
+                    callbacks.chatList(chatList = chatList)
                 } else {
                     callbacks.onError("")
                 }

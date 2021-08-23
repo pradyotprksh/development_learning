@@ -23,10 +23,14 @@
 */
 package com.project.pradyotprakash.whatsappcompose.utils
 
+import android.annotation.SuppressLint
 import android.os.Build
 import android.util.Log
+import com.github.marlonlom.utilities.timeago.TimeAgo
 import com.project.pradyotprakash.whatsappcompose.BuildConfig
 import com.project.pradyotprakash.whatsappcompose.utils.Constants.application
+import java.text.SimpleDateFormat
+import java.util.*
 
 /**
  * An utility method which will contain the utility methods, helpful for doing the similar methods
@@ -75,5 +79,12 @@ object Utility {
      */
     fun systemOS(): String {
         return  "${Build.ID} ${Build.VERSION.SDK_INT} ${Build.VERSION.CODENAME}"
+    }
+
+    /**
+     * Convert timestamp to a readable format in time ago
+     */
+    fun getTimeAgo(time: Long): String {
+        return TimeAgo.using(time = time)
     }
 }

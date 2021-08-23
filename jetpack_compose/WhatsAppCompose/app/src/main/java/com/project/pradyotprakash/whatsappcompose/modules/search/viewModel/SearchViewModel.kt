@@ -68,13 +68,19 @@ class SearchViewModel : ViewModel() {
     val loading: LiveData<Boolean> = _loading
 
     /**
+     * List of users
+     */
+    private val _users = MutableLiveData(listOf<User>())
+    val users: LiveData<List<User>> = _users
+
+    /**
      * Get user list
      */
     fun getUsers() {
         firebaseUtility.allUsers(
             callbacks = object : FirestoreCallbacks {
                 override fun userList(users: List<User>) {
-
+                    _users.value = users
                 }
 
                 override fun onError(message: String) {

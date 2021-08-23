@@ -132,3 +132,9 @@ val red30Bold = TextStyle(
     fontSize = 30.sp,
     fontWeight = FontWeight.Bold
 )
+
+val action25Bold = TextStyle(
+    color = Action,
+    fontSize = 25.sp,
+    fontWeight = FontWeight.Bold
+)

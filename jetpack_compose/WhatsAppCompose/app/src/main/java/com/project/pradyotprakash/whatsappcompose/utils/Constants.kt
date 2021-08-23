@@ -39,4 +39,5 @@ object Constants {
     const val chat = "Chat"
     const val search = "Search"
     const val status = "Status"
+    const val userId = "userId"
 }

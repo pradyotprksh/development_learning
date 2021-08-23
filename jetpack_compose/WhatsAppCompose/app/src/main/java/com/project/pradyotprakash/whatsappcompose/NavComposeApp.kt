@@ -32,17 +32,21 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.project.pradyotprakash.whatsappcompose.modules.authentication.view.AuthenticationView
+import com.project.pradyotprakash.whatsappcompose.modules.chatUser.view.ChatViewUser
 import com.project.pradyotprakash.whatsappcompose.modules.formFill.view.FormFillView
 import com.project.pradyotprakash.whatsappcompose.modules.home.view.HomeView
 import com.project.pradyotprakash.whatsappcompose.modules.profile.view.ProfileView
 import com.project.pradyotprakash.whatsappcompose.modules.splash.view.SplashView
 import com.project.pradyotprakash.whatsappcompose.nav.Action
 import com.project.pradyotprakash.whatsappcompose.nav.Destination.Authentication
+import com.project.pradyotprakash.whatsappcompose.nav.Destination.ChatUser
 import com.project.pradyotprakash.whatsappcompose.nav.Destination.FormFill
 import com.project.pradyotprakash.whatsappcompose.nav.Destination.Home
 import com.project.pradyotprakash.whatsappcompose.nav.Destination.Profile
 import com.project.pradyotprakash.whatsappcompose.nav.Destination.Splash
 import com.project.pradyotprakash.whatsappcompose.ui.theme.WhatsAppComposeTheme
+import com.project.pradyotprakash.whatsappcompose.utils.Constants
+import com.project.pradyotprakash.whatsappcompose.utils.Utility
 
 /**
  * The main Navigation composable which will handle all the navigation stack.
@@ -74,7 +78,8 @@ fun NavComposeApp() {
             }
             composable(Home) {
                 HomeView(
-                    profile = actions.profile
+                    profile = actions.profile,
+                    userMessage = actions.chatUser
                 )
             }
             composable(FormFill) {
@@ -84,6 +89,13 @@ fun NavComposeApp() {
                 ProfileView(
                     back = actions.navigateBack,
                     splash = actions.splash
+                )
+            }
+            composable(ChatUser) {
+                val userId = it.arguments?.getString(Constants.userId) ?: ""
+                ChatViewUser(
+                    userId = userId,
+                    back = actions.navigateBack
                 )
             }
         }

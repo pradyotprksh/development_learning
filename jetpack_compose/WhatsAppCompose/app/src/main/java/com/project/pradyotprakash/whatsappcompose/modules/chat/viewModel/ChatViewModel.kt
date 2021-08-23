@@ -26,12 +26,20 @@ package com.project.pradyotprakash.whatsappcompose.modules.chat.viewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.project.pradyotprakash.whatsappcompose.models.ChatDetails
+import com.project.pradyotprakash.whatsappcompose.utils.FirestoreCallbacks
+import com.project.pradyotprakash.whatsappcompose.utils.FirestoreUtility
+import com.project.pradyotprakash.whatsappcompose.utils.Utility
 
 /**
  * A view model for the ChatView which will do all the business logic and update the
  * ui state as per the requirement.
  */
 class ChatViewModel : ViewModel() {
+    private val firestoreUtility: FirestoreUtility = FirestoreUtility()
+
+    var firstCallDone: Boolean = false
+
     /**
      * Message to be shown to the user.
      */
@@ -61,4 +69,29 @@ class ChatViewModel : ViewModel() {
      */
     private val _loading = MutableLiveData(false)
     val loading: LiveData<Boolean> = _loading
+
+    /**
+     * List of chats
+     */
+    private val _chats = MutableLiveData(listOf<ChatDetails>())
+    val chats: LiveData<List<ChatDetails>> = _chats
+
+    /**
+     * Get the list of chat for the current user
+     */
+    fun getChatList() {
+        firestoreUtility.currentUserChatList(
+            callbacks = object : FirestoreCallbacks {
+                override fun onError(message: String) {
+                    _loading.value = false
+                    _showMessage.value = true
+                    _message.value = message
+                }
+
+                override fun chatList(chatList: List<ChatDetails>) {
+                    _chats.value = chatList
+                }
+            }
+        )
+    }
 }

@@ -29,6 +29,7 @@ import com.project.pradyotprakash.whatsappcompose.nav.Destination.FormFill
 import com.project.pradyotprakash.whatsappcompose.nav.Destination.Home
 import com.project.pradyotprakash.whatsappcompose.nav.Destination.Profile
 import com.project.pradyotprakash.whatsappcompose.nav.Destination.Splash
+import com.project.pradyotprakash.whatsappcompose.utils.Constants
 
 /**
  * A set of destination used in the whole application
@@ -42,6 +43,7 @@ object Destination {
     const val Chat = "chat"
     const val Search = "search"
     const val Status = "status"
+    const val ChatUser = "chatUser/{${Constants.userId}}"
 }
 
 /**
@@ -68,5 +70,7 @@ class Action(navController: NavHostController) {
         }
     }
     val profile: () -> Unit = { navController.navigate(Profile) }
+    val chatUser: (userId: String) -> Unit =
+        { userId -> navController.navigate("chatUser/$userId") }
     val navigateBack: () -> Unit = { navController.popBackStack() }
 }

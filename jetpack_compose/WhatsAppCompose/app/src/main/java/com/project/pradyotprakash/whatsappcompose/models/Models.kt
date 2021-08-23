@@ -72,3 +72,33 @@ data class StatusDivision(
     var createdBy: DocumentReference? = null,
     var status: MutableList<Status> = mutableListOf()
 )
+
+/**
+ * Chat details
+ */
+data class ChatDetails(
+    var lastMessage: String = "",
+    var lastMessageSentOn: Long = 0,
+    var lastMessageSentBy: DocumentReference? = null,
+    var chatCreatedOn: Long = 0,
+    var chatCreatedBy: DocumentReference? = null,
+    var isChatFavourite: Boolean = false,
+    var isLastMessageRead: Boolean = false,
+    var members: List<DocumentReference>? = null,
+
+    var lastMessageSentOnString: String = "",
+    var membersUser: ArrayList<User> = ArrayList(),
+    var otherUserDetails: User = User(),
+    var isLastMessageByCurrentUser: Boolean = false
+)
+
+/**
+ * Message details
+ */
+data class MessageDetails(
+    var message: String = "",
+    var sentOn: Long = 0,
+    var sentBy: DocumentReference? = null,
+
+    var sentByUser: User = User(),
+)

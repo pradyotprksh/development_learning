@@ -39,4 +39,7 @@
     <string name="what_is_mind">What\'s in your mind? Share with everyone.</string>
     <string name="recent_status">Recent Status</string>
     <string name="logout">Sign Out</string>
+    <string name="send_hi">Send Hi!! 👋</string>
+    <string name="recents">Recents</string>
+    <string name="you">You:</string>
 </resources>

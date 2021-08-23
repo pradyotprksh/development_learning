@@ -62,7 +62,7 @@ import kotlinx.coroutines.launch
 @ExperimentalMaterialApi
 @ExperimentalAnimationApi
 @Composable
-fun HomeView(profile: () -> Unit, homeViewModel: HomeViewModel = viewModel()) {
+fun HomeView(profile: () -> Unit, userMessage: (String) -> Unit, homeViewModel: HomeViewModel = viewModel()) {
     val coroutineScope = rememberCoroutineScope()
     val snackbarHostState = SnackbarHostState()
     val navController = rememberNavController()
@@ -110,7 +110,7 @@ fun HomeView(profile: () -> Unit, homeViewModel: HomeViewModel = viewModel()) {
                     contentAlignment = Alignment.Center,
                     modifier = Modifier.fillMaxSize()
                 ) {
-                    HomeNavigation(navController = navController)
+                    HomeNavigation(navController = navController, userMessage = userMessage)
                     if (loading) {
                         CircularIndicatorMessage(
                             message = stringResource(id = R.string.please_wait)

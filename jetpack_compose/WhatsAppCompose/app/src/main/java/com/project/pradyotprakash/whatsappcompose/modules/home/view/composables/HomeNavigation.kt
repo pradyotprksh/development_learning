@@ -44,13 +44,13 @@ import com.project.pradyotprakash.whatsappcompose.modules.status.view.StatusView
 @ExperimentalMaterialApi
 @ExperimentalAnimationApi
 @Composable
-fun HomeNavigation(navController: NavHostController) {
+fun HomeNavigation(userMessage: (String) -> Unit, navController: NavHostController) {
     NavHost(navController, startDestination = NavigationItem.Chat.route) {
         composable(NavigationItem.Chat.route) {
             ChatView()
         }
         composable(NavigationItem.Search.route) {
-            SearchView()
+            SearchView(userMessage = userMessage)
         }
         composable(NavigationItem.Status.route) {
             StatusView()

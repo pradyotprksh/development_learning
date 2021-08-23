@@ -25,6 +25,7 @@ package com.project.pradyotprakash.whatsappcompose.utils
 
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.PhoneAuthProvider
+import com.project.pradyotprakash.whatsappcompose.models.ChatDetails
 import com.project.pradyotprakash.whatsappcompose.models.Status
 import com.project.pradyotprakash.whatsappcompose.models.User
 
@@ -110,4 +111,14 @@ interface FirestoreCallbacks {
      * User list
      */
     fun userList(users: List<User>) {}
+
+    /**
+     * Chat details
+     */
+    fun chatDetails(chatDetails: ChatDetails) {}
+
+    /**
+     * Chat list
+     */
+    fun chatList(chatList: List<ChatDetails>) {}
 }
