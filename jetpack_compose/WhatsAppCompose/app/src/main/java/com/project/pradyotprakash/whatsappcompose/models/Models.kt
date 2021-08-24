@@ -59,8 +59,6 @@ data class Status(
     var deviceModel: String = "",
     var deviceOs: String = "",
     var createdOn: Long = 0,
-    var userName: String = "",
-    var userProfilePic: String = "",
 )
 
 /**

@@ -331,35 +331,6 @@ class FirestoreUtility {
                         chatDetails.isLastMessageRead =
                             !chatDetails.isLastMessageRead && !chatDetails.isLastMessageByCurrentUser
 
-                        // Get members details in the list
-                        if (chatDetails.members != null) {
-                            for (member in chatDetails.members!!) {
-                                db.document(chatDetails.lastMessageSentBy!!.path).get()
-                                    .addOnCompleteListener { task ->
-                                        if (task.exception != null) {
-                                            callbacks.onError(
-                                                task.exception?.localizedMessage ?: ""
-                                            )
-                                            return@addOnCompleteListener
-                                        }
-                                        val details = task.result?.toObject<User>()
-
-                                        if (details != null) {
-
-                                            /*
-                                            If current loop user is not same as the current user
-                                            then save the details
-                                             */
-                                            if (member.id != getCurrentUserId()) {
-                                                chatDetails.otherUserDetails = details
-                                            }
-
-                                            chatDetails.membersUser.add(details)
-                                        }
-                                    }
-                            }
-                        }
-
                         chatList.add(chatDetails)
                     }
 

@@ -139,7 +139,6 @@ fun StatusView(
                 sheetContent = {
                     StatusSheet(
                         bottomSheetScaffoldState = bottomSheetScaffoldState,
-                        userDetails = userDetails
                     )
                 }
             ) {

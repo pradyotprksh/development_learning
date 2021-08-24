@@ -73,7 +73,6 @@ import kotlinx.coroutines.launch
 @Composable
 fun StatusSheet(
     bottomSheetScaffoldState: BottomSheetScaffoldState,
-    userDetails: User,
     statusViewModel: StatusViewModel = viewModel(),
 ) {
     val context = LocalContext.current
@@ -110,7 +109,7 @@ fun StatusSheet(
                 TextButton(
                     onClick = {
                         if (context is Activity) {
-                            statusViewModel.uploadStatus(context, userDetails)
+                            statusViewModel.uploadStatus(context)
                             focusManager.clearFocus()
                             coroutineScope.launch {
                                 bottomSheetScaffoldState.bottomSheetState.collapse()
@@ -154,7 +153,7 @@ fun StatusSheet(
                 keyboardActions = KeyboardActions(
                     onDone = {
                         if (context is Activity) {
-                            statusViewModel.uploadStatus(context, userDetails)
+                            statusViewModel.uploadStatus(context)
                             focusManager.clearFocus()
                             coroutineScope.launch {
                                 bottomSheetScaffoldState.bottomSheetState.collapse()

@@ -108,8 +108,8 @@ class StatusViewModel : ViewModel() {
                         val createdBy = newStatus[status].createdBy
                         val statusDivision = StatusDivision()
                         statusDivision.createdBy = createdBy
-                        statusDivision.userName = newStatus[status].userName
-                        statusDivision.userProfilePic = newStatus[status].userProfilePic
+                        statusDivision.userName = "newStatus[status].userName"
+                        statusDivision.userProfilePic = "newStatus[status].userProfilePic"
 //                        if (firestoreUtility.currentUserReference() != createdBy) {
                             statusDivision.status.add(newStatus[status])
                             if (division.isNotEmpty() &&
@@ -152,10 +152,10 @@ class StatusViewModel : ViewModel() {
     /**
      * Upload status on DB
      */
-    fun uploadStatus(currentActivity: Activity?, userDetails: User) {
+    fun uploadStatus(currentActivity: Activity?) {
         if (loading.value == true) return
         try {
-            startUploadStatus(currentActivity, userDetails)
+            startUploadStatus(currentActivity)
         } catch (exception: Exception) {
             Utility.showMessage(exception.localizedMessage ?: "")
         }
@@ -164,7 +164,7 @@ class StatusViewModel : ViewModel() {
     /**
      * Start uploading the status
      */
-    private fun startUploadStatus(currentActivity: Activity?, userDetails: User) {
+    private fun startUploadStatus(currentActivity: Activity?) {
         val activity = getActivity(currentActivity)
         val statusMessage = getStatus(activity)
 
@@ -178,8 +178,6 @@ class StatusViewModel : ViewModel() {
             deviceModel = Utility.deviceModel(),
             deviceOs = Utility.systemOS(),
             createdOn = Utility.currentTimeStamp(),
-            userName = userDetails.userName,
-            userProfilePic = userDetails.profilePic
         )
 
         firestoreUtility.createStatus(

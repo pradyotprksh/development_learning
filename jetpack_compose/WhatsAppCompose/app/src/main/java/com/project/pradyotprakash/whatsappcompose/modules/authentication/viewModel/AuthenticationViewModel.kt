@@ -264,7 +264,7 @@ class AuthenticationViewModel : ViewModel() {
                     user.deviceId = Utility.getDeviceId()
                     user.deviceModel = Utility.deviceModel()
                     user.deviceOs = Utility.systemOS()
-                    updateUserDetails(user, home, formFill, user.isDetailsAdded)
+                    updateUserDetails(user, home, formFill, !user.isDetailsAdded)
                 }
 
                 override fun onError(message: String) {
