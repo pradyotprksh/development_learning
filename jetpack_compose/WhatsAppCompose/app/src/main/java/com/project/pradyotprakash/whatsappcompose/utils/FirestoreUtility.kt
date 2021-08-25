@@ -23,8 +23,11 @@
 */
 package com.project.pradyotprakash.whatsappcompose.utils
 
+import com.google.android.gms.tasks.Task
+import com.google.android.gms.tasks.Tasks
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.SetOptions
 import com.google.firebase.firestore.ktx.firestore
@@ -133,7 +136,7 @@ class FirestoreUtility {
      * Get current user reference
      */
     fun currentUserReference(): DocumentReference {
-        return db.collection(DBConstants.Collection.users).document(getCurrentUserId())
+        return getUserReference(getCurrentUserId())
     }
 
     /**
@@ -240,22 +243,21 @@ class FirestoreUtility {
     }
 
     /**
+     * Get user reference from an id
+     */
+    fun getUserReference(userId: String) : DocumentReference {
+        return db.collection(DBConstants.Collection.users).document(userId)
+    }
+
+    /**
      * Send messages to [toUserId]
      */
-    fun sendMessage(
+    fun sendPersonalMessage(
         toUserId: String,
         chatDetails: ChatDetails,
         messageDetails: MessageDetails? = null,
-        callbacks: FirestoreCallbacks,
-        isFirstMessage: Boolean = false
+        callbacks: FirestoreCallbacks
     ) {
-        if (isFirstMessage) {
-            chatDetails.members = listOf(
-                currentUserReference(),
-                db.collection(DBConstants.Collection.users).document(toUserId)
-            )
-        }
-
         /**
          * Update current user message option
          */

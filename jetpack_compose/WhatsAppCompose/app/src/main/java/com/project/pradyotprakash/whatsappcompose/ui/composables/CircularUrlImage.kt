@@ -28,7 +28,7 @@ fun CircularUrlImage(url: String, size: Int) {
                 crossfade(true)
             }
         ),
-        contentDescription = stringResource(id = R.string.image_description),
+        contentDescription = stringResource(id = R.string.image_description_network),
         contentScale = ContentScale.Crop,
         modifier = Modifier
             .size(size.dp)

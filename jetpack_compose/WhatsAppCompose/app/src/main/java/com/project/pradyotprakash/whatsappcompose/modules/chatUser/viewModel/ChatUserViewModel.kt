@@ -131,10 +131,11 @@ class ChatUserViewModel : ViewModel() {
      */
     private fun updateMessageRead(userId: String) {
         if (!currentChatDetails.isLastMessageRead &&
-            currentChatDetails.lastMessageSentBy?.id != firestoreUtility.getCurrentUserId()) {
+            currentChatDetails.lastMessageSentBy?.id != firestoreUtility.getCurrentUserId()
+        ) {
             currentChatDetails.isLastMessageRead = true
 
-            firestoreUtility.sendMessage(
+            firestoreUtility.sendPersonalMessage(
                 toUserId = userId,
                 chatDetails = currentChatDetails,
                 callbacks = object : FirestoreCallbacks {
@@ -160,6 +161,15 @@ class ChatUserViewModel : ViewModel() {
             currentChatDetails.chatCreatedOn = Utility.currentTimeStamp()
             currentChatDetails.chatCreatedBy = firestoreUtility.currentUserReference()
             currentChatDetails.isChatFavourite = false
+            currentChatDetails.chatIsAGroup = false
+            if (!currentChatDetails.chatIsAGroup) {
+                currentChatDetails.otherUserReferenceIfNotGroup =
+                    firestoreUtility.getUserReference(userId = sentTo)
+            }
+            currentChatDetails.members = listOf(
+                firestoreUtility.currentUserReference(),
+                firestoreUtility.getUserReference(userId = sentTo)
+            )
         }
         currentChatDetails.isLastMessageRead = false
 
@@ -169,11 +179,10 @@ class ChatUserViewModel : ViewModel() {
             sentOn = Utility.currentTimeStamp()
         )
 
-        firestoreUtility.sendMessage(
+        firestoreUtility.sendPersonalMessage(
             toUserId = sentTo,
             messageDetails = messageDetails,
             chatDetails = currentChatDetails,
-            isFirstMessage = isFirstMessage,
             callbacks = object : FirestoreCallbacks {
                 override fun isTrue() {}
 

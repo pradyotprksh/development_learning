@@ -65,8 +65,6 @@ data class Status(
  * Status division
  */
 data class StatusDivision(
-    var userName: String = "",
-    var userProfilePic: String = "",
     var createdBy: DocumentReference? = null,
     var status: MutableList<Status> = mutableListOf()
 )
@@ -83,10 +81,10 @@ data class ChatDetails(
     var isChatFavourite: Boolean = false,
     var isLastMessageRead: Boolean = false,
     var members: List<DocumentReference>? = null,
+    var chatIsAGroup: Boolean = false,
+    var otherUserReferenceIfNotGroup: DocumentReference? = null,
 
     var lastMessageSentOnString: String = "",
-    var membersUser: ArrayList<User> = ArrayList(),
-    var otherUserDetails: User = User(),
     var isLastMessageByCurrentUser: Boolean = false
 )
 

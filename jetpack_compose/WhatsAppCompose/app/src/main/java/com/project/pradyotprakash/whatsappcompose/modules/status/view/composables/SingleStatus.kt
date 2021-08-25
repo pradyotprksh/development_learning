@@ -47,7 +47,7 @@ import com.project.pradyotprakash.whatsappcompose.ui.theme.Action
 
 @Composable
 fun SingleStatus(
-    singleStatus: StatusDivision,
+    singleStatus: StatusDivision
 ) {
     Column(
         modifier = Modifier
@@ -62,7 +62,7 @@ fun SingleStatus(
         ) {
             Image(
                 painter = rememberImagePainter(
-                    data = singleStatus.userProfilePic,
+                    data = "userDetails.profilePic",
                     builder = {
                         crossfade(true)
                     }

@@ -47,7 +47,7 @@ import com.project.pradyotprakash.whatsappcompose.modules.status.view.StatusView
 fun HomeNavigation(userMessage: (String) -> Unit, navController: NavHostController) {
     NavHost(navController, startDestination = NavigationItem.Chat.route) {
         composable(NavigationItem.Chat.route) {
-            ChatView()
+            ChatView(userMessage = userMessage)
         }
         composable(NavigationItem.Search.route) {
             SearchView(userMessage = userMessage)

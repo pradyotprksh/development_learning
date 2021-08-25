@@ -108,8 +108,6 @@ class StatusViewModel : ViewModel() {
                         val createdBy = newStatus[status].createdBy
                         val statusDivision = StatusDivision()
                         statusDivision.createdBy = createdBy
-                        statusDivision.userName = "newStatus[status].userName"
-                        statusDivision.userProfilePic = "newStatus[status].userProfilePic"
 //                        if (firestoreUtility.currentUserReference() != createdBy) {
                             statusDivision.status.add(newStatus[status])
                             if (division.isNotEmpty() &&

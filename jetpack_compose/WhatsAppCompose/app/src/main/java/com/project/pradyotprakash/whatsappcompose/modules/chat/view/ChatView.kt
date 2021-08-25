@@ -23,17 +23,11 @@
 */
 package com.project.pradyotprakash.whatsappcompose.modules.chat.view
 
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.SnackbarHostState
@@ -46,21 +40,18 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.project.pradyotprakash.whatsappcompose.R
 import com.project.pradyotprakash.whatsappcompose.models.ChatDetails
+import com.project.pradyotprakash.whatsappcompose.modules.chat.view.composables.SingleChatView
 import com.project.pradyotprakash.whatsappcompose.modules.chat.viewModel.ChatViewModel
 import com.project.pradyotprakash.whatsappcompose.ui.composables.CircularIndicatorMessage
 import com.project.pradyotprakash.whatsappcompose.ui.composables.SizedBox
 import com.project.pradyotprakash.whatsappcompose.ui.composables.Snackbar
-import com.project.pradyotprakash.whatsappcompose.ui.theme.Notification
 import com.project.pradyotprakash.whatsappcompose.ui.theme.WhatsAppComposeTheme
 import com.project.pradyotprakash.whatsappcompose.ui.theme.black20Bold
-import com.project.pradyotprakash.whatsappcompose.ui.theme.gray15
-import com.project.pradyotprakash.whatsappcompose.ui.theme.lightGray15
 import com.project.pradyotprakash.whatsappcompose.utils.Utility
 import kotlinx.coroutines.launch
 
@@ -69,7 +60,7 @@ import kotlinx.coroutines.launch
  */
 
 @Composable
-fun ChatView(chatViewModel: ChatViewModel = viewModel()) {
+fun ChatView(userMessage: (String) -> Unit, chatViewModel: ChatViewModel = viewModel()) {
     val coroutineScope = rememberCoroutineScope()
     val snackbarHostState = SnackbarHostState()
 
@@ -80,6 +71,7 @@ fun ChatView(chatViewModel: ChatViewModel = viewModel()) {
 
     if (!chatViewModel.firstCallDone) {
         chatViewModel.getChatList()
+        chatViewModel.firstCallDone = true
     }
 
     /**
@@ -124,45 +116,10 @@ fun ChatView(chatViewModel: ChatViewModel = viewModel()) {
                             SizedBox(height = 10)
                         }
                         items(chats) { singleChat ->
-                            SizedBox(height = 5)
-                            Card(
-                                elevation = 5.dp,
-                                backgroundColor = Color.White,
-                                border = if (singleChat.isLastMessageRead) BorderStroke(
-                                    width = 1.dp,
-                                    color = Notification
-                                ) else null
-                            ) {
-                                Row(
-                                    modifier = Modifier
-                                        .padding(10.dp)
-                                        .fillMaxWidth(),
-                                    verticalAlignment = Alignment.CenterVertically,
-                                    horizontalArrangement = Arrangement.SpaceBetween
-                                ) {
-                                    Column {
-                                        Text(
-                                            text = singleChat.otherUserDetails.name,
-                                            style = black20Bold
-                                        )
-                                        SizedBox(height = 2)
-                                        if (singleChat.isLastMessageByCurrentUser) {
-                                            Text(
-                                                text = "${stringResource(id = R.string.you)} ${singleChat.lastMessage}",
-                                                style = gray15
-                                            )
-                                        } else {
-                                            Text(text = singleChat.lastMessage, style = gray15)
-                                        }
-                                    }
-                                    SizedBox(width = 10)
-                                    Text(
-                                        text = singleChat.lastMessageSentOnString,
-                                        style = lightGray15
-                                    )
-                                }
-                            }
-                            SizedBox(height = 5)
+                            SingleChatView(
+                                userMessage = userMessage,
+                                singleChat = singleChat
+                            )
                         }
                     }
                     if (loading) {

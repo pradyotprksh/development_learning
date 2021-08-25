@@ -171,7 +171,11 @@ fun StatusView(
                             cells = GridCells.Fixed(2),
                             contentPadding = PaddingValues(bottom = 50.dp)
                         ) {
-                            items(allStatus) { SingleStatus(singleStatus = it) }
+                            items(allStatus) {
+                                SingleStatus(
+                                    singleStatus = it
+                                )
+                            }
                         }
                     }
                     if (loading || loadingUser) {
