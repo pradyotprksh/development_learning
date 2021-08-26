@@ -29,8 +29,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.project.pradyotprakash.whatsappcompose.R
 import com.project.pradyotprakash.whatsappcompose.models.Status
+import com.project.pradyotprakash.whatsappcompose.models.StatusFirestore
 import com.project.pradyotprakash.whatsappcompose.models.StatusDivision
-import com.project.pradyotprakash.whatsappcompose.models.User
 import com.project.pradyotprakash.whatsappcompose.utils.FirestoreCallbacks
 import com.project.pradyotprakash.whatsappcompose.utils.FirestoreUtility
 import com.project.pradyotprakash.whatsappcompose.utils.Utility
@@ -91,7 +91,7 @@ class StatusViewModel : ViewModel() {
      * Status in the database
      */
     val allStatus = MutableLiveData(listOf<StatusDivision>())
-//    val currentUserStatus = MutableLiveData(listOf<StatusDivision>())
+    val currentUserStatus = MutableLiveData(listOf<StatusDivision>())
 
     /**
      * Listen to status changes
@@ -102,38 +102,40 @@ class StatusViewModel : ViewModel() {
             callbacks = object : FirestoreCallbacks {
                 override fun status(newStatus: List<Status>) {
                     val division: MutableList<StatusDivision> = mutableListOf()
-//                    val userStatus: MutableList<StatusDivision> = mutableListOf()
+                    val userStatus: MutableList<StatusDivision> = mutableListOf()
 
                     for (status in newStatus.indices) {
                         val createdBy = newStatus[status].createdBy
                         val statusDivision = StatusDivision()
                         statusDivision.createdBy = createdBy
-//                        if (firestoreUtility.currentUserReference() != createdBy) {
+                        statusDivision.userDetails = newStatus[status].userDetails
+                        if (firestoreUtility.currentUserReference() != createdBy) {
                             statusDivision.status.add(newStatus[status])
                             if (division.isNotEmpty() &&
-                                division.last().createdBy == newStatus[status].createdBy) {
+                                division.last().createdBy == newStatus[status].createdBy
+                            ) {
                                 division.last().status.add(newStatus[status])
                             } else {
                                 division.add(statusDivision)
                             }
-//                        } else {
-//                            if (userStatus.isEmpty()) {
-//                                statusDivision.status.add(newStatus[status])
-//                                userStatus.add(statusDivision)
-//                            } else {
-//                                userStatus.last().status.add(newStatus[status])
-//                            }
-//                        }
+                        } else {
+                            if (userStatus.isEmpty()) {
+                                statusDivision.status.add(newStatus[status])
+                                userStatus.add(statusDivision)
+                            } else {
+                                userStatus.last().status.add(newStatus[status])
+                            }
+                        }
                     }
 
                     division.forEach { it ->
                         it.status.sortBy { it.createdOn }
                     }
-//                    userStatus.forEach { it ->
-//                        it.status.sortBy { it.createdOn }
-//                    }
-//
-//                    currentUserStatus.value = userStatus
+                    userStatus.forEach { it ->
+                        it.status.sortBy { it.createdOn }
+                    }
+
+                    currentUserStatus.value = userStatus
                     allStatus.value = division
                     _loading.value = false
                 }
@@ -168,7 +170,7 @@ class StatusViewModel : ViewModel() {
 
         _loading.value = true
 
-        val status = Status(
+        val status = StatusFirestore(
             statusMessage = statusMessage,
             createdBy = firestoreUtility.currentUserReference(),
             appVersion = Utility.applicationVersion(),
@@ -179,7 +181,7 @@ class StatusViewModel : ViewModel() {
         )
 
         firestoreUtility.createStatus(
-            status = status,
+            statusFirestore = status,
             callbacks = object : FirestoreCallbacks {
                 override fun isTrue() {
                     _loading.value = false

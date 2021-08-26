@@ -20,9 +20,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
 import com.project.pradyotprakash.whatsappcompose.R
 import com.project.pradyotprakash.whatsappcompose.models.ChatDetails
+import com.project.pradyotprakash.whatsappcompose.models.ChatDetailsFirestore
 import com.project.pradyotprakash.whatsappcompose.ui.composables.SizedBox
 import com.project.pradyotprakash.whatsappcompose.ui.theme.Notification
 import com.project.pradyotprakash.whatsappcompose.ui.theme.black20Bold
@@ -33,6 +35,7 @@ import com.project.pradyotprakash.whatsappcompose.ui.theme.lightGray15
  * A composable which will be used to show the ui of the single chat. With few details.
  */
 
+@ExperimentalCoilApi
 @Composable
 fun SingleChatView(
     userMessage: (String) -> Unit,
@@ -42,12 +45,14 @@ fun SingleChatView(
     Card(
         elevation = 5.dp,
         backgroundColor = Color.White,
-        border = if (singleChat.isLastMessageRead) BorderStroke(
+        border = if (!singleChat.chatLastMessageRead) BorderStroke(
             width = 1.dp,
             color = Notification
         ) else null,
         modifier = Modifier.clickable {
-
+            if (singleChat.singleChatListDetails.userId.isNotEmpty()) {
+                userMessage(singleChat.singleChatListDetails.userId)
+            }
         }
     ) {
         Row(
@@ -62,7 +67,7 @@ fun SingleChatView(
             ) {
                 Image(
                     painter = rememberImagePainter(
-                        data = "otherUserDetails.profilePic",
+                        data = singleChat.singleChatListDetails.profilePic,
                         builder = {
                             crossfade(true)
                         }
@@ -74,7 +79,7 @@ fun SingleChatView(
                 SizedBox(width = 10)
                 Column {
                     Text(
-                        text = "otherUserDetails.name",
+                        text = singleChat.singleChatListDetails.name,
                         style = black20Bold,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis

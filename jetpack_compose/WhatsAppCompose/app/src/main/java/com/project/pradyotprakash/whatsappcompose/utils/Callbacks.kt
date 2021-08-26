@@ -26,7 +26,9 @@ package com.project.pradyotprakash.whatsappcompose.utils
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.PhoneAuthProvider
 import com.project.pradyotprakash.whatsappcompose.models.ChatDetails
+import com.project.pradyotprakash.whatsappcompose.models.ChatDetailsFirestore
 import com.project.pradyotprakash.whatsappcompose.models.Status
+import com.project.pradyotprakash.whatsappcompose.models.StatusFirestore
 import com.project.pradyotprakash.whatsappcompose.models.User
 
 /**
@@ -45,7 +47,11 @@ interface OtpSentCallbacks {
      *
      * A custom [message] also will be returned to show the user that otp has been sent
      */
-    fun onOtpSent(verificationId: String, token: PhoneAuthProvider.ForceResendingToken, message: String)
+    fun onOtpSent(
+        verificationId: String,
+        token: PhoneAuthProvider.ForceResendingToken,
+        message: String
+    )
 
     /**
      * Return an error message whenever there is some error or exception
@@ -115,10 +121,10 @@ interface FirestoreCallbacks {
     /**
      * Chat details
      */
-    fun chatDetails(chatDetails: ChatDetails) {}
+    fun chatDetails(chatDetails: ChatDetails, chatDetailsFirestore: ChatDetailsFirestore) {}
 
     /**
      * Chat list
      */
-    fun chatList(chatList: List<ChatDetails>) {}
+    fun chatList(chatList: List<ChatDetails>, favChatList: List<ChatDetails>) {}
 }

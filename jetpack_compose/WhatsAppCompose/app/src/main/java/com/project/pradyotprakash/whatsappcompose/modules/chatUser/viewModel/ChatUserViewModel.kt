@@ -4,7 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.project.pradyotprakash.whatsappcompose.models.ChatDetails
-import com.project.pradyotprakash.whatsappcompose.models.MessageDetails
+import com.project.pradyotprakash.whatsappcompose.models.ChatDetailsFirestore
+import com.project.pradyotprakash.whatsappcompose.models.MessageDetailsFirestore
 import com.project.pradyotprakash.whatsappcompose.models.User
 import com.project.pradyotprakash.whatsappcompose.utils.FirestoreCallbacks
 import com.project.pradyotprakash.whatsappcompose.utils.FirestoreUtility
@@ -65,6 +66,7 @@ class ChatUserViewModel : ViewModel() {
      * Chat details
      */
     var currentChatDetails: ChatDetails = ChatDetails()
+    var currentChatDetailsFirestore: ChatDetailsFirestore = ChatDetailsFirestore()
 
     /**
      * Check for user chat
@@ -118,8 +120,9 @@ class ChatUserViewModel : ViewModel() {
                     _isChatHistoryPresent.value = true
                 }
 
-                override fun chatDetails(chatDetails: ChatDetails) {
+                override fun chatDetails(chatDetails: ChatDetails, chatDetailsFirestore: ChatDetailsFirestore) {
                     currentChatDetails = chatDetails
+                    currentChatDetailsFirestore = chatDetailsFirestore
                     updateMessageRead(userId)
                 }
             }
@@ -130,14 +133,14 @@ class ChatUserViewModel : ViewModel() {
      * Update the message read or not if the last message is not by current user
      */
     private fun updateMessageRead(userId: String) {
-        if (!currentChatDetails.isLastMessageRead &&
-            currentChatDetails.lastMessageSentBy?.id != firestoreUtility.getCurrentUserId()
+        if (!currentChatDetailsFirestore.chatLastMessageRead &&
+            currentChatDetailsFirestore.lastMessageSentBy?.id != firestoreUtility.getCurrentUserId()
         ) {
-            currentChatDetails.isLastMessageRead = true
+            currentChatDetailsFirestore.chatLastMessageRead = true
 
             firestoreUtility.sendPersonalMessage(
                 toUserId = userId,
-                chatDetails = currentChatDetails,
+                chatDetailsFirestore = currentChatDetailsFirestore,
                 callbacks = object : FirestoreCallbacks {
                     override fun isTrue() {}
 
@@ -154,26 +157,22 @@ class ChatUserViewModel : ViewModel() {
      * Send message
      */
     fun sendMessage(message: String, sentTo: String, isFirstMessage: Boolean = false) {
-        currentChatDetails.lastMessage = message
-        currentChatDetails.lastMessageSentOn = Utility.currentTimeStamp()
-        currentChatDetails.lastMessageSentBy = firestoreUtility.currentUserReference()
+        currentChatDetailsFirestore.lastMessage = message
+        currentChatDetailsFirestore.lastMessageSentOn = Utility.currentTimeStamp()
+        currentChatDetailsFirestore.lastMessageSentBy = firestoreUtility.currentUserReference()
         if (isFirstMessage) {
-            currentChatDetails.chatCreatedOn = Utility.currentTimeStamp()
-            currentChatDetails.chatCreatedBy = firestoreUtility.currentUserReference()
-            currentChatDetails.isChatFavourite = false
-            currentChatDetails.chatIsAGroup = false
-            if (!currentChatDetails.chatIsAGroup) {
-                currentChatDetails.otherUserReferenceIfNotGroup =
-                    firestoreUtility.getUserReference(userId = sentTo)
-            }
-            currentChatDetails.members = listOf(
+            currentChatDetailsFirestore.chatCreatedOn = Utility.currentTimeStamp()
+            currentChatDetailsFirestore.chatCreatedBy = firestoreUtility.currentUserReference()
+            currentChatDetailsFirestore.chatLastMessageRead = false
+            currentChatDetailsFirestore.chatIsAGroup = false
+            currentChatDetailsFirestore.members = listOf(
                 firestoreUtility.currentUserReference(),
                 firestoreUtility.getUserReference(userId = sentTo)
             )
         }
-        currentChatDetails.isLastMessageRead = false
+        currentChatDetailsFirestore.chatLastMessageRead = false
 
-        val messageDetails = MessageDetails(
+        val messageDetails = MessageDetailsFirestore(
             message = message,
             sentBy = firestoreUtility.currentUserReference(),
             sentOn = Utility.currentTimeStamp()
@@ -181,8 +180,8 @@ class ChatUserViewModel : ViewModel() {
 
         firestoreUtility.sendPersonalMessage(
             toUserId = sentTo,
-            messageDetails = messageDetails,
-            chatDetails = currentChatDetails,
+            messageDetailsFirestore = messageDetails,
+            chatDetailsFirestore = currentChatDetailsFirestore,
             callbacks = object : FirestoreCallbacks {
                 override fun isTrue() {}
 

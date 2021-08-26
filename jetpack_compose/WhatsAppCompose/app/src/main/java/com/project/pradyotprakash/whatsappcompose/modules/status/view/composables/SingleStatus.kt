@@ -35,6 +35,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
 import com.project.pradyotprakash.whatsappcompose.R
 import com.project.pradyotprakash.whatsappcompose.models.StatusDivision
@@ -45,6 +46,7 @@ import com.project.pradyotprakash.whatsappcompose.ui.theme.Action
  * A single status composable which show details.
  */
 
+@ExperimentalCoilApi
 @Composable
 fun SingleStatus(
     singleStatus: StatusDivision
@@ -62,7 +64,7 @@ fun SingleStatus(
         ) {
             Image(
                 painter = rememberImagePainter(
-                    data = "userDetails.profilePic",
+                    data = singleStatus.userDetails.profilePic,
                     builder = {
                         crossfade(true)
                     }

@@ -27,7 +27,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.project.pradyotprakash.whatsappcompose.models.ChatDetails
-import com.project.pradyotprakash.whatsappcompose.models.User
 import com.project.pradyotprakash.whatsappcompose.utils.FirestoreCallbacks
 import com.project.pradyotprakash.whatsappcompose.utils.FirestoreUtility
 
@@ -77,6 +76,12 @@ class ChatViewModel : ViewModel() {
     val chats: LiveData<List<ChatDetails>> = _chats
 
     /**
+     * List of fav chats
+     */
+    private val _favChats = MutableLiveData(listOf<ChatDetails>())
+    val favChats: LiveData<List<ChatDetails>> = _favChats
+
+    /**
      * Get the list of chat for the current user
      */
     fun getChatList() {
@@ -88,8 +93,9 @@ class ChatViewModel : ViewModel() {
                     _message.value = message
                 }
 
-                override fun chatList(chatList: List<ChatDetails>) {
+                override fun chatList(chatList: List<ChatDetails>, favChatList: List<ChatDetails>) {
                     _chats.value = chatList
+                    _favChats.value = favChatList
                 }
             }
         )

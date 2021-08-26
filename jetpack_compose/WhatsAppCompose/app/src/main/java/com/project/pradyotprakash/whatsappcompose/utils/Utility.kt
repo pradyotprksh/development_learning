@@ -23,14 +23,11 @@
 */
 package com.project.pradyotprakash.whatsappcompose.utils
 
-import android.annotation.SuppressLint
 import android.os.Build
 import android.util.Log
 import com.github.marlonlom.utilities.timeago.TimeAgo
 import com.project.pradyotprakash.whatsappcompose.BuildConfig
 import com.project.pradyotprakash.whatsappcompose.utils.Constants.application
-import java.text.SimpleDateFormat
-import java.util.*
 
 /**
  * An utility method which will contain the utility methods, helpful for doing the similar methods
@@ -71,14 +68,14 @@ object Utility {
      * Get device model
      */
     fun deviceModel(): String {
-        return  "${Build.MODEL} ${Build.BRAND} ${Build.DEVICE}"
+        return "${Build.MODEL} ${Build.BRAND} ${Build.DEVICE}"
     }
 
     /**
      * Get phone OS
      */
     fun systemOS(): String {
-        return  "${Build.ID} ${Build.VERSION.SDK_INT} ${Build.VERSION.CODENAME}"
+        return "${Build.ID} ${Build.VERSION.SDK_INT} ${Build.VERSION.CODENAME}"
     }
 
     /**

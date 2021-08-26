@@ -44,9 +44,9 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.project.pradyotprakash.whatsappcompose.R
 import com.project.pradyotprakash.whatsappcompose.models.User
+import com.project.pradyotprakash.whatsappcompose.modules.search.view.composables.SingleUserCard
 import com.project.pradyotprakash.whatsappcompose.modules.search.viewModel.SearchViewModel
 import com.project.pradyotprakash.whatsappcompose.ui.composables.CircularIndicatorMessage
-import com.project.pradyotprakash.whatsappcompose.ui.composables.SingleUserCard
 import com.project.pradyotprakash.whatsappcompose.ui.composables.SizedBox
 import com.project.pradyotprakash.whatsappcompose.ui.composables.Snackbar
 import com.project.pradyotprakash.whatsappcompose.ui.theme.WhatsAppComposeTheme

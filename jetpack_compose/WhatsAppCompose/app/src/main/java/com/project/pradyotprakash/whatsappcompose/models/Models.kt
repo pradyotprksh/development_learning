@@ -49,6 +49,20 @@ data class User(
 )
 
 /**
+ * Status details for firestore
+ */
+data class StatusFirestore(
+    var statusMessage: String = "",
+    var createdBy: DocumentReference? = null,
+    var appVersion: String = "",
+    var deviceId: String = "",
+    var deviceModel: String = "",
+    var deviceOs: String = "",
+    var createdOn: Long = 0,
+    var userDetails: User = User()
+)
+
+/**
  * Status details
  */
 data class Status(
@@ -59,6 +73,7 @@ data class Status(
     var deviceModel: String = "",
     var deviceOs: String = "",
     var createdOn: Long = 0,
+    var userDetails: User = User()
 )
 
 /**
@@ -66,7 +81,23 @@ data class Status(
  */
 data class StatusDivision(
     var createdBy: DocumentReference? = null,
-    var status: MutableList<Status> = mutableListOf()
+    var status: MutableList<Status> = mutableListOf(),
+    var userDetails: User = User()
+)
+
+/**
+ * Chat details for firestore
+ */
+data class ChatDetailsFirestore(
+    var lastMessage: String = "",
+    var lastMessageSentOn: Long = 0,
+    var lastMessageSentBy: DocumentReference? = null,
+    var chatCreatedOn: Long = 0,
+    var chatCreatedBy: DocumentReference? = null,
+    var chatIsFavourite: Boolean = false,
+    var chatLastMessageRead: Boolean = false,
+    var members: List<DocumentReference>? = null,
+    var chatIsAGroup: Boolean = false
 )
 
 /**
@@ -78,14 +109,23 @@ data class ChatDetails(
     var lastMessageSentBy: DocumentReference? = null,
     var chatCreatedOn: Long = 0,
     var chatCreatedBy: DocumentReference? = null,
-    var isChatFavourite: Boolean = false,
-    var isLastMessageRead: Boolean = false,
+    var chatIsFavourite: Boolean = false,
+    var chatLastMessageRead: Boolean = false,
     var members: List<DocumentReference>? = null,
     var chatIsAGroup: Boolean = false,
-    var otherUserReferenceIfNotGroup: DocumentReference? = null,
-
     var lastMessageSentOnString: String = "",
-    var isLastMessageByCurrentUser: Boolean = false
+    var isLastMessageByCurrentUser: Boolean = false,
+    var membersUser: ArrayList<User> = ArrayList(),
+    var singleChatListDetails: User = User()
+)
+
+/**
+ * Message details for the firestore
+ */
+data class MessageDetailsFirestore(
+    var message: String = "",
+    var sentOn: Long = 0,
+    var sentBy: DocumentReference? = null
 )
 
 /**
@@ -95,6 +135,5 @@ data class MessageDetails(
     var message: String = "",
     var sentOn: Long = 0,
     var sentBy: DocumentReference? = null,
-
     var sentByUser: User = User(),
 )

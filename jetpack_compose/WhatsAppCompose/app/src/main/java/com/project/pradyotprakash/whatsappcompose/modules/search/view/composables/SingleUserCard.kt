@@ -1,4 +1,4 @@
-package com.project.pradyotprakash.whatsappcompose.ui.composables
+package com.project.pradyotprakash.whatsappcompose.modules.search.view.composables
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -12,6 +12,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.project.pradyotprakash.whatsappcompose.ui.composables.CircularUrlImage
+import com.project.pradyotprakash.whatsappcompose.ui.composables.SizedBox
 import com.project.pradyotprakash.whatsappcompose.ui.theme.black20Bold
 import com.project.pradyotprakash.whatsappcompose.ui.theme.lightGray15
 import com.project.pradyotprakash.whatsappcompose.ui.theme.link15
@@ -35,9 +37,11 @@ fun SingleUserCard(
     Card(
         backgroundColor = Color.White,
         elevation = 3.dp,
-        modifier = Modifier.fillMaxWidth().clickable {
-            userMessage(userId)
-        }
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable {
+                userMessage(userId)
+            }
     ) {
         Row(
             modifier = Modifier
@@ -53,7 +57,7 @@ fun SingleUserCard(
                     SizedBox(height = 5)
                 }
                 if (subTitle.isNotEmpty()) {
-                    Text(text = subTitle, style = link15)
+                    Text(text = "@$subTitle", style = link15)
                 }
                 if (subTitle.isNotEmpty() || thirdLine.isNotEmpty()) {
                     SizedBox(height = 5)
