@@ -58,8 +58,7 @@ data class StatusFirestore(
     var deviceId: String = "",
     var deviceModel: String = "",
     var deviceOs: String = "",
-    var createdOn: Long = 0,
-    var userDetails: User = User()
+    var createdOn: Long = 0
 )
 
 /**
@@ -126,4 +125,14 @@ data class MessageDetailsFirestore(
     var message: String = "",
     var sentOn: Long = 0,
     var sentBy: DocumentReference? = null
+)
+
+/**
+ * Message details
+ */
+data class MessageDetails(
+    var message: String = "",
+    var sentOn: Long = 0,
+    var sentBy: DocumentReference? = null,
+    var messageByCurrentUser: Boolean = false
 )

@@ -91,7 +91,8 @@ fun OTPComposable(
                     )
                 },
                 colors = TextFieldDefaults.textFieldColors(
-                    unfocusedIndicatorColor = Color.LightGray
+                    unfocusedIndicatorColor = Color.LightGray,
+                    backgroundColor = Color.White
                 ),
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Number,

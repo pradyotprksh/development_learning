@@ -27,9 +27,8 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.PhoneAuthProvider
 import com.project.pradyotprakash.whatsappcompose.models.ChatDetails
 import com.project.pradyotprakash.whatsappcompose.models.ChatDetailsFirestore
-import com.project.pradyotprakash.whatsappcompose.models.MessageDetailsFirestore
+import com.project.pradyotprakash.whatsappcompose.models.MessageDetails
 import com.project.pradyotprakash.whatsappcompose.models.Status
-import com.project.pradyotprakash.whatsappcompose.models.StatusFirestore
 import com.project.pradyotprakash.whatsappcompose.models.User
 
 /**
@@ -132,5 +131,5 @@ interface FirestoreCallbacks {
     /**
      * Messages list
      */
-    fun messages(messages: List<MessageDetailsFirestore>) {}
+    fun messages(messages: List<MessageDetails>) {}
 }

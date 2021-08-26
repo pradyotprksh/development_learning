@@ -57,7 +57,6 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.project.pradyotprakash.whatsappcompose.R
-import com.project.pradyotprakash.whatsappcompose.models.User
 import com.project.pradyotprakash.whatsappcompose.modules.status.viewModel.StatusViewModel
 import com.project.pradyotprakash.whatsappcompose.ui.composables.BackButton
 import com.project.pradyotprakash.whatsappcompose.ui.theme.Notification

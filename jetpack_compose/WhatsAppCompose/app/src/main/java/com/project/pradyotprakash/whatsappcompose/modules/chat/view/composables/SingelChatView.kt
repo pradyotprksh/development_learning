@@ -47,7 +47,6 @@ import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
 import com.project.pradyotprakash.whatsappcompose.R
 import com.project.pradyotprakash.whatsappcompose.models.ChatDetails
-import com.project.pradyotprakash.whatsappcompose.models.ChatDetailsFirestore
 import com.project.pradyotprakash.whatsappcompose.ui.composables.SizedBox
 import com.project.pradyotprakash.whatsappcompose.ui.theme.Notification
 import com.project.pradyotprakash.whatsappcompose.ui.theme.black20Bold

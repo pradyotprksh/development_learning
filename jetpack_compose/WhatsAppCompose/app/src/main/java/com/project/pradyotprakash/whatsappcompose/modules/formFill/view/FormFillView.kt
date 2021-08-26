@@ -25,10 +25,10 @@ package com.project.pradyotprakash.whatsappcompose.modules.formFill.view
 
 import android.app.Activity
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -125,174 +125,180 @@ fun FormFillView(home: () -> Unit, formFillViewModel: FormFillViewModel = viewMo
                     contentAlignment = Alignment.Center,
                     modifier = Modifier.fillMaxSize()
                 ) {
-                    Column(
+                    LazyColumn(
                         modifier = Modifier
                             .fillMaxSize()
-                            .padding(horizontal = 15.dp, vertical = 50.dp)
+                            .padding(horizontal = 15.dp, vertical = 30.dp)
                     ) {
-                        Text(
-                            stringResource(id = R.string.account_created),
-                            style = black20Bold
-                        )
-                        Text(
-                            stringResource(id = R.string.account_created_helper),
-                            style = gray15
-                        )
-                        SizedBox(
-                            height = 50
-                        )
-                        OutlinedTextField(
-                            value = name,
-                            textStyle = black20Bold,
-                            modifier = Modifier.fillMaxWidth(),
-                            singleLine = true,
-                            onValueChange = { formFillViewModel.onNameChange(it) },
-                            placeholder = {
-                                Text(
-                                    stringResource(id = R.string.name_helper),
-                                    style = gray20Bold
-                                )
-                            },
-                            label = {
-                                Text(
-                                    stringResource(id = R.string.name),
-                                    style = gray15
-                                )
-                            },
-                            colors = TextFieldDefaults.textFieldColors(
-                                unfocusedIndicatorColor = Color.LightGray
-                            ),
-                            keyboardOptions = KeyboardOptions(
-                                keyboardType = KeyboardType.Text,
-                                imeAction = ImeAction.Done,
-                                capitalization = KeyboardCapitalization.Words
-                            ),
-                            keyboardActions = KeyboardActions(
-                                onDone = {
-                                    focusManager.clearFocus()
-                                }
-                            ),
-                        )
-                        SizedBox(height = 15)
-                        OutlinedTextField(
-                            value = username,
-                            textStyle = black20Bold,
-                            modifier = Modifier.fillMaxWidth(),
-                            singleLine = true,
-                            onValueChange = { formFillViewModel.onUsernameChange(it) },
-                            placeholder = {
-                                Text(
-                                    stringResource(id = R.string.username_helper),
-                                    style = gray20Bold
-                                )
-                            },
-                            label = {
-                                Text(
-                                    stringResource(id = R.string.username),
-                                    style = gray15
-                                )
-                            },
-                            colors = TextFieldDefaults.textFieldColors(
-                                unfocusedIndicatorColor = Color.LightGray
-                            ),
-                            keyboardOptions = KeyboardOptions(
-                                keyboardType = KeyboardType.Text,
-                                imeAction = ImeAction.Done
-                            ),
-                            keyboardActions = KeyboardActions(
-                                onDone = {
-                                    focusManager.clearFocus()
-                                }
+                        item {
+                            Text(
+                                stringResource(id = R.string.account_created),
+                                style = black20Bold
                             )
-                        )
-                        SizedBox(height = 15)
-                        OutlinedTextField(
-                            value = emailId,
-                            textStyle = black20Bold,
-                            modifier = Modifier.fillMaxWidth(),
-                            singleLine = true,
-                            onValueChange = { formFillViewModel.onEmailIdChange(it) },
-                            placeholder = {
-                                Text(
-                                    stringResource(id = R.string.email_id_helper),
-                                    style = gray20Bold
-                                )
-                            },
-                            label = {
-                                Text(
-                                    stringResource(id = R.string.emailId),
-                                    style = gray15
-                                )
-                            },
-                            colors = TextFieldDefaults.textFieldColors(
-                                unfocusedIndicatorColor = Color.LightGray
-                            ),
-                            keyboardOptions = KeyboardOptions(
-                                keyboardType = KeyboardType.Email,
-                                imeAction = ImeAction.Done
-                            ),
-                            keyboardActions = KeyboardActions(
-                                onDone = {
-                                    focusManager.clearFocus()
-                                }
+                            Text(
+                                stringResource(id = R.string.account_created_helper),
+                                style = gray15
                             )
-                        )
-                        SizedBox(height = 5)
-                        Text(
-                            text = stringResource(id = R.string.email_id_note),
-                            style = gray12Italic
-                        )
-                        SizedBox(height = 15)
-                        OutlinedTextField(
-                            value = status,
-                            textStyle = black20Bold,
-                            modifier = Modifier.fillMaxWidth(),
-                            onValueChange = { formFillViewModel.onStatusChange(it) },
-                            placeholder = {
-                                Text(
-                                    stringResource(id = R.string.status_helper),
-                                    style = gray20Bold
+                            SizedBox(
+                                height = 50
+                            )
+                            OutlinedTextField(
+                                value = name,
+                                textStyle = black20Bold,
+                                modifier = Modifier.fillMaxWidth(),
+                                singleLine = true,
+                                onValueChange = { formFillViewModel.onNameChange(it) },
+                                placeholder = {
+                                    Text(
+                                        stringResource(id = R.string.name_helper),
+                                        style = gray20Bold
+                                    )
+                                },
+                                label = {
+                                    Text(
+                                        stringResource(id = R.string.name),
+                                        style = gray15
+                                    )
+                                },
+                                colors = TextFieldDefaults.textFieldColors(
+                                    unfocusedIndicatorColor = Color.LightGray,
+                                    backgroundColor = Color.White
+                                ),
+                                keyboardOptions = KeyboardOptions(
+                                    keyboardType = KeyboardType.Text,
+                                    imeAction = ImeAction.Done,
+                                    capitalization = KeyboardCapitalization.Words
+                                ),
+                                keyboardActions = KeyboardActions(
+                                    onDone = {
+                                        focusManager.clearFocus()
+                                    }
+                                ),
+                            )
+                            SizedBox(height = 15)
+                            OutlinedTextField(
+                                value = username,
+                                textStyle = black20Bold,
+                                modifier = Modifier.fillMaxWidth(),
+                                singleLine = true,
+                                onValueChange = { formFillViewModel.onUsernameChange(it) },
+                                placeholder = {
+                                    Text(
+                                        stringResource(id = R.string.username_helper),
+                                        style = gray20Bold
+                                    )
+                                },
+                                label = {
+                                    Text(
+                                        stringResource(id = R.string.username),
+                                        style = gray15
+                                    )
+                                },
+                                colors = TextFieldDefaults.textFieldColors(
+                                    unfocusedIndicatorColor = Color.LightGray,
+                                    backgroundColor = Color.White
+                                ),
+                                keyboardOptions = KeyboardOptions(
+                                    keyboardType = KeyboardType.Text,
+                                    imeAction = ImeAction.Done
+                                ),
+                                keyboardActions = KeyboardActions(
+                                    onDone = {
+                                        focusManager.clearFocus()
+                                    }
                                 )
-                            },
-                            label = {
-                                Text(
-                                    stringResource(id = R.string.status),
-                                    style = gray15
+                            )
+                            SizedBox(height = 15)
+                            OutlinedTextField(
+                                value = emailId,
+                                textStyle = black20Bold,
+                                modifier = Modifier.fillMaxWidth(),
+                                singleLine = true,
+                                onValueChange = { formFillViewModel.onEmailIdChange(it) },
+                                placeholder = {
+                                    Text(
+                                        stringResource(id = R.string.email_id_helper),
+                                        style = gray20Bold
+                                    )
+                                },
+                                label = {
+                                    Text(
+                                        stringResource(id = R.string.emailId),
+                                        style = gray15
+                                    )
+                                },
+                                colors = TextFieldDefaults.textFieldColors(
+                                    unfocusedIndicatorColor = Color.LightGray,
+                                    backgroundColor = Color.White
+                                ),
+                                keyboardOptions = KeyboardOptions(
+                                    keyboardType = KeyboardType.Email,
+                                    imeAction = ImeAction.Done
+                                ),
+                                keyboardActions = KeyboardActions(
+                                    onDone = {
+                                        focusManager.clearFocus()
+                                    }
                                 )
-                            },
-                            colors = TextFieldDefaults.textFieldColors(
-                                unfocusedIndicatorColor = Color.LightGray
-                            ),
-                            keyboardOptions = KeyboardOptions(
-                                keyboardType = KeyboardType.Text,
-                                imeAction = ImeAction.Done,
-                                capitalization = KeyboardCapitalization.Sentences
-                            ),
-                            keyboardActions = KeyboardActions(
-                                onDone = {
+                            )
+                            SizedBox(height = 5)
+                            Text(
+                                text = stringResource(id = R.string.email_id_note),
+                                style = gray12Italic
+                            )
+                            SizedBox(height = 15)
+                            OutlinedTextField(
+                                value = status,
+                                textStyle = black20Bold,
+                                modifier = Modifier.fillMaxWidth(),
+                                onValueChange = { formFillViewModel.onStatusChange(it) },
+                                placeholder = {
+                                    Text(
+                                        stringResource(id = R.string.status_helper),
+                                        style = gray20Bold
+                                    )
+                                },
+                                label = {
+                                    Text(
+                                        stringResource(id = R.string.status),
+                                        style = gray15
+                                    )
+                                },
+                                colors = TextFieldDefaults.textFieldColors(
+                                    unfocusedIndicatorColor = Color.LightGray,
+                                    backgroundColor = Color.White
+                                ),
+                                keyboardOptions = KeyboardOptions(
+                                    keyboardType = KeyboardType.Text,
+                                    imeAction = ImeAction.Done,
+                                    capitalization = KeyboardCapitalization.Sentences
+                                ),
+                                keyboardActions = KeyboardActions(
+                                    onDone = {
+                                        focusManager.clearFocus()
+                                        if (context is Activity) {
+                                            formFillViewModel.updateUserDetails(context, home)
+                                        }
+                                    }
+                                )
+                            )
+                            SizedBox(height = 50)
+                            Button(
+                                modifier = Modifier.fillMaxWidth(),
+                                shape = RoundedCornerShape(50),
+                                onClick = {
                                     focusManager.clearFocus()
                                     if (context is Activity) {
                                         formFillViewModel.updateUserDetails(context, home)
                                     }
                                 }
-                            )
-                        )
-                        SizedBox(height = 50)
-                        Button(
-                            modifier = Modifier.fillMaxWidth(),
-                            shape = RoundedCornerShape(50),
-                            onClick = {
-                                focusManager.clearFocus()
-                                if (context is Activity) {
-                                    formFillViewModel.updateUserDetails(context, home)
-                                }
+                            ) {
+                                Text(
+                                    stringResource(id = R.string.continue_button).uppercase(),
+                                    style = white20Bold,
+                                    modifier = Modifier.padding(10.dp)
+                                )
                             }
-                        ) {
-                            Text(
-                                stringResource(id = R.string.continue_button).uppercase(),
-                                style = white20Bold,
-                                modifier = Modifier.padding(10.dp)
-                            )
                         }
                     }
                     if (loading) {

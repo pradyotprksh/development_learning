@@ -53,7 +53,11 @@ import kotlinx.coroutines.launch
 
 @ExperimentalMaterialApi
 @Composable
-fun CreateStatus(coroutineScope: CoroutineScope, bottomSheetScaffoldState: BottomSheetScaffoldState, userDetails: User) {
+fun CreateStatus(
+    coroutineScope: CoroutineScope,
+    bottomSheetScaffoldState: BottomSheetScaffoldState,
+    userDetails: User
+) {
     val focusManager = LocalFocusManager.current
 
     Row(

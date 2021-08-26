@@ -29,8 +29,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.project.pradyotprakash.whatsappcompose.R
 import com.project.pradyotprakash.whatsappcompose.models.Status
-import com.project.pradyotprakash.whatsappcompose.models.StatusFirestore
 import com.project.pradyotprakash.whatsappcompose.models.StatusDivision
+import com.project.pradyotprakash.whatsappcompose.models.StatusFirestore
 import com.project.pradyotprakash.whatsappcompose.utils.FirestoreCallbacks
 import com.project.pradyotprakash.whatsappcompose.utils.FirestoreUtility
 import com.project.pradyotprakash.whatsappcompose.utils.Utility

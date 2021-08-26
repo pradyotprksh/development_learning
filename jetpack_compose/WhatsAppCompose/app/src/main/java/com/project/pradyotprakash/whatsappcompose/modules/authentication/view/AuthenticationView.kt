@@ -136,7 +136,7 @@ fun AuthenticationView(
                     Column(
                         modifier = Modifier
                             .fillMaxSize()
-                            .padding(horizontal = 15.dp, vertical = 50.dp)
+                            .padding(horizontal = 15.dp, vertical = 30.dp)
                     ) {
                         Text(
                             stringResource(id = R.string.welcome_to)
@@ -172,7 +172,8 @@ fun AuthenticationView(
                                 }
                             },
                             colors = TextFieldDefaults.textFieldColors(
-                                unfocusedIndicatorColor = Color.LightGray
+                                unfocusedIndicatorColor = Color.LightGray,
+                                backgroundColor = Color.White
                             ),
                             keyboardOptions = KeyboardOptions(
                                 keyboardType = KeyboardType.Number,

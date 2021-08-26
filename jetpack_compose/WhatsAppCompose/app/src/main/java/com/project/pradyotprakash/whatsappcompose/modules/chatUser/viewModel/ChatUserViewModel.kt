@@ -28,6 +28,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.project.pradyotprakash.whatsappcompose.models.ChatDetails
 import com.project.pradyotprakash.whatsappcompose.models.ChatDetailsFirestore
+import com.project.pradyotprakash.whatsappcompose.models.MessageDetails
 import com.project.pradyotprakash.whatsappcompose.models.MessageDetailsFirestore
 import com.project.pradyotprakash.whatsappcompose.models.User
 import com.project.pradyotprakash.whatsappcompose.utils.FirestoreCallbacks
@@ -86,10 +87,23 @@ class ChatUserViewModel : ViewModel() {
     val selectedUserDetails: LiveData<User> = _selectedUserDetails
 
     /**
+     * Messages typed by user
+     */
+    private val _typedMessage = MutableLiveData("")
+    val typedMessage: LiveData<String> = _typedMessage
+
+    /**
+     * Update the message value as user types
+     */
+    fun updateTypedMessage(message: String) {
+        _typedMessage.value = message
+    }
+
+    /**
      * List of fav chats
      */
-    private val _messages = MutableLiveData(listOf<MessageDetailsFirestore>())
-    val messages: LiveData<List<MessageDetailsFirestore>> = _messages
+    private val _messages = MutableLiveData(listOf<MessageDetails>())
+    val messages: LiveData<List<MessageDetails>> = _messages
 
     /**
      * Chat details
@@ -170,7 +184,7 @@ class ChatUserViewModel : ViewModel() {
                     _message.value = message
                 }
 
-                override fun messages(messages: List<MessageDetailsFirestore>) {
+                override fun messages(messages: List<MessageDetails>) {
                     _loading.value = false
                     _messages.value = messages
                 }
@@ -191,10 +205,6 @@ class ChatUserViewModel : ViewModel() {
                 toUserId = userId,
                 chatDetailsFirestore = currentChatDetailsFirestore,
                 callbacks = object : FirestoreCallbacks {
-                    override fun isTrue() {
-                        getMessages(userId)
-                    }
-
                     override fun onError(message: String) {
                         _loading.value = false
                         _showMessage.value = true
@@ -202,6 +212,18 @@ class ChatUserViewModel : ViewModel() {
                     }
                 }
             )
+        }
+        getMessages(userId)
+    }
+
+    /**
+     * Send the message when the user clicks on send
+     */
+    fun sendAMessage(sentTo: String) {
+        val message = getTypedMessage()
+        if (message.isNotEmpty()) {
+            _typedMessage.value = ""
+            sendMessage(message = message, sentTo = sentTo)
         }
     }
 
@@ -240,6 +262,40 @@ class ChatUserViewModel : ViewModel() {
                 override fun onError(message: String) {
                     _showMessage.value = true
                     _message.value = message
+                }
+            }
+        )
+    }
+
+    /**
+     * Returns a non-nullable message
+     *
+     * Throws exception
+     */
+    @kotlin.jvm.Throws(IllegalArgumentException::class)
+    private fun getTypedMessage(): String {
+        return _typedMessage.value ?: ""
+    }
+
+    /**
+     * Update the fav details of the chat for the current user only
+     */
+    fun updateFav(userId: String) {
+        if (_loading.value == true) return
+        _loading.value = true
+        currentChatDetailsFirestore.chatIsFavourite = !currentChatDetailsFirestore.chatIsFavourite
+        firestoreUtility.updateChatDetails(
+            userId = userId,
+            chatDetailsFirestore = currentChatDetailsFirestore,
+            callbacks = object : FirestoreCallbacks {
+                override fun onError(message: String) {
+                    _loading.value = false
+                    _showMessage.value = true
+                    _message.value = message
+                }
+
+                override fun isTrue() {
+                    _loading.value = false
                 }
             }
         )

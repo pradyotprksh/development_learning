@@ -47,6 +47,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
 import com.project.pradyotprakash.whatsappcompose.R
 import com.project.pradyotprakash.whatsappcompose.models.User
@@ -64,6 +65,7 @@ import kotlinx.coroutines.launch
  * A profile view composable which will be used to show the profile details
  */
 
+@ExperimentalCoilApi
 @ExperimentalMaterialApi
 @Composable
 fun ProfileView(

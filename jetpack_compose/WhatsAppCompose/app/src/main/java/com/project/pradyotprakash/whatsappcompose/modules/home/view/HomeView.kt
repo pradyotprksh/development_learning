@@ -42,6 +42,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.rememberNavController
+import coil.annotation.ExperimentalCoilApi
 import com.project.pradyotprakash.whatsappcompose.R
 import com.project.pradyotprakash.whatsappcompose.modules.home.view.composables.HomeAppBar
 import com.project.pradyotprakash.whatsappcompose.modules.home.view.composables.HomeBottomNavigation
@@ -58,11 +59,16 @@ import kotlinx.coroutines.launch
  * A home view which will be used to show all the main features of the application to
  * an authenticated user.
  */
+@ExperimentalCoilApi
 @ExperimentalFoundationApi
 @ExperimentalMaterialApi
 @ExperimentalAnimationApi
 @Composable
-fun HomeView(profile: () -> Unit, userMessage: (String) -> Unit, homeViewModel: HomeViewModel = viewModel()) {
+fun HomeView(
+    profile: () -> Unit,
+    userMessage: (String) -> Unit,
+    homeViewModel: HomeViewModel = viewModel()
+) {
     val coroutineScope = rememberCoroutineScope()
     val snackbarHostState = SnackbarHostState()
     val navController = rememberNavController()

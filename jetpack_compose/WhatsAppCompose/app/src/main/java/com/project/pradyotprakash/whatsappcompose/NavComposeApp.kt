@@ -47,7 +47,6 @@ import com.project.pradyotprakash.whatsappcompose.nav.Destination.Profile
 import com.project.pradyotprakash.whatsappcompose.nav.Destination.Splash
 import com.project.pradyotprakash.whatsappcompose.ui.theme.WhatsAppComposeTheme
 import com.project.pradyotprakash.whatsappcompose.utils.Constants
-import com.project.pradyotprakash.whatsappcompose.utils.Utility
 
 /**
  * The main Navigation composable which will handle all the navigation stack.

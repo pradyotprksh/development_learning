@@ -24,7 +24,6 @@
 package com.project.pradyotprakash.whatsappcompose.modules.home.view.composables
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
@@ -42,7 +41,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.project.pradyotprakash.whatsappcompose.R
-import com.project.pradyotprakash.whatsappcompose.ui.composables.SizedBox
 import com.project.pradyotprakash.whatsappcompose.ui.theme.black15Bold
 
 /**
@@ -51,37 +49,34 @@ import com.project.pradyotprakash.whatsappcompose.ui.theme.black15Bold
 
 @Composable
 fun HomeAppBar(title: String, profile: () -> Unit) {
-    Column {
-        SizedBox(height = 30)
-        TopAppBar(
-            title = {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    Text(
-                        text = title,
-                        style = black15Bold,
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier.weight(0.9f)
-                    )
-                    IconButton(
-                        onClick = {
-                            profile()
-                        }
-                    ) {
-                        Icon(
-                            Icons.Filled.Person,
-                            contentDescription = stringResource(id = R.string.image_description),
-                            modifier = Modifier.size(25.dp),
-                            tint = Color.Gray
-                        )
+    TopAppBar(
+        title = {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text(
+                    text = title,
+                    style = black15Bold,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.weight(0.9f)
+                )
+                IconButton(
+                    onClick = {
+                        profile()
                     }
+                ) {
+                    Icon(
+                        Icons.Filled.Person,
+                        contentDescription = stringResource(id = R.string.image_description),
+                        modifier = Modifier.size(25.dp),
+                        tint = Color.Gray
+                    )
                 }
-            },
-            elevation = 0.dp,
-            backgroundColor = Color.White,
-        )
-    }
+            }
+        },
+        elevation = 0.dp,
+        backgroundColor = Color.White,
+    )
 }

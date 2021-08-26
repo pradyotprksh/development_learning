@@ -319,10 +319,7 @@ class AuthenticationViewModel : ViewModel() {
 
     /**
      * Returns a non-nullable country code
-     *
-     * Throws exception
      */
-    @kotlin.jvm.Throws(IllegalArgumentException::class)
     private fun getCountryCode(): String {
         return "+${country.phoneCode}"
     }

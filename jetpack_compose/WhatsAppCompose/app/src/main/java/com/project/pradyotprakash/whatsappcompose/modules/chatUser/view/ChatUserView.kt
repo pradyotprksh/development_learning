@@ -23,33 +23,53 @@
 */
 package com.project.pradyotprakash.whatsappcompose.modules.chatUser.view
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.SnackbarHostState
 import androidx.compose.material.SnackbarResult
 import androidx.compose.material.Surface
+import androidx.compose.material.Text
+import androidx.compose.material.TextField
+import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardCapitalization
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.annotation.ExperimentalCoilApi
 import com.project.pradyotprakash.whatsappcompose.R
-import com.project.pradyotprakash.whatsappcompose.models.MessageDetailsFirestore
+import com.project.pradyotprakash.whatsappcompose.models.MessageDetails
 import com.project.pradyotprakash.whatsappcompose.models.User
 import com.project.pradyotprakash.whatsappcompose.modules.UserViewModel
 import com.project.pradyotprakash.whatsappcompose.modules.chatUser.view.composables.SendHi
+import com.project.pradyotprakash.whatsappcompose.modules.chatUser.view.composables.SingleMessage
 import com.project.pradyotprakash.whatsappcompose.modules.chatUser.view.composables.TopBarDetails
 import com.project.pradyotprakash.whatsappcompose.modules.chatUser.viewModel.ChatUserViewModel
 import com.project.pradyotprakash.whatsappcompose.ui.composables.CircularIndicatorMessage
 import com.project.pradyotprakash.whatsappcompose.ui.composables.Snackbar
+import com.project.pradyotprakash.whatsappcompose.ui.theme.Notification
 import com.project.pradyotprakash.whatsappcompose.ui.theme.WhatsAppComposeTheme
+import com.project.pradyotprakash.whatsappcompose.ui.theme.white20
 import com.project.pradyotprakash.whatsappcompose.utils.Utility
 import kotlinx.coroutines.launch
 
@@ -77,8 +97,9 @@ fun ChatViewUser(
         initial = false
     )
     val message: String by chatUserViewModel.message.observeAsState(initial = "")
+    val typedMessage: String by chatUserViewModel.typedMessage.observeAsState(initial = "")
     val selectedUserDetails: User by chatUserViewModel.selectedUserDetails.observeAsState(initial = User())
-    val messages: List<MessageDetailsFirestore> by chatUserViewModel.messages.observeAsState(initial = listOf())
+    val messages: List<MessageDetails> by chatUserViewModel.messages.observeAsState(initial = listOf())
 
     /**
      * States from user view model
@@ -129,13 +150,76 @@ fun ChatViewUser(
                     contentAlignment = Alignment.Center,
                     modifier = Modifier.fillMaxSize()
                 ) {
-                    Column(
+                    Box(
+                        contentAlignment = Alignment.BottomCenter,
                         modifier = Modifier.fillMaxSize()
                     ) {
-                        TopBarDetails(
-                            selectedUserDetails = selectedUserDetails,
-                            back = back
-                        )
+                        Column(
+                            modifier = Modifier.fillMaxSize(),
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            verticalArrangement = Arrangement.Bottom
+                        ) {
+                            TopBarDetails(
+                                selectedUserDetails = selectedUserDetails,
+                                back = back,
+                                isFavorite = chatUserViewModel.currentChatDetails.chatIsFavourite,
+                                changFav = {
+                                    chatUserViewModel.updateFav(userId = userId)
+                                },
+                                showFav = isChatHistoryPresent
+                            )
+                            LazyColumn(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .weight(weight = 0.83f, fill = true),
+                                contentPadding = PaddingValues(
+                                    bottom = 85.dp,
+                                    top = 15.dp,
+                                    start = 15.dp,
+                                    end = 15.dp
+                                ),
+                                reverseLayout = true
+                            ) {
+                                items(messages) { message ->
+                                    SingleMessage(message = message)
+                                }
+                            }
+                        }
+                        if (isChatHistoryPresent) {
+                            TextField(
+                                value = typedMessage,
+                                onValueChange = { chatUserViewModel.updateTypedMessage(it) },
+                                colors = TextFieldDefaults.textFieldColors(
+                                    textColor = Color.White,
+                                    disabledTextColor = Color.Gray,
+                                    backgroundColor = Notification,
+                                    focusedIndicatorColor = Color.Transparent,
+                                    unfocusedIndicatorColor = Color.Transparent,
+                                    disabledIndicatorColor = Color.Transparent
+                                ),
+                                placeholder = {
+                                    Text(
+                                        text = stringResource(id = R.string.message_help),
+                                        style = white20
+                                    )
+                                },
+                                textStyle = white20,
+                                keyboardOptions = KeyboardOptions(
+                                    keyboardType = KeyboardType.Text,
+                                    imeAction = ImeAction.Send,
+                                    capitalization = KeyboardCapitalization.Sentences
+                                ),
+                                keyboardActions = KeyboardActions(
+                                    onSend = {
+                                        chatUserViewModel.sendAMessage(sentTo = userId)
+                                    }
+                                ),
+                                shape = RoundedCornerShape(50),
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(15.dp)
+                            )
+                        }
                     }
                     if (!isChatHistoryPresent) {
                         SendHi {

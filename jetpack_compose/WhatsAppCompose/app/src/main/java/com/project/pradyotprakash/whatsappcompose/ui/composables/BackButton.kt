@@ -27,7 +27,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -48,7 +47,7 @@ import com.project.pradyotprakash.whatsappcompose.ui.theme.Action
  */
 
 @Composable
-fun BackButton(back: () -> Unit, icon: ImageVector, topSpace: Int = 50) {
+fun BackButton(back: () -> Unit, icon: ImageVector, topSpace: Int = 30) {
     Column(
         modifier = Modifier
             .padding(start = 15.dp)

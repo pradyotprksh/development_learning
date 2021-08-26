@@ -138,10 +138,9 @@ fun ChatView(userMessage: (String) -> Unit, chatViewModel: ChatViewModel = viewM
                                     )
                                 }
                             }
-                        }
-                        SizedBox(height = 20)
-                        if (chats.isNotEmpty()) {
                             SizedBox(height = 20)
+                        }
+                        if (chats.isNotEmpty()) {
                             Text(
                                 text = stringResource(id = R.string.recents),
                                 style = black20Bold

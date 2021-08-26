@@ -38,17 +38,11 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Outline
-import androidx.compose.ui.graphics.Path
-import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.Density
-import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
@@ -91,7 +85,9 @@ fun SingleFavChatView(
                     width = 1.dp,
                     color = Notification
                 ) else null,
-                modifier = Modifier.fillMaxSize().padding(end = 5.dp)
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(end = 5.dp)
             ) {
                 Image(
                     painter = rememberImagePainter(

@@ -32,6 +32,7 @@ import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 import com.project.pradyotprakash.whatsappcompose.models.ChatDetails
 import com.project.pradyotprakash.whatsappcompose.models.ChatDetailsFirestore
+import com.project.pradyotprakash.whatsappcompose.models.MessageDetails
 import com.project.pradyotprakash.whatsappcompose.models.MessageDetailsFirestore
 import com.project.pradyotprakash.whatsappcompose.models.Status
 import com.project.pradyotprakash.whatsappcompose.models.StatusFirestore
@@ -247,22 +248,29 @@ class FirestoreUtility {
         db.collection(DBConstants.Collection.chats).document(getCurrentUserId())
             .collection(DBConstants.Collection.chats).document(userId)
             .collection(DBConstants.Collection.messages)
-            .orderBy(DBConstants.DocumentField.sentOn)
+            .orderBy(DBConstants.DocumentField.sentOn, Query.Direction.DESCENDING)
             .addSnapshotListener { task, e ->
                 if (e != null) {
                     callbacks.onError(e.localizedMessage ?: "")
                     return@addSnapshotListener
                 }
                 if (task != null) {
-                    val messages = ArrayList<MessageDetailsFirestore>()
+                    val messages = ArrayList<MessageDetails>()
                     for (message in task.documents) {
-                        val messageDetails = message.toObject<MessageDetailsFirestore>()
+                        val messageDetails = message.toObject<MessageDetails>()
                         if (messageDetails != null) {
+                            val sentBy = messageDetails.sentBy
+                            if (sentBy != null) {
+                                messageDetails.messageByCurrentUser =
+                                    sentBy.id == getCurrentUserId()
+                            }
                             messages.add(messageDetails)
                         }
                     }
 
                     callbacks.messages(messages = messages)
+                } else {
+                    callbacks.onError("")
                 }
             }
     }
@@ -351,6 +359,29 @@ class FirestoreUtility {
     }
 
     /**
+     * Update current user chat details only
+     */
+    fun updateChatDetails(
+        userId: String,
+        chatDetailsFirestore: ChatDetailsFirestore,
+        callbacks: FirestoreCallbacks
+    ) {
+        db.collection(DBConstants.Collection.chats).document(getCurrentUserId())
+            .collection(DBConstants.Collection.chats).document(userId).set(chatDetailsFirestore)
+            .addOnCompleteListener { task ->
+                if (task.exception != null) {
+                    callbacks.onError(message = task.exception?.localizedMessage ?: "")
+                    return@addOnCompleteListener
+                }
+                if (task.isSuccessful) {
+                    callbacks.isTrue()
+                } else {
+                    callbacks.onError(message = "")
+                }
+            }
+    }
+
+    /**
      * Listen to current user message lists
      */
     fun currentUserChatList(callbacks: FirestoreCallbacks) {
@@ -411,8 +442,9 @@ class FirestoreUtility {
                                         }
                                         if (chatDetails.chatIsFavourite) {
                                             favChatList.add(chatDetails)
+                                        } else {
+                                            chatList.add(chatDetails)
                                         }
-                                        chatList.add(chatDetails)
                                     }
 
                                     callbacks.chatList(

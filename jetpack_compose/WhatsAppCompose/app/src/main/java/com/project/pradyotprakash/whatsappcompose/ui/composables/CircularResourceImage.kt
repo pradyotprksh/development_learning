@@ -48,6 +48,8 @@ fun CircularResourceImage(resourceId: Int, size: Int) {
         painter = painterResource(id = resourceId),
         contentDescription = stringResource(id = R.string.image_description),
         contentScale = ContentScale.Crop,
-        modifier = Modifier.size(size.dp).clip(CircleShape)
+        modifier = Modifier
+            .size(size.dp)
+            .clip(CircleShape)
     )
 }
