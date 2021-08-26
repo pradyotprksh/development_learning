@@ -225,7 +225,6 @@ class FirestoreUtility {
                 }
                 if (task != null) {
                     if (task.exists()) {
-                        callbacks.isTrue()
                         val chatDetails = task.toObject<ChatDetails>()
                         val chatDetailsFirestore = task.toObject<ChatDetailsFirestore>()
                         if (chatDetails != null && chatDetailsFirestore != null) {
@@ -237,6 +236,33 @@ class FirestoreUtility {
                     } else {
                         callbacks.isFalse()
                     }
+                }
+            }
+    }
+
+    /**
+     * Get list of messages from the [userId] to the current user
+     */
+    fun getMessages(userId: String, callbacks: FirestoreCallbacks) {
+        db.collection(DBConstants.Collection.chats).document(getCurrentUserId())
+            .collection(DBConstants.Collection.chats).document(userId)
+            .collection(DBConstants.Collection.messages)
+            .orderBy(DBConstants.DocumentField.sentOn)
+            .addSnapshotListener { task, e ->
+                if (e != null) {
+                    callbacks.onError(e.localizedMessage ?: "")
+                    return@addSnapshotListener
+                }
+                if (task != null) {
+                    val messages = ArrayList<MessageDetailsFirestore>()
+                    for (message in task.documents) {
+                        val messageDetails = message.toObject<MessageDetailsFirestore>()
+                        if (messageDetails != null) {
+                            messages.add(messageDetails)
+                        }
+                    }
+
+                    callbacks.messages(messages = messages)
                 }
             }
     }

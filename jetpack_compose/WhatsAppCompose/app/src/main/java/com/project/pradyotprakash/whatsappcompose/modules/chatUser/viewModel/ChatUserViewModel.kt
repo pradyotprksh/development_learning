@@ -1,3 +1,26 @@
+/*
+ * MIT License
+ *
+ * Copyright (c) 2021 Pradyot Prakash
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+*/
 package com.project.pradyotprakash.whatsappcompose.modules.chatUser.viewModel
 
 import androidx.lifecycle.LiveData
@@ -63,6 +86,12 @@ class ChatUserViewModel : ViewModel() {
     val selectedUserDetails: LiveData<User> = _selectedUserDetails
 
     /**
+     * List of fav chats
+     */
+    private val _messages = MutableLiveData(listOf<MessageDetailsFirestore>())
+    val messages: LiveData<List<MessageDetailsFirestore>> = _messages
+
+    /**
      * Chat details
      */
     var currentChatDetails: ChatDetails = ChatDetails()
@@ -115,15 +144,35 @@ class ChatUserViewModel : ViewModel() {
                     _isChatHistoryPresent.value = false
                 }
 
-                override fun isTrue() {
-                    _loading.value = false
+                override fun chatDetails(
+                    chatDetails: ChatDetails,
+                    chatDetailsFirestore: ChatDetailsFirestore
+                ) {
                     _isChatHistoryPresent.value = true
-                }
-
-                override fun chatDetails(chatDetails: ChatDetails, chatDetailsFirestore: ChatDetailsFirestore) {
                     currentChatDetails = chatDetails
                     currentChatDetailsFirestore = chatDetailsFirestore
                     updateMessageRead(userId)
+                }
+            }
+        )
+    }
+
+    /**
+     * Get the list of messages sent/receive to/from [userId]
+     */
+    private fun getMessages(userId: String) {
+        firestoreUtility.getMessages(
+            userId = userId,
+            callbacks = object : FirestoreCallbacks {
+                override fun onError(message: String) {
+                    _loading.value = false
+                    _showMessage.value = true
+                    _message.value = message
+                }
+
+                override fun messages(messages: List<MessageDetailsFirestore>) {
+                    _loading.value = false
+                    _messages.value = messages
                 }
             }
         )
@@ -142,9 +191,12 @@ class ChatUserViewModel : ViewModel() {
                 toUserId = userId,
                 chatDetailsFirestore = currentChatDetailsFirestore,
                 callbacks = object : FirestoreCallbacks {
-                    override fun isTrue() {}
+                    override fun isTrue() {
+                        getMessages(userId)
+                    }
 
                     override fun onError(message: String) {
+                        _loading.value = false
                         _showMessage.value = true
                         _message.value = message
                     }

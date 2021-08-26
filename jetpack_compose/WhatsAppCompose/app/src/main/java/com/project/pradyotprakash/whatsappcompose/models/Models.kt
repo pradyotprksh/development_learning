@@ -127,13 +127,3 @@ data class MessageDetailsFirestore(
     var sentOn: Long = 0,
     var sentBy: DocumentReference? = null
 )
-
-/**
- * Message details
- */
-data class MessageDetails(
-    var message: String = "",
-    var sentOn: Long = 0,
-    var sentBy: DocumentReference? = null,
-    var sentByUser: User = User(),
-)
