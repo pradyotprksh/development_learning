@@ -31,6 +31,7 @@ import androidx.compose.runtime.remember
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import coil.annotation.ExperimentalCoilApi
 import com.project.pradyotprakash.whatsappcompose.modules.authentication.view.AuthenticationView
 import com.project.pradyotprakash.whatsappcompose.modules.chatUser.view.ChatViewUser
 import com.project.pradyotprakash.whatsappcompose.modules.formFill.view.FormFillView
@@ -51,6 +52,7 @@ import com.project.pradyotprakash.whatsappcompose.utils.Utility
 /**
  * The main Navigation composable which will handle all the navigation stack.
  */
+@ExperimentalCoilApi
 @ExperimentalFoundationApi
 @ExperimentalMaterialApi
 @ExperimentalAnimationApi

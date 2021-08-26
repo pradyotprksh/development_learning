@@ -30,6 +30,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import coil.annotation.ExperimentalCoilApi
 import com.project.pradyotprakash.whatsappcompose.modules.chat.view.ChatView
 import com.project.pradyotprakash.whatsappcompose.modules.home.view.nav.NavigationItem
 import com.project.pradyotprakash.whatsappcompose.modules.search.view.SearchView
@@ -40,6 +41,7 @@ import com.project.pradyotprakash.whatsappcompose.modules.status.view.StatusView
  * bar.
  */
 
+@ExperimentalCoilApi
 @ExperimentalFoundationApi
 @ExperimentalMaterialApi
 @ExperimentalAnimationApi
