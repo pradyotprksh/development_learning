@@ -121,7 +121,12 @@ interface FirestoreCallbacks {
     /**
      * Chat details
      */
-    fun chatDetails(chatDetails: ChatDetails, chatDetailsFirestore: ChatDetailsFirestore) {}
+    fun chatDetails(
+        currentChatDetails: ChatDetails,
+        currentChatDetailsFirestore: ChatDetailsFirestore,
+        otherChatDetails: ChatDetails,
+        otherChatDetailsFirestore: ChatDetailsFirestore,
+    ) {}
 
     /**
      * Chat list

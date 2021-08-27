@@ -110,6 +110,8 @@ class ChatUserViewModel : ViewModel() {
      */
     var currentChatDetails: ChatDetails = ChatDetails()
     var currentChatDetailsFirestore: ChatDetailsFirestore = ChatDetailsFirestore()
+    var otherChatDetails: ChatDetails = ChatDetails()
+    var otherChatDetailsFirestore: ChatDetailsFirestore = ChatDetailsFirestore()
 
     /**
      * Check for user chat
@@ -159,13 +161,16 @@ class ChatUserViewModel : ViewModel() {
                 }
 
                 override fun chatDetails(
-                    chatDetails: ChatDetails,
-                    chatDetailsFirestore: ChatDetailsFirestore
+                    currentChatDetails: ChatDetails,
+                    currentChatDetailsFirestore: ChatDetailsFirestore,
+                    otherChatDetails: ChatDetails,
+                    otherChatDetailsFirestore: ChatDetailsFirestore,
                 ) {
                     _isChatHistoryPresent.value = true
-                    currentChatDetails = chatDetails
-                    currentChatDetailsFirestore = chatDetailsFirestore
-                    updateMessageRead(userId)
+                    this@ChatUserViewModel.currentChatDetails = currentChatDetails
+                    this@ChatUserViewModel.currentChatDetailsFirestore = currentChatDetailsFirestore
+                    this@ChatUserViewModel.otherChatDetails = otherChatDetails
+                    this@ChatUserViewModel.otherChatDetailsFirestore = otherChatDetailsFirestore
                 }
             }
         )
@@ -200,10 +205,12 @@ class ChatUserViewModel : ViewModel() {
             currentChatDetailsFirestore.lastMessageSentBy?.id != firestoreUtility.getCurrentUserId()
         ) {
             currentChatDetailsFirestore.chatLastMessageRead = true
+            otherChatDetailsFirestore.chatLastMessageRead = true
 
             firestoreUtility.sendPersonalMessage(
                 toUserId = userId,
-                chatDetailsFirestore = currentChatDetailsFirestore,
+                currentChatDetailsFirestore = currentChatDetailsFirestore,
+                otherChatDetailsFirestore = otherChatDetailsFirestore,
                 callbacks = object : FirestoreCallbacks {
                     override fun onError(message: String) {
                         _loading.value = false
@@ -223,6 +230,7 @@ class ChatUserViewModel : ViewModel() {
         val message = getTypedMessage()
         if (message.isNotEmpty()) {
             _typedMessage.value = ""
+            updateMessageRead(sentTo)
             sendMessage(message = message, sentTo = sentTo)
         }
     }
@@ -231,20 +239,7 @@ class ChatUserViewModel : ViewModel() {
      * Send message
      */
     fun sendMessage(message: String, sentTo: String, isFirstMessage: Boolean = false) {
-        currentChatDetailsFirestore.lastMessage = message
-        currentChatDetailsFirestore.lastMessageSentOn = Utility.currentTimeStamp()
-        currentChatDetailsFirestore.lastMessageSentBy = firestoreUtility.currentUserReference()
-        if (isFirstMessage) {
-            currentChatDetailsFirestore.chatCreatedOn = Utility.currentTimeStamp()
-            currentChatDetailsFirestore.chatCreatedBy = firestoreUtility.currentUserReference()
-            currentChatDetailsFirestore.chatLastMessageRead = false
-            currentChatDetailsFirestore.chatIsAGroup = false
-            currentChatDetailsFirestore.members = listOf(
-                firestoreUtility.currentUserReference(),
-                firestoreUtility.getUserReference(userId = sentTo)
-            )
-        }
-        currentChatDetailsFirestore.chatLastMessageRead = false
+        updateChatDetails(message, sentTo, isFirstMessage)
 
         val messageDetails = MessageDetailsFirestore(
             message = message,
@@ -255,7 +250,8 @@ class ChatUserViewModel : ViewModel() {
         firestoreUtility.sendPersonalMessage(
             toUserId = sentTo,
             messageDetailsFirestore = messageDetails,
-            chatDetailsFirestore = currentChatDetailsFirestore,
+            currentChatDetailsFirestore = currentChatDetailsFirestore,
+            otherChatDetailsFirestore = otherChatDetailsFirestore,
             callbacks = object : FirestoreCallbacks {
                 override fun isTrue() {}
 
@@ -265,6 +261,40 @@ class ChatUserViewModel : ViewModel() {
                 }
             }
         )
+    }
+
+    /**
+     * Set the details of the chat before update the db
+     */
+    private fun updateChatDetails(message: String, sentTo: String, isFirstMessage: Boolean) {
+        currentChatDetailsFirestore.lastMessage = message
+        currentChatDetailsFirestore.lastMessageSentOn = Utility.currentTimeStamp()
+        currentChatDetailsFirestore.lastMessageSentBy = firestoreUtility.currentUserReference()
+
+        otherChatDetailsFirestore.lastMessage = message
+        otherChatDetailsFirestore.lastMessageSentOn = Utility.currentTimeStamp()
+        otherChatDetailsFirestore.lastMessageSentBy = firestoreUtility.currentUserReference()
+        if (isFirstMessage) {
+            currentChatDetailsFirestore.chatCreatedOn = Utility.currentTimeStamp()
+            currentChatDetailsFirestore.chatCreatedBy = firestoreUtility.currentUserReference()
+            currentChatDetailsFirestore.chatLastMessageRead = false
+            currentChatDetailsFirestore.chatIsAGroup = false
+            currentChatDetailsFirestore.members = listOf(
+                firestoreUtility.currentUserReference(),
+                firestoreUtility.getUserReference(userId = sentTo)
+            )
+
+            otherChatDetailsFirestore.chatCreatedOn = Utility.currentTimeStamp()
+            otherChatDetailsFirestore.chatCreatedBy = firestoreUtility.currentUserReference()
+            otherChatDetailsFirestore.chatLastMessageRead = false
+            otherChatDetailsFirestore.chatIsAGroup = false
+            otherChatDetailsFirestore.members = listOf(
+                firestoreUtility.currentUserReference(),
+                firestoreUtility.getUserReference(userId = sentTo)
+            )
+        }
+        currentChatDetailsFirestore.chatLastMessageRead = false
+        otherChatDetailsFirestore.chatLastMessageRead = false
     }
 
     /**

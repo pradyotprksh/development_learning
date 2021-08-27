@@ -219,24 +219,51 @@ class FirestoreUtility {
     fun isChatAvailable(toUserId: String, callbacks: FirestoreCallbacks) {
         db.collection(DBConstants.Collection.chats).document(getCurrentUserId())
             .collection(DBConstants.Collection.chats).document(toUserId)
-            .addSnapshotListener { task, e ->
-                if (e != null) {
-                    callbacks.onError(e.localizedMessage ?: "")
+            .addSnapshotListener { currentTask, currentException ->
+                if (currentException != null) {
+                    callbacks.onError(currentException.localizedMessage ?: "")
                     return@addSnapshotListener
                 }
-                if (task != null) {
-                    if (task.exists()) {
-                        val chatDetails = task.toObject<ChatDetails>()
-                        val chatDetailsFirestore = task.toObject<ChatDetailsFirestore>()
-                        if (chatDetails != null && chatDetailsFirestore != null) {
-                            callbacks.chatDetails(
-                                chatDetails = chatDetails,
-                                chatDetailsFirestore = chatDetailsFirestore
-                            )
+                if (currentTask != null) {
+                    if (currentTask.exists()) {
+                        val currentChatDetails = currentTask.toObject<ChatDetails>()
+                        val currentChatDetailsFirestore =
+                            currentTask.toObject<ChatDetailsFirestore>()
+                        if (currentChatDetails != null && currentChatDetailsFirestore != null) {
+
+                            // Get other user chat details
+                            db.collection(DBConstants.Collection.chats).document(getCurrentUserId())
+                                .collection(DBConstants.Collection.chats).document(toUserId).get()
+                                .addOnCompleteListener { otherTask ->
+                                    if (otherTask.exception != null) {
+                                        callbacks.onError(otherTask.exception?.localizedMessage ?: "")
+                                    } else {
+                                        if (otherTask.result.exists()) {
+                                            val otherChatDetails =
+                                                otherTask.result.toObject<ChatDetails>()
+                                            val otherChatDetailsFirestore =
+                                                otherTask.result.toObject<ChatDetailsFirestore>()
+                                            if (otherChatDetails != null && otherChatDetailsFirestore != null) {
+                                                callbacks.chatDetails(
+                                                    currentChatDetails = currentChatDetails,
+                                                    currentChatDetailsFirestore = currentChatDetailsFirestore,
+                                                    otherChatDetails = otherChatDetails,
+                                                    otherChatDetailsFirestore = otherChatDetailsFirestore
+                                                )
+                                            }
+                                        } else {
+                                            callbacks.isFalse()
+                                        }
+                                    }
+                                }
+                        } else {
+                            callbacks.onError("")
                         }
                     } else {
                         callbacks.isFalse()
                     }
+                } else {
+                    callbacks.onError("")
                 }
             }
     }
@@ -310,7 +337,8 @@ class FirestoreUtility {
      */
     fun sendPersonalMessage(
         toUserId: String,
-        chatDetailsFirestore: ChatDetailsFirestore,
+        currentChatDetailsFirestore: ChatDetailsFirestore,
+        otherChatDetailsFirestore: ChatDetailsFirestore,
         messageDetailsFirestore: MessageDetailsFirestore? = null,
         callbacks: FirestoreCallbacks
     ) {
@@ -338,8 +366,8 @@ class FirestoreUtility {
          * Update the details in batch
          */
         db.runBatch {
-            it.set(currentChatRef, chatDetailsFirestore)
-            it.set(toChatRef, chatDetailsFirestore)
+            it.set(currentChatRef, currentChatDetailsFirestore)
+            it.set(toChatRef, otherChatDetailsFirestore)
 
             if (messageDetailsFirestore != null) {
                 it.set(currentMessageRef, messageDetailsFirestore)
