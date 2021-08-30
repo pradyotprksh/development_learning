@@ -212,18 +212,6 @@ class AuthenticationViewModel : ViewModel() {
         val number = getPhoneNumber(activity)
         val code = getOtpCode(activity, cCode, number)
 
-        val userDetails = User(
-            phoneNumber = number,
-            countryName = country.name,
-            countryNameCode = country.nameCode,
-            countryPhoneCode = country.phoneCode,
-            lastLoggedIn = Utility.currentTimeStamp(),
-            appVersion = Utility.applicationVersion(),
-            deviceId = Utility.getDeviceId(),
-            deviceModel = Utility.deviceModel(),
-            deviceOs = Utility.systemOS(),
-        )
-
         PhoneAuthenticationUtility.verifyOTP(
             verificationId = verificationId,
             code = code,
@@ -233,7 +221,19 @@ class AuthenticationViewModel : ViewModel() {
                 }
 
                 override fun onVerified(user: FirebaseUser) {
-                    userDetails.userId = user.uid
+                    val userDetails = User(
+                        phoneNumber = number,
+                        countryName = country.name,
+                        countryNameCode = country.nameCode,
+                        countryPhoneCode = country.phoneCode,
+                        lastLoggedIn = Utility.currentTimeStamp(),
+                        appVersion = Utility.applicationVersion(),
+                        deviceId = Utility.getDeviceId(),
+                        deviceModel = Utility.deviceModel(),
+                        deviceOs = Utility.systemOS(),
+                        userId = user.uid
+                    )
+
                     checkForUserDetails(userDetails, home, formFill)
                 }
 
