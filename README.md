@@ -5,10 +5,6 @@ Will be adding new projects for different platforms as I move forward and learn.
 
 Each project is divided into folders based on the platforms and the courses. And also added the final screenshot of the project (if possible).
 
-# NOTE
-
-**IF YOU NEED THE ACCESS TO THE REPOSITORY IN THE DISCUSSION YOU CAN LET ME KNOW. WILL GIVE THE READ ACCESS.**
-
 ## [iOS](https://github.com/pradyotprksh/development_learning/tree/main/ios)
 
 ### [Angela Udemy iOS Course](https://github.com/pradyotprksh/development_learning/tree/main/ios/ios_angela_udemy) 
