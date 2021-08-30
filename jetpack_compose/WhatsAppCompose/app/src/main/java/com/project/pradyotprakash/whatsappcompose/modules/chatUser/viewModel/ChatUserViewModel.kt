@@ -171,6 +171,8 @@ class ChatUserViewModel : ViewModel() {
                     this@ChatUserViewModel.currentChatDetailsFirestore = currentChatDetailsFirestore
                     this@ChatUserViewModel.otherChatDetails = otherChatDetails
                     this@ChatUserViewModel.otherChatDetailsFirestore = otherChatDetailsFirestore
+
+                    getMessages(userId)
                 }
             }
         )
@@ -192,6 +194,8 @@ class ChatUserViewModel : ViewModel() {
                 override fun messages(messages: List<MessageDetails>) {
                     _loading.value = false
                     _messages.value = messages
+
+                    updateMessageRead(userId)
                 }
             }
         )
@@ -220,7 +224,6 @@ class ChatUserViewModel : ViewModel() {
                 }
             )
         }
-        getMessages(userId)
     }
 
     /**
@@ -230,7 +233,6 @@ class ChatUserViewModel : ViewModel() {
         val message = getTypedMessage()
         if (message.isNotEmpty()) {
             _typedMessage.value = ""
-            updateMessageRead(sentTo)
             sendMessage(message = message, sentTo = sentTo)
         }
     }
