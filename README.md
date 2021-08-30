@@ -6,7 +6,6 @@ Will be adding new projects for different platforms as I move forward and learn.
 Each project is divided into folders based on the platforms and the courses. And also added the final screenshot of the project (if possible).
 
 # NOTE
-**IF ANYTIME THE REPOSITORY IS NOT ACCESSIBLE IT MEANS THAT THE REPO HAS BEEN MADE PRIVATE. IF ITS PRIVATE THEN IT MEANS THAT I AM WORKING ON NEW PROJECT AND THE REPOSITORY WILL BE MADE PUBLIC WHEN ITS DONE. I THOUGHT OF MAKING A SEPERATE REPOSITORY AND THEN WORK ON THAT BUT IT WILL NOT BE FEASIBLE.**
 
 **IF YOU NEED THE ACCESS TO THE REPOSITORY IN THE DISCUSSION YOU CAN LET ME KNOW. WILL GIVE THE READ ACCESS.**
 
