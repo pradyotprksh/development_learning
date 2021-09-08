@@ -13,6 +13,8 @@ class GameController extends GetxController {
   var numberOfMoves = 0;
   var rng = new Random();
 
+  var numberOfTurns = 10;
+
   void _initialSetup() {
     pugPosition = 100;
     diceNumber = 0;
@@ -28,45 +30,51 @@ class GameController extends GetxController {
   }
 
   void rollDice() {
-    // Generate random number up to 6
-    var num = rng.nextInt(6);
-    // If 0 then 1
-    if (num <= 0) {
-      num = 1;
-    }
-    ++numberOfMoves;
-    // If pug is within the board range
-    if (pugPosition - num >= 1) {
-      // If game started
-      if (diceNumber == 0) {
-        // If not even then try again
-        if (num % 2 != 0) {
-          diceNumberString = 'Try again';
+    if (numberOfTurns > 0) {
+      // Generate random number up to 6
+      var num = rng.nextInt(6);
+      // If 0 then 1
+      if (num <= 0) {
+        num = 1;
+      }
+      ++numberOfMoves;
+      // If pug is within the board range
+      if (pugPosition - num >= 1) {
+        // If game started
+        if (diceNumber == 0) {
+          // If not even then try again
+          if (num % 2 != 0) {
+            diceNumberString = 'Try again';
+          } else {
+            diceNumber = num;
+            diceNumberString = '$diceNumber';
+          }
         } else {
           diceNumber = num;
           diceNumberString = '$diceNumber';
         }
-      } else {
-        diceNumber = num;
-        diceNumberString = '$diceNumber';
-      }
-      // If even number came
-      if (diceNumberString != 'Try again') {
-        pugPosition -= diceNumber;
-        if (pugPosition == snakeHeadPosition) {
-          pugPosition = snakeTailPosition;
+        // If even number came
+        if (diceNumberString != 'Try again') {
+          pugPosition -= diceNumber;
+          if (pugPosition == snakeHeadPosition) {
+            pugPosition = snakeTailPosition;
+          }
         }
+        // If pug reached the first box
+        if (pugPosition == 1) {
+          diceNumberString = 'Finished';
+          --numberOfTurns;
+          lastGameStats +=
+              '$numberOfTurns number game completed in $numberOfMoves moves\n';
+        }
+      } else if (pugPosition == 1) {
+        _initialSetup();
+        _updateSnakePosition();
+      } else {
+        diceNumberString = 'Try again';
       }
-      // If pug reached the first box
-      if (pugPosition == 1) {
-        diceNumberString = 'Finished';
-      }
-    } else if (pugPosition == 1) {
-      lastGameStats = 'Last game completed in $numberOfMoves moves';
-      _initialSetup();
-      _updateSnakePosition();
     } else {
-      diceNumberString = 'Try again';
+      diceNumberString = '$numberOfTurns remaining';
     }
     update();
   }
@@ -75,5 +83,11 @@ class GameController extends GetxController {
     snakeHeadPosition = rng.nextInt(50);
     snakeTailPosition = snakeHeadPosition + 10 + rng.nextInt(35);
     update();
+  }
+
+  void restartGame() {
+    numberOfTurns = 10;
+    lastGameStats = '';
+    _initialSetup();
   }
 }

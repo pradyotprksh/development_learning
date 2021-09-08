@@ -53,10 +53,23 @@ class GameView extends StatelessWidget {
               SizedBox(
                 height: 30,
               ),
-              Text(
-                _controller.lastGameStats,
-                style: Get.textTheme.bodyText1,
-              )
+              Padding(
+                padding: const EdgeInsets.all(15.0),
+                child: Text(
+                  _controller.lastGameStats,
+                  style: Get.textTheme.bodyText1,
+                ),
+              ),
+              SizedBox(
+                height: 30,
+              ),
+              if (_controller.numberOfTurns <= 0)
+                ElevatedButton(
+                  onPressed: _controller.restartGame,
+                  child: Text(
+                    'Restart',
+                  ),
+                )
             ],
           ),
         ),
