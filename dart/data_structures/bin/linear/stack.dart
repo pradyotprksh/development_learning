@@ -66,3 +66,68 @@ class Stack {
     print(elements);
   }
 }
+
+class DoubleStack {
+  final _stack = [-1, -1, -1, -1, -1];
+  final _maxElements = 5;
+  var _top1 = -1;
+  var _top2 = 5;
+
+  void push1(int value) {
+    if (_top1 >= _top2 - 1) {
+      print('Stack 1 full can\'t push $value');
+    } else {
+      ++_top1;
+      _stack[_top1] = value;
+    }
+  }
+
+  void push2(int value) {
+    if (_top2 <= _top1 + 1) {
+      print('Stack 2 full can\'t push $value');
+    } else {
+      --_top2;
+      _stack[_top2] = value;
+    }
+  }
+
+  void pop1() {
+    if (_top1 == -1) {
+      print('Stack 1 empty');
+    } else {
+      _stack[_top1] = -1;
+      --_top1;
+    }
+  }
+
+  void pop2() {
+    if (_top2 == _maxElements) {
+      print('Stack 2 empty');
+    } else {
+      _stack[_top2] = -1;
+      ++_top2;
+    }
+  }
+
+  void printStacks() {
+    var firstElements = '';
+    var secondElements = '';
+
+    for (var i = _top1; i >= 0; i--) {
+      if (_stack[i] == -1) {
+        firstElements = '$firstElements#--->';
+      } else {
+        firstElements = '$firstElements${_stack[i]}--->';
+      }
+    }
+    for (var i = _top2; i < _maxElements; i++) {
+      if (_stack[i] == -1) {
+        secondElements = '$secondElements#--->';
+      } else {
+        secondElements = '$secondElements${_stack[i]}--->';
+      }
+    }
+    print('First Stack $firstElements');
+    print('Second Stack $secondElements');
+  }
+}

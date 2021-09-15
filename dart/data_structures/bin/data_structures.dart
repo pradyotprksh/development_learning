@@ -32,6 +32,30 @@ void main(List<String> arguments) {
   _stack.getMinimumValue();
   print('**********\n');
 
+  print('***** DOUBLE STACK *****');
+  var doubleStack = DoubleStack();
+
+  doubleStack.push1(1);
+  doubleStack.push1(2);
+  doubleStack.push2(10);
+  doubleStack.push2(20);
+  doubleStack.push2(30);
+  doubleStack.printStacks();
+
+  doubleStack.pop1();
+  doubleStack.printStacks();
+
+  doubleStack.pop2();
+  doubleStack.printStacks();
+
+  doubleStack.push1(2);
+  doubleStack.push2(30);
+  doubleStack.push2(40);
+  doubleStack.push1(3);
+  doubleStack.printStacks();
+
+  print('**********\n');
+
   print('***** QUEUE *****');
   var queue = Queue();
   queue.enqueue(1);
