@@ -5,6 +5,12 @@ Will be adding new projects for different platforms as I move forward and learn.
 
 Each project is divided into folders based on the platforms and the courses. And also added the final screenshot of the project (if possible).
 
+## [Dart](https://github.com/pradyotprksh/development_learning/tree/main/dart)
+  - [data_structures](https://github.com/pradyotprksh/development_learning/tree/main/dart/data_structures)
+
+## [Flutter](https://github.com/pradyotprksh/development_learning/tree/main/flutter)
+  - [snake_ladders](https://github.com/pradyotprksh/development_learning/tree/main/flutter/snake_ladders)
+
 ## [iOS](https://github.com/pradyotprksh/development_learning/tree/main/ios)
 
 ### [Angela Udemy iOS Course](https://github.com/pradyotprksh/development_learning/tree/main/ios/ios_angela_udemy) 
