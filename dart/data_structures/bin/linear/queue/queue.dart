@@ -49,9 +49,9 @@ class Queue {
     var elements = '';
     for (var i in _queue) {
       if (i == -1) {
-        elements = '$elements#-';
+        elements = '$elements#--->';
       } else {
-        elements = '$elements$i-';
+        elements = '$elements$i--->';
       }
     }
     print(elements);

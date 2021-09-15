@@ -1,4 +1,3 @@
-import 'linear/linked_list/double_linked_list.dart';
 import 'linear/linked_list/single_linked_list.dart';
 import 'linear/queue/queue.dart';
 import 'linear/queue/types/circular_queue.dart';
@@ -80,9 +79,23 @@ void main(List<String> arguments) {
 
   print('***** SINGLE LINKED LIST *****');
   var singleLinkedList = SingleLinkedList();
-  print('**********\n');
 
-  print('***** DOUBLY LINKED LIST *****');
-  var doublyLinkedList = DoubleLinkedList();
+  singleLinkedList.insertAtStart(1);
+  singleLinkedList.insertAtStart(2);
+  singleLinkedList.insertAtStart(3);
+
+  singleLinkedList.insertAtEnd(4);
+  singleLinkedList.insertAtEnd(5);
+
+  singleLinkedList.insertAtMiddle(6, 1);
+
+  singleLinkedList.insertAtMiddle(7, 7);
+
+  singleLinkedList.deleteFromStart();
+
+  singleLinkedList.deleteFromEnd();
+
+  singleLinkedList.deleteFromMiddle(1);
+  singleLinkedList.deleteFromMiddle(3);
   print('**********\n');
 }

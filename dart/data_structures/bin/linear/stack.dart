@@ -46,7 +46,7 @@ class Stack {
   void printStack() {
     var elements = '';
     for (var i in _stack) {
-      elements = '$elements$i-';
+      elements = '$elements$i--->';
     }
     print(elements);
   }
