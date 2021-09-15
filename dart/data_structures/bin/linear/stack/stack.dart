@@ -54,8 +54,9 @@ class Stack {
     return _maxElements == 0;
   }
 
-  void peek() {
+  int peek() {
     print('Top - $top');
+    return top;
   }
 
   void printStack() {

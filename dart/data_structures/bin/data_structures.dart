@@ -1,7 +1,8 @@
 import 'linear/linked_list/single_linked_list.dart';
 import 'linear/queue/queue.dart';
 import 'linear/queue/types/circular_queue.dart';
-import 'linear/stack.dart';
+import 'linear/stack/stack.dart';
+import 'linear/stack/stack_questions.dart';
 
 void main(List<String> arguments) {
   print('***** STACK *****');
@@ -53,7 +54,11 @@ void main(List<String> arguments) {
   doubleStack.push2(40);
   doubleStack.push1(3);
   doubleStack.printStacks();
+  print('**********\n');
 
+  print('***** STACK QUESTIONS *****');
+  var stackQuestions = StackQuestions();
+  stackQuestions.evaluatePostfixExpression('138*+');
   print('**********\n');
 
   print('***** QUEUE *****');
