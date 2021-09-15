@@ -11,9 +11,13 @@ void main(List<String> arguments) {
   _stack.push(8);
   _stack.push(7);
 
+  _stack.getMinimumValue();
+
   _stack.pop();
   _stack.pop();
   _stack.pop();
+
+  _stack.getMinimumValue();
 
   _stack.peek();
   _stack.push(5);
@@ -25,7 +29,7 @@ void main(List<String> arguments) {
   _stack.push(7);
   _stack.push(6);
 
-  _stack.push(5);
+  _stack.getMinimumValue();
   print('**********\n');
 
   print('***** QUEUE *****');
