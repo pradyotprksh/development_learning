@@ -1,3 +1,4 @@
+import 'linear/linked_list/double_linked_list.dart';
 import 'linear/linked_list/single_linked_list.dart';
 import 'linear/queue/queue.dart';
 import 'linear/queue/types/circular_queue.dart';
@@ -121,14 +122,38 @@ void main(List<String> arguments) {
   singleLinkedList.insertAtEnd(5);
 
   singleLinkedList.insertAtMiddle(6, 1);
-
   singleLinkedList.insertAtMiddle(7, 7);
 
   singleLinkedList.deleteFromStart();
-
   singleLinkedList.deleteFromEnd();
+  singleLinkedList.deleteFromMiddle(4);
 
-  singleLinkedList.deleteFromMiddle(1);
-  singleLinkedList.deleteFromMiddle(3);
+  singleLinkedList.searchElement(6);
+  singleLinkedList.searchElement(7);
+
+  singleLinkedList.sortList();
+  print('**********\n');
+
+  print('***** DOUBLE LINKED LIST *****');
+  var doubleLinkedList = DoubleLinkedList();
+
+  doubleLinkedList.insertAtStart(1);
+  doubleLinkedList.insertAtStart(2);
+  doubleLinkedList.insertAtStart(3);
+
+  doubleLinkedList.insertAtEnd(4);
+  doubleLinkedList.insertAtEnd(5);
+
+  doubleLinkedList.insertAtMiddle(6, 1);
+  doubleLinkedList.insertAtMiddle(7, 7);
+
+  doubleLinkedList.deleteFromStart();
+  doubleLinkedList.deleteFromEnd();
+  doubleLinkedList.deleteFromMiddle(4);
+
+  doubleLinkedList.searchElement(6);
+  doubleLinkedList.searchElement(7);
+
+  doubleLinkedList.sortList();
   print('**********\n');
 }

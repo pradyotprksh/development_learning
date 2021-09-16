@@ -75,5 +75,44 @@ class SingleLinkedList {
     traverse();
   }
 
-  void deleteFromMiddle(int position) {}
+  void deleteFromMiddle(int position) {
+    var temp = head;
+    for (var i = 2; i < position; i++) {
+      temp = temp?.next;
+    }
+    temp?.next = temp.next?.next;
+    traverse();
+  }
+
+  void searchElement(int value) {
+    var temp = head;
+    while (temp != null) {
+      if (temp.data == value) {
+        print('$value found in the list');
+        return;
+      }
+      temp = temp.next;
+    }
+    print('$value not found in the list');
+  }
+
+  void sortList() {
+    if (head == null) {
+      return;
+    }
+    var current = head;
+    while (current != null) {
+      var next = current.next;
+      while (next != null) {
+        if (next.data > current.data) {
+          current.data = next.data + current.data;
+          next.data = current.data - next.data;
+          current.data = current.data - next.data;
+        }
+        next = next.next;
+      }
+      current = current.next;
+    }
+    traverse();
+  }
 }
