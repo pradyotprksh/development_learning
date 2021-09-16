@@ -4,7 +4,8 @@ import 'linear/queue/queue.dart';
 import 'linear/queue/types/circular_queue.dart';
 import 'linear/stack/stack.dart';
 import 'linear/stack/stack_questions.dart';
-import 'non_linear/trees.dart';
+import 'non_linear/trees/binary_tree.dart';
+import 'non_linear/trees/trees.dart' as tree;
 
 void main(List<String> arguments) {
   print('***** STACK *****');
@@ -196,7 +197,7 @@ void main(List<String> arguments) {
   print('**********\n');
 
   print('***** TREES *****');
-  var trees = Trees();
+  var trees = tree.Trees();
 
   trees.insertNode(1);
   trees.insertNode(2);
@@ -210,5 +211,22 @@ void main(List<String> arguments) {
   trees.preOrderTraversal(trees.root);
   print('Postorder traversal');
   trees.postOrderTraversal(trees.root);
+  print('**********\n');
+
+  print('***** BINARY TREE *****');
+  print('***** FULL BINARY TREE *****');
+  var fullBinaryTree = FullBinaryTree();
+  fullBinaryTree.root = tree.Node(data: 1);
+  fullBinaryTree.root?.left = tree.Node(data: 2);
+  fullBinaryTree.root?.right = tree.Node(data: 3);
+  fullBinaryTree.root?.left?.left = tree.Node(data: 4);
+  fullBinaryTree.root?.left?.right = tree.Node(data: 5);
+  fullBinaryTree.root?.right?.left = tree.Node(data: 6);
+  fullBinaryTree.root?.right?.right = tree.Node(data: 7);
+
+  print('Inorder traversal');
+  trees.inorderTraversal(fullBinaryTree.root);
+  print(
+      'Is full binary tree? ${fullBinaryTree.isFullBinaryTree(fullBinaryTree.root)}');
   print('**********\n');
 }
