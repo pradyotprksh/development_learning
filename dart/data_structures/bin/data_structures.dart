@@ -4,6 +4,7 @@ import 'linear/queue/queue.dart';
 import 'linear/queue/types/circular_queue.dart';
 import 'linear/stack/stack.dart';
 import 'linear/stack/stack_questions.dart';
+import 'non_linear/trees.dart';
 
 void main(List<String> arguments) {
   print('***** STACK *****');
@@ -192,5 +193,22 @@ void main(List<String> arguments) {
   circularDoubleLinkedList.deleteFromStart();
   circularDoubleLinkedList.deleteFromEnd();
   circularDoubleLinkedList.deleteAtMiddle(4);
+  print('**********\n');
+
+  print('***** TREES *****');
+  var trees = Trees();
+
+  trees.insertNode(1);
+  trees.insertNode(2);
+  trees.insertNode(3);
+  trees.insertNode(4);
+  trees.insertNode(5);
+
+  print('Inorder traversal');
+  trees.inorderTraversal(trees.root);
+  print('Preorder traversal');
+  trees.preOrderTraversal(trees.root);
+  print('Postorder traversal');
+  trees.postOrderTraversal(trees.root);
   print('**********\n');
 }
