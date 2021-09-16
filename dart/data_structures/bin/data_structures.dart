@@ -175,4 +175,22 @@ void main(List<String> arguments) {
 
   doubleLinkedList.sortList();
   print('**********\n');
+
+  print('***** CIRCULAR DOUBLE LINKED LIST *****');
+  var circularDoubleLinkedList = CircularDoubleLinkedList();
+
+  circularDoubleLinkedList.insertAtStart(1);
+  circularDoubleLinkedList.insertAtStart(2);
+  circularDoubleLinkedList.insertAtStart(3);
+
+  circularDoubleLinkedList.insertAtEnd(4);
+  circularDoubleLinkedList.insertAtEnd(5);
+
+  circularDoubleLinkedList.insertAtMiddle(6, 1);
+  circularDoubleLinkedList.insertAtMiddle(7, 7);
+
+  circularDoubleLinkedList.deleteFromStart();
+  circularDoubleLinkedList.deleteFromEnd();
+  circularDoubleLinkedList.deleteAtMiddle(4);
+  print('**********\n');
 }

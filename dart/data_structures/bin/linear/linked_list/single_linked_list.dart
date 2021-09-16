@@ -186,6 +186,7 @@ class CircularSingleLinkedList {
       last = null;
     } else {
       head = head?.next;
+      last?.next = head;
     }
     traverse();
   }
