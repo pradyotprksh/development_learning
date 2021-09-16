@@ -134,6 +134,25 @@ void main(List<String> arguments) {
   singleLinkedList.sortList();
   print('**********\n');
 
+  print('***** CIRCULAR SINGLE LINKED LIST *****');
+  var circularSingleLinkedList = CircularSingleLinkedList();
+
+  circularSingleLinkedList.insertAtStart(1);
+  circularSingleLinkedList.insertAtStart(2);
+  circularSingleLinkedList.insertAtStart(3);
+
+  circularSingleLinkedList.insertAtEnd(4);
+  circularSingleLinkedList.insertAtEnd(5);
+
+  circularSingleLinkedList.insertAtMiddle(6, 6);
+  circularSingleLinkedList.insertAtMiddle(7, 3);
+  circularSingleLinkedList.insertAtMiddle(8, 5);
+
+  circularSingleLinkedList.deleteFromStart();
+  circularSingleLinkedList.deleteFromEnd();
+  circularSingleLinkedList.deleteAtMiddle(3);
+  print('**********\n');
+
   print('***** DOUBLE LINKED LIST *****');
   var doubleLinkedList = DoubleLinkedList();
 

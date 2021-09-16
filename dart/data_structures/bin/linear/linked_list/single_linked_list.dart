@@ -116,3 +116,114 @@ class SingleLinkedList {
     traverse();
   }
 }
+
+class CircularSingleLinkedList {
+  Node? head;
+  Node? last;
+
+  void traverse() {
+    var temp = head;
+    var statement = '--';
+    while (true) {
+      statement = '$statement${temp?.data}--->';
+      if (temp == last) {
+        break;
+      }
+      temp = temp?.next;
+    }
+    print(statement);
+  }
+
+  void insertAtStart(int value) {
+    var node = Node(data: value);
+    node.next = head;
+    head = node;
+    last ??= head;
+    last?.next = head;
+    print('Added $value on start');
+    traverse();
+  }
+
+  void insertAtEnd(int value) {
+    var node = Node(data: value);
+    head ??= node;
+    last ??= node;
+    last?.next = node;
+    node.next = head;
+    last = node;
+    print('Added $value on end');
+    traverse();
+  }
+
+  void insertAtMiddle(int value, int position) {
+    if (head == null) {
+      print('List empty');
+      return;
+    }
+    var node = Node(data: value);
+    var temp = head;
+    var i = 2;
+    for (i = 2; i < position; i++) {
+      temp = temp?.next;
+    }
+    print('Added $value at position $position');
+    if (temp?.next == head) {
+      insertAtStart(value);
+    } else {
+      node.next = temp?.next;
+      temp?.next = node;
+      traverse();
+    }
+  }
+
+  void deleteFromStart() {
+    if (head == null) {
+      print('List empty');
+      return;
+    }
+    if (head == last) {
+      head = null;
+      last = null;
+    } else {
+      head = head?.next;
+    }
+    traverse();
+  }
+
+  void deleteFromEnd() {
+    if (last == null) {
+      print('List empty');
+      return;
+    }
+    if (head == last) {
+      head = null;
+      last = null;
+    } else {
+      var temp = head;
+      while (temp?.next != last) {
+        temp = temp?.next;
+      }
+      temp?.next = head;
+      last = temp;
+    }
+    traverse();
+  }
+
+  void deleteAtMiddle(int position) {
+    if (head == null) {
+      print('List empty');
+      return;
+    }
+    if (head == last) {
+      head = null;
+      last = null;
+    } else {
+      var temp = head;
+      for (var i = 2; i < position; i++) {
+        temp = temp?.next;
+      }
+      temp?.next = temp.next?.next;
+      traverse();
+    }
+  }
+}
