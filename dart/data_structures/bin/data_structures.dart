@@ -62,6 +62,9 @@ void main(List<String> arguments) {
   print('***** STACK QUESTIONS *****');
   var stackQuestions = StackQuestions();
   stackQuestions.evaluatePostfixExpression('138*+');
+  stackQuestions.findDuplicateParenthesis('(xy)((z))');
+  print(
+      'Decoded sequence : ${stackQuestions.decodeSequenceAndGetMinimum('IDIDII')}');
   print('**********\n');
 
   print('***** QUEUE *****');

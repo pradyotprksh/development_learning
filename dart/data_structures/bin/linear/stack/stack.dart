@@ -1,19 +1,21 @@
 class Stack {
   final _stack = [];
   final _minimumStack = [];
-  var _maxElements = 5;
-  var top = -1;
+  var _maxElements = 10;
+  dynamic top = -1;
 
-  void push(int value) {
+  void push(dynamic value) {
     if (isFull()) {
       print('Max height reached. Can\'t add $value');
     } else {
       _stack.insert(0, value);
-      if (_minimumStack.isEmpty) {
-        _minimumStack.insert(0, value);
-      } else {
-        if (_minimumStack[_minimumStack.length - 1] > value) {
+      if (value.runtimeType is int) {
+        if (_minimumStack.isEmpty) {
           _minimumStack.insert(0, value);
+        } else {
+          if (_minimumStack[_minimumStack.length - 1] > value) {
+            _minimumStack.insert(0, value);
+          }
         }
       }
       top = value;
@@ -28,8 +30,10 @@ class Stack {
       print('Stack empty');
     } else {
       print('Removed $top');
-      if (_minimumStack[0] == _stack[0]) {
-        _minimumStack.removeAt(0);
+      if (peek().runtimeType is int) {
+        if (_minimumStack[0] == _stack[0]) {
+          _minimumStack.removeAt(0);
+        }
       }
       _stack.removeAt(0);
       ++_maxElements;
@@ -43,18 +47,22 @@ class Stack {
   }
 
   void getMinimumValue() {
-    print('Minimum - ${_minimumStack[0]}');
+    if (_minimumStack.isEmpty) {
+      print('Integer stack is needed to get the minimum');
+    } else {
+      print('Minimum - ${_minimumStack[0]}');
+    }
   }
 
   bool isEmpty() {
-    return _maxElements == 5;
+    return _maxElements == 10;
   }
 
   bool isFull() {
     return _maxElements == 0;
   }
 
-  int peek() {
+  dynamic peek() {
     print('Top - $top');
     return top;
   }
@@ -69,10 +77,10 @@ class Stack {
 }
 
 class DoubleStack {
-  final _stack = [-1, -1, -1, -1, -1];
-  final _maxElements = 5;
+  final _stack = [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1];
+  final _maxElements = 10;
   var _top1 = -1;
-  var _top2 = 5;
+  var _top2 = 10;
 
   void push1(int value) {
     if (_top1 >= _top2 - 1) {
