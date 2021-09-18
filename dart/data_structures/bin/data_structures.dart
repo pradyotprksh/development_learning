@@ -231,5 +231,41 @@ void main(List<String> arguments) {
   trees.inorderTraversal(fullBinaryTree.root);
   print(
       'Is full binary tree? ${fullBinaryTree.isFullBinaryTree(fullBinaryTree.root)}');
+
+  print('***** PERFECT BINARY TREE *****');
+  var perfectBinaryTree = PerfectBinaryTree();
+  perfectBinaryTree.root = tree.Node(data: 1);
+  perfectBinaryTree.root?.left = tree.Node(data: 2);
+  perfectBinaryTree.root?.right = tree.Node(data: 3);
+  perfectBinaryTree.root?.left?.left = tree.Node(data: 4);
+  perfectBinaryTree.root?.left?.right = tree.Node(data: 5);
+  perfectBinaryTree.root?.right?.left = tree.Node(data: 6);
+  perfectBinaryTree.root?.right?.right = tree.Node(data: 7);
+
+  print('Inorder traversal');
+  trees.inorderTraversal(perfectBinaryTree.root);
+  print(
+      'Is perfect binary tree? ${perfectBinaryTree.isPerfectBinaryTree(perfectBinaryTree.root)}');
+  print('**********\n');
+
+  print('***** COMPLETE BINARY TREE *****');
+  var completeBinaryTree = CompleteBinaryTree();
+  completeBinaryTree.root = tree.Node(data: 1);
+  completeBinaryTree.root?.left = tree.Node(data: 12);
+  completeBinaryTree.root?.left?.left = tree.Node(data: 5);
+  completeBinaryTree.root?.right = tree.Node(data: 9);
+  completeBinaryTree.root?.right?.left = tree.Node(data: 10);
+
+  print('Inorder traversal');
+  trees.inorderTraversal(completeBinaryTree.root);
+  print(
+      'Number of nodes ${completeBinaryTree.numberOfNodes(completeBinaryTree.root)}');
+  print('Is complete binary tree? ${completeBinaryTree.isCompleteBinaryTree(
+    completeBinaryTree.root,
+    0,
+    completeBinaryTree.numberOfNodes(
+      completeBinaryTree.root,
+    ),
+  )}');
   print('**********\n');
 }
