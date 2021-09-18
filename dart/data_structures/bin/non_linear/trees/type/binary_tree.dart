@@ -1,4 +1,4 @@
-import 'trees.dart';
+import '../trees.dart';
 
 class FullBinaryTree {
   Node? root;

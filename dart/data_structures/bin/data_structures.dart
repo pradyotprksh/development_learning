@@ -4,7 +4,7 @@ import 'linear/queue/queue.dart';
 import 'linear/queue/types/circular_queue.dart';
 import 'linear/stack/stack.dart';
 import 'linear/stack/stack_questions.dart';
-import 'non_linear/trees/binary_tree.dart';
+import 'non_linear/trees/type/binary_tree.dart';
 import 'non_linear/trees/trees.dart' as tree;
 
 void main(List<String> arguments) {
