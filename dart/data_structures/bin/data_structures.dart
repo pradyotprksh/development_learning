@@ -4,8 +4,9 @@ import 'linear/queue/queue.dart';
 import 'linear/queue/types/circular_queue.dart';
 import 'linear/stack/stack.dart';
 import 'linear/stack/stack_questions.dart';
-import 'non_linear/trees/type/binary_tree.dart';
 import 'non_linear/trees/trees.dart' as tree;
+import 'non_linear/trees/type/binary_tree.dart';
+import 'questions.dart';
 
 void main(List<String> arguments) {
   print('***** STACK *****');
@@ -267,5 +268,12 @@ void main(List<String> arguments) {
       completeBinaryTree.root,
     ),
   )}');
+  print('**********\n');
+
+  print('***** QUESTIONS *****');
+  var questions = Questions();
+  print(questions.reverseAString('Hi this is a test string'));
+  print(questions.mergedSortedArray([1, 2, 4, 6], [4, 4, 6]));
+  print(questions.twoSum([2, 7, 11, 15], 17));
   print('**********\n');
 }
