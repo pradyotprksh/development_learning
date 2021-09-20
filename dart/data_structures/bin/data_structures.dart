@@ -280,5 +280,6 @@ void main(List<String> arguments) {
   print(questions.containsDuplicate([1, 1, 1, 3, 3, 4, 3, 2, 4, 2]));
   print(questions.rotateArray([-1, -100, 3, 99], 2));
   print(questions.longestWord('fun&!! time'));
+  print(questions.recurringNumber([1, 2, 3, 4, 5, 2, 1]));
   print('**********\n');
 }

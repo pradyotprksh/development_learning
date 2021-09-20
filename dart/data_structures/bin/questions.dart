@@ -119,4 +119,16 @@ class Questions {
     }
     return longestWord;
   }
+
+  int recurringNumber(List<int> nums) {
+    Map<int, int> unique = {};
+    for (var num in nums) {
+      if (unique.containsValue(num)) {
+        return num;
+      } else {
+        unique[num] = num;
+      }
+    }
+    return -1;
+  }
 }
