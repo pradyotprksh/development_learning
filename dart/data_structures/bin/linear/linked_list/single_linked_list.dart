@@ -115,6 +115,21 @@ class SingleLinkedList {
     }
     traverse();
   }
+
+  void reverseList() {
+    Node? temp;
+    Node? prev;
+    Node? current = head;
+    while (current?.next != null) {
+      temp = current?.next;
+      current?.next = prev;
+      prev = current;
+      current = temp;
+    }
+    current?.next = prev;
+    head = current;
+    traverse();
+  }
 }
 
 class CircularSingleLinkedList {

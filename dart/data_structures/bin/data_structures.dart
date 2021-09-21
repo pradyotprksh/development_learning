@@ -138,6 +138,7 @@ void main(List<String> arguments) {
   singleLinkedList.searchElement(7);
 
   singleLinkedList.sortList();
+  singleLinkedList.reverseList();
   print('**********\n');
 
   print('***** CIRCULAR SINGLE LINKED LIST *****');
