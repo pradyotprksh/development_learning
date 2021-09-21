@@ -68,11 +68,11 @@ void main(List<String> arguments) {
   stackLinkedListImplementation.push(3);
   stackLinkedListImplementation.push(4);
   print(stackLinkedListImplementation.peek());
-  stackLinkedListImplementation.pop();
-  stackLinkedListImplementation.pop();
+  print('Removed ${stackLinkedListImplementation.pop()}');
+  print('Removed ${stackLinkedListImplementation.pop()}');
   print(stackLinkedListImplementation.peek());
-  stackLinkedListImplementation.pop();
-  stackLinkedListImplementation.pop();
+  print('Removed ${stackLinkedListImplementation.pop()}');
+  print('Removed ${stackLinkedListImplementation.pop()}');
   print(stackLinkedListImplementation.peek());
   stackLinkedListImplementation.push(1);
   print(stackLinkedListImplementation.peek());
