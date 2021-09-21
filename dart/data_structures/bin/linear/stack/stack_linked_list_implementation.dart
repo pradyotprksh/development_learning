@@ -23,6 +23,9 @@ class StackLinkedListImplementation {
 
   int pop() {
     var value = top?.data ?? -1;
+    if (top == bottom) {
+      bottom = null;
+    }
     top = top?.next;
     --length;
     return value;
