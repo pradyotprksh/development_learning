@@ -3,6 +3,7 @@ import 'linear/linked_list/single_linked_list.dart';
 import 'linear/queue/queue.dart';
 import 'linear/queue/types/circular_queue.dart';
 import 'linear/stack/stack.dart';
+import 'linear/stack/stack_linked_list_implementation.dart';
 import 'linear/stack/stack_questions.dart';
 import 'non_linear/trees/trees.dart' as tree;
 import 'non_linear/trees/type/binary_tree.dart';
@@ -58,6 +59,23 @@ void main(List<String> arguments) {
   doubleStack.push2(40);
   doubleStack.push1(3);
   doubleStack.printStacks();
+  print('**********\n');
+
+  print('***** STACK USING LINKED LIST *****');
+  var stackLinkedListImplementation = StackLinkedListImplementation();
+  stackLinkedListImplementation.push(1);
+  stackLinkedListImplementation.push(2);
+  stackLinkedListImplementation.push(3);
+  stackLinkedListImplementation.push(4);
+  print(stackLinkedListImplementation.peek());
+  stackLinkedListImplementation.pop();
+  stackLinkedListImplementation.pop();
+  print(stackLinkedListImplementation.peek());
+  stackLinkedListImplementation.pop();
+  stackLinkedListImplementation.pop();
+  print(stackLinkedListImplementation.peek());
+  stackLinkedListImplementation.push(1);
+  print(stackLinkedListImplementation.peek());
   print('**********\n');
 
   print('***** STACK QUESTIONS *****');
