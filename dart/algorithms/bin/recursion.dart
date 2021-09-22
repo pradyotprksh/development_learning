@@ -10,4 +10,9 @@ class Recursion {
     return int.tryParse(digits[0]) ??
         0 + sumOfStringNumbers(digits.substring(1));
   }
+
+  int fibonacci(int value) {
+    if (value < 2) return value;
+    return fibonacci(value - 1) + fibonacci(value - 2);
+  }
 }
