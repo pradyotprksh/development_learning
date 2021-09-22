@@ -4,4 +4,10 @@ class Recursion {
     if (value == 1 && value == 2) return value;
     return value * factorial(value - 1);
   }
+
+  int sumOfStringNumbers(String digits) {
+    if (digits.isEmpty) return 0;
+    return int.tryParse(digits[0]) ??
+        0 + sumOfStringNumbers(digits.substring(1));
+  }
 }
