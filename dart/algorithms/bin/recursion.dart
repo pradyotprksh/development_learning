@@ -15,4 +15,9 @@ class Recursion {
     if (value < 2) return value;
     return fibonacci(value - 1) + fibonacci(value - 2);
   }
+
+  String reverseString(String value) {
+    if (value.isEmpty) return value;
+    return reverseString(value.substring(1)) + value[0];
+  }
 }
