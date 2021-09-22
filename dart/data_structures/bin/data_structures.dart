@@ -6,6 +6,7 @@ import 'linear/stack/stack.dart';
 import 'linear/stack/stack_linked_list_implementation.dart';
 import 'linear/stack/stack_questions.dart';
 import 'non_linear/trees/trees.dart' as tree;
+import 'non_linear/trees/type/binary_search_tree.dart';
 import 'non_linear/trees/type/binary_tree.dart';
 import 'questions.dart';
 
@@ -300,5 +301,21 @@ void main(List<String> arguments) {
   print(questions.rotateArray([-1, -100, 3, 99], 2));
   print(questions.longestWord('fun&!! time'));
   print(questions.recurringNumber([1, 2, 3, 4, 5, 2, 1]));
+  print('**********\n');
+
+  print('***** BINARY SEARCH TREE *****');
+  var binarySearchTree = BinarySearchTree();
+  binarySearchTree.insert(41);
+  binarySearchTree.insert(20);
+  binarySearchTree.insert(11);
+  binarySearchTree.insert(29);
+  binarySearchTree.insert(32);
+  binarySearchTree.insert(65);
+  binarySearchTree.insert(50);
+  binarySearchTree.insert(91);
+  binarySearchTree.insert(72);
+  binarySearchTree.insert(99);
+  binarySearchTree.remove(65);
+  binarySearchTree.inorderTraversal(binarySearchTree.root);
   print('**********\n');
 }
