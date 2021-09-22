@@ -7,6 +7,7 @@ Each project is divided into folders based on the platforms and the courses. And
 
 ## [Dart](https://github.com/pradyotprksh/development_learning/tree/main/dart)
   - [data_structures](https://github.com/pradyotprksh/development_learning/tree/main/dart/data_structures)
+  - [algorithms](https://github.com/pradyotprksh/development_learning/tree/main/dart/algorithms)
 
 ## [Flutter](https://github.com/pradyotprksh/development_learning/tree/main/flutter)
   - [snake_ladders](https://github.com/pradyotprksh/development_learning/tree/main/flutter/snake_ladders)
