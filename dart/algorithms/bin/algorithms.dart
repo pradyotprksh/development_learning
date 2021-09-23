@@ -1,5 +1,5 @@
 import 'recursion.dart';
-import 'sorting/sorting.dart';
+import 'sorting.dart';
 
 void main(List<String> arguments) {
   print('***** RECURSION *****');
@@ -18,5 +18,7 @@ void main(List<String> arguments) {
   print(sorting.selectionSort([1, 4, 3, 5, 6, 7]));
   print('***** INSERTION SORT *****');
   print(sorting.insertionSort([1, 2, 3, 4, 5, 1]));
+  print('***** MERGE SORT *****');
+  print(sorting.mergeSort([1, 2, 3, 4, 5, 6]));
   print('**********\n');
 }
