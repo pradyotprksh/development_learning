@@ -26,4 +26,23 @@ class Sorting {
     }
     return arr;
   }
+
+  List<int> insertionSort(List<int> arr) {
+    for (var i = 1; i < arr.length; i++) {
+      var start = i - 1;
+      var current = i;
+      while (start >= 0) {
+        if (arr[start] > arr[current]) {
+          arr[start] = arr[start] + arr[current];
+          arr[current] = arr[start] - arr[current];
+          arr[start] = arr[start] - arr[current];
+        } else {
+          break;
+        }
+        --current;
+        --start;
+      }
+    }
+    return arr;
+  }
 }
