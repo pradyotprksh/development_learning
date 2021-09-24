@@ -5,6 +5,7 @@ import 'linear/queue/types/circular_queue.dart';
 import 'linear/stack/stack.dart';
 import 'linear/stack/stack_linked_list_implementation.dart';
 import 'linear/stack/stack_questions.dart';
+import 'non_linear/graphs.dart';
 import 'non_linear/trees/trees.dart' as tree;
 import 'non_linear/trees/type/binary_search_tree.dart';
 import 'non_linear/trees/type/binary_tree.dart';
@@ -317,5 +318,25 @@ void main(List<String> arguments) {
   binarySearchTree.insert(99);
   binarySearchTree.remove(65);
   binarySearchTree.inorderTraversal(binarySearchTree.root);
+  print('**********\n');
+
+  print('***** GRAPHS *****');
+  var graphs = Graphs();
+  graphs.addVertex(0);
+  graphs.addVertex(1);
+  graphs.addVertex(2);
+  graphs.addVertex(3);
+  graphs.addVertex(4);
+  graphs.addVertex(5);
+  graphs.addVertex(6);
+  graphs.addConnection(3, 1);
+  graphs.addConnection(3, 4);
+  graphs.addConnection(4, 2);
+  graphs.addConnection(4, 5);
+  graphs.addConnection(1, 2);
+  graphs.addConnection(1, 0);
+  graphs.addConnection(0, 2);
+  graphs.addConnection(6, 5);
+  graphs.printConnections();
   print('**********\n');
 }
