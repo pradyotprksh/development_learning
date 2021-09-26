@@ -316,8 +316,9 @@ void main(List<String> arguments) {
   binarySearchTree.insert(91);
   binarySearchTree.insert(72);
   binarySearchTree.insert(99);
-  binarySearchTree.remove(65);
   binarySearchTree.inorderTraversal(binarySearchTree.root);
+  binarySearchTree.bfsTraversal(binarySearchTree.root);
+  print(binarySearchTree.isValidBST(binarySearchTree.root));
   print('**********\n');
 
   print('***** GRAPHS *****');

@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 class Node {
   Node? left;
   Node? right;
@@ -75,5 +77,55 @@ class BinarySearchTree {
     inorderTraversal(node.left);
     print(node.value);
     inorderTraversal(node.right);
+  }
+
+  void bfsTraversal(
+    Node? node,
+  ) {
+    if (node == null) {
+      return;
+    }
+    var currentNode = node;
+    var list = <int>[];
+    var queue = Queue<Node>();
+    queue.add(currentNode);
+    while (queue.isNotEmpty) {
+      currentNode = queue.removeFirst();
+      list.add(currentNode.value);
+      if (currentNode.left != null) {
+        queue.add(currentNode.left!);
+      }
+      if (currentNode.right != null) {
+        queue.add(currentNode.right!);
+      }
+    }
+    print(list);
+  }
+
+  bool isValidBST(
+    Node? node,
+  ) {
+    if (node == null) {
+      return true;
+    }
+    var currentNode = node;
+    var queue = Queue<Node>();
+    queue.add(currentNode);
+    while (queue.isNotEmpty) {
+      currentNode = queue.removeFirst();
+      if (currentNode.left != null) {
+        if (currentNode.value < currentNode.left!.value) {
+          return false;
+        }
+        queue.add(currentNode.left!);
+      }
+      if (currentNode.right != null) {
+        if (currentNode.value > currentNode.right!.value) {
+          return false;
+        }
+        queue.add(currentNode.right!);
+      }
+    }
+    return true;
   }
 }
