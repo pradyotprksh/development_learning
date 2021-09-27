@@ -1,9 +1,10 @@
-class DirectedGraph {
+class UndirectedWeightGraph {
   var numberOfNodes = 0;
   var adjacentList = <int, List<Map<int, int>>>{};
 
   void addVertex(int node) {
     adjacentList[node] = [];
+    ++numberOfNodes;
   }
 
   void addConnection(int from, int to, int weight) {
@@ -38,6 +39,7 @@ class DirectedGraph {
     }
 
     adjacentList[from]?.add(<int, int>{to: weight});
+    adjacentList[to]?.add(<int, int>{from: weight});
   }
 
   void printConnections() {
@@ -52,4 +54,6 @@ class DirectedGraph {
       print('$node ---> $connections');
     }
   }
+
+  void dijkstraAlgorithm(int source) {}
 }
