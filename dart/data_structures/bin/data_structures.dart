@@ -5,7 +5,8 @@ import 'linear/queue/types/circular_queue.dart';
 import 'linear/stack/stack.dart';
 import 'linear/stack/stack_linked_list_implementation.dart';
 import 'linear/stack/stack_questions.dart';
-import 'non_linear/graphs.dart';
+import 'non_linear/graphs/directed_graph.dart';
+import 'non_linear/graphs/graphs.dart';
 import 'non_linear/trees/trees.dart' as tree;
 import 'non_linear/trees/type/binary_search_tree.dart';
 import 'non_linear/trees/type/binary_tree.dart';
@@ -339,5 +340,25 @@ void main(List<String> arguments) {
   graphs.addConnection(0, 2);
   graphs.addConnection(6, 5);
   graphs.printConnections();
+  graphs.bfsTraversal(2);
+  print('**********\n');
+
+  print('***** DIRECTED GRAPHS *****');
+  var directedGraph = DirectedGraph();
+  directedGraph.addVertex(1);
+  directedGraph.addVertex(2);
+  directedGraph.addVertex(3);
+  directedGraph.addVertex(4);
+  directedGraph.addVertex(5);
+  directedGraph.addVertex(6);
+  directedGraph.addConnection(1, 2, 2);
+  directedGraph.addConnection(1, 3, 4);
+  directedGraph.addConnection(2, 3, 1);
+  directedGraph.addConnection(2, 4, 7);
+  directedGraph.addConnection(3, 5, 3);
+  directedGraph.addConnection(5, 4, 2);
+  directedGraph.addConnection(4, 6, 1);
+  directedGraph.addConnection(5, 6, 5);
+  directedGraph.printConnections();
   print('**********\n');
 }

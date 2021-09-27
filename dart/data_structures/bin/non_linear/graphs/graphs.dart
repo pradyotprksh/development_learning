@@ -1,9 +1,12 @@
+import 'dart:collection';
+
 class Graphs {
   var numberOfNodes = 0;
   var adjacentList = <int, List<int>>{};
 
   void addVertex(int node) {
     adjacentList[node] = <int>[];
+    ++numberOfNodes;
   }
 
   void addConnection(int node1, int node2) {
@@ -36,5 +39,30 @@ class Graphs {
       }
       print('$node ---> $connections');
     }
+  }
+
+  void bfsTraversal(int start) {
+    var list = <int>[];
+    var visited = List.filled(numberOfNodes, false);
+    var queue = Queue<int>();
+
+    visited[start] = true;
+    queue.add(start);
+
+    while (queue.isNotEmpty) {
+      var s = queue.removeFirst();
+      list.add(s);
+      var connectionList = adjacentList[s];
+      if (connectionList != null) {
+        for (var connection in connectionList) {
+          if (!visited[connection]) {
+            visited[connection] = true;
+            queue.add(connection);
+          }
+        }
+      }
+    }
+
+    print(list);
   }
 }
