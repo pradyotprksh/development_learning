@@ -55,5 +55,48 @@ class UndirectedWeightGraph {
     }
   }
 
-  void dijkstraAlgorithm(int source) {}
+  void dijkstraAlgorithm(int source) {
+    var count = adjacentList.length;
+    var visitedNodes = List.filled(numberOfNodes, false);
+    var distance = List.filled(numberOfNodes, double.maxFinite.toInt());
+
+    distance[source] = 0;
+    for (var i = 0; i < count; i++) {
+      var min = minIndex(distance, visitedNodes);
+      visitedNodes[min] = true;
+
+      var node = adjacentList[min];
+      if (node != null) {
+        for (var v = 0; v < count; v++) {
+          var weight = 0;
+          for (var connections in node) {
+            if (connections.containsKey(v)) {
+              weight = connections[v] ?? 0;
+              break;
+            }
+          }
+
+          if (!visitedNodes[v] &&
+              weight != 0 &&
+              (distance[min] + weight) < distance[v]) {
+            distance[v] = distance[min] + weight;
+          }
+        }
+      }
+    }
+
+    print(distance);
+  }
+
+  int minIndex(List<int> distances, List<bool> visited) {
+    var minIndex = -1;
+    var minValue = double.maxFinite.toInt();
+    for (var d = 0; d < distances.length; d++) {
+      if (!visited[d] && distances[d] < minValue) {
+        minValue = distances[d];
+        minIndex = d;
+      }
+    }
+    return minIndex;
+  }
 }

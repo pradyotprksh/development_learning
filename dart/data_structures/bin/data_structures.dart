@@ -382,5 +382,6 @@ void main(List<String> arguments) {
   undirectedWeightGraph.addConnection(4, 5, 2);
   undirectedWeightGraph.addConnection(5, 6, 1);
   undirectedWeightGraph.printConnections();
+  undirectedWeightGraph.dijkstraAlgorithm(0);
   print('**********\n');
 }
