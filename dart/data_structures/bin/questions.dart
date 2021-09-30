@@ -131,4 +131,44 @@ class Questions {
     }
     return -1;
   }
+
+  bool isStringUnique(String str) {
+    var characters = <String>{};
+    for (var s in str.split('')) {
+      if (!characters.add(s)) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  bool isStringUniqueWOEDS(String str) {
+    for (var i = 0; i < str.length; i++) {
+      for (var j = 0; j < str.length && j != i; j++) {
+        if (str.split('')[i] == str.split('')[j]) {
+          return false;
+        }
+      }
+    }
+    return true;
+  }
+
+  bool isStringABPermutation(String a, String b) {
+    if (a.length != b.length) {
+      return false;
+    }
+    var aArr = a.split('');
+    var bArr = b.split('');
+    aArr.sort();
+    bArr.sort();
+
+    var sortedA = aArr.toString();
+    var sortedB = bArr.toString();
+
+    return sortedA.compareTo(sortedB) == 0;
+  }
+
+  String urlIfy(String str) {
+    return str.trim().replaceAll(' ', '%20');
+  }
 }

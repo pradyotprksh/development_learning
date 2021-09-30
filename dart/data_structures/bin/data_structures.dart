@@ -293,19 +293,6 @@ void main(List<String> arguments) {
   )}');
   print('**********\n');
 
-  print('***** QUESTIONS *****');
-  var questions = Questions();
-  print(questions.reverseAString('Hi this is a test string'));
-  print(questions.mergedSortedArray([1, 2, 4, 6], [4, 4, 6]));
-  print(questions.twoSum([2, 7, 11, 15], 17));
-  print(questions.maxSubArray([5, 4, -1, 7, 8]));
-  print(questions.movesZero([0, 2, 0, 1]));
-  print(questions.containsDuplicate([1, 1, 1, 3, 3, 4, 3, 2, 4, 2]));
-  print(questions.rotateArray([-1, -100, 3, 99], 2));
-  print(questions.longestWord('fun&!! time'));
-  print(questions.recurringNumber([1, 2, 3, 4, 5, 2, 1]));
-  print('**********\n');
-
   print('***** BINARY SEARCH TREE *****');
   var binarySearchTree = BinarySearchTree();
   binarySearchTree.insert(41);
@@ -383,5 +370,22 @@ void main(List<String> arguments) {
   undirectedWeightGraph.addConnection(5, 6, 1);
   undirectedWeightGraph.printConnections();
   undirectedWeightGraph.dijkstraAlgorithm(0);
+  print('**********\n');
+
+  print('***** QUESTIONS *****');
+  var questions = Questions();
+  print(questions.reverseAString('Hi this is a test string'));
+  print(questions.mergedSortedArray([1, 2, 4, 6], [4, 4, 6]));
+  print(questions.twoSum([2, 7, 11, 15], 17));
+  print(questions.maxSubArray([5, 4, -1, 7, 8]));
+  print(questions.movesZero([0, 2, 0, 1]));
+  print(questions.containsDuplicate([1, 1, 1, 3, 3, 4, 3, 2, 4, 2]));
+  print(questions.rotateArray([-1, -100, 3, 99], 2));
+  print(questions.longestWord('fun&!! time'));
+  print(questions.recurringNumber([1, 2, 3, 4, 5, 2, 1]));
+  print(questions.isStringUnique('abca'));
+  print(questions.isStringUniqueWOEDS('abc'));
+  print(questions.isStringABPermutation('aba', 'abb'));
+  print(questions.urlIfy('mr john smith      '));
   print('**********\n');
 }
