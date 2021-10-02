@@ -387,5 +387,7 @@ void main(List<String> arguments) {
   print(questions.isStringUniqueWOEDS('abc'));
   print(questions.isStringABPermutation('aba', 'abb'));
   print(questions.urlIfy('mr john smith      '));
+  print(questions.isOneAway('pale', 'bake'));
+  print(questions.stringCompression('aaa'));
   print('**********\n');
 }

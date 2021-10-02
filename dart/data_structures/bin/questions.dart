@@ -171,4 +171,53 @@ class Questions {
   String urlIfy(String str) {
     return str.trim().replaceAll(' ', '%20');
   }
+
+  bool isOneAway(String main, String edited) {
+    if ((main.length - edited.length).abs() > 1) {
+      return false;
+    }
+    var numberOfEdits = 0;
+    var mainArr = main.split('');
+    var editedArr = edited.split('');
+    var mainLength = 0;
+    var editedLength = 0;
+    while (mainLength < mainArr.length && editedLength < editedArr.length) {
+      if (mainArr[mainLength] != editedArr[editedLength]) {
+        ++numberOfEdits;
+        if (main.length > edited.length) {
+          ++mainLength;
+          continue;
+        } else if (edited.length > main.length) {
+          ++editedLength;
+          continue;
+        }
+      }
+      ++mainLength;
+      ++editedLength;
+    }
+    return numberOfEdits <= 1;
+  }
+
+  String stringCompression(String str) {
+    var count = 0;
+    var compressedString = '';
+    var lastChar = str.split('').first;
+
+    for (var s in str.split('')) {
+      if (lastChar == s) {
+        ++count;
+      } else {
+        compressedString = '$compressedString$lastChar$count';
+        lastChar = s;
+        count = 1;
+      }
+    }
+
+    compressedString = '$compressedString$lastChar$count';
+
+    if (compressedString.length < str.length) {
+      return compressedString;
+    }
+    return str;
+  }
 }
