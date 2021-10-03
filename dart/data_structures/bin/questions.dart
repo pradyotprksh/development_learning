@@ -220,4 +220,22 @@ class Questions {
     }
     return str;
   }
+
+  List<List<int>> rotateImageBy90Degree(List<List<int>> image) {
+    var rotatedImage =
+        List.generate(image.length, (index) => List.filled(image.length, 0));
+    var rI = 0;
+    var rJ = 0;
+    for (var j = 0; j < image.length; j++) {
+      if (rI == image.length) rI = 0;
+      for (var i = image.length - 1; i >= 0; i--) {
+        if (rJ == image.length) rJ = 0;
+        rotatedImage[rI][rJ] = image[i][j];
+        ++rJ;
+      }
+      ++rI;
+    }
+    image = rotatedImage;
+    return image;
+  }
 }

@@ -389,5 +389,13 @@ void main(List<String> arguments) {
   print(questions.urlIfy('mr john smith      '));
   print(questions.isOneAway('pale', 'bake'));
   print(questions.stringCompression('aaa'));
+  print(questions.rotateImageBy90Degree(
+    [
+      [1, 2, 3, 4],
+      [5, 6, 7, 8],
+      [9, 10, 11, 12],
+      [13, 14, 15, 16]
+    ],
+  ));
   print('**********\n');
 }
