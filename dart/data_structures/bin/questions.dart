@@ -238,4 +238,60 @@ class Questions {
     image = rotatedImage;
     return image;
   }
+
+  List<List<int>> zeroMatrix(List<List<int>> matrix) {
+    var rows = <int>[];
+    var columns = <int>[];
+
+    for (var i = 0; i < matrix.length; i++) {
+      for (var j = 0; j < matrix[i].length; j++) {
+        if (matrix[i][j] == 0) {
+          if (!rows.contains(i)) {
+            rows.add(i);
+          }
+          if (!columns.contains(j)) {
+            columns.add(j);
+          }
+        }
+      }
+    }
+
+    for (var row = 0; row < matrix.length; row++) {
+      if (rows.contains(row)) {
+        for (var j = 0; j < matrix.length; j++) {
+          matrix[row][j] = 0;
+        }
+      }
+    }
+
+    for (var col in columns) {
+      for (var row = 0; row < matrix.length; row++) {
+        matrix[row][col] = 0;
+      }
+    }
+
+    return matrix;
+  }
+
+  bool isARotations(String s1, String s2) {
+    if (s1.length != s2.length) {
+      return false;
+    }
+
+    var startS1 = 0;
+    var startS2 = s2.length - 1;
+
+    var s1Arr = s1.split('');
+    var s2Arr = s2.split('');
+
+    while (startS1 < s1.length - 1 && startS2 >= 0) {
+      if (s1Arr[startS1] != s2Arr[startS2]) {
+        return false;
+      }
+      startS1++;
+      startS2--;
+    }
+
+    return true;
+  }
 }

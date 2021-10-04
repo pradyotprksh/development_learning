@@ -397,5 +397,14 @@ void main(List<String> arguments) {
       [13, 14, 15, 16]
     ],
   ));
+  print(questions.zeroMatrix(
+    [
+      [1, 2, 0, 4],
+      [5, 6, 7, 8],
+      [9, 0, 11, 12],
+      [13, 14, 15, 16]
+    ],
+  ));
+  print(questions.isARotations('waterbottle', 'elttobretaw'));
   print('**********\n');
 }
