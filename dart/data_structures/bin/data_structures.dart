@@ -406,5 +406,14 @@ void main(List<String> arguments) {
     ],
   ));
   print(questions.isARotations('waterbottle', 'elttobretaw'));
+  var linkedList = SingleLinkedList();
+  linkedList.insertAtStart(0);
+  linkedList.insertAtEnd(1);
+  linkedList.insertAtEnd(2);
+  linkedList.insertAtEnd(1);
+  linkedList.insertAtEnd(3);
+  linkedList.insertAtEnd(1);
+  linkedList.insertAtEnd(2);
+  linkedList.removeDuplicatesFromLinkedList();
   print('**********\n');
 }

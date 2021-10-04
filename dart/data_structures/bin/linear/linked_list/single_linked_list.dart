@@ -130,6 +130,22 @@ class SingleLinkedList {
     head = current;
     traverse();
   }
+
+  void removeDuplicatesFromLinkedList() {
+    var data = <int?>{};
+    var temp = head;
+    var prev = head;
+    while (head != null) {
+      if (data.add(head?.data)) {
+        prev = head;
+      } else {
+        prev?.next = head?.next;
+      }
+      head = head?.next;
+    }
+    head = temp;
+    traverse();
+  }
 }
 
 class CircularSingleLinkedList {
