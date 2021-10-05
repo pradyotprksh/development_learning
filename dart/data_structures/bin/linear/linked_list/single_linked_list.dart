@@ -146,6 +146,25 @@ class SingleLinkedList {
     head = temp;
     traverse();
   }
+
+  void getKthToLastElement(int k) {
+    var temp = head;
+    while (temp != null && k > 0) {
+      temp = temp.next;
+      --k;
+    }
+
+    if (k < 0 || temp == null) {
+      print('Index out of bound');
+      return;
+    }
+    var output = '';
+    while (temp != null) {
+      output = '$output--->${temp.data}';
+      temp = temp.next;
+    }
+    print(output);
+  }
 }
 
 class CircularSingleLinkedList {

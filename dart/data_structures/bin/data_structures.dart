@@ -414,6 +414,8 @@ void main(List<String> arguments) {
   linkedList.insertAtEnd(3);
   linkedList.insertAtEnd(1);
   linkedList.insertAtEnd(2);
+  linkedList.getKthToLastElement(6);
+  linkedList.deleteFromMiddle(4);
   linkedList.removeDuplicatesFromLinkedList();
   print('**********\n');
 }
