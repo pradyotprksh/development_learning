@@ -11,6 +11,7 @@ import 'non_linear/graphs/undirected_weight_graph.dart';
 import 'non_linear/trees/trees.dart' as tree;
 import 'non_linear/trees/type/binary_search_tree.dart';
 import 'non_linear/trees/type/binary_tree.dart';
+import 'non_linear/trees/type/tries.dart';
 import 'questions.dart';
 
 void main(List<String> arguments) {
@@ -417,5 +418,14 @@ void main(List<String> arguments) {
   linkedList.getKthToLastElement(6);
   linkedList.deleteFromMiddle(4);
   linkedList.removeDuplicatesFromLinkedList();
+  print('**********\n');
+
+  print('***** TRIES *****');
+  var tries = Tries();
+  tries.insert('MANY');
+  tries.insert('MY');
+  tries.insert('MAN');
+  tries.insert('LIE');
+  tries.insert('A');
   print('**********\n');
 }
