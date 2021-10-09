@@ -427,5 +427,6 @@ void main(List<String> arguments) {
   tries.insert('MAN');
   tries.insert('LIE');
   tries.insert('A');
+  tries.search('MAY');
   print('**********\n');
 }

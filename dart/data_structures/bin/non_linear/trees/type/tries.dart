@@ -18,8 +18,8 @@ class Tries {
   void insert(String value) {
     var children = root.children;
     var s = value.split('');
+    TriesNode node;
     for (var i = 0; i < value.length; i++) {
-      TriesNode node;
       if (children.containsKey(s[i])) {
         node = children[s[i]]!;
       } else {
@@ -34,5 +34,29 @@ class Tries {
     }
 
     print(root.toString());
+  }
+
+  void search(String value) {
+    var node = _searchNode(value);
+    if (node != null) {
+      print('Found $value');
+    } else {
+      print('Not found $value');
+    }
+  }
+
+  TriesNode? _searchNode(String value) {
+    var children = root.children;
+    var s = value.split('');
+    TriesNode? node;
+    for (var i = 0; i < value.length; i++) {
+      if (children.containsKey(s[i])) {
+        node = children[s[i]]!;
+      } else {
+        return null;
+      }
+      children = node.children;
+    }
+    return node;
   }
 }
