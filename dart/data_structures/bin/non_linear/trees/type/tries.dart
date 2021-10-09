@@ -1,14 +1,13 @@
 class TriesNode {
-  String value = "";
   var children = <String, TriesNode>{};
   bool isLast = false;
 
   @override
   String toString() {
     if (isLast) {
-      return '$value -> $children -> *';
+      return '$children -> *';
     }
-    return '$value -> $children';
+    return '$children';
   }
 }
 
@@ -23,7 +22,7 @@ class Tries {
       if (children.containsKey(s[i])) {
         node = children[s[i]]!;
       } else {
-        node = TriesNode()..value = s[i];
+        node = TriesNode();
         children[s[i]] = node;
       }
       children = node.children;
