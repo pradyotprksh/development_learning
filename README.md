@@ -44,7 +44,7 @@ Each project is divided into folders based on the platforms and the courses. And
   - [FlashChat](https://github.com/pradyotprksh/development_learning/tree/main/jetpack_compose/FlashChat)
   - [WhatsApp Compose](https://github.com/pradyotprksh/development_learning/tree/main/jetpack_compose/WhatsAppCompose)
 
-## [Python]()
+## [Python](https://github.com/pradyotprksh/development_learning/tree/main/python)
 
 ### [2022 Complete Python Bootcamp From Zero to Hero in Python]()
     - []
