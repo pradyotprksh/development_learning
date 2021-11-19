@@ -1,3 +1,7 @@
+## Links
+
+[Details of the project](https://medium.com/geekculture/whatsapp-clone-jetpack-compose-d90120723d88)
+
 ## NOTES
 
 ### Known Issues
