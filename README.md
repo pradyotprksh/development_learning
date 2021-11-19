@@ -43,6 +43,7 @@ Each project is divided into folders based on the platforms and the courses. And
   - [Dicee](https://github.com/pradyotprksh/development_learning/tree/main/jetpack_compose/Dicee)
   - [FlashChat](https://github.com/pradyotprksh/development_learning/tree/main/jetpack_compose/FlashChat)
   - [WhatsApp Compose](https://github.com/pradyotprksh/development_learning/tree/main/jetpack_compose/WhatsAppCompose)
+    - For more details go to this [link](https://medium.com/geekculture/whatsapp-clone-jetpack-compose-d90120723d88)
 
 ## [Python](https://github.com/pradyotprksh/development_learning/tree/main/python)
 
