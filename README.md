@@ -46,11 +46,6 @@ Each project is divided into folders based on the platforms and the courses. And
   - [WhatsApp Compose](https://github.com/pradyotprksh/development_learning/tree/main/jetpack_compose/WhatsAppCompose)
     - For more details go to this [link](https://medium.com/geekculture/whatsapp-clone-jetpack-compose-d90120723d88)
 
-## [Python](https://github.com/pradyotprksh/development_learning/tree/main/python)
-
-### [2022 Complete Python Bootcamp From Zero to Hero in Python](https://github.com/pradyotprksh/development_learning/tree/main/python/jose_portilla_python)
-  - [basics](https://github.com/pradyotprksh/development_learning/tree/main/python/jose_portilla_python/basics)
-
 ## [Kotlin](https://github.com/pradyotprksh/development_learning/tree/main/kotlin)
   - [basics](https://github.com/pradyotprksh/development_learning/tree/main/kotlin/basics)
 
