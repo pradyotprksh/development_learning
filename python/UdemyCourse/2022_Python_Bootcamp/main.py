@@ -1,0 +1,20 @@
+from basics import log_info, Constants, numbers_basics, variable_assignments, strings_basics, string_slicing_indexing, \
+    string_properties_methods, print_new_line
+
+log_info(Constants.Messages.STARTING_MESSAGE)
+print_new_line()
+log_info(Constants.Messages.NUMBERS_START)
+numbers_basics()
+print_new_line()
+log_info(Constants.Messages.VARIABLES_ASSIGNMENT_START)
+variable_assignments()
+print_new_line()
+log_info(Constants.Messages.STRINGS_START)
+strings_basics()
+print_new_line()
+log_info(Constants.Messages.STRINGS_SLICING_INDEXING)
+string_slicing_indexing()
+print_new_line()
+log_info(Constants.Messages.STRINGS_PROPERTIES_METHODS)
+string_properties_methods()
+print_new_line()
