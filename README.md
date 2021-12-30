@@ -53,8 +53,7 @@ Each project is divided into folders based on the platforms and the courses. And
 This is still in progress will be updating the notes as I move forward. The notes have been made using the "CRACKING the CODING INTERVIEW 6th EDITION".
 
 ## [Python](https://github.com/pradyotprksh/development_learning/tree/main/python)
-
-### [2022 Bootcamp Udemy Python Course](https://github.com/pradyotprksh/development_learning/tree/main/python/UdemyCourse/2022_Python_Bootcamp) 
+  - [2022 Bootcamp Udemy Python Course](https://github.com/pradyotprksh/development_learning/tree/main/python/UdemyCourse/2022_Python_Bootcamp) 
 
 
 > If you found this helpful or you learned something today and want to thank me, consider buying me a cup of ☕ at [PayPal](https://paypal.me/pradyotprksh)
