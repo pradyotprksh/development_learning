@@ -71,3 +71,45 @@ def string_properties_methods():
         my_string[0] = "P"
     except TypeError as err:
         log_exception(err)
+
+    # The above can be achieved by using concatenation
+    my_string = "Hello World"
+    last_letters = my_string[1:]
+    log_debug(last_letters)
+    last_letters = 'P' + last_letters
+    log_debug(last_letters)
+
+    letter = 'z'
+    log_debug(letter * 5)
+
+    log_debug(my_string.upper())
+    log_debug(my_string.lower())
+    log_debug(my_string.split())
+    log_debug(my_string.split('o'))
+
+
+def string_formatting():
+    """
+    Let's see how we can format strings in Python.
+    Check https://pyformat.info for more details.
+    :return: none
+    """
+
+    # Using format method
+    log_debug("This is one way of {} string".format("formatting"))
+    log_debug("This is {} way of {} string".format("one", "formatting"))
+    # Can assign index
+    log_debug("The {2} {1} {0}".format("fox", "brown", "quick"))
+    log_debug("The {1} {1} {0}".format("fox", "brown", "quick"))
+    # Can assign key to the values
+    log_debug("The {q} {b} {f}".format(f="fox", b="brown", q="quick"))
+
+    # Format floating value
+    result = 100/77
+    log_debug(result)
+    log_debug("The result was {r:1.3f}".format(r=result))
+
+    # Using formatting string literals
+    name = "Pradyot"
+    log_debug(name)
+    log_debug(f"My name is {name}")
