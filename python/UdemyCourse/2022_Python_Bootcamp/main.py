@@ -1,5 +1,6 @@
-from basics import log_info, Constants, numbers_basics, variable_assignments, strings_basics, string_slicing_indexing, \
-    string_properties_methods, print_new_line, string_formatting, lists_basic
+from basics import numbers_basics, variable_assignments, strings_basics, string_slicing_indexing, \
+    string_properties_methods, string_formatting, lists_basic
+from src import log_info, Constants, print_new_line
 
 log_info(Constants.Messages.STARTING_MESSAGE)
 print_new_line()

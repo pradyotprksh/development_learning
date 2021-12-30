@@ -1,4 +1,4 @@
-from ..src import log_debug
+from src import log_debug
 
 
 def lists_basic():

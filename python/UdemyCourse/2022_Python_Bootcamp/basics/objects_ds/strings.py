@@ -1,4 +1,4 @@
-from ..src import log_debug, log_exception
+from src import log_debug, log_exception
 
 
 def strings_basics():

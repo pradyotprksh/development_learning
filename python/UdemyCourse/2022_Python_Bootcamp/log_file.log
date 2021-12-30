@@ -1,104 +1,104 @@
-2021-12-31 00:28:30.563 | INFO     | basics.src.utility:log_info:20 - 
+2021-12-31 00:37:08.880 | INFO     | src.utility:log_info:20 - 
 Welcome to the tutorial. Here we will be taking look on various Python related basics. 
 Each operations output will be shown on the console and you can navigate to the files for how it's being achieved.
-2021-12-31 00:28:30.563 | DEBUG    | basics.src.utility:print_new_line:12 - 🥳
+2021-12-31 00:37:08.880 | DEBUG    | src.utility:print_new_line:12 - 🥳
 
-2021-12-31 00:28:30.563 | INFO     | basics.src.utility:log_info:20 - Let's start with numbers in python
-2021-12-31 00:28:30.563 | DEBUG    | basics.src.utility:log_debug:29 - 4
-2021-12-31 00:28:30.563 | DEBUG    | basics.src.utility:log_debug:29 - 8
-2021-12-31 00:28:30.563 | DEBUG    | basics.src.utility:log_debug:29 - 4.666666666666667
-2021-12-31 00:28:30.563 | DEBUG    | basics.src.utility:log_debug:29 - 2
-2021-12-31 00:28:30.563 | DEBUG    | basics.src.utility:log_debug:29 - 8
-2021-12-31 00:28:30.564 | DEBUG    | basics.src.utility:log_debug:29 - 102
-2021-12-31 00:28:30.564 | DEBUG    | basics.src.utility:log_debug:29 - 5.551115123125783e-17
-2021-12-31 00:28:30.564 | DEBUG    | basics.src.utility:print_new_line:12 - 🥳
+2021-12-31 00:37:08.880 | INFO     | src.utility:log_info:20 - Let's start with numbers in python
+2021-12-31 00:37:08.880 | DEBUG    | src.utility:log_debug:29 - 4
+2021-12-31 00:37:08.881 | DEBUG    | src.utility:log_debug:29 - 8
+2021-12-31 00:37:08.881 | DEBUG    | src.utility:log_debug:29 - 4.666666666666667
+2021-12-31 00:37:08.881 | DEBUG    | src.utility:log_debug:29 - 2
+2021-12-31 00:37:08.881 | DEBUG    | src.utility:log_debug:29 - 8
+2021-12-31 00:37:08.881 | DEBUG    | src.utility:log_debug:29 - 102
+2021-12-31 00:37:08.881 | DEBUG    | src.utility:log_debug:29 - 5.551115123125783e-17
+2021-12-31 00:37:08.881 | DEBUG    | src.utility:print_new_line:12 - 🥳
 
-2021-12-31 00:28:30.564 | INFO     | basics.src.utility:log_info:20 - Let's start with variable assignments in python
-2021-12-31 00:28:30.564 | DEBUG    | basics.src.utility:log_debug:29 - 5
-2021-12-31 00:28:30.564 | DEBUG    | basics.src.utility:log_debug:29 - 10
-2021-12-31 00:28:30.564 | DEBUG    | basics.src.utility:log_debug:29 - 20
-2021-12-31 00:28:30.564 | DEBUG    | basics.src.utility:log_debug:29 - 20
-2021-12-31 00:28:30.564 | DEBUG    | basics.src.utility:log_debug:29 - 40
-2021-12-31 00:28:30.564 | DEBUG    | basics.src.utility:log_debug:29 - <class 'int'>
-2021-12-31 00:28:30.564 | DEBUG    | basics.src.utility:log_debug:29 - <class 'float'>
-2021-12-31 00:28:30.564 | DEBUG    | basics.src.utility:log_debug:29 - 10.0
-2021-12-31 00:28:30.564 | DEBUG    | basics.src.utility:print_new_line:12 - 🥳
+2021-12-31 00:37:08.881 | INFO     | src.utility:log_info:20 - Let's start with variable assignments in python
+2021-12-31 00:37:08.881 | DEBUG    | src.utility:log_debug:29 - 5
+2021-12-31 00:37:08.881 | DEBUG    | src.utility:log_debug:29 - 10
+2021-12-31 00:37:08.881 | DEBUG    | src.utility:log_debug:29 - 20
+2021-12-31 00:37:08.881 | DEBUG    | src.utility:log_debug:29 - 20
+2021-12-31 00:37:08.881 | DEBUG    | src.utility:log_debug:29 - 40
+2021-12-31 00:37:08.881 | DEBUG    | src.utility:log_debug:29 - <class 'int'>
+2021-12-31 00:37:08.881 | DEBUG    | src.utility:log_debug:29 - <class 'float'>
+2021-12-31 00:37:08.881 | DEBUG    | src.utility:log_debug:29 - 10.0
+2021-12-31 00:37:08.881 | DEBUG    | src.utility:print_new_line:12 - 🥳
 
-2021-12-31 00:28:30.564 | INFO     | basics.src.utility:log_info:20 - Let's start with Strings basics in python
-2021-12-31 00:28:30.564 | DEBUG    | basics.src.utility:log_debug:29 - hello
-2021-12-31 00:28:30.564 | DEBUG    | basics.src.utility:log_debug:29 - hello
-2021-12-31 00:28:30.564 | DEBUG    | basics.src.utility:log_debug:29 - i don't know
-2021-12-31 00:28:30.564 | DEBUG    | basics.src.utility:log_debug:29 - i 
+2021-12-31 00:37:08.881 | INFO     | src.utility:log_info:20 - Let's start with Strings basics in python
+2021-12-31 00:37:08.881 | DEBUG    | src.utility:log_debug:29 - hello
+2021-12-31 00:37:08.881 | DEBUG    | src.utility:log_debug:29 - hello
+2021-12-31 00:37:08.882 | DEBUG    | src.utility:log_debug:29 - i don't know
+2021-12-31 00:37:08.882 | DEBUG    | src.utility:log_debug:29 - i 
  don't know
-2021-12-31 00:28:30.564 | DEBUG    | basics.src.utility:log_debug:29 - i 	 don't know
-2021-12-31 00:28:30.564 | DEBUG    | basics.src.utility:log_debug:29 - 6
-2021-12-31 00:28:30.564 | DEBUG    | basics.src.utility:print_new_line:12 - 🥳
+2021-12-31 00:37:08.882 | DEBUG    | src.utility:log_debug:29 - i 	 don't know
+2021-12-31 00:37:08.882 | DEBUG    | src.utility:log_debug:29 - 6
+2021-12-31 00:37:08.882 | DEBUG    | src.utility:print_new_line:12 - 🥳
 
-2021-12-31 00:28:30.565 | INFO     | basics.src.utility:log_info:20 - Let's start with Strings slicing and indexing in python
-2021-12-31 00:28:30.565 | DEBUG    | basics.src.utility:log_debug:29 - Hello World
-2021-12-31 00:28:30.565 | DEBUG    | basics.src.utility:log_debug:29 - H
-2021-12-31 00:28:30.565 | DEBUG    | basics.src.utility:log_debug:29 - r
-2021-12-31 00:28:30.565 | DEBUG    | basics.src.utility:log_debug:29 - abcdefghijk
-2021-12-31 00:28:30.565 | DEBUG    | basics.src.utility:log_debug:29 - c
-2021-12-31 00:28:30.565 | DEBUG    | basics.src.utility:log_debug:29 - cdefghijk
-2021-12-31 00:28:30.565 | DEBUG    | basics.src.utility:log_debug:29 - abc
-2021-12-31 00:28:30.565 | DEBUG    | basics.src.utility:log_debug:29 - def
-2021-12-31 00:28:30.565 | DEBUG    | basics.src.utility:log_debug:29 - acegik
-2021-12-31 00:28:30.565 | DEBUG    | basics.src.utility:log_debug:29 - ceg
-2021-12-31 00:28:30.565 | DEBUG    | basics.src.utility:log_debug:29 - kjihgfedcba
-2021-12-31 00:28:30.565 | DEBUG    | basics.src.utility:print_new_line:12 - 🥳
+2021-12-31 00:37:08.882 | INFO     | src.utility:log_info:20 - Let's start with Strings slicing and indexing in python
+2021-12-31 00:37:08.882 | DEBUG    | src.utility:log_debug:29 - Hello World
+2021-12-31 00:37:08.882 | DEBUG    | src.utility:log_debug:29 - H
+2021-12-31 00:37:08.882 | DEBUG    | src.utility:log_debug:29 - r
+2021-12-31 00:37:08.882 | DEBUG    | src.utility:log_debug:29 - abcdefghijk
+2021-12-31 00:37:08.882 | DEBUG    | src.utility:log_debug:29 - c
+2021-12-31 00:37:08.882 | DEBUG    | src.utility:log_debug:29 - cdefghijk
+2021-12-31 00:37:08.882 | DEBUG    | src.utility:log_debug:29 - abc
+2021-12-31 00:37:08.882 | DEBUG    | src.utility:log_debug:29 - def
+2021-12-31 00:37:08.882 | DEBUG    | src.utility:log_debug:29 - acegik
+2021-12-31 00:37:08.882 | DEBUG    | src.utility:log_debug:29 - ceg
+2021-12-31 00:37:08.882 | DEBUG    | src.utility:log_debug:29 - kjihgfedcba
+2021-12-31 00:37:08.882 | DEBUG    | src.utility:print_new_line:12 - 🥳
 
-2021-12-31 00:28:30.565 | INFO     | basics.src.utility:log_info:20 - Let's start with Strings properties and methods in python
-2021-12-31 00:28:30.565 | ERROR    | basics.src.utility:log_exception:47 - 'str' object does not support item assignment
+2021-12-31 00:37:08.882 | INFO     | src.utility:log_info:20 - Let's start with Strings properties and methods in python
+2021-12-31 00:37:08.882 | ERROR    | src.utility:log_exception:47 - 'str' object does not support item assignment
 Traceback (most recent call last):
 
-  File "/Users/pradyotprakash/Desktop/Data/Projects/learning/development_learning/python/UdemyCourse/2022_Python_Bootcamp/main.py", line 19, in <module>
+  File "/Users/pradyotprakash/Desktop/Data/Projects/learning/development_learning/python/UdemyCourse/2022_Python_Bootcamp/main.py", line 20, in <module>
     string_properties_methods()
-    └ <function string_properties_methods at 0x105550a60>
+    └ <function string_properties_methods at 0x105e2aa60>
 
 > File "/Users/pradyotprakash/Desktop/Data/Projects/learning/development_learning/python/UdemyCourse/2022_Python_Bootcamp/basics/objects_ds/strings.py", line 71, in string_properties_methods
     my_string[0] = "P"
     └ 'Hello'
 
 TypeError: 'str' object does not support item assignment
-2021-12-31 00:28:30.568 | DEBUG    | basics.src.utility:log_debug:29 - ello World
-2021-12-31 00:28:30.568 | DEBUG    | basics.src.utility:log_debug:29 - Pello World
-2021-12-31 00:28:30.568 | DEBUG    | basics.src.utility:log_debug:29 - zzzzz
-2021-12-31 00:28:30.568 | DEBUG    | basics.src.utility:log_debug:29 - HELLO WORLD
-2021-12-31 00:28:30.568 | DEBUG    | basics.src.utility:log_debug:29 - hello world
-2021-12-31 00:28:30.568 | DEBUG    | basics.src.utility:log_debug:29 - ['Hello', 'World']
-2021-12-31 00:28:30.568 | DEBUG    | basics.src.utility:log_debug:29 - ['Hell', ' W', 'rld']
-2021-12-31 00:28:30.568 | DEBUG    | basics.src.utility:print_new_line:12 - 🥳
+2021-12-31 00:37:08.885 | DEBUG    | src.utility:log_debug:29 - ello World
+2021-12-31 00:37:08.885 | DEBUG    | src.utility:log_debug:29 - Pello World
+2021-12-31 00:37:08.885 | DEBUG    | src.utility:log_debug:29 - zzzzz
+2021-12-31 00:37:08.885 | DEBUG    | src.utility:log_debug:29 - HELLO WORLD
+2021-12-31 00:37:08.885 | DEBUG    | src.utility:log_debug:29 - hello world
+2021-12-31 00:37:08.885 | DEBUG    | src.utility:log_debug:29 - ['Hello', 'World']
+2021-12-31 00:37:08.885 | DEBUG    | src.utility:log_debug:29 - ['Hell', ' W', 'rld']
+2021-12-31 00:37:08.886 | DEBUG    | src.utility:print_new_line:12 - 🥳
 
-2021-12-31 00:28:30.568 | INFO     | basics.src.utility:log_info:20 - Let's start with formatting Strings in python
-2021-12-31 00:28:30.568 | DEBUG    | basics.src.utility:log_debug:29 - This is one way of formatting string
-2021-12-31 00:28:30.568 | DEBUG    | basics.src.utility:log_debug:29 - This is one way of formatting string
-2021-12-31 00:28:30.568 | DEBUG    | basics.src.utility:log_debug:29 - The quick brown fox
-2021-12-31 00:28:30.569 | DEBUG    | basics.src.utility:log_debug:29 - The brown brown fox
-2021-12-31 00:28:30.569 | DEBUG    | basics.src.utility:log_debug:29 - The quick brown fox
-2021-12-31 00:28:30.569 | DEBUG    | basics.src.utility:log_debug:29 - 1.2987012987012987
-2021-12-31 00:28:30.569 | DEBUG    | basics.src.utility:log_debug:29 - The result was 1.299
-2021-12-31 00:28:30.569 | DEBUG    | basics.src.utility:log_debug:29 - Pradyot
-2021-12-31 00:28:30.569 | DEBUG    | basics.src.utility:log_debug:29 - My name is Pradyot
-2021-12-31 00:28:30.569 | DEBUG    | basics.src.utility:print_new_line:12 - 🥳
+2021-12-31 00:37:08.886 | INFO     | src.utility:log_info:20 - Let's start with formatting Strings in python
+2021-12-31 00:37:08.886 | DEBUG    | src.utility:log_debug:29 - This is one way of formatting string
+2021-12-31 00:37:08.886 | DEBUG    | src.utility:log_debug:29 - This is one way of formatting string
+2021-12-31 00:37:08.886 | DEBUG    | src.utility:log_debug:29 - The quick brown fox
+2021-12-31 00:37:08.886 | DEBUG    | src.utility:log_debug:29 - The brown brown fox
+2021-12-31 00:37:08.886 | DEBUG    | src.utility:log_debug:29 - The quick brown fox
+2021-12-31 00:37:08.886 | DEBUG    | src.utility:log_debug:29 - 1.2987012987012987
+2021-12-31 00:37:08.886 | DEBUG    | src.utility:log_debug:29 - The result was 1.299
+2021-12-31 00:37:08.886 | DEBUG    | src.utility:log_debug:29 - Pradyot
+2021-12-31 00:37:08.886 | DEBUG    | src.utility:log_debug:29 - My name is Pradyot
+2021-12-31 00:37:08.886 | DEBUG    | src.utility:print_new_line:12 - 🥳
 
-2021-12-31 00:28:30.569 | INFO     | basics.src.utility:log_info:20 - Let's start with Lists in python
-2021-12-31 00:28:30.569 | DEBUG    | basics.src.utility:log_debug:29 - [1, 2, 3]
-2021-12-31 00:28:30.569 | DEBUG    | basics.src.utility:log_debug:29 - ['One', 2, 3.0]
-2021-12-31 00:28:30.569 | DEBUG    | basics.src.utility:log_debug:29 - 3
-2021-12-31 00:28:30.569 | DEBUG    | basics.src.utility:log_debug:29 - One
-2021-12-31 00:28:30.569 | DEBUG    | basics.src.utility:log_debug:29 - 3.0
-2021-12-31 00:28:30.569 | DEBUG    | basics.src.utility:log_debug:29 - ['One', 2, 3.0]
-2021-12-31 00:28:30.569 | DEBUG    | basics.src.utility:log_debug:29 - ['One', 2]
-2021-12-31 00:28:30.569 | DEBUG    | basics.src.utility:log_debug:29 - ['One', 2, 3.0, 'Four', 'Five']
-2021-12-31 00:28:30.569 | DEBUG    | basics.src.utility:log_debug:29 - [1, 2, 3.0]
-2021-12-31 00:28:30.569 | DEBUG    | basics.src.utility:log_debug:29 - [1, 2, 3.0, 4.0, 5.0, 7.0, 'Eight', 9]
-2021-12-31 00:28:30.569 | DEBUG    | basics.src.utility:log_debug:29 - [1, 2, 3.0, 4.0, 5.0, 7.0, 'Eight']
-2021-12-31 00:28:30.569 | DEBUG    | basics.src.utility:log_debug:29 - [1, 2, 3.0, 4.0, 5.0, 7.0]
-2021-12-31 00:28:30.569 | DEBUG    | basics.src.utility:log_debug:29 - Eight
-2021-12-31 00:28:30.570 | DEBUG    | basics.src.utility:log_debug:29 - [1, 2, 3.0, 5.0, 7.0]
-2021-12-31 00:28:30.570 | DEBUG    | basics.src.utility:log_debug:29 - 4.0
-2021-12-31 00:28:30.570 | DEBUG    | basics.src.utility:log_debug:29 - [1, 2, 3.0, 5.0, 7.0]
-2021-12-31 00:28:30.570 | DEBUG    | basics.src.utility:log_debug:29 - [7.0, 5.0, 3.0, 2, 1]
-2021-12-31 00:28:30.570 | DEBUG    | basics.src.utility:print_new_line:12 - 🥳
+2021-12-31 00:37:08.886 | INFO     | src.utility:log_info:20 - Let's start with Lists in python
+2021-12-31 00:37:08.886 | DEBUG    | src.utility:log_debug:29 - [1, 2, 3]
+2021-12-31 00:37:08.886 | DEBUG    | src.utility:log_debug:29 - ['One', 2, 3.0]
+2021-12-31 00:37:08.886 | DEBUG    | src.utility:log_debug:29 - 3
+2021-12-31 00:37:08.886 | DEBUG    | src.utility:log_debug:29 - One
+2021-12-31 00:37:08.886 | DEBUG    | src.utility:log_debug:29 - 3.0
+2021-12-31 00:37:08.886 | DEBUG    | src.utility:log_debug:29 - ['One', 2, 3.0]
+2021-12-31 00:37:08.886 | DEBUG    | src.utility:log_debug:29 - ['One', 2]
+2021-12-31 00:37:08.886 | DEBUG    | src.utility:log_debug:29 - ['One', 2, 3.0, 'Four', 'Five']
+2021-12-31 00:37:08.887 | DEBUG    | src.utility:log_debug:29 - [1, 2, 3.0]
+2021-12-31 00:37:08.887 | DEBUG    | src.utility:log_debug:29 - [1, 2, 3.0, 4.0, 5.0, 7.0, 'Eight', 9]
+2021-12-31 00:37:08.887 | DEBUG    | src.utility:log_debug:29 - [1, 2, 3.0, 4.0, 5.0, 7.0, 'Eight']
+2021-12-31 00:37:08.887 | DEBUG    | src.utility:log_debug:29 - [1, 2, 3.0, 4.0, 5.0, 7.0]
+2021-12-31 00:37:08.887 | DEBUG    | src.utility:log_debug:29 - Eight
+2021-12-31 00:37:08.887 | DEBUG    | src.utility:log_debug:29 - [1, 2, 3.0, 5.0, 7.0]
+2021-12-31 00:37:08.887 | DEBUG    | src.utility:log_debug:29 - 4.0
+2021-12-31 00:37:08.887 | DEBUG    | src.utility:log_debug:29 - [1, 2, 3.0, 5.0, 7.0]
+2021-12-31 00:37:08.887 | DEBUG    | src.utility:log_debug:29 - [7.0, 5.0, 3.0, 2, 1]
+2021-12-31 00:37:08.887 | DEBUG    | src.utility:print_new_line:12 - 🥳
 
