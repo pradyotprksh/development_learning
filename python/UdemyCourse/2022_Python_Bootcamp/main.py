@@ -1,5 +1,5 @@
 from basics import log_info, Constants, numbers_basics, variable_assignments, strings_basics, string_slicing_indexing, \
-    string_properties_methods, print_new_line, string_formatting
+    string_properties_methods, print_new_line, string_formatting, lists_basic
 
 log_info(Constants.Messages.STARTING_MESSAGE)
 print_new_line()
@@ -20,4 +20,7 @@ string_properties_methods()
 print_new_line()
 log_info(Constants.Messages.LETS_START_WITH_PYTHON.format(Constants.Messages.STRINGS_FORMATTING))
 string_formatting()
+print_new_line()
+log_info(Constants.Messages.LETS_START_WITH_PYTHON.format(Constants.Messages.LISTS))
+lists_basic()
 print_new_line()
