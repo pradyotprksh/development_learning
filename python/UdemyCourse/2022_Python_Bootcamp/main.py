@@ -1,5 +1,5 @@
 from basics import numbers_basics, variable_assignments, strings_basics, string_slicing_indexing, \
-    string_properties_methods, string_formatting, lists_basic, dictionaries_basics
+    string_properties_methods, string_formatting, lists_basic, dictionaries_basics, tuples_basics
 from src import log_info, Constants, print_new_line
 
 log_info(Constants.Messages.STARTING_MESSAGE)
@@ -27,4 +27,7 @@ lists_basic()
 print_new_line()
 log_info(Constants.Messages.LETS_START_WITH_PYTHON.format(Constants.Messages.DICTIONARIES))
 dictionaries_basics()
+print_new_line()
+log_info(Constants.Messages.LETS_START_WITH_PYTHON.format(Constants.Messages.TUPLES))
+tuples_basics()
 print_new_line()

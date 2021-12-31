@@ -12,3 +12,4 @@ Each operations output will be shown on the console and you can navigate to the 
         STRINGS_FORMATTING = "formatting Strings"
         LISTS = "Lists"
         DICTIONARIES = "Dictionaries"
+        TUPLES = "Tuples"
