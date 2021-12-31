@@ -13,3 +13,4 @@ Each operations output will be shown on the console and you can navigate to the 
         LISTS = "Lists"
         DICTIONARIES = "Dictionaries"
         TUPLES = "Tuples"
+        SETS = "Sets"

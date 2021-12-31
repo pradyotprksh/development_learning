@@ -4,3 +4,4 @@ from .strings import strings_basics, string_slicing_indexing, string_properties_
 from .lists import lists_basic
 from .dictionaries import dictionaries_basics
 from .tuples import tuples_basics
+from .sets import sets_basics
