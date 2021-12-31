@@ -11,3 +11,4 @@ Each operations output will be shown on the console and you can navigate to the 
         STRINGS_PROPERTIES_METHODS = "Strings properties and methods"
         STRINGS_FORMATTING = "formatting Strings"
         LISTS = "Lists"
+        DICTIONARIES = "Dictionaries"
