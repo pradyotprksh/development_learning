@@ -14,3 +14,4 @@ Each operations output will be shown on the console and you can navigate to the 
         DICTIONARIES = "Dictionaries"
         TUPLES = "Tuples"
         SETS = "Sets"
+        BOOLEANS = "Booleans"

@@ -5,3 +5,4 @@ from .lists import lists_basic
 from .dictionaries import dictionaries_basics
 from .tuples import tuples_basics
 from .sets import sets_basics
+from .booleans import booleans_basics
