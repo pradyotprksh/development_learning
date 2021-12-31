@@ -17,4 +17,9 @@
 
 ## Links
 * https://github.com/Pierian-Data/Complete-Python-3-Bootcamp
+* Basic Practice: http://codingbat.com/python
+* Mathematical Practice: https://projecteuler.net/archives
+* Problem solving: http://www.codeabbey.com/index/task_list
+* Problem solving: https://www.reddit.com/r/dailyprogrammer
+* Problem solving: http://www.pythonchallenge.com/
 

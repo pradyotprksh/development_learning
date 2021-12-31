@@ -7,3 +7,4 @@ from .tuples import tuples_basics
 from .sets import sets_basics
 from .booleans import booleans_basics
 from .io_with_files import io_with_files_basics
+from .comparison_operators import comparison_operators_basics, comparison_with_logical_operators_basics
