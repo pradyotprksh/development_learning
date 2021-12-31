@@ -15,3 +15,4 @@ Each operations output will be shown on the console and you can navigate to the 
         TUPLES = "Tuples"
         SETS = "Sets"
         BOOLEANS = "Booleans"
+        IO_WITH_FILES = "I/O with Files"

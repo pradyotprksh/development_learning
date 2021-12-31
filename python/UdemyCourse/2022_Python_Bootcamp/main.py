@@ -1,6 +1,6 @@
 from basics import numbers_basics, variable_assignments, strings_basics, string_slicing_indexing, \
     string_properties_methods, string_formatting, lists_basic, dictionaries_basics, tuples_basics, sets_basics, \
-    booleans_basics
+    booleans_basics, io_with_files_basics
 from src import log_info, Constants, print_new_line
 
 log_info(Constants.Messages.STARTING_MESSAGE)
@@ -37,4 +37,7 @@ sets_basics()
 print_new_line()
 log_info(Constants.Messages.LETS_START_WITH_PYTHON.format(Constants.Messages.BOOLEANS))
 booleans_basics()
+print_new_line()
+log_info(Constants.Messages.LETS_START_WITH_PYTHON.format(Constants.Messages.IO_WITH_FILES))
+io_with_files_basics()
 print_new_line()
