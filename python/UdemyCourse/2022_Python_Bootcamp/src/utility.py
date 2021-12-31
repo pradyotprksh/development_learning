@@ -1,9 +1,6 @@
 from loguru import logger
 
 
-logger.add("log_file.log", retention="1 days")
-
-
 def print_new_line():
     """
     Print new lines

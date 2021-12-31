@@ -15,9 +15,6 @@
 * Data science and machine learning
 * Create websites
 
-## Note
-* Check log_file.log for console output
-
 ## Links
 * https://github.com/Pierian-Data/Complete-Python-3-Bootcamp
 
