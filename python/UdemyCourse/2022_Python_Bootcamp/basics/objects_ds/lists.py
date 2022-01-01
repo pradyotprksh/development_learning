@@ -56,3 +56,52 @@ def lists_basic():
     log_debug(my_list)
     my_list.reverse()
     log_debug(my_list)
+
+
+def list_comprehension():
+    """
+    Let's check one of the concept in python known as list comprehension
+    :return:
+    """
+
+    my_string = 'Hello'
+    my_list = []
+    for letter in my_string:
+        my_list.append(letter)
+    log_debug(my_list)
+
+    # let's do the above using comprehension concept
+    my_list = [letter for letter in my_string]
+    log_debug(my_list)
+
+    my_list = [x for x in 'word']
+    log_debug(my_list)
+
+    my_list = [num for num in range(0, 11)]
+    log_debug(my_list)
+
+    my_list = [num**2 for num in range(0, 11)]
+    log_debug(my_list)
+
+    my_list = [num for num in range(0, 11) if num % 2 == 0]
+    log_debug(my_list)
+
+    celcius = [0, 45, 13, 35.5]
+    farenheit = [(9/5) * temp + 32 for temp in celcius]
+    log_debug(farenheit)
+
+    # use if and else
+    results = [x if x % 2 == 0 else 'ODD' for x in range(0, 10)]
+    log_debug(results)
+
+    # nested loops
+    my_list = []
+    for x in [2, 4, 6]:
+        for y in [1, 10, 100]:
+            my_list.append(x * y)
+    log_debug(my_list)
+
+    # lets do the above using comprehension
+    my_list = [x*y for x in [2, 4, 6] for y in [1, 10, 100]]
+    log_debug(my_list)
+    

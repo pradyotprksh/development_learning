@@ -1,7 +1,7 @@
 from .numbers import numbers_basics
 from .variable_assignments import variable_assignments
 from .strings import strings_basics, string_slicing_indexing, string_properties_methods, string_formatting
-from .lists import lists_basic
+from .lists import lists_basic, list_comprehension
 from .dictionaries import dictionaries_basics
 from .tuples import tuples_basics
 from .sets import sets_basics
