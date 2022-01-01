@@ -19,3 +19,4 @@ Each operations output will be shown on the console and you can navigate to the 
         COMPARISON_LOGICAL_OPERATORS = "Comparison Operators and Logical Operators"
         IF_ELIF_ELSE = "If, elif and else"
         FOR_LOOPS = "For loops"
+        WHILE_LOOPS = "While loops"
