@@ -18,7 +18,7 @@ setup(
     )],
     packages=find_packages(
         include=[
-            'basics', 'src', 'basics.objects_ds'
+            'basics', 'basics.objects_ds', 'basics.python_statements', 'src',
         ]
     ),
     install_requires=[
