@@ -20,3 +20,4 @@ Each operations output will be shown on the console and you can navigate to the 
         IF_ELIF_ELSE = "If, elif and else"
         FOR_LOOPS = "For loops"
         WHILE_LOOPS = "While loops"
+        USEFUL_OPERATORS = "Useful operators"
