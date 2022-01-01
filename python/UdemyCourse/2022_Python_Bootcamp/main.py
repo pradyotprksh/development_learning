@@ -1,7 +1,7 @@
 from basics import numbers_basics, variable_assignments, strings_basics, string_slicing_indexing, \
     string_properties_methods, string_formatting, lists_basic, dictionaries_basics, tuples_basics, sets_basics, \
     booleans_basics, io_with_files_basics, comparison_operators_basics, comparison_with_logical_operators_basics, \
-    if_elif_else_basics
+    if_elif_else_basics, for_loops_basics
 from src import log_info, Constants, print_new_line
 
 log_info(Constants.Messages.STARTING_MESSAGE)
@@ -48,4 +48,7 @@ comparison_with_logical_operators_basics()
 print_new_line()
 log_info(Constants.Messages.LETS_START_WITH_PYTHON.format(Constants.Messages.IF_ELIF_ELSE))
 if_elif_else_basics()
+print_new_line()
+log_info(Constants.Messages.LETS_START_WITH_PYTHON.format(Constants.Messages.FOR_LOOPS))
+for_loops_basics()
 print_new_line()

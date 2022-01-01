@@ -18,3 +18,4 @@ Each operations output will be shown on the console and you can navigate to the 
         IO_WITH_FILES = "I/O with Files"
         COMPARISON_LOGICAL_OPERATORS = "Comparison Operators and Logical Operators"
         IF_ELIF_ELSE = "If, elif and else"
+        FOR_LOOPS = "For loops"
