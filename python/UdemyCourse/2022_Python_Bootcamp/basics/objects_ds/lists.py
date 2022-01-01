@@ -104,4 +104,3 @@ def list_comprehension():
     # lets do the above using comprehension
     my_list = [x*y for x in [2, 4, 6] for y in [1, 10, 100]]
     log_debug(my_list)
-    
