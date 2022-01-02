@@ -2,7 +2,7 @@ from basics import numbers_basics, variable_assignments, strings_basics, string_
     string_properties_methods, string_formatting, lists_basic, dictionaries_basics, tuples_basics, sets_basics, \
     booleans_basics, io_with_files_basics, comparison_operators_basics, comparison_with_logical_operators_basics, \
     if_elif_else_basics, for_loops_basics, while_loops_basics, useful_operators, list_comprehension, \
-    methods_functions, three_cup_monte, args_kwargs
+    methods_functions, three_cup_monte, args_kwargs, lambda_map_filters
 from src import log_info, Constants, print_new_line
 
 
@@ -71,4 +71,7 @@ three_cup_monte()
 print_new_line()
 log_info(Constants.Messages.LETS_START_WITH_PYTHON.format(Constants.Messages.ARGS_KWARGS))
 args_kwargs()
+print_new_line()
+log_info(Constants.Messages.LETS_START_WITH_PYTHON.format(Constants.Messages.LAMBDA_FILTERS_MAPS))
+lambda_map_filters()
 print_new_line()

@@ -25,3 +25,4 @@ Each operations output will be shown on the console and you can navigate to the 
         METHODS_FUNCTIONS = "Methods and Functions"
         THREE_CUP_MONTEE = "Let's create a three cup montee game using Python"
         ARGS_KWARGS = "*args and **kwargs"
+        LAMBDA_FILTERS_MAPS = "Lambda expressions, filters and maps"
