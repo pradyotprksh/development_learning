@@ -29,6 +29,17 @@ def greet():
     hello()
 
 
+y = 50
+
+
+def affect_global():
+    global y
+    log_debug(f'Y is {y}')
+
+    y = 200
+    log_debug(f'Global Y is changed locally to {y}')
+
+
 def nested_statements_scope():
     """
     Let's have a look on nested statements and scopes
@@ -51,3 +62,6 @@ def nested_statements_scope():
 
     # Enclosing
     greet()
+
+    affect_global()
+    log_debug(f'Y after affect_global is {y}')
