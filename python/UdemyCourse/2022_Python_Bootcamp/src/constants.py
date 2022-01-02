@@ -26,3 +26,4 @@ Each operations output will be shown on the console and you can navigate to the 
         THREE_CUP_MONTEE = "Let's create a three cup montee game using Python"
         ARGS_KWARGS = "*args and **kwargs"
         LAMBDA_FILTERS_MAPS = "Lambda expressions, filters and maps"
+        NESTED_STATEMENTS_SCOPES = "Nested statements and scopes"

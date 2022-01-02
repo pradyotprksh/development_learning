@@ -3,4 +3,5 @@ from .objects_ds import numbers_basics, variable_assignments, strings_basics, st
     booleans_basics, io_with_files_basics, comparison_operators_basics, comparison_with_logical_operators_basics, \
     list_comprehension
 from .python_statements import if_elif_else_basics, for_loops_basics, while_loops_basics, useful_operators
-from .methods_functions import methods_functions, three_cup_monte, args_kwargs, lambda_map_filters
+from .methods_functions import methods_functions, three_cup_monte, args_kwargs, lambda_map_filters, \
+    nested_statements_scope
