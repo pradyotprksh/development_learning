@@ -23,3 +23,4 @@ Each operations output will be shown on the console and you can navigate to the 
         USEFUL_OPERATORS = "Useful operators"
         LIST_COMPREHENSION = "List comprehension"
         METHODS_FUNCTIONS = "Methods and Functions"
+        THREE_CUP_MONTEE = "Let's create a three cup montee game using Python"
