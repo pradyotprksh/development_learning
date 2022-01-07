@@ -18,7 +18,7 @@ setup(
     )],
     packages=find_packages(
         include=[
-            'basics', 'basics.objects_ds', 'basics.python_statements', 'basics.methods_functions'
+            'basics', 'basics.objects_ds', 'basics.python_statements', 'basics.methods_functions', 'basics.tic_tac_toe'
             'src',
         ]
     ),
