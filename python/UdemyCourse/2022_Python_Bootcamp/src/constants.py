@@ -31,3 +31,4 @@ Each operations output will be shown on the console and you can navigate to the 
         WELCOME_TO_TIC_TAC_TOE = f"Welcome to the {TIC_TAC_TOE}. Below is the current state of the game."
         ATTRIBUTES_CLASS_KEYWORD = "Attributes and class keyword"
         CLASS_OBJECT_ATTRIBUTES_METHODS = "Class object attributes and methods"
+        INHERITANCE_POLYMORPHISM = "Inheritance and Polymorphism"

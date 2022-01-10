@@ -1,4 +1,3 @@
-
 # Object Oriented Programming
 or OOP helps to create our own objects with methods and variables.
 
