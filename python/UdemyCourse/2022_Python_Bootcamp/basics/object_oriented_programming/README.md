@@ -11,3 +11,5 @@ class is used to create classes
 __init__ allows to create an instance of an actual object
 
 Everything in python is an object
+
+A method is a function inside an object

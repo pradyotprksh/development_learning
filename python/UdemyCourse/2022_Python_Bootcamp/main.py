@@ -3,7 +3,7 @@ from basics import numbers_basics, variable_assignments, strings_basics, string_
     booleans_basics, io_with_files_basics, comparison_operators_basics, comparison_with_logical_operators_basics, \
     if_elif_else_basics, for_loops_basics, while_loops_basics, useful_operators, list_comprehension, \
     methods_functions, three_cup_monte, args_kwargs, lambda_map_filters, nested_statements_scope, tic_tac_toe, \
-    attributes_class_keyword
+    attributes_class_keyword, class_object_attributes_method
 from src import log_info, Constants, print_new_line
 
 
@@ -109,4 +109,8 @@ print_new_line()
 
 log_info(Constants.Messages.LETS_START_WITH_PYTHON.format(Constants.Messages.ATTRIBUTES_CLASS_KEYWORD))
 attributes_class_keyword()
+print_new_line()
+
+log_info(Constants.Messages.LETS_START_WITH_PYTHON.format(Constants.Messages.CLASS_OBJECT_ATTRIBUTES_METHODS))
+class_object_attributes_method()
 print_new_line()

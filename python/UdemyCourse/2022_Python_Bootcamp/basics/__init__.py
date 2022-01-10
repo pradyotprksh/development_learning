@@ -6,4 +6,4 @@ from .python_statements import if_elif_else_basics, for_loops_basics, while_loop
 from .methods_functions import methods_functions, three_cup_monte, args_kwargs, lambda_map_filters, \
     nested_statements_scope
 from .tic_tac_toe import tic_tac_toe
-from .object_oriented_programming import attributes_class_keyword
+from .object_oriented_programming import attributes_class_keyword, class_object_attributes_method
