@@ -62,8 +62,9 @@ def write_files():
 
         with open("data/my_new_file.txt", mode="r") as f:
             log_debug(f.read())
-        with open("data/my_new_file.txt", mode="a") as f:
-            f.write("\nFOUR ON FOURTH")
+        # TODO: Uncomment this when done
+        # with open("data/my_new_file.txt", mode="a") as f:
+        #     f.write("\nFOUR ON FOURTH")
         with open("data/my_new_file.txt", mode="r") as f:
             log_debug(f.read())
         with open("data/test_new_file.txt", mode="w") as f:
