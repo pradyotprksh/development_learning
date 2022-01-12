@@ -32,3 +32,4 @@ Each operations output will be shown on the console and you can navigate to the 
         ATTRIBUTES_CLASS_KEYWORD = "Attributes and class keyword"
         CLASS_OBJECT_ATTRIBUTES_METHODS = "Class object attributes and methods"
         INHERITANCE_POLYMORPHISM = "Inheritance and Polymorphism"
+        SPECIAL_METHODS = "Special methods (OOPs)"

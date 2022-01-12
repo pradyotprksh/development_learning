@@ -59,7 +59,7 @@ def pet_speak(pet):
     log_debug(pet.speak())
 
 
-class PolyAnimal:
+class AbsPolyAnimal:
 
     def __init__(self, name):
         self.name = name
@@ -68,12 +68,12 @@ class PolyAnimal:
         raise NotImplementedError("Subclass must implement this abstract method")
 
 
-class AbsPolyDog(PolyAnimal):
+class AbsPolyDog(AbsPolyAnimal):
     def speak(self):
         return self.name + " says Woof!!"
 
 
-class AbsPolyCat(PolyAnimal):
+class AbsPolyCat(AbsPolyAnimal):
     def speak(self):
         return self.name + " says Meow!!"
 
@@ -93,7 +93,7 @@ def polymorphism():
     pet_speak(griff)
 
     # Abstraction
-    my_animal = PolyAnimal("ErrorAnimal")
+    my_animal = AbsPolyAnimal("ErrorAnimal")
     try:
         my_animal.speak()
     except Exception as e:

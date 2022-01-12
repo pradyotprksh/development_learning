@@ -7,4 +7,4 @@ from .methods_functions import methods_functions, three_cup_monte, args_kwargs, 
     nested_statements_scope
 from .tic_tac_toe import tic_tac_toe
 from .object_oriented_programming import attributes_class_keyword, class_object_attributes_method, \
-    inheritance_polymorphism
+    inheritance_polymorphism, special_methods
