@@ -24,7 +24,7 @@ setup(
         ]
     ),
     install_requires=[
-        'loguru'
+        'loguru', 'pylint'
     ],
     entry_points={
         'console_scripts': [
