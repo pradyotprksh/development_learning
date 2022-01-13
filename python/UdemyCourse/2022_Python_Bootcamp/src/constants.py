@@ -33,3 +33,4 @@ Each operations output will be shown on the console and you can navigate to the 
         CLASS_OBJECT_ATTRIBUTES_METHODS = "Class object attributes and methods"
         INHERITANCE_POLYMORPHISM = "Inheritance and Polymorphism"
         SPECIAL_METHODS = "Special methods (OOPs)"
+        ERRORS_EXCEPTION_HANDLING = "Errors and exception handling"

@@ -8,3 +8,4 @@ from .methods_functions import methods_functions, three_cup_monte, args_kwargs, 
 from .tic_tac_toe import tic_tac_toe
 from .object_oriented_programming import attributes_class_keyword, class_object_attributes_method, \
     inheritance_polymorphism, special_methods
+from .errors_exception_handling import errors_exception_handling
