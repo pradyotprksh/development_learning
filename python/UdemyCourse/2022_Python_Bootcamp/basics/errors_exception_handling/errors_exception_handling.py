@@ -25,7 +25,7 @@ def errors_exception_handling():
 
     try:
         f = open('data/testfile', 'w')
-        f.write('Write a test line')
+        f.write('Write a testing line')
     except TypeError:
         log_debug("There was a type error")
     except OSError:
@@ -35,7 +35,7 @@ def errors_exception_handling():
 
     try:
         f = open('data/testfile', 'r')
-        f.write('Write a test line')
+        f.write('Write a testing line')
     except TypeError:
         log_debug("There was a type error")
     except OSError:

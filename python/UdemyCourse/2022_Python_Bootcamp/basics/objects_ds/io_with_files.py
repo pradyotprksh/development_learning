@@ -7,7 +7,7 @@ def read_files():
     :return:
     """
     try:
-        my_file = open("data/test.txt")
+        my_file = open("data/testing.txt")
         log_debug(my_file)
 
         log_debug(my_file.read())
@@ -25,7 +25,7 @@ def read_files():
         # Have to close the file after use
         my_file.close()
         # Another way to open file without explicitly closing it
-        with open("data/test.txt") as new_file:
+        with open("data/testing.txt") as new_file:
             contents = new_file.read()
             log_debug(contents)
     except Exception as e:
