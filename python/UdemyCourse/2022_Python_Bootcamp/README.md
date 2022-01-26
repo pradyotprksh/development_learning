@@ -1,5 +1,7 @@
 # Python Learnings
 
+**NOTE: Use the main.py file and follow the sequence to see the example of each topic** 
+
 ## Why Python?
 * Designed for clear, logical code that is easy to read and learn.
 * Lots of existing libraries and frameworks are already available.
