@@ -1,6 +1,6 @@
 # Python Learnings
 
-**NOTE: Use the main.py file and follow the sequence to see the example of each topic** 
+**NOTE: Use the [main.py](https://github.com/pradyotprksh/development_learning/blob/main/python/UdemyCourse/2022_Python_Bootcamp/main.py) file and follow the sequence to see the example of each topic** 
 
 ## Why Python?
 * Designed for clear, logical code that is easy to read and learn.
