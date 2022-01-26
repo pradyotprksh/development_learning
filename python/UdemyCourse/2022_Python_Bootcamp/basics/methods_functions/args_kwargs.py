@@ -35,7 +35,7 @@ def my_func_args_kwargs(*args, **kwargs):
 def args_kwargs():
     """
     Let's take a look on what *args and **kwargs is
-    :return:
+    :return: none
     """
 
     log_debug(my_func(5, 10))

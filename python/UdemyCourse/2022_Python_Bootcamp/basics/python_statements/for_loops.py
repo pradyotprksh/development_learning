@@ -4,7 +4,7 @@ from src import log_debug
 def for_loops_basics():
     """
     Let's check on for loops statements
-    :return:
+    :return: none
     """
 
     my_list = [1, 2, 3, 4, 5, 6, 7, 8, 9]

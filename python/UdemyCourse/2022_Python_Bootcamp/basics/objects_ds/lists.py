@@ -61,7 +61,7 @@ def lists_basic():
 def list_comprehension():
     """
     Let's check one of the concept in python known as list comprehension
-    :return:
+    :return: none
     """
 
     my_string = 'Hello'

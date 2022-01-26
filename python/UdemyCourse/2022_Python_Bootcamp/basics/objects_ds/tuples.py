@@ -4,7 +4,7 @@ from src import log_debug, log_exception
 def tuples_basics():
     """
     Let's check on tuples in Python
-    :return:
+    :return: none
     """
 
     my_tuple = (1, 2, 3)

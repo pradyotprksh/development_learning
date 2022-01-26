@@ -4,7 +4,7 @@ from src import log_debug
 def sets_basics():
     """
     Let's check on sets
-    :return:
+    :return: none
     """
 
     # Unordered collection of unique elements.

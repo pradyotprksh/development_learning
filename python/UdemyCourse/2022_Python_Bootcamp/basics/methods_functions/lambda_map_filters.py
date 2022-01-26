@@ -18,7 +18,7 @@ def is_even(num):
 def lambda_map_filters():
     """
     Let's have a look on lambda expression, map and filters in Python
-    :return:
+    :return: none
     """
 
     # maps

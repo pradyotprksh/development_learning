@@ -4,7 +4,7 @@ from src import log_debug
 def while_loops_basics():
     """
     Let's check on while loops statements
-    :return:
+    :return: none
     """
 
     x = 0

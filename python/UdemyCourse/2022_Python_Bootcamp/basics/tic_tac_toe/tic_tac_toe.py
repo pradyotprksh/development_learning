@@ -61,7 +61,7 @@ def update_tic_tac_toe(row, item, current_item):
 def tic_tac_toe():
     """
     Let's make a tic-tac-toe game using Python
-    :return:
+    :return: none
     """
     # TODO: Uncomment this when done with the learning
     # game_won, who_won = is_any_one_won()

@@ -108,7 +108,7 @@ def polymorphism():
 def inheritance_polymorphism():
     """
     Let's take a look on inheritance and polymorphism
-    :return:
+    :return: none
     """
 
     inheritance()

@@ -4,7 +4,7 @@ from src import log_debug
 def dictionaries_basics():
     """
     Let's check on dictionaries
-    :return:
+    :return: none
     """
 
     # Unordered mappings for storing objects.

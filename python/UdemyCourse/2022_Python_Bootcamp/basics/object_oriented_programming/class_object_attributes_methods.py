@@ -24,7 +24,7 @@ class Dog:
 def class_object_attributes_method():
     """
     Let's take a look on class object attributes and methods
-    :return:
+    :return: none
     """
 
     my_dog = Dog(breed="Lab", name="Luffy")

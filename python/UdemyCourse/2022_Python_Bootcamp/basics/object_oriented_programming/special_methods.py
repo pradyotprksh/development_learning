@@ -28,7 +28,7 @@ class Sample:
 def special_methods():
     """
     Let's take a look on special methods in oops for python
-    :return:
+    :return: none
     """
 
     my_list = [1, 2, 3]

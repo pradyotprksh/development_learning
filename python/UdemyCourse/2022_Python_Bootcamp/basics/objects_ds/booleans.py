@@ -4,7 +4,7 @@ from src import log_debug
 def booleans_basics():
     """
     Let's check on booleans
-    :return:
+    :return: none
     """
 
     # Conveys true or false statements

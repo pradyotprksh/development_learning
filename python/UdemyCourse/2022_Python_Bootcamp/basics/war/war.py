@@ -6,7 +6,7 @@ from src import log_debug, log_info
 def start_war_game():
     """
     Start the war game made with python
-    :return:
+    :return: none
     """
 
     # Create players

@@ -5,7 +5,7 @@ from random import shuffle, randint
 def useful_operators():
     """
     Let's see some useful operators in python
-    :return:
+    :return: none
     """
 
     # range

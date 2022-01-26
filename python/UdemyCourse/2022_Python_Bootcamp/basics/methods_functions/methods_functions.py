@@ -45,7 +45,7 @@ def employee_check(work_hours):
 def methods_functions():
     """
     Let's check few examples related to methods and functions in Python
-    :return:
+    :return: none
     """
 
     say_hello()

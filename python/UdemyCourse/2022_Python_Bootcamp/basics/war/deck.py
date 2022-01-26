@@ -15,13 +15,13 @@ class Deck:
     def shuffle_deck(self):
         """
         Shuffle the cards
-        :return:
+        :return: none
         """
         shuffle(self.all_cards)
 
     def deal_one(self):
         """
         Deal one card from the deck
-        :return:
+        :return: Single card which is popped from the deck
         """
         return self.all_cards.pop()

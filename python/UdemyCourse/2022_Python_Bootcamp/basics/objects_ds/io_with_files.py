@@ -4,7 +4,7 @@ from src import log_debug, log_exception
 def read_files():
     """
     Read files operation in Python
-    :return:
+    :return: none
     """
     try:
         my_file = open("data/testing.txt")
@@ -35,7 +35,7 @@ def read_files():
 def write_files():
     """
     Write operation on files in Python
-    :return:
+    :return: none
     """
 
     try:
@@ -78,7 +78,7 @@ def write_files():
 def io_with_files_basics():
     """
     Let's check on I/O with files in Python
-    :return:
+    :return: none
     """
 
     read_files()

@@ -28,7 +28,7 @@ def three_cup_monte():
     """
     Let's create a three cup montee game using Python.
     This will only be a code game, no visualization.
-    :return:
+    :return: none
     """
 
     my_cups = ['', 'O', '']

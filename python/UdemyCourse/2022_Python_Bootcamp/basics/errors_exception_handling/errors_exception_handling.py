@@ -8,7 +8,7 @@ def add(n1, n2):
 def errors_exception_handling():
     """
     Let's take a look on errors and exception handling in python
-    :return:
+    :return: none
     """
 
     add(10, 20)

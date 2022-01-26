@@ -43,7 +43,7 @@ def affect_global():
 def nested_statements_scope():
     """
     Let's have a look on nested statements and scopes
-    :return:
+    :return: none
     """
 
     log_debug(x)

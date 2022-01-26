@@ -21,7 +21,7 @@ def log_debug(message):
     """
     Show a debug message on the console
     :param message: message which needs to be shown
-    :return: non
+    :return: none
     """
     logger.debug(message)
 

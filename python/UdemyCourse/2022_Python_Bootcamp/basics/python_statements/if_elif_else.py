@@ -4,7 +4,7 @@ from src import log_debug
 def if_elif_else_basics():
     """
     Let's check on if elif and else statements
-    :return:
+    :return: none
     """
 
     if True:

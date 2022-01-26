@@ -20,7 +20,7 @@ class Dog:
 def attributes_class_keyword():
     """
     Let's check on what is a class and how to create it1
-    :return:
+    :return: none
     """
 
     my_sample = Sample()

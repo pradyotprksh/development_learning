@@ -4,7 +4,7 @@ from src import log_debug
 def comparison_operators_basics():
     """
     Let's check on comparison operators in Python
-    :return:
+    :return: none
     """
 
     # ==, !=, >, <, <=, >=
@@ -34,7 +34,7 @@ def comparison_operators_basics():
 def comparison_with_logical_operators_basics():
     """
     Let's check how to combine comparison operators with logical operators
-    :return:
+    :return: none
     """
 
     # and, or, not
