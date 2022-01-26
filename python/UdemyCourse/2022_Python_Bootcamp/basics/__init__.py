@@ -10,3 +10,4 @@ from .object_oriented_programming import attributes_class_keyword, class_object_
     inheritance_polymorphism, special_methods
 from .errors_exception_handling import errors_exception_handling
 from .war import start_war_game
+from .blackjack import start_blackjack

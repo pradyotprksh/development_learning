@@ -35,3 +35,4 @@ Each operations output will be shown on the console and you can navigate to the 
         SPECIAL_METHODS = "Special methods (OOPs)"
         ERRORS_EXCEPTION_HANDLING = "Errors and exception handling"
         WAR_DECK_GAME = "War deck game"
+        BLACKJACK_GAME = "Blackjack game"
