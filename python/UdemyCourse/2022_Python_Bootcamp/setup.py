@@ -20,7 +20,7 @@ setup(
         include=[
             'basics', 'basics.objects_ds', 'basics.python_statements', 'basics.methods_functions', 'basics.tic_tac_toe',
             'basics.object_oriented_programming', 'basics.errors_exception_handling', 'basics.testing', 'basics.war',
-            'basics.blackjack'
+            'basics.blackjack', 'basics.decorators'
             'src',
         ]
     ),
