@@ -37,3 +37,4 @@ Each operations output will be shown on the console and you can navigate to the 
         WAR_DECK_GAME = "War deck game"
         BLACKJACK_GAME = "Blackjack game"
         DECORATORS = "Decorators"
+        GENERATORS = "Generators"

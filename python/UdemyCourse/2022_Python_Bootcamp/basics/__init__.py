@@ -12,3 +12,4 @@ from .errors_exception_handling import errors_exception_handling
 from .war import start_war_game
 from .blackjack import start_blackjack
 from .decorators import decorators
+from .generators import generators
