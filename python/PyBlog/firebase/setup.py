@@ -32,7 +32,13 @@ class Firebase:
         ValueCheck.is_empty_or_none(arg=storage_bucket_name, argument_name="storage_bucket_name")
 
         cred = credentials.Certificate(cert=configuration_path)
-        self.firebase_app = firebase_admin.initialize_app(credential=cred, name=app_name)
+        self.firebase_app = firebase_admin.initialize_app(
+            credential=cred,
+            name=app_name,
+            options={
+                'storageBucket': storage_bucket_name
+            }
+        )
         self.firestore = Firestore(firebase_app=self.firebase_app)
         self.storage = Storage(firebase_app=self.firebase_app, storage_bucket_name=storage_bucket_name)
 
