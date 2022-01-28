@@ -19,6 +19,7 @@ setup(
     packages=find_packages(
         include=[
             'py_blog',
+            'firebase',
             'src'
         ]
     ),
