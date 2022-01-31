@@ -38,3 +38,4 @@ Each operations output will be shown on the console and you can navigate to the 
         BLACKJACK_GAME = "Blackjack game"
         DECORATORS = "Decorators"
         GENERATORS = "Generators"
+        COLLECTION_MODULE = "Collections"
