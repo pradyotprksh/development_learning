@@ -40,3 +40,4 @@ Each operations output will be shown on the console and you can navigate to the 
         GENERATORS = "Generators"
         COLLECTION_MODULE = "Collections"
         OS_MODULE = "Opening and reading files and folder"
+        DATE_TIME_MODULE = "Datetime Module"
