@@ -4,7 +4,7 @@ from basics import numbers_basics, variable_assignments, strings_basics, string_
     if_elif_else_basics, for_loops_basics, while_loops_basics, useful_operators, list_comprehension, \
     methods_functions, three_cup_monte, args_kwargs, lambda_map_filters, nested_statements_scope, tic_tac_toe, \
     attributes_class_keyword, class_object_attributes_method, inheritance_polymorphism, special_methods, \
-    errors_exception_handling, start_war_game, start_blackjack, decorators, generators, collection_module
+    errors_exception_handling, start_war_game, start_blackjack, decorators, generators, collection_module, os_module
 from src import log_info, Constants, print_new_line
 
 
@@ -147,4 +147,8 @@ if __name__ == "__main__":
 
     log_info(Constants.Messages.LETS_START_WITH_PYTHON.format(Constants.Messages.COLLECTION_MODULE))
     collection_module()
+    print_new_line()
+
+    log_info(Constants.Messages.LETS_START_WITH_PYTHON.format(Constants.Messages.OS_MODULE))
+    os_module()
     print_new_line()
