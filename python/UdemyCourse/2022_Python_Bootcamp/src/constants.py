@@ -41,3 +41,4 @@ Each operations output will be shown on the console and you can navigate to the 
         COLLECTION_MODULE = "Collections"
         OS_MODULE = "Opening and reading files and folder"
         DATE_TIME_MODULE = "Datetime Module"
+        MATH_RANDOM_MODULE = "Math and Random module"
