@@ -1,6 +1,9 @@
 plugins {
-    id(BuildPlugins.androidApplication)
-    id(BuildPlugins.jetbrainsKotlin)
+    id(Plugins.BuildPlugins.androidApplication)
+    id(Plugins.BuildPlugins.jetbrainsKotlin)
+    id(Plugins.BuildPlugins.daggerHilt)
+
+    kotlin(Plugins.KotlinPlugins.kapt)
 }
 
 android {
@@ -13,7 +16,7 @@ android {
         versionCode = AndroidConfiguration.versionCode
         versionName = AndroidConfiguration.versionName
 
-        testInstrumentationRunner = BuildPlugins.testRunnerInstrumentation
+        testInstrumentationRunner = Plugins.BuildPlugins.testRunnerInstrumentation
         vectorDrawables {
             useSupportLibrary = AndroidConfiguration.useSupportLibrary
         }
@@ -53,13 +56,23 @@ android {
     }
 }
 
+kapt {
+    correctErrorTypes = true
+}
+
 dependencies {
     implementation(Libraries.Androidx.core)
+    implementation(Libraries.Androidx.lifecycle)
     implementation(Libraries.Androidx.Compose.ui)
     implementation(Libraries.Androidx.Compose.material)
     implementation(Libraries.Androidx.Compose.toolingPreview)
-    implementation(Libraries.Androidx.lifecycle)
     implementation(Libraries.Androidx.Compose.activity)
+    implementation(Libraries.Androidx.Navigation.navFragment)
+    implementation(Libraries.Androidx.Navigation.navUi)
+    implementation(Libraries.Androidx.Navigation.navDynamicFeature)
+    implementation(Libraries.Androidx.Navigation.navCompose)
+    implementation(Libraries.Google.hilt)
+    implementation(Libraries.Kotlin.coroutines)
 
     debugImplementation(Libraries.Androidx.Compose.uiTooling)
 
@@ -68,4 +81,7 @@ dependencies {
     androidTestImplementation(TestLibraries.AndroidTest.junit)
     androidTestImplementation(TestLibraries.AndroidTest.espresso)
     androidTestImplementation(TestLibraries.AndroidTest.compose)
+    androidTestImplementation(TestLibraries.AndroidTest.navigationCompose)
+
+    kapt(Libraries.Google.hiltCompiler)
 }

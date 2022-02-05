@@ -12,5 +12,6 @@ object TestLibraries {
             "androidx.test.espresso:espresso-core:${Versions.Libraries.AndroidTest.espresso}"
         const val compose =
             "androidx.compose.ui:ui-test-junit4:${Versions.Libraries.AndroidX.compose}"
+        const val navigationCompose = "androidx.navigation:navigation-testing:${Versions.Libraries.AndroidX.navCompose}"
     }
 }
