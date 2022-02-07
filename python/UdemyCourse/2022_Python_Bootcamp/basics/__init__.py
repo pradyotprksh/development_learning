@@ -13,4 +13,5 @@ from .war import start_war_game
 from .blackjack import start_blackjack
 from .decorators import decorators
 from .generators import generators
-from .advanced_python_modules import collection_module, os_module, datetime_module, math_random_module, python_debugger
+from .advanced_python_modules import collection_module, os_module, datetime_module, math_random_module, \
+    python_debugger, regular_expressions

@@ -5,7 +5,7 @@ from basics import numbers_basics, variable_assignments, strings_basics, string_
     methods_functions, three_cup_monte, args_kwargs, lambda_map_filters, nested_statements_scope, tic_tac_toe, \
     attributes_class_keyword, class_object_attributes_method, inheritance_polymorphism, special_methods, \
     errors_exception_handling, start_war_game, start_blackjack, decorators, generators, collection_module, os_module, \
-    datetime_module, math_random_module, python_debugger
+    datetime_module, math_random_module, python_debugger, regular_expressions
 from src import log_info, Constants, print_new_line
 
 
@@ -164,4 +164,8 @@ if __name__ == "__main__":
 
     log_info(Constants.Messages.LETS_START_WITH_PYTHON.format(Constants.Messages.PYTHON_DEBUGGER))
     python_debugger()
+    print_new_line()
+
+    log_info(Constants.Messages.LETS_START_WITH_PYTHON.format(Constants.Messages.REGULAR_EXPRESSIONS))
+    regular_expressions()
     print_new_line()

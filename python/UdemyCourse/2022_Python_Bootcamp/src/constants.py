@@ -43,3 +43,4 @@ Each operations output will be shown on the console and you can navigate to the 
         DATE_TIME_MODULE = "Datetime Module"
         MATH_RANDOM_MODULE = "Math and Random module"
         PYTHON_DEBUGGER = "Python Debugger"
+        REGULAR_EXPRESSIONS = "Regular Expressions"
