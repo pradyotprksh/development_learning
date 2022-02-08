@@ -44,3 +44,4 @@ Each operations output will be shown on the console and you can navigate to the 
         MATH_RANDOM_MODULE = "Math and Random module"
         PYTHON_DEBUGGER = "Python Debugger"
         REGULAR_EXPRESSIONS = "Regular Expressions"
+        TIMING_CODE = "Timing Code"
