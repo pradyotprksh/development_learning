@@ -11,6 +11,10 @@ def os_module():
     # delete a file
     # this check is required to delete the file if already exist otherwise it will throw exception
     try:
+        os.mkdir("data/move")
+    except FileExistsError:
+        pass
+    try:
         os.unlink("data/move/practice.txt")
     except FileNotFoundError:
         pass

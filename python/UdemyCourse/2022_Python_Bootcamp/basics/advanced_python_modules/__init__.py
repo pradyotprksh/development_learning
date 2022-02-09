@@ -5,3 +5,4 @@ from .math_random_module import math_random_module
 from .python_debugger import python_debugger
 from .regular_expressions import regular_expressions
 from .timing_code import timing_code
+from .zip_unzip_files import zip_unzip_files

@@ -45,3 +45,4 @@ Each operations output will be shown on the console and you can navigate to the 
         PYTHON_DEBUGGER = "Python Debugger"
         REGULAR_EXPRESSIONS = "Regular Expressions"
         TIMING_CODE = "Timing Code"
+        ZIP_UNZIP_FILE = "Zip and Unzip Files"
