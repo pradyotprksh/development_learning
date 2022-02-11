@@ -11,3 +11,11 @@ After some searching and banging my head on the laptop I found https://docs.pyth
 
 It gives the details on how you should be structuring the project, but it will vary on the type of project you are 
 working on.
+
+## Ignore Files
+
+Since, I am going to push the code to GitHub it's better to ignore those files which are not needed and need to be 
+protected for security reasons.
+
+I am not sure which files to ignore in Python, so I found a repository which provides the .gitignore for different 
+languages. You can find the details here https://github.com/github/gitignore.
