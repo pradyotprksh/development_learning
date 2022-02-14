@@ -13,3 +13,30 @@ class Constants:
     class URLs:
         """A constant class for URLs"""
         IP_ADDRESS = "https://api64.ipify.org?format=json"
+
+    class Firebase:
+        """A constant class for Firebase collections/documents/keys"""
+
+        class Collections:
+            """A constants for only collections"""
+            USERS = "users"
+
+        class Documents:
+            """A constants for only documents"""
+
+        class Keys:
+            """A constants for only keys"""
+            DISPLAY_NAME = "display_name"
+            EMAIL = "email"
+            PHONE_NUMBER = "phone_number"
+            PHOTO_URL = "photo_url"
+            PASSWORD = "password"
+            EMAIL_VERIFIED = "email_verified"
+            SYSTEM_NAME = "system_name"
+            USER_ID = "uid"
+            SYSTEM_ARCHITECTURE = "system_architecture"
+            SYSTEM_MACHINE = "system_machine"
+            SYSTEM_PROCESSOR = "system_processor"
+            SYSTEM_VERSION = "system_version"
+            PYTHON_VERSION = "python_version"
+            SYSTEM_IP_ADDRESS = "system_ip_address"

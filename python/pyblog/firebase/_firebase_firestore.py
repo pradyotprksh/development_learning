@@ -3,6 +3,7 @@ Firestore implementation for PyBlog
 """
 
 from firebase_admin import firestore
+from src import Constants
 
 
 class _FirebaseFirestore:
@@ -15,3 +16,31 @@ class _FirebaseFirestore:
         :param firebase_app: App object for the firebase admin
         """
         self.firestore_db = firestore.client(app=firebase_app)
+
+    def update_user_details(self, uid, user_details, platform_details):
+        """
+        Update the user details on the user collection
+        :param uid: User id of the current user
+        :param user_details: User details of the current user
+        :param platform_details: Platform details of the current user
+        :return: None
+        """
+        full_details = {
+            Constants.Firebase.Keys.EMAIL: user_details.email,
+            Constants.Firebase.Keys.PHONE_NUMBER: user_details.phone_number,
+            Constants.Firebase.Keys.PHOTO_URL: user_details.photo_url,
+            Constants.Firebase.Keys.PASSWORD: user_details.password,
+            Constants.Firebase.Keys.EMAIL_VERIFIED: user_details.email_verified,
+            Constants.Firebase.Keys.USER_ID: uid,
+            Constants.Firebase.Keys.SYSTEM_NAME: platform_details.system,
+            Constants.Firebase.Keys.SYSTEM_ARCHITECTURE: platform_details.architecture,
+            Constants.Firebase.Keys.SYSTEM_MACHINE: platform_details.machine,
+            Constants.Firebase.Keys.SYSTEM_PROCESSOR: platform_details.processor,
+            Constants.Firebase.Keys.SYSTEM_VERSION: platform_details.version,
+            Constants.Firebase.Keys.PYTHON_VERSION: platform_details.python_version,
+            Constants.Firebase.Keys.SYSTEM_IP_ADDRESS: platform_details.ip_address,
+        }
+
+        self.firestore_db\
+            .collection(Constants.Firebase.Collections.USERS)\
+            .document(uid).set(full_details)

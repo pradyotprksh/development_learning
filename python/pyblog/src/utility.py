@@ -2,6 +2,7 @@
 
 import platform
 import socket
+from loguru import logger
 from pyblog import SystemDetails
 from .http_client import get_request
 from .constants import Constants
@@ -13,7 +14,7 @@ def get_platform_details():
     :return: SystemDetails Contains all the details related to the system which are required
     """
     system = platform.system()
-    architecture = platform.architecture()
+    architecture = platform.architecture()[0]
     machine = platform.machine()
     processor = platform.processor()
     version = platform.version()
@@ -23,7 +24,8 @@ def get_platform_details():
         ip_address = get_request(
             Constants.URLs.IP_ADDRESS
         ).ip
-    except:
+    except Exception as e:
+        logger.exception(e)
         host_name = socket.gethostname()
         ip_address = socket.gethostbyname(host_name)
 
