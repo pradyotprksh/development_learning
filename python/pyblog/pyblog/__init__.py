@@ -1,1 +1,1 @@
-from .models import SystemDetails
+from .models import SystemDetails, UserDetails

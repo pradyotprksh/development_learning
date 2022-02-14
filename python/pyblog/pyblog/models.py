@@ -14,3 +14,15 @@ SystemDetails = namedtuple(
         "ip_address"
     ]
 )
+
+UserDetails = namedtuple(
+    "UserDetails",
+    [
+        "display_name",
+        "email",
+        "phone_number",
+        "photo_url",
+        "password",
+        "email_verified"
+    ]
+)
