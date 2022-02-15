@@ -52,5 +52,4 @@ def timing_code():
     """
 
     checking_using_time()
-    # TODO: Uncomment this when done
-    # checking_using_timeit()
+    checking_using_timeit()
