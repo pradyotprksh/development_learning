@@ -19,7 +19,7 @@ class Firebase:
         :return: None
         """
 
-        cred = credentials.Certificate(cert=Constants.Variables.FIREBASE_CRED_FILE_PATH)
+        cred = credentials.Certificate(cert=Constants.Paths.FIREBASE_CRED_FILE_PATH)
         self._firebase_app = firebase_admin.initialize_app(
             credential=cred,
             name=Constants.Variables.PROJECT_NAME
