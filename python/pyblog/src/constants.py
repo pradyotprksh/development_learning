@@ -4,6 +4,10 @@
 class Constants:
     """A constant class for PyBlog"""
 
+    class Messages:
+        """A constant class for messages"""
+        WELCOME = "Welcome to {}"
+
     class Paths:
         """A constant class for paths"""
         FIREBASE_CRED_FILE_PATH = "data/confidential/serviceAccountKey.json"
