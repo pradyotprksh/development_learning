@@ -1,21 +1,22 @@
 """PyBlog"""
 
 
-from src import get_platform_details
-from pyblog import UserDetails
-from firebase import Firebase
+import tkinter as tk
+from tkinter import ttk
+from src import Constants
 
 
 if __name__ == '__main__':
-    firebase = Firebase()
-    firebase.create_user(
-        user_details=UserDetails(
-            email="pradyotprksh4@gmail.com",
-            email_verified=False,
-            phone_number="+91 9663522579",
-            password="password",
-            display_name="Pradyot Prakash",
-            photo_url="https://www.my_photo.com",
-        ),
-        platform_details=get_platform_details()
-    )
+    root = tk.Tk()
+    root.title(Constants.Variables.PROJECT_NAME)
+
+    screen_width = root.winfo_screenwidth()
+    screen_height = root.winfo_screenheight()
+
+    # Full Screen
+    root.geometry(f"{screen_width}x{screen_height}+{0}+{0}")
+    # TODO: Project icon doesn't show
+    root.iconbitmap(Constants.Paths.MAIN_ICON)
+
+    ttk.Label(master=root, text="PyBlog").pack()
+    root.mainloop()
