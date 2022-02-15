@@ -24,6 +24,8 @@ languages. You can find the details here https://github.com/github/gitignore.
 
 https://www.pythontutorial.net/tkinter/
 
+https://www.djangoproject.com
+
 ## Firebase [WIP]
 
 https://github.com/firebase/firebase-admin-python

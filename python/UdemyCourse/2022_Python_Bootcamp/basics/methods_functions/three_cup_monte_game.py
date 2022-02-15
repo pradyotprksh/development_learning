@@ -10,10 +10,7 @@ def shuffle_cups(my_list):
 def player_guess():
     guess = ''
     while guess not in ['0', '1', '2']:
-        # TODO: Change hardcoded value with input when the project is done
-        # input("Enter the cup count: 0, 1, 2 = ")
-        # Have removed input for now
-        guess = '2'
+        guess = input("Enter the cup count: 0, 1, 2 = ")
     return int(guess)
 
 

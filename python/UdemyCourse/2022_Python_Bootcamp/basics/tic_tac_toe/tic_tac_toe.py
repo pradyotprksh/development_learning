@@ -63,30 +63,29 @@ def tic_tac_toe():
     Let's make a tic-tac-toe game using Python
     :return: none
     """
-    # TODO: Uncomment this when done with the learning
-    # game_won, who_won = is_any_one_won()
-    # game_draw = is_game_draw()
-    # current_item = 'X'
-    #
-    # while game_won is False and game_draw is False:
-    #     log_debug(Constants.Messages.WELCOME_TO_TIC_TAC_TOE)
-    #     display_tic_tac_toe()
-    #
-    #     row, item = get_input_from_user()
-    #
-    #     if update_tic_tac_toe(row, item, current_item) is False:
-    #         log_error("Please enter a valid row or item")
-    #         continue
-    #     game_won, who_won = is_any_one_won()
-    #     game_draw = is_game_draw()
-    #
-    #     if current_item == 'X':
-    #         current_item = 'O'
-    #     else:
-    #         current_item = 'X'
-    #
-    # if game_won:
-    #     log_debug(who_won)
-    # else:
-    #     log_debug("It's a draw")
+    game_won, who_won = is_any_one_won()
+    game_draw = is_game_draw()
+    current_item = 'X'
+
+    while game_won is False and game_draw is False:
+        log_debug(Constants.Messages.WELCOME_TO_TIC_TAC_TOE)
+        display_tic_tac_toe()
+
+        row, item = get_input_from_user()
+
+        if update_tic_tac_toe(row, item, current_item) is False:
+            log_error("Please enter a valid row or item")
+            continue
+        game_won, who_won = is_any_one_won()
+        game_draw = is_game_draw()
+
+        if current_item == 'X':
+            current_item = 'O'
+        else:
+            current_item = 'X'
+
+    if game_won:
+        log_debug(who_won)
+    else:
+        log_debug("It's a draw")
 

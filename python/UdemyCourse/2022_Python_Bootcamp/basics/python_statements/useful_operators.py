@@ -62,7 +62,5 @@ def useful_operators():
 
     log_debug(randint(3, 6))
 
-    # TODO: Uncomment the below code when the learning is done
-    # input - will comment this code for now
-    # value = input('Enter a number: ')
-    # log_debug(value)
+    value = input('Enter a number: ')
+    log_debug(value)
