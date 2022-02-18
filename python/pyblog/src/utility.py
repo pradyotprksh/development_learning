@@ -2,6 +2,8 @@
 
 import platform
 import socket
+import calendar
+import time
 from loguru import logger
 from pyblog import SystemDetails
 from .http_client import get_request
@@ -19,6 +21,7 @@ def get_platform_details():
     processor = platform.processor()
     version = platform.version()
     python_version = platform.python_version()
+    time_stamp = calendar.timegm(time.gmtime())
 
     try:
         ip_address = get_request(
@@ -36,5 +39,6 @@ def get_platform_details():
         processor=processor,
         version=version,
         python_version=python_version,
-        ip_address=ip_address
+        ip_address=ip_address,
+        timestamp=time_stamp
     )

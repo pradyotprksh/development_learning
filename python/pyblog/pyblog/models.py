@@ -11,7 +11,8 @@ SystemDetails = namedtuple(
         "processor",
         "version",
         "python_version",
-        "ip_address"
+        "ip_address",
+        "timestamp"
     ]
 )
 
@@ -23,6 +24,7 @@ UserDetails = namedtuple(
         "phone_number",
         "photo_url",
         "password",
-        "email_verified"
+        "email_verified",
+        "last_logged_in"
     ]
 )

@@ -7,6 +7,9 @@ class Constants:
     class Messages:
         """A constant class for messages"""
         WELCOME = "Welcome to {}"
+        AUTH_TYPE_QUESTION = "Are you a new user?"
+        EMAIL_QUESTION = "What\'s your email address?"
+        PHONE_QUESTION = "What\'s your phone number?"
 
     class Paths:
         """A constant class for paths"""
@@ -17,6 +20,9 @@ class Constants:
         """A constant class for variables"""
         PROJECT_NAME = "PyBlog"
         FIREBASE_STORAGE_BUCKET_NAME = "pyblog-f1a61.appspot.com"
+        YES_NO_CHOICE = ["Yes", "No"]
+        INPUT_QUESTION = "input"
+        CONFIRM_QUESTION = "confirm"
 
     class URLs:
         """A constant class for URLs"""
@@ -48,3 +54,4 @@ class Constants:
             SYSTEM_VERSION = "system_version"
             PYTHON_VERSION = "python_version"
             SYSTEM_IP_ADDRESS = "system_ip_address"
+            LAST_LOGGED_IN = "last_logged_in"
