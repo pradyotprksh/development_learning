@@ -29,7 +29,6 @@ class _FirebaseFirestore:
             Constants.Firebase.Keys.EMAIL: user_details.email,
             Constants.Firebase.Keys.PHONE_NUMBER: user_details.phone_number,
             Constants.Firebase.Keys.PHOTO_URL: user_details.photo_url,
-            Constants.Firebase.Keys.PASSWORD: user_details.password,
             Constants.Firebase.Keys.EMAIL_VERIFIED: user_details.email_verified,
             Constants.Firebase.Keys.USER_ID: uid,
             Constants.Firebase.Keys.SYSTEM_NAME: platform_details.system,
@@ -39,8 +38,18 @@ class _FirebaseFirestore:
             Constants.Firebase.Keys.SYSTEM_VERSION: platform_details.version,
             Constants.Firebase.Keys.PYTHON_VERSION: platform_details.python_version,
             Constants.Firebase.Keys.SYSTEM_IP_ADDRESS: platform_details.ip_address,
+            Constants.Firebase.Keys.LAST_LOGGED_IN: user_details.last_logged_in,
         }
 
         self.firestore_db\
             .collection(Constants.Firebase.Collections.USERS)\
             .document(uid).set(full_details)
+
+    def get_current_user_details(self, uid):
+        """
+        Get the current user details from Firestore
+        :param uid: User id of the current user
+        :return: UserDetails
+        """
+
+        return self.firestore_db.collection(Constants.Firebase.Collections.USERS).document(uid).get().to_dict()

@@ -27,7 +27,7 @@ class Firebase:
         )
         self._pyblog_firestore = _FirebaseFirestore(firebase_app=self._firebase_app)
         self._pyblog_storage = _FirebaseStorage(firebase_app=self._firebase_app)
-        self.current_user = None
+        self._current_user = None
 
     def create_user(self, user_details, platform_details):
         """
@@ -38,7 +38,7 @@ class Firebase:
         """
 
         try:
-            self.current_user = auth.create_user(
+            self._current_user = auth.create_user(
                 email=user_details.email,
                 email_verified=user_details.email_verified,
                 phone_number=user_details.phone_number,
@@ -50,7 +50,7 @@ class Firebase:
             )
 
             self._pyblog_firestore.update_user_details(
-                uid=self.current_user.uid,
+                uid=self._current_user.uid,
                 user_details=user_details,
                 platform_details=platform_details
             )
@@ -70,28 +70,29 @@ class Firebase:
 
         try:
             if email is not None:
-                self.current_user = auth.get_user_by_email(
+                self._current_user = auth.get_user_by_email(
                     email=email,
                     app=self._firebase_app
                 )
             else:
-                self.current_user = auth.get_user_by_phone_number(
+                self._current_user = auth.get_user_by_phone_number(
                     phone_number=phone_number,
                     app=self._firebase_app
                 )
 
-            if self.current_user is not None:
+            if self._current_user is not None:
                 user_details = UserDetails(
-                    display_name=self.current_user.display_name,
-                    email=self.current_user.email,
-                    phone_number=self.current_user.phone_number,
-                    photo_url=self.current_user.photo_url,
+                    display_name=self._current_user.display_name,
+                    email=self._current_user.email,
+                    phone_number=self._current_user.phone_number,
+                    photo_url=self._current_user.photo_url,
                     password=None,
-                    email_verified=self.current_user.email_verified,
+                    email_verified=self._current_user.email_verified,
+                    last_logged_in=platform_details.timestamp
                 )
 
                 self._pyblog_firestore.update_user_details(
-                    uid=self.current_user.uid,
+                    uid=self._current_user.uid,
                     user_details=user_details,
                     platform_details=platform_details
                 )
@@ -103,12 +104,20 @@ class Firebase:
         Log out the current user
         :return: None
         """
-        self.current_user = None
+        self._current_user = None
 
     def _generate_email_for_verification(self):
         """
         Generate an email for the current logged-in user for verification
         :return: None
         """
-        if self.current_user is not None and self.current_user.email_verified is False:
-            auth.generate_email_verification_link(email=self.current_user.email, app=self._firebase_app)
+        if self._current_user is not None and self._current_user.email_verified is False:
+            auth.generate_email_verification_link(email=self._current_user.email, app=self._firebase_app)
+
+    def get_current_user_details(self):
+        """
+        Get current user details
+        :return: UserDetails
+        """
+
+        return self._pyblog_firestore.get_current_user_details(uid=self._current_user.uid)
