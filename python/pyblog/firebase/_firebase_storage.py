@@ -35,4 +35,4 @@ class _FirebaseStorage:
             return blob.public_url
         except Exception as exception:
             logger.exception(exception.__str__())
-            return Constants.Variables.DEFAULT_IMAGE
+            return Constants.URLs.DEFAULT_IMAGE

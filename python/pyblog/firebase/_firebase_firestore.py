@@ -27,6 +27,7 @@ class _FirebaseFirestore:
         """
         full_details = {
             Constants.Firebase.Keys.EMAIL: user_details.email,
+            Constants.Firebase.Keys.DISPLAY_NAME: user_details.display_name,
             Constants.Firebase.Keys.PHONE_NUMBER: user_details.phone_number,
             Constants.Firebase.Keys.PHOTO_URL: user_details.photo_url,
             Constants.Firebase.Keys.EMAIL_VERIFIED: user_details.email_verified,

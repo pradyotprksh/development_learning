@@ -3,7 +3,7 @@
 from firebase import Firebase
 from src import confirmation_question, get_user_email, get_user_phone_number, \
     Constants, get_user_name, get_password, \
-    get_platform_details, get_photo_path, ask_for_choices
+    get_platform_details, get_photo_path, ask_for_choices, ask_for_profile_choices
 from .models import UserDetails
 
 firebase = Firebase()
@@ -20,7 +20,7 @@ def _sign_up_user():
     phone_number = get_user_phone_number()
     password = get_password()
     _photo_path = get_photo_path()
-    photo_url = Constants.Variables.DEFAULT_IMAGE
+    photo_url = Constants.URLs.DEFAULT_IMAGE
     if _photo_path is not None:
         photo_url = firebase.upload_file(path=_photo_path)
 
@@ -62,6 +62,59 @@ def _login_user():
         )
 
 
+def _profile_flow():
+    """
+    Start profile flow of the user
+    :return:
+    """
+    choice = ask_for_profile_choices()
+    if choice == Constants.Variables.USER_PROFILE_DETAILS:
+        user_details = firebase.get_user_details_firestore()
+        string_user_details = Constants.Messages.USER_DETAILS.format(
+            user_details[Constants.Firebase.Keys.DISPLAY_NAME],
+            user_details[Constants.Firebase.Keys.EMAIL],
+            user_details[Constants.Firebase.Keys.PHONE_NUMBER],
+            user_details[Constants.Firebase.Keys.LAST_LOGGED_IN],
+        )
+        print(string_user_details)
+        confirmation_question(message=Constants.Messages.PRESS_TO_CONTINUE)
+    elif choice == Constants.Variables.USER_BLOGS:
+        pass
+    elif choice == Constants.Variables.USER_ACTIONS:
+        pass
+
+
+def _start_user_flow():
+    """
+    Start the user flow when the user is authenticated
+    :return: None
+    """
+    current_user = firebase.get_current_user_details()
+    print(Constants.Messages.WELCOME_USER.format(
+        current_user.display_name,
+        Constants.Variables.PROJECT_NAME
+    ))
+    logout = False
+    while not logout:
+        choice = ask_for_choices()
+        if choice == Constants.Variables.MY_PROFILE_CHOICE:
+            _profile_flow()
+        elif choice == Constants.Variables.BLOGS_CHOICE:
+            pass
+        elif choice == Constants.Variables.SEARCH_CHOICE:
+            pass
+        elif choice == Constants.Variables.LOG_OUT_CHOICE:
+            confirm_log_out = confirmation_question(message=Constants.Messages.LOGOUT_CONFIRMATION)
+            if confirm_log_out:
+                print(Constants.Messages.THANK_YOU_USER.format(
+                    current_user.display_name,
+                    Constants.Variables.PROJECT_NAME
+                ))
+                print(Constants.Messages.SEE_YOU_AGAIN)
+                firebase.logout_user()
+                logout = True
+
+
 def initiate_user_authentication():
     """
     Initiate the user authentication for PyBlog
@@ -75,25 +128,4 @@ def initiate_user_authentication():
         _login_user()
 
     if firebase.get_current_user_details() is not None:
-        current_user = firebase.get_current_user_details()
-        print(Constants.Messages.WELCOME_USER.format(
-            current_user.display_name,
-            Constants.Variables.PROJECT_NAME
-        ))
-        logout = False
-        while not logout:
-            choice = ask_for_choices()
-            if choice == Constants.Variables.MY_PROFILE_CHOICE:
-                pass
-            if choice == Constants.Variables.BLOGS_CHOICE:
-                pass
-            if choice == Constants.Variables.SEARCH_CHOICE:
-                pass
-            if choice == Constants.Variables.LOG_OUT_CHOICE:
-                print(Constants.Messages.THANK_YOU_USER.format(
-                    current_user.display_name,
-                    Constants.Variables.PROJECT_NAME
-                ))
-                print(Constants.Messages.SEE_YOU_AGAIN)
-                firebase.logout_user()
-                logout = True
+        _start_user_flow()

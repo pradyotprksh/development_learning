@@ -28,6 +28,14 @@ class Constants:
         WELCOME_USER = "Welcome {} to {}"
         THANK_YOU_USER = "Thank you {} for using {}"
         SEE_YOU_AGAIN = "We hope to see you again."
+        LOGOUT_CONFIRMATION = "Are you sure you want to log out?"
+        SHALL_CONTINUE = "Shall we continue?"
+        PRESS_TO_CONTINUE = "Press y/n to continue"
+        USER_DETAILS = "Details are as below:" \
+                       "\nNAME: {}" \
+                       "\nEMAIL ADDRESS: {}" \
+                       "\nPHONE NUMBER: {}" \
+                       "\nLAST LOGGED IN: {}"
 
     class Paths:
         """A constant class for paths"""
@@ -50,18 +58,23 @@ class Constants:
         USER_NAME_REGEX = r"(^[a-zA-Z][a-zA-Z\s]{0,20}[a-zA-Z]$)"
         PASSWORD_REGEX = r"^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[^\w\d\s:])([^\s]){8,16}$"
         IMAGES_TYPES = ["jpg", "jpeg", "jfif", "pjpeg", "pjp", "png"]
-        DEFAULT_IMAGE = "https://firebasestorage.googleapis.com/v0/b/pyblog-f1a61." \
-                        "appspot.com/o/default_image.png?alt" \
-                        "=media&token=3512d6cf-af03-48cc-b9a7-c8cac855e257 "
         MY_PROFILE_CHOICE = "My Profile"
         BLOGS_CHOICE = "Show All Blogs"
         SEARCH_CHOICE = "Search"
         LOG_OUT_CHOICE = "Log Out"
         USER_OPTION_CHOICES = [MY_PROFILE_CHOICE, BLOGS_CHOICE, SEARCH_CHOICE, LOG_OUT_CHOICE]
+        USER_PROFILE_DETAILS = "Profile Details"
+        USER_BLOGS = "Show My Blogs"
+        USER_ACTIONS = "Actions"
+        BACK = "Back"
+        USER_PROFILE_OPTION_CHOICES = [USER_PROFILE_DETAILS, USER_BLOGS, USER_ACTIONS, BACK]
 
     class URLs:
         """A constant class for URLs"""
         IP_ADDRESS = "https://api64.ipify.org?format=json"
+        DEFAULT_IMAGE = "https://firebasestorage.googleapis.com/v0/b/pyblog-f1a61." \
+                        "appspot.com/o/default_image.png?alt" \
+                        "=media&token=3512d6cf-af03-48cc-b9a7-c8cac855e257 "
 
     class Firebase:
         """A constant class for Firebase collections/documents/keys"""

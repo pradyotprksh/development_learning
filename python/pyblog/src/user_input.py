@@ -129,3 +129,19 @@ def ask_for_choices():
         }],
         style=style
     )["option"]
+
+
+def ask_for_profile_choices():
+    """
+    Ask for profile choices
+    :return: Selected choice
+    """
+    return prompt(
+        questions=[{
+            "type": Constants.Variables.LIST_QUESTION,
+            "name": "profile_option",
+            "message": Constants.Messages.OPTION_QUESTION,
+            "choices": Constants.Variables.USER_PROFILE_OPTION_CHOICES
+        }],
+        style=style
+    )["profile_option"]

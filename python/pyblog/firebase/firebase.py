@@ -135,3 +135,13 @@ class Firebase:
         """
 
         return self._pyblog_storage.upload_file(file_path=path)
+
+    def get_user_details_firestore(self):
+        """
+        Get user details from firestore
+        :return: User details
+        """
+
+        return self._pyblog_firestore.get_current_user_details(
+            uid=self._current_user.uid
+        )
