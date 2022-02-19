@@ -27,8 +27,8 @@ def get_platform_details():
         ip_address = get_request(
             Constants.URLs.IP_ADDRESS
         ).ip
-    except Exception as e:
-        logger.exception(e)
+    except Exception as exception:
+        logger.exception(exception.__str__())
         host_name = socket.gethostname()
         ip_address = socket.gethostbyname(host_name)
 

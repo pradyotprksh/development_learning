@@ -56,8 +56,8 @@ class Firebase:
             )
 
             self._generate_email_for_verification()
-        except Exception as e:
-            logger.debug(e.__str__())
+        except Exception as exception:
+            logger.debug(exception.__str__())
 
     def login_user(self, platform_details, email=None, phone_number=None):
         """
@@ -88,7 +88,6 @@ class Firebase:
                     photo_url=self._current_user.photo_url,
                     password=None,
                     email_verified=self._current_user.email_verified,
-                    last_logged_in=platform_details.timestamp
                 )
 
                 self._pyblog_firestore.update_user_details(
@@ -96,8 +95,11 @@ class Firebase:
                     user_details=user_details,
                     platform_details=platform_details
                 )
-        except Exception as e:
-            logger.debug(e.__str__())
+
+                if self._current_user.email_verified is False:
+                    self._generate_email_for_verification()
+        except Exception as exception:
+            logger.debug(exception.__str__())
 
     def logout_user(self):
         """
@@ -112,7 +114,10 @@ class Firebase:
         :return: None
         """
         if self._current_user is not None and self._current_user.email_verified is False:
-            auth.generate_email_verification_link(email=self._current_user.email, app=self._firebase_app)
+            auth.generate_email_verification_link(
+                email=self._current_user.email,
+                app=self._firebase_app
+            )
 
     def get_current_user_details(self):
         """
@@ -120,4 +125,13 @@ class Firebase:
         :return: UserDetails
         """
 
-        return self._pyblog_firestore.get_current_user_details(uid=self._current_user.uid)
+        return self._current_user
+
+    def upload_file(self, path):
+        """
+        Upload the file to firebase storage module
+        :param path: File name
+        :return: URL of file
+        """
+
+        return self._pyblog_storage.upload_file(file_path=path)

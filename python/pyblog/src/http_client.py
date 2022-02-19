@@ -1,8 +1,8 @@
-""""""
+"""A client which will connect to the outside world"""
 
 import json
-import urllib3
 from collections import namedtuple
+import urllib3
 
 
 http = urllib3.PoolManager()
