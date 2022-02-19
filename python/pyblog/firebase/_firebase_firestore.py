@@ -38,7 +38,7 @@ class _FirebaseFirestore:
             Constants.Firebase.Keys.SYSTEM_VERSION: platform_details.version,
             Constants.Firebase.Keys.PYTHON_VERSION: platform_details.python_version,
             Constants.Firebase.Keys.SYSTEM_IP_ADDRESS: platform_details.ip_address,
-            Constants.Firebase.Keys.LAST_LOGGED_IN: user_details.last_logged_in,
+            Constants.Firebase.Keys.LAST_LOGGED_IN: platform_details.timestamp,
         }
 
         self.firestore_db\
@@ -52,4 +52,5 @@ class _FirebaseFirestore:
         :return: UserDetails
         """
 
-        return self.firestore_db.collection(Constants.Firebase.Collections.USERS).document(uid).get().to_dict()
+        return self.firestore_db.collection(Constants.Firebase.Collections.USERS)\
+            .document(uid).get().to_dict()

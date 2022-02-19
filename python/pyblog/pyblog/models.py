@@ -24,7 +24,6 @@ UserDetails = namedtuple(
         "phone_number",
         "photo_url",
         "password",
-        "email_verified",
-        "last_logged_in"
+        "email_verified"
     ]
 )

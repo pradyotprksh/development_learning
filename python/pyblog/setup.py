@@ -14,7 +14,7 @@ setup(
     author_email='pradyotprksh4@gmail.com',
     keywords='basics, blog, firebase',
     data_files=[(
-        'data', ['data/']
+        'data', []
     )],
     packages=find_packages(
         include=[
