@@ -54,6 +54,7 @@ This is still in progress will be updating the notes as I move forward. The note
 
 ## [Python](https://github.com/pradyotprksh/development_learning/tree/main/python)
   - [2022 Bootcamp Udemy Python Course](https://github.com/pradyotprksh/development_learning/tree/main/python/UdemyCourse/2022_Python_Bootcamp) 
+  - [PyBlog 🐍]()
 
 
 
