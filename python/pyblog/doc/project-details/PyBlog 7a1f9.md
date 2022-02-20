@@ -4,18 +4,18 @@ A blog application made using python and firebase as a backend service.
 
 ---
 
-## Things to learn:
+## Things to learn
 
 - [x]  Python
-- [ ]  GUI
-- [ ]  Firebase in python
-    - [ ]  Login
-    - [ ]  Firestore
-    - [ ]  Storage
+- [ ]  ~~GUI~~
+- [x]  Firebase in python
+    - [x]  Login
+    - [x]  Firestore
+    - [x]  Storage
 
-## **Features**:
+## **Features**
 
-- Login
+- SignUp/Login
 - Profile
 - Create Blog
     - Tags to Blog
@@ -29,4 +29,4 @@ A blog application made using python and firebase as a backend service.
     - User
     - Blog
 
-[Project Board](PyBlog%207a1f9664eabf4459b7699e91c8056636/Project%20Board%20a5a7aa69ad9a4ff4bbf33d67fbfee1d5.csv)
+[Project Board](PyBlog%207a1f9/Project%20Bo%20a5a7a.csv)

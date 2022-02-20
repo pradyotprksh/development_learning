@@ -1,4 +1,4 @@
-# Firebase Implementation
+# Profile
 
 Assign: Pradyot Prakash
 Status: Not started

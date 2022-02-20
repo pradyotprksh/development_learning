@@ -1,3 +1,3 @@
-# Test Editor
+# Get Blogs
 
 Assign: Pradyot Prakash

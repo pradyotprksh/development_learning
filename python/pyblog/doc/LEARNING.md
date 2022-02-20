@@ -20,12 +20,6 @@ protected for security reasons.
 I am not sure which files to ignore in Python, so I found a repository which provides the .gitignore for different 
 languages. You can find the details here https://github.com/github/gitignore.
 
-## UI [WIP]
-
-https://www.pythontutorial.net/tkinter/
-
-https://www.djangoproject.com
-
 ## Firebase [WIP]
 
 https://github.com/firebase/firebase-admin-python
