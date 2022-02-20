@@ -1,6 +1,6 @@
 """A collection of all inputs which will be asked to the user"""
 
-from whaaaaat import prompt, style_from_dict, Token
+from PyInquirer import prompt, style_from_dict, Token
 from .constants import Constants
 from .validators import EmailValidator, PhoneNumberValidator, NameValidator, \
     PasswordValidator, PhotoValidator
@@ -145,3 +145,63 @@ def ask_for_profile_choices():
         }],
         style=style
     )["profile_option"]
+
+
+def ask_for_blogs_choices():
+    """
+    Ask for blogs choices
+    :return: Selected choice
+    """
+    return prompt(
+        questions=[{
+            "type": Constants.Variables.LIST_QUESTION,
+            "name": "blogs_option",
+            "message": Constants.Messages.OPTION_QUESTION,
+            "choices": Constants.Variables.BLOGS_CHOICES
+        }],
+        style=style
+    )["blogs_option"]
+
+
+def ask_for_search_choices():
+    """
+    Ask for search choices
+    :return: Selected choice
+    """
+    return prompt(
+        questions=[{
+            "type": Constants.Variables.LIST_QUESTION,
+            "name": "search_option",
+            "message": Constants.Messages.OPTION_QUESTION,
+            "choices": Constants.Variables.SEARCH_CHOICES
+        }],
+        style=style
+    )["search_option"]
+
+
+def press_any_key_to_continue(message):
+    """
+    Show an option to user to press any key to continue
+    :param message: Message to be shown
+    :return: None
+    """
+    input(message)
+
+
+def open_editor_for_blog(message):
+    """
+        Ask for search choices
+        :return: Selected choice
+        """
+    return prompt(
+        questions=[{
+            "type": Constants.Variables.EDITOR_QUESTION,
+            "name": "blog",
+            "message": message,
+            "eargs": {
+                "editor": "nano",
+                "ext": ".txt"
+            }
+        }],
+        style=style
+    )["blog"]

@@ -30,12 +30,14 @@ class Constants:
         SEE_YOU_AGAIN = "We hope to see you again."
         LOGOUT_CONFIRMATION = "Are you sure you want to log out?"
         SHALL_CONTINUE = "Shall we continue?"
-        PRESS_TO_CONTINUE = "Press y/n to continue"
+        PRESS_TO_CONTINUE = "Press any key to continue"
         USER_DETAILS = "Details are as below:" \
                        "\nNAME: {}" \
                        "\nEMAIL ADDRESS: {}" \
                        "\nPHONE NUMBER: {}" \
+                       "\nPROFILE PICTURE: {}" \
                        "\nLAST LOGGED IN: {}"
+        WRITE_BLOG = "Please write your new blog, press enter when done"
 
     class Paths:
         """A constant class for paths"""
@@ -49,6 +51,7 @@ class Constants:
         YES_NO_CHOICE = ["Yes", "No"]
         INPUT_QUESTION = "input"
         LIST_QUESTION = "list"
+        EDITOR_QUESTION = "editor"
         CONFIRM_QUESTION = "confirm"
         PASSWORD_QUESTION = "password"
         EMAIL_REGEX = r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)"
@@ -58,16 +61,24 @@ class Constants:
         USER_NAME_REGEX = r"(^[a-zA-Z][a-zA-Z\s]{0,20}[a-zA-Z]$)"
         PASSWORD_REGEX = r"^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[^\w\d\s:])([^\s]){8,16}$"
         IMAGES_TYPES = ["jpg", "jpeg", "jfif", "pjpeg", "pjp", "png"]
+        BACK = "Back"
         MY_PROFILE_CHOICE = "My Profile"
-        BLOGS_CHOICE = "Show All Blogs"
+        BLOGS_CHOICE = "Blog Options"
         SEARCH_CHOICE = "Search"
         LOG_OUT_CHOICE = "Log Out"
         USER_OPTION_CHOICES = [MY_PROFILE_CHOICE, BLOGS_CHOICE, SEARCH_CHOICE, LOG_OUT_CHOICE]
         USER_PROFILE_DETAILS = "Profile Details"
         USER_BLOGS = "Show My Blogs"
-        USER_ACTIONS = "Actions"
-        BACK = "Back"
+        USER_ACTIONS = "Profile Actions"
         USER_PROFILE_OPTION_CHOICES = [USER_PROFILE_DETAILS, USER_BLOGS, USER_ACTIONS, BACK]
+        FOLLOWED_BLOGS = "Show Followed Users Blogs"
+        ALL_BLOGS = "Show All Blogs"
+        MY_BLOGS = "Show My Blogs"
+        WRITE_BLOG = "Write A Blog"
+        BLOGS_CHOICES = [WRITE_BLOG, FOLLOWED_BLOGS, ALL_BLOGS, MY_BLOGS, BACK]
+        SEARCH_USERS = "Search For A User"
+        SEARCH_BLOGS = "Search For Blogs"
+        SEARCH_CHOICES = [SEARCH_USERS, SEARCH_BLOGS, BACK]
 
     class URLs:
         """A constant class for URLs"""

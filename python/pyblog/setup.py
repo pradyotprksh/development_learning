@@ -24,7 +24,7 @@ setup(
         ]
     ),
     install_requires=[
-        'firebase-admin', 'loguru', 'pylint', 'urllib3', 'whaaaaat'
+        'firebase-admin', 'loguru', 'PyInquirer', 'pylint', 'urllib3'
     ],
     entry_points={
         'console_scripts': [

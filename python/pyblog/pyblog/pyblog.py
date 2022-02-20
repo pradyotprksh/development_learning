@@ -3,7 +3,9 @@
 from firebase import Firebase
 from src import confirmation_question, get_user_email, get_user_phone_number, \
     Constants, get_user_name, get_password, \
-    get_platform_details, get_photo_path, ask_for_choices, ask_for_profile_choices
+    get_platform_details, get_photo_path, ask_for_choices, ask_for_profile_choices, \
+    press_any_key_to_continue, ask_for_blogs_choices, ask_for_search_choices, \
+    open_editor_for_blog
 from .models import UserDetails
 
 firebase = Firebase()
@@ -74,13 +76,44 @@ def _profile_flow():
             user_details[Constants.Firebase.Keys.DISPLAY_NAME],
             user_details[Constants.Firebase.Keys.EMAIL],
             user_details[Constants.Firebase.Keys.PHONE_NUMBER],
+            user_details[Constants.Firebase.Keys.PHOTO_URL],
             user_details[Constants.Firebase.Keys.LAST_LOGGED_IN],
         )
         print(string_user_details)
-        confirmation_question(message=Constants.Messages.PRESS_TO_CONTINUE)
+        press_any_key_to_continue(message=Constants.Messages.PRESS_TO_CONTINUE)
     elif choice == Constants.Variables.USER_BLOGS:
         pass
     elif choice == Constants.Variables.USER_ACTIONS:
+        pass
+
+
+def _blogs_flow():
+    """
+    Start blogs flow
+    :return: None
+    """
+    choice = ask_for_blogs_choices()
+    if choice == Constants.Variables.FOLLOWED_BLOGS:
+        pass
+    elif choice == Constants.Variables.ALL_BLOGS:
+        pass
+    elif choice == Constants.Variables.MY_BLOGS:
+        pass
+    elif choice == Constants.Variables.WRITE_BLOG:
+        blog = open_editor_for_blog(message=Constants.Messages.WRITE_BLOG)
+        print(blog)
+        pass
+
+
+def _search_flow():
+    """
+    Start blogs flow
+    :return: None
+    """
+    choice = ask_for_search_choices()
+    if choice == Constants.Variables.SEARCH_BLOGS:
+        pass
+    elif choice == Constants.Variables.SEARCH_USERS:
         pass
 
 
@@ -100,9 +133,9 @@ def _start_user_flow():
         if choice == Constants.Variables.MY_PROFILE_CHOICE:
             _profile_flow()
         elif choice == Constants.Variables.BLOGS_CHOICE:
-            pass
+            _blogs_flow()
         elif choice == Constants.Variables.SEARCH_CHOICE:
-            pass
+            _search_flow()
         elif choice == Constants.Variables.LOG_OUT_CHOICE:
             confirm_log_out = confirmation_question(message=Constants.Messages.LOGOUT_CONFIRMATION)
             if confirm_log_out:
