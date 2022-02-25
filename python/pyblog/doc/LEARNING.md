@@ -20,11 +20,22 @@ protected for security reasons.
 I am not sure which files to ignore in Python, so I found a repository which provides the .gitignore for different 
 languages. You can find the details here https://github.com/github/gitignore.
 
-## Firebase [WIP]
+## Firebase
 
-https://github.com/firebase/firebase-admin-python
-https://youtu.be/yylnC3dr_no
+I thought of making it a device specific project, but where is the fun in that. So thought the easiest one to work with 
+in backend perspective is Firebase. Since I have prior knowledge on how it works, so it was easier to pick it.
+
+But how can I integrate Firebase with Python? 🤔
+
+Initially I thought it would be using rest api calls, but what about realtime update? Can we achieve it? What about 
+authentication? And also storage? I was this close to drop the idea then I found 
+https://github.com/firebase/firebase-admin-python. A Firebase library for Python. This is used basically for admin but 
+for now I will use it as a standalone project (might be).
+
+So the features which I will be using from Firebase would be mainly Authentication, Firestore and Storage. Might 
+include more but that will depend on the project future and my mood 😅.
 
 ## Regex [WIP]
 
 https://regex101.com
+
