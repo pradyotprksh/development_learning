@@ -3,7 +3,7 @@
 import os
 import imghdr
 import regex
-from whaaaaat import Validator, ValidationError
+from PyInquirer import Validator, ValidationError
 from .constants import Constants
 
 

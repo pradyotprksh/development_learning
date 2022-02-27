@@ -15,7 +15,7 @@ A blog application made using python and firebase as a backend service.
 
 ## **Features**
 
-- SignUp/Login
+- ~~SignUp/Login~~
 - Profile
 - Create Blog
     - Tags to Blog

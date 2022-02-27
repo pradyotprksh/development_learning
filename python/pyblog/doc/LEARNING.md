@@ -35,7 +35,11 @@ for now I will use it as a standalone project (might be).
 So the features which I will be using from Firebase would be mainly Authentication, Firestore and Storage. Might 
 include more but that will depend on the project future and my mood 😅.
 
-## Regex [WIP]
+## Regex
 
-https://regex101.com
+A common headache while creating a project is validation of data. And to do that usually we need regular expressions.
+Like for email, password strength, etc.
+
+And after few searching found https://regex101.com to check my expressions and also find examples as well. I got what I 
+needed from this site and everything works as expected by me 😅.
 
