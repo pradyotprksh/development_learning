@@ -115,9 +115,9 @@ def get_user_phone_number():
     )["phone"]
 
 
-def ask_for_choices():
+def show_list_options(choices):
     """
-    Ask for choices
+    Ask for a choice
     :return: Selected choice
     """
     return prompt(
@@ -125,58 +125,10 @@ def ask_for_choices():
             "type": Constants.Variables.LIST_QUESTION,
             "name": "option",
             "message": Constants.Messages.OPTION_QUESTION,
-            "choices": Constants.Variables.USER_OPTION_CHOICES
+            "choices": choices
         }],
         style=style
     )["option"]
-
-
-def ask_for_profile_choices():
-    """
-    Ask for profile choices
-    :return: Selected choice
-    """
-    return prompt(
-        questions=[{
-            "type": Constants.Variables.LIST_QUESTION,
-            "name": "profile_option",
-            "message": Constants.Messages.OPTION_QUESTION,
-            "choices": Constants.Variables.USER_PROFILE_OPTION_CHOICES
-        }],
-        style=style
-    )["profile_option"]
-
-
-def ask_for_blogs_choices():
-    """
-    Ask for blogs choices
-    :return: Selected choice
-    """
-    return prompt(
-        questions=[{
-            "type": Constants.Variables.LIST_QUESTION,
-            "name": "blogs_option",
-            "message": Constants.Messages.OPTION_QUESTION,
-            "choices": Constants.Variables.BLOGS_CHOICES
-        }],
-        style=style
-    )["blogs_option"]
-
-
-def ask_for_search_choices():
-    """
-    Ask for search choices
-    :return: Selected choice
-    """
-    return prompt(
-        questions=[{
-            "type": Constants.Variables.LIST_QUESTION,
-            "name": "search_option",
-            "message": Constants.Messages.OPTION_QUESTION,
-            "choices": Constants.Variables.SEARCH_CHOICES
-        }],
-        style=style
-    )["search_option"]
 
 
 def press_any_key_to_continue(message):

@@ -61,24 +61,67 @@ class Constants:
         USER_NAME_REGEX = r"(^[a-zA-Z][a-zA-Z\s]{0,20}[a-zA-Z]$)"
         PASSWORD_REGEX = r"^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[^\w\d\s:])([^\s]){8,16}$"
         IMAGES_TYPES = ["jpg", "jpeg", "jfif", "pjpeg", "pjp", "png"]
+
+        # Options
         BACK = "Back"
-        MY_PROFILE_CHOICE = "My Profile"
-        BLOGS_CHOICE = "Blog Options"
+        MY_PROFILE_CHOICE = "Profile"
+        BLOGS_CHOICE = "Blog"
         SEARCH_CHOICE = "Search"
         LOG_OUT_CHOICE = "Log Out"
+        USER_PROFILE_DETAILS = "My Profile Details"
+        USER_BLOGS = "Blogs Options"
+        USER_ACTIONS = "My Profile Actions"
+        USER_EDIT = "Edit Profile Details"
+        USER_FOLLOWERS = "My Followers"
+        USER_FOLLOWING = "Me Following"
+        USER_SUBSCRIBED = "Me Subscribed"
+        USER_SUBSCRIBER = "My Subscribers"
+        USER_BLOGS_SHOW_BLOGS = "Show All My Blogs"
+        USER_BLOGS_WRITE_BLOG = "Write A New Blog"
+        USER_BLOGS_FAV_BLOG = "My Favourite Blogs"
+        USER_ACTIONS_VERIFY_EMAIL_ADDRESS = "Verify My Email Address"
+        USER_ACTIONS_CHANGE_PASSWORD = "Change My Password"
+        USER_ACTIONS_DELETE_ACCOUNT = "Delete My Account"
+        USER_EDIT_NAME = "Change My Name"
+        USER_EDIT_DISPLAY_IMAGE = "Change My Display Image"
+        USER_BLOGS_WRITE_BLOG_DEFAULT_TEMPLATE = "Use Default Template"
+        USER_BLOGS_WRITE_BLOG_JUST_WRITE = "Just Write A Blog"
+        BLOGS_SEE_ALL = "See All Blogs"
+        BLOGS_SEE_FOLLOWING_BLOGS = "See Blogs From Following Users"
+        BLOGS_SEE_SUBSCRIBED_BLOGS = "See Blogs From Subscribed Users"
+        BLOGS_SEE_FILTERED_BLOGS = "Filter Blogs"
+        BLOGS_SEE_FILTERED_BLOGS_RECENT = "Most Recent Blogs"
+        BLOGS_SEE_FILTERED_BLOGS_LIKED = "Most Liked Blogs"
+        BLOGS_SEE_FILTERED_BLOGS_VIEWED = "Most Viewed Blogs"
+        SEARCH_CHOICE_USERS = "Users"
+        SEARCH_CHOICE_BLOG_TAGS = "By Blog Tags"
+        SEARCH_CHOICE_BLOGS = "Blogs"
+
+        # Main Options
         USER_OPTION_CHOICES = [MY_PROFILE_CHOICE, BLOGS_CHOICE, SEARCH_CHOICE, LOG_OUT_CHOICE]
-        USER_PROFILE_DETAILS = "Profile Details"
-        USER_BLOGS = "Show My Blogs"
-        USER_ACTIONS = "Profile Actions"
-        USER_PROFILE_OPTION_CHOICES = [USER_PROFILE_DETAILS, USER_BLOGS, USER_ACTIONS, BACK]
-        FOLLOWED_BLOGS = "Show Followed Users Blogs"
-        ALL_BLOGS = "Show All Blogs"
-        MY_BLOGS = "Show My Blogs"
-        WRITE_BLOG = "Write A Blog"
-        BLOGS_CHOICES = [WRITE_BLOG, FOLLOWED_BLOGS, ALL_BLOGS, MY_BLOGS, BACK]
-        SEARCH_USERS = "Search For A User"
-        SEARCH_BLOGS = "Search For Blogs"
-        SEARCH_CHOICES = [SEARCH_USERS, SEARCH_BLOGS, BACK]
+
+        # MY_PROFILE_CHOICE Options
+        USER_PROFILE_OPTION_CHOICES = [USER_PROFILE_DETAILS, USER_BLOGS, USER_ACTIONS, USER_EDIT, USER_FOLLOWERS,
+                                       USER_FOLLOWING, USER_SUBSCRIBED, USER_SUBSCRIBER, BACK]
+        # --USER_BLOGS Options
+        USER_BLOGS_OPTIONS = [USER_BLOGS_SHOW_BLOGS, USER_BLOGS_WRITE_BLOG, USER_BLOGS_FAV_BLOG, BACK]
+        # ----USER_BLOGS_WRITE_BLOG Options
+        USER_BLOGS_WRITE_BLOG_OPTIONS = [USER_BLOGS_WRITE_BLOG_DEFAULT_TEMPLATE, USER_BLOGS_WRITE_BLOG_JUST_WRITE, BACK]
+        # --USER_ACTIONS Options
+        USER_ACTIONS_OPTIONS = [USER_ACTIONS_VERIFY_EMAIL_ADDRESS, USER_ACTIONS_CHANGE_PASSWORD,
+                                USER_ACTIONS_DELETE_ACCOUNT, BACK]
+        # --USER_EDIT Options
+        USER_EDIT_OPTIONS = [USER_EDIT_NAME, USER_EDIT_DISPLAY_IMAGE, BACK]
+
+        # BLOGS_CHOICE Options
+        BLOGS_CHOICE_OPTIONS = [BLOGS_SEE_ALL, BLOGS_SEE_FOLLOWING_BLOGS, BLOGS_SEE_SUBSCRIBED_BLOGS,
+                                BLOGS_SEE_FILTERED_BLOGS, BACK]
+        # --BLOGS_SEE_FILTERED_BLOGS Options
+        BLOGS_SEE_FILTERED_BLOGS_OPTIONS = [BLOGS_SEE_FILTERED_BLOGS_RECENT, BLOGS_SEE_FILTERED_BLOGS_LIKED,
+                                            BLOGS_SEE_FILTERED_BLOGS_VIEWED, BACK]
+
+        # SEARCH_CHOICE Options
+        SEARCH_CHOICE_OPTIONS = [SEARCH_CHOICE_USERS, SEARCH_CHOICE_BLOGS, SEARCH_CHOICE_BLOG_TAGS, BACK]
 
     class URLs:
         """A constant class for URLs"""

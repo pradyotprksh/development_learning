@@ -2,10 +2,7 @@
 
 from firebase import Firebase
 from src import confirmation_question, get_user_email, get_user_phone_number, \
-    Constants, get_user_name, get_password, \
-    get_platform_details, get_photo_path, ask_for_choices, ask_for_profile_choices, \
-    press_any_key_to_continue, ask_for_blogs_choices, ask_for_search_choices, \
-    open_editor_for_blog
+    Constants, get_user_name, get_password, get_platform_details, get_photo_path, show_list_options
 from .models import UserDetails
 
 firebase = Firebase()
@@ -22,9 +19,10 @@ def _sign_up_user():
     phone_number = get_user_phone_number()
     password = get_password()
     _photo_path = get_photo_path()
-    photo_url = Constants.URLs.DEFAULT_IMAGE
     if _photo_path is not None:
         photo_url = firebase.upload_file(path=_photo_path)
+    else:
+        photo_url = Constants.URLs.DEFAULT_IMAGE
 
     user_details = UserDetails(
         display_name=name,
@@ -64,27 +62,106 @@ def _login_user():
         )
 
 
+def _user_write_blogs_flow():
+    """
+    Start current user write a blog flow
+    :return: None
+    """
+    choice = show_list_options(choices=Constants.Variables.USER_BLOGS_WRITE_BLOG_OPTIONS)
+    if choice == Constants.Variables.USER_BLOGS_WRITE_BLOG_DEFAULT_TEMPLATE:
+        _user_blogs_flow()
+    elif choice == Constants.Variables.USER_BLOGS_WRITE_BLOG_JUST_WRITE:
+        _user_blogs_flow()
+    elif choice == Constants.Variables.BACK:
+        _user_blogs_flow()
+
+
+def _user_blogs_flow():
+    """
+    Start current user blogs flow
+    :return: None
+    """
+    choice = show_list_options(choices=Constants.Variables.USER_BLOGS_OPTIONS)
+    if choice == Constants.Variables.USER_BLOGS_SHOW_BLOGS:
+        _profile_flow()
+    elif choice == Constants.Variables.USER_BLOGS_WRITE_BLOG:
+        _user_write_blogs_flow()
+    elif choice == Constants.Variables.USER_BLOGS_FAV_BLOG:
+        _profile_flow()
+    elif choice == Constants.Variables.BACK:
+        _profile_flow()
+
+
+def _user_actions_flow():
+    """
+    Start profile actions flow for current user
+    :return: None
+    """
+    choice = show_list_options(choices=Constants.Variables.USER_ACTIONS_OPTIONS)
+    if choice == Constants.Variables.USER_ACTIONS_VERIFY_EMAIL_ADDRESS:
+        _profile_flow()
+    elif choice == Constants.Variables.USER_ACTIONS_CHANGE_PASSWORD:
+        _profile_flow()
+    elif choice == Constants.Variables.USER_ACTIONS_DELETE_ACCOUNT:
+        _profile_flow()
+    elif choice == Constants.Variables.BACK:
+        _profile_flow()
+
+
+def _user_edit_option():
+    """
+    Start flow for edit profile for current user
+    :return: None
+    """
+    choice = show_list_options(choices=Constants.Variables.USER_EDIT_OPTIONS)
+    if choice == Constants.Variables.USER_EDIT_NAME:
+        _profile_flow()
+    elif choice == Constants.Variables.USER_EDIT_DISPLAY_IMAGE:
+        _profile_flow()
+    elif choice == Constants.Variables.BACK:
+        _profile_flow()
+
+
 def _profile_flow():
     """
     Start profile flow of the user
-    :return:
+    :return: None
     """
-    choice = ask_for_profile_choices()
+    choice = show_list_options(choices=Constants.Variables.USER_PROFILE_OPTION_CHOICES)
     if choice == Constants.Variables.USER_PROFILE_DETAILS:
-        user_details = firebase.get_user_details_firestore()
-        string_user_details = Constants.Messages.USER_DETAILS.format(
-            user_details[Constants.Firebase.Keys.DISPLAY_NAME],
-            user_details[Constants.Firebase.Keys.EMAIL],
-            user_details[Constants.Firebase.Keys.PHONE_NUMBER],
-            user_details[Constants.Firebase.Keys.PHOTO_URL],
-            user_details[Constants.Firebase.Keys.LAST_LOGGED_IN],
-        )
-        print(string_user_details)
-        press_any_key_to_continue(message=Constants.Messages.PRESS_TO_CONTINUE)
+        pass
     elif choice == Constants.Variables.USER_BLOGS:
-        pass
+        _user_blogs_flow()
     elif choice == Constants.Variables.USER_ACTIONS:
+        _user_actions_flow()
+    elif choice == Constants.Variables.USER_EDIT:
+        _user_edit_option()
+    elif choice == Constants.Variables.USER_FOLLOWERS:
         pass
+    elif choice == Constants.Variables.USER_FOLLOWING:
+        pass
+    elif choice == Constants.Variables.USER_SUBSCRIBED:
+        pass
+    elif choice == Constants.Variables.USER_SUBSCRIBER:
+        pass
+    elif choice == Constants.Variables.BACK:
+        pass
+
+
+def _blogs_see_filtered_option():
+    """
+    See filtered option for blogs
+    :return: None
+    """
+    choice = show_list_options(choices=Constants.Variables.BLOGS_SEE_FILTERED_BLOGS_OPTIONS)
+    if choice == Constants.Variables.BLOGS_SEE_FILTERED_BLOGS_RECENT:
+        _blogs_flow()
+    elif choice == Constants.Variables.BLOGS_SEE_FILTERED_BLOGS_LIKED:
+        _blogs_flow()
+    elif choice == Constants.Variables.BLOGS_SEE_FILTERED_BLOGS_VIEWED:
+        _blogs_flow()
+    elif choice == Constants.Variables.BACK:
+        _blogs_flow()
 
 
 def _blogs_flow():
@@ -92,16 +169,16 @@ def _blogs_flow():
     Start blogs flow
     :return: None
     """
-    choice = ask_for_blogs_choices()
-    if choice == Constants.Variables.FOLLOWED_BLOGS:
+    choice = show_list_options(choices=Constants.Variables.BLOGS_CHOICE_OPTIONS)
+    if choice == Constants.Variables.BLOGS_SEE_ALL:
         pass
-    elif choice == Constants.Variables.ALL_BLOGS:
+    elif choice == Constants.Variables.BLOGS_SEE_FOLLOWING_BLOGS:
         pass
-    elif choice == Constants.Variables.MY_BLOGS:
+    elif choice == Constants.Variables.BLOGS_SEE_SUBSCRIBED_BLOGS:
         pass
-    elif choice == Constants.Variables.WRITE_BLOG:
-        blog = open_editor_for_blog(message=Constants.Messages.WRITE_BLOG)
-        print(blog)
+    elif choice == Constants.Variables.BLOGS_SEE_FILTERED_BLOGS:
+        _blogs_see_filtered_option()
+    elif choice == Constants.Variables.BACK:
         pass
 
 
@@ -110,10 +187,14 @@ def _search_flow():
     Start blogs flow
     :return: None
     """
-    choice = ask_for_search_choices()
-    if choice == Constants.Variables.SEARCH_BLOGS:
+    choice = show_list_options(choices=Constants.Variables.SEARCH_CHOICE_OPTIONS)
+    if choice == Constants.Variables.SEARCH_CHOICE_USERS:
         pass
-    elif choice == Constants.Variables.SEARCH_USERS:
+    elif choice == Constants.Variables.SEARCH_CHOICE_BLOGS:
+        pass
+    elif choice == Constants.Variables.SEARCH_CHOICE_BLOG_TAGS:
+        pass
+    elif choice == Constants.Variables.BACK:
         pass
 
 
@@ -129,7 +210,7 @@ def _start_user_flow():
     ))
     logout = False
     while not logout:
-        choice = ask_for_choices()
+        choice = show_list_options(choices=Constants.Variables.USER_OPTION_CHOICES)
         if choice == Constants.Variables.MY_PROFILE_CHOICE:
             _profile_flow()
         elif choice == Constants.Variables.BLOGS_CHOICE:
