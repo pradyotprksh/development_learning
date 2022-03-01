@@ -1,3 +1,3 @@
 # User Selection Flow [WIP]
 
-![Complete flow of the menu for the current user.](https://github.com/pradyotprksh/development_learning/blob/main/python/pyblog/doc/project-details/PyBlog%207a1f9/Project%20Bo%20a5a7a/User%20Selec%2016cce.md "Selection Flow")
+![Complete flow of the menu for the current user.](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/378faa0b-c080-4cfe-82db-5c1be0310e5a/PyBlog_Menu_Flow.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220301%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220301T180700Z&X-Amz-Expires=86400&X-Amz-Signature=fa92b8eb419872a00bf697e9c83c25ea5c611408b31b7144af0efef0f962e4c6&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22PyBlog%2520Menu%2520Flow.png%22&x-id=GetObject "Selection Flow")
