@@ -145,3 +145,39 @@ class Firebase:
         return self._pyblog_firestore.get_current_user_details(
             uid=self._current_user.uid
         )
+
+    def update_user(self, platform_details, name=None, photo_url=None):
+        """
+        Update the user details
+        :param platform_details: Details of the current platform
+        :param name: New name of the user
+        :param photo_url: New display image of the user
+        """
+        if name is not None or photo_url is not None:
+            if name is not None:
+                self._current_user = auth.update_user(
+                    uid=self._current_user.uid,
+                    display_name=name,
+                    app=self._firebase_app
+                )
+            if photo_url is not None:
+                self._current_user = auth.update_user(
+                    uid=self._current_user.uid,
+                    photo_url=photo_url,
+                    app=self._firebase_app
+                )
+            if self._current_user is not None:
+                user_details = UserDetails(
+                    display_name=self._current_user.display_name,
+                    email=self._current_user.email,
+                    phone_number=self._current_user.phone_number,
+                    photo_url=self._current_user.photo_url,
+                    password=None,
+                    email_verified=self._current_user.email_verified,
+                )
+
+                self._pyblog_firestore.update_user_details(
+                    uid=self._current_user.uid,
+                    user_details=user_details,
+                    platform_details=platform_details
+                )

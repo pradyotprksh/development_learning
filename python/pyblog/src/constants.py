@@ -6,6 +6,7 @@ class Constants:
 
     class Messages:
         """A constant class for messages"""
+        NAME = "name"
         WELCOME = "Welcome to {}"
         AUTH_TYPE_QUESTION = "Are you a new user?"
         NAME_QUESTION = "What\'s your name?"
@@ -35,9 +36,10 @@ class Constants:
                        "\nNAME: {}" \
                        "\nEMAIL ADDRESS: {}" \
                        "\nPHONE NUMBER: {}" \
-                       "\nPROFILE PICTURE: {}" \
-                       "\nLAST LOGGED IN: {}"
+                       "\nPROFILE PICTURE: {}"
         WRITE_BLOG = "Please write your new blog, press enter when done"
+        CONFIRM_CHANGE = "Are you sure you want to change your {} to {}"
+        SOMETHING_WENT_WRONG = "Something went wrong. Please try again."
 
     class Paths:
         """A constant class for paths"""
@@ -69,7 +71,7 @@ class Constants:
         SEARCH_CHOICE = "Search"
         LOG_OUT_CHOICE = "Log Out"
         USER_PROFILE_DETAILS = "My Profile Details"
-        USER_BLOGS = "Blogs Options"
+        USER_BLOGS = "My Blogs Options"
         USER_ACTIONS = "My Profile Actions"
         USER_EDIT = "Edit Profile Details"
         USER_FOLLOWERS = "My Followers"
@@ -101,8 +103,8 @@ class Constants:
         USER_OPTION_CHOICES = [MY_PROFILE_CHOICE, BLOGS_CHOICE, SEARCH_CHOICE, LOG_OUT_CHOICE]
 
         # MY_PROFILE_CHOICE Options
-        USER_PROFILE_OPTION_CHOICES = [USER_PROFILE_DETAILS, USER_BLOGS, USER_ACTIONS, USER_EDIT, USER_FOLLOWERS,
-                                       USER_FOLLOWING, USER_SUBSCRIBED, USER_SUBSCRIBER, BACK]
+        USER_PROFILE_OPTION_CHOICES = [USER_PROFILE_DETAILS, USER_ACTIONS, USER_EDIT, USER_FOLLOWERS,
+                                       USER_FOLLOWING, USER_SUBSCRIBED, USER_SUBSCRIBER, USER_BLOGS, BACK]
         # --USER_BLOGS Options
         USER_BLOGS_OPTIONS = [USER_BLOGS_SHOW_BLOGS, USER_BLOGS_WRITE_BLOG, USER_BLOGS_FAV_BLOG, BACK]
         # ----USER_BLOGS_WRITE_BLOG Options

@@ -1,7 +1,7 @@
 # User Edit Profile
 
 Assign: Pradyot Prakash
-Status: Not started
+Status: Completed
 
-- [ ]  Name
-- [ ]  Display Image
+- [x]  Name
+- [x]  Display Image

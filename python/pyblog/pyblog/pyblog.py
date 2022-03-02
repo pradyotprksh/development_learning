@@ -2,7 +2,8 @@
 
 from firebase import Firebase
 from src import confirmation_question, get_user_email, get_user_phone_number, \
-    Constants, get_user_name, get_password, get_platform_details, get_photo_path, show_list_options
+    Constants, get_user_name, get_password, get_platform_details, get_photo_path, show_list_options, \
+    press_any_key_to_continue
 from .models import UserDetails
 
 firebase = Firebase()
@@ -115,11 +116,41 @@ def _user_edit_option():
     """
     choice = show_list_options(choices=Constants.Variables.USER_EDIT_OPTIONS)
     if choice == Constants.Variables.USER_EDIT_NAME:
+        name = get_user_name()
+        confirmation = confirmation_question(Constants.Messages.CONFIRM_CHANGE.format(
+            Constants.Messages.NAME,
+            name
+        ))
+        if confirmation:
+            firebase.update_user(platform_details=get_platform_details(), name=name)
         _profile_flow()
     elif choice == Constants.Variables.USER_EDIT_DISPLAY_IMAGE:
+        _photo_path = get_photo_path()
+        if _photo_path is not None:
+            photo_url = firebase.upload_file(path=_photo_path)
+            firebase.update_user(platform_details=get_platform_details(), photo_url=photo_url)
+        else:
+            print(Constants.Messages.SOMETHING_WENT_WRONG)
         _profile_flow()
     elif choice == Constants.Variables.BACK:
         _profile_flow()
+
+
+def _show_profile_details():
+    """
+    Show the current user profile details
+    :return: None
+    """
+    user_details = firebase.get_user_details_firestore()
+    string_user_details = Constants.Messages.USER_DETAILS.format(
+        user_details[Constants.Firebase.Keys.DISPLAY_NAME],
+        user_details[Constants.Firebase.Keys.EMAIL],
+        user_details[Constants.Firebase.Keys.PHONE_NUMBER],
+        user_details[Constants.Firebase.Keys.PHOTO_URL],
+    )
+    print(string_user_details)
+    press_any_key_to_continue(message=Constants.Messages.PRESS_TO_CONTINUE)
+    _profile_flow()
 
 
 def _profile_flow():
@@ -129,7 +160,7 @@ def _profile_flow():
     """
     choice = show_list_options(choices=Constants.Variables.USER_PROFILE_OPTION_CHOICES)
     if choice == Constants.Variables.USER_PROFILE_DETAILS:
-        pass
+        _show_profile_details()
     elif choice == Constants.Variables.USER_BLOGS:
         _user_blogs_flow()
     elif choice == Constants.Variables.USER_ACTIONS:
@@ -220,6 +251,7 @@ def _start_user_flow():
         elif choice == Constants.Variables.LOG_OUT_CHOICE:
             confirm_log_out = confirmation_question(message=Constants.Messages.LOGOUT_CONFIRMATION)
             if confirm_log_out:
+                current_user = firebase.get_current_user_details()
                 print(Constants.Messages.THANK_YOU_USER.format(
                     current_user.display_name,
                     Constants.Variables.PROJECT_NAME
