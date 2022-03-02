@@ -3,7 +3,7 @@
 from firebase import Firebase
 from src import confirmation_question, get_user_email, get_user_phone_number, \
     Constants, get_user_name, get_password, get_platform_details, get_photo_path, show_list_options, \
-    press_any_key_to_continue
+    press_any_key_to_continue, start_blog_edit
 from .models import UserDetails
 
 firebase = Firebase()
@@ -63,6 +63,13 @@ def _login_user():
         )
 
 
+def _write_blog_option(start_type):
+    if start_type == Constants.Variables.USER_BLOGS_WRITE_BLOG_DEFAULT_TEMPLATE:
+        start_blog_edit(template_path=Constants.Paths.DEFAULT_BLOG_TEMPLATE)
+    else:
+        start_blog_edit()
+
+
 def _user_write_blogs_flow():
     """
     Start current user write a blog flow
@@ -70,8 +77,10 @@ def _user_write_blogs_flow():
     """
     choice = show_list_options(choices=Constants.Variables.USER_BLOGS_WRITE_BLOG_OPTIONS)
     if choice == Constants.Variables.USER_BLOGS_WRITE_BLOG_DEFAULT_TEMPLATE:
+        _write_blog_option(start_type=Constants.Variables.USER_BLOGS_WRITE_BLOG_DEFAULT_TEMPLATE)
         _user_blogs_flow()
     elif choice == Constants.Variables.USER_BLOGS_WRITE_BLOG_JUST_WRITE:
+        _write_blog_option(start_type=Constants.Variables.USER_BLOGS_WRITE_BLOG_JUST_WRITE)
         _user_blogs_flow()
     elif choice == Constants.Variables.BACK:
         _user_blogs_flow()

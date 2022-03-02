@@ -140,20 +140,10 @@ def press_any_key_to_continue(message):
     input(message)
 
 
-def open_editor_for_blog(message):
+def start_blog_edit(template_path=None):
     """
-        Ask for search choices
-        :return: Selected choice
-        """
-    return prompt(
-        questions=[{
-            "type": Constants.Variables.EDITOR_QUESTION,
-            "name": "blog",
-            "message": message,
-            "eargs": {
-                "editor": "nano",
-                "ext": ".txt"
-            }
-        }],
-        style=style
-    )["blog"]
+    Start the blog edit process
+    :parm template_path: Path for the template blog, optional
+    """
+    print(template_path)
+    pass

@@ -44,7 +44,7 @@ class Constants:
     class Paths:
         """A constant class for paths"""
         FIREBASE_CRED_FILE_PATH = "data/confidential/serviceAccountKey.json"
-        MAIN_ICON = r"data/images/main_icon.ico"
+        DEFAULT_BLOG_TEMPLATE = "data/BLOGS_DEFAULT_TEMPLATE.md"
 
     class Variables:
         """A constant class for variables"""
