@@ -37,6 +37,28 @@ class NameValidator(Validator):
             )
 
 
+class BlogTitleValidator(Validator):
+    """Validate blog title"""
+    def validate(self, document):
+        is_okay = len(document.text) > 5
+        if not is_okay:
+            raise ValidationError(
+                message=Constants.Messages.INVALID_BLOG_TITLE,
+                cursor_position=len(document.text)
+            )
+
+
+class BlogSubTitleValidator(Validator):
+    """Validate blog subtitle"""
+    def validate(self, document):
+        is_okay = len(document.text) > 15
+        if not is_okay:
+            raise ValidationError(
+                message=Constants.Messages.INVALID_BLOG_SUBTITLE,
+                cursor_position=len(document.text)
+            )
+
+
 class PhotoValidator(Validator):
     """Validate photo"""
 

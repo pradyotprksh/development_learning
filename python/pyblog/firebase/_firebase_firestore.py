@@ -55,3 +55,33 @@ class _FirebaseFirestore:
 
         return self.firestore_db.collection(Constants.Firebase.Collections.USERS)\
             .document(uid).get().to_dict()
+
+    def get_blog_tags(self):
+        """
+        Get the tags from firestore
+        :return: Tags
+        """
+
+        return list(self.firestore_db.collection(Constants.Firebase.Collections.TAGS).get())
+
+    def upload_blog(self, blog_details):
+        """
+        Upload blog on firestore
+        :param blog_details: Blog details
+        """
+
+        full_details = {
+            Constants.Firebase.Keys.TITLE: blog_details.title,
+            Constants.Firebase.Keys.SUBTITLE: blog_details.subtitle,
+            Constants.Firebase.Keys.TAGS: blog_details.tags,
+            Constants.Firebase.Keys.EMAIL_SUBSCRIBER: blog_details.email_subscriber,
+            Constants.Firebase.Keys.BLOG: blog_details.blog,
+            Constants.Firebase.Keys.CREATED_BY: blog_details.created_by_uid,
+            Constants.Firebase.Keys.CREATED_ON: blog_details.created_on,
+            Constants.Firebase.Keys.VIEWS: blog_details.views,
+            Constants.Firebase.Keys.LIKES: blog_details.likes,
+        }
+
+        self.firestore_db \
+            .collection(Constants.Firebase.Collections.BLOGS) \
+            .document().set(full_details)

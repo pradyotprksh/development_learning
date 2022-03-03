@@ -27,3 +27,18 @@ UserDetails = namedtuple(
         "email_verified"
     ]
 )
+
+BlogDetails = namedtuple(
+    "BlogDetails",
+    [
+        "title",
+        "subtitle",
+        "tags",
+        "blog",
+        "email_subscriber",
+        "created_on",
+        "created_by_uid",
+        "views",
+        "likes"
+    ]
+)

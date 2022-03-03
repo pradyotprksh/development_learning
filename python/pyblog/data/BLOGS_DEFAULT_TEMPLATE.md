@@ -1,9 +1,0 @@
-# TITLE
-
-### SUBTITLE
-
----
-
-`WRITE YOUR BLOG FROM HERE`
-
----

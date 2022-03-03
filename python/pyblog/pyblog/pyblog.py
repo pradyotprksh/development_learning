@@ -3,8 +3,8 @@
 from firebase import Firebase
 from src import confirmation_question, get_user_email, get_user_phone_number, \
     Constants, get_user_name, get_password, get_platform_details, get_photo_path, show_list_options, \
-    press_any_key_to_continue, start_blog_edit
-from .models import UserDetails
+    press_any_key_to_continue, start_blog_edit, get_blog_initial_details, get_current_date
+from .models import UserDetails, BlogDetails
 
 firebase = Firebase()
 
@@ -63,11 +63,74 @@ def _login_user():
         )
 
 
+def _get_final_blog_data(title, subtitle, tags, blog, created_by, created_on):
+    with open(Constants.Paths.DEFAULT_BLOG_TEMPLATE, "r") as default_blog:
+        default_blog_data = default_blog.read()
+
+        tags_string = ""
+        for tag in tags:
+            tags_string = f"| {tag} | {tags_string}"
+
+        blog = default_blog_data.replace(
+            Constants.Variables.REPLACE_BLOG_TITLE, title
+        ).replace(
+            Constants.Variables.REPLACE_BLOG_SUBTITLE, subtitle
+        ).replace(
+            Constants.Variables.REPLACE_BLOG_DATA, blog
+        ).replace(
+            Constants.Variables.REPLACE_BLOG_CREATED_BY, created_by
+        ).replace(
+            Constants.Variables.REPLACE_BLOG_CREATED_ON, created_on
+        ).replace(
+            Constants.Variables.REPLACE_BLOG_TAGS, tags_string
+        )
+
+        default_blog.close()
+
+    return blog
+
+
 def _write_blog_option(start_type):
+    """
+    Start write blog option
+    :parm start_type: Start type of the blog
+    """
+    tags = firebase.get_blog_tags()
+    title, subtitle, selected_tags, email_subscriber = get_blog_initial_details(tags=tags)
+
     if start_type == Constants.Variables.USER_BLOGS_WRITE_BLOG_DEFAULT_TEMPLATE:
-        start_blog_edit(template_path=Constants.Paths.DEFAULT_BLOG_TEMPLATE)
+        blog = start_blog_edit(template_path=Constants.Paths.DEFAULT_BLOG_TEMPLATE)
     else:
-        start_blog_edit()
+        blog = start_blog_edit()
+
+    user_details = firebase.get_user_details_firestore()
+
+    created_by_uid = user_details[Constants.Firebase.Keys.USER_ID]
+    created_by_name = user_details[Constants.Firebase.Keys.DISPLAY_NAME]
+    created_on = get_current_date()
+
+    final_blog = _get_final_blog_data(
+        title=title,
+        subtitle=subtitle,
+        tags=selected_tags,
+        blog=blog,
+        created_by=created_by_name,
+        created_on=created_on
+    )
+
+    blog_details = BlogDetails(
+        title=title,
+        subtitle=subtitle,
+        tags=selected_tags,
+        email_subscriber=email_subscriber,
+        blog=final_blog,
+        created_by_uid=created_by_uid,
+        created_on=created_on,
+        views=0,
+        likes=0
+    )
+
+    firebase.upload_blog(blog_details=blog_details)
 
 
 def _user_write_blogs_flow():

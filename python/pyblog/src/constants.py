@@ -40,11 +40,20 @@ class Constants:
         WRITE_BLOG = "Please write your new blog, press enter when done"
         CONFIRM_CHANGE = "Are you sure you want to change your {} to {}"
         SOMETHING_WENT_WRONG = "Something went wrong. Please try again."
+        BLOG_TITLE_QUESTION = "Please provide the blog title"
+        BLOG_SUBTITLE_QUESTION = "Please provide the blog subtitle"
+        BLOG_TAGS_QUESTION = "Please select the blog tags"
+        BLOG_EMAIL_SUBSCRIBERS_QUESTION = "Do you want to email your subscribers about the blog?"
+        INVALID_BLOG_TITLE = "Blog title must be grater than 5 characters"
+        INVALID_BLOG_SUBTITLE = "Blog subtitle must be grater than 5 characters"
+        INVALID_CHECKBOX_SELECTION = "You must choose at least one option."
+        VIEWS = "views"
+        LIKES = "likes"
 
     class Paths:
         """A constant class for paths"""
         FIREBASE_CRED_FILE_PATH = "data/confidential/serviceAccountKey.json"
-        DEFAULT_BLOG_TEMPLATE = "data/BLOGS_DEFAULT_TEMPLATE.md"
+        DEFAULT_BLOG_TEMPLATE = "data/BLOGS_DEFAULT_TEMPLATE.txt"
 
     class Variables:
         """A constant class for variables"""
@@ -56,6 +65,7 @@ class Constants:
         EDITOR_QUESTION = "editor"
         CONFIRM_QUESTION = "confirm"
         PASSWORD_QUESTION = "password"
+        CHECKBOX_QUESTION = "checkbox"
         EMAIL_REGEX = r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)"
         # This regex is only for Indian phone number
         # Taken from https://regexpattern.com/phone-number/
@@ -63,6 +73,16 @@ class Constants:
         USER_NAME_REGEX = r"(^[a-zA-Z][a-zA-Z\s]{0,20}[a-zA-Z]$)"
         PASSWORD_REGEX = r"^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[^\w\d\s:])([^\s]){8,16}$"
         IMAGES_TYPES = ["jpg", "jpeg", "jfif", "pjpeg", "pjp", "png"]
+
+        # Default Blog
+        REPLACE_BLOG_TITLE = "###TITLE"
+        REPLACE_BLOG_SUBTITLE = "###SUBTITLE"
+        REPLACE_BLOG_DATA = "###BLOG_DATA"
+        REPLACE_BLOG_CREATED_BY = "###CREATED_BY"
+        REPLACE_BLOG_CREATED_ON = "###CREATED_ON"
+        REPLACE_BLOG_VIEWS = "###VIEWS"
+        REPLACE_BLOG_LIKES = "###LIKES"
+        REPLACE_BLOG_TAGS = "##TAGS"
 
         # Options
         BACK = "Back"
@@ -138,6 +158,8 @@ class Constants:
         class Collections:
             """A constants for only collections"""
             USERS = "users"
+            TAGS = "tags"
+            BLOGS = "blogs"
 
         class Documents:
             """A constants for only documents"""
@@ -159,3 +181,12 @@ class Constants:
             PYTHON_VERSION = "python_version"
             SYSTEM_IP_ADDRESS = "system_ip_address"
             LAST_LOGGED_IN = "last_logged_in"
+            TITLE = "title"
+            SUBTITLE = "subtitle",
+            TAGS = "tags",
+            EMAIL_SUBSCRIBER = "email_subscriber",
+            BLOG = "blog_data",
+            CREATED_BY = "created_by",
+            CREATED_ON = "created_on",
+            VIEWS = "views",
+            LIKES = "likes"

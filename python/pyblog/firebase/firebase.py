@@ -181,3 +181,23 @@ class Firebase:
                     user_details=user_details,
                     platform_details=platform_details
                 )
+
+    def get_blog_tags(self):
+        """
+        Get the tags from firestore
+        :return: Tags list
+        """
+
+        tags = self._pyblog_firestore.get_blog_tags()
+        tags_list = []
+        for tag in tags:
+            tags_list.append(tag.to_dict()[Constants.Firebase.Keys.TITLE])
+        return tags_list
+
+    def upload_blog(self, blog_details):
+        """
+        Upload blog on firestore
+        :param blog_details: Blog details
+        """
+
+        self._pyblog_firestore.upload_blog(blog_details=blog_details)

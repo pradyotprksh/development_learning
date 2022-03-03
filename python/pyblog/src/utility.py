@@ -8,6 +8,7 @@ from loguru import logger
 from pyblog import SystemDetails
 from .http_client import get_request
 from .constants import Constants
+from datetime import date
 
 
 def get_platform_details():
@@ -42,3 +43,12 @@ def get_platform_details():
         ip_address=ip_address,
         timestamp=time_stamp
     )
+
+
+def get_current_date():
+    """
+    Get the current date of format %B %d, %Y
+    :return: Current data
+    """
+    today = date.today()
+    return today.strftime("%B %d, %Y")
