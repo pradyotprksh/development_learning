@@ -3,7 +3,8 @@
 from PyInquirer import prompt, style_from_dict, Token
 from .constants import Constants
 from .validators import EmailValidator, PhoneNumberValidator, NameValidator, \
-    PasswordValidator, PhotoValidator, BlogTitleValidator, BlogSubTitleValidator
+    PasswordValidator, PhotoValidator, BlogTitleValidator, BlogSubTitleValidator, \
+    BlogTagValidator
 
 style = style_from_dict({
     Token.Separator: '#f94144',
@@ -162,10 +163,31 @@ def start_blog_edit(template_path=None):
     )["blog"]
 
 
+def ask_for_new_tags():
+    """
+    Ask for a new tag for blog
+    :return: New tag
+    """
+    return prompt(
+        questions=[{
+            "type": Constants.Variables.INPUT_QUESTION,
+            "name": "tag",
+            "message": Constants.Messages.PROVIDE_BLOG_TAG,
+            "validate": BlogTagValidator,
+        }],
+        style=style,
+    )["tag"]
+
+
+def get_blog_write_action():
+    pass
+
+
 def get_blog_initial_details(tags):
     """
     Fetch the initial details of the blog
     :parm tags: Tags for blog
+    :return: tags, title, send email to subscriber and subtitle
     """
     tag_choices = []
     for tag in tags:

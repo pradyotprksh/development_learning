@@ -3,7 +3,8 @@
 from firebase import Firebase
 from src import confirmation_question, get_user_email, get_user_phone_number, \
     Constants, get_user_name, get_password, get_platform_details, get_photo_path, show_list_options, \
-    press_any_key_to_continue, start_blog_edit, get_blog_initial_details, get_current_date
+    press_any_key_to_continue, start_blog_edit, get_blog_initial_details, get_current_date, \
+    get_current_timestamp, ask_for_new_tags
 from .models import UserDetails, BlogDetails
 
 firebase = Firebase()
@@ -98,25 +99,31 @@ def _write_blog_option(start_type):
     tags = firebase.get_blog_tags()
     title, subtitle, selected_tags, email_subscriber = get_blog_initial_details(tags=tags)
 
-    if start_type == Constants.Variables.USER_BLOGS_WRITE_BLOG_DEFAULT_TEMPLATE:
-        blog = start_blog_edit(template_path=Constants.Paths.DEFAULT_BLOG_TEMPLATE)
-    else:
-        blog = start_blog_edit()
+    if Constants.Messages.USE_A_NEW_TAG in selected_tags:
+        new_tags = list(set(ask_for_new_tags().replace(", ", ",").replace(" ,", ",").split(",")))
+        selected_tags = list(set(selected_tags + new_tags))
+        firebase.update_blog_tags(tags=selected_tags)
 
     user_details = firebase.get_user_details_firestore()
 
     created_by_uid = user_details[Constants.Firebase.Keys.USER_ID]
     created_by_name = user_details[Constants.Firebase.Keys.DISPLAY_NAME]
     created_on = get_current_date()
+    created_on_timestamp = get_current_timestamp()
 
-    final_blog = _get_final_blog_data(
-        title=title,
-        subtitle=subtitle,
-        tags=selected_tags,
-        blog=blog,
-        created_by=created_by_name,
-        created_on=created_on
-    )
+    if start_type == Constants.Variables.USER_BLOGS_WRITE_BLOG_DEFAULT_TEMPLATE:
+        blog = start_blog_edit(template_path=Constants.Paths.DEFAULT_BLOG_TEMPLATE)
+        final_blog = _get_final_blog_data(
+            title=title,
+            subtitle=subtitle,
+            tags=selected_tags,
+            blog=blog,
+            created_by=created_by_name,
+            created_on=created_on
+        )
+    else:
+        blog = start_blog_edit()
+        final_blog = blog
 
     blog_details = BlogDetails(
         title=title,
@@ -125,12 +132,18 @@ def _write_blog_option(start_type):
         email_subscriber=email_subscriber,
         blog=final_blog,
         created_by_uid=created_by_uid,
-        created_on=created_on,
+        created_on=created_on_timestamp,
         views=0,
         likes=0
     )
 
-    firebase.upload_blog(blog_details=blog_details)
+
+
+    is_upload = confirmation_question(Constants.Messages.CONFIRM_UPLOAD)
+    if is_upload:
+        firebase.upload_blog(blog_details=blog_details)
+    else:
+        pass
 
 
 def _user_write_blogs_flow():

@@ -62,7 +62,21 @@ class _FirebaseFirestore:
         :return: Tags
         """
 
-        return list(self.firestore_db.collection(Constants.Firebase.Collections.TAGS).get())
+        return self.firestore_db.collection(Constants.Firebase.Collections.BLOGS) \
+            .document(Constants.Firebase.Documents.TAGS) \
+            .get().to_dict()
+
+    def update_blog_tags(self, tags):
+        """
+        Ser the tags in the tags array
+        :return: None
+        """
+
+        self.firestore_db.collection(Constants.Firebase.Collections.BLOGS) \
+            .document(Constants.Firebase.Documents.TAGS) \
+            .set({
+                Constants.Firebase.Keys.TAGS: tags
+            })
 
     def upload_blog(self, blog_details):
         """

@@ -48,6 +48,17 @@ class BlogTitleValidator(Validator):
             )
 
 
+class BlogTagValidator(Validator):
+    """Validate blog title"""
+    def validate(self, document):
+        is_okay = len(document.text) > 3
+        if not is_okay:
+            raise ValidationError(
+                message=Constants.Messages.INVALID_BLOG_TITLE,
+                cursor_position=len(document.text)
+            )
+
+
 class BlogSubTitleValidator(Validator):
     """Validate blog subtitle"""
     def validate(self, document):

@@ -188,11 +188,15 @@ class Firebase:
         :return: Tags list
         """
 
-        tags = self._pyblog_firestore.get_blog_tags()
-        tags_list = []
-        for tag in tags:
-            tags_list.append(tag.to_dict()[Constants.Firebase.Keys.TITLE])
-        return tags_list
+        return self._pyblog_firestore.get_blog_tags()[Constants.Firebase.Keys.TAGS]
+
+    def update_blog_tags(self, tags):
+        """
+        Ser the tags in the tags array
+        :return: None
+        """
+
+        self._pyblog_firestore.update_blog_tags(tags=tags)
 
     def upload_blog(self, blog_details):
         """

@@ -6,6 +6,7 @@ class Constants:
 
     class Messages:
         """A constant class for messages"""
+        CONFIRM_UPLOAD = "Are you sure you want to upload the blog?"
         NAME = "name"
         WELCOME = "Welcome to {}"
         AUTH_TYPE_QUESTION = "Are you a new user?"
@@ -49,6 +50,9 @@ class Constants:
         INVALID_CHECKBOX_SELECTION = "You must choose at least one option."
         VIEWS = "views"
         LIKES = "likes"
+        USE_A_NEW_TAG = "Add a new tag"
+        PROVIDE_BLOG_TAG = "Please provide tag for your blog. <For multiple tags separate it with comma(,)>"
+        VALID_BLOG_TAG = "Please provide a valid tag name. For multiple separate it with comma(,)"
 
     class Paths:
         """A constant class for paths"""
@@ -118,6 +122,9 @@ class Constants:
         SEARCH_CHOICE_USERS = "Users"
         SEARCH_CHOICE_BLOG_TAGS = "By Blog Tags"
         SEARCH_CHOICE_BLOGS = "Blogs"
+        UPLOAD_FIRESTORE = "Upload Online"
+        SAVE_AS_DRAFT = "Save As A Draft"
+        DISCARD = "Discard"
 
         # Main Options
         USER_OPTION_CHOICES = [MY_PROFILE_CHOICE, BLOGS_CHOICE, SEARCH_CHOICE, LOG_OUT_CHOICE]
@@ -129,6 +136,8 @@ class Constants:
         USER_BLOGS_OPTIONS = [USER_BLOGS_SHOW_BLOGS, USER_BLOGS_WRITE_BLOG, USER_BLOGS_FAV_BLOG, BACK]
         # ----USER_BLOGS_WRITE_BLOG Options
         USER_BLOGS_WRITE_BLOG_OPTIONS = [USER_BLOGS_WRITE_BLOG_DEFAULT_TEMPLATE, USER_BLOGS_WRITE_BLOG_JUST_WRITE, BACK]
+        # ------USER_BLOGS_WRITE_ACTIONS Options
+        USER_BLOGS_WRITE_ACTIONS = [UPLOAD_FIRESTORE, SAVE_AS_DRAFT, DISCARD, BACK]
         # --USER_ACTIONS Options
         USER_ACTIONS_OPTIONS = [USER_ACTIONS_VERIFY_EMAIL_ADDRESS, USER_ACTIONS_CHANGE_PASSWORD,
                                 USER_ACTIONS_DELETE_ACCOUNT, BACK]
@@ -158,11 +167,11 @@ class Constants:
         class Collections:
             """A constants for only collections"""
             USERS = "users"
-            TAGS = "tags"
             BLOGS = "blogs"
 
         class Documents:
             """A constants for only documents"""
+            TAGS = "tags"
 
         class Keys:
             """A constants for only keys"""
@@ -182,11 +191,11 @@ class Constants:
             SYSTEM_IP_ADDRESS = "system_ip_address"
             LAST_LOGGED_IN = "last_logged_in"
             TITLE = "title"
-            SUBTITLE = "subtitle",
-            TAGS = "tags",
-            EMAIL_SUBSCRIBER = "email_subscriber",
-            BLOG = "blog_data",
-            CREATED_BY = "created_by",
-            CREATED_ON = "created_on",
-            VIEWS = "views",
+            SUBTITLE = "subtitle"
+            TAGS = "tags"
+            EMAIL_SUBSCRIBER = "email_subscriber"
+            BLOG = "blog_data"
+            CREATED_BY = "created_by"
+            CREATED_ON = "created_on"
+            VIEWS = "views"
             LIKES = "likes"

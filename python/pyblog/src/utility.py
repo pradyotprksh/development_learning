@@ -22,7 +22,7 @@ def get_platform_details():
     processor = platform.processor()
     version = platform.version()
     python_version = platform.python_version()
-    time_stamp = calendar.timegm(time.gmtime())
+    time_stamp = get_current_timestamp()
 
     try:
         ip_address = get_request(
@@ -52,3 +52,11 @@ def get_current_date():
     """
     today = date.today()
     return today.strftime("%B %d, %Y")
+
+
+def get_current_timestamp():
+    """
+    Get current timestamp
+    :return: Current Timestamp
+    """
+    return calendar.timegm(time.gmtime())
