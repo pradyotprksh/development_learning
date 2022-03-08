@@ -6,6 +6,8 @@ class Constants:
 
     class Messages:
         """A constant class for messages"""
+        BLOG_DISCARDED = "Blog \"{}\" is discarded. And not saved in our system."
+        CONFIRM_DISCARD = "Are you sure you want to discard the blog \"{}\"?"
         CONFIRM_UPLOAD = "Are you sure you want to upload the blog?"
         NAME = "name"
         WELCOME = "Welcome to {}"
@@ -199,3 +201,4 @@ class Constants:
             CREATED_ON = "created_on"
             VIEWS = "views"
             LIKES = "likes"
+            IS_DRAFT = "isDraft"

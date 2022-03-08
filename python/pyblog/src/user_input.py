@@ -179,10 +179,6 @@ def ask_for_new_tags():
     )["tag"]
 
 
-def get_blog_write_action():
-    pass
-
-
 def get_blog_initial_details(tags):
     """
     Fetch the initial details of the blog

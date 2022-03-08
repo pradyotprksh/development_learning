@@ -134,16 +134,27 @@ def _write_blog_option(start_type):
         created_by_uid=created_by_uid,
         created_on=created_on_timestamp,
         views=0,
-        likes=0
+        likes=0,
+        isDraft=False
     )
 
-
-
-    is_upload = confirmation_question(Constants.Messages.CONFIRM_UPLOAD)
-    if is_upload:
-        firebase.upload_blog(blog_details=blog_details)
-    else:
-        pass
+    upload_ask = True
+    while upload_ask:
+        blog_write_action = show_list_options(Constants.Variables.USER_BLOGS_WRITE_ACTIONS)
+        if blog_write_action == Constants.Variables.UPLOAD_FIRESTORE:
+            is_upload = confirmation_question(Constants.Messages.CONFIRM_UPLOAD)
+            if is_upload:
+                firebase.upload_blog(blog_details=blog_details)
+                upload_ask = False
+        elif blog_write_action == Constants.Variables.SAVE_AS_DRAFT:
+            blog_details.isDraft = True
+            firebase.upload_blog(blog_details=blog_details)
+            upload_ask = False
+        else:
+            is_discard = confirmation_question(Constants.Messages.CONFIRM_DISCARD.format(title))
+            if is_discard:
+                print(Constants.Messages.BLOG_DISCARDED.format(title))
+                upload_ask = False
 
 
 def _user_write_blogs_flow():

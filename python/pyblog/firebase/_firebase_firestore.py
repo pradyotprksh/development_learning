@@ -94,6 +94,7 @@ class _FirebaseFirestore:
             Constants.Firebase.Keys.CREATED_ON: blog_details.created_on,
             Constants.Firebase.Keys.VIEWS: blog_details.views,
             Constants.Firebase.Keys.LIKES: blog_details.likes,
+            Constants.Firebase.Keys.IS_DRAFT: blog_details.isDraft,
         }
 
         self.firestore_db \
