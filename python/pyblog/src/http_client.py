@@ -9,6 +9,10 @@ http = urllib3.PoolManager()
 
 
 def _custom_decoder(result):
+    """
+    Decode the http response
+    :return: Decoded response
+    """
     return namedtuple('X', result.keys())(*result.values())
 
 

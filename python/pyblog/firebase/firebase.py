@@ -6,7 +6,7 @@ import firebase_admin
 from firebase_admin import credentials, auth
 from loguru import logger
 from src import Constants
-from pyblog import UserDetails
+from pyblog import UserDetails, BlogDetails
 from ._firebase_firestore import _FirebaseFirestore
 from ._firebase_storage import _FirebaseStorage
 
@@ -205,3 +205,31 @@ class Firebase:
         """
 
         self._pyblog_firestore.upload_blog(blog_details=blog_details)
+
+    def get_current_user_blog_drafts(self):
+        """
+        Get current user blogs which are saved as draft
+        :return: Blog details
+        """
+
+        drafts_doc = self._pyblog_firestore.get_blogs(
+            is_draft=True, is_for_current_user=True, current_uid=self._current_user.uid
+        )
+
+        draft_list = []
+        for draft in drafts_doc:
+            blog_details = BlogDetails(
+                title=draft.to_dict()[Constants.Firebase.Keys.TITLE],
+                subtitle=draft.to_dict()[Constants.Firebase.Keys.SUBTITLE],
+                tags=draft.to_dict()[Constants.Firebase.Keys.TAGS],
+                blog=draft.to_dict()[Constants.Firebase.Keys.BLOG],
+                email_subscriber=draft.to_dict()[Constants.Firebase.Keys.EMAIL_SUBSCRIBER],
+                created_on=draft.to_dict()[Constants.Firebase.Keys.CREATED_ON],
+                created_by_uid=draft.to_dict()[Constants.Firebase.Keys.CREATED_BY],
+                views=draft.to_dict()[Constants.Firebase.Keys.VIEWS],
+                likes=draft.to_dict()[Constants.Firebase.Keys.LIKES],
+                isDraft=draft.to_dict()[Constants.Firebase.Keys.IS_DRAFT],
+                blog_id=draft.id
+            )
+            draft_list.append(blog_details)
+        return draft_list

@@ -39,6 +39,7 @@ class NameValidator(Validator):
 
 class BlogTitleValidator(Validator):
     """Validate blog title"""
+
     def validate(self, document):
         is_okay = len(document.text) > 5
         if not is_okay:
@@ -50,6 +51,7 @@ class BlogTitleValidator(Validator):
 
 class BlogTagValidator(Validator):
     """Validate blog title"""
+
     def validate(self, document):
         is_okay = len(document.text) > 3
         if not is_okay:
@@ -61,6 +63,7 @@ class BlogTagValidator(Validator):
 
 class BlogSubTitleValidator(Validator):
     """Validate blog subtitle"""
+
     def validate(self, document):
         is_okay = len(document.text) > 15
         if not is_okay:

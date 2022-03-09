@@ -4,10 +4,10 @@ from firebase import Firebase
 from src import confirmation_question, get_user_email, get_user_phone_number, \
     Constants, get_user_name, get_password, get_platform_details, get_photo_path, show_list_options, \
     press_any_key_to_continue, start_blog_edit, get_blog_initial_details, get_current_date, \
-    get_current_timestamp, ask_for_new_tags
+    get_current_timestamp
 from .models import UserDetails, BlogDetails
 
-firebase = Firebase()
+_firebase = Firebase()
 
 
 def _sign_up_user():
@@ -22,7 +22,7 @@ def _sign_up_user():
     password = get_password()
     _photo_path = get_photo_path()
     if _photo_path is not None:
-        photo_url = firebase.upload_file(path=_photo_path)
+        photo_url = _firebase.upload_file(path=_photo_path)
     else:
         photo_url = Constants.URLs.DEFAULT_IMAGE
 
@@ -35,7 +35,7 @@ def _sign_up_user():
         photo_url=photo_url
     )
 
-    firebase.create_user(user_details=user_details, platform_details=get_platform_details())
+    _firebase.create_user(user_details=user_details, platform_details=get_platform_details())
 
 
 def _login_user():
@@ -57,7 +57,7 @@ def _login_user():
             phone_number = get_user_phone_number()
 
     if email_address is not None or phone_number is not None:
-        firebase.login_user(
+        _firebase.login_user(
             email=email_address,
             phone_number=phone_number,
             platform_details=get_platform_details()
@@ -65,12 +65,24 @@ def _login_user():
 
 
 def _get_final_blog_data(title, subtitle, tags, blog, created_by, created_on):
+    """
+    Get the final blog details by updating the blog to the default template
+    :param title: Title of the blog
+    :param subtitle: Subtitle of the blog
+    :param tags: Tags selected for the blog
+    :param blog: Main blog string
+    :param created_by: Created by username
+    :param created_on: Created on
+    :return: Updated blog: Updated the blog on
+    """
+
     with open(Constants.Paths.DEFAULT_BLOG_TEMPLATE, "r") as default_blog:
         default_blog_data = default_blog.read()
 
         tags_string = ""
         for tag in tags:
-            tags_string = f"| {tag} | {tags_string}"
+            tags_string = f"{tag} | {tags_string}"
+        tags_string = f"| {tags_string}"
 
         blog = default_blog_data.replace(
             Constants.Variables.REPLACE_BLOG_TITLE, title
@@ -95,16 +107,17 @@ def _write_blog_option(start_type):
     """
     Start write blog option
     :parm start_type: Start type of the blog
+    :return: None
     """
-    tags = firebase.get_blog_tags()
+    tags = _firebase.get_blog_tags()
     title, subtitle, selected_tags, email_subscriber = get_blog_initial_details(tags=tags)
 
     if Constants.Messages.USE_A_NEW_TAG in selected_tags:
-        new_tags = list(set(ask_for_new_tags().replace(", ", ",").replace(" ,", ",").split(",")))
-        selected_tags = list(set(selected_tags + new_tags))
-        firebase.update_blog_tags(tags=selected_tags)
+        updated_tags = list(set(tags + selected_tags))
+        _firebase.update_blog_tags(tags=updated_tags)
+        selected_tags.remove(Constants.Messages.USE_A_NEW_TAG)
 
-    user_details = firebase.get_user_details_firestore()
+    user_details = _firebase.get_user_details_firestore()
 
     created_by_uid = user_details[Constants.Firebase.Keys.USER_ID]
     created_by_name = user_details[Constants.Firebase.Keys.DISPLAY_NAME]
@@ -112,7 +125,7 @@ def _write_blog_option(start_type):
     created_on_timestamp = get_current_timestamp()
 
     if start_type == Constants.Variables.USER_BLOGS_WRITE_BLOG_DEFAULT_TEMPLATE:
-        blog = start_blog_edit(template_path=Constants.Paths.DEFAULT_BLOG_TEMPLATE)
+        blog = start_blog_edit()
         final_blog = _get_final_blog_data(
             title=title,
             subtitle=subtitle,
@@ -125,30 +138,44 @@ def _write_blog_option(start_type):
         blog = start_blog_edit()
         final_blog = blog
 
-    blog_details = BlogDetails(
-        title=title,
-        subtitle=subtitle,
-        tags=selected_tags,
-        email_subscriber=email_subscriber,
-        blog=final_blog,
-        created_by_uid=created_by_uid,
-        created_on=created_on_timestamp,
-        views=0,
-        likes=0,
-        isDraft=False
-    )
-
     upload_ask = True
     while upload_ask:
         blog_write_action = show_list_options(Constants.Variables.USER_BLOGS_WRITE_ACTIONS)
         if blog_write_action == Constants.Variables.UPLOAD_FIRESTORE:
             is_upload = confirmation_question(Constants.Messages.CONFIRM_UPLOAD)
             if is_upload:
-                firebase.upload_blog(blog_details=blog_details)
+                blog_details = BlogDetails(
+                    title=title,
+                    subtitle=subtitle,
+                    tags=selected_tags,
+                    email_subscriber=email_subscriber,
+                    blog=final_blog,
+                    created_by_uid=created_by_uid,
+                    created_on=created_on_timestamp,
+                    views=0,
+                    likes=0,
+                    isDraft=False,
+                    blog_id=""
+                )
+                _firebase.upload_blog(blog_details=blog_details)
+                print(Constants.Messages.FIRESTORE_BLOG_UPLOAD_SUCCESS.format(title))
                 upload_ask = False
         elif blog_write_action == Constants.Variables.SAVE_AS_DRAFT:
-            blog_details.isDraft = True
-            firebase.upload_blog(blog_details=blog_details)
+            blog_details = BlogDetails(
+                title=title,
+                subtitle=subtitle,
+                tags=selected_tags,
+                email_subscriber=email_subscriber,
+                blog=blog,
+                created_by_uid=created_by_uid,
+                created_on=created_on_timestamp,
+                views=0,
+                likes=0,
+                isDraft=True,
+                blog_id=""
+            )
+            _firebase.upload_blog(blog_details=blog_details)
+            print(Constants.Messages.DRAFT_BLOG_UPLOAD_SUCCESS.format(title))
             upload_ask = False
         else:
             is_discard = confirmation_question(Constants.Messages.CONFIRM_DISCARD.format(title))
@@ -173,6 +200,16 @@ def _user_write_blogs_flow():
         _user_blogs_flow()
 
 
+def _show_user_blog_drafts():
+    """
+    Shows the list of all the blogs for the current user which are saved as draft.
+    :return: None
+    """
+    drafts = _firebase.get_current_user_blog_drafts()
+    print(drafts)
+    _user_blogs_flow()
+
+
 def _user_blogs_flow():
     """
     Start current user blogs flow
@@ -183,6 +220,8 @@ def _user_blogs_flow():
         _profile_flow()
     elif choice == Constants.Variables.USER_BLOGS_WRITE_BLOG:
         _user_write_blogs_flow()
+    elif choice == Constants.Variables.USER_BLOGS_EDIT_DRAFT_BLOG:
+        _show_user_blog_drafts()
     elif choice == Constants.Variables.USER_BLOGS_FAV_BLOG:
         _profile_flow()
     elif choice == Constants.Variables.BACK:
@@ -218,13 +257,13 @@ def _user_edit_option():
             name
         ))
         if confirmation:
-            firebase.update_user(platform_details=get_platform_details(), name=name)
+            _firebase.update_user(platform_details=get_platform_details(), name=name)
         _profile_flow()
     elif choice == Constants.Variables.USER_EDIT_DISPLAY_IMAGE:
         _photo_path = get_photo_path()
         if _photo_path is not None:
-            photo_url = firebase.upload_file(path=_photo_path)
-            firebase.update_user(platform_details=get_platform_details(), photo_url=photo_url)
+            photo_url = _firebase.upload_file(path=_photo_path)
+            _firebase.update_user(platform_details=get_platform_details(), photo_url=photo_url)
         else:
             print(Constants.Messages.SOMETHING_WENT_WRONG)
         _profile_flow()
@@ -237,7 +276,7 @@ def _show_profile_details():
     Show the current user profile details
     :return: None
     """
-    user_details = firebase.get_user_details_firestore()
+    user_details = _firebase.get_user_details_firestore()
     string_user_details = Constants.Messages.USER_DETAILS.format(
         user_details[Constants.Firebase.Keys.DISPLAY_NAME],
         user_details[Constants.Firebase.Keys.EMAIL],
@@ -330,7 +369,7 @@ def _start_user_flow():
     Start the user flow when the user is authenticated
     :return: None
     """
-    current_user = firebase.get_current_user_details()
+    current_user = _firebase.get_current_user_details()
     print(Constants.Messages.WELCOME_USER.format(
         current_user.display_name,
         Constants.Variables.PROJECT_NAME
@@ -347,13 +386,13 @@ def _start_user_flow():
         elif choice == Constants.Variables.LOG_OUT_CHOICE:
             confirm_log_out = confirmation_question(message=Constants.Messages.LOGOUT_CONFIRMATION)
             if confirm_log_out:
-                current_user = firebase.get_current_user_details()
+                current_user = _firebase.get_current_user_details()
                 print(Constants.Messages.THANK_YOU_USER.format(
                     current_user.display_name,
                     Constants.Variables.PROJECT_NAME
                 ))
                 print(Constants.Messages.SEE_YOU_AGAIN)
-                firebase.logout_user()
+                _firebase.logout_user()
                 logout = True
 
 
@@ -369,5 +408,5 @@ def initiate_user_authentication():
     else:
         _login_user()
 
-    if firebase.get_current_user_details() is not None:
+    if _firebase.get_current_user_details() is not None:
         _start_user_flow()

@@ -15,7 +15,7 @@ class _FirebaseFirestore:
         details from Firebase Firestore
         :param firebase_app: App object for the firebase admin
         """
-        self.firestore_db = firestore.client(app=firebase_app)
+        self._firestore_db = firestore.client(app=firebase_app)
 
     def update_user_details(self, uid, user_details, platform_details):
         """
@@ -42,8 +42,8 @@ class _FirebaseFirestore:
             Constants.Firebase.Keys.LAST_LOGGED_IN: platform_details.timestamp,
         }
 
-        self.firestore_db\
-            .collection(Constants.Firebase.Collections.USERS)\
+        self._firestore_db \
+            .collection(Constants.Firebase.Collections.USERS) \
             .document(uid).set(full_details)
 
     def get_current_user_details(self, uid):
@@ -53,7 +53,7 @@ class _FirebaseFirestore:
         :return: UserDetails
         """
 
-        return self.firestore_db.collection(Constants.Firebase.Collections.USERS)\
+        return self._firestore_db.collection(Constants.Firebase.Collections.USERS) \
             .document(uid).get().to_dict()
 
     def get_blog_tags(self):
@@ -62,7 +62,7 @@ class _FirebaseFirestore:
         :return: Tags
         """
 
-        return self.firestore_db.collection(Constants.Firebase.Collections.BLOGS) \
+        return self._firestore_db.collection(Constants.Firebase.Collections.BLOGS) \
             .document(Constants.Firebase.Documents.TAGS) \
             .get().to_dict()
 
@@ -72,7 +72,7 @@ class _FirebaseFirestore:
         :return: None
         """
 
-        self.firestore_db.collection(Constants.Firebase.Collections.BLOGS) \
+        self._firestore_db.collection(Constants.Firebase.Collections.TAGS) \
             .document(Constants.Firebase.Documents.TAGS) \
             .set({
                 Constants.Firebase.Keys.TAGS: tags
@@ -82,6 +82,7 @@ class _FirebaseFirestore:
         """
         Upload blog on firestore
         :param blog_details: Blog details
+        :return: None
         """
 
         full_details = {
@@ -97,6 +98,43 @@ class _FirebaseFirestore:
             Constants.Firebase.Keys.IS_DRAFT: blog_details.isDraft,
         }
 
-        self.firestore_db \
+        self._firestore_db \
             .collection(Constants.Firebase.Collections.BLOGS) \
             .document().set(full_details)
+
+    def get_blogs(self, is_draft=False, is_for_current_user=False, current_uid=None):
+        """
+        Get blogs from firestore
+        :param is_draft: Get only drafts. Default is False
+        :param is_for_current_user: Get only current user blogs. Default is False
+        :param current_uid: current user id. Default is None.
+        """
+
+        if is_draft and is_for_current_user:
+            blog_collection = self._firestore_db.collection(Constants.Firebase.Collections.BLOGS) \
+                .where(
+                    Constants.Firebase.Keys.IS_DRAFT,
+                    Constants.Firebase.Operators.IS_EQUAL,
+                    is_draft
+                )\
+                .where(
+                    Constants.Firebase.Keys.CREATED_BY,
+                    Constants.Firebase.Operators.IS_EQUAL,
+                    current_uid
+                )
+        elif is_for_current_user:
+            blog_collection = self._firestore_db.collection(Constants.Firebase.Collections.BLOGS) \
+                .where(
+                    Constants.Firebase.Keys.CREATED_BY,
+                    Constants.Firebase.Operators.IS_EQUAL,
+                    current_uid
+                )
+        else:
+            blog_collection = self._firestore_db.collection(Constants.Firebase.Collections.BLOGS) \
+                .where(
+                    Constants.Firebase.Keys.IS_DRAFT,
+                    Constants.Firebase.Operators.IS_EQUAL,
+                    is_draft
+                )
+
+        return blog_collection.stream()

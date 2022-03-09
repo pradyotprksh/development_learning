@@ -141,14 +141,11 @@ def press_any_key_to_continue(message):
     input(message)
 
 
-def start_blog_edit(template_path=None):
+def start_blog_edit():
     """
     Start the blog edit process
-    :parm template_path: Path for the template blog, optional
     :return: Written blog
     """
-    if template_path is not None:
-        pass
     return prompt(
         questions=[{
             "type": Constants.Variables.EDITOR_QUESTION,
@@ -157,6 +154,27 @@ def start_blog_edit(template_path=None):
             "eargs": {
                 "editor": "nano",
                 "ext": ".txt"
+            }
+        }],
+        style=style
+    )["blog"]
+
+
+def edit_written_blog(filename):
+    """
+    Edit the existing blog
+    :param filename: File to be edited
+    :return: Edited blog
+    """
+    return prompt(
+        questions=[{
+            "type": Constants.Variables.EDITOR_QUESTION,
+            "name": "blog",
+            "message": Constants.Messages.WRITE_BLOG,
+            "eargs": {
+                "editor": "nano",
+                "ext": ".txt",
+                "filename": filename
             }
         }],
         style=style
@@ -222,6 +240,10 @@ def get_blog_initial_details(tags):
         }],
         style=style,
     )["selected_tags"]
+
+    if Constants.Messages.USE_A_NEW_TAG in selected_tags:
+        new_tags = list(set(ask_for_new_tags().replace(", ", ",").replace(" ,", ",").split(",")))
+        selected_tags = list(set(selected_tags + new_tags))
 
     email_subscriber = confirmation_question(Constants.Messages.BLOG_EMAIL_SUBSCRIBERS_QUESTION)
 

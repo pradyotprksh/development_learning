@@ -40,6 +40,7 @@ BlogDetails = namedtuple(
         "created_by_uid",
         "views",
         "likes",
-        "isDraft"
+        "isDraft",
+        "blog_id"
     ]
 )

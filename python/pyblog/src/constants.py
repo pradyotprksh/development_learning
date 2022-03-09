@@ -6,6 +6,8 @@ class Constants:
 
     class Messages:
         """A constant class for messages"""
+        DRAFT_BLOG_UPLOAD_SUCCESS = "Your blog \"{}\" is saved as a draft."
+        FIRESTORE_BLOG_UPLOAD_SUCCESS = "Your blog \"{}\" is available online for others to read."
         BLOG_DISCARDED = "Blog \"{}\" is discarded. And not saved in our system."
         CONFIRM_DISCARD = "Are you sure you want to discard the blog \"{}\"?"
         CONFIRM_UPLOAD = "Are you sure you want to upload the blog?"
@@ -106,6 +108,7 @@ class Constants:
         USER_SUBSCRIBER = "My Subscribers"
         USER_BLOGS_SHOW_BLOGS = "Show All My Blogs"
         USER_BLOGS_WRITE_BLOG = "Write A New Blog"
+        USER_BLOGS_EDIT_DRAFT_BLOG = "See Your Drafts"
         USER_BLOGS_FAV_BLOG = "My Favourite Blogs"
         USER_ACTIONS_VERIFY_EMAIL_ADDRESS = "Verify My Email Address"
         USER_ACTIONS_CHANGE_PASSWORD = "Change My Password"
@@ -127,6 +130,7 @@ class Constants:
         UPLOAD_FIRESTORE = "Upload Online"
         SAVE_AS_DRAFT = "Save As A Draft"
         DISCARD = "Discard"
+        EDIT = "Edit"
 
         # Main Options
         USER_OPTION_CHOICES = [MY_PROFILE_CHOICE, BLOGS_CHOICE, SEARCH_CHOICE, LOG_OUT_CHOICE]
@@ -135,11 +139,14 @@ class Constants:
         USER_PROFILE_OPTION_CHOICES = [USER_PROFILE_DETAILS, USER_ACTIONS, USER_EDIT, USER_FOLLOWERS,
                                        USER_FOLLOWING, USER_SUBSCRIBED, USER_SUBSCRIBER, USER_BLOGS, BACK]
         # --USER_BLOGS Options
-        USER_BLOGS_OPTIONS = [USER_BLOGS_SHOW_BLOGS, USER_BLOGS_WRITE_BLOG, USER_BLOGS_FAV_BLOG, BACK]
+        USER_BLOGS_OPTIONS = [USER_BLOGS_SHOW_BLOGS, USER_BLOGS_WRITE_BLOG, USER_BLOGS_EDIT_DRAFT_BLOG,
+                              USER_BLOGS_FAV_BLOG, BACK]
         # ----USER_BLOGS_WRITE_BLOG Options
         USER_BLOGS_WRITE_BLOG_OPTIONS = [USER_BLOGS_WRITE_BLOG_DEFAULT_TEMPLATE, USER_BLOGS_WRITE_BLOG_JUST_WRITE, BACK]
         # ------USER_BLOGS_WRITE_ACTIONS Options
         USER_BLOGS_WRITE_ACTIONS = [UPLOAD_FIRESTORE, SAVE_AS_DRAFT, DISCARD, BACK]
+        # ----USER_BLOGS_EDIT_DRAFT_BLOG Options
+        USER_BLOGS_EDIT_DRAFT_BLOG_OPTIONS = [EDIT, DISCARD, BACK]
         # --USER_ACTIONS Options
         USER_ACTIONS_OPTIONS = [USER_ACTIONS_VERIFY_EMAIL_ADDRESS, USER_ACTIONS_CHANGE_PASSWORD,
                                 USER_ACTIONS_DELETE_ACCOUNT, BACK]
@@ -170,6 +177,7 @@ class Constants:
             """A constants for only collections"""
             USERS = "users"
             BLOGS = "blogs"
+            TAGS = "tags"
 
         class Documents:
             """A constants for only documents"""
@@ -202,3 +210,7 @@ class Constants:
             VIEWS = "views"
             LIKES = "likes"
             IS_DRAFT = "isDraft"
+
+        class Operators:
+            """A constants for operators"""
+            IS_EQUAL = "=="
