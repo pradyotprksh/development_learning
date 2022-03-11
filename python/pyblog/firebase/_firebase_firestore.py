@@ -162,3 +162,13 @@ class _FirebaseFirestore:
         self._firestore_db \
             .collection(Constants.Firebase.Collections.BLOGS) \
             .document(document_id).set(full_details)
+
+    def delete_blog(self, document_id):
+        """
+        Delete the blog
+        :param document_id: Id of the blog to be deleted
+        """
+
+        self._firestore_db \
+            .collection(Constants.Firebase.Collections.BLOGS) \
+            .document(document_id).delete()

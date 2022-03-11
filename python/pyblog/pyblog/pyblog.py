@@ -15,6 +15,7 @@ def _sign_up_user():
     :return: None
     """
 
+    # Get all user details
     name = _user_input.get_user_name()
     email_address = _user_input.get_user_email()
     phone_number = _user_input.get_user_phone_number()
@@ -25,6 +26,7 @@ def _sign_up_user():
     else:
         photo_url = Constants.URLs.DEFAULT_IMAGE
 
+    # Create user details object
     user_details = UserDetails(
         display_name=name,
         email=email_address,
@@ -34,6 +36,7 @@ def _sign_up_user():
         photo_url=photo_url
     )
 
+    # Upload user details to firestore
     _firebase.create_user(user_details=user_details, platform_details=get_platform_details())
 
 
@@ -205,12 +208,6 @@ def _edit_selected_draft(draft):
     :param draft: Draft to be edited
     """
     print(Constants.Messages.EDITING_DRAFT_BLOG.format(draft.title))
-    edit_title = _user_input.confirmation_question(Constants.Messages.CONFIRM_EDIT_BLOG_TITLE)
-    edit_subtitle = _user_input.confirmation_question(Constants.Messages.CONFIRM_EDIT_BLOG_SUBTITLE)
-    edit_tags = _user_input.confirmation_question(Constants.Messages.CONFIRM_EDIT_BLOG_TAGS)
-    edit_blog = _user_input.confirmation_question(Constants.Messages.CONFIRM_EDIT_BLOG_BLOG)
-    edit_email_subscriber = _user_input.confirmation_question(Constants.Messages.CONFIRM_EDIT_BLOG_EMAIL_SUBSCRIBER)
-    edit_is_draft = _user_input.confirmation_question(Constants.Messages.CONFIRM_EDIT_BLOG_IS_DRAFT)
 
     new_title = draft.title
     new_subtitle = draft.subtitle
@@ -219,10 +216,15 @@ def _edit_selected_draft(draft):
     new_edit_blog = draft.blog
     new_is_draft = draft.isDraft
 
+    edit_title = _user_input.confirmation_question(Constants.Messages.CONFIRM_EDIT_BLOG_TITLE)
     if edit_title:
         new_title = _user_input.get_blog_title()
+
+    edit_subtitle = _user_input.confirmation_question(Constants.Messages.CONFIRM_EDIT_BLOG_SUBTITLE)
     if edit_subtitle:
         new_subtitle = _user_input.get_blog_subtitle()
+
+    edit_tags = _user_input.confirmation_question(Constants.Messages.CONFIRM_EDIT_BLOG_TAGS)
     if edit_tags:
         tags = _firebase.get_blog_tags()
         new_tags = _user_input.get_selected_tags(
@@ -234,16 +236,22 @@ def _edit_selected_draft(draft):
             updated_tags = list(set(tags + new_tags))
             _firebase.update_blog_tags(tags=updated_tags)
             new_tags.remove(Constants.Messages.USE_A_NEW_TAG)
+
+    edit_email_subscriber = _user_input.confirmation_question(Constants.Messages.CONFIRM_EDIT_BLOG_EMAIL_SUBSCRIBER)
     if edit_email_subscriber:
         new_email_subscriber = _user_input.confirmation_question(
             Constants.Messages.BLOG_EMAIL_SUBSCRIBERS_QUESTION
         )
+
+    edit_blog = _user_input.confirmation_question(Constants.Messages.CONFIRM_EDIT_BLOG_BLOG)
     if edit_blog:
         with open(Constants.Paths.EDIT_BLOG, "w") as new_blog:
             new_blog.write(draft.blog)
         _user_input.edit_written_blog(filename=Constants.Paths.EDIT_BLOG)
         with open(Constants.Paths.EDIT_BLOG, "r") as new_blog:
             new_edit_blog = new_blog.read()
+
+    edit_is_draft = _user_input.confirmation_question(Constants.Messages.CONFIRM_EDIT_BLOG_IS_DRAFT)
     if edit_is_draft:
         new_is_draft = edit_is_draft
 
@@ -309,6 +317,11 @@ def _show_user_blog_drafts():
         if draft_choice is Constants.Variables.EDIT:
             _edit_selected_draft(draft=selected_draft)
         elif draft_choice is Constants.Variables.DISCARD:
+            confirm_delete = _user_input.confirmation_question(
+                Constants.Messages.CONFIRM_DELETE_BLOG.format(selected_draft.title)
+            )
+            if confirm_delete:
+                _firebase.delete_blog(document_id=selected_draft.blog_id)
             _user_blogs_flow()
         else:
             _show_user_blog_drafts()
@@ -506,11 +519,13 @@ def initiate_user_authentication():
     :return: None
     """
 
+    # Ask for authentication type
     auth_type = _user_input.confirmation_question(message=Constants.Messages.AUTH_TYPE_QUESTION)
     if auth_type:
         _sign_up_user()
     else:
         _login_user()
 
+    # Check if user details is available after authentication
     if _firebase.get_current_user_details() is not None:
         _show_user_blog_drafts()

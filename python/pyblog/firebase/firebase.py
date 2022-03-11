@@ -237,3 +237,11 @@ class Firebase:
             )
             draft_list.append(blog_details)
         return draft_list
+
+    def delete_blog(self, document_id):
+        """
+        Delete the blog
+        :param document_id: Id of the blog to be deleted
+        """
+
+        self._pyblog_firestore.delete_blog(document_id=document_id)

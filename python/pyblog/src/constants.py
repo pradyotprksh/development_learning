@@ -6,6 +6,7 @@ class Constants:
 
     class Messages:
         """A constant class for messages"""
+        CONFIRM_DELETE_BLOG = "Are you sure you want to delete \"{}\"?"
         CONFIRM_EDIT_BLOG_IS_DRAFT = "Do you want to publish the blog?"
         CONFIRM_EDIT_BLOG_EMAIL_SUBSCRIBER = "Do you want to change the email the subscriber settings?"
         CONFIRM_EDIT_BLOG_BLOG = "Do you want to edit the content of blog?"
