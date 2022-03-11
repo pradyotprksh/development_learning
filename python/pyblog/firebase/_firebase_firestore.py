@@ -62,7 +62,7 @@ class _FirebaseFirestore:
         :return: Tags
         """
 
-        return self._firestore_db.collection(Constants.Firebase.Collections.BLOGS) \
+        return self._firestore_db.collection(Constants.Firebase.Collections.TAGS) \
             .document(Constants.Firebase.Documents.TAGS) \
             .get().to_dict()
 
@@ -138,3 +138,27 @@ class _FirebaseFirestore:
                 )
 
         return blog_collection.stream()
+
+    def update_blogs(self, blog_details, document_id):
+        """
+        Update the blog
+        :param blog_details: Updated blog details
+        :param document_id: Id of the blog to be updated
+        """
+
+        full_details = {
+            Constants.Firebase.Keys.TITLE: blog_details.title,
+            Constants.Firebase.Keys.SUBTITLE: blog_details.subtitle,
+            Constants.Firebase.Keys.TAGS: blog_details.tags,
+            Constants.Firebase.Keys.EMAIL_SUBSCRIBER: blog_details.email_subscriber,
+            Constants.Firebase.Keys.BLOG: blog_details.blog,
+            Constants.Firebase.Keys.CREATED_BY: blog_details.created_by_uid,
+            Constants.Firebase.Keys.CREATED_ON: blog_details.created_on,
+            Constants.Firebase.Keys.VIEWS: blog_details.views,
+            Constants.Firebase.Keys.LIKES: blog_details.likes,
+            Constants.Firebase.Keys.IS_DRAFT: blog_details.isDraft,
+        }
+
+        self._firestore_db \
+            .collection(Constants.Firebase.Collections.BLOGS) \
+            .document(document_id).set(full_details)

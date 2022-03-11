@@ -8,7 +8,7 @@
 
 ------------------------------------------------
 
-###CREATED_BY on ###CREATED_ON
-###VIEWS ###LIKES
+uploaded by ###CREATED_BY on ###CREATED_ON
+Views:###VIEWS Likes:###LIKES
 
 ##TAGS

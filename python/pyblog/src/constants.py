@@ -6,6 +6,12 @@ class Constants:
 
     class Messages:
         """A constant class for messages"""
+        CONFIRM_EDIT_BLOG_IS_DRAFT = "Do you want to publish the blog?"
+        CONFIRM_EDIT_BLOG_EMAIL_SUBSCRIBER = "Do you want to change the email the subscriber settings?"
+        CONFIRM_EDIT_BLOG_BLOG = "Do you want to edit the content of blog?"
+        CONFIRM_EDIT_BLOG_TAGS = "Do you want to change the blog tags?"
+        CONFIRM_EDIT_BLOG_SUBTITLE = "Do you want to change blog subtitle?"
+        CONFIRM_EDIT_BLOG_TITLE = "Do you want to change blog title?"
         DRAFT_BLOG_UPLOAD_SUCCESS = "Your blog \"{}\" is saved as a draft."
         FIRESTORE_BLOG_UPLOAD_SUCCESS = "Your blog \"{}\" is available online for others to read."
         BLOG_DISCARDED = "Blog \"{}\" is discarded. And not saved in our system."
@@ -57,11 +63,13 @@ class Constants:
         USE_A_NEW_TAG = "Add a new tag"
         PROVIDE_BLOG_TAG = "Please provide tag for your blog. <For multiple tags separate it with comma(,)>"
         VALID_BLOG_TAG = "Please provide a valid tag name. For multiple separate it with comma(,)"
+        EDITING_DRAFT_BLOG = "You are going to edit your draft titled \"{}\""
 
     class Paths:
         """A constant class for paths"""
         FIREBASE_CRED_FILE_PATH = "data/confidential/serviceAccountKey.json"
         DEFAULT_BLOG_TEMPLATE = "data/BLOGS_DEFAULT_TEMPLATE.txt"
+        EDIT_BLOG = "data/EDIT_BLOG.txt"
 
     class Variables:
         """A constant class for variables"""

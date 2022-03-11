@@ -198,18 +198,22 @@ class Firebase:
 
         self._pyblog_firestore.update_blog_tags(tags=tags)
 
-    def upload_blog(self, blog_details):
+    def upload_blog(self, blog_details, document_id=None):
         """
         Upload blog on firestore
         :param blog_details: Blog details
+        :param document_id: Blog document to be edited, None by default
         """
 
-        self._pyblog_firestore.upload_blog(blog_details=blog_details)
+        if document_id is None:
+            self._pyblog_firestore.update_blogs(blog_details=blog_details, document_id=document_id)
+        else:
+            self._pyblog_firestore.upload_blog(blog_details=blog_details)
 
     def get_current_user_blog_drafts(self):
         """
         Get current user blogs which are saved as draft
-        :return: Blog details
+        :return: List of Blog details
         """
 
         drafts_doc = self._pyblog_firestore.get_blogs(
