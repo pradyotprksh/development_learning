@@ -1,0 +1,25 @@
+on:
+  push:
+    branches:
+      - master
+concurrency:
+  group: ${{ github.ref }}
+  cancel-in-progress: true
+name: Checking Flublog
+jobs:
+  flublog:
+    name: flublog Code Checker
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-java@v1
+        with:
+          java-version: '12.x'
+      - uses: subosito/flutter-action@v1
+      - run: flutter doctor
+      - name: Checking flublog
+        working-directory: ./flutter/flublog
+        run: |
+          flutter clean
+          flutter pub get
+          flutter analyze
