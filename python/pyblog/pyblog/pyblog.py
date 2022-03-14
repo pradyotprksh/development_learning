@@ -2,7 +2,7 @@
 
 from firebase import Firebase
 from src import Constants, UserInput, get_current_date, get_current_timestamp, \
-    get_platform_details
+    get_platform_details, get_date_from_timestamp
 from .models import UserDetails, BlogDetails
 
 _firebase = Firebase()
@@ -327,6 +327,59 @@ def _show_user_blog_drafts():
             _show_user_blog_drafts()
 
 
+def _get_final_blog_to_show(blog_details):
+    """
+    Get final blog details to be shown
+    :param blog_details: Details of the blog
+    :return: Blog
+    """
+
+    final_blog = blog_details.blog
+
+    if Constants.Variables.REPLACE_BLOG_VIEWS not in final_blog or \
+            Constants.Variables.REPLACE_BLOG_LIKES not in final_blog:
+        current_user = _firebase.get_current_user_details()
+        final_blog = _get_final_blog_data(
+            title=blog_details.title, subtitle=blog_details.subtitle, tags=blog_details.tags,
+            blog=final_blog, created_by=current_user.display_name,
+            created_on=get_date_from_timestamp(blog_details.created_on)
+        )
+
+    final_blog = final_blog.replace(
+        Constants.Variables.REPLACE_BLOG_VIEWS,
+        f"{blog_details.views}"
+    ).replace(
+        Constants.Variables.REPLACE_BLOG_LIKES,
+        f"{blog_details.likes}"
+    )
+
+    return final_blog
+
+
+def _show_user_blog_all():
+    """
+    Get all blog for the current user
+    :return: None
+    """
+
+    current_blogs = _firebase.get_current_user_blogs()
+    only_titles = []
+    for blog in current_blogs:
+        only_titles.append(blog.title)
+    only_titles.append(Constants.Variables.BACK)
+    choice = _user_input.show_list_options(choices=only_titles)
+    if choice is Constants.Variables.BACK:
+        _user_blogs_flow()
+    else:
+        selected_title_index = only_titles.index(choice)
+        selected_blog = current_blogs[selected_title_index]
+
+        final_blog = _get_final_blog_to_show(blog_details=selected_blog)
+        print(final_blog.__str__())
+
+        _user_input.press_any_key_to_continue(message=Constants.Messages.PRESS_TO_CONTINUE)
+
+
 def _user_blogs_flow():
     """
     Start current user blogs flow
@@ -334,7 +387,8 @@ def _user_blogs_flow():
     """
     choice = _user_input.show_list_options(choices=Constants.Variables.USER_BLOGS_OPTIONS)
     if choice == Constants.Variables.USER_BLOGS_SHOW_BLOGS:
-        _profile_flow()
+        _show_user_blog_all()
+        _user_blogs_flow()
     elif choice == Constants.Variables.USER_BLOGS_WRITE_BLOG:
         _user_write_blogs_flow()
     elif choice == Constants.Variables.USER_BLOGS_EDIT_DRAFT_BLOG:
@@ -528,4 +582,4 @@ def initiate_user_authentication():
 
     # Check if user details is available after authentication
     if _firebase.get_current_user_details() is not None:
-        _show_user_blog_drafts()
+        _start_user_flow()

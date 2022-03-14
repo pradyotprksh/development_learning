@@ -60,3 +60,13 @@ def get_current_timestamp():
     :return: Current Timestamp
     """
     return calendar.timegm(time.gmtime())
+
+
+def get_date_from_timestamp(timestamp):
+    """
+    Get date from the passed timestamp
+    :param timestamp: Timestamp to be converted
+    :return: Date from the time stamp
+    """
+
+    return time.ctime(timestamp).format("%B %d, %Y")

@@ -213,7 +213,7 @@ class Firebase:
     def get_current_user_blog_drafts(self):
         """
         Get current user blogs which are saved as draft
-        :return: List of Blog details
+        :return: List of Draft Blog details
         """
 
         drafts_doc = self._pyblog_firestore.get_blogs(
@@ -237,6 +237,34 @@ class Firebase:
             )
             draft_list.append(blog_details)
         return draft_list
+
+    def get_current_user_blogs(self):
+        """
+        Get current user blogs
+        :return: List of Blog Details
+        """
+
+        blogs_doc = self._pyblog_firestore.get_blogs(
+            is_for_current_user=True, current_uid=self._current_user.uid
+        )
+
+        blogs_list = []
+        for blog in blogs_doc:
+            blog_details = BlogDetails(
+                title=blog.to_dict()[Constants.Firebase.Keys.TITLE],
+                subtitle=blog.to_dict()[Constants.Firebase.Keys.SUBTITLE],
+                tags=blog.to_dict()[Constants.Firebase.Keys.TAGS],
+                blog=blog.to_dict()[Constants.Firebase.Keys.BLOG],
+                email_subscriber=blog.to_dict()[Constants.Firebase.Keys.EMAIL_SUBSCRIBER],
+                created_on=blog.to_dict()[Constants.Firebase.Keys.CREATED_ON],
+                created_by_uid=blog.to_dict()[Constants.Firebase.Keys.CREATED_BY],
+                views=blog.to_dict()[Constants.Firebase.Keys.VIEWS],
+                likes=blog.to_dict()[Constants.Firebase.Keys.LIKES],
+                isDraft=blog.to_dict()[Constants.Firebase.Keys.IS_DRAFT],
+                blog_id=blog.id
+            )
+            blogs_list.append(blog_details)
+        return blogs_list
 
     def delete_blog(self, document_id):
         """

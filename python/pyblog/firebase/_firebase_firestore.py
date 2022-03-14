@@ -128,6 +128,11 @@ class _FirebaseFirestore:
                     Constants.Firebase.Keys.CREATED_BY,
                     Constants.Firebase.Operators.IS_EQUAL,
                     current_uid
+                )\
+                .where(
+                    Constants.Firebase.Keys.IS_DRAFT,
+                    Constants.Firebase.Operators.IS_EQUAL,
+                    False
                 )
         else:
             blog_collection = self._firestore_db.collection(Constants.Firebase.Collections.BLOGS) \
