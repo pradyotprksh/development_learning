@@ -54,6 +54,8 @@ dependencies:
 
   intl: ^0.17.0
 
+  rive: ^0.8.1
+
   share_plus: ^3.1.0
 
 dev_dependencies:
