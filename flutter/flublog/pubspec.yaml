@@ -21,6 +21,8 @@ dependencies:
 
   device_info_plus: ^3.2.2
 
+  enum_to_string: ^2.0.1
+
   firebase_analytics: ^9.1.2
 
   firebase_auth: ^3.3.11

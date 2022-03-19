@@ -1,8 +1,6 @@
 import 'package:flublog/app/app.dart';
 import 'package:flublog/domain/domain.dart';
-import 'package:flutter/foundation.dart' as foundation;
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 /// The entry point of the application
@@ -28,6 +26,11 @@ Future<void> _startServices() async {
   Get.find<FirebaseService>().implementFirebaseCrashlytics();
 }
 
+/// Local log writer for the [GetMaterialApp].
+///
+/// [message] contains the details to be shown
+///
+/// [isError] tells if the message is a error or not.
 void localLogWriter(String message, {bool isError = false}) {
   if (isError) {
     Utility.printELog(message);
@@ -42,19 +45,26 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp,
-      DeviceOrientation.portraitDown,
-    ]);
+    ApplicationDetails.setApplicationOrientation();
 
     return GetMaterialApp(
       title: StringConstants.appName,
       debugShowCheckedModeBanner:
-          foundation.kDebugMode || foundation.kProfileMode,
+          ApplicationDetails.isDebugMode || ApplicationDetails.isProfileMode,
+
       navigatorObservers:
           Get.find<FirebaseService>().getFirebaseNavigatorObservers(),
+
       themeMode: ThemeMode.system,
-      enableLog: foundation.kDebugMode || foundation.kProfileMode,
+      // TODO: Change "material" from hardcoded to local fetch
+      theme: ApplicationTheme.getTheme(ThemeMode.light, "material"),
+      darkTheme: ApplicationTheme.getTheme(ThemeMode.dark, "material"),
+      highContrastTheme: ApplicationTheme.getTheme(ThemeMode.light, "material"),
+      highContrastDarkTheme:
+          ApplicationTheme.getTheme(ThemeMode.dark, "material"),
+
+      enableLog:
+          ApplicationDetails.isDebugMode || ApplicationDetails.isProfileMode,
       logWriterCallback: localLogWriter,
     );
   }
