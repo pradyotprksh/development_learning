@@ -1,4 +1,3 @@
-import 'package:flublog/app/app.dart';
 import 'package:flublog/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart' as intl;
