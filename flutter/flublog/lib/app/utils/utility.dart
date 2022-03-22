@@ -1,4 +1,5 @@
 import 'package:flublog/app/app.dart';
+import 'package:flublog/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart' as intl;
 import 'package:logger/logger.dart';
@@ -18,20 +19,20 @@ abstract class Utility {
   ///
   /// [message] : The message which needed to be print.
   static void printDLog(String message) {
-    Logger().d('${StringConstants.appName} $message');
+    Logger().d('${Constants.appName} $message');
   }
 
   /// Print info log.
   ///
   /// [message] : The message which needed to be print.
   static void printILog(String message) {
-    Logger().i('${StringConstants.appName} $message');
+    Logger().i('${Constants.appName} $message');
   }
 
   /// Print error log.
   ///
   /// [message] : The message which needed to be print.
   static void printELog(String message) {
-    Logger().e('${StringConstants.appName} $message');
+    Logger().e('${Constants.appName} $message');
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flublog/app/app.dart';
+import 'package:flublog/constants.dart';
 import 'package:flublog/domain/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -17,13 +18,16 @@ void main() async {
 
 /// Initializing all the services for the application.
 void _initializeServices() {
-  Get.put<FirebaseService>(FirebaseServiceImplementation());
+  Get
+    ..put<FirebaseService>(FirebaseServiceImplementation())
+    ..put<DBService>(DBServiceImplementation());
 }
 
 /// Starting all the required services before application gets loaded.
 Future<void> _startServices() async {
   await Get.find<FirebaseService>().initializeFirebaseApp();
   Get.find<FirebaseService>().implementFirebaseCrashlytics();
+  await Get.putAsync<void>(() => Get.find<DBService>().initializeService());
 }
 
 /// Local log writer for the [GetMaterialApp].
@@ -48,7 +52,7 @@ class MyApp extends StatelessWidget {
     ApplicationDetails.setApplicationOrientation();
 
     return GetMaterialApp(
-      title: StringConstants.appName,
+      title: Constants.appName,
       debugShowCheckedModeBanner:
           ApplicationDetails.isDebugMode || ApplicationDetails.isProfileMode,
 
