@@ -1,20 +1,37 @@
 # Result
-# S WA 🚫
+# S ✅ TLE
+
+import math
+
+
+def _get_num_to_add(n):
+    if n < 10:
+        return n
+    s = 0
+    log_n = math.floor(math.log(n, 10) + 1)
+    while log_n > 0:
+        s += n % 10
+        n //= 10
+        log_n -= 1
+    return _get_num_to_add(s)
+
 
 def challenge_nine(n):
-    nine_divisible = set()
-    for i in range(1, 10):
-        num_1 = int(f"{i}{n}")
-        num_2 = int(f"{n}{i}")
+    num_to_add = (9 - _get_num_to_add(n)).__str__()
 
-        if num_1 % 9 == 0:
-            nine_divisible.add(num_1)
-        if num_2 % 9 == 0:
-            nine_divisible.add(num_2)
+    divisible_by_nine = set()
 
-    list_nine_divisible = list(nine_divisible)
-    list_nine_divisible.sort()
-    return list_nine_divisible[0]
+    for i in reversed(range(0, len(n.__str__()) + 1)):
+        if num_to_add == "0" and i == 0:
+            break
+        n_list = list(n.__str__())
+        n_list.insert(i, num_to_add)
+        divisible_by_nine.add(int("".join(n_list)))
+
+    divisible_by_nine_list = list(divisible_by_nine)
+    divisible_by_nine_list.sort()
+
+    return divisible_by_nine_list[0]
 
 
 test_cases = int(input())
