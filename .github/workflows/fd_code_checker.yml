@@ -36,6 +36,5 @@ jobs:
         working-directory: ./dart/stackexchange_api
         run: |
           dart pub get
-          dart format --output=none --set-exit-if-changed .
           dart analyze
           dart pub publish --dry-run
