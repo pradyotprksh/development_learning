@@ -34,7 +34,7 @@ linter:
   # producing the lint.
   rules:
     avoid_print: true
-    prefer_single_quotes: false
+    prefer_double_quotes: true
 
 # Additional information about this file can be found at
 # https://dart.dev/guides/language/analysis-options
