@@ -5,7 +5,7 @@ on:
 concurrency:
   group: ${{ github.ref }}
   cancel-in-progress: true
-name: Checking Flublog
+name: Flutter/Dart Projects
 jobs:
   flublog:
     name: flublog Code Checker
