@@ -43,3 +43,7 @@ Like for email, password strength, etc.
 And after few searching found https://regex101.com to check my expressions and also find examples as well. I got what I 
 needed from this site and everything works as expected by me 😅.
 
+## GitHub Actions [WIP]
+
+https://github.com/marketplace/actions/setup-python
+

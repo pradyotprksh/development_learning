@@ -31,11 +31,11 @@ jobs:
       - uses: actions/setup-java@v1
         with:
           java-version: '12.x'
-      - uses: subosito/flutter-action@v1
-      - run: flutter doctor
+      - uses: dart-lang/setup-dart@v1
       - name: Checking stackexchange_api
         working-directory: ./dart/stackexchange_api
         run: |
-          flutter clean
-          flutter pub get
-          flutter analyze
+          dart pub get
+          dart format --output=none --set-exit-if-changed .
+          dart analyze
+          dart pub publish --dry-run
