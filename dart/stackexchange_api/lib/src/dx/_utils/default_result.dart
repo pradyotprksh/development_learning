@@ -22,31 +22,30 @@ class DefaultResult extends Result {
       ..status = object["error_id"] as int?
       ..isError = hasError
       .._errorDetails = errorDetails
-      .._message = object["status_message"] as String?
       .._errorMessage = errorMessage
       ..otherKeys = collectOtherKeys(
         object,
         [
-          "status_code",
-          "success",
-          "status_message",
+          "error_id",
+          "error_message",
         ],
       );
   }
 
   int? status;
   bool? isError;
-  String? _message;
   String? _errorMessage;
   Map<String, dynamic>? _errorDetails;
   Map<String, dynamic> otherKeys = <String, dynamic>{};
 
   Map<String, dynamic>? get error => _errorDetails;
 
-  String? get message => _errorMessage ?? _message;
+  String? get message => _errorMessage;
 
   static Map<String, dynamic> collectOtherKeys(
-      dynamic object, List<String> knownKeys) {
+    dynamic object,
+    List<String> knownKeys,
+  ) {
     var clone = Map<String, dynamic>.from(
       object as Map<dynamic, dynamic>,
     );
