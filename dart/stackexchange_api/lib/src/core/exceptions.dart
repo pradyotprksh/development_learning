@@ -18,24 +18,17 @@ class StackExchangeApiException implements Exception {
   String toString() => message;
 }
 
-/// An exception thrown when a feature is not available for particular user.
-class ForbiddenException extends StackExchangeApiException {
-  ForbiddenException(this.service)
+/// An exception thrown when some argument is invalid.
+class InvalidArgumentsException extends StackExchangeApiException {
+  InvalidArgumentsException(String message)
       : super(
-          Constants.forbidden,
+          message,
         );
-
-  final String service;
 }
 
-/// An exception thrown when some argument is invalid.
-///
-/// This may be due to:
-/// - an invalid subscribe key.
-/// - missing or invalid token
-/// - other invalid request data.
-class InvalidArgumentsException extends StackExchangeApiException {
-  InvalidArgumentsException([String message = Constants.invalidArgument])
+/// An exception which will be thrown when there is an access token issue.
+class AccessTokenException extends StackExchangeApiException {
+  AccessTokenException(String message)
       : super(
           message,
         );
@@ -54,5 +47,22 @@ class UnknownException extends StackExchangeApiException {
   UnknownException()
       : super(
           Constants.unknownError,
+        );
+}
+
+/// An exception is thrown when some mismatch happen during the request.
+class SomethingMissingException extends StackExchangeApiException {
+  SomethingMissingException(String message)
+      : super(
+          message,
+        );
+}
+
+/// An exception which is thrown when something is wrong from the server
+/// end
+class ServerException extends StackExchangeApiException {
+  ServerException(String message)
+      : super(
+          message,
         );
 }

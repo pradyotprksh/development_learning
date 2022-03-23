@@ -6,14 +6,6 @@ StackExchangeApiException getExceptionFromAny(dynamic error) {
     return getExceptionFromDefaultResult(error);
   }
 
-  if (error is List) {
-    if (error.isEmpty) {
-      return UnknownException();
-    } else if (error.length == 3) {
-      return StackExchangeApiException(error[1] as String);
-    }
-  }
-
   return StackExchangeApiException("unknown exception: $error");
 }
 
@@ -21,22 +13,62 @@ StackExchangeApiException getExceptionFromAny(dynamic error) {
 ///
 /// Like if any error happens due to invalid input to the request.
 StackExchangeApiException getExceptionFromDefaultResult(DefaultResult result) {
-  if (result.status == 400 && result.message == "Invalid Arguments") {
-    return InvalidArgumentsException();
+  switch (result.status) {
+    case 400:
+      return InvalidArgumentsException(
+        result.message ?? Constants.badParameter,
+      );
+    case 401:
+      return SomethingMissingException(
+        result.message ?? Constants.accessTokenRequired,
+      );
+    case 402:
+      return AccessTokenException(
+        result.message ?? Constants.invalidAccessToken,
+      );
+    case 403:
+      return SomethingMissingException(
+        result.message ?? Constants.accessDenied,
+      );
+    case 404:
+      return SomethingMissingException(
+        result.message ?? Constants.noMethod,
+      );
+    case 405:
+      return SomethingMissingException(
+        result.message ?? Constants.keyRequired,
+      );
+    case 406:
+      return AccessTokenException(
+        result.message ?? Constants.accessTokenCompromised,
+      );
+    case 407:
+      return SomethingMissingException(
+        result.message ?? Constants.writeFailed,
+      );
+    case 409:
+      return SomethingMissingException(
+        result.message ?? Constants.duplicateRequest,
+      );
+    case 500:
+      return ServerException(
+        result.message ?? Constants.internalError,
+      );
+    case 502:
+      return ServerException(
+        result.message ?? Constants.throttleViolation,
+      );
+    case 503:
+      return ServerException(
+        result.message ?? Constants.temporarilyUnavailable,
+      );
   }
-
-  if (result.status == 403 &&
-      result.message!.startsWith("Use of the history Delete API")) {
-    return MethodDisabledException(result.message!);
-  }
-
-  if (result.status == 403 && result.message == "Forbidden") {
-    return ForbiddenException(result.message!);
-  }
-
   if (result.message?.isNotEmpty ?? false) {
-    return StackExchangeApiException("Error: ${result.message}");
+    return StackExchangeApiException(
+      "Error: ${result.message}",
+    );
   }
-
-  return StackExchangeApiException(Constants.unknownError);
+  return StackExchangeApiException(
+    Constants.unknownError,
+  );
 }

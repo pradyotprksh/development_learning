@@ -15,11 +15,11 @@ class DefaultResult extends Result {
     if (object is Map<String, dynamic>) {
       hasError = true;
       errorDetails = object;
-      errorMessage = errorDetails["status_message"] as String;
+      errorMessage = errorDetails["error_message"] as String;
     }
 
     return DefaultResult()
-      ..status = object["status_code"] as int?
+      ..status = object["error_id"] as int?
       ..isError = hasError
       .._errorDetails = errorDetails
       .._message = object["status_message"] as String?
