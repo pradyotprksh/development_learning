@@ -16,15 +16,15 @@ typedef _FiberAction<T> = Future<T> Function();
 /// Need to provide [Core] and the [action] which will be called through
 /// [Fiber].
 class Fiber<T> {
-  Fiber({
-    required this.action,
-  });
-
   int tries = 0;
 
   final _FiberAction<T> action;
 
   final _completer = Completer<T>();
+
+  Fiber({
+    required this.action,
+  });
 
   Future<T> get future => _completer.future;
 

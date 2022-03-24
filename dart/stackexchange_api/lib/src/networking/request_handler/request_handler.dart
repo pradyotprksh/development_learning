@@ -1,8 +1,8 @@
 import "dart:async";
 import "dart:convert";
 
-import "package:stackexchange_api/core.dart";
 import "package:http/http.dart" as http;
+import "package:stackexchange_api/core.dart";
 
 final _logger = injectLogger("film_gyaan.networking.request_handler");
 
@@ -15,21 +15,21 @@ final _logger = injectLogger("film_gyaan.networking.request_handler");
 /// And [_id] is basically the count of the request which is made till the
 /// current time.
 class RequestHandler extends IRequestHandler {
-  RequestHandler(
-      this._module,
-      this._id,
-      );
-
   final INetworkingModule _module;
 
   final int _id;
+
   final http.Client _httpClient = http.Client();
-
   final _cancel = Completer<Exception>();
-  Timer? _sendTimeoutTimer;
 
+  Timer? _sendTimeoutTimer;
   bool _isReleased = false;
+
   void Function(dynamic)? _abortRequest;
+  RequestHandler(
+    this._module,
+    this._id,
+  );
 
   Future<Exception> get cancelReason => _cancel.future;
 
@@ -109,7 +109,7 @@ class RequestHandler extends IRequestHandler {
         Duration(
           milliseconds: request.type.sendTimeout,
         ),
-            () {
+        () {
           if (!isDone) {
             _cancel.complete(
               RequestTimeoutException(),
@@ -178,10 +178,10 @@ class RequestHandler extends IRequestHandler {
   ///
   /// Returns [http.Request].
   http.Request _prepareRequest(
-      dynamic jsonBody,
-      http.Request httpRequest,
-      Map<String, String> headers,
-      ) {
+    dynamic jsonBody,
+    http.Request httpRequest,
+    Map<String, String> headers,
+  ) {
     final request = _copyRequest(httpRequest);
 
     if (jsonBody != null) {

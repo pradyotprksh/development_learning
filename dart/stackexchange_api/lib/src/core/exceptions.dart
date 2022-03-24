@@ -1,34 +1,16 @@
 import "package:stackexchange_api/core.dart";
 
-/// An exception thrown by the Stack Exchange Api SDK.
-class StackExchangeApiException implements Exception {
-  StackExchangeApiException(
-    this.message, [
-    StackTrace? stackTrace,
-  ]) : stackTrace = stackTrace ?? StackTrace.current;
-
-  final String message;
-
-  final StackTrace stackTrace;
-
-  /// Get the complete exception details
-  String exceptionDetails() => "$runtimeType: $message\n$stackTrace";
-
-  @override
-  String toString() => message;
-}
-
-/// An exception thrown when some argument is invalid.
-class InvalidArgumentsException extends StackExchangeApiException {
-  InvalidArgumentsException(String message)
+/// An exception which will be thrown when there is an access token issue.
+class AccessTokenException extends StackExchangeApiException {
+  AccessTokenException(String message)
       : super(
           message,
         );
 }
 
-/// An exception which will be thrown when there is an access token issue.
-class AccessTokenException extends StackExchangeApiException {
-  AccessTokenException(String message)
+/// An exception thrown when some argument is invalid.
+class InvalidArgumentsException extends StackExchangeApiException {
+  InvalidArgumentsException(String message)
       : super(
           message,
         );
@@ -42,11 +24,12 @@ class MethodDisabledException extends StackExchangeApiException {
         );
 }
 
-/// An exception thrown when something unexpected happens in the SDK.
-class UnknownException extends StackExchangeApiException {
-  UnknownException()
+/// An exception which is thrown when something is wrong from the server
+/// end
+class ServerException extends StackExchangeApiException {
+  ServerException(String message)
       : super(
-          Constants.unknownError,
+          message,
         );
 }
 
@@ -58,11 +41,28 @@ class SomethingMissingException extends StackExchangeApiException {
         );
 }
 
-/// An exception which is thrown when something is wrong from the server
-/// end
-class ServerException extends StackExchangeApiException {
-  ServerException(String message)
+/// An exception thrown by the Stack Exchange Api SDK.
+class StackExchangeApiException implements Exception {
+  final String message;
+
+  final StackTrace stackTrace;
+
+  StackExchangeApiException(
+    this.message, [
+    StackTrace? stackTrace,
+  ]) : stackTrace = stackTrace ?? StackTrace.current;
+
+  /// Get the complete exception details
+  String exceptionDetails() => "$runtimeType: $message\n$stackTrace";
+
+  @override
+  String toString() => message;
+}
+
+/// An exception thrown when something unexpected happens in the SDK.
+class UnknownException extends StackExchangeApiException {
+  UnknownException()
       : super(
-          message,
+          Constants.unknownError,
         );
 }

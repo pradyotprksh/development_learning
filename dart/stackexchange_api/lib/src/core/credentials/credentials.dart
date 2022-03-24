@@ -1,5 +1,11 @@
 /// Represents the credentials of [stackapps](https://stackapps.com).
 class Credentials {
+  int clientId;
+
+  String? clientSecret;
+
+  String? key;
+
   /// Required [clientId] is identifies your application to the Stack Exchange API.
   /// Your application client id is not secret, and may be safely embedded
   /// in distributed binaries.
@@ -35,10 +41,4 @@ class Credentials {
     this.clientSecret,
     this.key,
   });
-
-  int clientId;
-
-  String? clientSecret;
-
-  String? key;
 }

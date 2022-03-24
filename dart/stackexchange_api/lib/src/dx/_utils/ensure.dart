@@ -20,9 +20,9 @@ final _invariantMessages = {
 ///
 /// [value] contains the value which will be checked.
 class Ensure {
-  Ensure(this.value);
-
   dynamic value;
+
+  Ensure(this.value);
 
   /// Check if [value] is empty or not.
   ///

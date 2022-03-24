@@ -5,8 +5,14 @@ import "package:stackexchange_api/core.dart";
 ///
 /// Mainly will be used to show error message from remote.
 class DefaultResult extends Result {
-  DefaultResult();
+  int? status;
 
+  bool? isError;
+
+  String? _errorMessage;
+  Map<String, dynamic>? _errorDetails;
+  Map<String, dynamic> otherKeys = <String, dynamic>{};
+  DefaultResult();
   factory DefaultResult.fromJson(dynamic object) {
     var hasError = false;
     var errorMessage = "";
@@ -31,12 +37,6 @@ class DefaultResult extends Result {
         ],
       );
   }
-
-  int? status;
-  bool? isError;
-  String? _errorMessage;
-  Map<String, dynamic>? _errorDetails;
-  Map<String, dynamic> otherKeys = <String, dynamic>{};
 
   Map<String, dynamic>? get error => _errorDetails;
 

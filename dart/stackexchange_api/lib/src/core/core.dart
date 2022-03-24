@@ -7,19 +7,19 @@ typedef BodyDeserializer<T> = T Function(dynamic body);
 /// Provides a [Core] object which will be used to handle all the
 /// core related work. Like initializing MQTT, making request, etc.
 class Core {
-  Core({
-    required this.credentials,
-    required this.networking,
-  }) {
-    networking.register(this);
-  }
-
   late Credentials credentials;
 
   /// Internal module responsible for networking.
   INetworkingModule networking;
 
   var _closed = false;
+
+  Core({
+    required this.credentials,
+    required this.networking,
+  }) {
+    networking.register(this);
+  }
 
   bool get closed => _closed;
 
