@@ -1,3 +1,5 @@
+import 'package:stackexchange_api/core.dart';
+
 /// A class which will contain the response of the [IRequestHandler].
 abstract class IResponse {
   /// Headers which are provided in the request

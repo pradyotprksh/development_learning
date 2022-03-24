@@ -1,4 +1,4 @@
-import "package:stackexchange_api/core.dart";
+import 'package:stackexchange_api/core.dart';
 
 /// The body deserializer which will be used to parse
 /// the response body to the specified [T] class.

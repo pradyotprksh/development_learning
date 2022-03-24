@@ -1,4 +1,4 @@
-import "package:stackexchange_api/core.dart";
+import 'package:stackexchange_api/core.dart';
 
 /// Represents all the data necessary to make a request to the API.
 abstract class Parameters {

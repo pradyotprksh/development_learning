@@ -1,4 +1,4 @@
-import "package:stackexchange_api/core.dart";
+import 'package:stackexchange_api/core.dart';
 
 /// An exception which will be thrown when there is an access token issue.
 class AccessTokenException extends StackExchangeApiException {
@@ -53,7 +53,7 @@ class StackExchangeApiException implements Exception {
   ]) : stackTrace = stackTrace ?? StackTrace.current;
 
   /// Get the complete exception details
-  String exceptionDetails() => "$runtimeType: $message\n$stackTrace";
+  String exceptionDetails() => '$runtimeType: $message\n$stackTrace';
 
   @override
   String toString() => message;

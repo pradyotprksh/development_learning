@@ -1,4 +1,4 @@
-import "package:stackexchange_api/core.dart";
+import 'package:stackexchange_api/core.dart';
 
 /// Provides a [NetworkingModule] to the [Core].
 ///
@@ -19,9 +19,11 @@ class NetworkingModule extends INetworkingModule {
 
   @override
   Uri getOrigin() => Uri(
-        scheme: "https",
-        host: "api.themoviedb.org",
-        queryParameters: <String, dynamic>{},
+        scheme: 'https',
+        host: 'api.stackexchange.com',
+        queryParameters: <String, dynamic>{
+          if (_core.credentials.key != null) 'key': _core.credentials.key,
+        },
       );
 
   @override

@@ -1,4 +1,4 @@
-import "package:stackexchange_api/core.dart";
+import 'package:stackexchange_api/core.dart';
 
 /// A class which will be used to start the request.
 ///
@@ -23,8 +23,8 @@ abstract class IRequestHandler {
   /// final request.
   Uri prepareUri(Uri baseUri, Uri requestUri) => baseUri.replace(
         scheme: requestUri.hasScheme ? requestUri.scheme : baseUri.scheme,
-        host: requestUri.host != "" ? requestUri.host : null,
-        path: requestUri.path != "" ? requestUri.path : null,
+        host: requestUri.host != '' ? requestUri.host : null,
+        path: requestUri.path != '' ? requestUri.path : null,
         queryParameters: (baseUri.queryParameters.isNotEmpty ||
                 requestUri.queryParameters.isNotEmpty)
             ? <String, dynamic>{

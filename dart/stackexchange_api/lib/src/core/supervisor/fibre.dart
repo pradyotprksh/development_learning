@@ -1,8 +1,8 @@
-import "dart:async";
+import 'dart:async';
 
-import "package:stackexchange_api/core.dart";
+import 'package:stackexchange_api/core.dart';
 
-final _logger = injectLogger("film_gyaan.core.supervisor.fiber");
+final _logger = injectLogger('film_gyaan.core.supervisor.fiber');
 
 typedef _FiberAction<T> = Future<T> Function();
 
@@ -42,7 +42,7 @@ class Fiber<T> {
     } catch (exception, stackTrace) {
       if (exception is Error) {
         _logger.fatal(
-          "${Constants.fatalError} ($exception).",
+          '${Constants.fatalError} ($exception).',
         );
         return _completer.completeError(exception, stackTrace);
       }

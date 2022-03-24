@@ -1,4 +1,4 @@
-import "package:stackexchange_api/core.dart";
+import 'package:stackexchange_api/core.dart';
 
 /// Provides a [Request] which will contain the details for the request
 /// which needs to be done.
@@ -17,8 +17,8 @@ class Request {
   Uri? uri;
 
   Map<String, String>? headers;
-  Object? body;
 
+  Object? body;
   /// A GET [Request] which will make the request.
   Request.get({
     this.uri,
@@ -27,5 +27,5 @@ class Request {
   }) : type = RequestType.get;
 
   @override
-  String toString() => "Request { [$type] $uri }";
+  String toString() => 'Request { [$type] $uri }';
 }

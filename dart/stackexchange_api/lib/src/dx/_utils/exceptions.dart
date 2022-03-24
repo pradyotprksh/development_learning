@@ -1,4 +1,4 @@
-import "package:stackexchange_api/core.dart";
+import 'package:stackexchange_api/core.dart';
 
 /// Returns the [StackExchangeApiException] if any error occurs.
 StackExchangeApiException getExceptionFromAny(dynamic error) {
@@ -6,7 +6,7 @@ StackExchangeApiException getExceptionFromAny(dynamic error) {
     return getExceptionFromDefaultResult(error);
   }
 
-  return StackExchangeApiException("unknown exception: $error");
+  return StackExchangeApiException('unknown exception: $error');
 }
 
 /// Returns the [StackExchangeApiException] by checking the [DefaultResult].
@@ -65,7 +65,7 @@ StackExchangeApiException getExceptionFromDefaultResult(DefaultResult result) {
   }
   if (result.message?.isNotEmpty ?? false) {
     return StackExchangeApiException(
-      "Error: ${result.message}",
+      'Error: ${result.message}',
     );
   }
   return StackExchangeApiException(

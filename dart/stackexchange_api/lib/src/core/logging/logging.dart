@@ -1,6 +1,6 @@
-import "dart:async";
+import 'dart:async';
 
-import "package:logger/logger.dart";
+import 'package:logger/logger.dart';
 
 const _stackExchangeApiLoggerModuleKey = #stackexchangeApi.logging;
 
@@ -126,15 +126,15 @@ abstract class Level {
   static const int all = 10000;
 
   static const Map<int, String> levels = {
-    0: "off",
-    10: "shout",
-    20: "fatal",
-    40: "severe",
-    80: "warning",
-    160: "info",
-    320: "verbose",
-    640: "silly",
-    10000: "all"
+    0: 'off',
+    10: 'shout',
+    20: 'fatal',
+    40: 'severe',
+    80: 'warning',
+    160: 'info',
+    320: 'verbose',
+    640: 'silly',
+    10000: 'all'
   };
 
   static String getName(int level) => levels.entries
@@ -161,23 +161,23 @@ class Log extends ILogger {
       case Level.off:
       case Level.severe:
       case Level.fatal:
-        Logger().e("$_id $message");
+        Logger().e('$_id $message');
         break;
       case Level.info:
-        Logger().i("$_id $message");
+        Logger().i('$_id $message');
         break;
       case Level.silly:
-        Logger().wtf("$_id $message");
+        Logger().wtf('$_id $message');
         break;
       case Level.verbose:
-        Logger().v("$_id $message");
+        Logger().v('$_id $message');
         break;
       case Level.warning:
-        Logger().w("$_id $message");
+        Logger().w('$_id $message');
         break;
       case Level.shout:
       case Level.all:
-        Logger().d("$_id $message");
+        Logger().d('$_id $message');
         break;
     }
   }

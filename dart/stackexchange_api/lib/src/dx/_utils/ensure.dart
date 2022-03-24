@@ -1,17 +1,17 @@
-import "package:stackexchange_api/core.dart";
+import 'package:stackexchange_api/core.dart';
 
 /// A set of messages which will be shown when any condition
 /// was not meant.
 final _invariantMessages = {
-  "is-not-true": (String that, _) => that,
-  "not-null": (String that, _) => "$that cannot be null",
-  "not-empty": (String that, _) => "$that cannot be empty",
-  "default": (_, __) => "invariant has been broken",
-  "is-equal": (String that, List<String> what) =>
-      "$that has to equal ${what[0]}",
-  "invalid-type": (String that, List<String> what) =>
+  'is-not-true': (String that, _) => that,
+  'not-null': (String that, _) => '$that cannot be null',
+  'not-empty': (String that, _) => '$that cannot be empty',
+  'default': (_, __) => 'invariant has been broken',
+  'is-equal': (String that, List<String> what) =>
+      '$that has to equal ${what[0]}',
+  'invalid-type': (String that, List<String> what) =>
       '$that must be either ${what.join(' or ')}.',
-  "not-together": (String _this, List<String> _that) =>
+  'not-together': (String _this, List<String> _that) =>
       '$_this and ${_that.join(',')} can not be provided together. Make separate call!',
 };
 
@@ -36,7 +36,7 @@ class Ensure {
       return;
     }
 
-    throw InvariantException("not-empty", what);
+    throw InvariantException('not-empty', what);
   }
 
   /// Check if [value] is true or not.
@@ -44,12 +44,12 @@ class Ensure {
   /// If not then it returns [InvariantException].
   void isTrue([String? what]) {
     if (value is bool) {
-      if (value as bool) {
+      if (value == true) {
         return;
       }
     }
 
-    throw InvariantException("is-not-true", what);
+    throw InvariantException('is-not-true', what);
   }
 }
 
@@ -61,7 +61,7 @@ class InvariantException extends StackExchangeApiException {
     String? what,
     List<String> args = const [],
   ]) : super(
-          (_invariantMessages[messageId] ?? _invariantMessages["default"])!(
+          (_invariantMessages[messageId] ?? _invariantMessages['default'])!(
             what!,
             args,
           ),

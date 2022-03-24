@@ -35,12 +35,12 @@ enum RequestType { get, post, patch, subscribe, delete, file }
 /// like the type and other time out parameters.
 extension RequestTypeExtension on RequestType {
   static const methods = <RequestType, String>{
-    RequestType.get: "GET",
-    RequestType.post: "POST",
-    RequestType.patch: "PATCH",
-    RequestType.subscribe: "GET",
-    RequestType.delete: "DELETE",
-    RequestType.file: "POST",
+    RequestType.get: 'GET',
+    RequestType.post: 'POST',
+    RequestType.patch: 'PATCH',
+    RequestType.subscribe: 'GET',
+    RequestType.delete: 'DELETE',
+    RequestType.file: 'POST',
   };
 
   int get connectTimeout => _connectTimeoutRequestDefault[this]!;

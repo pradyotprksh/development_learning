@@ -1,4 +1,4 @@
-import "package:stackexchange_api/core.dart";
+import 'package:stackexchange_api/core.dart';
 
 /// Provides a [DefaultResult] which contains the error or any message which
 /// will be used to send an [StackExchangeApiException] to the application.
@@ -10,30 +10,32 @@ class DefaultResult extends Result {
   bool? isError;
 
   String? _errorMessage;
+
   Map<String, dynamic>? _errorDetails;
+
   Map<String, dynamic> otherKeys = <String, dynamic>{};
   DefaultResult();
   factory DefaultResult.fromJson(dynamic object) {
     var hasError = false;
-    var errorMessage = "";
+    var errorMessage = '';
     var errorDetails = <String, dynamic>{};
 
     if (object is Map<String, dynamic>) {
       hasError = true;
       errorDetails = object;
-      errorMessage = errorDetails["error_message"] as String;
+      errorMessage = errorDetails['error_message'] as String;
     }
 
     return DefaultResult()
-      ..status = object["error_id"] as int?
+      ..status = object['error_id'] as int?
       ..isError = hasError
       .._errorDetails = errorDetails
       .._errorMessage = errorMessage
       ..otherKeys = collectOtherKeys(
         object,
         [
-          "error_id",
-          "error_message",
+          'error_id',
+          'error_message',
         ],
       );
   }

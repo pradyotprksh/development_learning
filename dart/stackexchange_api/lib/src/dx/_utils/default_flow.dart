@@ -1,6 +1,6 @@
-import "dart:convert";
+import 'dart:convert';
 
-import "package:stackexchange_api/core.dart";
+import 'package:stackexchange_api/core.dart';
 
 /// A method which will be used to make the http request
 /// from the given [params] and return the response of the type

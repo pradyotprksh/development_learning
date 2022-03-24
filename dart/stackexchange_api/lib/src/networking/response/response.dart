@@ -1,5 +1,5 @@
-import "package:http/http.dart" as http;
-import "package:stackexchange_api/core.dart";
+import 'package:http/http.dart' as http;
+import 'package:stackexchange_api/core.dart';
 
 /// A response class which will contains all the required details
 /// of the request made.
@@ -8,7 +8,10 @@ class Response extends IResponse {
 
   final String _response;
 
-  Response(this._httpResponse, this._response);
+  Response(
+    this._httpResponse,
+    this._response,
+  );
 
   @override
   Map<String, String> get headers => _httpResponse.headers;

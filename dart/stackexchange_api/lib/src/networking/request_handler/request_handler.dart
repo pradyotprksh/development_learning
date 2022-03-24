@@ -1,10 +1,10 @@
-import "dart:async";
-import "dart:convert";
+import 'dart:async';
+import 'dart:convert';
 
-import "package:http/http.dart" as http;
-import "package:stackexchange_api/core.dart";
+import 'package:http/http.dart' as http;
+import 'package:stackexchange_api/core.dart';
 
-final _logger = injectLogger("film_gyaan.networking.request_handler");
+final _logger = injectLogger('film_gyaan.networking.request_handler');
 
 /// Provides the [RequestHandler].
 ///
@@ -20,12 +20,13 @@ class RequestHandler extends IRequestHandler {
   final int _id;
 
   final http.Client _httpClient = http.Client();
+
   final _cancel = Completer<Exception>();
-
   Timer? _sendTimeoutTimer;
-  bool _isReleased = false;
 
+  bool _isReleased = false;
   void Function(dynamic)? _abortRequest;
+
   RequestHandler(
     this._module,
     this._id,
@@ -42,7 +43,7 @@ class RequestHandler extends IRequestHandler {
   void cancel([dynamic reason]) {
     if (!isDone) {
       _logger.warning(
-        "($_id) Request has been cancelled (reason: ${reason.runtimeType}).",
+        '($_id) Request has been cancelled (reason: ${reason.runtimeType}).',
       );
 
       _cancel.complete(RequestCancelException(reason));
@@ -66,7 +67,7 @@ class RequestHandler extends IRequestHandler {
     }
 
     _logger.info(
-      "($_id) Preparing request.",
+      '($_id) Preparing request.',
     );
 
     var headers = <String, String>{};
@@ -80,7 +81,7 @@ class RequestHandler extends IRequestHandler {
     if (request.body != null) {
       headers.addAll(
         {
-          "Content-Type": "application/json; charset=utf-8",
+          'Content-Type': 'application/json; charset=utf-8',
         },
       );
     }
@@ -134,7 +135,7 @@ class RequestHandler extends IRequestHandler {
       }
 
       _logger.shout(
-        "($_id) Request succeed!",
+        '($_id) Request succeed!',
       );
 
       return response;
@@ -146,7 +147,7 @@ class RequestHandler extends IRequestHandler {
       rethrow;
     } catch (e) {
       _logger.fatal(
-        "($_id) Request failed (${e.runtimeType}) ($e)",
+        '($_id) Request failed (${e.runtimeType}) ($e)',
       );
       throw RequestOtherException(e);
     } finally {
@@ -155,7 +156,7 @@ class RequestHandler extends IRequestHandler {
         _httpClient.close();
         _sendTimeoutTimer?.cancel();
         _logger.info(
-          "($_id) Resource released...",
+          '($_id) Resource released...',
         );
       }
     }

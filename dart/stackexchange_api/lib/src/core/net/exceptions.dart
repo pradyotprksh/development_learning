@@ -1,4 +1,4 @@
-import "package:stackexchange_api/core.dart";
+import 'package:stackexchange_api/core.dart';
 
 /// When the request was canceled due to some error.
 class RequestCancelException extends StackExchangeApiException {
@@ -26,7 +26,7 @@ class RequestOtherException extends StackExchangeApiException {
 
   RequestOtherException([this.additionalData])
       : super(
-          "${Constants.requestFailed} ($additionalData)",
+          '${Constants.requestFailed} ($additionalData)',
         );
 }
 
