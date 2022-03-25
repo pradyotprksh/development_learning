@@ -12,6 +12,13 @@ import 'package:stackexchange_api/core.dart';
 /// [type] : Contains what is the type of the request from the [RequestType]
 /// list.
 class Request {
+  /// A GET [Request] which will make the request.
+  Request.get({
+    this.uri,
+    this.headers,
+    this.body,
+  }) : type = RequestType.get;
+
   RequestType type;
 
   Uri? uri;
@@ -19,12 +26,6 @@ class Request {
   Map<String, String>? headers;
 
   Object? body;
-  /// A GET [Request] which will make the request.
-  Request.get({
-    this.uri,
-    this.headers,
-    this.body,
-  }) : type = RequestType.get;
 
   @override
   String toString() => 'Request { [$type] $uri }';

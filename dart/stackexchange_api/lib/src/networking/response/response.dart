@@ -4,14 +4,14 @@ import 'package:stackexchange_api/core.dart';
 /// A response class which will contains all the required details
 /// of the request made.
 class Response extends IResponse {
-  final http.StreamedResponse _httpResponse;
-
-  final String _response;
-
   Response(
     this._httpResponse,
     this._response,
   );
+
+  final http.StreamedResponse _httpResponse;
+
+  final String _response;
 
   @override
   Map<String, String> get headers => _httpResponse.headers;

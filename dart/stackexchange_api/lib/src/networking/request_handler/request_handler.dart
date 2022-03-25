@@ -15,6 +15,11 @@ final _logger = injectLogger('film_gyaan.networking.request_handler');
 /// And [_id] is basically the count of the request which is made till the
 /// current time.
 class RequestHandler extends IRequestHandler {
+  RequestHandler(
+    this._module,
+    this._id,
+  );
+
   final INetworkingModule _module;
 
   final int _id;
@@ -26,11 +31,6 @@ class RequestHandler extends IRequestHandler {
 
   bool _isReleased = false;
   void Function(dynamic)? _abortRequest;
-
-  RequestHandler(
-    this._module,
-    this._id,
-  );
 
   Future<Exception> get cancelReason => _cancel.future;
 

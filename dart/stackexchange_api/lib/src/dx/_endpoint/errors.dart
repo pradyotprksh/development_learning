@@ -13,13 +13,14 @@ import 'package:stackexchange_api/core.dart';
 /// If [page] or [pageSize] doesn't exists then an error will be thrown by
 /// server.
 class AllErrors extends Parameters {
-  int? page;
-
-  int? pageSize;
   AllErrors({
     this.page,
     this.pageSize,
   });
+
+  int? page;
+
+  int? pageSize;
 
   @override
   Request toRequest() => Request.get(
@@ -39,11 +40,11 @@ class AllErrors extends Parameters {
 /// [id] is the id of the error for which the details has to be fetched.
 /// And it's a required field.
 class ErrorDetails extends Parameters {
-  int id;
-
   ErrorDetails({
     required this.id,
   });
+
+  int id;
 
   @override
   Request toRequest() => Request.get(

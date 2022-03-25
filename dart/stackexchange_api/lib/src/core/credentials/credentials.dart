@@ -31,15 +31,15 @@
 /// );
 /// ```
 class Credentials {
-  int clientId;
-
-  String? clientSecret;
-
-  String? key;
-
   Credentials({
     required this.clientId,
     this.clientSecret,
     this.key,
   });
+
+  int clientId;
+
+  String? clientSecret;
+
+  String? key;
 }

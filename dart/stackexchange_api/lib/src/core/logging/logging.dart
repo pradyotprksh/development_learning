@@ -54,14 +54,14 @@ abstract class ILogger {
 /// [_id] : Will be used to distinguish between loggers.
 /// [_obtainLogger] : Will be used to get the logger based on [_id].
 class LazyLogger implements ILogger {
-  final String _id;
-
-  final ILogger Function() _obtainLogger;
-
   LazyLogger(
     this._id,
     this._obtainLogger,
   );
+
+  final String _id;
+
+  final ILogger Function() _obtainLogger;
 
   ILogger get logger => _obtainLogger().get(_id);
 
@@ -148,9 +148,9 @@ abstract class Level {
 /// [_id] : Identifier for the logger to check from where the logs
 /// are printing;
 class Log extends ILogger {
-  final String _id;
-
   Log(this._id);
+
+  final String _id;
 
   @override
   Log get(String id) => this;

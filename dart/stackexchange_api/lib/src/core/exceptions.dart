@@ -43,14 +43,14 @@ class SomethingMissingException extends StackExchangeApiException {
 
 /// An exception thrown by the Stack Exchange Api SDK.
 class StackExchangeApiException implements Exception {
-  final String message;
-
-  final StackTrace stackTrace;
-
   StackExchangeApiException(
     this.message, [
     StackTrace? stackTrace,
   ]) : stackTrace = stackTrace ?? StackTrace.current;
+
+  final String message;
+
+  final StackTrace stackTrace;
 
   /// Get the complete exception details
   String exceptionDetails() => '$runtimeType: $message\n$stackTrace';
