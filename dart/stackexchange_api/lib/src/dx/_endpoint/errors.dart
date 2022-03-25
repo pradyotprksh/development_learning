@@ -26,9 +26,9 @@ class AllErrors extends Parameters {
   Request toRequest() => Request.get(
         uri: Uri(
           path: '/2.3/errors',
-          queryParameters: <String, int>{
-            if (page != null) 'page': page!,
-            if (pageSize != null) 'pageSize': pageSize!,
+          queryParameters: <String, String>{
+            if (page != null) 'page': page!.toString(),
+            if (pageSize != null) 'pageSize': pageSize!.toString(),
           },
         ),
       );

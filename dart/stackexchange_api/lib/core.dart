@@ -26,8 +26,11 @@ export 'src/core/supervisor/fibre.dart';
 export 'src/dx/_endpoint/errors.dart';
 export 'src/dx/_endpoint/objects/error_item.dart';
 export 'src/dx/_endpoint/objects/errors.dart';
+export 'src/dx/_endpoint/objects/sites.dart';
+export 'src/dx/_endpoint/sites.dart';
 export 'src/dx/_utils/utils.dart';
 export 'src/dx/errors/errors_request.dart';
+export 'src/dx/sites/sites_request.dart';
 // Networking
 export 'src/networking/networking.dart';
 export 'src/networking/request_handler/request_handler.dart';

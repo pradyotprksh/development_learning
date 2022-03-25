@@ -31,6 +31,11 @@ mixin ErrorsRequest on Core {
     if (page != null) {
       Ensure(page < 0).isTrue('page should be > 0');
     }
+    if (pageSize != null) {
+      if (pageSize < 0) {
+        _logger.warning('pageSize is < 0. Will be getting empty data.');
+      }
+    }
 
     final params = AllErrors(
       page: page,

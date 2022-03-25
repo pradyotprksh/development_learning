@@ -20,6 +20,8 @@ export 'src/default.dart' show StackExchangeApi;
 export 'src/dx/_endpoint/errors.dart' hide AllErrors, ErrorDetails;
 export 'src/dx/_endpoint/objects/error_item.dart';
 export 'src/dx/_endpoint/objects/errors.dart';
+export 'src/dx/_endpoint/objects/sites.dart';
+export 'src/dx/_endpoint/sites.dart' hide AllSites;
 export 'src/dx/_utils/utils.dart' hide InvariantException;
 // Networking
 export 'src/networking/networking.dart' hide NetworkingModule;
