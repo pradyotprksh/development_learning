@@ -2,22 +2,22 @@ import 'dart:convert';
 
 import 'package:stackexchange_api/core.dart';
 
-class Sites extends Result {
-  Sites({
+class Notifications extends Result {
+  Notifications({
     required this.items,
     required this.hasMore,
     required this.quotaMax,
     required this.quotaRemaining,
   });
 
-  factory Sites.fromJson(String str) => Sites.fromMap(
+  factory Notifications.fromJson(String str) => Notifications.fromMap(
         json.decode(str) as Map<String, dynamic>,
       );
 
-  factory Sites.fromMap(Map<String, dynamic> json) => Sites(
-        items: List<SiteItem>.from(
+  factory Notifications.fromMap(Map<String, dynamic> json) => Notifications(
+        items: List<NotificationItem>.from(
           (json['items'] as List<dynamic>? ?? <dynamic>[]).map<dynamic>(
-            (dynamic x) => SiteItem.fromMap(
+            (dynamic x) => NotificationItem.fromMap(
               x as Map<String, dynamic>,
             ),
           ),
@@ -27,18 +27,18 @@ class Sites extends Result {
         quotaRemaining: json['quota_remaining'] as int? ?? -1,
       );
 
-  final List<SiteItem> items;
+  final List<NotificationItem> items;
   final bool hasMore;
   final int quotaMax;
   final int quotaRemaining;
 
-  Sites copyWith({
-    List<SiteItem>? items,
+  Notifications copyWith({
+    List<NotificationItem>? items,
     bool? hasMore,
     int? quotaMax,
     int? quotaRemaining,
   }) =>
-      Sites(
+      Notifications(
         items: items ?? this.items,
         hasMore: hasMore ?? this.hasMore,
         quotaMax: quotaMax ?? this.quotaMax,
@@ -59,8 +59,63 @@ class Sites extends Result {
       };
 }
 
-class SiteItem {
-  SiteItem({
+class NotificationItem {
+  NotificationItem({
+    required this.site,
+    required this.isUnread,
+    required this.creationDate,
+    required this.notificationType,
+    required this.body,
+  });
+
+  factory NotificationItem.fromJson(String str) => NotificationItem.fromMap(
+        json.decode(str) as Map<String, dynamic>,
+      );
+
+  factory NotificationItem.fromMap(Map<String, dynamic> json) => NotificationItem(
+        site: Site.fromMap(
+          json['site'] as Map<String, dynamic>? ?? <String, dynamic>{},
+        ),
+        isUnread: json['is_unread'] as bool? ?? false,
+        creationDate: json['creation_date'] as int? ?? -1,
+        notificationType: json['notification_type'] as String? ?? '',
+        body: json['body'] as String? ?? '',
+      );
+
+  final Site site;
+  final bool isUnread;
+  final int creationDate;
+  final String notificationType;
+  final String body;
+
+  NotificationItem copyWith({
+    Site? site,
+    bool? isUnread,
+    int? creationDate,
+    String? notificationType,
+    String? body,
+  }) =>
+      NotificationItem(
+        site: site ?? this.site,
+        isUnread: isUnread ?? this.isUnread,
+        creationDate: creationDate ?? this.creationDate,
+        notificationType: notificationType ?? this.notificationType,
+        body: body ?? this.body,
+      );
+
+  String toJson() => json.encode(toMap());
+
+  Map<String, dynamic> toMap() => <String, dynamic>{
+        'site': site.toMap(),
+        'is_unread': isUnread,
+        'creation_date': creationDate,
+        'notification_type': notificationType,
+        'body': body,
+      };
+}
+
+class Site {
+  Site({
     required this.aliases,
     required this.styling,
     required this.relatedSites,
@@ -77,15 +132,13 @@ class SiteItem {
     required this.logoUrl,
     required this.name,
     required this.siteType,
-    required this.twitterAccount,
-    required this.closedBetaDate,
   });
 
-  factory SiteItem.fromJson(String str) => SiteItem.fromMap(
+  factory Site.fromJson(String str) => Site.fromMap(
         json.decode(str) as Map<String, dynamic>,
       );
 
-  factory SiteItem.fromMap(Map<String, dynamic> json) => SiteItem(
+  factory Site.fromMap(Map<String, dynamic> json) => Site(
         aliases: List<String>.from(
           (json['aliases'] as List<dynamic>? ?? <dynamic>[]).map<dynamic>(
             (dynamic x) => x as String,
@@ -102,8 +155,8 @@ class SiteItem {
           ),
         ),
         markdownExtensions: List<String>.from(
-          (json['markdown_extensions'] as List<dynamic>? ?? <dynamic>[])
-              .map<String>(
+          (json['markdown_extensions'] as List<String>? ?? <String>[])
+              .map<dynamic>(
             (dynamic x) => x as String,
           ),
         ),
@@ -120,8 +173,6 @@ class SiteItem {
         logoUrl: json['logo_url'] as String? ?? '',
         name: json['name'] as String? ?? '',
         siteType: json['site_type'] as String? ?? '',
-        twitterAccount: json['twitter_account'] as String? ?? '',
-        closedBetaDate: json['closed_beta_date'] as int? ?? -1,
       );
 
   final List<String> aliases;
@@ -140,10 +191,8 @@ class SiteItem {
   final String logoUrl;
   final String name;
   final String siteType;
-  final String twitterAccount;
-  final int closedBetaDate;
 
-  SiteItem copyWith({
+  Site copyWith({
     List<String>? aliases,
     Styling? styling,
     List<RelatedSite>? relatedSites,
@@ -160,10 +209,8 @@ class SiteItem {
     String? logoUrl,
     String? name,
     String? siteType,
-    String? twitterAccount,
-    int? closedBetaDate,
   }) =>
-      SiteItem(
+      Site(
         aliases: aliases ?? this.aliases,
         styling: styling ?? this.styling,
         relatedSites: relatedSites ?? this.relatedSites,
@@ -181,8 +228,6 @@ class SiteItem {
         logoUrl: logoUrl ?? this.logoUrl,
         name: name ?? this.name,
         siteType: siteType ?? this.siteType,
-        twitterAccount: twitterAccount ?? this.twitterAccount,
-        closedBetaDate: closedBetaDate ?? this.closedBetaDate,
       );
 
   String toJson() => json.encode(toMap());
@@ -216,7 +261,5 @@ class SiteItem {
         'logo_url': logoUrl,
         'name': name,
         'site_type': siteType,
-        'twitter_account': twitterAccount,
-        'closed_beta_date': closedBetaDate,
       };
 }

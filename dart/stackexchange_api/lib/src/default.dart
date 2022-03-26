@@ -4,7 +4,8 @@ import 'package:stackexchange_api/core.dart';
 ///
 /// [credentials] : The required filed which will be helped
 /// to configure initial api requests.
-class StackExchangeApi extends Core with ErrorsRequest, SitesRequest {
+class StackExchangeApi extends Core with ErrorsRequest, SitesRequest,
+    NotificationsRequest {
   StackExchangeApi({
     required Credentials credentials,
   }) : super(
