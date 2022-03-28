@@ -2,20 +2,20 @@ import 'package:stackexchange_api/core.dart';
 
 final _logger = injectLogger('stackexchangeApi.dx.notifications');
 
-/// A mixin on [Core] which will handle or initiate the notifications
+/// A mixin on [Core] which will handle or initiate the inbox
 /// request to StackExchangeApi.
-mixin NotificationsRequest on Core {
-  /// Returns a user's notifications.
+mixin InboxRequest on Core {
+  /// Returns a user's inbox.
   ///
-  /// This method requires an access_token, with a scope
-  /// containing "read_inbox".
+  /// This method requires an access_token, with a
+  /// scope containing "read_inbox".
   ///
-  /// This method returns a list of notifications.
+  /// This method returns a list of inbox items.
   ///
   /// Throws [StackExchangeApiException].
   ///
-  /// For more details go to [/notifications](https://api.stackexchange.com/docs/notifications)
-  Future<Notifications> getAllNotifications({
+  /// For more details go to [/inbox](https://api.stackexchange.com/docs/inbox)
+  Future<Inbox> getUserInbox({
     int? page,
     int? pageSize,
     required String accessToken,
@@ -27,24 +27,24 @@ mixin NotificationsRequest on Core {
     Ensure(accessToken.trim().isEmpty)
         .isTrue('accessToken should not be empty');
 
-    final params = AllNotifications(
+    final params = UserInbox(
       page: page,
       pageSize: pageSize,
       accessToken: accessToken,
     );
 
-    _logger.info('Getting all notifications. page:$page pageSize:$pageSize');
+    _logger.info('Getting user inbox. page:$page pageSize:$pageSize');
 
     return defaultFlow(
       core: this,
       params: params,
-      serializer: (dynamic json) => Notifications.fromMap(
+      serializer: (dynamic json) => Inbox.fromMap(
         json as Map<String, dynamic>,
       ),
     );
   }
 
-  /// Returns a user's unread notifications.
+  /// Returns the unread items in a user's inbox.
   ///
   /// This method requires an access_token, with a
   /// scope containing "read_inbox".
@@ -53,8 +53,8 @@ mixin NotificationsRequest on Core {
   ///
   /// Throws [StackExchangeApiException].
   ///
-  /// For more details go to [/notifications/unread](https://api.stackexchange.com/docs/unread-notifications)
-  Future<Notifications> getAllUnreadNotifications({
+  /// For more details go to [/inbox/unread](https://api.stackexchange.com/docs/inbox-unread)
+  Future<Inbox> getUserUnreadInbox({
     int? page,
     int? pageSize,
     required String accessToken,
@@ -66,18 +66,18 @@ mixin NotificationsRequest on Core {
     Ensure(accessToken.trim().isEmpty)
         .isTrue('accessToken should not be empty');
 
-    final params = AllUnreadNotifications(
+    final params = UserUnreadInbox(
       page: page,
       pageSize: pageSize,
       accessToken: accessToken,
     );
 
-    _logger.info('Getting all notifications. page:$page pageSize:$pageSize');
+    _logger.info('Getting user unread inbox. page:$page pageSize:$pageSize');
 
     return defaultFlow(
       core: this,
       params: params,
-      serializer: (dynamic json) => Notifications.fromMap(
+      serializer: (dynamic json) => Inbox.fromMap(
         json as Map<String, dynamic>,
       ),
     );

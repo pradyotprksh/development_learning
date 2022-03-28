@@ -1,6 +1,6 @@
 import 'package:stackexchange_api/core.dart';
 
-/// A parameter class which will be used to get all the user notifications
+/// A parameter class which will be used to get the user inbox
 /// from StackExchange.
 ///
 /// [page] and [pageSize] are the combined query. Loosely translated to get
@@ -15,8 +15,8 @@ import 'package:stackexchange_api/core.dart';
 ///
 /// [accessToken] is the required field for which user the notifications has
 /// to be fetched.
-class AllNotifications extends Parameters {
-  AllNotifications({
+class UserInbox extends Parameters {
+  UserInbox({
     required this.accessToken,
     this.page,
     this.pageSize,
@@ -30,19 +30,19 @@ class AllNotifications extends Parameters {
 
   @override
   Request toRequest() => Request.get(
-        uri: Uri(
-          path: '/2.3/notifications',
-          queryParameters: <String, String>{
-            'access_token': accessToken,
-            if (page != null) 'page': page!.toString(),
-            if (pageSize != null) 'pageSize': pageSize!.toString(),
-          },
-        ),
-      );
+    uri: Uri(
+      path: '/2.3/inbox',
+      queryParameters: <String, String>{
+        'access_token': accessToken,
+        if (page != null) 'page': page!.toString(),
+        if (pageSize != null) 'pageSize': pageSize!.toString(),
+      },
+    ),
+  );
 }
 
-/// A parameter class which will be used to get all the user unread
-/// notifications from StackExchange.
+/// A parameter class which will be used to get the user unread
+/// inbox from StackExchange.
 ///
 /// [page] and [pageSize] are the combined query. Loosely translated to get
 /// n number of books (refers to [pageSize]) from mth shelf (refers to [page]).
@@ -56,8 +56,8 @@ class AllNotifications extends Parameters {
 ///
 /// [accessToken] is the required field for which user the notifications has
 /// to be fetched.
-class AllUnreadNotifications extends Parameters {
-  AllUnreadNotifications({
+class UserUnreadInbox extends Parameters {
+  UserUnreadInbox({
     required this.accessToken,
     this.page,
     this.pageSize,
@@ -71,13 +71,13 @@ class AllUnreadNotifications extends Parameters {
 
   @override
   Request toRequest() => Request.get(
-        uri: Uri(
-          path: '2.3/notifications/unread',
-          queryParameters: <String, String>{
-            'access_token': accessToken,
-            if (page != null) 'page': page!.toString(),
-            if (pageSize != null) 'pageSize': pageSize!.toString(),
-          },
-        ),
-      );
+    uri: Uri(
+      path: '2.3/inbox/unread',
+      queryParameters: <String, String>{
+        'access_token': accessToken,
+        if (page != null) 'page': page!.toString(),
+        if (pageSize != null) 'pageSize': pageSize!.toString(),
+      },
+    ),
+  );
 }

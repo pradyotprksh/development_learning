@@ -32,14 +32,10 @@ mixin SitesRequest on Core {
     int? page,
     int? pageSize,
   }) async {
-    if (page != null) {
-      Ensure(page < 0).isTrue('page should be > 0');
-    }
-    if (pageSize != null) {
-      if (pageSize < 0) {
-        _logger.warning('pageSize is < 0. Will be getting empty data.');
-      }
-    }
+    Ensure(page != null && page < 0).isTrue('page should be > 0');
+    Checker(pageSize != null && pageSize <= 0, _logger).isTrueWarning(
+      'pageSize is <= 0. Will be getting empty data.',
+    );
 
     final params = AllSites(
       page: page,
