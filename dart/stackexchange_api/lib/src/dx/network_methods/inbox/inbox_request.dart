@@ -12,6 +12,8 @@ mixin InboxRequest on Core {
   ///
   /// This method returns a list of inbox items.
   ///
+  /// Check [UserInbox] for parameters details.
+  ///
   /// Throws [StackExchangeApiException].
   ///
   /// For more details go to [/inbox](https://api.stackexchange.com/docs/inbox)
@@ -51,12 +53,15 @@ mixin InboxRequest on Core {
   ///
   /// This method returns a list of notifications.
   ///
+  /// Check [UserUnreadInbox] for parameters details.
+  ///
   /// Throws [StackExchangeApiException].
   ///
   /// For more details go to [/inbox/unread](https://api.stackexchange.com/docs/inbox-unread)
   Future<Inbox> getUserUnreadInbox({
     int? page,
     int? pageSize,
+    int? since,
     required String accessToken,
   }) async {
     Ensure(page != null && page < 0).isTrue('page should be > 0');
@@ -70,9 +75,10 @@ mixin InboxRequest on Core {
       page: page,
       pageSize: pageSize,
       accessToken: accessToken,
+      sinceDate: since,
     );
 
-    _logger.info('Getting user unread inbox. page:$page pageSize:$pageSize');
+    _logger.info('Getting user unread inbox');
 
     return defaultFlow(
       core: this,

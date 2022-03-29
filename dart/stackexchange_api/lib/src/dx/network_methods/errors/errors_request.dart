@@ -16,10 +16,7 @@ mixin ErrorsRequest on Core {
   ///
   /// This method returns a list of errors.
   ///
-  /// Example,
-  /// ```dart
-  /// final errors = await stackExchange.getAllErrors();
-  /// ```
+  /// Check [AllErrors] for parameters details.
   ///
   /// Throws [StackExchangeApiException].
   ///
@@ -38,7 +35,7 @@ mixin ErrorsRequest on Core {
       pageSize: pageSize,
     );
 
-    _logger.info('Getting all error list. page:$page pageSize:$pageSize');
+    _logger.info('Getting all error list');
 
     return defaultFlow(
       core: this,
@@ -59,10 +56,7 @@ mixin ErrorsRequest on Core {
   /// HTTP status code and setting the error* properties on the wrapper
   /// object.
   ///
-  /// Example,
-  /// ```dart
-  /// final error = await stackExchange.getError();
-  /// ```
+  /// Check [ErrorDetails] for parameters details.
   ///
   /// Throws [StackExchangeApiException].
   ///

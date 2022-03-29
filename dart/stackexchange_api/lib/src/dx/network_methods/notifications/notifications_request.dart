@@ -12,6 +12,8 @@ mixin NotificationsRequest on Core {
   ///
   /// This method returns a list of notifications.
   ///
+  /// Check [AllNotifications] for parameters details.
+  ///
   /// Throws [StackExchangeApiException].
   ///
   /// For more details go to [/notifications](https://api.stackexchange.com/docs/notifications)
@@ -21,11 +23,11 @@ mixin NotificationsRequest on Core {
     required String accessToken,
   }) async {
     Ensure(page != null && page < 0).isTrue('page should be > 0');
+    Ensure(accessToken.trim().isEmpty)
+        .isTrue('accessToken should not be empty');
     Checker(pageSize != null && pageSize <= 0, _logger).isTrueWarning(
       'pageSize is <= 0. Will be getting empty data.',
     );
-    Ensure(accessToken.trim().isEmpty)
-        .isTrue('accessToken should not be empty');
 
     final params = AllNotifications(
       page: page,
@@ -51,6 +53,8 @@ mixin NotificationsRequest on Core {
   ///
   /// This method returns a list of notifications.
   ///
+  /// Check [AllUnreadNotifications] for parameters details.
+  ///
   /// Throws [StackExchangeApiException].
   ///
   /// For more details go to [/notifications/unread](https://api.stackexchange.com/docs/unread-notifications)
@@ -60,11 +64,11 @@ mixin NotificationsRequest on Core {
     required String accessToken,
   }) async {
     Ensure(page != null && page < 0).isTrue('page should be > 0');
+    Ensure(accessToken.trim().isEmpty)
+        .isTrue('accessToken should not be empty');
     Checker(pageSize != null && pageSize <= 0, _logger).isTrueWarning(
       'pageSize is <= 0. Will be getting empty data.',
     );
-    Ensure(accessToken.trim().isEmpty)
-        .isTrue('accessToken should not be empty');
 
     final params = AllUnreadNotifications(
       page: page,
@@ -72,7 +76,7 @@ mixin NotificationsRequest on Core {
       accessToken: accessToken,
     );
 
-    _logger.info('Getting all notifications. page:$page pageSize:$pageSize');
+    _logger.info('Getting all unread notifications.');
 
     return defaultFlow(
       core: this,

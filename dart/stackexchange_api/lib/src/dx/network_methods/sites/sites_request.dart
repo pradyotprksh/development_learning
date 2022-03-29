@@ -20,10 +20,7 @@ mixin SitesRequest on Core {
   //
   /// This method returns a list of sites.
   ///
-  /// Example,
-  /// ```dart
-  /// final errors = await stackExchange.getSites();
-  /// ```
+  /// Check [AllSites] for parameters details.
   ///
   /// Throws [StackExchangeApiException].
   ///
@@ -42,7 +39,7 @@ mixin SitesRequest on Core {
       pageSize: pageSize,
     );
 
-    _logger.info('Getting all sites. page:$page pageSize:$pageSize');
+    _logger.info('Getting all sites.');
 
     return defaultFlow(
       core: this,

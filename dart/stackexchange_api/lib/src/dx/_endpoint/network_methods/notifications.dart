@@ -35,7 +35,7 @@ class AllNotifications extends Parameters {
           queryParameters: <String, String>{
             'access_token': accessToken,
             if (page != null) 'page': page!.toString(),
-            if (pageSize != null) 'pageSize': pageSize!.toString(),
+            if (pageSize != null) 'pagesize': pageSize!.toString(),
           },
         ),
       );
@@ -76,7 +76,7 @@ class AllUnreadNotifications extends Parameters {
           queryParameters: <String, String>{
             'access_token': accessToken,
             if (page != null) 'page': page!.toString(),
-            if (pageSize != null) 'pageSize': pageSize!.toString(),
+            if (pageSize != null) 'pagesize': pageSize!.toString(),
           },
         ),
       );

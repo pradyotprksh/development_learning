@@ -28,7 +28,7 @@ class AllErrors extends Parameters {
           path: '/2.3/errors',
           queryParameters: <String, String>{
             if (page != null) 'page': page!.toString(),
-            if (pageSize != null) 'pageSize': pageSize!.toString(),
+            if (pageSize != null) 'pagesize': pageSize!.toString(),
           },
         ),
       );

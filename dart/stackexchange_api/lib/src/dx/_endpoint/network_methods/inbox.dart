@@ -30,15 +30,15 @@ class UserInbox extends Parameters {
 
   @override
   Request toRequest() => Request.get(
-    uri: Uri(
-      path: '/2.3/inbox',
-      queryParameters: <String, String>{
-        'access_token': accessToken,
-        if (page != null) 'page': page!.toString(),
-        if (pageSize != null) 'pageSize': pageSize!.toString(),
-      },
-    ),
-  );
+        uri: Uri(
+          path: '/2.3/inbox',
+          queryParameters: <String, String>{
+            'access_token': accessToken,
+            if (page != null) 'page': page!.toString(),
+            if (pageSize != null) 'pagesize': pageSize!.toString(),
+          },
+        ),
+      );
 }
 
 /// A parameter class which will be used to get the user unread
@@ -61,6 +61,7 @@ class UserUnreadInbox extends Parameters {
     required this.accessToken,
     this.page,
     this.pageSize,
+    this.sinceDate,
   });
 
   int? page;
@@ -69,15 +70,18 @@ class UserUnreadInbox extends Parameters {
 
   String accessToken;
 
+  int? sinceDate;
+
   @override
   Request toRequest() => Request.get(
-    uri: Uri(
-      path: '2.3/inbox/unread',
-      queryParameters: <String, String>{
-        'access_token': accessToken,
-        if (page != null) 'page': page!.toString(),
-        if (pageSize != null) 'pageSize': pageSize!.toString(),
-      },
-    ),
-  );
+        uri: Uri(
+          path: '2.3/inbox/unread',
+          queryParameters: <String, String>{
+            'access_token': accessToken,
+            if (page != null) 'page': page!.toString(),
+            if (pageSize != null) 'pagesize': pageSize!.toString(),
+            if (sinceDate != null) 'since': sinceDate!.toString(),
+          },
+        ),
+      );
 }

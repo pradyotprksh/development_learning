@@ -24,12 +24,12 @@ class AllSites extends Parameters {
 
   @override
   Request toRequest() => Request.get(
-    uri: Uri(
-      path: '/2.3/sites',
-      queryParameters: <String, dynamic>{
-        if (page != null) 'page': page!.toString(),
-        if (pageSize != null) 'pageSize': pageSize!.toString(),
-      },
-    ),
-  );
+        uri: Uri(
+          path: '/2.3/sites',
+          queryParameters: <String, dynamic>{
+            if (page != null) 'page': page!.toString(),
+            if (pageSize != null) 'pagesize': pageSize!.toString(),
+          },
+        ),
+      );
 }

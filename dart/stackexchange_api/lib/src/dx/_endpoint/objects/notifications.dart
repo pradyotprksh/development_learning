@@ -72,7 +72,8 @@ class NotificationItem {
         json.decode(str) as Map<String, dynamic>,
       );
 
-  factory NotificationItem.fromMap(Map<String, dynamic> json) => NotificationItem(
+  factory NotificationItem.fromMap(Map<String, dynamic> json) =>
+      NotificationItem(
         site: Site.fromMap(
           json['site'] as Map<String, dynamic>? ?? <String, dynamic>{},
         ),
