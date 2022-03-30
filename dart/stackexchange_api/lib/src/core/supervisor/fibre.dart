@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:stackexchange_api/core.dart';
 
-final _logger = injectLogger('film_gyaan.core.supervisor.fiber');
+final _logger = injectLogger('stackexchange_api.core.supervisor.fiber');
 
 typedef _FiberAction<T> = Future<T> Function();
 

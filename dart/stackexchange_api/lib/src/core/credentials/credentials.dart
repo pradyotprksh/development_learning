@@ -42,4 +42,8 @@ class Credentials {
   String? clientSecret;
 
   String? key;
+
+  @override
+  String toString() =>
+      'Credentials = clientId: $clientId, clientSecret: $clientSecret key:$key';
 }

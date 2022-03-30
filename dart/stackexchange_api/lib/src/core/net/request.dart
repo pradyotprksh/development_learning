@@ -19,6 +19,13 @@ class Request {
     this.body,
   }) : type = RequestType.get;
 
+  /// A POST [Request] which will make the request.
+  Request.post({
+    this.uri,
+    this.headers,
+    this.body,
+  }) : type = RequestType.post;
+
   RequestType type;
 
   Uri? uri;

@@ -4,7 +4,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:stackexchange_api/core.dart';
 
-final _logger = injectLogger('film_gyaan.networking.request_handler');
+final _logger = injectLogger('stackexchange_api.networking.request_handler');
 
 /// Provides the [RequestHandler].
 ///
