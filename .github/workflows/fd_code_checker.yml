@@ -39,7 +39,7 @@ jobs:
           dart analyze
           dart pub publish --dry-run
   stackoverflow:
-    name: flublog Code Checker
+    name: stackoverflow Code Checker
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
