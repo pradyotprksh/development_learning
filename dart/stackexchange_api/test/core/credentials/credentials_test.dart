@@ -1,6 +1,5 @@
 import 'package:stackexchange_api/core.dart';
-import 'package:test/expect.dart';
-import 'package:test/scaffolding.dart';
+import 'package:test/test.dart';
 
 import '../../variables.dart';
 

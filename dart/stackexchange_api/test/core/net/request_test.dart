@@ -1,12 +1,11 @@
 import 'package:stackexchange_api/core.dart';
-import 'package:test/expect.dart';
-import 'package:test/scaffolding.dart';
+import 'package:test/test.dart';
 
 import '../../variables.dart';
 
 /// Testing [Request]
 void main() {
-  var _lazyLogger = injectLogger('request_test');
+  final _lazyLogger = injectLogger('request_test');
 
   test(
     'GET request details should match',
