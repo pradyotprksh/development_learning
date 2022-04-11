@@ -75,7 +75,7 @@ class UserUnreadInbox extends Parameters {
   @override
   Request toRequest() => Request.get(
         uri: Uri(
-          path: '2.3/inbox/unread',
+          path: '/2.3/inbox/unread',
           queryParameters: <String, String>{
             'access_token': accessToken,
             if (page != null) 'page': page!.toString(),

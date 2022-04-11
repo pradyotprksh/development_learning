@@ -4,7 +4,7 @@ import 'package:test/test.dart';
 /// Testing [AllErrors] and [ErrorDetails]
 void main() {
   group(
-    'AllErrors test cases',
+    'all errors test cases',
     () {
       final allErrorsNoParameter = AllErrors();
       final allErrorsWithOnlyPage = AllErrors(page: 1);
@@ -12,7 +12,7 @@ void main() {
       final allErrors = AllErrors(page: 1, pageSize: 2);
 
       test(
-        'all errors with no parameters',
+        'with no parameters',
         () {
           expect(
             allErrorsNoParameter.toRequest().uri?.path,
@@ -26,8 +26,8 @@ void main() {
       );
 
       test(
-        'all errors with only page',
-            () {
+        'with only page',
+        () {
           expect(
             allErrorsWithOnlyPage.toRequest().uri?.path,
             '/2.3/errors',
@@ -48,8 +48,8 @@ void main() {
       );
 
       test(
-        'all errors with only pageSize',
-            () {
+        'with only pageSize',
+        () {
           expect(
             allErrorsWithOnlyPageSize.toRequest().uri?.path,
             '/2.3/errors',
@@ -59,7 +59,10 @@ void main() {
             1,
           );
           expect(
-            allErrorsWithOnlyPageSize.toRequest().uri?.queryParameters['pagesize'],
+            allErrorsWithOnlyPageSize
+                .toRequest()
+                .uri
+                ?.queryParameters['pagesize'],
             '2',
           );
           expect(
@@ -70,8 +73,8 @@ void main() {
       );
 
       test(
-        'all errors with all parameters',
-            () {
+        'with all parameters',
+        () {
           expect(
             allErrors.toRequest().uri?.path,
             '/2.3/errors',
@@ -87,6 +90,27 @@ void main() {
           expect(
             allErrors.toRequest().uri?.queryParameters['page'],
             '1',
+          );
+        },
+      );
+    },
+  );
+
+  group(
+    'error details test cases',
+    () {
+      final errorDetails = ErrorDetails(id: 400);
+
+      test(
+        'with a new instance',
+        () {
+          expect(
+            errorDetails.toRequest().uri?.path,
+            '/2.3/errors/${errorDetails.id}',
+          );
+          expect(
+            errorDetails.toRequest().uri?.queryParameters.length,
+            0,
           );
         },
       );
