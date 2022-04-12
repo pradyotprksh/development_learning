@@ -10,13 +10,13 @@ I will be getting ideas of the project which I want to work on and will be creat
 ## [Dart](https://github.com/pradyotprksh/development_learning/tree/main/dart)
   - [data_structures](https://github.com/pradyotprksh/development_learning/tree/main/dart/data_structures)
   - [algorithms](https://github.com/pradyotprksh/development_learning/tree/main/dart/algorithms)
-  - [Stack Exchange SDK](https://github.com/pradyotprksh/development_learning/tree/main/dart/stackexchange_api) [WIP]
+  - ⚠️ [Stack Exchange SDK](https://github.com/pradyotprksh/development_learning/tree/main/dart/stackexchange_api)
 
 ## [Flutter](https://github.com/pradyotprksh/development_learning/tree/main/flutter)
   - [snake_ladders](https://github.com/pradyotprksh/development_learning/tree/main/flutter/snake_ladders)
-  - [flublog](https://github.com/pradyotprksh/development_learning/tree/main/flutter/flublog) [WIP]
-  - [stackoverflow](https://github.com/pradyotprksh/development_learning/tree/main/flutter/stackoverflow) [WIP]
-  - [second_hand_clothes](https://github.com/pradyotprksh/development_learning/tree/main/flutter/second_hand_clothes) [WIP]
+  - ⚠️ [flublog](https://github.com/pradyotprksh/development_learning/tree/main/flutter/flublog)
+  - ⚠️ [stackoverflow](https://github.com/pradyotprksh/development_learning/tree/main/flutter/stackoverflow)
+  - ⚠️ [second_hand_clothes](https://github.com/pradyotprksh/development_learning/tree/main/flutter/second_hand_clothes)
 
 ## [iOS](https://github.com/pradyotprksh/development_learning/tree/main/ios)
 
@@ -57,10 +57,10 @@ I will be getting ideas of the project which I want to work on and will be creat
 
 ## [Python](https://github.com/pradyotprksh/development_learning/tree/main/python)
   - [2022 Bootcamp Udemy Python Course](https://github.com/pradyotprksh/development_learning/tree/main/python/UdemyCourse/2022_Python_Bootcamp) 
-  - [PyBlog 🐍](https://github.com/pradyotprksh/development_learning/tree/main/python/pyblog) [WIP]
+  - ⚠️ [PyBlog 🐍](https://github.com/pradyotprksh/development_learning/tree/main/python/pyblog)
   - [Practice](https://github.com/pradyotprksh/development_learning/tree/main/python/practice)
 
-## [Technical interview notes](https://pradyotprksh.notion.site/Technical-Interview-Notes-a12c1a0f334e4b6f85e72b299bace9ee) [WIP]
+## ⚠️ [Technical interview notes](https://pradyotprksh.notion.site/Technical-Interview-Notes-a12c1a0f334e4b6f85e72b299bace9ee)
 This is still in progress will be updating the notes as I move forward. The notes have been made using the "CRACKING the CODING INTERVIEW 6th EDITION".
 
 ---
