@@ -5,7 +5,7 @@ Will be adding new projects for different platforms as I move forward and learn.
 
 Each project is divided into folders based on the platforms and the courses. And also added the final screenshot of the project (if possible).
 
-I will be getting ideas of the project which I want to work on and will be creating the project and marking it as WIP, this doesn't mean I will be working on that. Check commits for the project I am currently working on. The only intention is keep track of the projects I want to work on.
+I will be getting ideas of the project which I want to work on and will be creating the project and marking it as ⚠️, this doesn't mean I will be working on that. Check commits for the project I am currently working on. The only intention is keep track of the projects I want to work on.
 
 ## [Dart](https://github.com/pradyotprksh/development_learning/tree/main/dart)
   - [data_structures](https://github.com/pradyotprksh/development_learning/tree/main/dart/data_structures)
