@@ -9,6 +9,17 @@
 # packages, and plugins designed to encourage good coding practices.
 include: package:flutter_lints/flutter.yaml
 
+analyzer:
+  strong-mode:
+    implicit-casts: false
+    implicit-dynamic: false
+  errors:
+    close_sinks: ignore
+    missing_required_param: warning
+    parameter_assignments: warning
+    missing_return: error
+    todo: ignore
+
 linter:
   # The lint rules applied to this project can be customized in the
   # section below to disable rules from the `package:flutter_lints/flutter.yaml`
@@ -22,8 +33,86 @@ linter:
   # `// ignore_for_file: name_of_lint` syntax on the line or in the file
   # producing the lint.
   rules:
-    # avoid_print: false  # Uncomment to disable the `avoid_print` rule
-    # prefer_single_quotes: true  # Uncomment to enable the `prefer_single_quotes` rule
+    avoid_print: true
+    prefer_single_quotes: false
+    annotate_overrides: true
+    avoid_empty_else: true
+    avoid_function_literals_in_foreach_calls: true
+    avoid_init_to_null: true
+    prefer_expression_function_bodies: true
+    avoid_null_checks_in_equality_operators: true
+    avoid_relative_lib_imports: true
+    avoid_renaming_method_parameters: true
+    avoid_return_types_on_setters: true
+    avoid_returning_null: true
+    avoid_types_as_parameter_names: true
+    avoid_unused_constructor_parameters: true
+    await_only_futures: true
+    camel_case_types: true
+    file_names: true
+    cancel_subscriptions: true
+    cascade_invocations: true
+    comment_references: true
+    constant_identifier_names: true
+    control_flow_in_finally: true
+    directives_ordering: true
+    curly_braces_in_flow_control_structures: true
+    empty_catches: true
+    empty_constructor_bodies: true
+    empty_statements: true
+    hash_and_equals: true
+    implementation_imports: true
+    invariant_booleans: true
+    iterable_contains_unrelated_type: true
+    library_names: true
+    library_prefixes: true
+    list_remove_unrelated_type: true
+    no_adjacent_strings_in_list: true
+    no_duplicate_case_values: true
+    non_constant_identifier_names: true
+    null_closures: true
+    omit_local_variable_types: true
+    only_throw_errors: true
+    overridden_fields: true
+    package_api_docs: true
+    package_names: true
+    package_prefixed_library_names: true
+    prefer_adjacent_string_concatenation: true
+    prefer_collection_literals: true
+    prefer_conditional_assignment: true
+    prefer_const_constructors: true
+    prefer_contains: true
+    prefer_equal_for_default_values: true
+    prefer_final_fields: true
+    prefer_initializing_formals: true
+    prefer_interpolation_to_compose_strings: true
+    prefer_is_empty: true
+    prefer_is_not_empty: true
+    prefer_typing_uninitialized_variables: true
+    recursive_getters: true
+    slash_for_doc_comments: true
+    sort_constructors_first: true
+    test_types_in_equals: true
+    throw_in_finally: true
+    type_init_formals: true
+    unawaited_futures: true
+    unnecessary_brace_in_string_interps: true
+    unnecessary_const: true
+    unnecessary_overrides: true
+    unnecessary_parenthesis: true
+    unnecessary_getters_setters: true
+    avoid_setters_without_getters: true
+    unnecessary_lambdas: true
+    unnecessary_new: true
+    unnecessary_null_aware_assignments: true
+    unnecessary_statements: true
+    unnecessary_this: true
+    unrelated_type_equality_checks: true
+    use_rethrow_when_possible: true
+    valid_regexps: true
+    sort_pub_dependencies: true
+    sized_box_for_whitespace: true
+    always_use_package_imports: true
 
 # Additional information about this file can be found at
 # https://dart.dev/guides/language/analysis-options
