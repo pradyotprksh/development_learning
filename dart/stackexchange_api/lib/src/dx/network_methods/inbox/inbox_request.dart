@@ -22,11 +22,11 @@ mixin InboxRequest on Core {
     int? pageSize,
     required String accessToken,
   }) async {
-    Ensure(page != null && page < 0).isTrue('page should be > 0');
+    Ensure(page != null && page > 0).isTrue('page should be > 0');
     Checker(pageSize != null && pageSize <= 0, _logger).isTrueWarning(
       'pageSize is <= 0. Will be getting empty data.',
     );
-    Ensure(accessToken.trim().isEmpty)
+    Ensure(accessToken.trim().isNotEmpty)
         .isTrue('accessToken should not be empty');
 
     final params = UserInbox(
@@ -64,11 +64,11 @@ mixin InboxRequest on Core {
     int? since,
     required String accessToken,
   }) async {
-    Ensure(page != null && page < 0).isTrue('page should be > 0');
+    Ensure(page != null && page > 0).isTrue('page should be > 0');
     Checker(pageSize != null && pageSize <= 0, _logger).isTrueWarning(
       'pageSize is <= 0. Will be getting empty data.',
     );
-    Ensure(accessToken.trim().isEmpty)
+    Ensure(accessToken.trim().isNotEmpty)
         .isTrue('accessToken should not be empty');
 
     final params = UserUnreadInbox(

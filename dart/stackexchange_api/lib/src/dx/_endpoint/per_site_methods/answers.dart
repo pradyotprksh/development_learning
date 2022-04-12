@@ -141,3 +141,32 @@ class AnswersIds extends Parameters {
         ),
       );
 }
+
+/// A parameter class which will be used to accept an answer by the
+/// authenticated user.
+///
+/// [id] of the answer which the user wants to accept.
+///
+/// [accessToken] is the token of the user who is going to accept the answer.
+class AcceptAnswer extends Parameters {
+  AcceptAnswer({
+    required this.id,
+    required this.accessToken,
+    this.preview = true,
+  });
+
+  int id;
+  String accessToken;
+  bool preview;
+
+  @override
+  Request toRequest() => Request.post(
+        uri: Uri(
+          path: '/2.3/answers/$id/accept',
+          queryParameters: <String, String>{
+            'access_token': accessToken,
+            'preview': preview.toString(),
+          },
+        ),
+      );
+}

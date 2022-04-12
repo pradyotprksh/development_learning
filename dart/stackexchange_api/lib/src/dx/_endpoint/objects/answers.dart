@@ -65,7 +65,7 @@ class Answers extends Result {
       };
 }
 
-class AnswerItem {
+class AnswerItem extends Result {
   AnswerItem({
     required this.owner,
     required this.isAccepted,

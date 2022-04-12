@@ -22,8 +22,8 @@ mixin NotificationsRequest on Core {
     int? pageSize,
     required String accessToken,
   }) async {
-    Ensure(page != null && page < 0).isTrue('page should be > 0');
-    Ensure(accessToken.trim().isEmpty)
+    Ensure(page != null && page > 0).isTrue('page should be > 0');
+    Ensure(accessToken.trim().isNotEmpty)
         .isTrue('accessToken should not be empty');
     Checker(pageSize != null && pageSize <= 0, _logger).isTrueWarning(
       'pageSize is <= 0. Will be getting empty data.',
@@ -63,8 +63,8 @@ mixin NotificationsRequest on Core {
     int? pageSize,
     required String accessToken,
   }) async {
-    Ensure(page != null && page < 0).isTrue('page should be > 0');
-    Ensure(accessToken.trim().isEmpty)
+    Ensure(page != null && page > 0).isTrue('page should be > 0');
+    Ensure(accessToken.trim().isNotEmpty)
         .isTrue('accessToken should not be empty');
     Checker(pageSize != null && pageSize <= 0, _logger).isTrueWarning(
       'pageSize is <= 0. Will be getting empty data.',
