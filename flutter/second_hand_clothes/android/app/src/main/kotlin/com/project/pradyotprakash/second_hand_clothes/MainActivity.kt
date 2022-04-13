@@ -1,4 +1,4 @@
-package com.project.pradyotprakash.secondhandclothes.second_hand_clothes
+package com.project.pradyotprakash.second_hand_clothes
 
 import io.flutter.embedding.android.FlutterActivity
 
