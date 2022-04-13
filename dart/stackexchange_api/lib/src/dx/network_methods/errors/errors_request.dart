@@ -25,7 +25,9 @@ mixin ErrorsRequest on Core {
     int? page,
     int? pageSize,
   }) async {
-    Ensure(page != null && page > 0).isTrue('page should be > 0');
+    if (page != null) {
+      Ensure(page > 0).isTrue('page should be > 0');
+    }
     Checker(pageSize != null && pageSize <= 0, _logger).isTrueWarning(
       'pageSize is <= 0. Will be getting empty data.',
     );

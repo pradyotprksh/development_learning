@@ -25,17 +25,24 @@ void main() {
 
       test(
         'with only required parameters',
-            () {
+        () {
           expect(
             userInboxWithOnlyRequiredParams.toRequest().uri?.path,
             '/2.3/inbox',
           );
           expect(
-            userInboxWithOnlyRequiredParams.toRequest().uri?.queryParameters.length,
+            userInboxWithOnlyRequiredParams
+                .toRequest()
+                .uri
+                ?.queryParameters
+                .length,
             1,
           );
           expect(
-            userInboxWithOnlyRequiredParams.toRequest().uri?.queryParameters['access_token'],
+            userInboxWithOnlyRequiredParams
+                .toRequest()
+                .uri
+                ?.queryParameters['access_token'],
             'accessToken',
           );
         },
@@ -43,7 +50,7 @@ void main() {
 
       test(
         'with extra page parameters',
-            () {
+        () {
           expect(
             userInboxWithExtraPageParam.toRequest().uri?.path,
             '/2.3/inbox',
@@ -53,11 +60,17 @@ void main() {
             2,
           );
           expect(
-            userInboxWithExtraPageParam.toRequest().uri?.queryParameters['access_token'],
+            userInboxWithExtraPageParam
+                .toRequest()
+                .uri
+                ?.queryParameters['access_token'],
             'accessToken',
           );
           expect(
-            userInboxWithExtraPageParam.toRequest().uri?.queryParameters['page'],
+            userInboxWithExtraPageParam
+                .toRequest()
+                .uri
+                ?.queryParameters['page'],
             '1',
           );
         },
@@ -65,21 +78,31 @@ void main() {
 
       test(
         'with extra page size parameters',
-            () {
+        () {
           expect(
             userInboxWithExtraPageSizeParam.toRequest().uri?.path,
             '/2.3/inbox',
           );
           expect(
-            userInboxWithExtraPageSizeParam.toRequest().uri?.queryParameters.length,
+            userInboxWithExtraPageSizeParam
+                .toRequest()
+                .uri
+                ?.queryParameters
+                .length,
             2,
           );
           expect(
-            userInboxWithExtraPageSizeParam.toRequest().uri?.queryParameters['access_token'],
+            userInboxWithExtraPageSizeParam
+                .toRequest()
+                .uri
+                ?.queryParameters['access_token'],
             'accessToken',
           );
           expect(
-            userInboxWithExtraPageSizeParam.toRequest().uri?.queryParameters['pagesize'],
+            userInboxWithExtraPageSizeParam
+                .toRequest()
+                .uri
+                ?.queryParameters['pagesize'],
             '2',
           );
         },
@@ -87,7 +110,7 @@ void main() {
 
       test(
         'with all parameters',
-            () {
+        () {
           expect(
             userInboxWithAllParam.toRequest().uri?.path,
             '/2.3/inbox',
@@ -97,7 +120,10 @@ void main() {
             3,
           );
           expect(
-            userInboxWithAllParam.toRequest().uri?.queryParameters['access_token'],
+            userInboxWithAllParam
+                .toRequest()
+                .uri
+                ?.queryParameters['access_token'],
             'accessToken',
           );
           expect(
@@ -140,17 +166,24 @@ void main() {
 
       test(
         'with only required parameters',
-            () {
+        () {
           expect(
             userUnreadInboxWithOnlyRequiredParams.toRequest().uri?.path,
             '/2.3/inbox/unread',
           );
           expect(
-            userUnreadInboxWithOnlyRequiredParams.toRequest().uri?.queryParameters.length,
+            userUnreadInboxWithOnlyRequiredParams
+                .toRequest()
+                .uri
+                ?.queryParameters
+                .length,
             1,
           );
           expect(
-            userUnreadInboxWithOnlyRequiredParams.toRequest().uri?.queryParameters['access_token'],
+            userUnreadInboxWithOnlyRequiredParams
+                .toRequest()
+                .uri
+                ?.queryParameters['access_token'],
             'accessToken',
           );
         },
@@ -158,21 +191,31 @@ void main() {
 
       test(
         'with extra page parameters',
-            () {
+        () {
           expect(
             userUnreadInboxWithExtraPageParam.toRequest().uri?.path,
             '/2.3/inbox/unread',
           );
           expect(
-            userUnreadInboxWithExtraPageParam.toRequest().uri?.queryParameters.length,
+            userUnreadInboxWithExtraPageParam
+                .toRequest()
+                .uri
+                ?.queryParameters
+                .length,
             2,
           );
           expect(
-            userUnreadInboxWithExtraPageParam.toRequest().uri?.queryParameters['access_token'],
+            userUnreadInboxWithExtraPageParam
+                .toRequest()
+                .uri
+                ?.queryParameters['access_token'],
             'accessToken',
           );
           expect(
-            userUnreadInboxWithExtraPageParam.toRequest().uri?.queryParameters['page'],
+            userUnreadInboxWithExtraPageParam
+                .toRequest()
+                .uri
+                ?.queryParameters['page'],
             '1',
           );
         },
@@ -180,21 +223,31 @@ void main() {
 
       test(
         'with extra page size parameters',
-            () {
+        () {
           expect(
             userUnreadInboxWithExtraPageSizeParam.toRequest().uri?.path,
             '/2.3/inbox/unread',
           );
           expect(
-            userUnreadInboxWithExtraPageSizeParam.toRequest().uri?.queryParameters.length,
+            userUnreadInboxWithExtraPageSizeParam
+                .toRequest()
+                .uri
+                ?.queryParameters
+                .length,
             2,
           );
           expect(
-            userUnreadInboxWithExtraPageSizeParam.toRequest().uri?.queryParameters['access_token'],
+            userUnreadInboxWithExtraPageSizeParam
+                .toRequest()
+                .uri
+                ?.queryParameters['access_token'],
             'accessToken',
           );
           expect(
-            userUnreadInboxWithExtraPageSizeParam.toRequest().uri?.queryParameters['pagesize'],
+            userUnreadInboxWithExtraPageSizeParam
+                .toRequest()
+                .uri
+                ?.queryParameters['pagesize'],
             '2',
           );
         },
@@ -202,21 +255,31 @@ void main() {
 
       test(
         'with extra since date parameters',
-            () {
+        () {
           expect(
             userUnreadInboxWithExtraSinceDateSizeParam.toRequest().uri?.path,
             '/2.3/inbox/unread',
           );
           expect(
-            userUnreadInboxWithExtraSinceDateSizeParam.toRequest().uri?.queryParameters.length,
+            userUnreadInboxWithExtraSinceDateSizeParam
+                .toRequest()
+                .uri
+                ?.queryParameters
+                .length,
             2,
           );
           expect(
-            userUnreadInboxWithExtraSinceDateSizeParam.toRequest().uri?.queryParameters['access_token'],
+            userUnreadInboxWithExtraSinceDateSizeParam
+                .toRequest()
+                .uri
+                ?.queryParameters['access_token'],
             'accessToken',
           );
           expect(
-            userUnreadInboxWithExtraSinceDateSizeParam.toRequest().uri?.queryParameters['since'],
+            userUnreadInboxWithExtraSinceDateSizeParam
+                .toRequest()
+                .uri
+                ?.queryParameters['since'],
             '123456',
           );
         },
@@ -224,7 +287,7 @@ void main() {
 
       test(
         'with all parameters',
-            () {
+        () {
           expect(
             userUnreadInboxWithAllParam.toRequest().uri?.path,
             '/2.3/inbox/unread',
@@ -234,19 +297,31 @@ void main() {
             4,
           );
           expect(
-            userUnreadInboxWithAllParam.toRequest().uri?.queryParameters['access_token'],
+            userUnreadInboxWithAllParam
+                .toRequest()
+                .uri
+                ?.queryParameters['access_token'],
             'accessToken',
           );
           expect(
-            userUnreadInboxWithAllParam.toRequest().uri?.queryParameters['page'],
+            userUnreadInboxWithAllParam
+                .toRequest()
+                .uri
+                ?.queryParameters['page'],
             '1',
           );
           expect(
-            userUnreadInboxWithAllParam.toRequest().uri?.queryParameters['pagesize'],
+            userUnreadInboxWithAllParam
+                .toRequest()
+                .uri
+                ?.queryParameters['pagesize'],
             '2',
           );
           expect(
-            userUnreadInboxWithAllParam.toRequest().uri?.queryParameters['since'],
+            userUnreadInboxWithAllParam
+                .toRequest()
+                .uri
+                ?.queryParameters['since'],
             '123456',
           );
         },

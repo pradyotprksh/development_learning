@@ -2,7 +2,7 @@ import 'package:stackexchange_api/core.dart';
 import 'package:stackexchange_api/src/default.dart';
 
 abstract class Variables {
-  static int clientId = 12345;
+  static int clientId = 23135;
   static String? clientSecret = '123456';
   static String? key = '123456';
 
@@ -14,5 +14,11 @@ abstract class Variables {
 
   static final stackExchangeApi = StackExchangeApi(
     credentials: credentials,
+  );
+
+  static final actualStackExchangeApi = StackExchangeApi(
+    credentials: Credentials(
+      clientId: clientId,
+    ),
   );
 }

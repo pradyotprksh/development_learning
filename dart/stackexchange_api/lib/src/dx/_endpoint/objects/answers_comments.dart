@@ -2,50 +2,45 @@ import 'dart:convert';
 
 import 'package:stackexchange_api/core.dart';
 
-class Answers extends Result {
-  Answers({
+class AnswersComments extends Result {
+  AnswersComments({
     required this.items,
     required this.hasMore,
-    required this.backoff,
     required this.quotaMax,
     required this.quotaRemaining,
   });
 
-  factory Answers.fromJson(String str) => Answers.fromMap(
+  factory AnswersComments.fromJson(String str) => AnswersComments.fromMap(
         json.decode(str) as Map<String, dynamic>,
       );
 
-  factory Answers.fromMap(Map<String, dynamic> json) => Answers(
-        items: List<AnswerItem>.from(
+  factory AnswersComments.fromMap(Map<String, dynamic> json) => AnswersComments(
+        items: List<AnswersCommentsItem>.from(
           (json['items'] as List<dynamic>? ?? <dynamic>[]).map<dynamic>(
-            (dynamic x) => AnswerItem.fromMap(
+            (dynamic x) => AnswersCommentsItem.fromMap(
               x as Map<String, dynamic>,
             ),
           ),
         ),
         hasMore: json['has_more'] as bool? ?? false,
-        backoff: json['backoff'] as int? ?? -1,
         quotaMax: json['quota_max'] as int? ?? -1,
         quotaRemaining: json['quota_remaining'] as int? ?? -1,
       );
 
-  final List<AnswerItem> items;
+  final List<AnswersCommentsItem> items;
   final bool hasMore;
-  final int backoff;
   final int quotaMax;
   final int quotaRemaining;
 
-  Answers copyWith({
-    List<AnswerItem>? items,
+  AnswersComments copyWith({
+    List<AnswersCommentsItem>? items,
     bool? hasMore,
-    int? backoff,
     int? quotaMax,
     int? quotaRemaining,
   }) =>
-      Answers(
+      AnswersComments(
         items: items ?? this.items,
         hasMore: hasMore ?? this.hasMore,
-        backoff: backoff ?? this.backoff,
         quotaMax: quotaMax ?? this.quotaMax,
         quotaRemaining: quotaRemaining ?? this.quotaRemaining,
       );
@@ -55,77 +50,75 @@ class Answers extends Result {
   Map<String, dynamic> toMap() => <String, dynamic>{
         'items': List<dynamic>.from(
           items.map<dynamic>(
-            (dynamic x) => x.toMap(),
+            (x) => x.toMap(),
           ),
         ),
         'has_more': hasMore,
-        'backoff': backoff,
         'quota_max': quotaMax,
         'quota_remaining': quotaRemaining,
       };
 }
 
-class AnswerItem extends Result {
-  AnswerItem({
+class AnswersCommentsItem {
+  AnswersCommentsItem({
     required this.owner,
-    required this.isAccepted,
+    required this.replyToUser,
+    required this.edited,
     required this.score,
-    required this.lastActivityDate,
-    required this.lastEditDate,
     required this.creationDate,
-    required this.answerId,
-    required this.questionId,
+    required this.postId,
+    required this.commentId,
     required this.contentLicense,
   });
 
-  factory AnswerItem.fromJson(String str) => AnswerItem.fromMap(
+  factory AnswersCommentsItem.fromJson(String str) =>
+      AnswersCommentsItem.fromMap(
         json.decode(str) as Map<String, dynamic>,
       );
 
-  factory AnswerItem.fromMap(Map<String, dynamic> json) => AnswerItem(
+  factory AnswersCommentsItem.fromMap(Map<String, dynamic> json) =>
+      AnswersCommentsItem(
         owner: Owner.fromMap(
           json['owner'] as Map<String, dynamic>? ?? <String, dynamic>{},
         ),
-        isAccepted: json['is_accepted'] as bool? ?? false,
+        replyToUser: Owner.fromMap(
+          json['reply_to_user'] as Map<String, dynamic>? ?? <String, dynamic>{},
+        ),
+        edited: json['edited'] as bool? ?? false,
         score: json['score'] as int? ?? -1,
-        lastActivityDate: json['last_activity_date'] as int? ?? -1,
-        lastEditDate: json['last_edit_date'] as int? ?? -1,
         creationDate: json['creation_date'] as int? ?? -1,
-        answerId: json['answer_id'] as int? ?? -1,
-        questionId: json['question_id'] as int? ?? -1,
+        postId: json['post_id'] as int? ?? -1,
+        commentId: json['comment_id'] as int? ?? -1,
         contentLicense: json['content_license'] as String? ?? '',
       );
 
   final Owner owner;
-  final bool isAccepted;
+  final Owner replyToUser;
+  final bool edited;
   final int score;
-  final int lastActivityDate;
-  final int lastEditDate;
   final int creationDate;
-  final int answerId;
-  final int questionId;
+  final int postId;
+  final int commentId;
   final String contentLicense;
 
-  AnswerItem copyWith({
+  AnswersCommentsItem copyWith({
     Owner? owner,
-    bool? isAccepted,
+    Owner? replyToUser,
+    bool? edited,
     int? score,
-    int? lastActivityDate,
-    int? lastEditDate,
     int? creationDate,
-    int? answerId,
-    int? questionId,
+    int? postId,
+    int? commentId,
     String? contentLicense,
   }) =>
-      AnswerItem(
+      AnswersCommentsItem(
         owner: owner ?? this.owner,
-        isAccepted: isAccepted ?? this.isAccepted,
+        replyToUser: replyToUser ?? this.replyToUser,
+        edited: edited ?? this.edited,
         score: score ?? this.score,
-        lastActivityDate: lastActivityDate ?? this.lastActivityDate,
-        lastEditDate: lastEditDate ?? this.lastEditDate,
         creationDate: creationDate ?? this.creationDate,
-        answerId: answerId ?? this.answerId,
-        questionId: questionId ?? this.questionId,
+        postId: postId ?? this.postId,
+        commentId: commentId ?? this.commentId,
         contentLicense: contentLicense ?? this.contentLicense,
       );
 
@@ -133,13 +126,12 @@ class AnswerItem extends Result {
 
   Map<String, dynamic> toMap() => <String, dynamic>{
         'owner': owner.toMap(),
-        'is_accepted': isAccepted,
+        'reply_to_user': replyToUser.toMap(),
+        'edited': edited,
         'score': score,
-        'last_activity_date': lastActivityDate,
-        'last_edit_date': lastEditDate,
         'creation_date': creationDate,
-        'answer_id': answerId,
-        'question_id': questionId,
+        'post_id': postId,
+        'comment_id': commentId,
         'content_license': contentLicense,
       };
 }

@@ -46,10 +46,10 @@ void main() {
 
   group(
     'testing RequestOtherException',
-        () {
+    () {
       test(
         'will throw RequestOtherException',
-            () {
+        () {
           expect(
             raiseRequestOtherException,
             throwsA(
@@ -61,7 +61,7 @@ void main() {
 
       test(
         '_requestOtherException will not be null',
-            () {
+        () {
           try {
             raiseRequestOtherException();
           } on RequestOtherException catch (e) {
@@ -74,8 +74,9 @@ void main() {
 
       test(
         '_requestOtherException will have correct message',
-            () {
-          expect(_requestOtherException?.message, '${Constants.requestFailed} (null)');
+        () {
+          expect(_requestOtherException?.message,
+              '${Constants.requestFailed} (null)');
         },
       );
     },
@@ -83,10 +84,10 @@ void main() {
 
   group(
     'testing RequestTimeoutException',
-        () {
+    () {
       test(
         'will throw RequestTimeoutException',
-            () {
+        () {
           expect(
             raiseRequestTimeoutException,
             throwsA(
@@ -98,7 +99,7 @@ void main() {
 
       test(
         '_requestTimeoutException will not be null',
-            () {
+        () {
           try {
             raiseRequestTimeoutException();
           } on RequestTimeoutException catch (e) {
@@ -111,7 +112,7 @@ void main() {
 
       test(
         '_requestTimeoutException will have correct message',
-            () {
+        () {
           expect(_requestTimeoutException?.message, Constants.requestTimeout);
         },
       );

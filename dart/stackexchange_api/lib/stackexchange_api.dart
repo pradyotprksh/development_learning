@@ -28,7 +28,17 @@ export 'src/dx/_endpoint/network_methods/network_methods.dart'
         AllSites;
 export 'src/dx/_endpoint/objects/objects.dart';
 export 'src/dx/_endpoint/per_site_methods/per_site_methods.dart'
-    hide AllAnswers, AnswersIds, AcceptAnswer;
+    hide
+        AllAnswers,
+        AnswersIds,
+        AcceptAnswer,
+        AnswersCommentsIds,
+        DeleteAnswer,
+        UndoAcceptAnswer,
+        DownVoteAnswer,
+        UndoDownVoteAnswer,
+        EditAnswer,
+        FlagAnswer;
 export 'src/dx/_utils/utils.dart' hide InvariantException;
 // Networking
 export 'src/networking/networking.dart' hide NetworkingModule;

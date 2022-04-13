@@ -22,7 +22,9 @@ mixin InboxRequest on Core {
     int? pageSize,
     required String accessToken,
   }) async {
-    Ensure(page != null && page > 0).isTrue('page should be > 0');
+    if (page != null) {
+      Ensure(page > 0).isTrue('page should be > 0');
+    }
     Checker(pageSize != null && pageSize <= 0, _logger).isTrueWarning(
       'pageSize is <= 0. Will be getting empty data.',
     );
@@ -64,7 +66,9 @@ mixin InboxRequest on Core {
     int? since,
     required String accessToken,
   }) async {
-    Ensure(page != null && page > 0).isTrue('page should be > 0');
+    if (page != null) {
+      Ensure(page > 0).isTrue('page should be > 0');
+    }
     Checker(pageSize != null && pageSize <= 0, _logger).isTrueWarning(
       'pageSize is <= 0. Will be getting empty data.',
     );

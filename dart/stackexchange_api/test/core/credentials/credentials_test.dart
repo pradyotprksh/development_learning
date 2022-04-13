@@ -11,7 +11,7 @@ void main() {
       expect(
         Variables.credentials.toString(),
         'Credentials = clientId: ${Variables.clientId}, clientSecret: '
-            '${Variables.clientSecret} key:${Variables.key}',
+        '${Variables.clientSecret} key:${Variables.key}',
       );
     },
   );

@@ -41,7 +41,7 @@ void main() {
 
   test(
     'POST request details should match',
-        () {
+    () {
       final _request = Request.post(
         uri: Uri(
           scheme: 'https',

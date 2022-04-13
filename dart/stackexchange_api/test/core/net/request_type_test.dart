@@ -18,21 +18,21 @@ void main() {
 
       test(
         'GET method',
-            () {
+        () {
           expect(requestType.method, 'GET');
         },
       );
 
       test(
         'GET receive timeout',
-            () {
+        () {
           expect(requestType.receiveTimeout, 10000);
         },
       );
 
       test(
         'GET send timeout',
-            () {
+        () {
           expect(requestType.sendTimeout, 10000);
         },
       );
@@ -41,33 +41,33 @@ void main() {
 
   group(
     'testing POST request type',
-        () {
+    () {
       const requestType = RequestType.post;
 
       test(
         'POST connect time out',
-            () {
+        () {
           expect(requestType.connectTimeout, 10000);
         },
       );
 
       test(
         'POST method',
-            () {
+        () {
           expect(requestType.method, 'POST');
         },
       );
 
       test(
         'POST receive timeout',
-            () {
+        () {
           expect(requestType.receiveTimeout, 10000);
         },
       );
 
       test(
         'POST send timeout',
-            () {
+        () {
           expect(requestType.sendTimeout, 10000);
         },
       );
