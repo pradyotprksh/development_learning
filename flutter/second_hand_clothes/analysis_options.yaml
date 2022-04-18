@@ -34,7 +34,7 @@ linter:
   # producing the lint.
   rules:
     avoid_print: true
-    prefer_single_quotes: false
+    prefer_single_quotes: true
     annotate_overrides: true
     avoid_empty_else: true
     avoid_function_literals_in_foreach_calls: true
