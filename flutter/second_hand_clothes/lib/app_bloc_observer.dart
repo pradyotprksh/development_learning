@@ -1,5 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:second_hand_clothes/utils/utils.dart';
+import 'package:second_hand_clothes/app/app.dart';
 
 class AppBlocObserver extends BlocObserver {
   @override
