@@ -1,0 +1,6 @@
+{
+  "applicationName": "Clothes",
+  "@applicationName": {
+    "description": "Name of the project"
+  }
+}

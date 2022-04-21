@@ -23,6 +23,8 @@ dependencies:
 
   enum_to_string: ^2.0.1
 
+  equatable: ^2.0.3
+
   firebase_analytics: ^9.1.5
 
   firebase_auth: ^3.3.14
@@ -43,6 +45,9 @@ dependencies:
     sdk: flutter
 
   flutter_bloc: ^8.0.1
+
+  flutter_localizations:
+    sdk: flutter
 
   get_ip_address: ^0.0.5
 
@@ -70,6 +75,8 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+
+  generate: true
 
   assets:
     - assets/
