@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:second_hand_clothes/app/app.dart';
 import 'package:second_hand_clothes/constants.dart';
+import 'package:second_hand_clothes/domain/domain.dart';
 
 /// An App stateful widget, which will be the parent of all the widgets.
 ///
@@ -17,6 +18,7 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     UtilsAppDetails().setApplicationOrientation();
+    final ServicesFirebaseCore _firebaseCore = FirebaseCore();
 
     return BlocBuilder<ThemeBloc, ThemeState>(
       builder: (_, themeState) =>
@@ -41,6 +43,9 @@ class App extends StatelessWidget {
               LocalizationDetails().getLocalizationDelegates(),
           supportedLocales: LocalizationDetails().getSupportedLocales(),
           locale: localizationState.currentLocale,
+          navigatorObservers: _firebaseCore.getFirebaseNavigatorObservers(),
+          initialRoute: NavigatorsRoutes().initialRoute,
+          routes: NavigatorsRoutes().routes,
         ),
       ),
     );
