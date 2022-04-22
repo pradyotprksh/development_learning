@@ -27,9 +27,12 @@ class ThemeBloc extends HydratedBloc<ThemeEvent, ThemeState>
     final newThemeState = state.copyWith(
       themeMode: event.themeMode?.stringToEnum(ThemeMode.values),
       lightFlexScheme: event.lightFlexScheme?.stringToEnum(FlexScheme.values),
-      lightContrastFlexScheme: event.lightContrastFlexScheme?.stringToEnum(FlexScheme.values),
+      lightContrastFlexScheme:
+          event.lightContrastFlexScheme?.stringToEnum(FlexScheme.values),
       darkFlexScheme: event.darkFlexScheme?.stringToEnum(FlexScheme.values),
-      darkContrastFlexScheme: event.darkContrastFlexScheme?.stringToEnum(FlexScheme.values),
+      darkContrastFlexScheme:
+          event.darkContrastFlexScheme?.stringToEnum(FlexScheme.values),
+      fontFamily: event.fontFamily,
     );
     emit(newThemeState);
   }
@@ -71,6 +74,7 @@ class ThemeBloc extends HydratedBloc<ThemeEvent, ThemeState>
                   FlexScheme.values,
                 ) ??
                 FlexScheme.material,
+        currentFontFamily: json['currentFontFamily'] as String,
       );
 
   @override
@@ -82,5 +86,6 @@ class ThemeBloc extends HydratedBloc<ThemeEvent, ThemeState>
         'currentDarkFlexScheme': state.currentDarkFlexScheme.enumToString(),
         'currentDarkContrastFlexScheme':
             state.currentDarkContrastFlexScheme.enumToString(),
+        'currentFontFamily': state.currentFontFamily,
       };
 }

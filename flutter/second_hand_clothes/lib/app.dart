@@ -21,7 +21,6 @@ class App extends StatelessWidget {
     UtilsAppDetails().setApplicationOrientation();
     final ServicesFirebaseCore _firebaseCore = FirebaseCore();
 
-    // TODO: Make font family selectable, rather than hard coded
     return BlocBuilder<ThemeBloc, ThemeState>(
       builder: (_, themeState) =>
           BlocBuilder<LocalizationBloc, LocalisationState>(
@@ -39,11 +38,11 @@ class App extends StatelessWidget {
           ),
           darkTheme: FlexThemeData.dark(
             scheme: themeState.currentDarkFlexScheme,
-            fontFamily: GoogleFonts.roboto().fontFamily,
+            fontFamily: themeState.currentFontFamily,
           ),
           highContrastDarkTheme: FlexThemeData.dark(
             scheme: themeState.currentDarkContrastFlexScheme,
-            fontFamily: GoogleFonts.roboto().fontFamily,
+            fontFamily: themeState.currentFontFamily,
           ),
           localizationsDelegates:
               LocalizationDetails().getLocalizationDelegates(),

@@ -1,6 +1,8 @@
 import 'package:equatable/equatable.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:second_hand_clothes/app/app.dart';
 
 /// A theme state for the application. This will contain the current
 /// application theme details.
@@ -22,12 +24,15 @@ class ThemeState extends Equatable {
   ///
   /// [currentDarkContrastFlexScheme] = It is the color scheme for the dark
   /// contrast theme, values can be checked in [FlexColorScheme]
+  ///
+  /// [currentFontFamily] = It is the current font family for the application.
   const ThemeState({
     this.currentThemeMode = ThemeMode.system,
     this.currentLightFlexScheme = FlexScheme.material,
     this.currentLightContrastFlexScheme = FlexScheme.materialHc,
     this.currentDarkFlexScheme = FlexScheme.material,
     this.currentDarkContrastFlexScheme = FlexScheme.materialHc,
+    this.currentFontFamily = ThemesConstants.defaultFontFamily,
   });
 
   ThemeState copyWith({
@@ -36,6 +41,7 @@ class ThemeState extends Equatable {
     FlexScheme? lightContrastFlexScheme,
     FlexScheme? darkFlexScheme,
     FlexScheme? darkContrastFlexScheme,
+    String? fontFamily,
   }) =>
       ThemeState(
         currentThemeMode: themeMode ?? currentThemeMode,
@@ -45,6 +51,7 @@ class ThemeState extends Equatable {
         currentDarkFlexScheme: darkFlexScheme ?? currentDarkFlexScheme,
         currentDarkContrastFlexScheme:
             darkContrastFlexScheme ?? currentDarkContrastFlexScheme,
+        currentFontFamily: fontFamily ?? currentFontFamily,
       );
 
   final ThemeMode currentThemeMode;
@@ -52,6 +59,7 @@ class ThemeState extends Equatable {
   final FlexScheme currentLightContrastFlexScheme;
   final FlexScheme currentDarkFlexScheme;
   final FlexScheme currentDarkContrastFlexScheme;
+  final String currentFontFamily;
 
   @override
   List<Object?> get props => [
@@ -60,5 +68,6 @@ class ThemeState extends Equatable {
         currentLightContrastFlexScheme,
         currentDarkFlexScheme,
         currentDarkContrastFlexScheme,
+        currentFontFamily,
       ];
 }

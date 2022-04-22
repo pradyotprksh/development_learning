@@ -25,12 +25,15 @@ class ChangeThemeEvent extends ThemeEvent {
   /// [darkFlexScheme] = New dark flex scheme
   ///
   /// [darkContrastFlexScheme] = New dark contrast flex scheme
+  ///
+  /// [fontFamily] = New font family
   ChangeThemeEvent(
     this.themeMode,
     this.lightFlexScheme,
     this.lightContrastFlexScheme,
     this.darkFlexScheme,
     this.darkContrastFlexScheme,
+    this.fontFamily,
   );
 
   final String? themeMode;
@@ -38,6 +41,7 @@ class ChangeThemeEvent extends ThemeEvent {
   final String? lightContrastFlexScheme;
   final String? darkFlexScheme;
   final String? darkContrastFlexScheme;
+  final String? fontFamily;
 
   @override
   List<Object?> get props => [
@@ -46,6 +50,7 @@ class ChangeThemeEvent extends ThemeEvent {
         lightContrastFlexScheme,
         darkFlexScheme,
         darkContrastFlexScheme,
+        fontFamily,
       ];
 }
 
