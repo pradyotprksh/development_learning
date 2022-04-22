@@ -12,7 +12,12 @@ class SplashBloc extends Bloc<SplashEvent, SplashState> {
   void _authorizationEvent(
     AuthorizationSplashEvent event,
     Emitter<SplashState> emit,
-  ) {
-    emit(const SplashState.unauthenticated());
+  ) async {
+    await Future.delayed(
+      const Duration(seconds: 5),
+      () {
+        emit(const SplashState.unauthenticated());
+      },
+    );
   }
 }

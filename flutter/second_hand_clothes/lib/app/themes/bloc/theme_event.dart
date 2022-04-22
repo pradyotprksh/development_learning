@@ -27,14 +27,14 @@ class ChangeThemeEvent extends ThemeEvent {
   /// [darkContrastFlexScheme] = New dark contrast flex scheme
   ///
   /// [fontFamily] = New font family
-  ChangeThemeEvent(
+  ChangeThemeEvent({
     this.themeMode,
     this.lightFlexScheme,
     this.lightContrastFlexScheme,
     this.darkFlexScheme,
     this.darkContrastFlexScheme,
     this.fontFamily,
-  );
+  });
 
   final String? themeMode;
   final String? lightFlexScheme;

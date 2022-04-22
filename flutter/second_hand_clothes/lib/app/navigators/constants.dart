@@ -9,4 +9,5 @@ class NavigatorsConstants {
       NavigatorsConstants._privateConstructor();
 
   final splashRoute = '/splash';
+  final personaliseRoute = '/personalise';
 }

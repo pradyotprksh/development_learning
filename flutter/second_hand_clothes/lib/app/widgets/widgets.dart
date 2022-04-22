@@ -5,3 +5,4 @@
 /// to here and used accordingly.
 ///
 /// And by widget I mean the custom widgets.
+export 'primary_note_box.dart';

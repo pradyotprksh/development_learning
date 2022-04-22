@@ -20,11 +20,15 @@ class SplashScreen extends StatelessWidget {
             case UtilsAuthenticationStatus.authenticated:
               break;
             case UtilsAuthenticationStatus.unauthenticated:
+              Navigator.pushReplacementNamed(
+                context,
+                NavigatorsConstants().personaliseRoute,
+              );
               break;
           }
         },
         child: Scaffold(
-          backgroundColor: Theme.of(context).backgroundColor,
+          backgroundColor: context.themeData().backgroundColor,
           extendBody: true,
           extendBodyBehindAppBar: true,
           body: SafeArea(
@@ -34,9 +38,9 @@ class SplashScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Text(
-                    '${LocalizationValues.of(context).welcomeTo} ${Constants().appName}',
+                    '${context.localizationValues().welcomeTo} ${context.localizationValues().applicationName}',
                     textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.headline4,
+                    style: context.themeData().textTheme.headline4,
                   ),
                   const Spacer(),
                   Lottie.asset(

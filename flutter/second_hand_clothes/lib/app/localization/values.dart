@@ -18,6 +18,25 @@ class LocalizationValues {
 
   static late BuildContext _buildContext;
 
+  String get applicationName =>
+      AppLocalizations.of(_buildContext)?.applicationName ?? 'applicationName';
+
   String get welcomeTo =>
       AppLocalizations.of(_buildContext)?.welcomeTo ?? 'welcomeTo';
+
+  String get personaliseTitle =>
+      AppLocalizations.of(_buildContext)?.personaliseTitle ??
+      'personaliseTitle';
+
+  String get personaliseDescription =>
+      AppLocalizations.of(_buildContext)?.personaliseDescription ??
+      'personaliseDescription';
+
+  String get themeTitle =>
+      AppLocalizations.of(_buildContext)?.themeTitle ??
+      'themeTitle';
+
+  String get themeSubTitle =>
+      AppLocalizations.of(_buildContext)?.themeSubTitle ??
+      'themeSubTitle';
 }

@@ -6,5 +6,21 @@
   "welcomeTo": "Welcome To",
   "@welcomeTo": {
     "description": "A greeting message"
+  },
+  "personaliseTitle": "Look & Feel",
+  "@personaliseTitle": {
+    "description": "Title of the personalise screen"
+  },
+  "personaliseDescription": "Please choose the required look and feel as per your requirement. there are options given for theme mode, theme color scheme and localization as well.",
+  "@personaliseDescription": {
+    "description": "Description of the personalise screen"
+  },
+  "themeTitle": "Theme",
+  "@themeTitle": {
+    "description": "Title of the theme option"
+  },
+  "themeSubTitle": "Please select the theme that suits you the most.",
+  "@themeSubTitle": {
+    "description": "Subtitle of the theme option"
   }
 }

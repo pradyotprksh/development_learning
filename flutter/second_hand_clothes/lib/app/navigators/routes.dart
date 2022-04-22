@@ -19,5 +19,9 @@ class NavigatorsRoutes {
           create: (_) => SplashBloc()..add(AuthorizationSplashEvent()),
           child: const SplashScreen(),
         ),
+    NavigatorsConstants().personaliseRoute: (context) => BlocProvider(
+          create: (_) => SplashBloc()..add(AuthorizationSplashEvent()),
+          child: const PersonaliseScreen(),
+        ),
   };
 }

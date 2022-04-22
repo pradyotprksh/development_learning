@@ -62,7 +62,7 @@ class ThemeBloc extends HydratedBloc<ThemeEvent, ThemeState>
                     .stringToEnum<FlexScheme>(
                   FlexScheme.values,
                 ) ??
-                FlexScheme.material,
+                FlexScheme.materialHc,
         currentDarkFlexScheme:
             (json['currentDarkFlexScheme'] as String).stringToEnum<FlexScheme>(
                   FlexScheme.values,
@@ -73,19 +73,19 @@ class ThemeBloc extends HydratedBloc<ThemeEvent, ThemeState>
                     .stringToEnum<FlexScheme>(
                   FlexScheme.values,
                 ) ??
-                FlexScheme.material,
+                FlexScheme.materialHc,
         currentFontFamily: json['currentFontFamily'] as String,
       );
 
   @override
   Map<String, dynamic>? toJson(ThemeState state) => <String, String>{
-        'currentThemeMode': state.currentThemeMode.enumToString(),
-        'currentLightFlexScheme': state.currentLightFlexScheme.enumToString(),
+        'currentThemeMode': state.currentThemeMode.name,
+        'currentLightFlexScheme': state.currentLightFlexScheme.name,
         'currentLightContrastFlexScheme':
-            state.currentLightContrastFlexScheme.enumToString(),
-        'currentDarkFlexScheme': state.currentDarkFlexScheme.enumToString(),
+            state.currentLightContrastFlexScheme.name,
+        'currentDarkFlexScheme': state.currentDarkFlexScheme.name,
         'currentDarkContrastFlexScheme':
-            state.currentDarkContrastFlexScheme.enumToString(),
+            state.currentDarkContrastFlexScheme.name,
         'currentFontFamily': state.currentFontFamily,
       };
 }

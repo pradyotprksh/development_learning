@@ -1,2 +1,2 @@
 export 'bloc/bloc.dart';
-export 'splash_screen.dart';
+export 'view/splash_screen.dart';
