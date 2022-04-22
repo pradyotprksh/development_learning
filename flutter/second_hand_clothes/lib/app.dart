@@ -1,6 +1,7 @@
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:second_hand_clothes/app/app.dart';
 import 'package:second_hand_clothes/constants.dart';
 import 'package:second_hand_clothes/domain/domain.dart';
@@ -20,24 +21,29 @@ class App extends StatelessWidget {
     UtilsAppDetails().setApplicationOrientation();
     final ServicesFirebaseCore _firebaseCore = FirebaseCore();
 
+    // TODO: Make font family selectable, rather than hard coded
     return BlocBuilder<ThemeBloc, ThemeState>(
       builder: (_, themeState) =>
           BlocBuilder<LocalizationBloc, LocalisationState>(
         builder: (_, localizationState) => MaterialApp(
-          title: Constants.appName,
+          title: Constants().appName,
           debugShowCheckedModeBanner: !UtilsAppDetails().isReleaseMode,
           themeMode: themeState.currentThemeMode,
           theme: FlexThemeData.light(
             scheme: themeState.currentLightFlexScheme,
+            fontFamily: GoogleFonts.roboto().fontFamily,
           ),
           highContrastTheme: FlexThemeData.light(
             scheme: themeState.currentLightContrastFlexScheme,
+            fontFamily: GoogleFonts.roboto().fontFamily,
           ),
           darkTheme: FlexThemeData.dark(
             scheme: themeState.currentDarkFlexScheme,
+            fontFamily: GoogleFonts.roboto().fontFamily,
           ),
           highContrastDarkTheme: FlexThemeData.dark(
             scheme: themeState.currentDarkContrastFlexScheme,
+            fontFamily: GoogleFonts.roboto().fontFamily,
           ),
           localizationsDelegates:
               LocalizationDetails().getLocalizationDelegates(),

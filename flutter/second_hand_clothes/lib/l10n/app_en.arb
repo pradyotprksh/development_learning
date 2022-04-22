@@ -2,5 +2,9 @@
   "applicationName": "Clothes",
   "@applicationName": {
     "description": "Name of the project"
+  },
+  "welcomeTo": "Welcome To",
+  "@welcomeTo": {
+    "description": "A greeting message"
   }
 }

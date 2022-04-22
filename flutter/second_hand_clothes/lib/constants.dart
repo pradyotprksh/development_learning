@@ -6,5 +6,5 @@ class Constants {
 
   static final Constants _instance = Constants._privateConstructor();
 
-  static const appName = 'Clothes';
+  final appName = 'Clothes';
 }
