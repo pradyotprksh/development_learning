@@ -1,7 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:second_hand_clothes/app/app.dart';
 
 /// A theme state for the application. This will contain the current
