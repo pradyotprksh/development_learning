@@ -162,38 +162,18 @@ class PersonaliseScreen extends StatelessWidget {
           barrierDismissible: true,
           builder: (dialogContext) => SimpleDialog(
             children: [
-              RadioListTile(
-                title: Text(
-                  ThemeMode.system.name.toCapitalized(),
-                  style: context.themeData().textTheme.titleLarge,
+              ...ThemeMode.values.map(
+                (e) => RadioListTile(
+                  title: Text(
+                    ThemeMode.system.name.toCapitalized(),
+                    style: context.themeData().textTheme.titleLarge,
+                  ),
+                  value: e,
+                  groupValue: currentThemeMode,
+                  onChanged: (value) {
+                    Navigator.pop(dialogContext, value);
+                  },
                 ),
-                value: ThemeMode.system,
-                groupValue: currentThemeMode,
-                onChanged: (value) {
-                  Navigator.pop(dialogContext, value);
-                },
-              ),
-              RadioListTile(
-                title: Text(
-                  ThemeMode.light.name.toCapitalized(),
-                  style: context.themeData().textTheme.titleLarge,
-                ),
-                value: ThemeMode.light,
-                groupValue: currentThemeMode,
-                onChanged: (value) {
-                  Navigator.pop(dialogContext, value);
-                },
-              ),
-              RadioListTile(
-                title: Text(
-                  ThemeMode.dark.name.toCapitalized(),
-                  style: context.themeData().textTheme.titleLarge,
-                ),
-                value: ThemeMode.dark,
-                groupValue: currentThemeMode,
-                onChanged: (value) {
-                  Navigator.pop(dialogContext, value);
-                },
               ),
             ],
           ),
@@ -227,8 +207,7 @@ class PersonaliseScreen extends StatelessWidget {
                         style: context.themeData().textTheme.titleLarge,
                       ),
                       value: e.languageCode,
-                      groupValue:
-                          LocalizationDetails().getSupportedLanguage().keys.toList(),
+                      groupValue: currentLocale.languageCode,
                       onChanged: (value) {
                         Navigator.pop(dialogContext, e);
                       },
