@@ -1,0 +1,16 @@
+{
+  "applicationName": "服",
+  "welcomeTo": "ようこそ",
+  "personaliseTitle": "ほら",
+  "personaliseDescription": "あなたの要件に応じて必要なルックアンドフィールを選択してください。テーマモード、テーマの配色、ローカリゼーションにもオプションがあります。",
+  "themeTitle": "テーマ",
+  "themeSubTitle": "自分に一番合うテーマを選んでください。",
+  "themeModeUndoTitle": "テーマが変更されました",
+  "undoOption": "外す",
+  "colorSchemeTitle": "配色",
+  "colorSchemeSubTitle": "自分に合った配色をお選びください。",
+  "languageTitle": "言語",
+  "languageSubTitle": "自分に合った言語をお選びください。",
+  "fontTitle": "フォント",
+  "fontSubTitle": "自分に合ったフォントをお選びください。"
+}

@@ -1,0 +1,16 @@
+{
+  "applicationName": "ملابس",
+  "welcomeTo": "مرحبا بكم في",
+  "personaliseTitle": "رأى ",
+  "personaliseDescription": "يرجى اختيار الشكل والمظهر المطلوبين وفقا لمتطلباتك. هناك خيارات مقدمة لوضع السمة ونظام ألوان السمة والتعريب أيضا.",
+  "themeTitle": "موضوع",
+  "themeSubTitle": "يرجى تحديد الموضوع الذي يناسبك أكثر.",
+  "themeModeUndoTitle": "تم تغيير النسق",
+  "undoOption": "تراجع",
+  "colorSchemeTitle": "نظام الألوان",
+  "colorSchemeSubTitle": "يرجى اختيار نظام الألوان الذي يناسبك.",
+  "languageTitle": "اللغة",
+  "languageSubTitle": "يرجى اختيار اللغة التي تناسبك.",
+  "fontTitle": "الخط",
+  "fontSubTitle": "يرجى اختيار الخط الذي يناسبك."
+}

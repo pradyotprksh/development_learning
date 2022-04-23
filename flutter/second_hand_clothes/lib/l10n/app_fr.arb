@@ -1,0 +1,16 @@
+{
+  "applicationName": "Vêtement",
+  "welcomeTo": "Bienvenue à",
+  "personaliseTitle": "Regarder ",
+  "personaliseDescription": "Veuillez choisir l’apparence requise selon vos besoins. il existe également des options pour le mode thème, le schéma de couleurs du thème et la localisation.",
+  "themeTitle": "Thème",
+  "themeSubTitle": "Veuillez sélectionner le thème qui vous convient le mieux.",
+  "themeModeUndoTitle": "Thème modifié",
+  "undoOption": "Défaire",
+  "colorSchemeTitle": "Couleurs",
+  "colorSchemeSubTitle": "Veuillez choisir une palette de couleurs qui vous convient.",
+  "languageTitle": "Langue",
+  "languageSubTitle": "Veuillez choisir la langue qui vous convient.",
+  "fontTitle": "Police",
+  "fontSubTitle": "Veuillez choisir la police qui vous convient."
+}

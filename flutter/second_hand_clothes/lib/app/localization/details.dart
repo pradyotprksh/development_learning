@@ -24,13 +24,19 @@ class LocalizationDetails {
 
   /// Get list of supported locales
   List<Locale> getSupportedLocales() => const [
+        Locale('ar', ''),
         Locale('en', ''),
         Locale('es', ''),
+        Locale('fr', ''),
+        Locale('ja', ''),
       ];
 
   /// Get supported language list
   Map<String, String> getSupportedLanguage() => {
+        'ar': 'Arabic',
         'en': 'English',
         'es': 'Spanish',
+        'fr': 'French',
+        'ja': 'Japanese',
       };
 }
