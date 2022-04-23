@@ -8,5 +8,7 @@
   "themeModeUndoTitle": "Tema cambiado",
   "undoOption": "Deshacer",
   "colorSchemeTitle": "Esquema de color",
-  "colorSchemeSubTitle": "Por favor, elija un esquema de color que se adapte a usted."
+  "colorSchemeSubTitle": "Por favor, elija un esquema de color que se adapte a usted.",
+  "languageTitle": "Idioma",
+  "languageSubTitle": "Por favor, elija el idioma que más le convenga."
 }

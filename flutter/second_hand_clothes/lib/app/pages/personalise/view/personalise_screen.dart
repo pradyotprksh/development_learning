@@ -73,7 +73,30 @@ class PersonaliseScreen extends StatelessWidget {
                   style: context.themeData().textTheme.subtitle1,
                 ),
               ),
+              ThemesBox().height15,
               const WidgetsColorSchemeList(),
+              Divider(
+                color: context.themeData().dividerColor,
+              ),
+              ListTile(
+                leading: Icon(
+                  Icons.language,
+                  color: context.themeData().iconTheme.color,
+                ),
+                title: Text(
+                  context.localizationValues().languageTitle,
+                  style: context.themeData().textTheme.titleLarge,
+                ),
+                subtitle: Text(
+                  context.localizationValues().languageSubTitle,
+                  style: context.themeData().textTheme.subtitle1,
+                ),
+                onTap: () {
+                  final currentLanguage =
+                      context.read<LocalizationBloc>().state.currentLocale;
+                  _triggerLocalizationChangeEvent(context, currentLanguage);
+                },
+              ),
               Divider(
                 color: context.themeData().dividerColor,
               ),
@@ -180,6 +203,45 @@ class PersonaliseScreen extends StatelessWidget {
     context.read<ThemeBloc>().add(
           ChangeThemeEvent(
             themeMode: newThemeMode.name,
+          ),
+        );
+  }
+
+  /// Trigger the language change event by showing a dialog.
+  void _triggerLocalizationChangeEvent(
+    BuildContext context,
+    Locale currentLocale,
+  ) async {
+    final newLanguage = await showDialog<Locale>(
+          context: context,
+          barrierDismissible: true,
+          builder: (dialogContext) => SimpleDialog(
+            children: [
+              // TODO: Fix the elected language not showing as selected in the UI
+              ...LocalizationDetails().getSupportedLocales().map(
+                    (e) => RadioListTile(
+                      title: Text(
+                        LocalizationDetails()
+                                .getSupportedLanguage()[e.languageCode] ??
+                            '',
+                        style: context.themeData().textTheme.titleLarge,
+                      ),
+                      value: e.languageCode,
+                      groupValue:
+                          LocalizationDetails().getSupportedLanguage().keys.toList(),
+                      onChanged: (value) {
+                        Navigator.pop(dialogContext, e);
+                      },
+                    ),
+                  ),
+            ],
+          ),
+        ) ??
+        currentLocale;
+    context.read<LocalizationBloc>().clearHistory();
+    context.read<LocalizationBloc>().add(
+          ChangeLocalizationEvent(
+            newLocale: newLanguage.languageCode,
           ),
         );
   }

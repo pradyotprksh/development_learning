@@ -55,4 +55,12 @@ class LocalizationValues {
   String get colorSchemeSubTitle =>
       AppLocalizations.of(_buildContext)?.colorSchemeSubTitle ??
           'colorSchemeSubTitle';
+
+  String get languageTitle =>
+      AppLocalizations.of(_buildContext)?.languageTitle ??
+          'languageTitle';
+
+  String get languageSubTitle =>
+      AppLocalizations.of(_buildContext)?.languageSubTitle ??
+          'languageTitle';
 }

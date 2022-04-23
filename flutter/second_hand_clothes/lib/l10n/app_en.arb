@@ -38,5 +38,13 @@
   "colorSchemeSubTitle": "Please choose a color scheme that suits you.",
   "@colorSchemeSubTitle": {
     "description": "A sub title for the color scheme"
+  },
+  "languageTitle": "Language",
+  "@languageTitle": {
+    "description": "A title for the language selector"
+  },
+  "languageSubTitle": "Please choose the language that suits you.",
+  "@languageSubTitle": {
+    "description": "A sub title for the language selcteor"
   }
 }

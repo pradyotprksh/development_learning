@@ -27,4 +27,10 @@ class LocalizationDetails {
         Locale('en', ''),
         Locale('es', ''),
       ];
+
+  /// Get supported language list
+  Map<String, String> getSupportedLanguage() => {
+        'en': 'English',
+        'es': 'Spanish',
+      };
 }
