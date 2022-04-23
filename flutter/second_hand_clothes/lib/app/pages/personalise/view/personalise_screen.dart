@@ -165,7 +165,7 @@ class PersonaliseScreen extends StatelessWidget {
               ...ThemeMode.values.map(
                 (e) => RadioListTile(
                   title: Text(
-                    ThemeMode.system.name.toCapitalized(),
+                    e.name.toCapitalized(),
                     style: context.themeData().textTheme.titleLarge,
                   ),
                   value: e,
