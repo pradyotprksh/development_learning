@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:second_hand_clothes/app/app.dart';
 
+/// A widget to get the list of color scheme for the user to choose from.
+///
+/// It also shows a dot icon which is being selected by the user.
 class WidgetsColorSchemeList extends StatelessWidget {
   const WidgetsColorSchemeList({Key? key}) : super(key: key);
 
