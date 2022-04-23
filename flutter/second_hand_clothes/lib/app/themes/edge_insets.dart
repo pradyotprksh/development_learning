@@ -21,5 +21,7 @@ class ThemesEdgeInsets {
 
   EdgeInsets all10 = const EdgeInsets.all(10);
 
+  EdgeInsets left20 = const EdgeInsets.only(left: 20);
+
   EdgeInsets zero = const EdgeInsets.all(0);
 }

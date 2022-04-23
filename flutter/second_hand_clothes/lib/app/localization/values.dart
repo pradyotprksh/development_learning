@@ -39,4 +39,20 @@ class LocalizationValues {
   String get themeSubTitle =>
       AppLocalizations.of(_buildContext)?.themeSubTitle ??
       'themeSubTitle';
+
+  String get themeModeUndoTitle =>
+      AppLocalizations.of(_buildContext)?.themeModeUndoTitle ??
+          'themeModeUndoTitle';
+
+  String get undoOption =>
+      AppLocalizations.of(_buildContext)?.undoOption ??
+          'undoOption';
+
+  String get colorSchemeTitle =>
+      AppLocalizations.of(_buildContext)?.colorSchemeTitle ??
+          'colorSchemeTitle';
+
+  String get colorSchemeSubTitle =>
+      AppLocalizations.of(_buildContext)?.colorSchemeSubTitle ??
+          'colorSchemeSubTitle';
 }

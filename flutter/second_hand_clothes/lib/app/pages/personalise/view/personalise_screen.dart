@@ -11,9 +11,13 @@ class PersonaliseScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => BlocListener<ThemeBloc, ThemeState>(
-        listenWhen: (previousState, newState) => previousState != newState,
-        listener: (context, state) {
-          // TODO: Handle undo option for theme state change
+        listenWhen: (previousState, newState) =>
+            previousState != newState && context.read<ThemeBloc>().canUndo,
+        listener: (_, themeState) {
+          _handleUndoSnackBar(
+            context,
+            context.localizationValues().themeModeUndoTitle,
+          );
         },
         child: Scaffold(
           backgroundColor: context.themeData().backgroundColor,
@@ -27,10 +31,8 @@ class PersonaliseScreen extends StatelessWidget {
             ),
           ),
           body: ListView(
-            padding: ThemesEdgeInsets().all15,
             children: [
               ListTile(
-                contentPadding: ThemesEdgeInsets().zero,
                 leading: BlocBuilder<ThemeBloc, ThemeState>(
                   builder: (_, themeState) => Icon(
                     _getThemeIcon(themeState.currentThemeMode),
@@ -48,60 +50,41 @@ class PersonaliseScreen extends StatelessWidget {
                 onTap: () async {
                   final currentThemeMode =
                       context.read<ThemeBloc>().state.currentThemeMode;
-                  final newThemeMode = await showDialog<ThemeMode>(
-                        context: context,
-                        barrierDismissible: true,
-                        builder: (dialogContext) => SimpleDialog(
-                          children: [
-                            RadioListTile(
-                              title: Text(
-                                ThemeMode.system.name.toCapitalized(),
-                                style: context.themeData().textTheme.titleLarge,
-                              ),
-                              value: ThemeMode.system,
-                              groupValue: currentThemeMode,
-                              onChanged: (value) {
-                                Navigator.pop(dialogContext, value);
-                              },
-                            ),
-                            RadioListTile(
-                              title: Text(
-                                ThemeMode.light.name.toCapitalized(),
-                                style: context.themeData().textTheme.titleLarge,
-                              ),
-                              value: ThemeMode.light,
-                              groupValue: currentThemeMode,
-                              onChanged: (value) {
-                                Navigator.pop(dialogContext, value);
-                              },
-                            ),
-                            RadioListTile(
-                              title: Text(
-                                ThemeMode.dark.name.toCapitalized(),
-                                style: context.themeData().textTheme.titleLarge,
-                              ),
-                              value: ThemeMode.dark,
-                              groupValue: currentThemeMode,
-                              onChanged: (value) {
-                                Navigator.pop(dialogContext, value);
-                              },
-                            ),
-                          ],
-                        ),
-                      ) ??
-                      currentThemeMode;
-                  context.read<ThemeBloc>().add(
-                        ChangeThemeEvent(
-                          themeMode: newThemeMode.name,
-                        ),
-                      );
+                  _triggerThemeModeChangeEvent(context, currentThemeMode);
                 },
               ),
+              Divider(
+                color: context.themeData().dividerColor,
+              ),
+              ListTile(
+                leading: BlocBuilder<ThemeBloc, ThemeState>(
+                  builder: (_, themeState) => WidgetsColorSchemeIcon(
+                    currentThemeMode: themeState.currentThemeMode,
+                    currentLightFlexScheme: themeState.currentLightFlexScheme,
+                    currentDarkFlexScheme: themeState.currentDarkFlexScheme,
+                  ),
+                ),
+                title: Text(
+                  context.localizationValues().colorSchemeTitle,
+                  style: context.themeData().textTheme.titleLarge,
+                ),
+                subtitle: Text(
+                  context.localizationValues().colorSchemeSubTitle,
+                  style: context.themeData().textTheme.subtitle1,
+                ),
+              ),
+              const WidgetsColorSchemeList(),
+              Divider(
+                color: context.themeData().dividerColor,
+              ),
               ThemesBox().height15,
-              WidgetsPrimaryNoteBox(
-                child: Text(
-                  context.localizationValues().personaliseDescription,
-                  style: context.themeData().textTheme.caption,
+              Container(
+                margin: ThemesEdgeInsets().all15,
+                child: WidgetsPrimaryNoteBox(
+                  child: Text(
+                    context.localizationValues().personaliseDescription,
+                    style: context.themeData().textTheme.caption,
+                  ),
                 ),
               ),
             ],
@@ -119,5 +102,85 @@ class PersonaliseScreen extends StatelessWidget {
       default:
         return Icons.phone_android;
     }
+  }
+
+  /// Handle snack bar for undo operation, and [content] is the message to be
+  /// shown.
+  void _handleUndoSnackBar(BuildContext context, String content) {
+    ScaffoldMessenger.of(context).clearSnackBars();
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        backgroundColor: context.themeData().snackBarTheme.backgroundColor,
+        content: Text(
+          content,
+          style: context.themeData().snackBarTheme.contentTextStyle,
+        ),
+        action: SnackBarAction(
+          label: context.localizationValues().undoOption,
+          textColor: context.themeData().snackBarTheme.actionTextColor,
+          onPressed: () {
+            context.read<ThemeBloc>().undo();
+          },
+        ),
+      ),
+    );
+  }
+
+  /// Trigger the theme change even whenever user chooses a new theme mode.
+  ///
+  /// Also clear the undo stack so that snack bar is handled more clearly
+  /// rather than giving the undo option multiple time.
+  void _triggerThemeModeChangeEvent(
+    BuildContext context,
+    ThemeMode currentThemeMode,
+  ) async {
+    final newThemeMode = await showDialog<ThemeMode>(
+          context: context,
+          barrierDismissible: true,
+          builder: (dialogContext) => SimpleDialog(
+            children: [
+              RadioListTile(
+                title: Text(
+                  ThemeMode.system.name.toCapitalized(),
+                  style: context.themeData().textTheme.titleLarge,
+                ),
+                value: ThemeMode.system,
+                groupValue: currentThemeMode,
+                onChanged: (value) {
+                  Navigator.pop(dialogContext, value);
+                },
+              ),
+              RadioListTile(
+                title: Text(
+                  ThemeMode.light.name.toCapitalized(),
+                  style: context.themeData().textTheme.titleLarge,
+                ),
+                value: ThemeMode.light,
+                groupValue: currentThemeMode,
+                onChanged: (value) {
+                  Navigator.pop(dialogContext, value);
+                },
+              ),
+              RadioListTile(
+                title: Text(
+                  ThemeMode.dark.name.toCapitalized(),
+                  style: context.themeData().textTheme.titleLarge,
+                ),
+                value: ThemeMode.dark,
+                groupValue: currentThemeMode,
+                onChanged: (value) {
+                  Navigator.pop(dialogContext, value);
+                },
+              ),
+            ],
+          ),
+        ) ??
+        currentThemeMode;
+    context.read<ThemeBloc>().clearHistory();
+    context.read<ThemeBloc>().add(
+          ChangeThemeEvent(
+            themeMode: newThemeMode.name,
+          ),
+        );
   }
 }

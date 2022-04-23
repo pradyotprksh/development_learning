@@ -22,5 +22,21 @@
   "themeSubTitle": "Please select the theme that suits you the most.",
   "@themeSubTitle": {
     "description": "Subtitle of the theme option"
+  },
+  "themeModeUndoTitle": "Theme changed",
+  "@themeModeUndoTitle": {
+    "description": "A title for the snack bar which is shown when theme changes"
+  },
+  "undoOption": "Undo",
+  "@undoOption": {
+    "description": "An undo title"
+  },
+  "colorSchemeTitle": "Color Scheme",
+  "@colorSchemeTitle": {
+    "description": "Title for the color scheme"
+  },
+  "colorSchemeSubTitle": "Please choose a color scheme based on your theme.",
+  "@colorSchemeSubTitle": {
+    "description": "A sub title for the color scheme"
   }
 }

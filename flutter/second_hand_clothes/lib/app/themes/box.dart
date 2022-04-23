@@ -12,4 +12,6 @@ class ThemesBox {
   static final ThemesBox _instance = ThemesBox._privateConstructor();
 
   SizedBox height15 = const SizedBox(height: 15);
+
+  SizedBox width15 = const SizedBox(width: 15);
 }

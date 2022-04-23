@@ -4,5 +4,9 @@
   "personaliseTitle": "Mirar & Sentir",
   "personaliseDescription": "Por favor, elija la apariencia requerida según sus requisitos. también se ofrecen opciones para el modo de tema, el esquema de color del tema y la localización.",
   "themeTitle": "Tema",
-  "themeSubTitle": "Por favor, seleccione el tema que más le convenga."
+  "themeSubTitle": "Por favor, seleccione el tema que más le convenga.",
+  "themeModeUndoTitle": "Tema cambiado",
+  "undoOption": "Deshacer",
+  "colorSchemeTitle": "Esquema de color",
+  "colorSchemeSubTitle": "Por favor, elija un esquema de color basado en su tema."
 }
