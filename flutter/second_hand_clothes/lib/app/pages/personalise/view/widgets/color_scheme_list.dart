@@ -38,7 +38,6 @@ class WidgetsColorSchemeList extends StatelessWidget {
                       color: themeData.primaryColor.withAlpha(80),
                       border: Border.all(
                         color: themeData.primaryColor,
-                        width: isSelected ? 3 : 1,
                       ),
                       borderRadius: const BorderRadius.all(
                         Radius.circular(10),

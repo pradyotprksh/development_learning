@@ -21,6 +21,8 @@ class WidgetsColorSchemeIcon extends StatelessWidget {
   final FlexScheme currentLightFlexScheme;
   final FlexScheme currentDarkFlexScheme;
 
+  // TODO: Fix the icon color change issue in dark mode
+
   @override
   Widget build(BuildContext context) => Icon(
         Icons.color_lens,

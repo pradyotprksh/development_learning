@@ -35,7 +35,7 @@
   "@colorSchemeTitle": {
     "description": "Title for the color scheme"
   },
-  "colorSchemeSubTitle": "Please choose a color scheme based on your theme.",
+  "colorSchemeSubTitle": "Please choose a color scheme that suits you.",
   "@colorSchemeSubTitle": {
     "description": "A sub title for the color scheme"
   }
