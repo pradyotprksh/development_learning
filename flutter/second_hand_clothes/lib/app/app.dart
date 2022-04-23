@@ -1,7 +1,7 @@
 /// An app layer, which is the look and feel of the application. This will
 /// handle all the things related to ui. And data will be provided by the
 /// domain layer.
-export 'bloc/bloc.dart';
+export 'blocs/blocs.dart';
 export 'localization/localization.dart';
 export 'navigators/navigators.dart';
 export 'pages/pages.dart';
