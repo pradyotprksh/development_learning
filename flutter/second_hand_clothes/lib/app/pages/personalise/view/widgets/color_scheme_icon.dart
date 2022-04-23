@@ -1,6 +1,6 @@
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
-import 'package:second_hand_clothes/app/app.dart';
+import 'package:second_hand_clothes/device/device.dart';
 
 /// A widget for scheme color icon, so it will return an icon widget
 /// with the color as per the current color scheme selected by the user.

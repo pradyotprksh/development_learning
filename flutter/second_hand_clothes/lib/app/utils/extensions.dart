@@ -28,8 +28,4 @@ extension BuildContextExtension on BuildContext {
   /// Return the localization values object, so LocalizationValues.of(context)
   /// will change to context.localizationValues().
   LocalizationValues localizationValues() => LocalizationValues.of(this);
-
-  /// Returns true if the user phone is in dark mode otherwise false.
-  bool isPhoneInDarkMode() =>
-      MediaQuery.of(this).platformBrightness == Brightness.light;
 }
