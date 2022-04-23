@@ -1,7 +1,6 @@
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:second_hand_clothes/app/app.dart';
 import 'package:second_hand_clothes/constants.dart';
 import 'package:second_hand_clothes/domain/domain.dart';
@@ -30,11 +29,11 @@ class App extends StatelessWidget {
           themeMode: themeState.currentThemeMode,
           theme: FlexThemeData.light(
             scheme: themeState.currentLightFlexScheme,
-            fontFamily: GoogleFonts.roboto().fontFamily,
+            fontFamily: themeState.currentFontFamily,
           ),
           highContrastTheme: FlexThemeData.light(
             scheme: themeState.currentLightContrastFlexScheme,
-            fontFamily: GoogleFonts.roboto().fontFamily,
+            fontFamily: themeState.currentFontFamily,
           ),
           darkTheme: FlexThemeData.dark(
             scheme: themeState.currentDarkFlexScheme,

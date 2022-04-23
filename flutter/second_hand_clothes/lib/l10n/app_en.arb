@@ -45,6 +45,14 @@
   },
   "languageSubTitle": "Please choose the language that suits you.",
   "@languageSubTitle": {
-    "description": "A sub title for the language selcteor"
+    "description": "A sub title for the language selector"
+  },
+  "fontTitle": "Font",
+  "@fontTitle": {
+    "description": "A title for the font selector"
+  },
+  "fontSubTitle": "Please choose the font that suits you.",
+  "@fontSubTitle": {
+    "description": "A sub title for the font selector"
   }
 }

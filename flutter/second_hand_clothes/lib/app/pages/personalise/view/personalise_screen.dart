@@ -10,15 +10,35 @@ class PersonaliseScreen extends StatelessWidget {
   const PersonaliseScreen({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) => BlocListener<ThemeBloc, ThemeState>(
-        listenWhen: (previousState, newState) =>
-            previousState != newState && context.read<ThemeBloc>().canUndo,
-        listener: (_, themeState) {
-          _handleUndoSnackBar(
-            context,
-            context.localizationValues().themeModeUndoTitle,
-          );
-        },
+  Widget build(BuildContext context) => MultiBlocListener(
+        listeners: [
+          BlocListener<ThemeBloc, ThemeState>(
+            listenWhen: (previousState, newState) =>
+                previousState != newState && context.read<ThemeBloc>().canUndo,
+            listener: (_, __) {
+              UtilsSomeMethod().handleUndoSnackBar(
+                context,
+                context.localizationValues().themeModeUndoTitle,
+                () {
+                  context.read<ThemeBloc>().undo();
+                },
+              );
+            },
+          ),
+          BlocListener<LocalizationBloc, LocalisationState>(
+            listenWhen: (previousState, newState) =>
+                previousState != newState && context.read<ThemeBloc>().canUndo,
+            listener: (_, __) {
+              UtilsSomeMethod().handleUndoSnackBar(
+                context,
+                context.localizationValues().themeModeUndoTitle,
+                () {
+                  context.read<LocalizationBloc>().undo();
+                },
+              );
+            },
+          ),
+        ],
         child: Scaffold(
           backgroundColor: context.themeData().backgroundColor,
           appBar: AppBar(
@@ -35,7 +55,7 @@ class PersonaliseScreen extends StatelessWidget {
               ListTile(
                 leading: BlocBuilder<ThemeBloc, ThemeState>(
                   builder: (_, themeState) => Icon(
-                    _getThemeIcon(themeState.currentThemeMode),
+                    UtilsSomeMethod().getThemeIcon(themeState.currentThemeMode),
                     color: context.themeData().iconTheme.color,
                   ),
                 ),
@@ -50,7 +70,8 @@ class PersonaliseScreen extends StatelessWidget {
                 onTap: () async {
                   final currentThemeMode =
                       context.read<ThemeBloc>().state.currentThemeMode;
-                  _triggerThemeModeChangeEvent(context, currentThemeMode);
+                  UtilsSomeMethod()
+                      .triggerThemeModeChangeEvent(context, currentThemeMode);
                 },
               ),
               Divider(
@@ -94,7 +115,33 @@ class PersonaliseScreen extends StatelessWidget {
                 onTap: () {
                   final currentLanguage =
                       context.read<LocalizationBloc>().state.currentLocale;
-                  _triggerLocalizationChangeEvent(context, currentLanguage);
+                  UtilsSomeMethod()
+                      .triggerLocalizationChangeEvent(context, currentLanguage);
+                },
+              ),
+              Divider(
+                color: context.themeData().dividerColor,
+              ),
+              ListTile(
+                leading: Icon(
+                  Icons.font_download,
+                  color: context.themeData().iconTheme.color,
+                ),
+                title: BlocBuilder<ThemeBloc, ThemeState>(
+                  builder: (_, themeState) => Text(
+                    '${context.localizationValues().fontTitle} - ${themeState.currentFontFamily}',
+                    style: context.themeData().textTheme.titleLarge,
+                  ),
+                ),
+                subtitle: Text(
+                  context.localizationValues().fontSubTitle,
+                  style: context.themeData().textTheme.subtitle1,
+                ),
+                onTap: () {
+                  UtilsSomeMethod().triggerFontFamilyChangeEvent(
+                    context,
+                    context.read<ThemeBloc>().state.currentFontFamily,
+                  );
                 },
               ),
               Divider(
@@ -114,114 +161,4 @@ class PersonaliseScreen extends StatelessWidget {
           ),
         ),
       );
-
-  /// Get the theme icon of the application based on [currentThemeMode].
-  IconData _getThemeIcon(ThemeMode currentThemeMode) {
-    switch (currentThemeMode) {
-      case ThemeMode.light:
-        return Icons.light_mode;
-      case ThemeMode.dark:
-        return Icons.dark_mode;
-      default:
-        return Icons.phone_android;
-    }
-  }
-
-  /// Handle snack bar for undo operation, and [content] is the message to be
-  /// shown.
-  void _handleUndoSnackBar(BuildContext context, String content) {
-    ScaffoldMessenger.of(context).clearSnackBars();
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        backgroundColor: context.themeData().snackBarTheme.backgroundColor,
-        content: Text(
-          content,
-          style: context.themeData().snackBarTheme.contentTextStyle,
-        ),
-        action: SnackBarAction(
-          label: context.localizationValues().undoOption,
-          textColor: context.themeData().snackBarTheme.actionTextColor,
-          onPressed: () {
-            context.read<ThemeBloc>().undo();
-          },
-        ),
-      ),
-    );
-  }
-
-  /// Trigger the theme change even whenever user chooses a new theme mode.
-  ///
-  /// Also clear the undo stack so that snack bar is handled more clearly
-  /// rather than giving the undo option multiple time.
-  void _triggerThemeModeChangeEvent(
-    BuildContext context,
-    ThemeMode currentThemeMode,
-  ) async {
-    final newThemeMode = await showDialog<ThemeMode>(
-          context: context,
-          barrierDismissible: true,
-          builder: (dialogContext) => SimpleDialog(
-            children: [
-              ...ThemeMode.values.map(
-                (e) => RadioListTile(
-                  title: Text(
-                    e.name.toCapitalized(),
-                    style: context.themeData().textTheme.titleLarge,
-                  ),
-                  value: e,
-                  groupValue: currentThemeMode,
-                  onChanged: (value) {
-                    Navigator.pop(dialogContext, value);
-                  },
-                ),
-              ),
-            ],
-          ),
-        ) ??
-        currentThemeMode;
-    context.read<ThemeBloc>().clearHistory();
-    context.read<ThemeBloc>().add(
-          ChangeThemeEvent(
-            themeMode: newThemeMode.name,
-          ),
-        );
-  }
-
-  /// Trigger the language change event by showing a dialog.
-  void _triggerLocalizationChangeEvent(
-    BuildContext context,
-    Locale currentLocale,
-  ) async {
-    final newLanguage = await showDialog<Locale>(
-          context: context,
-          barrierDismissible: true,
-          builder: (dialogContext) => SimpleDialog(
-            children: [
-              // TODO: Fix the elected language not showing as selected in the UI
-              ...LocalizationDetails().getSupportedLocales().map(
-                    (e) => RadioListTile(
-                      title: Text(
-                        LocalizationDetails()
-                                .getSupportedLanguage()[e.languageCode] ??
-                            '',
-                        style: context.themeData().textTheme.titleLarge,
-                      ),
-                      value: e.languageCode,
-                      groupValue: currentLocale.languageCode,
-                      onChanged: (value) {
-                        Navigator.pop(dialogContext, e);
-                      },
-                    ),
-                  ),
-            ],
-          ),
-        ) ??
-        currentLocale;
-    context.read<LocalizationBloc>().clearHistory();
-    context.read<LocalizationBloc>().add(
-          ChangeLocalizationEvent(
-            newLocale: newLanguage.languageCode,
-          ),
-        );
-  }
 }

@@ -63,4 +63,12 @@ class LocalizationValues {
   String get languageSubTitle =>
       AppLocalizations.of(_buildContext)?.languageSubTitle ??
           'languageTitle';
+
+  String get fontTitle =>
+      AppLocalizations.of(_buildContext)?.fontTitle ??
+          'fontTitle';
+
+  String get fontSubTitle =>
+      AppLocalizations.of(_buildContext)?.fontSubTitle ??
+          'fontSubTitle';
 }

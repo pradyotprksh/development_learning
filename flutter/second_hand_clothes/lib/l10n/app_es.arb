@@ -10,5 +10,7 @@
   "colorSchemeTitle": "Esquema de color",
   "colorSchemeSubTitle": "Por favor, elija un esquema de color que se adapte a usted.",
   "languageTitle": "Idioma",
-  "languageSubTitle": "Por favor, elija el idioma que más le convenga."
+  "languageSubTitle": "Por favor, elija el idioma que más le convenga.",
+  "fontTitle": "Fuente",
+  "fontSubTitle": "Por favor, elija la fuente que más le convenga."
 }
