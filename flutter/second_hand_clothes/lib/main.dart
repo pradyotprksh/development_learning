@@ -31,6 +31,9 @@ void main() async {
                 FetchCurrentLocalizationEvent(),
               ),
           ),
+          BlocProvider(
+            create: (_) => AuthorizationBloc(),
+          ),
         ],
         child: const App(),
       ),
