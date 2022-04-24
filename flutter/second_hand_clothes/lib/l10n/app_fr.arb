@@ -12,5 +12,15 @@
   "languageTitle": "Langue",
   "languageSubTitle": "Veuillez choisir la langue qui vous convient.",
   "fontTitle": "Police",
-  "fontSubTitle": "Veuillez choisir la police qui vous convient."
+  "fontSubTitle": "Veuillez choisir la police qui vous convient.",
+  "hello": "Bonjour!!",
+  "newUserMessage": "Voyons ce que les autres vendent et ce que vous pouvez rendre aux autres.",
+  "emailAddressLabel": "Adresse courriel",
+  "emailAddressHint": "abc@xyz.com",
+  "emailAddressError": "Veuillez saisir une adresse e-mail correcte",
+  "passwordLabel": "Mot de passe",
+  "passwordHint": "Qw12#456",
+  "passwordError": "Veuillez entrer un mot de passe fort",
+  "authenticateButtonTitle": "Authentifier",
+  "authenticateOtherOptionNote": "Nous fournissons également un moyen plus facile de vous authentifier."
 }

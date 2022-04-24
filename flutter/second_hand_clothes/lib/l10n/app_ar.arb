@@ -12,5 +12,15 @@
   "languageTitle": "اللغة",
   "languageSubTitle": "يرجى اختيار اللغة التي تناسبك.",
   "fontTitle": "الخط",
-  "fontSubTitle": "يرجى اختيار الخط الذي يناسبك."
+  "fontSubTitle": "يرجى اختيار الخط الذي يناسبك.",
+  "hello": "مرحبًا!!",
+  "newUserMessage": "دعونا نرى ما يبيعه الآخرون وما يمكنك إعادته للآخرين.",
+  "emailAddressLabel": "عنوان البريد الإلكتروني",
+  "emailAddressHint": "abc@xyz.com",
+  "emailAddressError": "يرجى إدخال عنوان بريد إلكتروني صحيح",
+  "passwordLabel": "شعار",
+  "passwordHint": "Qw12#456",
+  "passwordError": "الرجاء إدخال كلمة مرور قوية",
+  "authenticateButtonTitle": "مصادقه",
+  "authenticateOtherOptionNote": "كما نقدم طريقة أسهل لمصادقة نفسك."
 }

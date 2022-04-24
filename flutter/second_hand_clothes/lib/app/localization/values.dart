@@ -71,4 +71,44 @@ class LocalizationValues {
   String get fontSubTitle =>
       AppLocalizations.of(_buildContext)?.fontSubTitle ??
           'fontSubTitle';
+
+  String get hello =>
+      AppLocalizations.of(_buildContext)?.hello ??
+          'hello';
+
+  String get newUserMessage =>
+      AppLocalizations.of(_buildContext)?.newUserMessage ??
+          'newUserMessage';
+
+  String get emailAddressLabel =>
+      AppLocalizations.of(_buildContext)?.emailAddressLabel ??
+          'emailAddressLabel';
+
+  String get emailAddressHint =>
+      AppLocalizations.of(_buildContext)?.emailAddressHint ??
+          'emailAddressHint';
+
+  String get emailAddressError =>
+      AppLocalizations.of(_buildContext)?.emailAddressError ??
+          'emailAddressError';
+
+  String get passwordLabel =>
+      AppLocalizations.of(_buildContext)?.passwordLabel ??
+          'passwordLabel';
+
+  String get passwordHint =>
+      AppLocalizations.of(_buildContext)?.passwordHint ??
+          'passwordHint';
+
+  String get passwordError =>
+      AppLocalizations.of(_buildContext)?.passwordError ??
+          'passwordError';
+
+  String get authenticateButtonTitle =>
+      AppLocalizations.of(_buildContext)?.authenticateButtonTitle ??
+          'authenticateButtonTitle';
+
+  String get authenticateOtherOptionNote =>
+      AppLocalizations.of(_buildContext)?.authenticateOtherOptionNote ??
+          'authenticateOtherOptionNote';
 }

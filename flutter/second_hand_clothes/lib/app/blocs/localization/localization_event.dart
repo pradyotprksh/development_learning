@@ -7,6 +7,8 @@ import 'package:replay_bloc/replay_bloc.dart';
 /// It can be used to fetch the current localization or update it to a new
 /// value.
 abstract class LocalizationEvent extends ReplayEvent with EquatableMixin {
+  const LocalizationEvent();
+
   @override
   List<Object?> get props => [];
 }
@@ -17,11 +19,11 @@ abstract class LocalizationEvent extends ReplayEvent with EquatableMixin {
 /// If any change required to the localization this event can be triggered.
 class ChangeLocalizationEvent extends LocalizationEvent {
   /// [newLocale] = New locale which is to be used.
-  ChangeLocalizationEvent({
+  const ChangeLocalizationEvent({
     required this.newLocale,
   });
 
-  String newLocale;
+  final String newLocale;
 
   @override
   List<Object?> get props => [newLocale];
@@ -32,4 +34,6 @@ class ChangeLocalizationEvent extends LocalizationEvent {
 ///
 /// This will be used mainly when the application starts or user is on a page
 /// where localization change option is available.
-class FetchCurrentLocalizationEvent extends LocalizationEvent {}
+class FetchCurrentLocalizationEvent extends LocalizationEvent {
+  const FetchCurrentLocalizationEvent();
+}

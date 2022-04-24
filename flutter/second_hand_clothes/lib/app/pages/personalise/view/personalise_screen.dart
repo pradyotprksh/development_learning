@@ -128,6 +128,8 @@ class PersonaliseScreen extends StatelessWidget {
                   color: context.themeData().iconTheme.color,
                 ),
                 title: BlocBuilder<ThemeBloc, ThemeState>(
+                  buildWhen: (previous, current) =>
+                      previous.currentFontFamily != current.currentFontFamily,
                   builder: (_, themeState) => Text(
                     '${context.localizationValues().fontTitle} - ${themeState.currentFontFamily}',
                     style: context.themeData().textTheme.titleLarge,

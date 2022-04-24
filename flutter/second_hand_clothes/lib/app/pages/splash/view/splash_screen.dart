@@ -12,7 +12,7 @@ class SplashScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    context.read<AuthorizationBloc>().add(CheckAuthorizationEvent());
+    context.read<AuthorizationBloc>().add(const CheckAuthorizationEvent());
 
     return BlocListener<AuthorizationBloc, AuthorizationState>(
       listener: (BuildContext context, state) {
@@ -24,7 +24,7 @@ class SplashScreen extends StatelessWidget {
           case UtilsAuthenticationStatus.unauthenticated:
             Navigator.pushReplacementNamed(
               context,
-              NavigatorsConstants().personaliseRoute,
+              NavigatorsConstants().authenticationRoute,
             );
             break;
         }

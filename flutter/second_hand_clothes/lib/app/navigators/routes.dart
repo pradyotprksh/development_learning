@@ -18,5 +18,9 @@ class NavigatorsRoutes {
     NavigatorsConstants().splashRoute: (context) => const SplashScreen(),
     NavigatorsConstants().personaliseRoute: (context) =>
         const PersonaliseScreen(),
+    NavigatorsConstants().authenticationRoute: (context) => BlocProvider(
+          create: (_) => AuthenticationBloc(),
+          child: const AuthenticationScreen(),
+        ),
   };
 }

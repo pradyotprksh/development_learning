@@ -12,5 +12,15 @@
   "languageTitle": "Idioma",
   "languageSubTitle": "Por favor, elija el idioma que más le convenga.",
   "fontTitle": "Fuente",
-  "fontSubTitle": "Por favor, elija la fuente que más le convenga."
+  "fontSubTitle": "Por favor, elija la fuente que más le convenga.",
+  "hello": "¡¡Hola!!",
+  "newUserMessage": "Veamos qué venden los demás y qué puedes devolver a los demás.",
+  "emailAddressLabel": "Dirección de correo electrónico",
+  "emailAddressHint": "abc@xyz.com",
+  "emailAddressError": "Introduzca una dirección de correo electrónico correcta",
+  "passwordLabel": "Contraseña",
+  "passwordHint": "Qw12#456",
+  "passwordError": "Introduzca una contraseña segura",
+  "authenticateButtonTitle": "Autentificar",
+  "authenticateOtherOptionNote": "También proporcionamos una forma más fácil de autenticarse."
 }

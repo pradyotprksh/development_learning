@@ -8,7 +8,7 @@ class AuthorizationBloc extends Bloc<AuthorizationEvent, AuthorizationState> {
     on<CheckAuthorizationEvent>(_checkAuthorizationEvent);
   }
 
-  /// Whenever [AuthorizationSplashEvent] is sent this method will be called.
+  /// Whenever [CheckAuthorizationEvent] is sent this method will be called.
   void _checkAuthorizationEvent(
     CheckAuthorizationEvent event,
     Emitter<AuthorizationState> emit,

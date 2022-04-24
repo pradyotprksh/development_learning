@@ -3,3 +3,15 @@ enum UtilsAuthenticationStatus {
   authenticated,
   unauthenticated,
 }
+
+enum EmailAddressValidationError {
+  empty,
+  invalid,
+  noAccount,
+}
+
+enum PasswordValidationError {
+  empty,
+  tooWeak,
+}
+

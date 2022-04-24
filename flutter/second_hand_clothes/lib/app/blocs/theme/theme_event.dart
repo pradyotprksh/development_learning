@@ -6,6 +6,8 @@ import 'package:replay_bloc/replay_bloc.dart';
 /// Will be used to set the theme when the application starts or
 /// change the theme if required.
 abstract class ThemeEvent extends ReplayEvent with EquatableMixin {
+  const ThemeEvent();
+
   @override
   List<Object?> get props => [];
 }
@@ -27,7 +29,7 @@ class ChangeThemeEvent extends ThemeEvent {
   /// [darkContrastFlexScheme] = New dark contrast flex scheme
   ///
   /// [fontFamily] = New font family
-  ChangeThemeEvent({
+  const ChangeThemeEvent({
     this.themeMode,
     this.lightFlexScheme,
     this.lightContrastFlexScheme,
@@ -59,4 +61,6 @@ class ChangeThemeEvent extends ThemeEvent {
 ///
 /// This will be used mainly when the application starts or user is on a page
 /// where theme change option is available.
-class FetchCurrentThemeEvent extends ThemeEvent {}
+class FetchCurrentThemeEvent extends ThemeEvent {
+  const FetchCurrentThemeEvent();
+}

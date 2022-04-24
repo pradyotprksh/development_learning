@@ -12,5 +12,15 @@
   "languageTitle": "言語",
   "languageSubTitle": "自分に合った言語をお選びください。",
   "fontTitle": "フォント",
-  "fontSubTitle": "自分に合ったフォントをお選びください。"
+  "fontSubTitle": "自分に合ったフォントをお選びください。",
+  "hello": "こんにちは！！",
+  "newUserMessage": "他の人が何を売っているのか、そしてあなたが他の人に何を返すことができるのかを見てみましょう。",
+  "emailAddressLabel": "アドレス",
+  "emailAddressHint": "abc@xyz.com",
+  "emailAddressError": "正しいメールアドレスを入力してください",
+  "passwordLabel": "パスワード",
+  "passwordHint": "Qw12#456",
+  "passwordError": "強力なパスワードを入力してください",
+  "authenticateButtonTitle": "認証",
+  "authenticateOtherOptionNote": "また、自分自身を認証するための簡単な方法も提供します。"
 }

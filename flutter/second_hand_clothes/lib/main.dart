@@ -22,13 +22,13 @@ void main() async {
           BlocProvider(
             create: (_) => ThemeBloc()
               ..add(
-                FetchCurrentThemeEvent(),
+                const FetchCurrentThemeEvent(),
               ),
           ),
           BlocProvider(
             create: (_) => LocalizationBloc()
               ..add(
-                FetchCurrentLocalizationEvent(),
+                const FetchCurrentLocalizationEvent(),
               ),
           ),
           BlocProvider(

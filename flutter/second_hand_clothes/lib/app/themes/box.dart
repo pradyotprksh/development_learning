@@ -13,5 +13,9 @@ class ThemesBox {
 
   SizedBox height15 = const SizedBox(height: 15);
 
+  SizedBox height50 = const SizedBox(height: 50);
+
+  SizedBox height30 = const SizedBox(height: 30);
+
   SizedBox width15 = const SizedBox(width: 15);
 }

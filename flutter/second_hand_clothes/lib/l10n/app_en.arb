@@ -54,5 +54,45 @@
   "fontSubTitle": "Please choose the font that suits you.",
   "@fontSubTitle": {
     "description": "A sub title for the font selector"
+  },
+  "hello": "Hello!!",
+  "@hello": {
+    "description": "A hello greeting"
+  },
+  "newUserMessage": "Let's see what others are selling and what you can give others back.",
+  "@newUserMessage": {
+    "description": "A message to a new user"
+  },
+  "emailAddressLabel": "Email Address",
+  "@emailAddressLabel": {
+    "description": "Email label for the user."
+  },
+  "emailAddressHint": "abc@xyz.com",
+  "@emailAddressHint": {
+    "description": "A email hint for the user."
+  },
+  "emailAddressError": "Please enter a correct email address",
+  "@emailAddressError": {
+    "description": "An error when the email is not in correct format."
+  },
+  "passwordLabel": "Password",
+  "@passwordLabel": {
+    "description": "Password label for the user."
+  },
+  "passwordHint": "Qw12#456",
+  "@passwordHint": {
+    "description": "A password hint for the user."
+  },
+  "passwordError": "Please enter a strong password",
+  "@passwordError": {
+    "description": "An error when the password is not in correct format."
+  },
+  "authenticateButtonTitle": "Authenticate",
+  "@authenticateButtonTitle": {
+    "description": "A title of the authenticate button."
+  },
+  "authenticateOtherOptionNote": "We also provide easier way to authenticate yourself.",
+  "@authenticateOtherOptionNote": {
+    "description": "A note to the user stating other options are also available for authentication."
   }
 }

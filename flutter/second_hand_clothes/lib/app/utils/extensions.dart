@@ -1,5 +1,7 @@
+import 'package:email_validator/email_validator.dart';
 import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter/material.dart';
+import 'package:password_strength/password_strength.dart';
 import 'package:second_hand_clothes/app/app.dart';
 
 /// An extension on an String, this will be used to move the common
@@ -16,6 +18,15 @@ extension StringExtensions on String {
   /// Capitalized the first character of the string
   String toCapitalized() =>
       length > 0 ? '${this[0].toUpperCase()}${substring(1).toLowerCase()}' : '';
+
+  /// Is a valid email address
+  bool isValidEmail() => EmailValidator.validate(this);
+
+  /// Is the password too weak to be used.
+  bool isPasswordTooWeak() => getPasswordStrength() < 0.3;
+
+  /// Get the password strong to be used.
+  double getPasswordStrength() => estimatePasswordStrength(this);
 }
 
 /// An extension on BuildContext which will be used to take out the
