@@ -11,8 +11,8 @@ abstract class AuthenticationEvent extends Equatable {
 
 /// A child of [AuthenticationEvent] which will be called whenever there is
 /// a change in email text field.
-class EmailAddressChangeEvent extends AuthenticationEvent {
-  const EmailAddressChangeEvent(this.emailAddress);
+class EmailAddressChangeAuthenticateEvent extends AuthenticationEvent {
+  const EmailAddressChangeAuthenticateEvent(this.emailAddress);
 
   final String emailAddress;
 
@@ -22,11 +22,17 @@ class EmailAddressChangeEvent extends AuthenticationEvent {
 
 /// A child of [AuthenticationEvent] which will be called whenever there
 /// is a change in password text field.
-class PasswordChangeEvent extends AuthenticationEvent {
-  const PasswordChangeEvent(this.password);
+class PasswordChangeAuthenticateEvent extends AuthenticationEvent {
+  const PasswordChangeAuthenticateEvent(this.password);
 
   final String password;
 
   @override
   List<Object?> get props => [password];
+}
+
+/// A child of [AuthenticationEvent] which will be called whenever the
+/// authentication form is submitted.
+class SubmitFormAuthenticateEvent extends AuthenticationEvent {
+  const SubmitFormAuthenticateEvent();
 }

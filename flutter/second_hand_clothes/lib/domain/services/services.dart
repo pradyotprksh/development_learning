@@ -3,4 +3,5 @@
 ///
 /// These services are mainly which are needed at any point of time and want
 /// it to be up and running.
+export 'firebase_auth.dart';
 export 'firebase_core.dart';

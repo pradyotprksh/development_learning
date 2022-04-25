@@ -49,7 +49,7 @@ class AuthenticationScreen extends StatelessWidget {
                 autofocus: true,
                 onChanged: (emailAddress) =>
                     context.read<AuthenticationBloc>().add(
-                          EmailAddressChangeEvent(
+                          EmailAddressChangeAuthenticateEvent(
                             emailAddress,
                           ),
                         ),
@@ -78,7 +78,7 @@ class AuthenticationScreen extends StatelessWidget {
                 textInputAction: TextInputAction.done,
                 maxLength: 16,
                 onChanged: (password) => context.read<AuthenticationBloc>().add(
-                      PasswordChangeEvent(
+                      PasswordChangeAuthenticateEvent(
                         password,
                       ),
                     ),
@@ -89,8 +89,13 @@ class AuthenticationScreen extends StatelessWidget {
               buildWhen: (previous, current) =>
                   previous.formStatus != current.formStatus,
               builder: (_, authenticationState) => ElevatedButton(
-                onPressed:
-                    authenticationState.formStatus.isValidated ? () {} : null,
+                onPressed: authenticationState.formStatus.isValidated
+                    ? () {
+                        context.read<AuthenticationBloc>().add(
+                              const SubmitFormAuthenticateEvent(),
+                            );
+                      }
+                    : null,
                 child: Text(
                   context.localizationValues().authenticateButtonTitle,
                   style: context.themeData().textTheme.button,
