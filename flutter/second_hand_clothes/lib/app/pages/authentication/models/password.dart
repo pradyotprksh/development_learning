@@ -11,10 +11,7 @@ class PasswordModels
 
   @override
   PasswordValidationError? validator(String? value) {
-    if (value != null) {
-      if (value.isEmpty) {
-        return PasswordValidationError.empty;
-      }
+    if (value != null && value.isNotEmpty) {
       if (value.isPasswordTooWeak()) {
         return PasswordValidationError.tooWeak;
       }

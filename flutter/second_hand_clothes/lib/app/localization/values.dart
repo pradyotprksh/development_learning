@@ -76,6 +76,10 @@ class LocalizationValues {
       AppLocalizations.of(_buildContext)?.hello ??
           'hello';
 
+  String get helloAgain =>
+      AppLocalizations.of(_buildContext)?.helloAgain ??
+          'helloAgain';
+
   String get newUserMessage =>
       AppLocalizations.of(_buildContext)?.newUserMessage ??
           'newUserMessage';
@@ -111,4 +115,12 @@ class LocalizationValues {
   String get authenticateOtherOptionNote =>
       AppLocalizations.of(_buildContext)?.authenticateOtherOptionNote ??
           'authenticateOtherOptionNote';
+
+  String get somethingWentWrong =>
+      AppLocalizations.of(_buildContext)?.somethingWentWrong ??
+          'somethingWentWrong';
+
+  String get okayButton =>
+      AppLocalizations.of(_buildContext)?.okayButton ??
+          'okayButton';
 }

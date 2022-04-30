@@ -5,13 +5,11 @@ enum UtilsAuthenticationStatus {
 }
 
 enum EmailAddressValidationError {
-  empty,
   invalid,
   noAccount,
 }
 
 enum PasswordValidationError {
-  empty,
   tooWeak,
 }
 

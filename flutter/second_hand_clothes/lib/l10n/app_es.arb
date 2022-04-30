@@ -14,6 +14,7 @@
   "fontTitle": "Fuente",
   "fontSubTitle": "Por favor, elija la fuente que más le convenga.",
   "hello": "¡¡Hola!!",
+  "helloAgain": "Hola de nuevo!!",
   "newUserMessage": "Veamos qué venden los demás y qué puedes devolver a los demás.",
   "emailAddressLabel": "Dirección de correo electrónico",
   "emailAddressHint": "abc@xyz.com",
@@ -22,5 +23,7 @@
   "passwordHint": "Qw12#456",
   "passwordError": "Introduzca una contraseña segura",
   "authenticateButtonTitle": "Autentificar",
-  "authenticateOtherOptionNote": "También proporcionamos una forma más fácil de autenticarse."
+  "authenticateOtherOptionNote": "También proporcionamos una forma más fácil de autenticarse.",
+  "somethingWentWrong": "Algo salió mal. Inténtelo de nuevo después de algún tiempo.",
+  "okayButton": "Bien"
 }

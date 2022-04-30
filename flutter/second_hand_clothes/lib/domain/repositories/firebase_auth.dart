@@ -28,9 +28,10 @@ class RepositoriesFirebaseAuth extends ServicesFirebaseAuth {
     } catch (exception) {
       UtilsLogger().log('authenticateUser', exception);
       if (exception is FirebaseException) {
-        rethrow;
+        throw AuthenticationException(message: exception.message);
+      } else {
+        throw const AuthenticationException();
       }
     }
-    return null;
   }
 }

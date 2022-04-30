@@ -14,6 +14,7 @@
   "fontTitle": "الخط",
   "fontSubTitle": "يرجى اختيار الخط الذي يناسبك.",
   "hello": "مرحبًا!!",
+  "helloAgain": "مرحبا مرة أخرى!!",
   "newUserMessage": "دعونا نرى ما يبيعه الآخرون وما يمكنك إعادته للآخرين.",
   "emailAddressLabel": "عنوان البريد الإلكتروني",
   "emailAddressHint": "abc@xyz.com",
@@ -22,5 +23,7 @@
   "passwordHint": "Qw12#456",
   "passwordError": "الرجاء إدخال كلمة مرور قوية",
   "authenticateButtonTitle": "مصادقه",
-  "authenticateOtherOptionNote": "كما نقدم طريقة أسهل لمصادقة نفسك."
+  "authenticateOtherOptionNote": "كما نقدم طريقة أسهل لمصادقة نفسك.",
+  "somethingWentWrong": "حدث خطأ ما. يرجى المحاولة مرة أخرى بعد مرور بعض الوقت.",
+  "okayButton": "حسنًا"
 }

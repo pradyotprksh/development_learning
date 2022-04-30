@@ -59,6 +59,10 @@
   "@hello": {
     "description": "A hello greeting"
   },
+  "helloAgain": "Hello Again!!",
+  "@helloAgain": {
+    "description": "A hello again greeting"
+  },
   "newUserMessage": "Let's see what others are selling and what you can give others back.",
   "@newUserMessage": {
     "description": "A message to a new user"
@@ -94,5 +98,13 @@
   "authenticateOtherOptionNote": "We also provide easier way to authenticate yourself.",
   "@authenticateOtherOptionNote": {
     "description": "A note to the user stating other options are also available for authentication."
+  },
+  "somethingWentWrong": "Something went wrong. Please try again after sometime.",
+  "@somethingWentWrong": {
+    "description": "An error message which will be shown when we do not know what the error is."
+  },
+  "okayButton": "Okay",
+  "@okayButton": {
+    "description": "A okay text for the button."
   }
 }

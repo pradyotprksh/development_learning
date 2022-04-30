@@ -43,4 +43,27 @@ extension BuildContextExtension on BuildContext {
   /// Returns true if the user phone is in dark mode otherwise false.
   bool isPhoneInDarkMode() =>
       MediaQuery.of(this).platformBrightness == Brightness.light;
+
+  /// Clear all the snack bars
+  void clearSnackBars() {
+    ScaffoldMessenger.of(this).clearSnackBars();
+  }
+
+  /// Replace an existing snack bar with a new one.
+  ///
+  /// [content] = text to be shown on the snack bar
+  /// [action] = action required on the snack bar
+  void replaceAndShowSnackBar(String content, SnackBarAction? action) {
+    clearSnackBars();
+    ScaffoldMessenger.of(this).showSnackBar(
+      SnackBar(
+        backgroundColor: themeData().snackBarTheme.backgroundColor,
+        content: Text(
+          content,
+          style: themeData().snackBarTheme.contentTextStyle,
+        ),
+        action: action,
+      ),
+    );
+  }
 }

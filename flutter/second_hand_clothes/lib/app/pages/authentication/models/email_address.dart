@@ -11,10 +11,7 @@ class EmailAddressModels
 
   @override
   EmailAddressValidationError? validator(String? value) {
-    if (value != null) {
-      if (value.isEmpty) {
-        return EmailAddressValidationError.empty;
-      }
+    if (value != null && value.isNotEmpty) {
       if (!value.isValidEmail()) {
         return EmailAddressValidationError.invalid;
       }

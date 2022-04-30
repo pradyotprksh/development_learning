@@ -14,6 +14,7 @@
   "fontTitle": "Police",
   "fontSubTitle": "Veuillez choisir la police qui vous convient.",
   "hello": "Bonjour!!",
+  "helloAgain": "Bonjour encore !!",
   "newUserMessage": "Voyons ce que les autres vendent et ce que vous pouvez rendre aux autres.",
   "emailAddressLabel": "Adresse courriel",
   "emailAddressHint": "abc@xyz.com",
@@ -22,5 +23,7 @@
   "passwordHint": "Qw12#456",
   "passwordError": "Veuillez entrer un mot de passe fort",
   "authenticateButtonTitle": "Authentifier",
-  "authenticateOtherOptionNote": "Nous fournissons également un moyen plus facile de vous authentifier."
+  "authenticateOtherOptionNote": "Nous fournissons également un moyen plus facile de vous authentifier.",
+  "somethingWentWrong": "Quelque chose a mal tourné. Veuillez réessayer après un certain temps.",
+  "okayButton": "D’accord"
 }

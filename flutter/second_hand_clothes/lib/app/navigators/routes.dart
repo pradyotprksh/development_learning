@@ -20,10 +20,10 @@ class NavigatorsRoutes {
     NavigatorsConstants().personaliseRoute: (context) =>
         const PersonaliseScreen(),
     NavigatorsConstants().authenticationRoute: (context) => BlocProvider(
-          create: (_) => AuthenticationBloc(
+          create: (_) => LoginBloc(
             RepositoriesFirebaseAuth(),
           ),
-          child: const AuthenticationScreen(),
+          child: const LoginScreen(),
         ),
   };
 }
