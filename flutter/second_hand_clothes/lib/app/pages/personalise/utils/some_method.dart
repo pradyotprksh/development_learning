@@ -5,13 +5,13 @@ import 'package:second_hand_clothes/app/app.dart';
 
 /// A utility class for [PersonaliseScreen], this will contain the extra
 /// functionality which will be required while UI update.
-class UtilsSomeMethod {
-  factory UtilsSomeMethod() => _instance;
+class PersonaliseUtilsSomeMethod {
+  factory PersonaliseUtilsSomeMethod() => _instance;
 
-  UtilsSomeMethod._privateConstructor();
+  PersonaliseUtilsSomeMethod._privateConstructor();
 
-  static final UtilsSomeMethod _instance =
-      UtilsSomeMethod._privateConstructor();
+  static final PersonaliseUtilsSomeMethod _instance =
+      PersonaliseUtilsSomeMethod._privateConstructor();
 
   /// Get the theme icon of the application based on [currentThemeMode].
   IconData getThemeIcon(ThemeMode currentThemeMode) {

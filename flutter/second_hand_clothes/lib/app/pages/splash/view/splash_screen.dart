@@ -24,7 +24,10 @@ class SplashScreen extends StatelessWidget {
           case UtilsAuthenticationStatus.unauthenticated:
             Navigator.pushReplacementNamed(
               context,
-              NavigatorsConstants().authenticationRoute,
+              NavigatorsConstants().formRoute,
+              arguments: FormArguments(
+                FormConstants().loginFormId,
+              ),
             );
             break;
         }

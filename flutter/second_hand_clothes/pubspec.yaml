@@ -90,4 +90,5 @@ flutter:
 
   assets:
     - assets/
+    - assets/form/
     - assets/lottie/

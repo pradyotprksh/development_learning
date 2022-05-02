@@ -66,4 +66,7 @@ extension BuildContextExtension on BuildContext {
       ),
     );
   }
+
+  /// Get the arguments for page
+  Object? arguments() => ModalRoute.of(this)!.settings.arguments;
 }

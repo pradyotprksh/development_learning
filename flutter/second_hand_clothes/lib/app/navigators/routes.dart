@@ -25,5 +25,9 @@ class NavigatorsRoutes {
           ),
           child: const LoginScreen(),
         ),
+    NavigatorsConstants().formRoute: (context) => BlocProvider(
+      create: (_) => FormBloc(),
+      child: const FormScreen(),
+    ),
   };
 }

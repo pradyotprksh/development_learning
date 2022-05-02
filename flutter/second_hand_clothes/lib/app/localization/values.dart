@@ -18,109 +18,123 @@ class LocalizationValues {
 
   static late BuildContext _buildContext;
 
-  String get applicationName =>
-      AppLocalizations.of(_buildContext)?.applicationName ?? 'applicationName';
+  final mapLocalization = <String, String>{
+    'applicationName': AppLocalizations.of(_buildContext)?.applicationName ??
+        'applicationName',
+    'welcomeTo': AppLocalizations.of(_buildContext)?.welcomeTo ?? 'welcomeTo',
+    'personaliseTitle': AppLocalizations.of(_buildContext)?.personaliseTitle ??
+        'personaliseTitle',
+    'personaliseDescription':
+        AppLocalizations.of(_buildContext)?.personaliseDescription ??
+            'personaliseDescription',
+    'themeTitle':
+        AppLocalizations.of(_buildContext)?.themeTitle ?? 'themeTitle',
+    'themeSubTitle':
+        AppLocalizations.of(_buildContext)?.themeSubTitle ?? 'themeSubTitle',
+    'themeModeUndoTitle':
+        AppLocalizations.of(_buildContext)?.themeModeUndoTitle ??
+            'themeModeUndoTitle',
+    'undoOption':
+        AppLocalizations.of(_buildContext)?.undoOption ?? 'undoOption',
+    'colorSchemeTitle': AppLocalizations.of(_buildContext)?.colorSchemeTitle ??
+        'colorSchemeTitle',
+    'colorSchemeSubTitle':
+        AppLocalizations.of(_buildContext)?.colorSchemeSubTitle ??
+            'colorSchemeSubTitle',
+    'languageTitle':
+        AppLocalizations.of(_buildContext)?.languageTitle ?? 'languageTitle',
+    'languageSubTitle': AppLocalizations.of(_buildContext)?.languageSubTitle ??
+        'languageSubTitle',
+    'fontTitle': AppLocalizations.of(_buildContext)?.fontTitle ?? 'fontTitle',
+    'fontSubTitle':
+        AppLocalizations.of(_buildContext)?.fontSubTitle ?? 'fontSubTitle',
+    'hello': AppLocalizations.of(_buildContext)?.hello ?? 'hello',
+    'helloAgain':
+        AppLocalizations.of(_buildContext)?.helloAgain ?? 'helloAgain',
+    'newUserMessage':
+        AppLocalizations.of(_buildContext)?.newUserMessage ?? 'newUserMessage',
+    'emailAddressLabel':
+        AppLocalizations.of(_buildContext)?.emailAddressLabel ??
+            'emailAddressLabel',
+    'emailAddressHint': AppLocalizations.of(_buildContext)?.emailAddressHint ??
+        'emailAddressHint',
+    'emailAddressError':
+        AppLocalizations.of(_buildContext)?.emailAddressError ??
+            'emailAddressError',
+    'passwordLabel':
+        AppLocalizations.of(_buildContext)?.passwordLabel ?? 'passwordLabel',
+    'passwordHint':
+        AppLocalizations.of(_buildContext)?.passwordHint ?? 'passwordHint',
+    'passwordError':
+        AppLocalizations.of(_buildContext)?.passwordError ?? 'passwordError',
+    'authenticateButtonTitle':
+        AppLocalizations.of(_buildContext)?.authenticateButtonTitle ??
+            'authenticateButtonTitle',
+    'authenticateOtherOptionNote':
+        AppLocalizations.of(_buildContext)?.authenticateOtherOptionNote ??
+            'authenticateOtherOptionNote',
+    'somethingWentWrong':
+        AppLocalizations.of(_buildContext)?.somethingWentWrong ??
+            'somethingWentWrong',
+    'okayButton':
+        AppLocalizations.of(_buildContext)?.okayButton ?? 'okayButton',
+  };
 
-  String get welcomeTo =>
-      AppLocalizations.of(_buildContext)?.welcomeTo ?? 'welcomeTo';
+  String get applicationName => mapLocalization['applicationName'] ?? '****';
 
-  String get personaliseTitle =>
-      AppLocalizations.of(_buildContext)?.personaliseTitle ??
-      'personaliseTitle';
+  String get welcomeTo => mapLocalization['welcomeTo'] ?? '****';
+
+  String get personaliseTitle => mapLocalization['personaliseTitle'] ?? '****';
 
   String get personaliseDescription =>
-      AppLocalizations.of(_buildContext)?.personaliseDescription ??
-      'personaliseDescription';
+      mapLocalization['personaliseDescription'] ?? '****';
 
-  String get themeTitle =>
-      AppLocalizations.of(_buildContext)?.themeTitle ??
-      'themeTitle';
+  String get themeTitle => mapLocalization['themeTitle'] ?? '****';
 
-  String get themeSubTitle =>
-      AppLocalizations.of(_buildContext)?.themeSubTitle ??
-      'themeSubTitle';
+  String get themeSubTitle => mapLocalization['themeSubTitle'] ?? '****';
 
-  String get themeModeUndoTitle =>
-      AppLocalizations.of(_buildContext)?.themeModeUndoTitle ??
-          'themeModeUndoTitle';
+  String get themeModeUndoTitle => mapLocalization['themeModeUndoTitle'] ?? '****';
 
-  String get undoOption =>
-      AppLocalizations.of(_buildContext)?.undoOption ??
-          'undoOption';
+  String get undoOption => mapLocalization['undoOption'] ?? '****';
 
-  String get colorSchemeTitle =>
-      AppLocalizations.of(_buildContext)?.colorSchemeTitle ??
-          'colorSchemeTitle';
+  String get colorSchemeTitle => mapLocalization['colorSchemeTitle'] ?? '****';
 
   String get colorSchemeSubTitle =>
-      AppLocalizations.of(_buildContext)?.colorSchemeSubTitle ??
-          'colorSchemeSubTitle';
+      mapLocalization['colorSchemeSubTitle'] ?? '****';
 
-  String get languageTitle =>
-      AppLocalizations.of(_buildContext)?.languageTitle ??
-          'languageTitle';
+  String get languageTitle => mapLocalization['languageTitle'] ?? '****';
 
-  String get languageSubTitle =>
-      AppLocalizations.of(_buildContext)?.languageSubTitle ??
-          'languageTitle';
+  String get languageSubTitle => mapLocalization['languageSubTitle'] ?? '****';
 
-  String get fontTitle =>
-      AppLocalizations.of(_buildContext)?.fontTitle ??
-          'fontTitle';
+  String get fontTitle => mapLocalization['fontTitle'] ?? '****';
 
-  String get fontSubTitle =>
-      AppLocalizations.of(_buildContext)?.fontSubTitle ??
-          'fontSubTitle';
+  String get fontSubTitle => mapLocalization['fontSubTitle'] ?? '****';
 
-  String get hello =>
-      AppLocalizations.of(_buildContext)?.hello ??
-          'hello';
+  String get hello => mapLocalization['hello'] ?? '****';
 
-  String get helloAgain =>
-      AppLocalizations.of(_buildContext)?.helloAgain ??
-          'helloAgain';
+  String get helloAgain => mapLocalization['helloAgain'] ?? '****';
 
-  String get newUserMessage =>
-      AppLocalizations.of(_buildContext)?.newUserMessage ??
-          'newUserMessage';
+  String get newUserMessage => mapLocalization['newUserMessage'] ?? '****';
 
-  String get emailAddressLabel =>
-      AppLocalizations.of(_buildContext)?.emailAddressLabel ??
-          'emailAddressLabel';
+  String get emailAddressLabel => mapLocalization['emailAddressLabel'] ?? '****';
 
-  String get emailAddressHint =>
-      AppLocalizations.of(_buildContext)?.emailAddressHint ??
-          'emailAddressHint';
+  String get emailAddressHint => mapLocalization['emailAddressHint'] ?? '****';
 
-  String get emailAddressError =>
-      AppLocalizations.of(_buildContext)?.emailAddressError ??
-          'emailAddressError';
+  String get emailAddressError => mapLocalization['emailAddressError'] ?? '****';
 
-  String get passwordLabel =>
-      AppLocalizations.of(_buildContext)?.passwordLabel ??
-          'passwordLabel';
+  String get passwordLabel => mapLocalization['passwordLabel'] ?? '****';
 
-  String get passwordHint =>
-      AppLocalizations.of(_buildContext)?.passwordHint ??
-          'passwordHint';
+  String get passwordHint => mapLocalization['passwordHint'] ?? '****';
 
-  String get passwordError =>
-      AppLocalizations.of(_buildContext)?.passwordError ??
-          'passwordError';
+  String get passwordError => mapLocalization['passwordError'] ?? '****';
 
   String get authenticateButtonTitle =>
-      AppLocalizations.of(_buildContext)?.authenticateButtonTitle ??
-          'authenticateButtonTitle';
+      mapLocalization['authenticateButtonTitle'] ?? '****';
 
   String get authenticateOtherOptionNote =>
-      AppLocalizations.of(_buildContext)?.authenticateOtherOptionNote ??
-          'authenticateOtherOptionNote';
+      mapLocalization['authenticateOtherOptionNote'] ?? '****';
 
-  String get somethingWentWrong =>
-      AppLocalizations.of(_buildContext)?.somethingWentWrong ??
-          'somethingWentWrong';
+  String get somethingWentWrong => mapLocalization['somethingWentWrong'] ?? '****';
 
-  String get okayButton =>
-      AppLocalizations.of(_buildContext)?.okayButton ??
-          'okayButton';
+  String get okayButton => mapLocalization['okayButton'] ?? '****';
 }

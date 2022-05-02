@@ -18,4 +18,17 @@ class ThemesBox {
   SizedBox height30 = const SizedBox(height: 30);
 
   SizedBox width15 = const SizedBox(width: 15);
+
+  SizedBox shrink = const SizedBox.shrink();
+
+  SizedBox box({
+    double? height = 0.0,
+    double? width = 0.0,
+    Key? key,
+  }) =>
+      SizedBox(
+        key: key,
+        height: height,
+        width: width,
+      );
 }

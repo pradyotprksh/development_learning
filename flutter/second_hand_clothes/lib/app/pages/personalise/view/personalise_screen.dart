@@ -16,7 +16,7 @@ class PersonaliseScreen extends StatelessWidget {
             listenWhen: (previousState, newState) =>
                 previousState != newState && context.read<ThemeBloc>().canUndo,
             listener: (_, __) {
-              UtilsSomeMethod().handleUndoSnackBar(
+              PersonaliseUtilsSomeMethod().handleUndoSnackBar(
                 context,
                 context.localizationValues().themeModeUndoTitle,
                 () {
@@ -29,7 +29,7 @@ class PersonaliseScreen extends StatelessWidget {
             listenWhen: (previousState, newState) =>
                 previousState != newState && context.read<ThemeBloc>().canUndo,
             listener: (_, __) {
-              UtilsSomeMethod().handleUndoSnackBar(
+              PersonaliseUtilsSomeMethod().handleUndoSnackBar(
                 context,
                 context.localizationValues().themeModeUndoTitle,
                 () {
@@ -55,7 +55,7 @@ class PersonaliseScreen extends StatelessWidget {
               ListTile(
                 leading: BlocBuilder<ThemeBloc, ThemeState>(
                   builder: (_, themeState) => Icon(
-                    UtilsSomeMethod().getThemeIcon(themeState.currentThemeMode),
+                    PersonaliseUtilsSomeMethod().getThemeIcon(themeState.currentThemeMode),
                     color: context.themeData().iconTheme.color,
                   ),
                 ),
@@ -70,7 +70,7 @@ class PersonaliseScreen extends StatelessWidget {
                 onTap: () async {
                   final currentThemeMode =
                       context.read<ThemeBloc>().state.currentThemeMode;
-                  UtilsSomeMethod()
+                  PersonaliseUtilsSomeMethod()
                       .triggerThemeModeChangeEvent(context, currentThemeMode);
                 },
               ),
@@ -115,7 +115,7 @@ class PersonaliseScreen extends StatelessWidget {
                 onTap: () {
                   final currentLanguage =
                       context.read<LocalizationBloc>().state.currentLocale;
-                  UtilsSomeMethod()
+                  PersonaliseUtilsSomeMethod()
                       .triggerLocalizationChangeEvent(context, currentLanguage);
                 },
               ),
@@ -140,7 +140,7 @@ class PersonaliseScreen extends StatelessWidget {
                   style: context.themeData().textTheme.subtitle1,
                 ),
                 onTap: () {
-                  UtilsSomeMethod().triggerFontFamilyChangeEvent(
+                  PersonaliseUtilsSomeMethod().triggerFontFamilyChangeEvent(
                     context,
                     context.read<ThemeBloc>().state.currentFontFamily,
                   );

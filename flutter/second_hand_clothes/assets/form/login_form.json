@@ -1,0 +1,108 @@
+{
+  "id": "login_form",
+  "type": "authentication",
+  "subType": "login",
+  "extendBody": true,
+  "extendBodyBehindAppBar": true,
+  "padding": "20_40_20_40",
+  "orientation": "vertical",
+  "items": [
+    {
+      "id": "1",
+      "type": "label",
+      "text": "helloAgain",
+      "style": {
+        "textStyle": "h2",
+        "textAlignment": "center"
+      }
+    },
+    {
+      "id": "2",
+      "type": "box",
+      "style": {
+        "height": 15.0,
+        "width": 0.0
+      }
+    },
+    {
+      "id": "3",
+      "type": "label",
+      "text": "newUserMessage",
+      "style": {
+        "textStyle": "labelLarge",
+        "textAlignment": "center"
+      }
+    },
+    {
+      "id": "4",
+      "type": "box",
+      "style": {
+        "height": 50.0,
+        "width": 0.0
+      }
+    },
+    {
+      "id": "5",
+      "type": "textField",
+      "style": {
+        "icon": "alternate_email",
+        "label": "emailAddressLabel",
+        "hint": "emailAddressHint",
+        "error": "emailAddressError",
+        "keyboardType": "emailAddress",
+        "textInputAction": "next",
+        "autofocus": true
+      },
+      "inputType": "email",
+      "validate": ["EmailAddressModels"]
+    },
+    {
+      "id": "6",
+      "type": "box",
+      "style": {
+        "height": 30.0,
+        "width": 0.0
+      }
+    },
+    {
+      "id": "7",
+      "type": "textField",
+      "style": {
+        "icon": "password",
+        "label": "passwordLabel",
+        "hint": "passwordHint",
+        "error": "passwordError",
+        "keyboardType": "text",
+        "obscureText": true,
+        "obscuringCharacter": "*",
+        "textInputAction": "done",
+        "maxLength": 16
+      },
+      "inputType": "password",
+      "validate": ["PasswordModels"]
+    },
+    {
+      "id": "8",
+      "type": "box",
+      "style": {
+        "height": 50.0,
+        "width": 0.0
+      }
+    },
+    {
+      "id": "9",
+      "type": "button",
+      "subType": "elevatedButton",
+      "text": "authenticateButtonTitle",
+      "validate": ["3", "4"]
+    },
+    {
+      "id": "10",
+      "type": "box",
+      "style": {
+        "height": 30.0,
+        "width": 0.0
+      }
+    }
+  ]
+}

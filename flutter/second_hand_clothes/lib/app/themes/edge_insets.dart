@@ -17,6 +17,11 @@ class ThemesEdgeInsets {
     bottom: 20,
   );
 
+  EdgeInsets left20Right20 = const EdgeInsets.only(
+    left: 20,
+    right: 20,
+  );
+
   EdgeInsets top30Bottom30 = const EdgeInsets.only(
     top: 30,
     bottom: 30,
