@@ -78,7 +78,31 @@ class LocalizationValues {
             'somethingWentWrong',
     'okayButton':
         AppLocalizations.of(_buildContext)?.okayButton ?? 'okayButton',
+    'formParsingError': AppLocalizations.of(_buildContext)?.formParsingError ??
+        'formParsingError',
+    'wrongFormId':
+        AppLocalizations.of(_buildContext)?.wrongFormId ?? 'wrongFormId',
+    'fetchingFormDetails':
+        AppLocalizations.of(_buildContext)?.fetchingFormDetails ??
+            'fetchingFormDetails',
+    'formRefreshMessage':
+        AppLocalizations.of(_buildContext)?.formRefreshMessage ??
+            'formRefreshMessage',
   };
+
+  final formParsingErrorKey = 'formParsingError';
+
+  final wrongFormIdKey = 'wrongFormIdKey';
+
+  String get formParsingError => mapLocalization['formParsingError'] ?? '****';
+
+  String get wrongFormId => mapLocalization['wrongFormId'] ?? '****';
+
+  String get fetchingFormDetails =>
+      mapLocalization['fetchingFormDetails'] ?? '****';
+
+  String get formRefreshMessage =>
+      mapLocalization['formRefreshMessage'] ?? '****';
 
   String get applicationName => mapLocalization['applicationName'] ?? '****';
 
@@ -93,7 +117,8 @@ class LocalizationValues {
 
   String get themeSubTitle => mapLocalization['themeSubTitle'] ?? '****';
 
-  String get themeModeUndoTitle => mapLocalization['themeModeUndoTitle'] ?? '****';
+  String get themeModeUndoTitle =>
+      mapLocalization['themeModeUndoTitle'] ?? '****';
 
   String get undoOption => mapLocalization['undoOption'] ?? '****';
 
@@ -116,11 +141,13 @@ class LocalizationValues {
 
   String get newUserMessage => mapLocalization['newUserMessage'] ?? '****';
 
-  String get emailAddressLabel => mapLocalization['emailAddressLabel'] ?? '****';
+  String get emailAddressLabel =>
+      mapLocalization['emailAddressLabel'] ?? '****';
 
   String get emailAddressHint => mapLocalization['emailAddressHint'] ?? '****';
 
-  String get emailAddressError => mapLocalization['emailAddressError'] ?? '****';
+  String get emailAddressError =>
+      mapLocalization['emailAddressError'] ?? '****';
 
   String get passwordLabel => mapLocalization['passwordLabel'] ?? '****';
 
@@ -134,7 +161,8 @@ class LocalizationValues {
   String get authenticateOtherOptionNote =>
       mapLocalization['authenticateOtherOptionNote'] ?? '****';
 
-  String get somethingWentWrong => mapLocalization['somethingWentWrong'] ?? '****';
+  String get somethingWentWrong =>
+      mapLocalization['somethingWentWrong'] ?? '****';
 
   String get okayButton => mapLocalization['okayButton'] ?? '****';
 }

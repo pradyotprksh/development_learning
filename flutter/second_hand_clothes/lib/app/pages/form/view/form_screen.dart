@@ -17,10 +17,13 @@ class FormScreen extends StatelessWidget {
       listenWhen: (previous, current) =>
           previous.formStatus != current.formStatus,
       listener: (_, formState) {
-        if (formState.formStatus == FormzStatus.submissionFailure) {
+        if (formState.formStatus == FormzStatus.submissionFailure ||
+            formState.formStatus == FormzStatus.invalid) {
           FormUtilsSomeMethod().handleUndoSnackBar(
             context,
-            formState.errorMessage ??
+            context
+                    .localizationValues()
+                    .mapLocalization[formState.errorMessage ?? ''] ??
                 context.localizationValues().somethingWentWrong,
             () {
               context.clearSnackBars();
@@ -29,7 +32,7 @@ class FormScreen extends StatelessWidget {
         }
       },
       buildWhen: (previous, current) =>
-          previous.formData.id != current.formData.id,
+          previous.formStatus != current.formStatus,
       builder: (_, formState) {
         final formData = formState.formData;
         final formItems = formData.items;
@@ -39,8 +42,8 @@ class FormScreen extends StatelessWidget {
           extendBody: formData.extendBody ?? true,
           extendBodyBehindAppBar: formData.extendBodyBehindAppBar ?? true,
           body: formState.formStatus == FormzStatus.submissionInProgress
-              ? const WidgetsCircularLoadingIndicator(
-                  message: 'Loading Form. Please wait.',
+              ? WidgetsCircularLoadingIndicator(
+                  message: context.localizationValues().fetchingFormDetails,
                 )
               : formItems != null && formItems.isNotEmpty
                   ? app.WidgetsFormItems(

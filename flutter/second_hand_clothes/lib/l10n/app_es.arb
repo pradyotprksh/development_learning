@@ -25,5 +25,9 @@
   "authenticateButtonTitle": "Autentificar",
   "authenticateOtherOptionNote": "También proporcionamos una forma más fácil de autenticarse.",
   "somethingWentWrong": "Algo salió mal. Inténtelo de nuevo después de algún tiempo.",
-  "okayButton": "Bien"
+  "okayButton": "Bien",
+  "formParsingError": "Algo salió mal con el análisis de formularios. Por favor, inténtelo de nuevo después de algún tiempo, lo estamos investigando.",
+  "wrongFormId": "Se preguntaron detalles de formulario incorrectos. Por favor, regrese de nuevo, estamos investigando esto.",
+  "fetchingFormDetails": "Obtención de detalles del formulario. Espera.",
+  "formRefreshMessage": "Algo está mal con el formulario solicitado, estamos revisando esto. ¿O puedes probar a refrescar?"
 }

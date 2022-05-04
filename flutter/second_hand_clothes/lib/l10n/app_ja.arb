@@ -25,5 +25,9 @@
   "authenticateButtonTitle": "認証",
   "authenticateOtherOptionNote": "また、自分自身を認証するための簡単な方法も提供します。",
   "somethingWentWrong": "何かがおかしくなった。しばらくしてからもう一度お試しください。",
-  "okayButton": "大丈夫です"
+  "okayButton": "大丈夫です",
+  "formParsingError": "フォームの解析で問題が発生しました。しばらくしてからもう一度お試しください、私たちはそれを調べています。",
+  "wrongFormId": "間違ったフォームの詳細を尋ねられました。もう一度戻ってきてください、私たちはこれを調べています。",
+  "fetchingFormDetails": "フォームの詳細を取得します。お待ちください。",
+  "formRefreshMessage": "要求されたフォームに何か問題があります、私たちはこれをチェックインしています。それとも、さわやかにしてみませんか?"
 }

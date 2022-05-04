@@ -4,6 +4,7 @@
 
 import 'dart:convert';
 
+import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
 FormData formDataFromJson(String str) => FormData.fromJson(
@@ -12,7 +13,7 @@ FormData formDataFromJson(String str) => FormData.fromJson(
 
 String formDataToJson(FormData data) => json.encode(data.toJson());
 
-class FormData {
+class FormData extends Equatable {
   const FormData({
     required this.id,
     required this.formType,
@@ -102,6 +103,9 @@ class FormData {
                 ),
               ),
       };
+
+  @override
+  List<Object?> get props => [id, items];
 }
 
 enum FormType {
@@ -127,7 +131,7 @@ final axisMap = <String, Axis>{
   'vertical': Axis.vertical,
 };
 
-class FormItem {
+class FormItem extends Equatable {
   const FormItem({
     required this.id,
     required this.type,
@@ -234,6 +238,9 @@ class FormItem {
                 ),
               ),
       };
+
+  @override
+  List<Object?> get props => [id, type, subType];
 }
 
 enum ButtonState {
@@ -295,7 +302,7 @@ final userActionsMap = <String, UserActions>{
   'loginUser': UserActions.loginUser,
 };
 
-class Style {
+class Style extends Equatable {
   const Style({
     required this.style,
     required this.textAlignment,
@@ -410,6 +417,9 @@ class Style {
         'width': width,
         'indent': indent?.toJson(),
       };
+
+  @override
+  List<Object?> get props => [];
 }
 
 enum ItemTextStyle {

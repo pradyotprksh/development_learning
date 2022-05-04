@@ -22,7 +22,7 @@ class WidgetsErrorRefresh extends StatelessWidget {
             children: [
               WidgetsPrimaryNoteBox(
                 child: Text(
-                  'Might be some issue with form. Please try again after sometime or refresh the page.',
+                  context.localizationValues().formRefreshMessage,
                   style: context.themeData().textTheme.caption,
                   textAlign: TextAlign.center,
                 ),

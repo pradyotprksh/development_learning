@@ -82,7 +82,7 @@ class FormBloc extends Bloc<FormEvent, FormState> {
             .toList();
 
         await Future.delayed(
-          const Duration(seconds: 2),
+          FormConstants().formStatusChangeDuration,
           () {
             emit(
               state.copyWith(
@@ -96,20 +96,29 @@ class FormBloc extends Bloc<FormEvent, FormState> {
           },
         );
       } catch (_) {
-        emit(
-          state.copyWith(
-            formStatus: FormzStatus.invalid,
-            errorMessage:
-                'Something went wrong with the form parsing. Please try again after sometime, we are looking into it.',
-          ),
+        await Future.delayed(
+          FormConstants().formStatusChangeDuration,
+          () {
+            emit(
+              state.copyWith(
+                formStatus: FormzStatus.invalid,
+                errorMessage: LocalizationValues().formParsingErrorKey,
+              ),
+            );
+          },
         );
       }
     } else {
-      emit(
-        state.copyWith(
-          formStatus: FormzStatus.invalid,
-          errorMessage: 'Wrong form id',
-        ),
+      await Future.delayed(
+        FormConstants().formStatusChangeDuration,
+        () {
+          emit(
+            state.copyWith(
+              formStatus: FormzStatus.invalid,
+              errorMessage: LocalizationValues().wrongFormIdKey,
+            ),
+          );
+        },
       );
     }
   }
@@ -222,9 +231,8 @@ class FormBloc extends Bloc<FormEvent, FormState> {
         }
 
         itemDetails = itemDetails.copyWith(
-          buttonState: continueCheck
-              ? ButtonState.loading
-              : ButtonState.disabled,
+          buttonState:
+              continueCheck ? ButtonState.loading : ButtonState.disabled,
         );
       }
 

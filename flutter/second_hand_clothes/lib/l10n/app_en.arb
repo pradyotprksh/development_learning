@@ -106,5 +106,21 @@
   "okayButton": "Okay",
   "@okayButton": {
     "description": "A okay text for the button."
+  },
+  "formParsingError": "Something went wrong with the form parsing. Please try again after sometime, we are looking into it.",
+  "@formParsingError": {
+    "description": "An error message whenever there is a form parsing error"
+  },
+  "wrongFormId": "Wrong form details was asked. Please come back again, we are looking into this.",
+  "@wrongFormId": {
+    "description": "A form error message related to wrong form id"
+  },
+  "fetchingFormDetails": "Fetching form details. Please wait.",
+  "@fetchingFormDetails": {
+    "description": "Loading message while the form details are being fetched"
+  },
+  "formRefreshMessage": "Something is wrong with the requested form, we are checking into this. Or can you try refreshing?",
+  "@formRefreshMessage": {
+    "description": "A form message which will be shown to the user for refreshing the page."
   }
 }
