@@ -24,21 +24,28 @@ class WidgetsFormItems extends StatelessWidget {
               switch (item.type) {
                 case ItemType.label:
                   return WidgetsFormText(
-                    textItem: item,
+                    textItemId: item.id,
                   );
                 case ItemType.textField:
                   return WidgetsFormTextField(
-                    textFieldItem: item,
+                    textFieldItemId: item.id,
                   );
                 case ItemType.button:
                   return WidgetFormButtons(
-                    buttonItem: item,
+                    buttonItemId: item.id,
                   );
                 case ItemType.box:
                   return ThemesBox().box(
                     key: Key(item.id),
                     height: item.style?.height,
                     width: item.style?.width,
+                  );
+                case ItemType.divider:
+                  return Divider(
+                    key: Key(item.id),
+                    color: context.themeData().dividerColor,
+                    indent: item.style?.indent?.start,
+                    endIndent: item.style?.indent?.end,
                   );
                 case ItemType.unknown:
                   return ThemesBox().shrink;

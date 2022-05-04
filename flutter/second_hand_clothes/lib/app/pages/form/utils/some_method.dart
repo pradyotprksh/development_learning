@@ -44,6 +44,8 @@ class FormUtilsSomeMethod {
         return context.themeData().textTheme.headline2;
       case ItemTextStyle.labelLarge:
         return context.themeData().textTheme.labelLarge;
+      case ItemTextStyle.caption:
+        return context.themeData().textTheme.caption;
       case ItemTextStyle.unknown:
       default:
         return context.themeData().textTheme.bodyText1;

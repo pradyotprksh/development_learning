@@ -5,4 +5,5 @@
 /// to here and used accordingly.
 ///
 /// And by widget I mean the custom widgets.
+export 'circular_progress_indicator.dart';
 export 'primary_note_box.dart';

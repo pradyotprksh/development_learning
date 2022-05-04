@@ -1,39 +1,72 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:formz/formz.dart';
 import 'package:second_hand_clothes/app/app.dart' as app;
+import 'package:second_hand_clothes/app/app.dart';
 
 /// A widget for showing buttons for the form based on the item details.
 class WidgetFormButtons extends StatelessWidget {
-  /// [buttonItem] = Items details for the button
+  /// [buttonItemId] = Items id for the button
   const WidgetFormButtons({
-    required this.buttonItem,
+    required this.buttonItemId,
     Key? key,
   }) : super(key: key);
 
-  final app.FormItem buttonItem;
+  final String buttonItemId;
 
   @override
   Widget build(BuildContext context) =>
       BlocBuilder<app.FormBloc, app.FormState>(
-        builder: (_, buttonState) {
-          switch (buttonItem.subType) {
-            case app.ItemSubType.elevatedButton:
-              return ElevatedButton(
-                onPressed: buttonState.formStatus == FormzStatus.valid
-                    ? () {}
-                    : null,
-                child: Text(
-                  context
-                          .localizationValues()
-                          .mapLocalization[buttonItem.text] ??
-                      '',
-                  style: context.themeData().textTheme.button,
-                ),
-              );
-            case app.ItemSubType.unknown:
-            default:
-              return app.ThemesBox().shrink;
+        buildWhen: (previous, current) {
+          final previousButtonStateDetails =
+              previous.formButtonDetails?.firstWhere(
+            (element) => element.itemId == buttonItemId,
+          );
+          final currentButtonStateDetails =
+              current.formButtonDetails?.firstWhere(
+            (element) => element.itemId == buttonItemId,
+          );
+
+          return previousButtonStateDetails != currentButtonStateDetails;
+        },
+        builder: (_, formState) {
+          final buttonStateDetails = formState.formButtonDetails?.firstWhere(
+            (element) => element.itemId == buttonItemId,
+          );
+
+          if (buttonStateDetails != null) {
+            var buttonContent =
+                buttonStateDetails.buttonState == app.ButtonState.loading
+                    ? const WidgetsCircularProgressIndicator.small()
+                    : Text(
+                        context
+                                .localizationValues()
+                                .mapLocalization[buttonStateDetails.text] ??
+                            '',
+                        style: context.themeData().textTheme.button,
+                      );
+
+            switch (buttonStateDetails.buttonType) {
+              case app.ItemSubType.elevatedButton:
+                return ElevatedButton(
+                  onPressed:
+                      buttonStateDetails.buttonState == app.ButtonState.enabled
+                          ? () {
+                              context.read<app.FormBloc>().add(
+                                    app.ActionsFormEvent(
+                                      buttonItemId,
+                                      buttonStateDetails.buttonAction,
+                                    ),
+                                  );
+                            }
+                          : null,
+                  child: buttonContent,
+                );
+              case app.ItemSubType.unknown:
+              default:
+                return app.ThemesBox().shrink;
+            }
+          } else {
+            return app.ThemesBox().shrink;
           }
         },
       );

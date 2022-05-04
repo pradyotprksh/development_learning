@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:second_hand_clothes/app/app.dart';
 
 /// A form event class which will listen to any form events made by the form
 /// screen.
@@ -27,6 +28,7 @@ class GetDetailsFormEvent extends FormEvent {
 /// in the text widget of the form.
 class TextFieldChangeFormEvent extends FormEvent {
   /// [itemId] = Id of the item for which the change started
+  ///
   /// [value] = Value which is typed.
   const TextFieldChangeFormEvent(
     this.itemId,
@@ -38,4 +40,50 @@ class TextFieldChangeFormEvent extends FormEvent {
 
   @override
   List<Object?> get props => [itemId, value];
+}
+
+/// A child of [FormEvent] which will be called whenever an action is
+/// performed.
+class ActionsFormEvent extends FormEvent {
+  /// [itemId] = Id of the widget which is being clicked
+  ///
+  /// [actions] = Action type which needs to be performed
+  const ActionsFormEvent(
+    this.itemId,
+    this.actions,
+  );
+
+  final String itemId;
+  final UserActions? actions;
+
+  @override
+  List<Object?> get props => [itemId, actions];
+}
+
+/// A child for [FormEvent] which will be triggered to check for enabling and
+/// disabling certain UI components.
+class EnableDisableComponentEvent extends FormEvent {
+  const EnableDisableComponentEvent(
+    this.eventFrom,
+    this.checkOn,
+  );
+
+  final String eventFrom;
+  final List<String>? checkOn;
+
+  @override
+  List<Object?> get props => [checkOn, eventFrom];
+}
+
+/// A child of [FormEvent] which will be triggered when a check on the button
+/// state has to be made.
+class CheckButtonStateEvent extends FormEvent {
+  const CheckButtonStateEvent(
+    this.itemId,
+  );
+
+  final String itemId;
+
+  @override
+  List<Object?> get props => [itemId];
 }

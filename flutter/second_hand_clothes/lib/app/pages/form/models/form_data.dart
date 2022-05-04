@@ -135,14 +135,20 @@ class FormItem {
     required this.style,
     required this.gap,
     required this.inputType,
-    required this.validate,
+    required this.validateTo,
     required this.subType,
+    required this.actions,
+    required this.validateOn,
+    required this.buttonState,
   });
 
   factory FormItem.fromJson(Map<String, dynamic> json) => FormItem(
         id: json['id'] as String,
         type: itemTypeMap[json['type'] as String] ?? ItemType.unknown,
-        subType: itemSubTypeMap[json['subType'] as String? ?? ''] ?? ItemSubType.unknown,
+        actions: userActionsMap[json['actions'] as String? ?? ''] ??
+            UserActions.unknown,
+        subType: itemSubTypeMap[json['subType'] as String? ?? ''] ??
+            ItemSubType.unknown,
         text: json['text'] as String?,
         style: Style.fromJson(
           json['style'] as Map<String, dynamic>? ?? <String, dynamic>{},
@@ -150,11 +156,18 @@ class FormItem {
         gap: json['gap'] as int?,
         inputType: inputTypeMap[json['inputType'] as String? ?? ''] ??
             InputType.unknown,
-        validate: List<String>.from(
-          (json['validate'] as List<dynamic>? ?? <dynamic>[]).map<dynamic>(
+        validateTo: List<String>.from(
+          (json['validateTo'] as List<dynamic>? ?? <dynamic>[]).map<dynamic>(
             (dynamic x) => x,
           ),
         ),
+        validateOn: List<String>.from(
+          (json['validateOn'] as List<dynamic>? ?? <dynamic>[]).map<dynamic>(
+            (dynamic x) => x,
+          ),
+        ),
+        buttonState: buttonStateMap[json['buttonState'] as String? ?? ''] ??
+            ButtonState.unknown,
       );
 
   final String id;
@@ -164,7 +177,10 @@ class FormItem {
   final Style? style;
   final int? gap;
   final InputType? inputType;
-  final List<String>? validate;
+  final List<String>? validateTo;
+  final List<String>? validateOn;
+  final UserActions? actions;
+  final ButtonState? buttonState;
 
   FormItem copyWith({
     String? id,
@@ -173,8 +189,11 @@ class FormItem {
     Style? style,
     int? gap,
     InputType? inputType,
-    List<String>? validate,
+    List<String>? validateTo,
+    List<String>? validateOn,
     ItemSubType? subType,
+    UserActions? actions,
+    ButtonState? buttonState,
   }) =>
       FormItem(
         id: id ?? this.id,
@@ -184,32 +203,58 @@ class FormItem {
         style: style ?? this.style,
         gap: gap ?? this.gap,
         inputType: inputType ?? this.inputType,
-        validate: validate ?? this.validate,
+        validateTo: validateTo ?? this.validateTo,
+        validateOn: validateOn ?? this.validateOn,
+        actions: actions ?? this.actions,
+        buttonState: buttonState ?? this.buttonState,
       );
 
   Map<String, dynamic> toJson() => <String, dynamic>{
         'id': id,
         'type': type.name,
         'subType': subType?.name,
+        'actions': actions?.name,
+        'buttonState': buttonState?.name,
         'text': text,
         'style': style == null ? null : style!.toJson(),
         'gap': gap,
         'inputType': inputType?.name,
-        'validate': validate == null
+        'validateTo': validateTo == null
             ? null
             : List<dynamic>.from(
-                validate!.map<dynamic>(
+                validateTo!.map<dynamic>(
+                  (x) => x,
+                ),
+              ),
+        'validateOn': validateOn == null
+            ? null
+            : List<dynamic>.from(
+                validateOn!.map<dynamic>(
                   (x) => x,
                 ),
               ),
       };
 }
 
+enum ButtonState {
+  enabled,
+  disabled,
+  loading,
+  unknown,
+}
+
+final buttonStateMap = <String, ButtonState>{
+  'enabled': ButtonState.enabled,
+  'disabled': ButtonState.disabled,
+  'loading': ButtonState.loading,
+};
+
 enum ItemType {
   label,
   textField,
   button,
   box,
+  divider,
   unknown,
 }
 
@@ -217,6 +262,7 @@ final itemTypeMap = <String, ItemType>{
   'label': ItemType.label,
   'textField': ItemType.textField,
   'button': ItemType.button,
+  'divider': ItemType.divider,
   'box': ItemType.box,
 };
 
@@ -240,6 +286,15 @@ final inputTypeMap = <String, InputType>{
   'password': InputType.password,
 };
 
+enum UserActions {
+  loginUser,
+  unknown,
+}
+
+final userActionsMap = <String, UserActions>{
+  'loginUser': UserActions.loginUser,
+};
+
 class Style {
   const Style({
     required this.style,
@@ -257,6 +312,7 @@ class Style {
     required this.maxLength,
     required this.height,
     required this.width,
+    required this.indent,
   });
 
   factory Style.fromJson(Map<String, dynamic> json) => Style(
@@ -277,6 +333,9 @@ class Style {
         maxLength: json['maxLength'] as int?,
         height: json['height'] as double?,
         width: json['width'] as double?,
+        indent: Indent.fromJson(
+          json['indent'] as Map<String, dynamic>? ?? <String, dynamic>{},
+        ),
       );
 
   final ItemTextStyle? style;
@@ -294,6 +353,7 @@ class Style {
   final int? maxLength;
   final double? height;
   final double? width;
+  final Indent? indent;
 
   Style copyWith({
     ItemTextStyle? style,
@@ -311,6 +371,7 @@ class Style {
     int? maxLength,
     double? height,
     double? width,
+    Indent? indent,
   }) =>
       Style(
         style: style ?? this.style,
@@ -328,6 +389,7 @@ class Style {
         maxLength: maxLength ?? this.maxLength,
         height: height ?? this.height,
         width: width ?? this.width,
+        indent: indent ?? this.indent,
       );
 
   Map<String, dynamic> toJson() => <String, dynamic>{
@@ -346,18 +408,21 @@ class Style {
         'maxLength': maxLength,
         'height': height,
         'width': width,
+        'indent': indent?.toJson(),
       };
 }
 
 enum ItemTextStyle {
   h2,
   labelLarge,
+  caption,
   unknown,
 }
 
 final textStyleMap = <String, ItemTextStyle>{
   'h2': ItemTextStyle.h2,
   'labelLarge': ItemTextStyle.labelLarge,
+  'caption': ItemTextStyle.caption,
 };
 
 final keyboardTypeMap = <String, TextInputType>{
@@ -382,3 +447,32 @@ final iconMap = <String, IconData>{
   'alternate_email': Icons.alternate_email,
   'password': Icons.password,
 };
+
+class Indent {
+  const Indent({
+    this.start,
+    this.end,
+  });
+
+  factory Indent.fromJson(Map<String, dynamic> json) => Indent(
+        start: json['start'] as double?,
+        end: json['end'] as double?,
+      );
+
+  final double? start;
+  final double? end;
+
+  Indent copyWith({
+    double? start,
+    double? end,
+  }) =>
+      Indent(
+        start: start ?? this.start,
+        end: end ?? this.end,
+      );
+
+  Map<String, dynamic> toJson() => <String, dynamic>{
+        'start': start,
+        'end': end,
+      };
+}

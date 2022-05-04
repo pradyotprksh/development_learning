@@ -19,12 +19,6 @@ class NavigatorsRoutes {
     NavigatorsConstants().splashRoute: (context) => const SplashScreen(),
     NavigatorsConstants().personaliseRoute: (context) =>
         const PersonaliseScreen(),
-    NavigatorsConstants().authenticationRoute: (context) => BlocProvider(
-          create: (_) => LoginBloc(
-            RepositoriesFirebaseAuth(),
-          ),
-          child: const LoginScreen(),
-        ),
     NavigatorsConstants().formRoute: (context) => BlocProvider(
       create: (_) => FormBloc(),
       child: const FormScreen(),

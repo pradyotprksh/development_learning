@@ -8,26 +8,34 @@ class FormState extends Equatable {
   const FormState({
     this.formData = const FormData.noData(),
     this.formStatus = FormzStatus.submissionInProgress,
-    this.formItemDetails,
+    this.formTextFieldDetails,
+    this.formButtonDetails,
+    this.formLabelDetails,
     this.errorMessage,
   });
 
   final FormData formData;
   final FormzStatus formStatus;
   final String? errorMessage;
-  final List<FormItemStateDetails>? formItemDetails;
+  final List<FormTextFieldStateDetails>? formTextFieldDetails;
+  final List<FormButtonStateDetails>? formButtonDetails;
+  final List<FormLabelStateDetails>? formLabelDetails;
 
   FormState copyWith({
     FormData? formData,
     FormzStatus? formStatus,
     String? errorMessage,
-    List<FormItemStateDetails>? formItemDetails,
+    List<FormTextFieldStateDetails>? formTextFieldDetails,
+    List<FormButtonStateDetails>? formButtonDetails,
+    List<FormLabelStateDetails>? formLabelDetails,
   }) =>
       FormState(
         formData: formData ?? this.formData,
         formStatus: formStatus ?? this.formStatus,
         errorMessage: errorMessage ?? this.errorMessage,
-        formItemDetails: formItemDetails ?? this.formItemDetails,
+        formTextFieldDetails: formTextFieldDetails ?? this.formTextFieldDetails,
+        formButtonDetails: formButtonDetails ?? this.formButtonDetails,
+        formLabelDetails: formLabelDetails ?? this.formLabelDetails,
       );
 
   @override
@@ -35,6 +43,7 @@ class FormState extends Equatable {
         formData,
         formStatus,
         errorMessage,
-        formItemDetails,
+        formTextFieldDetails,
+        formButtonDetails,
       ];
 }

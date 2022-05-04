@@ -1,39 +1,177 @@
-/// A form state details for an form item.
-class FormItemStateDetails {
-  /// [itemId] = Id of the item
+import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
+import 'package:second_hand_clothes/app/app.dart';
+
+/// A form state details for label type
+class FormLabelStateDetails extends Equatable {
+  /// [text] = text to be shown on the widget
   ///
+  /// [textAlign] = alignment of the text in the ui
+  ///
+  /// [textStyle] = font style of the text widget
+  const FormLabelStateDetails({
+    required this.text,
+    required this.itemId,
+    this.textAlign,
+    this.textStyle,
+    this.itemType = ItemType.label,
+  });
+
+  final String text;
+  final TextAlign? textAlign;
+  final ItemTextStyle? textStyle;
+  final String itemId;
+  final ItemType itemType;
+
+  @override
+  List<Object?> get props => [text, textAlign, textStyle, itemId, itemType];
+}
+
+/// A form state details for a text field form item.
+class FormTextFieldStateDetails extends Equatable {
   /// [errorMessage] = Error message for that particular item
   ///
   /// [textFieldValue] = Value of the item which is a text field
-  ///
-  /// [validators] = Set of validators which are used to validate the
-  /// state of an item.
-  FormItemStateDetails({
+  const FormTextFieldStateDetails({
+    this.keyboardType,
+    this.textInputAction,
+    this.autofocus,
+    this.obscureText,
+    this.obscuringCharacter,
+    this.maxLength,
     required this.itemId,
     required this.textFieldValue,
     this.currentErrorMessage,
     this.errorMessage,
-    this.validators,
+    this.icon,
+    this.label,
+    this.hint,
+    this.validateTo,
+    this.validateOn,
+    this.itemType = ItemType.textField,
   });
 
   final String itemId;
+  final List<String>? validateTo;
+  final List<String>? validateOn;
+  final ItemType itemType;
   final String? currentErrorMessage;
   final String? errorMessage;
   final String textFieldValue;
-  final List<String>? validators;
+  final IconData? icon;
+  final String? label;
+  final String? hint;
+  final TextInputType? keyboardType;
+  final TextInputAction? textInputAction;
+  final bool? autofocus;
+  final bool? obscureText;
+  final String? obscuringCharacter;
+  final int? maxLength;
 
-  FormItemStateDetails copyWith({
-    String? itemId,
+  FormTextFieldStateDetails copyWith({
     String? currentErrorMessage,
     String? errorMessage,
     String? textFieldValue,
-    List<String>? validators,
+    List<String>? validateTo,
+    List<String>? validateOn,
+    IconData? icon,
+    String? label,
+    String? hint,
+    TextInputType? keyboardType,
+    TextInputAction? textInputAction,
+    bool? autofocus,
+    bool? obscureText,
+    String? obscuringCharacter,
+    int? maxLength,
   }) =>
-      FormItemStateDetails(
-        itemId: itemId ?? this.itemId,
+      FormTextFieldStateDetails(
+        itemId: itemId,
+        itemType: itemType,
         currentErrorMessage: currentErrorMessage ?? this.currentErrorMessage,
         errorMessage: errorMessage ?? this.errorMessage,
         textFieldValue: textFieldValue ?? this.textFieldValue,
-        validators: validators ?? this.validators,
+        validateTo: validateTo ?? this.validateTo,
+        validateOn: validateOn ?? this.validateOn,
+        icon: icon ?? this.icon,
+        label: label ?? this.label,
+        hint: hint ?? this.hint,
+        keyboardType: keyboardType ?? this.keyboardType,
+        textInputAction: textInputAction ?? this.textInputAction,
+        autofocus: autofocus ?? this.autofocus,
+        obscureText: obscureText ?? this.obscureText,
+        obscuringCharacter: obscuringCharacter ?? this.obscuringCharacter,
+        maxLength: maxLength ?? this.maxLength,
       );
+
+  @override
+  List<Object?> get props => [
+        currentErrorMessage,
+        errorMessage,
+        textFieldValue,
+        icon,
+        label,
+        hint,
+        keyboardType,
+        textInputAction,
+        autofocus,
+        obscureText,
+        obscuringCharacter,
+        maxLength,
+        itemType,
+        itemId,
+        validateTo,
+        validateOn,
+      ];
+}
+
+/// A form state details for a text field form item.
+class FormButtonStateDetails extends Equatable {
+  /// [buttonType] = Subtype of the button
+  ///
+  /// [buttonState] = Button current state
+  const FormButtonStateDetails({
+    required this.text,
+    required this.itemId,
+    this.validateOn,
+    this.buttonState = ButtonState.disabled,
+    required this.buttonType,
+    this.buttonAction,
+    this.itemType = ItemType.button,
+  });
+
+  FormButtonStateDetails copyWith({
+    String? text,
+    List<String>? validateOn,
+    ItemSubType? buttonType,
+    ButtonState? buttonState,
+    UserActions? buttonAction,
+  }) =>
+      FormButtonStateDetails(
+        itemId: itemId,
+        itemType: itemType,
+        text: text ?? this.text,
+        validateOn: validateOn ?? this.validateOn,
+        buttonType: buttonType ?? this.buttonType,
+        buttonState: buttonState ?? this.buttonState,
+        buttonAction: buttonAction ?? this.buttonAction,
+      );
+
+  final String itemId;
+  final String text;
+  final List<String>? validateOn;
+  final ItemType itemType;
+  final ItemSubType? buttonType;
+  final ButtonState buttonState;
+  final UserActions? buttonAction;
+
+  @override
+  List<Object?> get props => [
+        text,
+        buttonState,
+        buttonType,
+        itemId,
+        validateOn,
+        itemType,
+        buttonAction,
+      ];
 }

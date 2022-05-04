@@ -54,7 +54,8 @@
         "autofocus": true
       },
       "inputType": "email",
-      "validate": ["EmailAddressModels"]
+      "validateOn": ["EmailAddressModels"],
+      "validateTo": ["9"]
     },
     {
       "id": "6",
@@ -79,7 +80,8 @@
         "maxLength": 16
       },
       "inputType": "password",
-      "validate": ["PasswordModels"]
+      "validateOn": ["PasswordModels"],
+      "validateTo": ["9"]
     },
     {
       "id": "8",
@@ -94,7 +96,9 @@
       "type": "button",
       "subType": "elevatedButton",
       "text": "authenticateButtonTitle",
-      "validate": ["3", "4"]
+      "validateOn": ["5", "7"],
+      "actions": "loginUser",
+      "buttonState": "disabled"
     },
     {
       "id": "10",
@@ -102,6 +106,33 @@
       "style": {
         "height": 30.0,
         "width": 0.0
+      }
+    },
+    {
+      "id": "11",
+      "type": "divider",
+      "style": {
+        "indent": {
+          "start": 30.0,
+          "end": 30.0
+        }
+      }
+    },
+    {
+      "id": "10",
+      "type": "box",
+      "style": {
+        "height": 30.0,
+        "width": 0.0
+      }
+    },
+    {
+      "id": "12",
+      "type": "label",
+      "text": "authenticateOtherOptionNote",
+      "style": {
+        "textStyle": "labelLarge",
+        "textAlignment": "center"
       }
     }
   ]
