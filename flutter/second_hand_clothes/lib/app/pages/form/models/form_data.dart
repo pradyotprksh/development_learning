@@ -39,9 +39,8 @@ class FormData extends Equatable {
 
   factory FormData.fromJson(Map<String, dynamic> json) => FormData(
         id: json['id'] as String,
-        formType: formTypeMap[json['type'] as String] ?? FormType.unknown,
-        formSubType:
-            formSubTypeMap[json['subType'] as String] ?? FormSubType.unknown,
+        formType: FormType.getFormType(json['type'] as String),
+        formSubType: FormSubType.getFormSubType(json['subType'] as String),
         orientation:
             axisMap[json['orientation'] as String? ?? ''] ?? Axis.vertical,
         extendBody: json['extendBody'] as bool?,
@@ -110,21 +109,25 @@ class FormData extends Equatable {
 
 enum FormType {
   authentication,
-  unknown,
-}
+  unknown;
 
-final formTypeMap = <String, FormType>{
-  'authentication': FormType.authentication,
-};
+  static FormType getFormType(String input) =>
+      <String, FormType>{
+        'authentication': FormType.authentication,
+      }[input] ??
+      FormType.unknown;
+}
 
 enum FormSubType {
   login,
-  unknown,
-}
+  unknown;
 
-final formSubTypeMap = <String, FormSubType>{
-  'login': FormSubType.login,
-};
+  static FormSubType getFormSubType(String input) =>
+      <String, FormSubType>{
+        'login': FormSubType.login,
+      }[input] ??
+      FormSubType.unknown;
+}
 
 final axisMap = <String, Axis>{
   'horizontal': Axis.horizontal,
@@ -148,18 +151,23 @@ class FormItem extends Equatable {
 
   factory FormItem.fromJson(Map<String, dynamic> json) => FormItem(
         id: json['id'] as String,
-        type: itemTypeMap[json['type'] as String] ?? ItemType.unknown,
-        actions: userActionsMap[json['actions'] as String? ?? ''] ??
-            UserActions.unknown,
-        subType: itemSubTypeMap[json['subType'] as String? ?? ''] ??
-            ItemSubType.unknown,
+        type: ItemType.getItemType(
+          json['type'] as String? ?? '',
+        ),
+        actions: UserActions.getUserActions(
+          json['actions'] as String? ?? '',
+        ),
+        subType: ItemSubType.getItemSubType(
+          json['subType'] as String? ?? '',
+        ),
         text: json['text'] as String?,
         style: Style.fromJson(
           json['style'] as Map<String, dynamic>? ?? <String, dynamic>{},
         ),
         gap: json['gap'] as int?,
-        inputType: inputTypeMap[json['inputType'] as String? ?? ''] ??
-            InputType.unknown,
+        inputType: InputType.getInputType(
+          json['inputType'] as String? ?? '',
+        ),
         validateTo: List<String>.from(
           (json['validateTo'] as List<dynamic>? ?? <dynamic>[]).map<dynamic>(
             (dynamic x) => x,
@@ -170,8 +178,9 @@ class FormItem extends Equatable {
             (dynamic x) => x,
           ),
         ),
-        buttonState: buttonStateMap[json['buttonState'] as String? ?? ''] ??
-            ButtonState.unknown,
+        buttonState: ButtonState.getButtonState(
+          json['buttonState'] as String? ?? '',
+        ),
       );
 
   final String id;
@@ -247,14 +256,16 @@ enum ButtonState {
   enabled,
   disabled,
   loading,
-  unknown,
-}
+  unknown;
 
-final buttonStateMap = <String, ButtonState>{
-  'enabled': ButtonState.enabled,
-  'disabled': ButtonState.disabled,
-  'loading': ButtonState.loading,
-};
+  static ButtonState getButtonState(String input) =>
+      <String, ButtonState>{
+        'enabled': ButtonState.enabled,
+        'disabled': ButtonState.disabled,
+        'loading': ButtonState.loading,
+      }[input] ??
+      ButtonState.unknown;
+}
 
 enum ItemType {
   label,
@@ -262,45 +273,53 @@ enum ItemType {
   button,
   box,
   divider,
-  unknown,
-}
+  unknown;
 
-final itemTypeMap = <String, ItemType>{
-  'label': ItemType.label,
-  'textField': ItemType.textField,
-  'button': ItemType.button,
-  'divider': ItemType.divider,
-  'box': ItemType.box,
-};
+  static ItemType getItemType(String input) =>
+      <String, ItemType>{
+        'label': ItemType.label,
+        'textField': ItemType.textField,
+        'button': ItemType.button,
+        'divider': ItemType.divider,
+        'box': ItemType.box,
+      }[input] ??
+      ItemType.unknown;
+}
 
 enum ItemSubType {
   elevatedButton,
-  unknown,
-}
+  unknown;
 
-final itemSubTypeMap = <String, ItemSubType>{
-  'elevatedButton': ItemSubType.elevatedButton,
-};
+  static ItemSubType getItemSubType(String input) =>
+      <String, ItemSubType>{
+        'elevatedButton': ItemSubType.elevatedButton,
+      }[input] ??
+      ItemSubType.unknown;
+}
 
 enum InputType {
   email,
   password,
-  unknown,
-}
+  unknown;
 
-final inputTypeMap = <String, InputType>{
-  'email': InputType.email,
-  'password': InputType.password,
-};
+  static InputType getInputType(String input) =>
+      <String, InputType>{
+        'email': InputType.email,
+        'password': InputType.password,
+      }[input] ??
+      InputType.unknown;
+}
 
 enum UserActions {
   loginUser,
-  unknown,
-}
+  unknown;
 
-final userActionsMap = <String, UserActions>{
-  'loginUser': UserActions.loginUser,
-};
+  static UserActions getUserActions(String input) =>
+      <String, UserActions>{
+        'loginUser': UserActions.loginUser,
+      }[input] ??
+      UserActions.unknown;
+}
 
 class Style extends Equatable {
   const Style({
@@ -323,8 +342,9 @@ class Style extends Equatable {
   });
 
   factory Style.fromJson(Map<String, dynamic> json) => Style(
-        style: textStyleMap[json['textStyle'] as String? ?? ''] ??
-            ItemTextStyle.unknown,
+        style: ItemTextStyle.getItemTextStyle(
+          json['textStyle'] as String? ?? '',
+        ),
         textAlignment: textAlignmentMap[json['textAlignment'] as String? ?? ''],
         alignment: alignmentMap[json['alignment'] as String? ?? ''],
         icon: iconMap[json['icon'] as String? ?? ''],
@@ -426,14 +446,16 @@ enum ItemTextStyle {
   h2,
   labelLarge,
   caption,
-  unknown,
-}
+  unknown;
 
-final textStyleMap = <String, ItemTextStyle>{
-  'h2': ItemTextStyle.h2,
-  'labelLarge': ItemTextStyle.labelLarge,
-  'caption': ItemTextStyle.caption,
-};
+  static ItemTextStyle getItemTextStyle(String input) =>
+      <String, ItemTextStyle>{
+        'h2': ItemTextStyle.h2,
+        'labelLarge': ItemTextStyle.labelLarge,
+        'caption': ItemTextStyle.caption,
+      }[input] ??
+      ItemTextStyle.unknown;
+}
 
 final keyboardTypeMap = <String, TextInputType>{
   'emailAddress': TextInputType.emailAddress,

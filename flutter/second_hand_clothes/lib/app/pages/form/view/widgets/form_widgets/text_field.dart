@@ -7,8 +7,8 @@ class WidgetsFormTextField extends StatelessWidget {
   /// [textFieldItemId] = Id related to the text field widget
   const WidgetsFormTextField({
     required this.textFieldItemId,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final String textFieldItemId;
 

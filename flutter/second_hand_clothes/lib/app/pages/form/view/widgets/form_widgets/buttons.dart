@@ -8,8 +8,8 @@ class WidgetFormButtons extends StatelessWidget {
   /// [buttonItemId] = Items id for the button
   const WidgetFormButtons({
     required this.buttonItemId,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final String buttonItemId;
 

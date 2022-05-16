@@ -7,7 +7,7 @@ class PasswordModels
     extends FormzInput<String, PasswordValidationError> {
   const PasswordModels.pure() : super.dirty('');
 
-  const PasswordModels.dirty([String value = '']) : super.dirty(value);
+  const PasswordModels.dirty([super.value = '']) : super.dirty();
 
   @override
   PasswordValidationError? validator(String? value) {

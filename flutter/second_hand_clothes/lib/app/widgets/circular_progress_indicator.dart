@@ -9,8 +9,8 @@ class WidgetsCircularProgressIndicator extends StatelessWidget {
   const WidgetsCircularProgressIndicator({
     this.height,
     this.width,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   /// Show a small indicator with [height] = 15 and [width] = 15.
   const WidgetsCircularProgressIndicator.small({Key? key})

@@ -17,8 +17,8 @@ class WidgetsPrimaryNoteBox extends StatelessWidget {
     required this.child,
     this.borderColor,
     this.backgroundColor,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final Widget child;
   final Color? borderColor;

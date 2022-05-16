@@ -14,8 +14,8 @@ class WidgetsColorSchemeIcon extends StatelessWidget {
     required this.currentThemeMode,
     required this.currentLightFlexScheme,
     required this.currentDarkFlexScheme,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final ThemeMode currentThemeMode;
   final FlexScheme currentLightFlexScheme;

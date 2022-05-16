@@ -13,7 +13,7 @@ import 'package:second_hand_clothes/domain/domain.dart';
 ///
 /// We will also set the theme and localization of the application from here.
 class App extends StatelessWidget {
-  const App({Key? key}) : super(key: key);
+  const App({super.key});
 
   @override
   Widget build(BuildContext context) {

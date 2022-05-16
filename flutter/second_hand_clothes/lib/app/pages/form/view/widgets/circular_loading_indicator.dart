@@ -9,8 +9,8 @@ class WidgetsCircularLoadingIndicator extends StatelessWidget {
   /// message below the indicator, if required.
   const WidgetsCircularLoadingIndicator({
     this.message,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final String? message;
 

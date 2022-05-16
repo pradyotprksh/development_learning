@@ -7,7 +7,7 @@ import 'package:second_hand_clothes/app/app.dart';
 ///
 /// Theme, color schema, font, etc. can be change by the user.
 class PersonaliseScreen extends StatelessWidget {
-  const PersonaliseScreen({Key? key}) : super(key: key);
+  const PersonaliseScreen({super.key});
 
   @override
   Widget build(BuildContext context) => MultiBlocListener(

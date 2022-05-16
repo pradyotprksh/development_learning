@@ -6,7 +6,7 @@ import 'package:second_hand_clothes/app/app.dart';
 
 /// A form view screen which will show the form ui based on the form id.
 class FormScreen extends StatelessWidget {
-  const FormScreen({Key? key}) : super(key: key);
+  const FormScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

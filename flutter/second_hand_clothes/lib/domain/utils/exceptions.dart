@@ -13,8 +13,8 @@ class DomainException implements Exception {
 /// process.
 class AuthenticationException extends DomainException {
   const AuthenticationException({
-    String? message,
-  }) : super(message: message);
+    super.message,
+  });
 
   @override
   String toString() => 'AuthenticationException: $message';

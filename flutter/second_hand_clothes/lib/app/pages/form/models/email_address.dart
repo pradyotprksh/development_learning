@@ -7,7 +7,7 @@ class EmailAddressModels
     extends FormzInput<String, EmailAddressValidationError> {
   const EmailAddressModels.pure() : super.dirty('');
 
-  const EmailAddressModels.dirty([String value = '']) : super.dirty(value);
+  const EmailAddressModels.dirty([super.value = '']) : super.dirty();
 
   @override
   EmailAddressValidationError? validator(String? value) {

@@ -8,8 +8,8 @@ class WidgetsErrorRefresh extends StatelessWidget {
   /// button is clicked.
   const WidgetsErrorRefresh({
     required this.onRefresh,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final Function() onRefresh;
 

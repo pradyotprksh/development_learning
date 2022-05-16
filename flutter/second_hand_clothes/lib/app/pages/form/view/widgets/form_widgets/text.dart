@@ -7,8 +7,8 @@ class WidgetsFormText extends StatelessWidget {
   /// [textItemId] = Item id for the text widget
   const WidgetsFormText({
     required this.textItemId,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final String textItemId;
 

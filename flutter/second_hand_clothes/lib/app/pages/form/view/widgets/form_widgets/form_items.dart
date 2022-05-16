@@ -8,8 +8,8 @@ class WidgetsFormItems extends StatelessWidget {
   const WidgetsFormItems({
     required this.formItems,
     this.itemOrientation,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final List<FormItem> formItems;
   final Axis? itemOrientation;

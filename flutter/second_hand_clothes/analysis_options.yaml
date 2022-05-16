@@ -113,6 +113,7 @@ linter:
     sort_pub_dependencies: true
     sized_box_for_whitespace: true
     always_use_package_imports: true
+    use_super_parameters: true
 
 # Additional information about this file can be found at
 # https://dart.dev/guides/language/analysis-options

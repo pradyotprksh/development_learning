@@ -8,7 +8,7 @@ import 'package:second_hand_clothes/app/app.dart';
 ///
 /// The state of this page will be handled by [AuthorizationBloc].
 class SplashScreen extends StatelessWidget {
-  const SplashScreen({Key? key}) : super(key: key);
+  const SplashScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

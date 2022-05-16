@@ -7,7 +7,7 @@ import 'package:second_hand_clothes/app/app.dart';
 ///
 /// It also shows a dot icon which is being selected by the user.
 class WidgetsColorSchemeList extends StatelessWidget {
-  const WidgetsColorSchemeList({Key? key}) : super(key: key);
+  const WidgetsColorSchemeList({super.key});
 
   @override
   Widget build(BuildContext context) => SizedBox(
