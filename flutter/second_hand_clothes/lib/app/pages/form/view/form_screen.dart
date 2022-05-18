@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
 import 'package:second_hand_clothes/app/app.dart' as app;
-import 'package:second_hand_clothes/app/app.dart';
 
 /// A form view screen which will show the form ui based on the form id.
 class FormScreen extends StatelessWidget {
@@ -19,7 +18,7 @@ class FormScreen extends StatelessWidget {
       listener: (_, formState) {
         if (formState.formStatus == FormzStatus.submissionFailure ||
             formState.formStatus == FormzStatus.invalid) {
-          FormUtilsSomeMethod().handleUndoSnackBar(
+          app.FormUtilsSomeMethod().handleUndoSnackBar(
             context,
             context
                     .localizationValues()
@@ -42,7 +41,7 @@ class FormScreen extends StatelessWidget {
           extendBody: formData.extendBody ?? true,
           extendBodyBehindAppBar: formData.extendBodyBehindAppBar ?? true,
           body: formState.formStatus == FormzStatus.submissionInProgress
-              ? WidgetsCircularLoadingIndicator(
+              ? app.WidgetsCircularLoadingIndicator(
                   message: context.localizationValues().fetchingFormDetails,
                 )
               : formItems != null && formItems.isNotEmpty
@@ -52,8 +51,8 @@ class FormScreen extends StatelessWidget {
                     )
                   : app.WidgetsErrorRefresh(
                       onRefresh: () {
-                        context.read<FormBloc>().add(
-                              GetDetailsFormEvent(
+                        context.read<app.FormBloc>().add(
+                              app.GetDetailsFormEvent(
                                 arguments.formId,
                               ),
                             );

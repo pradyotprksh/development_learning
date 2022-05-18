@@ -20,37 +20,9 @@ class WidgetsFormItems extends StatelessWidget {
         padding: ThemesEdgeInsets().left20Top40Right20Bottom40,
         children: [
           ...formItems.map(
-            (item) {
-              switch (item.type) {
-                case ItemType.label:
-                  return WidgetsFormText(
-                    textItemId: item.id,
-                  );
-                case ItemType.textField:
-                  return WidgetsFormTextField(
-                    textFieldItemId: item.id,
-                  );
-                case ItemType.button:
-                  return WidgetFormButtons(
-                    buttonItemId: item.id,
-                  );
-                case ItemType.box:
-                  return ThemesBox().box(
-                    key: Key(item.id),
-                    height: item.style?.height,
-                    width: item.style?.width,
-                  );
-                case ItemType.divider:
-                  return Divider(
-                    key: Key(item.id),
-                    color: context.themeData().dividerColor,
-                    indent: item.style?.indent?.start,
-                    endIndent: item.style?.indent?.end,
-                  );
-                case ItemType.unknown:
-                  return ThemesBox().shrink;
-              }
-            },
+            (item) => WidgetsFormItem(
+              item: item,
+            ),
           ),
         ],
       );

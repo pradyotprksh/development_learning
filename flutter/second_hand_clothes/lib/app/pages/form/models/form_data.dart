@@ -6,6 +6,7 @@ import 'dart:convert';
 
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 FormData formDataFromJson(String str) => FormData.fromJson(
       json.decode(str) as Map<String, dynamic>,
@@ -147,6 +148,7 @@ class FormItem extends Equatable {
     required this.actions,
     required this.validateOn,
     required this.buttonState,
+    required this.children,
   });
 
   factory FormItem.fromJson(Map<String, dynamic> json) => FormItem(
@@ -181,6 +183,13 @@ class FormItem extends Equatable {
         buttonState: ButtonState.getButtonState(
           json['buttonState'] as String? ?? '',
         ),
+        children: List<FormItem>.from(
+          (json['children'] as List<dynamic>? ?? <FormItem>[]).map<dynamic>(
+            (dynamic x) => FormItem.fromJson(
+              x as Map<String, dynamic>,
+            ),
+          ),
+        ),
       );
 
   final String id;
@@ -193,7 +202,8 @@ class FormItem extends Equatable {
   final List<String>? validateTo;
   final List<String>? validateOn;
   final UserActions? actions;
-  final ButtonState? buttonState;
+  final ButtonState buttonState;
+  final List<FormItem> children;
 
   FormItem copyWith({
     String? id,
@@ -207,8 +217,10 @@ class FormItem extends Equatable {
     ItemSubType? subType,
     UserActions? actions,
     ButtonState? buttonState,
+    List<FormItem>? children,
   }) =>
       FormItem(
+        children: children ?? this.children,
         id: id ?? this.id,
         type: type ?? this.type,
         subType: subType ?? this.subType,
@@ -227,7 +239,7 @@ class FormItem extends Equatable {
         'type': type.name,
         'subType': subType?.name,
         'actions': actions?.name,
-        'buttonState': buttonState?.name,
+        'buttonState': buttonState.name,
         'text': text,
         'style': style == null ? null : style!.toJson(),
         'gap': gap,
@@ -246,6 +258,11 @@ class FormItem extends Equatable {
                   (x) => x,
                 ),
               ),
+        'children': List<dynamic>.from(
+          children.map<dynamic>(
+            (x) => x.toJson(),
+          ),
+        ),
       };
 
   @override
@@ -273,6 +290,7 @@ enum ItemType {
   button,
   box,
   divider,
+  row,
   unknown;
 
   static ItemType getItemType(String input) =>
@@ -282,17 +300,20 @@ enum ItemType {
         'button': ItemType.button,
         'divider': ItemType.divider,
         'box': ItemType.box,
+        'row': ItemType.row,
       }[input] ??
       ItemType.unknown;
 }
 
 enum ItemSubType {
   elevatedButton,
+  iconButton,
   unknown;
 
   static ItemSubType getItemSubType(String input) =>
       <String, ItemSubType>{
         'elevatedButton': ItemSubType.elevatedButton,
+        'iconButton': ItemSubType.iconButton,
       }[input] ??
       ItemSubType.unknown;
 }
@@ -312,11 +333,15 @@ enum InputType {
 
 enum UserActions {
   loginUser,
+  googleSignIn,
+  phoneLogin,
   unknown;
 
   static UserActions getUserActions(String input) =>
       <String, UserActions>{
         'loginUser': UserActions.loginUser,
+        'googleSignIn': UserActions.googleSignIn,
+        'phoneLogin': UserActions.phoneLogin,
       }[input] ??
       UserActions.unknown;
 }
@@ -339,6 +364,7 @@ class Style extends Equatable {
     required this.height,
     required this.width,
     required this.indent,
+    required this.mainAxisAlignment,
   });
 
   factory Style.fromJson(Map<String, dynamic> json) => Style(
@@ -346,6 +372,8 @@ class Style extends Equatable {
           json['textStyle'] as String? ?? '',
         ),
         textAlignment: textAlignmentMap[json['textAlignment'] as String? ?? ''],
+        mainAxisAlignment:
+            mainAxisAlignmentMap[json['mainAxisAlignment'] as String? ?? ''],
         alignment: alignmentMap[json['alignment'] as String? ?? ''],
         icon: iconMap[json['icon'] as String? ?? ''],
         label: json['label'] as String?,
@@ -381,6 +409,7 @@ class Style extends Equatable {
   final double? height;
   final double? width;
   final Indent? indent;
+  final MainAxisAlignment? mainAxisAlignment;
 
   Style copyWith({
     ItemTextStyle? style,
@@ -399,8 +428,10 @@ class Style extends Equatable {
     double? height,
     double? width,
     Indent? indent,
+    MainAxisAlignment? mainAxisAlignment,
   }) =>
       Style(
+        mainAxisAlignment: mainAxisAlignment ?? this.mainAxisAlignment,
         style: style ?? this.style,
         textAlignment: textAlignment ?? this.textAlignment,
         alignment: alignment ?? this.alignment,
@@ -420,6 +451,7 @@ class Style extends Equatable {
       );
 
   Map<String, dynamic> toJson() => <String, dynamic>{
+        'mainAxisAlignment': mainAxisAlignment?.name,
         'textStyle': style?.name,
         'textAlignment': textAlignment?.name,
         'alignment': alignment.toString(),
@@ -467,6 +499,11 @@ final textInputActionMap = <String, TextInputAction>{
   'done': TextInputAction.done,
 };
 
+final mainAxisAlignmentMap = <String, MainAxisAlignment>{
+  'spaceEvenly': MainAxisAlignment.spaceEvenly,
+  'center': MainAxisAlignment.center,
+};
+
 final textAlignmentMap = <String, TextAlign>{
   'center': TextAlign.center,
 };
@@ -478,6 +515,8 @@ final alignmentMap = <String, Alignment>{
 final iconMap = <String, IconData>{
   'alternate_email': Icons.alternate_email,
   'password': Icons.password,
+  'google': MdiIcons.google,
+  'phone': Icons.phone,
 };
 
 class Indent {

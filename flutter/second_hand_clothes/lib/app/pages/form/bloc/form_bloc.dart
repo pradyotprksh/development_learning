@@ -36,49 +36,22 @@ class FormBloc extends Bloc<FormEvent, FormState> {
 
         final formLabelState = formData.items
             ?.where((element) => element.type == ItemType.label)
-            .map(
-              (item) => FormLabelStateDetails(
-                text: item.text ?? '',
-                itemId: item.id,
-                textAlign: item.style?.textAlignment,
-                textStyle: item.style?.style,
-              ),
-            )
+            .map(_getLabelStateDetails)
             .toList();
 
         final formTextFieldState = formData.items
             ?.where((element) => element.type == ItemType.textField)
-            .map(
-              (item) => FormTextFieldStateDetails(
-                textFieldValue: '',
-                itemId: item.id,
-                validateTo: item.validateTo,
-                validateOn: item.validateOn,
-                errorMessage: item.style?.error,
-                icon: item.style?.icon,
-                label: item.style?.label,
-                hint: item.style?.hint,
-                keyboardType: item.style?.keyboardType,
-                textInputAction: item.style?.textInputAction,
-                autofocus: item.style?.autofocus,
-                obscureText: item.style?.obscureText,
-                obscuringCharacter: item.style?.obscuringCharacter,
-                maxLength: item.style?.maxLength,
-              ),
-            )
+            .map(_getTextFieldStateDetails)
             .toList();
 
         final formButtonState = formData.items
             ?.where((element) => element.type == ItemType.button)
-            .map(
-              (item) => FormButtonStateDetails(
-                itemId: item.id,
-                buttonType: item.subType,
-                validateOn: item.validateOn,
-                text: item.text ?? '',
-                buttonAction: item.actions,
-              ),
-            )
+            .map(_getButtonStateDetails)
+            .toList();
+
+        final formRowState = formData.items
+            ?.where((element) => element.type == ItemType.row)
+            .map(_getRowStateDetails)
             .toList();
 
         await Future.delayed(
@@ -91,6 +64,7 @@ class FormBloc extends Bloc<FormEvent, FormState> {
                 formTextFieldDetails: formTextFieldState,
                 formButtonDetails: formButtonState,
                 formLabelDetails: formLabelState,
+                formRowDetails: formRowState,
               ),
             );
           },
@@ -122,6 +96,54 @@ class FormBloc extends Bloc<FormEvent, FormState> {
       );
     }
   }
+
+  /// Get button state details for [item].
+  FormButtonStateDetails _getButtonStateDetails(FormItem item) =>
+      FormButtonStateDetails(
+        itemId: item.id,
+        buttonType: item.subType,
+        validateOn: item.validateOn,
+        text: item.text ?? '',
+        buttonAction: item.actions,
+        icon: item.style?.icon,
+        buttonState: item.buttonState,
+      );
+
+  /// Get label state details for [item].
+  FormLabelStateDetails _getLabelStateDetails(FormItem item) =>
+      FormLabelStateDetails(
+        text: item.text ?? '',
+        itemId: item.id,
+        textAlign: item.style?.textAlignment,
+        textStyle: item.style?.style,
+      );
+
+  /// Get row state details for [item].
+  FormRowStateDetails _getRowStateDetails(FormItem item) => FormRowStateDetails(
+        itemId: item.id,
+        itemType: ItemType.row,
+        children: item.children,
+        mainAxisAlignment: item.style?.mainAxisAlignment,
+      );
+
+  /// Get text field state details for [item].
+  FormTextFieldStateDetails _getTextFieldStateDetails(FormItem item) =>
+      FormTextFieldStateDetails(
+        textFieldValue: '',
+        itemId: item.id,
+        validateTo: item.validateTo,
+        validateOn: item.validateOn,
+        errorMessage: item.style?.error,
+        icon: item.style?.icon,
+        label: item.style?.label,
+        hint: item.style?.hint,
+        keyboardType: item.style?.keyboardType,
+        textInputAction: item.style?.textInputAction,
+        autofocus: item.style?.autofocus,
+        obscureText: item.style?.obscureText,
+        obscuringCharacter: item.style?.obscuringCharacter,
+        maxLength: item.style?.maxLength,
+      );
 
   /// Whenever [TextFieldChangeFormEvent] is sent then this method will be
   /// called.

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:second_hand_clothes/app/app.dart' as app;
-import 'package:second_hand_clothes/app/app.dart';
 
 /// A widget for showing buttons for the form based on the item details.
 class WidgetFormButtons extends StatelessWidget {
@@ -33,10 +32,15 @@ class WidgetFormButtons extends StatelessWidget {
             (element) => element.itemId == buttonItemId,
           );
 
+          app.UtilsLogger().log(
+            'Creating ${buttonStateDetails?.itemId} button which '
+            'is a ${buttonStateDetails?.buttonType}',
+          );
+
           if (buttonStateDetails != null) {
             var buttonContent =
                 buttonStateDetails.buttonState == app.ButtonState.loading
-                    ? const WidgetsCircularProgressIndicator.small()
+                    ? const app.WidgetsCircularProgressIndicator.small()
                     : Text(
                         context
                                 .localizationValues()
@@ -45,21 +49,32 @@ class WidgetFormButtons extends StatelessWidget {
                         style: context.themeData().textTheme.button,
                       );
 
+            var buttonAction =
+                buttonStateDetails.buttonState == app.ButtonState.enabled
+                    ? () {
+                        context.read<app.FormBloc>().add(
+                              app.ActionsFormEvent(
+                                buttonItemId,
+                                buttonStateDetails.buttonAction,
+                              ),
+                            );
+                      }
+                    : null;
+
             switch (buttonStateDetails.buttonType) {
               case app.ItemSubType.elevatedButton:
                 return ElevatedButton(
-                  onPressed:
-                      buttonStateDetails.buttonState == app.ButtonState.enabled
-                          ? () {
-                              context.read<app.FormBloc>().add(
-                                    app.ActionsFormEvent(
-                                      buttonItemId,
-                                      buttonStateDetails.buttonAction,
-                                    ),
-                                  );
-                            }
-                          : null,
+                  key: Key(buttonStateDetails.itemId),
+                  onPressed: buttonAction,
                   child: buttonContent,
+                );
+              case app.ItemSubType.iconButton:
+                return IconButton(
+                  key: Key(buttonStateDetails.itemId),
+                  onPressed: buttonAction,
+                  icon: Icon(
+                    buttonStateDetails.icon,
+                  ),
                 );
               case app.ItemSubType.unknown:
               default:

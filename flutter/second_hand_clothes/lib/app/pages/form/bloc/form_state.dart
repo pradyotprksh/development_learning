@@ -12,6 +12,7 @@ class FormState extends Equatable {
     this.formButtonDetails,
     this.formLabelDetails,
     this.errorMessage,
+    this.formRowDetails,
   });
 
   final FormData formData;
@@ -20,6 +21,7 @@ class FormState extends Equatable {
   final List<FormTextFieldStateDetails>? formTextFieldDetails;
   final List<FormButtonStateDetails>? formButtonDetails;
   final List<FormLabelStateDetails>? formLabelDetails;
+  final List<FormRowStateDetails>? formRowDetails;
 
   FormState copyWith({
     FormData? formData,
@@ -28,6 +30,7 @@ class FormState extends Equatable {
     List<FormTextFieldStateDetails>? formTextFieldDetails,
     List<FormButtonStateDetails>? formButtonDetails,
     List<FormLabelStateDetails>? formLabelDetails,
+    List<FormRowStateDetails>? formRowDetails,
   }) =>
       FormState(
         formData: formData ?? this.formData,
@@ -36,6 +39,7 @@ class FormState extends Equatable {
         formTextFieldDetails: formTextFieldDetails ?? this.formTextFieldDetails,
         formButtonDetails: formButtonDetails ?? this.formButtonDetails,
         formLabelDetails: formLabelDetails ?? this.formLabelDetails,
+        formRowDetails: formRowDetails ?? this.formRowDetails,
       );
 
   @override
@@ -45,5 +49,7 @@ class FormState extends Equatable {
         errorMessage,
         formTextFieldDetails,
         formButtonDetails,
+        formRowDetails,
+        formRowDetails,
       ];
 }

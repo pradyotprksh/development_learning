@@ -137,6 +137,7 @@ class FormButtonStateDetails extends Equatable {
     required this.buttonType,
     this.buttonAction,
     this.itemType = ItemType.button,
+    this.icon,
   });
 
   FormButtonStateDetails copyWith({
@@ -145,6 +146,7 @@ class FormButtonStateDetails extends Equatable {
     ItemSubType? buttonType,
     ButtonState? buttonState,
     UserActions? buttonAction,
+    IconData? icon,
   }) =>
       FormButtonStateDetails(
         itemId: itemId,
@@ -154,6 +156,7 @@ class FormButtonStateDetails extends Equatable {
         buttonType: buttonType ?? this.buttonType,
         buttonState: buttonState ?? this.buttonState,
         buttonAction: buttonAction ?? this.buttonAction,
+        icon: icon ?? this.icon,
       );
 
   final String itemId;
@@ -163,6 +166,7 @@ class FormButtonStateDetails extends Equatable {
   final ItemSubType? buttonType;
   final ButtonState buttonState;
   final UserActions? buttonAction;
+  final IconData? icon;
 
   @override
   List<Object?> get props => [
@@ -173,5 +177,24 @@ class FormButtonStateDetails extends Equatable {
         validateOn,
         itemType,
         buttonAction,
+        icon,
       ];
+}
+
+/// A form state details for a row form item.
+class FormRowStateDetails extends Equatable {
+  const FormRowStateDetails({
+    required this.itemId,
+    required this.itemType,
+    this.mainAxisAlignment,
+    required this.children,
+  });
+
+  final String itemId;
+  final ItemType itemType;
+  final MainAxisAlignment? mainAxisAlignment;
+  final List<FormItem> children;
+
+  @override
+  List<Object?> get props => [itemId, itemType, mainAxisAlignment, children];
 }
