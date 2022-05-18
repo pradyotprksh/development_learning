@@ -52,6 +52,8 @@ class PersonaliseUtilsSomeMethod {
     BuildContext context,
     ThemeMode currentThemeMode,
   ) async {
+    final themeBloc = context.read<ThemeBloc>();
+
     final newThemeMode = await showDialog<ThemeMode>(
           context: context,
           barrierDismissible: true,
@@ -75,12 +77,13 @@ class PersonaliseUtilsSomeMethod {
         ) ??
         currentThemeMode;
 
-    context.read<ThemeBloc>().clearHistory();
-    context.read<ThemeBloc>().add(
-          ChangeThemeEvent(
-            themeMode: newThemeMode.name,
-          ),
-        );
+    themeBloc
+      ..clearHistory()
+      ..add(
+        ChangeThemeEvent(
+          themeMode: newThemeMode.name,
+        ),
+      );
   }
 
   /// Trigger the language change event by showing a dialog.
@@ -88,6 +91,8 @@ class PersonaliseUtilsSomeMethod {
     BuildContext context,
     Locale currentLocale,
   ) async {
+    final localizationBloc = context.read<LocalizationBloc>();
+
     final newLanguage = await showDialog<Locale>(
           context: context,
           barrierDismissible: true,
@@ -113,12 +118,13 @@ class PersonaliseUtilsSomeMethod {
         ) ??
         currentLocale;
 
-    context.read<LocalizationBloc>().clearHistory();
-    context.read<LocalizationBloc>().add(
-          ChangeLocalizationEvent(
-            newLocale: newLanguage.languageCode,
-          ),
-        );
+    localizationBloc
+      ..clearHistory()
+      ..add(
+        ChangeLocalizationEvent(
+          newLocale: newLanguage.languageCode,
+        ),
+      );
   }
 
   /// Show a bottom sheet dialog which gives an option to choose the required
@@ -127,6 +133,8 @@ class PersonaliseUtilsSomeMethod {
     BuildContext context,
     String currentFontFamily,
   ) async {
+    final themeBloc = context.read<ThemeBloc>();
+
     final newFontFamily = await showModalBottomSheet<String>(
           context: context,
           backgroundColor: context.themeData().bottomSheetTheme.backgroundColor,
@@ -166,11 +174,12 @@ class PersonaliseUtilsSomeMethod {
         currentFontFamily;
 
     // TODO: Font family change not reflecting on the application.
-    context.read<ThemeBloc>().clearHistory();
-    context.read<ThemeBloc>().add(
-          ChangeThemeEvent(
-            fontFamily: newFontFamily,
-          ),
-        );
+    themeBloc
+      ..clearHistory()
+      ..add(
+        ChangeThemeEvent(
+          fontFamily: newFontFamily,
+        ),
+      );
   }
 }

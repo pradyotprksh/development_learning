@@ -13,17 +13,17 @@ class RepositoriesDataFirebaseAuth extends ServicesDataFirebaseAuth {
     required String password,
     required AuthType authType,
   }) async {
-    final User? _user;
+    final User? user;
     switch (authType) {
       case AuthType.login:
         final userCredentials = await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
-        _user = userCredentials.user;
+        user = userCredentials.user;
         break;
       case AuthType.register:
         final userCredentials = await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password);
-        _user = userCredentials.user;
+        user = userCredentials.user;
         break;
     }
-    return _user;
+    return user;
   }
 }

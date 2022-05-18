@@ -18,7 +18,7 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     UtilsAppDetails().setApplicationOrientation();
-    final ServicesFirebaseCore _firebaseCore = FirebaseCore();
+    final ServicesFirebaseCore firebaseCore = FirebaseCore();
 
     return BlocBuilder<ThemeBloc, ThemeState>(
       builder: (_, themeState) =>
@@ -47,7 +47,7 @@ class App extends StatelessWidget {
               LocalizationDetails().getLocalizationDelegates(),
           supportedLocales: LocalizationDetails().getSupportedLocales(),
           locale: localizationState.currentLocale,
-          navigatorObservers: _firebaseCore.getFirebaseNavigatorObservers(),
+          navigatorObservers: firebaseCore.getFirebaseNavigatorObservers(),
           initialRoute: NavigatorsRoutes().initialRoute,
           routes: NavigatorsRoutes().routes,
         ),

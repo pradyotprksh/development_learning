@@ -49,7 +49,7 @@ void main() async {
 ///
 /// That will be handled from here.
 Future<void> _initialSetup() async {
-  final ServicesFirebaseCore _firebaseCore = FirebaseCore();
-  await _firebaseCore.initializeFirebaseApp();
-  _firebaseCore.implementFirebaseCrashlytics();
+  final ServicesFirebaseCore firebaseCore = FirebaseCore();
+  await firebaseCore.initializeFirebaseApp();
+  firebaseCore.implementFirebaseCrashlytics();
 }
