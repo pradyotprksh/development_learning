@@ -34,6 +34,14 @@ class FormBloc extends Bloc<FormEvent, FormState> {
         );
         final formData = formDataFromJson(loginJson);
 
+        // Get all the item id which has children
+        var itemIdWithChildren = <String>[];
+        formData.items?.forEach((element) {
+          if (element.children.isNotEmpty) {
+            itemIdWithChildren.add(element.id);
+          }
+        });
+
         final formLabelState = formData.items
             ?.where((element) => element.type == ItemType.label)
             .map(_getLabelStateDetails)
@@ -54,6 +62,48 @@ class FormBloc extends Bloc<FormEvent, FormState> {
             .map(_getRowStateDetails)
             .toList();
 
+        final formColumnState = formData.items
+            ?.where((element) => element.type == ItemType.column)
+            .map(_getColumnStateDetails)
+            .toList();
+
+        // Create the state details for all the children, a very long process
+        // to check it up on because there might be very long
+        // nested widget tree.
+        while (itemIdWithChildren.isNotEmpty) {
+          final itemId = itemIdWithChildren.removeLast();
+          final itemDetails = formData.items?.firstWhere(
+            (element) => element.id == itemId,
+          );
+
+          if (itemDetails != null) {
+            for (var element in itemDetails.children) {
+              if (element.children.isNotEmpty) {
+                itemIdWithChildren.add(element.id);
+              }
+              switch (element.type) {
+                case ItemType.label:
+                  formLabelState?.add(_getLabelStateDetails(element));
+                  break;
+                case ItemType.textField:
+                  formTextFieldState?.add(_getTextFieldStateDetails(element));
+                  break;
+                case ItemType.button:
+                  formButtonState?.add(_getButtonStateDetails(element));
+                  break;
+                case ItemType.row:
+                  formRowState?.add(_getRowStateDetails(element));
+                  break;
+                case ItemType.column:
+                  formColumnState?.add(_getColumnStateDetails(element));
+                  break;
+                default:
+                  break;
+              }
+            }
+          }
+        }
+
         await Future.delayed(
           FormConstants().formStatusChangeDuration,
           () {
@@ -65,6 +115,7 @@ class FormBloc extends Bloc<FormEvent, FormState> {
                 formButtonDetails: formButtonState,
                 formLabelDetails: formLabelState,
                 formRowDetails: formRowState,
+                formColumnDetails: formColumnState,
               ),
             );
           },
@@ -124,6 +175,14 @@ class FormBloc extends Bloc<FormEvent, FormState> {
         itemType: ItemType.row,
         children: item.children,
         mainAxisAlignment: item.style?.mainAxisAlignment,
+      );
+
+  /// Get row state details for [item].
+  FormColumnStateDetails _getColumnStateDetails(FormItem item) =>
+      FormColumnStateDetails(
+        itemId: item.id,
+        itemType: ItemType.row,
+        children: item.children,
       );
 
   /// Get text field state details for [item].

@@ -47,6 +47,10 @@ class WidgetsFormItem extends StatelessWidget {
         return WidgetsFormRow(
           rowItemId: item.id,
         );
+      case ItemType.column:
+        return WidgetsFormColumn(
+          columnItemId: item.id,
+        );
       case ItemType.unknown:
         return ThemesBox().shrink;
     }

@@ -8,5 +8,5 @@ class FormConstants {
 
   final loginFormId = 'login_form';
 
-  final formStatusChangeDuration = const Duration(seconds: 2);
+  final formStatusChangeDuration = const Duration(seconds: 1);
 }

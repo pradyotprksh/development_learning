@@ -291,6 +291,7 @@ enum ItemType {
   box,
   divider,
   row,
+  column,
   unknown;
 
   static ItemType getItemType(String input) =>
@@ -301,6 +302,7 @@ enum ItemType {
         'divider': ItemType.divider,
         'box': ItemType.box,
         'row': ItemType.row,
+        'column': ItemType.column,
       }[input] ??
       ItemType.unknown;
 }

@@ -198,3 +198,19 @@ class FormRowStateDetails extends Equatable {
   @override
   List<Object?> get props => [itemId, itemType, mainAxisAlignment, children];
 }
+
+/// A form state details for a column form item.
+class FormColumnStateDetails extends Equatable {
+  const FormColumnStateDetails({
+    required this.itemId,
+    required this.itemType,
+    required this.children,
+  });
+
+  final String itemId;
+  final ItemType itemType;
+  final List<FormItem> children;
+
+  @override
+  List<Object?> get props => [itemId, itemType, children];
+}
