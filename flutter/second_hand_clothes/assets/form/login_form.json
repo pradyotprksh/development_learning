@@ -182,6 +182,26 @@
           "buttonState": "enabled"
         }
       ]
+    },
+    {
+      "id": "15",
+      "type": "box",
+      "style": {
+        "height": 30.0,
+        "width": 0.0
+      }
+    },
+    {
+      "id": "16",
+      "type": "button",
+      "subType": "outlinedButton",
+      "text": "doNotHaveAnAccount",
+      "actions": "signUpUserOption",
+      "buttonState": "enabled",
+      "navigationAction": {
+        "route": "/form",
+        "formId": "sign_up_form"
+      }
     }
   ]
 }

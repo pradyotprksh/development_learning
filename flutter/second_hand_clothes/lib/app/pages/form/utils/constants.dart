@@ -7,6 +7,7 @@ class FormConstants {
   static final FormConstants _instance = FormConstants._privateConstructor();
 
   final loginFormId = 'login_form';
+  final signUpFormId = 'sign_up_form';
 
   final formStatusChangeDuration = const Duration(seconds: 1);
 }

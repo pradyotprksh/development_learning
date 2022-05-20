@@ -29,5 +29,6 @@
   "formParsingError": "Quelque chose s’est mal passé avec l’analyse du formulaire. S’il vous plaît réessayer après un certain temps, nous l’examinons.",
   "wrongFormId": "Des détails de formulaire erronés ont été demandés. S’il vous plaît, revenez, nous examinons la question.",
   "fetchingFormDetails": "Récupération des détails du formulaire. Veuillez patienter.",
-  "formRefreshMessage": "Quelque chose ne va pas avec le formulaire demandé, nous vérifions cela. Ou pouvez-vous essayer de vous rafraîchir?"
+  "formRefreshMessage": "Quelque chose ne va pas avec le formulaire demandé, nous vérifions cela. Ou pouvez-vous essayer de vous rafraîchir?",
+  "doNotHaveAnAccount": "Vous n’avez pas de compte ? Créez-en un."
 }

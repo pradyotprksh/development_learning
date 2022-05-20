@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:second_hand_clothes/domain/domain.dart';
 
 /// A service class for firebase authentication, which will be used
@@ -13,7 +12,7 @@ abstract class ServicesFirebaseAuth {
   /// [password] = Password for the account
   ///
   /// [authType] = Type of authentication, register or login
-  Future<User?> authenticateUser({
+  Future<UserDetails?> authenticateUser({
     required String email,
     required String password,
     required AuthType authType,

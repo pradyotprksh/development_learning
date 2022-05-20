@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:logger/logger.dart';
 import 'package:second_hand_clothes/app/app.dart' as app;
 
 /// A widget for showing buttons for the form based on the item details.
@@ -35,19 +36,27 @@ class WidgetFormButtons extends StatelessWidget {
           app.UtilsLogger().log(
             'Creating ${buttonStateDetails?.itemId} button which '
             'is a ${buttonStateDetails?.buttonType}',
+            logLevel: Level.info,
           );
 
           if (buttonStateDetails != null) {
             var buttonContent =
                 buttonStateDetails.buttonState == app.ButtonState.loading
                     ? const app.WidgetsCircularProgressIndicator.small()
-                    : Text(
-                        context
-                                .localizationValues()
-                                .mapLocalization[buttonStateDetails.text] ??
-                            '',
-                        style: context.themeData().textTheme.button,
-                      );
+                    : (buttonStateDetails.buttonType ==
+                                app.ItemSubType.elevatedButton ||
+                            buttonStateDetails.buttonType ==
+                                app.ItemSubType.outlinedButton)
+                        ? Text(
+                            context
+                                    .localizationValues()
+                                    .mapLocalization[buttonStateDetails.text] ??
+                                '',
+                            style: context.themeData().textTheme.button,
+                          )
+                        : Icon(
+                            buttonStateDetails.icon,
+                          );
 
             var buttonAction =
                 buttonStateDetails.buttonState == app.ButtonState.enabled
@@ -72,9 +81,13 @@ class WidgetFormButtons extends StatelessWidget {
                 return IconButton(
                   key: Key(buttonStateDetails.itemId),
                   onPressed: buttonAction,
-                  icon: Icon(
-                    buttonStateDetails.icon,
-                  ),
+                  icon: buttonContent,
+                );
+              case app.ItemSubType.outlinedButton:
+                return OutlinedButton(
+                  key: Key(buttonStateDetails.itemId),
+                  onPressed: buttonAction,
+                  child: buttonContent,
                 );
               case app.ItemSubType.unknown:
               default:

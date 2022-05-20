@@ -88,11 +88,16 @@ class LocalizationValues {
     'formRefreshMessage':
         AppLocalizations.of(_buildContext)?.formRefreshMessage ??
             'formRefreshMessage',
+    'doNotHaveAnAccount':
+        AppLocalizations.of(_buildContext)?.doNotHaveAnAccount ??
+            'doNotHaveAnAccount',
   };
 
   final formParsingErrorKey = 'formParsingError';
 
   final wrongFormIdKey = 'wrongFormIdKey';
+
+  String get doNotHaveAnAccount => mapLocalization['doNotHaveAnAccount'] ?? '****';
 
   String get formParsingError => mapLocalization['formParsingError'] ?? '****';
 

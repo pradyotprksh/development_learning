@@ -36,6 +36,12 @@ extension BuildContextExtension on BuildContext {
   /// only context.themeData() will be used.
   ThemeData themeData() => Theme.of(this);
 
+  /// Get the ModalRoute from the context
+  ModalRoute? modalRoute() => ModalRoute.of(this);
+
+  /// Get current route name
+  String currentRoute() => modalRoute()?.settings.name ?? '';
+
   /// Return the localization values object, so LocalizationValues.of(context)
   /// will change to context.localizationValues().
   LocalizationValues localizationValues() => LocalizationValues.of(this);

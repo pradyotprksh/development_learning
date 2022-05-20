@@ -7,6 +7,7 @@ import 'dart:convert';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:second_hand_clothes/app/app.dart';
 
 FormData formDataFromJson(String str) => FormData.fromJson(
       json.decode(str) as Map<String, dynamic>,
@@ -149,48 +150,52 @@ class FormItem extends Equatable {
     required this.validateOn,
     required this.buttonState,
     required this.children,
+    required this.navigationAction,
   });
 
   factory FormItem.fromJson(Map<String, dynamic> json) => FormItem(
-        id: json['id'] as String,
-        type: ItemType.getItemType(
-          json['type'] as String? ?? '',
+      id: json['id'] as String,
+      type: ItemType.getItemType(
+        json['type'] as String? ?? '',
+      ),
+      actions: UserActions.getUserActions(
+        json['actions'] as String? ?? '',
+      ),
+      subType: ItemSubType.getItemSubType(
+        json['subType'] as String? ?? '',
+      ),
+      text: json['text'] as String?,
+      style: Style.fromJson(
+        json['style'] as Map<String, dynamic>? ?? <String, dynamic>{},
+      ),
+      gap: json['gap'] as int?,
+      inputType: InputType.getInputType(
+        json['inputType'] as String? ?? '',
+      ),
+      validateTo: List<String>.from(
+        (json['validateTo'] as List<dynamic>? ?? <dynamic>[]).map<dynamic>(
+          (dynamic x) => x,
         ),
-        actions: UserActions.getUserActions(
-          json['actions'] as String? ?? '',
+      ),
+      validateOn: List<String>.from(
+        (json['validateOn'] as List<dynamic>? ?? <dynamic>[]).map<dynamic>(
+          (dynamic x) => x,
         ),
-        subType: ItemSubType.getItemSubType(
-          json['subType'] as String? ?? '',
-        ),
-        text: json['text'] as String?,
-        style: Style.fromJson(
-          json['style'] as Map<String, dynamic>? ?? <String, dynamic>{},
-        ),
-        gap: json['gap'] as int?,
-        inputType: InputType.getInputType(
-          json['inputType'] as String? ?? '',
-        ),
-        validateTo: List<String>.from(
-          (json['validateTo'] as List<dynamic>? ?? <dynamic>[]).map<dynamic>(
-            (dynamic x) => x,
+      ),
+      buttonState: ButtonState.getButtonState(
+        json['buttonState'] as String? ?? '',
+      ),
+      children: List<FormItem>.from(
+        (json['children'] as List<dynamic>? ?? <FormItem>[]).map<dynamic>(
+          (dynamic x) => FormItem.fromJson(
+            x as Map<String, dynamic>,
           ),
         ),
-        validateOn: List<String>.from(
-          (json['validateOn'] as List<dynamic>? ?? <dynamic>[]).map<dynamic>(
-            (dynamic x) => x,
-          ),
-        ),
-        buttonState: ButtonState.getButtonState(
-          json['buttonState'] as String? ?? '',
-        ),
-        children: List<FormItem>.from(
-          (json['children'] as List<dynamic>? ?? <FormItem>[]).map<dynamic>(
-            (dynamic x) => FormItem.fromJson(
-              x as Map<String, dynamic>,
-            ),
-          ),
-        ),
-      );
+      ),
+      navigationAction: NavigationAction.fromJson(
+        json['navigationAction'] as Map<String, dynamic>? ??
+            <String, dynamic>{},
+      ));
 
   final String id;
   final ItemType type;
@@ -204,6 +209,7 @@ class FormItem extends Equatable {
   final UserActions? actions;
   final ButtonState buttonState;
   final List<FormItem> children;
+  final NavigationAction? navigationAction;
 
   FormItem copyWith({
     String? id,
@@ -218,6 +224,7 @@ class FormItem extends Equatable {
     UserActions? actions,
     ButtonState? buttonState,
     List<FormItem>? children,
+    NavigationAction? navigationAction,
   }) =>
       FormItem(
         children: children ?? this.children,
@@ -232,6 +239,7 @@ class FormItem extends Equatable {
         validateOn: validateOn ?? this.validateOn,
         actions: actions ?? this.actions,
         buttonState: buttonState ?? this.buttonState,
+        navigationAction: navigationAction ?? this.navigationAction,
       );
 
   Map<String, dynamic> toJson() => <String, dynamic>{
@@ -241,7 +249,7 @@ class FormItem extends Equatable {
         'actions': actions?.name,
         'buttonState': buttonState.name,
         'text': text,
-        'style': style == null ? null : style!.toJson(),
+        'style': style?.toJson(),
         'gap': gap,
         'inputType': inputType?.name,
         'validateTo': validateTo == null
@@ -263,6 +271,7 @@ class FormItem extends Equatable {
             (x) => x.toJson(),
           ),
         ),
+        'navigationAction': navigationAction?.toJson(),
       };
 
   @override
@@ -310,12 +319,14 @@ enum ItemType {
 enum ItemSubType {
   elevatedButton,
   iconButton,
+  outlinedButton,
   unknown;
 
   static ItemSubType getItemSubType(String input) =>
       <String, ItemSubType>{
         'elevatedButton': ItemSubType.elevatedButton,
         'iconButton': ItemSubType.iconButton,
+        'outlinedButton': ItemSubType.outlinedButton,
       }[input] ??
       ItemSubType.unknown;
 }
@@ -337,6 +348,8 @@ enum UserActions {
   loginUser,
   googleSignIn,
   phoneLogin,
+  signUpUserOption,
+  signUpUser,
   unknown;
 
   static UserActions getUserActions(String input) =>
@@ -344,8 +357,46 @@ enum UserActions {
         'loginUser': UserActions.loginUser,
         'googleSignIn': UserActions.googleSignIn,
         'phoneLogin': UserActions.phoneLogin,
+        'signUpUser': UserActions.signUpUser,
+        'signUpUserOption': UserActions.signUpUserOption,
       }[input] ??
       UserActions.unknown;
+}
+
+class NavigationAction extends Equatable {
+  const NavigationAction({
+    required this.route,
+    required this.formId,
+  });
+
+  factory NavigationAction.fromJson(Map<String, dynamic> json) =>
+      NavigationAction(
+        route: json['route'] as String? ?? '',
+        formId: json['formId'] as String? ?? '',
+      );
+
+  final String route;
+  final String? formId;
+
+  NavigationAction copyWith({
+    String? route,
+    String? formId,
+  }) =>
+      NavigationAction(
+        route: route ?? this.route,
+        formId: formId ?? this.formId,
+      );
+
+  Map<String, dynamic> toJson() => <String, dynamic>{
+        'route': route,
+        'formId': formId,
+      };
+
+  @override
+  List<Object?> get props => [
+        route,
+        formId,
+      ];
 }
 
 class Style extends Equatable {

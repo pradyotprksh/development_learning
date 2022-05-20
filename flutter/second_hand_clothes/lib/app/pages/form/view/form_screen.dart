@@ -13,9 +13,27 @@ class FormScreen extends StatelessWidget {
     context.read<app.FormBloc>().add(app.GetDetailsFormEvent(arguments.formId));
 
     return BlocConsumer<app.FormBloc, app.FormState>(
-      listenWhen: (previous, current) =>
-          previous.formStatus != current.formStatus,
       listener: (_, formState) {
+        if (formState.navigationAction != null) {
+          if (formState.navigationAction?.route != null) {
+            if (formState.navigationAction?.formId != null) {
+              Navigator.pushNamed(
+                context,
+                formState.navigationAction?.route ?? '',
+                arguments: app.FormArguments(
+                  formState.navigationAction?.formId ?? '',
+                ),
+              );
+            } else {
+              if (formState.navigationAction?.route != context.currentRoute()) {
+                Navigator.pushNamed(
+                  context,
+                  formState.navigationAction?.route ?? '',
+                );
+              }
+            }
+          }
+        }
         if (formState.formStatus == FormzStatus.submissionFailure ||
             formState.formStatus == FormzStatus.invalid) {
           app.FormUtilsSomeMethod().handleUndoSnackBar(
@@ -37,27 +55,34 @@ class FormScreen extends StatelessWidget {
         final formItems = formData.items;
 
         return Scaffold(
+          key: Key(formData.id),
           backgroundColor: context.themeData().backgroundColor,
           extendBody: formData.extendBody ?? true,
           extendBodyBehindAppBar: formData.extendBodyBehindAppBar ?? true,
-          body: formState.formStatus == FormzStatus.submissionInProgress
-              ? app.WidgetsCircularLoadingIndicator(
+          body: Stack(
+            children: [
+              if (formItems != null && formItems.isNotEmpty)
+                app.WidgetsFormItems(
+                  formItems: formItems,
+                  itemOrientation: formData.orientation,
+                ),
+              if (formState.formStatus == FormzStatus.invalid ||
+                  formState.formStatus == FormzStatus.submissionFailure)
+                app.WidgetsErrorRefresh(
+                  onRefresh: () {
+                    context.read<app.FormBloc>().add(
+                          app.GetDetailsFormEvent(
+                            arguments.formId,
+                          ),
+                        );
+                  },
+                ),
+              if (formState.formStatus == FormzStatus.submissionInProgress)
+                app.WidgetsCircularLoadingIndicator(
                   message: context.localizationValues().fetchingFormDetails,
-                )
-              : formItems != null && formItems.isNotEmpty
-                  ? app.WidgetsFormItems(
-                      formItems: formItems,
-                      itemOrientation: formData.orientation,
-                    )
-                  : app.WidgetsErrorRefresh(
-                      onRefresh: () {
-                        context.read<app.FormBloc>().add(
-                              app.GetDetailsFormEvent(
-                                arguments.formId,
-                              ),
-                            );
-                      },
-                    ),
+                ),
+            ],
+          ),
         );
       },
     );

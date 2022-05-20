@@ -14,7 +14,7 @@ class RepositoriesFirebaseAuth extends ServicesFirebaseAuth {
   final ServicesDataFirebaseAuth _dataFirebaseAuth;
 
   @override
-  Future<User?> authenticateUser({
+  Future<UserDetails?> authenticateUser({
     required String email,
     required String password,
     required AuthType authType,
@@ -26,7 +26,7 @@ class RepositoriesFirebaseAuth extends ServicesFirebaseAuth {
         authType: authType,
       );
     } catch (exception) {
-      UtilsLogger().log('authenticateUser', exception);
+      UtilsLogger().log('authenticateUser', error: exception);
       if (exception is FirebaseException) {
         throw AuthenticationException(message: exception.message);
       } else {

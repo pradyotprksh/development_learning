@@ -16,14 +16,19 @@ class UtilsLogger {
 
   static final UtilsLogger _instance = UtilsLogger._privateConstructor();
 
-  /// Log a [message], [error] and [stackTrace] if available.
+  /// Log a [message], [error], [logLevel] and [stackTrace] if available.
   void log(
-    dynamic message, [
+    dynamic message, {
     dynamic error,
     StackTrace? stackTrace,
-  ]) {
+    Level? logLevel,
+  }) {
     Logger().log(
-      (error == null) ? Level.debug : Level.error,
+      (error == null)
+          ? (logLevel != null)
+              ? logLevel
+              : Level.debug
+          : Level.error,
       message,
       error,
       stackTrace,

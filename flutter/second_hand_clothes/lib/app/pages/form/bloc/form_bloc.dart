@@ -3,17 +3,20 @@ import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
 import 'package:second_hand_clothes/app/app.dart';
+import 'package:second_hand_clothes/domain/domain.dart';
 
 /// A bloc class for the form screen which will listen to any changes raised
 /// by form event and update the state by updating the value of form state.
 class FormBloc extends Bloc<FormEvent, FormState> {
-  FormBloc() : super(const FormState()) {
+  FormBloc(this._authService) : super(const FormState()) {
     on<GetDetailsFormEvent>(_getFormDetails);
     on<TextFieldChangeFormEvent>(_onTextFieldChangeEvent);
     on<ActionsFormEvent>(_onActionsFormEvent);
     on<EnableDisableComponentEvent>(_onEnableDisableComponentEvent);
     on<CheckButtonStateEvent>(_onCheckButtonStateEvent);
   }
+
+  final ServicesFirebaseAuth _authService;
 
   /// Whenever [GetDetailsFormEvent] is raised then this method will be called.
   void _getFormDetails(
@@ -27,82 +30,56 @@ class FormBloc extends Bloc<FormEvent, FormState> {
     );
 
     final formId = event.formId;
-    if (formId == FormConstants().loginFormId) {
-      try {
-        final loginJson = await UtilsAssets().getJSONData(
+    var formJson = '';
+
+    try {
+      if (formId == FormConstants().loginFormId) {
+        formJson = await UtilsAssets().getJSONData(
           UtilsAssets().loginFormId,
         );
-        final formData = formDataFromJson(loginJson);
+      }
 
-        // Get all the item id which has children
-        var itemIdWithChildren = <String>[];
-        formData.items?.forEach((element) {
-          if (element.children.isNotEmpty) {
-            itemIdWithChildren.add(element.id);
-          }
-        });
+      if (formJson.isEmpty) {
+        await Future.delayed(
+          FormConstants().formStatusChangeDuration,
+          () {
+            emit(
+              state.copyWith(
+                formStatus: FormzStatus.invalid,
+                errorMessage: LocalizationValues().wrongFormIdKey,
+              ),
+            );
+          },
+        );
+      } else {
+        final formData = formDataFromJson(formJson);
 
-        final formLabelState = formData.items
-            ?.where((element) => element.type == ItemType.label)
+        final flatFormItems = flatten(formData.items ?? []);
+
+        final formLabelState = flatFormItems
+            .where((element) => element.type == ItemType.label)
             .map(_getLabelStateDetails)
             .toList();
 
-        final formTextFieldState = formData.items
-            ?.where((element) => element.type == ItemType.textField)
+        final formTextFieldState = flatFormItems
+            .where((element) => element.type == ItemType.textField)
             .map(_getTextFieldStateDetails)
             .toList();
 
-        final formButtonState = formData.items
-            ?.where((element) => element.type == ItemType.button)
+        final formButtonState = flatFormItems
+            .where((element) => element.type == ItemType.button)
             .map(_getButtonStateDetails)
             .toList();
 
-        final formRowState = formData.items
-            ?.where((element) => element.type == ItemType.row)
+        final formRowState = flatFormItems
+            .where((element) => element.type == ItemType.row)
             .map(_getRowStateDetails)
             .toList();
 
-        final formColumnState = formData.items
-            ?.where((element) => element.type == ItemType.column)
+        final formColumnState = flatFormItems
+            .where((element) => element.type == ItemType.column)
             .map(_getColumnStateDetails)
             .toList();
-
-        // Create the state details for all the children, a very long process
-        // to check it up on because there might be very long
-        // nested widget tree.
-        while (itemIdWithChildren.isNotEmpty) {
-          final itemId = itemIdWithChildren.removeLast();
-          final itemDetails = formData.items?.firstWhere(
-            (element) => element.id == itemId,
-          );
-
-          if (itemDetails != null) {
-            for (var element in itemDetails.children) {
-              if (element.children.isNotEmpty) {
-                itemIdWithChildren.add(element.id);
-              }
-              switch (element.type) {
-                case ItemType.label:
-                  formLabelState?.add(_getLabelStateDetails(element));
-                  break;
-                case ItemType.textField:
-                  formTextFieldState?.add(_getTextFieldStateDetails(element));
-                  break;
-                case ItemType.button:
-                  formButtonState?.add(_getButtonStateDetails(element));
-                  break;
-                case ItemType.row:
-                  formRowState?.add(_getRowStateDetails(element));
-                  break;
-                case ItemType.column:
-                  formColumnState?.add(_getColumnStateDetails(element));
-                  break;
-                default:
-                  break;
-              }
-            }
-          }
-        }
 
         await Future.delayed(
           FormConstants().formStatusChangeDuration,
@@ -120,27 +97,15 @@ class FormBloc extends Bloc<FormEvent, FormState> {
             );
           },
         );
-      } catch (_) {
-        await Future.delayed(
-          FormConstants().formStatusChangeDuration,
-          () {
-            emit(
-              state.copyWith(
-                formStatus: FormzStatus.invalid,
-                errorMessage: LocalizationValues().formParsingErrorKey,
-              ),
-            );
-          },
-        );
       }
-    } else {
+    } catch (_) {
       await Future.delayed(
         FormConstants().formStatusChangeDuration,
         () {
           emit(
             state.copyWith(
               formStatus: FormzStatus.invalid,
-              errorMessage: LocalizationValues().wrongFormIdKey,
+              errorMessage: LocalizationValues().formParsingErrorKey,
             ),
           );
         },
@@ -158,6 +123,7 @@ class FormBloc extends Bloc<FormEvent, FormState> {
         buttonAction: item.actions,
         icon: item.style?.icon,
         buttonState: item.buttonState,
+        itemType: ItemType.button,
       );
 
   /// Get label state details for [item].
@@ -167,6 +133,7 @@ class FormBloc extends Bloc<FormEvent, FormState> {
         itemId: item.id,
         textAlign: item.style?.textAlignment,
         textStyle: item.style?.style,
+        itemType: ItemType.label,
       );
 
   /// Get row state details for [item].
@@ -181,7 +148,7 @@ class FormBloc extends Bloc<FormEvent, FormState> {
   FormColumnStateDetails _getColumnStateDetails(FormItem item) =>
       FormColumnStateDetails(
         itemId: item.id,
-        itemType: ItemType.row,
+        itemType: ItemType.column,
         children: item.children,
       );
 
@@ -189,6 +156,7 @@ class FormBloc extends Bloc<FormEvent, FormState> {
   FormTextFieldStateDetails _getTextFieldStateDetails(FormItem item) =>
       FormTextFieldStateDetails(
         textFieldValue: '',
+        itemType: ItemType.textField,
         itemId: item.id,
         validateTo: item.validateTo,
         validateOn: item.validateOn,
@@ -259,12 +227,52 @@ class FormBloc extends Bloc<FormEvent, FormState> {
     ActionsFormEvent event,
     Emitter<FormState> emit,
   ) {
-    switch (event.actions) {
-      case UserActions.loginUser:
-        break;
-      case UserActions.unknown:
-      default:
-        break;
+    try {
+      switch (event.actions) {
+        case UserActions.loginUser:
+          _authService.authenticateUser(
+            email: 'email',
+            password: 'password',
+            authType: AuthType.login,
+          );
+          break;
+        case UserActions.googleSignIn:
+          break;
+        case UserActions.phoneLogin:
+          break;
+        case UserActions.signUpUserOption:
+          final itemDetails = _getItemDetailsBasedOnId(
+            state.formData.items ?? [],
+            event.itemId,
+          );
+
+          emit(
+            state.copyWith(
+              navigationAction: itemDetails?.navigationAction,
+            ),
+          );
+          break;
+        case UserActions.signUpUser:
+          break;
+        case UserActions.unknown:
+        default:
+          break;
+      }
+    } catch (e) {
+      if (e is AuthenticationException) {
+        emit(
+          state.copyWith(
+            formStatus: FormzStatus.submissionFailure,
+            errorMessage: e.message,
+          ),
+        );
+      } else {
+        emit(
+          state.copyWith(
+            formStatus: FormzStatus.submissionFailure,
+          ),
+        );
+      }
     }
   }
 
@@ -286,8 +294,9 @@ class FormBloc extends Bloc<FormEvent, FormState> {
         for (var validateOn in validateOn) {
           if (!continueCheck) break;
 
-          final item = state.formData.items?.firstWhere(
-            (item) => item.id == validateOn,
+          final item = _getItemDetailsBasedOnId(
+            state.formData.items ?? [],
+            validateOn,
           );
 
           if (item != null) {
@@ -313,7 +322,7 @@ class FormBloc extends Bloc<FormEvent, FormState> {
 
         itemDetails = itemDetails.copyWith(
           buttonState:
-              continueCheck ? ButtonState.loading : ButtonState.disabled,
+              continueCheck ? ButtonState.enabled : ButtonState.disabled,
         );
       }
 
@@ -338,20 +347,46 @@ class FormBloc extends Bloc<FormEvent, FormState> {
     EnableDisableComponentEvent event,
     Emitter<FormState> emit,
   ) {
-    event.checkOn?.forEach((checkOn) {
-      final item = state.formData.items?.firstWhere(
-        (item) => item.id == checkOn,
-      );
+    event.checkOn?.forEach(
+      (checkOn) {
+        final item = _getItemDetailsBasedOnId(
+          state.formData.items ?? [],
+          checkOn,
+        );
 
-      if (item != null) {
-        switch (item.type) {
-          case ItemType.button:
-            add(CheckButtonStateEvent(checkOn));
-            break;
-          default:
-            break;
+        if (item != null) {
+          switch (item.type) {
+            case ItemType.button:
+              add(CheckButtonStateEvent(checkOn));
+              break;
+            default:
+              break;
+          }
         }
-      }
-    });
+      },
+    );
   }
+
+  /// Get the details of the item based on the [itemId] for the list of
+  /// [formData].
+  FormItem? _getItemDetailsBasedOnId(List<FormItem> formData, String itemId) {
+    var item = flatten(formData).firstWhere(
+      (item) => item.id == itemId,
+    );
+
+    return item;
+  }
+
+  /// Fold all the form item, i.e. nested children as well, into a single
+  /// dimensional list for better search and iteration.
+  List<FormItem> flatten(List<FormItem> arr) => arr.fold(
+        [],
+        (value, element) => [
+          ...value,
+          ...[element],
+          ...element.children.isNotEmpty
+              ? flatten(element.children)
+              : [element],
+        ],
+      );
 }
