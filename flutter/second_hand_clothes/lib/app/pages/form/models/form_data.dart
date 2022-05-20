@@ -121,11 +121,13 @@ enum FormType {
 
 enum FormSubType {
   login,
+  signUp,
   unknown;
 
   static FormSubType getFormSubType(String input) =>
       <String, FormSubType>{
         'login': FormSubType.login,
+        'sign_up': FormSubType.signUp,
       }[input] ??
       FormSubType.unknown;
 }
@@ -348,6 +350,7 @@ enum UserActions {
   googleSignIn,
   phoneLogin,
   signUpUserOption,
+  loginUserOption,
   signUpUser,
   unknown;
 
@@ -358,6 +361,7 @@ enum UserActions {
         'phoneLogin': UserActions.phoneLogin,
         'signUpUser': UserActions.signUpUser,
         'signUpUserOption': UserActions.signUpUserOption,
+        'loginUserOption': UserActions.loginUserOption,
       }[input] ??
       UserActions.unknown;
 }
@@ -366,29 +370,35 @@ class NavigationAction extends Equatable {
   const NavigationAction({
     required this.route,
     required this.formId,
+    required this.goBack,
   });
 
   factory NavigationAction.fromJson(Map<String, dynamic> json) =>
       NavigationAction(
-        route: json['route'] as String? ?? '',
-        formId: json['formId'] as String? ?? '',
+        route: json['route'] as String?,
+        formId: json['formId'] as String?,
+        goBack: json['goBack'] as bool? ?? false,
       );
 
-  final String route;
+  final String? route;
   final String? formId;
+  final bool? goBack;
 
   NavigationAction copyWith({
     String? route,
     String? formId,
+    bool? goBack,
   }) =>
       NavigationAction(
         route: route ?? this.route,
         formId: formId ?? this.formId,
+        goBack: goBack ?? this.goBack,
       );
 
   Map<String, dynamic> toJson() => <String, dynamic>{
         'route': route,
         'formId': formId,
+        'goBack': goBack,
       };
 
   @override
@@ -588,6 +598,7 @@ class Indent {
   Indent copyWith({
     double? start,
     double? end,
+    bool? goBack,
   }) =>
       Indent(
         start: start ?? this.start,

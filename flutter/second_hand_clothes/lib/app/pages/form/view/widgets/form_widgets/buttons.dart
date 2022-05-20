@@ -51,7 +51,7 @@ class WidgetFormButtons extends StatelessWidget {
                             context
                                     .localizationValues()
                                     .mapLocalization[buttonStateDetails.text] ??
-                                '',
+                                buttonStateDetails.text,
                             style: context.themeData().textTheme.button,
                           )
                         : Icon(

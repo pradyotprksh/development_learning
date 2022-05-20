@@ -1,0 +1,243 @@
+{
+  "id": "sign_up_form",
+  "type": "authentication",
+  "subType": "sign_up",
+  "extendBody": true,
+  "extendBodyBehindAppBar": true,
+  "padding": "20_40_20_40",
+  "orientation": "vertical",
+  "items": [
+    {
+      "id": "1",
+      "type": "label",
+      "text": "Hello There!!",
+      "style": {
+        "textStyle": "h2",
+        "textAlignment": "center"
+      }
+    },
+    {
+      "id": "2",
+      "type": "box",
+      "style": {
+        "height": 15.0,
+        "width": 0.0
+      }
+    },
+    {
+      "id": "3",
+      "type": "label",
+      "text": "Sometimes it's better to re-wear a clothe rather than buying new. Create an account to see what others are selling, there might be a chance to get clothes for free as well.",
+      "style": {
+        "textStyle": "labelLarge",
+        "textAlignment": "center"
+      }
+    },
+    {
+      "id": "4",
+      "type": "box",
+      "style": {
+        "height": 20.0,
+        "width": 0.0
+      }
+    },
+    {
+      "id": "11",
+      "type": "divider",
+      "style": {
+        "indent": {
+          "start": 30.0,
+          "end": 30.0
+        }
+      }
+    },
+    {
+      "id": "10",
+      "type": "box",
+      "style": {
+        "height": 30.0,
+        "width": 0.0
+      }
+    },
+    {
+      "id": "12",
+      "type": "label",
+      "text": "Use below option if you don't want to remember your password.",
+      "style": {
+        "textStyle": "labelLarge",
+        "textAlignment": "center"
+      }
+    },
+    {
+      "id": "13",
+      "type": "box",
+      "style": {
+        "height": 25.0,
+        "width": 0.0
+      }
+    },
+    {
+      "id": "14",
+      "type": "row",
+      "style": {
+        "mainAxisAlignment": "spaceEvenly"
+      },
+      "children": [
+        {
+          "id": "14_1",
+          "type": "button",
+          "subType": "iconButton",
+          "style": {
+            "icon": "google"
+          },
+          "actions": "googleSignIn",
+          "buttonState": "enabled"
+        },
+        {
+          "id": "14_2",
+          "type": "button",
+          "subType": "iconButton",
+          "style": {
+            "icon": "phone"
+          },
+          "actions": "phoneLogin",
+          "buttonState": "enabled"
+        }
+      ]
+    },
+    {
+      "id": "10",
+      "type": "box",
+      "style": {
+        "height": 30.0,
+        "width": 0.0
+      }
+    },
+    {
+      "id": "11",
+      "type": "divider",
+      "style": {
+        "indent": {
+          "start": 30.0,
+          "end": 30.0
+        }
+      }
+    },
+    {
+      "id": "10",
+      "type": "box",
+      "style": {
+        "height": 30.0,
+        "width": 0.0
+      }
+    },
+    {
+      "id": "5",
+      "type": "textField",
+      "style": {
+        "icon": "alternate_email",
+        "label": "emailAddressLabel",
+        "hint": "emailAddressHint",
+        "error": "emailAddressError",
+        "keyboardType": "emailAddress",
+        "textInputAction": "next",
+        "autofocus": true
+      },
+      "inputType": "email",
+      "validateOn": [
+        "EmailAddressModels"
+      ],
+      "validateTo": [
+        "9"
+      ]
+    },
+    {
+      "id": "6",
+      "type": "box",
+      "style": {
+        "height": 30.0,
+        "width": 0.0
+      }
+    },
+    {
+      "id": "7",
+      "type": "textField",
+      "style": {
+        "icon": "password",
+        "label": "passwordLabel",
+        "hint": "passwordHint",
+        "error": "passwordError",
+        "keyboardType": "text",
+        "obscureText": true,
+        "obscuringCharacter": "*",
+        "textInputAction": "done",
+        "maxLength": 16
+      },
+      "inputType": "password",
+      "validateOn": [
+        "PasswordModels"
+      ],
+      "validateTo": [
+        "9"
+      ]
+    },
+    {
+      "id": "8",
+      "type": "box",
+      "style": {
+        "height": 50.0,
+        "width": 0.0
+      }
+    },
+    {
+      "id": "9",
+      "type": "button",
+      "subType": "elevatedButton",
+      "text": "authenticateButtonTitle",
+      "validateOn": [
+        "5",
+        "7"
+      ],
+      "actions": "loginUser",
+      "buttonState": "disabled"
+    },
+    {
+      "id": "10",
+      "type": "box",
+      "style": {
+        "height": 30.0,
+        "width": 0.0
+      }
+    },
+    {
+      "id": "11",
+      "type": "divider",
+      "style": {
+        "indent": {
+          "start": 30.0,
+          "end": 30.0
+        }
+      }
+    },
+    {
+      "id": "10",
+      "type": "box",
+      "style": {
+        "height": 30.0,
+        "width": 0.0
+      }
+    },
+    {
+      "id": "16",
+      "type": "button",
+      "subType": "outlinedButton",
+      "text": "Have an account?",
+      "actions": "loginUserOption",
+      "buttonState": "enabled",
+      "navigationAction": {
+        "route": "/form",
+        "formId": "login_form"
+      }
+    }
+  ]
+}

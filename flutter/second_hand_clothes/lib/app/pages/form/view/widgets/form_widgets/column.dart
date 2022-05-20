@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:logger/logger.dart';
 import 'package:second_hand_clothes/app/app.dart' as app;
 
 /// A widget for showing column for the form based on the item details.
@@ -28,15 +29,20 @@ class WidgetsFormColumn extends StatelessWidget {
           return previousColumnStateDetails != currentColumnStateDetails;
         },
         builder: (_, formState) {
-          final rowStateDetails = formState.formColumnDetails?.firstWhere(
+          final columnStateDetails = formState.formColumnDetails?.firstWhere(
             (element) => element.itemId == columnItemId,
           );
 
-          return (rowStateDetails != null)
+          app.UtilsLogger().log(
+            'Creating ${columnStateDetails?.itemId} column',
+            logLevel: Level.info,
+          );
+
+          return (columnStateDetails != null)
               ? Column(
                   key: Key(columnItemId),
                   children: [
-                    ...rowStateDetails.children.map(
+                    ...columnStateDetails.children.map(
                       (child) => app.WidgetsFormItem(
                         item: child,
                       ),

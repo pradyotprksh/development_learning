@@ -47,7 +47,7 @@ class FormState extends Equatable {
         formLabelDetails: formLabelDetails ?? this.formLabelDetails,
         formRowDetails: formRowDetails ?? this.formRowDetails,
         formColumnDetails: formColumnDetails ?? this.formColumnDetails,
-        navigationAction: navigationAction ?? this.navigationAction,
+        navigationAction: navigationAction,
       );
 
   @override

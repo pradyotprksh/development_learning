@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:logger/logger.dart';
 import 'package:second_hand_clothes/app/app.dart' as app;
 
 /// A widget for text item type, which will be used to show a label
@@ -31,12 +32,17 @@ class WidgetsFormText extends StatelessWidget {
             (element) => element.itemId == textItemId,
           );
 
+          app.UtilsLogger().log(
+            'Creating ${textStateDetails?.itemId} text',
+            logLevel: Level.info,
+          );
+
           return (textStateDetails != null)
               ? Text(
                   context
                           .localizationValues()
                           .mapLocalization[textStateDetails.text] ??
-                      '',
+                      textStateDetails.text,
                   key: Key(textItemId),
                   style: app.FormUtilsSomeMethod().getTextStyle(
                     context,

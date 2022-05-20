@@ -5,6 +5,8 @@ import 'package:formz/formz.dart';
 import 'package:second_hand_clothes/app/app.dart';
 import 'package:second_hand_clothes/domain/domain.dart';
 
+// TODO: Whenever a new form is dismissed and back to the previous form then doing any action makes the re-state change
+
 /// A bloc class for the form screen which will listen to any changes raised
 /// by form event and update the state by updating the value of form state.
 class FormBloc extends Bloc<FormEvent, FormState> {
@@ -35,7 +37,11 @@ class FormBloc extends Bloc<FormEvent, FormState> {
     try {
       if (formId == FormConstants().loginFormId) {
         formJson = await UtilsAssets().getJSONData(
-          UtilsAssets().loginFormId,
+          UtilsAssets().loginForm,
+        );
+      } else if (formId == FormConstants().signUpFormId) {
+        formJson = await UtilsAssets().getJSONData(
+          UtilsAssets().signUpForm,
         );
       }
 
@@ -54,7 +60,7 @@ class FormBloc extends Bloc<FormEvent, FormState> {
       } else {
         final formData = formDataFromJson(formJson);
 
-        final flatFormItems = flatten(formData.items ?? []);
+        final flatFormItems = _flatten(formData.items ?? []);
 
         final formLabelState = flatFormItems
             .where((element) => element.type == ItemType.label)
@@ -93,6 +99,7 @@ class FormBloc extends Bloc<FormEvent, FormState> {
                 formLabelDetails: formLabelState,
                 formRowDetails: formRowState,
                 formColumnDetails: formColumnState,
+                navigationAction: null,
               ),
             );
           },
@@ -240,6 +247,7 @@ class FormBloc extends Bloc<FormEvent, FormState> {
           break;
         case UserActions.phoneLogin:
           break;
+        case UserActions.loginUserOption:
         case UserActions.signUpUserOption:
           final itemDetails = _getItemDetailsBasedOnId(
             state.formData.items ?? [],
@@ -370,7 +378,7 @@ class FormBloc extends Bloc<FormEvent, FormState> {
   /// Get the details of the item based on the [itemId] for the list of
   /// [formData].
   FormItem? _getItemDetailsBasedOnId(List<FormItem> formData, String itemId) {
-    var item = flatten(formData).firstWhere(
+    var item = _flatten(formData).firstWhere(
       (item) => item.id == itemId,
     );
 
@@ -379,14 +387,14 @@ class FormBloc extends Bloc<FormEvent, FormState> {
 
   /// Fold all the form item, i.e. nested children as well, into a single
   /// dimensional list for better search and iteration.
-  List<FormItem> flatten(List<FormItem> arr) => arr.fold(
+  List<FormItem> _flatten(List<FormItem> arr) => arr.fold(
         [],
         (value, element) => [
           ...value,
           ...[element],
           ...element.children.isNotEmpty
-              ? flatten(element.children)
-              : [element],
+              ? _flatten(element.children)
+              : [],
         ],
       );
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:logger/logger.dart';
 import 'package:second_hand_clothes/app/app.dart' as app;
 
 /// A widget for the form screen which will be used to show a text field.
@@ -31,6 +32,11 @@ class WidgetsFormTextField extends StatelessWidget {
           final textFieldStateDetails =
               formState.formTextFieldDetails?.firstWhere(
             (element) => element.itemId == textFieldItemId,
+          );
+
+          app.UtilsLogger().log(
+            'Creating ${textFieldStateDetails?.itemId} text field',
+            logLevel: Level.info,
           );
 
           return (textFieldStateDetails != null)

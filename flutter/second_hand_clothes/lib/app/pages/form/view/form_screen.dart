@@ -17,13 +17,11 @@ class FormScreen extends StatelessWidget {
         if (formState.navigationAction != null) {
           if (formState.navigationAction?.route != null) {
             if (formState.navigationAction?.formId != null) {
-              Navigator.pushNamed(
-                context,
-                formState.navigationAction?.route ?? '',
-                arguments: app.FormArguments(
-                  formState.navigationAction?.formId ?? '',
-                ),
-              );
+              context.read<app.FormBloc>().add(
+                    app.GetDetailsFormEvent(
+                      formState.navigationAction?.formId ?? '',
+                    ),
+                  );
             } else {
               if (formState.navigationAction?.route != context.currentRoute()) {
                 Navigator.pushNamed(
@@ -31,6 +29,10 @@ class FormScreen extends StatelessWidget {
                   formState.navigationAction?.route ?? '',
                 );
               }
+            }
+          } else {
+            if (formState.navigationAction?.goBack == true) {
+              Navigator.pop(context);
             }
           }
         }
