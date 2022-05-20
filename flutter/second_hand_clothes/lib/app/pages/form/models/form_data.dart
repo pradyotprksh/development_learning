@@ -7,7 +7,6 @@ import 'dart:convert';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:second_hand_clothes/app/app.dart';
 
 FormData formDataFromJson(String str) => FormData.fromJson(
       json.decode(str) as Map<String, dynamic>,
