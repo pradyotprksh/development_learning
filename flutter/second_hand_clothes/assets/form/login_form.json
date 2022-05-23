@@ -42,7 +42,7 @@
       }
     },
     {
-      "id": "5",
+      "id": "email",
       "type": "textField",
       "style": {
         "icon": "alternate_email",
@@ -70,7 +70,7 @@
       }
     },
     {
-      "id": "7",
+      "id": "password",
       "type": "textField",
       "style": {
         "icon": "password",
@@ -105,10 +105,22 @@
       "subType": "elevatedButton",
       "text": "authenticateButtonTitle",
       "validateOn": [
-        "5",
-        "7"
+        "email",
+        "password"
       ],
-      "actions": "loginUser",
+      "actions": {
+        "name": "loginUser",
+        "parametersFrom": [
+          "email",
+          "password"
+        ],
+        "onActionComplete": {
+          "isNavigation": true,
+          "navigationAction": {
+            "route": "/home"
+          }
+        }
+      },
       "buttonState": "disabled"
     },
     {
@@ -168,7 +180,9 @@
           "style": {
             "icon": "google"
           },
-          "actions": "googleSignIn",
+          "actions": {
+            "name": "googleSignIn"
+          },
           "buttonState": "enabled"
         },
         {
@@ -178,7 +192,9 @@
           "style": {
             "icon": "phone"
           },
-          "actions": "phoneLogin",
+          "actions": {
+            "name": "phoneLogin"
+          },
           "buttonState": "enabled"
         }
       ]
@@ -196,7 +212,9 @@
       "type": "button",
       "subType": "outlinedButton",
       "text": "doNotHaveAnAccount",
-      "actions": "signUpUserOption",
+      "actions": {
+        "name": "signUpUserOption"
+      },
       "buttonState": "enabled",
       "navigationAction": {
         "route": "/form",

@@ -91,13 +91,20 @@ class LocalizationValues {
     'doNotHaveAnAccount':
         AppLocalizations.of(_buildContext)?.doNotHaveAnAccount ??
             'doNotHaveAnAccount',
+    'formProcessErrorMessage':
+        AppLocalizations.of(_buildContext)?.formProcessErrorMessage ??
+            'formProcessErrorMessage',
   };
 
   final formParsingErrorKey = 'formParsingError';
 
-  final wrongFormIdKey = 'wrongFormIdKey';
+  final formProcessErrorMessageKey = 'formProcessErrorMessage';
+
+  final wrongFormIdKey = 'wrongFormId';
 
   String get doNotHaveAnAccount => mapLocalization['doNotHaveAnAccount'] ?? '****';
+
+  String get formProcessErrorMessage => mapLocalization['formProcessErrorMessage'] ?? '****';
 
   String get formParsingError => mapLocalization['formParsingError'] ?? '****';
 

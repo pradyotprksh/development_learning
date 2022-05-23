@@ -54,7 +54,7 @@ class ActionsFormEvent extends FormEvent {
   );
 
   final String itemId;
-  final UserActions? actions;
+  final Actions? actions;
 
   @override
   List<Object?> get props => [itemId, actions];

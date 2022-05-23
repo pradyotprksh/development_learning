@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' as material;
 import 'package:second_hand_clothes/app/app.dart';
 
 /// A form state details for label type
@@ -18,7 +18,7 @@ class FormLabelStateDetails extends Equatable {
   });
 
   final String text;
-  final TextAlign? textAlign;
+  final material.TextAlign? textAlign;
   final ItemTextStyle? textStyle;
   final String itemId;
   final ItemType itemType;
@@ -58,11 +58,11 @@ class FormTextFieldStateDetails extends Equatable {
   final String? currentErrorMessage;
   final String? errorMessage;
   final String textFieldValue;
-  final IconData? icon;
+  final material.IconData? icon;
   final String? label;
   final String? hint;
-  final TextInputType? keyboardType;
-  final TextInputAction? textInputAction;
+  final material.TextInputType? keyboardType;
+  final material.TextInputAction? textInputAction;
   final bool? autofocus;
   final bool? obscureText;
   final String? obscuringCharacter;
@@ -74,11 +74,11 @@ class FormTextFieldStateDetails extends Equatable {
     String? textFieldValue,
     List<String>? validateTo,
     List<String>? validateOn,
-    IconData? icon,
+    material.IconData? icon,
     String? label,
     String? hint,
-    TextInputType? keyboardType,
-    TextInputAction? textInputAction,
+    material.TextInputType? keyboardType,
+    material.TextInputAction? textInputAction,
     bool? autofocus,
     bool? obscureText,
     String? obscuringCharacter,
@@ -145,8 +145,8 @@ class FormButtonStateDetails extends Equatable {
     List<String>? validateOn,
     ItemSubType? buttonType,
     ButtonState? buttonState,
-    UserActions? buttonAction,
-    IconData? icon,
+    Actions? buttonAction,
+    material.IconData? icon,
   }) =>
       FormButtonStateDetails(
         itemId: itemId,
@@ -165,8 +165,8 @@ class FormButtonStateDetails extends Equatable {
   final ItemType itemType;
   final ItemSubType? buttonType;
   final ButtonState buttonState;
-  final UserActions? buttonAction;
-  final IconData? icon;
+  final Actions? buttonAction;
+  final material.IconData? icon;
 
   @override
   List<Object?> get props => [
@@ -192,7 +192,7 @@ class FormRowStateDetails extends Equatable {
 
   final String itemId;
   final ItemType itemType;
-  final MainAxisAlignment? mainAxisAlignment;
+  final material.MainAxisAlignment? mainAxisAlignment;
   final List<FormItem> children;
 
   @override

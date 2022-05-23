@@ -126,5 +126,9 @@
   "doNotHaveAnAccount": "Don't have an account? Create one.",
   "@doNotHaveAnAccount": {
     "description": "A message to create an account for a new user."
+  },
+  "formProcessErrorMessage": "Something went wrong while processing the form request. Please try again or check all the details filled by you. We are looking into this as well.",
+  "@formProcessErrorMessage": {
+    "description": "An error message which is shown when there is a something wrong while processing the request."
   }
 }

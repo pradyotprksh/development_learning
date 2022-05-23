@@ -5,8 +5,6 @@ import 'package:formz/formz.dart';
 import 'package:second_hand_clothes/app/app.dart';
 import 'package:second_hand_clothes/domain/domain.dart';
 
-// TODO: Whenever a new form is dismissed and back to the previous form then doing any action makes the re-state change
-
 /// A bloc class for the form screen which will listen to any changes raised
 /// by form event and update the state by updating the value of form state.
 class FormBloc extends Bloc<FormEvent, FormState> {
@@ -185,19 +183,21 @@ class FormBloc extends Bloc<FormEvent, FormState> {
     TextFieldChangeFormEvent event,
     Emitter<FormState> emit,
   ) {
-    var formInputs = <FormzInput>[];
-
     final updatedFormItemDetails = state.formTextFieldDetails?.map(
       (item) {
         if (item.itemId == event.itemId) {
           String? errorMessage;
-          item.validateOn?.forEach((validator) {
-            if (validator == 'EmailAddressModels') {
-              formInputs.add(EmailAddressModels.dirty(event.value));
-            } else if (validator == 'PasswordModels') {
-              formInputs.add(PasswordModels.dirty(event.value));
-            }
-          });
+          var formInputs = <FormzInput>[];
+
+          item.validateOn?.forEach(
+            (validator) {
+              if (validator == 'EmailAddressModels') {
+                formInputs.add(EmailAddressModels.dirty(event.value));
+              } else if (validator == 'PasswordModels') {
+                formInputs.add(PasswordModels.dirty(event.value));
+              }
+            },
+          );
 
           final formState = Formz.validate(formInputs);
           if (formState == FormzStatus.invalid) {
@@ -235,51 +235,98 @@ class FormBloc extends Bloc<FormEvent, FormState> {
     Emitter<FormState> emit,
   ) {
     try {
-      switch (event.actions) {
-        case UserActions.loginUser:
-          _authService.authenticateUser(
-            email: 'email',
-            password: 'password',
-            authType: AuthType.login,
-          );
-          break;
-        case UserActions.googleSignIn:
-          break;
-        case UserActions.phoneLogin:
-          break;
-        case UserActions.loginUserOption:
-        case UserActions.signUpUserOption:
-          final itemDetails = _getItemDetailsBasedOnId(
-            state.formData.items ?? [],
-            event.itemId,
-          );
+      final actionCreatorItem = _getItemDetailsBasedOnId(
+        state.formData.items ?? [],
+        event.itemId,
+      );
 
-          emit(
-            state.copyWith(
-              navigationAction: itemDetails?.navigationAction,
-            ),
-          );
-          break;
-        case UserActions.signUpUser:
-          break;
-        case UserActions.unknown:
-        default:
-          break;
+      if (actionCreatorItem != null) {
+        final actionDetails = event.actions;
+        if (actionDetails != null) {
+          switch (actionDetails.name) {
+            case UserActions.loginUser:
+              emit(
+                state.copyWith(
+                  formStatus: FormzStatus.submissionInProgress,
+                ),
+              );
+              final parameters = actionDetails.parametersFrom;
+              if (parameters != null) {
+                final emailId = state.formTextFieldDetails
+                    ?.firstWhere(
+                      (element) => element.itemId == parameters[0],
+                    )
+                    .textFieldValue;
+                final password = state.formTextFieldDetails
+                    ?.firstWhere(
+                      (element) => element.itemId == parameters[1],
+                    )
+                    .textFieldValue;
+
+                if (emailId != null &&
+                    emailId.isNotEmpty &&
+                    password != null &&
+                    password.isNotEmpty) {
+                  _authService.authenticateUser(
+                    email: emailId,
+                    password: password,
+                    authType: AuthType.login,
+                  );
+
+                  if (actionDetails.onActionComplete != null) {
+                    if (actionDetails.onActionComplete?.isNavigation == true) {
+                      emit(
+                        state.copyWith(
+                          formStatus: FormzStatus.submissionSuccess,
+                          navigationAction:
+                              actionDetails.onActionComplete?.navigationAction,
+                        ),
+                      );
+                    }
+                  } else {
+                    _submissionFailureStateUpdate(emit);
+                  }
+                } else {
+                  _submissionFailureStateUpdate(emit);
+                }
+              } else {
+                _submissionFailureStateUpdate(emit);
+              }
+              break;
+            case UserActions.googleSignIn:
+              break;
+            case UserActions.phoneLogin:
+              break;
+            case UserActions.loginUserOption:
+            case UserActions.signUpUserOption:
+              final itemDetails = _getItemDetailsBasedOnId(
+                state.formData.items ?? [],
+                event.itemId,
+              );
+
+              emit(
+                state.copyWith(
+                  navigationAction: itemDetails?.navigationAction,
+                ),
+              );
+              break;
+            case UserActions.signUpUser:
+              break;
+            case UserActions.unknown:
+            default:
+              break;
+          }
+        } else {
+          _submissionFailureStateUpdate(emit);
+        }
+      } else {
+        _submissionFailureStateUpdate(emit);
       }
     } catch (e) {
       if (e is AuthenticationException) {
-        emit(
-          state.copyWith(
-            formStatus: FormzStatus.submissionFailure,
-            errorMessage: e.message,
-          ),
-        );
+        _submissionFailureStateUpdate(emit, e.message);
       } else {
-        emit(
-          state.copyWith(
-            formStatus: FormzStatus.submissionFailure,
-          ),
-        );
+        _submissionFailureStateUpdate(emit);
       }
     }
   }
@@ -392,9 +439,22 @@ class FormBloc extends Bloc<FormEvent, FormState> {
         (value, element) => [
           ...value,
           ...[element],
-          ...element.children.isNotEmpty
-              ? _flatten(element.children)
-              : [],
+          ...element.children.isNotEmpty ? _flatten(element.children) : [],
         ],
       );
+
+  /// An emitter for failure state for the form, usually called when there is
+  /// a processing issue.
+  void _submissionFailureStateUpdate(
+    Emitter<FormState> emit, [
+    String? errorMessage,
+  ]) {
+    emit(
+      state.copyWith(
+        formStatus: FormzStatus.submissionFailure,
+        errorMessage:
+            errorMessage ?? LocalizationValues().formProcessErrorMessageKey,
+      ),
+    );
+  }
 }
