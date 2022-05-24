@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:second_hand_clothes/app/app.dart';
+import 'package:second_hand_clothes/domain/domain.dart';
 
 /// A form event class which will listen to any form events made by the form
 /// screen.

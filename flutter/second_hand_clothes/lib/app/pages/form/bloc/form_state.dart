@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:formz/formz.dart';
 import 'package:second_hand_clothes/app/app.dart';
+import 'package:second_hand_clothes/domain/domain.dart';
 
 /// The current state of the form screen which will be used to update the
 /// ui if required.
@@ -15,11 +16,13 @@ class FormState extends Equatable {
     this.formRowDetails,
     this.formColumnDetails,
     this.navigationAction,
+    this.loadingMessage,
   });
 
   final FormData formData;
   final FormzStatus formStatus;
   final String? errorMessage;
+  final String? loadingMessage;
   final List<FormTextFieldStateDetails>? formTextFieldDetails;
   final List<FormButtonStateDetails>? formButtonDetails;
   final List<FormLabelStateDetails>? formLabelDetails;
@@ -37,6 +40,7 @@ class FormState extends Equatable {
     List<FormRowStateDetails>? formRowDetails,
     List<FormColumnStateDetails>? formColumnDetails,
     NavigationAction? navigationAction,
+    String? loadingMessage,
   }) =>
       FormState(
         formData: formData ?? this.formData,
@@ -48,6 +52,7 @@ class FormState extends Equatable {
         formRowDetails: formRowDetails ?? this.formRowDetails,
         formColumnDetails: formColumnDetails ?? this.formColumnDetails,
         navigationAction: navigationAction,
+        loadingMessage: loadingMessage ?? this.loadingMessage,
       );
 
   @override
@@ -61,5 +66,6 @@ class FormState extends Equatable {
         formRowDetails,
         formColumnDetails,
         navigationAction,
+        loadingMessage,
       ];
 }

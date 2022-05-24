@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:logger/logger.dart';
 import 'package:second_hand_clothes/app/app.dart' as app;
+import 'package:second_hand_clothes/domain/domain.dart' as domain;
 
 /// A widget for showing buttons for the form based on the item details.
 class WidgetFormButtons extends StatelessWidget {
@@ -41,12 +42,12 @@ class WidgetFormButtons extends StatelessWidget {
 
           if (buttonStateDetails != null) {
             var buttonContent =
-                buttonStateDetails.buttonState == app.ButtonState.loading
+                buttonStateDetails.buttonState == domain.ButtonState.loading
                     ? const app.WidgetsCircularProgressIndicator.small()
                     : (buttonStateDetails.buttonType ==
-                                app.ItemSubType.elevatedButton ||
+                                domain.ItemSubType.elevatedButton ||
                             buttonStateDetails.buttonType ==
-                                app.ItemSubType.outlinedButton)
+                                domain.ItemSubType.outlinedButton)
                         ? Text(
                             context
                                     .localizationValues()
@@ -59,7 +60,7 @@ class WidgetFormButtons extends StatelessWidget {
                           );
 
             var buttonAction =
-                buttonStateDetails.buttonState == app.ButtonState.enabled
+                buttonStateDetails.buttonState == domain.ButtonState.enabled
                     ? () {
                         context.read<app.FormBloc>().add(
                               app.ActionsFormEvent(
@@ -71,25 +72,25 @@ class WidgetFormButtons extends StatelessWidget {
                     : null;
 
             switch (buttonStateDetails.buttonType) {
-              case app.ItemSubType.elevatedButton:
+              case domain.ItemSubType.elevatedButton:
                 return ElevatedButton(
                   key: Key(buttonStateDetails.itemId),
                   onPressed: buttonAction,
                   child: buttonContent,
                 );
-              case app.ItemSubType.iconButton:
+              case domain.ItemSubType.iconButton:
                 return IconButton(
                   key: Key(buttonStateDetails.itemId),
                   onPressed: buttonAction,
                   icon: buttonContent,
                 );
-              case app.ItemSubType.outlinedButton:
+              case domain.ItemSubType.outlinedButton:
                 return OutlinedButton(
                   key: Key(buttonStateDetails.itemId),
                   onPressed: buttonAction,
                   child: buttonContent,
                 );
-              case app.ItemSubType.unknown:
+              case domain.ItemSubType.unknown:
               default:
                 return app.ThemesBox().shrink;
             }

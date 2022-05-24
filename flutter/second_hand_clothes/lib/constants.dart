@@ -7,4 +7,8 @@ class Constants {
   static final Constants _instance = Constants._privateConstructor();
 
   final appName = 'Clothes';
+  final loginFormId = 'login_form';
+  final signUpFormId = 'sign_up_form';
+
+  final formStatusChangeDuration = const Duration(seconds: 1);
 }

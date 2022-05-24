@@ -12,4 +12,5 @@ class NavigatorsConstants {
   final personaliseRoute = '/personalise';
   final authenticationRoute = '/authentication';
   final formRoute = '/form';
+  final homeRoute = '/home';
 }

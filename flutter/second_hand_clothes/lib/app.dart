@@ -2,8 +2,8 @@ import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:second_hand_clothes/app/app.dart';
-import 'package:second_hand_clothes/constants.dart';
 import 'package:second_hand_clothes/domain/domain.dart';
+import 'package:second_hand_clothes/second_hand_clothes.dart';
 
 /// An App stateful widget, which will be the parent of all the widgets.
 ///

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
 import 'package:second_hand_clothes/app/app.dart';
+import 'package:second_hand_clothes/second_hand_clothes.dart';
 
 /// Splash screen of the splash page, this will be used to create the splash
 /// widgets and show them to the user.
@@ -26,7 +27,7 @@ class SplashScreen extends StatelessWidget {
               context,
               NavigatorsConstants().formRoute,
               arguments: FormArguments(
-                FormConstants().loginFormId,
+                Constants().loginFormId,
               ),
             );
             break;

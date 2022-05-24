@@ -13,8 +13,6 @@ class UtilsAssets {
   static final UtilsAssets _instance = UtilsAssets._privateConstructor();
 
   final clothesAnim = 'assets/lottie/clothes_anim.json';
-  final loginForm = 'assets/form/login_form.json';
-  final signUpForm = 'assets/form/sign_up_form.json';
 
   /// Get file data which is in json format, the path of the file will be
   /// stored in [filePath].

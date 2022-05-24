@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:second_hand_clothes/app/app.dart';
+import 'package:second_hand_clothes/domain/domain.dart';
 
 /// A utility class for [FormScreen], this will contain the extra
 /// functionality which will be required while UI update.

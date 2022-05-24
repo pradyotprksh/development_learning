@@ -81,7 +81,10 @@ class FormScreen extends StatelessWidget {
                 ),
               if (formState.formStatus == FormzStatus.submissionInProgress)
                 app.WidgetsCircularLoadingIndicator(
-                  message: context.localizationValues().fetchingFormDetails,
+                  message: context
+                          .localizationValues()
+                          .mapLocalization[formState.loadingMessage ?? ''] ??
+                      context.localizationValues().fetchingFormDetails,
                 ),
             ],
           ),

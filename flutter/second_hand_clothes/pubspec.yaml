@@ -13,7 +13,7 @@ dependencies:
 
   cached_network_image: ^3.2.1
 
-  cloud_firestore: ^3.1.15
+  cloud_firestore: ^3.1.16
 
   connectivity_plus: ^2.3.0
 
@@ -35,7 +35,9 @@ dependencies:
 
   firebase_crashlytics: ^2.8.0
 
-  firebase_dynamic_links: ^4.2.3
+  firebase_database: ^9.0.14
+
+  firebase_dynamic_links: ^4.2.4
 
   firebase_performance: ^0.8.0+12
 
@@ -55,7 +57,7 @@ dependencies:
 
   get_ip_address: ^0.0.5
 
-  google_fonts: ^2.3.2
+  google_fonts: ^3.0.1
 
   hydrated_bloc: ^8.1.0
 

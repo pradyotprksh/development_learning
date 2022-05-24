@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:second_hand_clothes/app/app.dart';
+import 'package:second_hand_clothes/domain/domain.dart';
 
 /// A widget for a single form item, based on the type a new widget will be
 /// created and used.

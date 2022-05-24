@@ -5,3 +5,4 @@
 /// it to be up and running.
 export 'firebase_auth.dart';
 export 'firebase_core.dart';
+export 'firebase_db.dart';

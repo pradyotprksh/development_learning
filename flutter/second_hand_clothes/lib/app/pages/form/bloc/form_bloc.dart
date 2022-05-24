@@ -4,11 +4,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
 import 'package:second_hand_clothes/app/app.dart';
 import 'package:second_hand_clothes/domain/domain.dart';
+import 'package:second_hand_clothes/second_hand_clothes.dart';
 
 /// A bloc class for the form screen which will listen to any changes raised
 /// by form event and update the state by updating the value of form state.
 class FormBloc extends Bloc<FormEvent, FormState> {
-  FormBloc(this._authService) : super(const FormState()) {
+  FormBloc(this._authService, this._firebaseDB) : super(const FormState()) {
     on<GetDetailsFormEvent>(_getFormDetails);
     on<TextFieldChangeFormEvent>(_onTextFieldChangeEvent);
     on<ActionsFormEvent>(_onActionsFormEvent);
@@ -17,6 +18,7 @@ class FormBloc extends Bloc<FormEvent, FormState> {
   }
 
   final ServicesFirebaseAuth _authService;
+  final ServicesFirebaseDB _firebaseDB;
 
   /// Whenever [GetDetailsFormEvent] is raised then this method will be called.
   void _getFormDetails(
@@ -26,86 +28,63 @@ class FormBloc extends Bloc<FormEvent, FormState> {
     emit(
       state.copyWith(
         formStatus: FormzStatus.submissionInProgress,
+        loadingMessage: LocalizationValues().fetchingFormDetailsKey,
       ),
     );
 
     final formId = event.formId;
-    var formJson = '';
 
     try {
-      if (formId == FormConstants().loginFormId) {
-        formJson = await UtilsAssets().getJSONData(
-          UtilsAssets().loginForm,
-        );
-      } else if (formId == FormConstants().signUpFormId) {
-        formJson = await UtilsAssets().getJSONData(
-          UtilsAssets().signUpForm,
-        );
-      }
+      final formData = await _firebaseDB.getFormDetails(formId);
 
-      if (formJson.isEmpty) {
-        await Future.delayed(
-          FormConstants().formStatusChangeDuration,
-          () {
-            emit(
-              state.copyWith(
-                formStatus: FormzStatus.invalid,
-                errorMessage: LocalizationValues().wrongFormIdKey,
-              ),
-            );
-          },
-        );
-      } else {
-        final formData = formDataFromJson(formJson);
+      final flatFormItems = _flatten(formData.items ?? []);
 
-        final flatFormItems = _flatten(formData.items ?? []);
+      final formLabelState = flatFormItems
+          .where((element) => element.type == ItemType.label)
+          .map(_getLabelStateDetails)
+          .toList();
 
-        final formLabelState = flatFormItems
-            .where((element) => element.type == ItemType.label)
-            .map(_getLabelStateDetails)
-            .toList();
+      final formTextFieldState = flatFormItems
+          .where((element) => element.type == ItemType.textField)
+          .map(_getTextFieldStateDetails)
+          .toList();
 
-        final formTextFieldState = flatFormItems
-            .where((element) => element.type == ItemType.textField)
-            .map(_getTextFieldStateDetails)
-            .toList();
+      final formButtonState = flatFormItems
+          .where((element) => element.type == ItemType.button)
+          .map(_getButtonStateDetails)
+          .toList();
 
-        final formButtonState = flatFormItems
-            .where((element) => element.type == ItemType.button)
-            .map(_getButtonStateDetails)
-            .toList();
+      final formRowState = flatFormItems
+          .where((element) => element.type == ItemType.row)
+          .map(_getRowStateDetails)
+          .toList();
 
-        final formRowState = flatFormItems
-            .where((element) => element.type == ItemType.row)
-            .map(_getRowStateDetails)
-            .toList();
+      final formColumnState = flatFormItems
+          .where((element) => element.type == ItemType.column)
+          .map(_getColumnStateDetails)
+          .toList();
 
-        final formColumnState = flatFormItems
-            .where((element) => element.type == ItemType.column)
-            .map(_getColumnStateDetails)
-            .toList();
-
-        await Future.delayed(
-          FormConstants().formStatusChangeDuration,
-          () {
-            emit(
-              state.copyWith(
-                formData: formData,
-                formStatus: FormzStatus.submissionSuccess,
-                formTextFieldDetails: formTextFieldState,
-                formButtonDetails: formButtonState,
-                formLabelDetails: formLabelState,
-                formRowDetails: formRowState,
-                formColumnDetails: formColumnState,
-                navigationAction: null,
-              ),
-            );
-          },
-        );
-      }
-    } catch (_) {
       await Future.delayed(
-        FormConstants().formStatusChangeDuration,
+        Constants().formStatusChangeDuration,
+            () {
+          emit(
+            state.copyWith(
+              formData: formData,
+              formStatus: FormzStatus.submissionSuccess,
+              formTextFieldDetails: formTextFieldState,
+              formButtonDetails: formButtonState,
+              formLabelDetails: formLabelState,
+              formRowDetails: formRowState,
+              formColumnDetails: formColumnState,
+              navigationAction: null,
+            ),
+          );
+        },
+      );
+    } catch (e) {
+      UtilsLogger().log(e);
+      await Future.delayed(
+        Constants().formStatusChangeDuration,
         () {
           emit(
             state.copyWith(
@@ -244,6 +223,7 @@ class FormBloc extends Bloc<FormEvent, FormState> {
         final actionDetails = event.actions;
         if (actionDetails != null) {
           switch (actionDetails.name) {
+            case UserActions.signUpUser:
             case UserActions.loginUser:
               emit(
                 state.copyWith(
@@ -267,11 +247,19 @@ class FormBloc extends Bloc<FormEvent, FormState> {
                     emailId.isNotEmpty &&
                     password != null &&
                     password.isNotEmpty) {
-                  _authService.authenticateUser(
-                    email: emailId,
-                    password: password,
-                    authType: AuthType.login,
-                  );
+                  if (actionDetails.name == UserActions.loginUser) {
+                    _authService.authenticateUser(
+                      email: emailId,
+                      password: password,
+                      authType: AuthType.login,
+                    );
+                  } else {
+                    _authService.authenticateUser(
+                      email: emailId,
+                      password: password,
+                      authType: AuthType.register,
+                    );
+                  }
 
                   if (actionDetails.onActionComplete != null) {
                     if (actionDetails.onActionComplete?.isNavigation == true) {
@@ -309,8 +297,6 @@ class FormBloc extends Bloc<FormEvent, FormState> {
                   navigationAction: itemDetails?.navigationAction,
                 ),
               );
-              break;
-            case UserActions.signUpUser:
               break;
             case UserActions.unknown:
             default:

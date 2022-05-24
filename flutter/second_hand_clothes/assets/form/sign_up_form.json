@@ -90,7 +90,9 @@
           "style": {
             "icon": "google"
           },
-          "actions": "googleSignIn",
+          "actions": {
+            "name": "googleSignIn"
+          },
           "buttonState": "enabled"
         },
         {
@@ -100,7 +102,9 @@
           "style": {
             "icon": "phone"
           },
-          "actions": "phoneLogin",
+          "actions": {
+            "name": "phoneLogin"
+          },
           "buttonState": "enabled"
         }
       ]
@@ -198,7 +202,20 @@
         "5",
         "7"
       ],
-      "actions": "loginUser",
+      "actions": {
+        "name": "signUpUser",
+        "parametersFrom": [
+          "email",
+          "password"
+        ],
+        "onActionComplete": {
+          "isNavigation": true,
+          "navigationAction": {
+            "route": "/form",
+            "formId": "personal_details"
+          }
+        }
+      },
       "buttonState": "disabled"
     },
     {
@@ -232,7 +249,9 @@
       "type": "button",
       "subType": "outlinedButton",
       "text": "Have an account?",
-      "actions": "loginUserOption",
+      "actions": {
+        "name": "loginUserOption"
+      },
       "buttonState": "enabled",
       "navigationAction": {
         "route": "/form",

@@ -41,9 +41,9 @@ class WidgetsCircularLoadingIndicator extends StatelessWidget {
                       context.themeData().indicatorColor,
                     ),
                   ),
-                  if (message != null)
+                  if (message != null && message != '')
                     ThemesBox().height15,
-                  if (message != null)
+                  if (message != null && message != '')
                     Text(
                       message!,
                       style: context.themeData().textTheme.bodyText1,

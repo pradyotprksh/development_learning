@@ -102,6 +102,8 @@ class LocalizationValues {
 
   final wrongFormIdKey = 'wrongFormId';
 
+  final fetchingFormDetailsKey = 'fetchingFormDetails';
+
   String get doNotHaveAnAccount => mapLocalization['doNotHaveAnAccount'] ?? '****';
 
   String get formProcessErrorMessage => mapLocalization['formProcessErrorMessage'] ?? '****';

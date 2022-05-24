@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:second_hand_clothes/app/app.dart';
+import 'package:second_hand_clothes/domain/domain.dart';
 
 /// A widget for form screen to show all the items on the ui, based on the
 /// type got from the form details.
