@@ -136,7 +136,7 @@
       }
     },
     {
-      "id": "5",
+      "id": "email",
       "type": "textField",
       "style": {
         "icon": "alternate_email",
@@ -164,7 +164,7 @@
       }
     },
     {
-      "id": "7",
+      "id": "password",
       "type": "textField",
       "style": {
         "icon": "password",
@@ -199,8 +199,8 @@
       "subType": "elevatedButton",
       "text": "authenticateButtonTitle",
       "validateOn": [
-        "5",
-        "7"
+        "email",
+        "password"
       ],
       "actions": {
         "name": "signUpUser",

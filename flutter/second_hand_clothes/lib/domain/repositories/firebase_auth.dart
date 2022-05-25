@@ -20,14 +20,14 @@ class RepositoriesFirebaseAuth extends ServicesFirebaseAuth {
     required AuthType authType,
   }) async {
     try {
-      return _dataFirebaseAuth.authenticateUser(
+      return await _dataFirebaseAuth.authenticateUser(
         email: email,
         password: password,
         authType: authType,
       );
     } catch (exception) {
       UtilsLogger().log('authenticateUser', error: exception);
-      if (exception is FirebaseException) {
+      if (exception is FirebaseAuthException) {
         throw AuthenticationException(message: exception.message);
       } else {
         throw const AuthenticationException();

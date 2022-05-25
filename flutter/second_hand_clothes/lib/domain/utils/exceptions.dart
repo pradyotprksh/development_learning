@@ -17,5 +17,5 @@ class AuthenticationException extends DomainException {
   });
 
   @override
-  String toString() => 'AuthenticationException: $message';
+  String toString() => '$message';
 }

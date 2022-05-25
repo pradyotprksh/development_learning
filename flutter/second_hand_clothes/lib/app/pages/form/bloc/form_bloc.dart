@@ -66,7 +66,7 @@ class FormBloc extends Bloc<FormEvent, FormState> {
 
       await Future.delayed(
         Constants().formStatusChangeDuration,
-            () {
+        () {
           emit(
             state.copyWith(
               formData: formData,
@@ -212,7 +212,7 @@ class FormBloc extends Bloc<FormEvent, FormState> {
   void _onActionsFormEvent(
     ActionsFormEvent event,
     Emitter<FormState> emit,
-  ) {
+  ) async {
     try {
       final actionCreatorItem = _getItemDetailsBasedOnId(
         state.formData.items ?? [],
@@ -248,13 +248,14 @@ class FormBloc extends Bloc<FormEvent, FormState> {
                     password != null &&
                     password.isNotEmpty) {
                   if (actionDetails.name == UserActions.loginUser) {
-                    _authService.authenticateUser(
+                    await _authService.authenticateUser(
                       email: emailId,
                       password: password,
                       authType: AuthType.login,
                     );
                   } else {
-                    _authService.authenticateUser(
+                    // TODO: On success there is an error with redirection. Need to check.
+                    await _authService.authenticateUser(
                       email: emailId,
                       password: password,
                       authType: AuthType.register,
@@ -309,11 +310,7 @@ class FormBloc extends Bloc<FormEvent, FormState> {
         _submissionFailureStateUpdate(emit);
       }
     } catch (e) {
-      if (e is AuthenticationException) {
-        _submissionFailureStateUpdate(emit, e.message);
-      } else {
-        _submissionFailureStateUpdate(emit);
-      }
+      _submissionFailureStateUpdate(emit, e.toString());
     }
   }
 

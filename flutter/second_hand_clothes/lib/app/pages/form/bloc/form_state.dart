@@ -45,7 +45,7 @@ class FormState extends Equatable {
       FormState(
         formData: formData ?? this.formData,
         formStatus: formStatus ?? this.formStatus,
-        errorMessage: errorMessage ?? this.errorMessage,
+        errorMessage: errorMessage,
         formTextFieldDetails: formTextFieldDetails ?? this.formTextFieldDetails,
         formButtonDetails: formButtonDetails ?? this.formButtonDetails,
         formLabelDetails: formLabelDetails ?? this.formLabelDetails,

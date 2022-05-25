@@ -62,6 +62,8 @@ class WidgetFormButtons extends StatelessWidget {
             var buttonAction =
                 buttonStateDetails.buttonState == domain.ButtonState.enabled
                     ? () {
+                        context.dismissKeyboard();
+
                         context.read<app.FormBloc>().add(
                               app.ActionsFormEvent(
                                 buttonItemId,

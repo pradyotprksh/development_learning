@@ -75,4 +75,14 @@ extension BuildContextExtension on BuildContext {
 
   /// Get the arguments for page
   Object? arguments() => ModalRoute.of(this)!.settings.arguments;
+
+  /// Get the current focus scope node
+  FocusScopeNode focusScopeNode() => FocusScope.of(this);
+
+  /// Dismiss the keyboard if its visible
+  void dismissKeyboard() {
+    if (!focusScopeNode().hasPrimaryFocus) {
+      focusScopeNode().unfocus();
+    }
+  }
 }

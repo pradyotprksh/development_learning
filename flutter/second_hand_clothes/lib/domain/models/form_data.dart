@@ -521,8 +521,8 @@ class Style extends Equatable {
         obscureText: json['obscureText'] as bool?,
         obscuringCharacter: json['obscuringCharacter'] as String?,
         maxLength: json['maxLength'] as int?,
-        height: json['height'] as double?,
-        width: json['width'] as double?,
+        height: (json['height'] as int?)?.toDouble(),
+        width: (json['width'] as int?)?.toDouble(),
         indent: Indent.fromJson(
           json['indent'] as Map<String, dynamic>? ?? <String, dynamic>{},
         ),
@@ -661,8 +661,8 @@ class Indent {
   });
 
   factory Indent.fromJson(Map<String, dynamic> json) => Indent(
-        start: json['start'] as double?,
-        end: json['end'] as double?,
+        start: (json['start'] as int?)?.toDouble(),
+        end: (json['end'] as int?)?.toDouble(),
       );
 
   final double? start;

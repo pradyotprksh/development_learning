@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:firebase_database/firebase_database.dart';
 import 'package:second_hand_clothes/data/data.dart';
 import 'package:second_hand_clothes/domain/domain.dart';
@@ -9,7 +11,7 @@ class RepositoriesDataFirebaseDB extends ServicesDataFirebaseDB {
   Future<String> getStringFormDetails(String formId) async {
     final snapshot = await FirebaseDatabase.instance.ref(formId).get();
     if (snapshot.exists) {
-      return snapshot.value.toString();
+      return jsonEncode(snapshot.value);
     }
     return '';
   }

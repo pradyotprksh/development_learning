@@ -14,6 +14,7 @@ class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     context.read<AuthorizationBloc>().add(const CheckAuthorizationEvent());
+    context.dismissKeyboard();
 
     return BlocListener<AuthorizationBloc, AuthorizationState>(
       listener: (BuildContext context, state) {

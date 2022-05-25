@@ -20,8 +20,10 @@ class RepositoriesFirebaseDB extends ServicesFirebaseDB {
 
   @override
   Future<FormData> getFormDetails(String formId) async {
-    var formStringData = await _dataFirebaseDB.getStringFormDetails(formId);
-    if (formStringData.isEmpty) {
+    var formStringData = '';
+    try {
+      formStringData = await _dataFirebaseDB.getStringFormDetails(formId);
+    } catch (_) {
       formStringData = await _deviceFirebaseDB.getStringFormDetails(formId);
     }
     return formDataFromJson(formStringData);
