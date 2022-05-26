@@ -2,7 +2,7 @@ on:
   push:
     branches:
       - main
-name: Flutter/Dart Projects
+name: Flutter Projects
 jobs:
   flublog:
     name: flublog Code Checker
