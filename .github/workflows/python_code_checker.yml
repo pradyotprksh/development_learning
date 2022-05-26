@@ -9,19 +9,17 @@ name: Python Projects
 jobs:
   practice:
     name: practice Code Checker
-    lint:
-      runs-on: ubuntu-latest
-      steps:
-        - uses: actions/checkout@v1
-        - uses: ricardochaves/python-lint@master
-          with:
-            python-root-list: "python/practice"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: ricardochaves/python-lint@master
+        with:
+          python-root-list: "python/practice"
   pyblog:
     name: pyblog Code Checker
-    lint:
-      runs-on: ubuntu-latest
-      steps:
-        - uses: actions/checkout@v1
-        - uses: ricardochaves/python-lint@master
-          with:
-            python-root-list: "python/pyblog"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: ricardochaves/python-lint@master
+        with:
+          python-root-list: "python/pyblog"
