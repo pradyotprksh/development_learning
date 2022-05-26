@@ -247,6 +247,7 @@ class FormBloc extends Bloc<FormEvent, FormState> {
                     emailId.isNotEmpty &&
                     password != null &&
                     password.isNotEmpty) {
+
                   if (actionDetails.name == UserActions.loginUser) {
                     await _authService.authenticateUser(
                       email: emailId,
