@@ -58,6 +58,7 @@ I will be getting ideas of the project which I want to work on and will be creat
 ## [Python](https://github.com/pradyotprksh/development_learning/tree/main/python)
   - [2022 Bootcamp Udemy Python Course](https://github.com/pradyotprksh/development_learning/tree/main/python/UdemyCourse/2022_Python_Bootcamp) 
   - ⚠️ [PyBlog 🐍](https://github.com/pradyotprksh/development_learning/tree/main/python/pyblog)
+    - For more details go to this [link](https://pradyotprksh4.medium.com/pyblog-python-firebase-448233b9baa2)
   - [Practice](https://github.com/pradyotprksh/development_learning/tree/main/python/practice)
 
 ## ⚠️ [Technical interview notes](https://pradyotprksh.notion.site/Technical-Interview-Notes-a12c1a0f334e4b6f85e72b299bace9ee)
