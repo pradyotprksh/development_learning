@@ -8,18 +8,18 @@ Each project is divided into folders based on the platforms and the courses. And
 
 I will be getting ideas of the project which I want to work on and will be creating the project and marking it as ⚠️, this doesn't mean I will be working on that. Check commits for the project I am currently working on. The only intention is keep track of the projects I want to work on.
 
-## [<img src="https://img.shields.io/badge/Dart-0175C2?style=for-the-badge&logo=dart&logoColor=white" />](https://github.com/pradyotprksh/development_learning/tree/main/dart)
+[<img src="https://img.shields.io/badge/Dart-0175C2?style=for-the-badge&logo=dart&logoColor=white" />](https://github.com/pradyotprksh/development_learning/tree/main/dart)
   - [data_structures](https://github.com/pradyotprksh/development_learning/tree/main/dart/data_structures)
   - [algorithms](https://github.com/pradyotprksh/development_learning/tree/main/dart/algorithms)
   - ⚠️ [Stack Exchange SDK](https://github.com/pradyotprksh/development_learning/tree/main/dart/stackexchange_api)
 
-## [<img src="https://img.shields.io/badge/Flutter-02569B?style=for-the-badge&logo=flutter&logoColor=white" />](https://github.com/pradyotprksh/development_learning/tree/main/flutter)
+[<img src="https://img.shields.io/badge/Flutter-02569B?style=for-the-badge&logo=flutter&logoColor=white" />](https://github.com/pradyotprksh/development_learning/tree/main/flutter)
   - [snake_ladders](https://github.com/pradyotprksh/development_learning/tree/main/flutter/snake_ladders)
   - ⚠️ [flublog](https://github.com/pradyotprksh/development_learning/tree/main/flutter/flublog)
   - ⚠️ [stackoverflow](https://github.com/pradyotprksh/development_learning/tree/main/flutter/stackoverflow)
   - ⚠️ [second_hand_clothes](https://github.com/pradyotprksh/development_learning/tree/main/flutter/second_hand_clothes)
 
-## [<img src="https://img.shields.io/badge/iOS-E34C26?style=for-the-badge&logo=ios&logoColor=white" />](https://github.com/pradyotprksh/development_learning/tree/main/ios)
+[<img src="https://img.shields.io/badge/iOS-E34C26?style=for-the-badge&logo=ios&logoColor=white" />](https://github.com/pradyotprksh/development_learning/tree/main/ios)
   - [Angela Udemy iOS Course](https://github.com/pradyotprksh/development_learning/tree/main/ios/angela_udemy) 
     - [I Am Rich](https://github.com/pradyotprksh/development_learning/tree/main/ios/angela_udemy/i_am_rich)
     - [I Am Poor](https://github.com/pradyotprksh/development_learning/tree/main/ios/angela_udemy/i_am_poor)
@@ -44,7 +44,7 @@ I will be getting ideas of the project which I want to work on and will be creat
     - [H4XOR-News](https://github.com/pradyotprksh/development_learning/tree/main/ios/angela_udemy/SwiftUI/H4XOR-News)
     - [Calculator-Advanced-Swift-iOS13](https://github.com/pradyotprksh/development_learning/tree/main/ios/angela_udemy/Calculator-Advanced-Swift-iOS13)
 
-## [<img src="https://img.shields.io/badge/Android-3DDC84?style=for-the-badge&logo=android&logoColor=white" />](https://github.com/pradyotprksh/development_learning/tree/main/jetpack_compose)
+[<img src="https://img.shields.io/badge/Android-3DDC84?style=for-the-badge&logo=android&logoColor=white" />](https://github.com/pradyotprksh/development_learning/tree/main/jetpack_compose)
   - [Basics](https://github.com/pradyotprksh/development_learning/tree/main/jetpack_compose/basics)
   - [IAmRich](https://github.com/pradyotprksh/development_learning/tree/main/jetpack_compose/IAmRich)
   - [Dicee](https://github.com/pradyotprksh/development_learning/tree/main/jetpack_compose/Dicee)
@@ -52,22 +52,14 @@ I will be getting ideas of the project which I want to work on and will be creat
   - [WhatsApp Compose](https://github.com/pradyotprksh/development_learning/tree/main/jetpack_compose/WhatsAppCompose)
     - For more details go to this [link](https://medium.com/geekculture/whatsapp-clone-jetpack-compose-d90120723d88)
 
-## [<img src="https://img.shields.io/badge/Kotlin-0095D5?&style=for-the-badge&logo=kotlin&logoColor=white" />](https://github.com/pradyotprksh/development_learning/tree/main/kotlin)
+[<img src="https://img.shields.io/badge/Kotlin-0095D5?&style=for-the-badge&logo=kotlin&logoColor=white" />](https://github.com/pradyotprksh/development_learning/tree/main/kotlin)
   - [basics](https://github.com/pradyotprksh/development_learning/tree/main/kotlin/basics)
 
-## [<img src="https://img.shields.io/badge/Python-FFD43B?style=for-the-badge&logo=python&logoColor=blue" />](https://github.com/pradyotprksh/development_learning/tree/main/python)
+[<img src="https://img.shields.io/badge/Python-FFD43B?style=for-the-badge&logo=python&logoColor=blue" />](https://github.com/pradyotprksh/development_learning/tree/main/python)
   - [2022 Bootcamp Udemy Python Course](https://github.com/pradyotprksh/development_learning/tree/main/python/UdemyCourse/2022_Python_Bootcamp) 
   - ⚠️ [PyBlog 🐍](https://github.com/pradyotprksh/development_learning/tree/main/python/pyblog)
     - For more details go to this [link](https://pradyotprksh4.medium.com/pyblog-python-firebase-448233b9baa2)
   - [Practice](https://github.com/pradyotprksh/development_learning/tree/main/python/practice)
-
-## Others
-  - ⚠️ [Technical interview notes](https://pradyotprksh.notion.site/Technical-Interview-Notes-a12c1a0f334e4b6f85e72b299bace9ee)
-
-
-      > **Note**
-      > 
-      > This is still in progress will be updating the notes as I move forward. The notes have been made using the "CRACKING the CODING INTERVIEW 6th EDITION".
 
 ---
 
