@@ -40,7 +40,7 @@ class PersonaliseScreen extends StatelessWidget {
           ),
         ],
         child: Scaffold(
-          backgroundColor: context.themeData().backgroundColor,
+          backgroundColor: context.themeData().scaffoldBackgroundColor,
           appBar: AppBar(
             backgroundColor: context.themeData().appBarTheme.backgroundColor,
             foregroundColor: context.themeData().appBarTheme.foregroundColor,

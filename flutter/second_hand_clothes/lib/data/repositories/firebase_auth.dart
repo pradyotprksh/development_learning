@@ -38,4 +38,8 @@ class RepositoriesDataFirebaseAuth extends ServicesDataFirebaseAuth {
       uid: user?.uid,
     );
   }
+
+  @override
+  bool isUserLoggedIn() =>
+      FirebaseAuth.instance.currentUser != null;
 }

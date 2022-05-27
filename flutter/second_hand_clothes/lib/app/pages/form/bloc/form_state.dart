@@ -17,8 +17,6 @@ class FormState extends Equatable {
     this.formColumnDetails,
     this.navigationAction,
     this.loadingMessage,
-    this.isAuthenticateEvent,
-    this.authenticate,
   });
 
   final FormData formData;
@@ -31,8 +29,6 @@ class FormState extends Equatable {
   final List<FormRowStateDetails>? formRowDetails;
   final List<FormColumnStateDetails>? formColumnDetails;
   final NavigationAction? navigationAction;
-  final bool? isAuthenticateEvent;
-  final Authenticate? authenticate;
 
   FormState copyWith({
     FormData? formData,
@@ -45,8 +41,6 @@ class FormState extends Equatable {
     List<FormColumnStateDetails>? formColumnDetails,
     NavigationAction? navigationAction,
     String? loadingMessage,
-    bool? isAuthenticateEvent,
-    Authenticate? authenticate,
   }) =>
       FormState(
         formData: formData ?? this.formData,
@@ -58,9 +52,7 @@ class FormState extends Equatable {
         formRowDetails: formRowDetails ?? this.formRowDetails,
         formColumnDetails: formColumnDetails ?? this.formColumnDetails,
         navigationAction: navigationAction,
-        loadingMessage: loadingMessage ?? this.loadingMessage,
-        isAuthenticateEvent: isAuthenticateEvent,
-        authenticate: authenticate,
+        loadingMessage: loadingMessage,
       );
 
   @override
@@ -75,7 +67,5 @@ class FormState extends Equatable {
         formColumnDetails,
         navigationAction,
         loadingMessage,
-        isAuthenticateEvent,
-        authenticate,
       ];
 }

@@ -34,4 +34,7 @@ class RepositoriesFirebaseAuth extends ServicesFirebaseAuth {
       }
     }
   }
+
+  @override
+  bool isUserLoggedIn() => _dataFirebaseAuth.isUserLoggedIn();
 }

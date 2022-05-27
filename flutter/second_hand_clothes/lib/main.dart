@@ -32,7 +32,9 @@ void main() async {
               ),
           ),
           BlocProvider(
-            create: (_) => AuthorizationBloc(),
+            create: (_) => AuthorizationBloc(
+              RepositoriesFirebaseAuth(),
+            ),
           ),
         ],
         child: const App(),

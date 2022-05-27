@@ -59,7 +59,7 @@ class FormScreen extends StatelessWidget {
 
         return Scaffold(
           key: Key(formData.id),
-          backgroundColor: context.themeData().backgroundColor,
+          backgroundColor: context.themeData().scaffoldBackgroundColor,
           extendBody: formData.extendBody ?? true,
           extendBodyBehindAppBar: formData.extendBodyBehindAppBar ?? true,
           body: Stack(

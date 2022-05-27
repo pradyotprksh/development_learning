@@ -17,4 +17,9 @@ abstract class ServicesFirebaseAuth {
     required String password,
     required AuthType authType,
   });
+
+  /// Checks if a user is available or not for the current session.
+  ///
+  /// Returns true if a user is found otherwise false.
+  bool isUserLoggedIn();
 }

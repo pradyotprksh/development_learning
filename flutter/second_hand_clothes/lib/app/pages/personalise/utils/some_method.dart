@@ -139,6 +139,7 @@ class PersonaliseUtilsSomeMethod {
           context: context,
           backgroundColor: context.themeData().bottomSheetTheme.backgroundColor,
           builder: (bottomSheetDialog) => Scaffold(
+            backgroundColor: context.themeData().scaffoldBackgroundColor,
             appBar: AppBar(
               backgroundColor: context.themeData().appBarTheme.backgroundColor,
               title: Text(

@@ -94,6 +94,9 @@ class LocalizationValues {
     'formProcessErrorMessage':
         AppLocalizations.of(_buildContext)?.formProcessErrorMessage ??
             'formProcessErrorMessage',
+    'submittingFormDetails':
+        AppLocalizations.of(_buildContext)?.submittingFormDetails ??
+            'submittingFormDetails',
   };
 
   final formParsingErrorKey = 'formParsingError';
@@ -101,6 +104,8 @@ class LocalizationValues {
   final formProcessErrorMessageKey = 'formProcessErrorMessage';
 
   final wrongFormIdKey = 'wrongFormId';
+
+  final submittingFormDetailsKey = 'submittingFormDetails';
 
   final fetchingFormDetailsKey = 'fetchingFormDetails';
 

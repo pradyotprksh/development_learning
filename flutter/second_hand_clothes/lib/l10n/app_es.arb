@@ -31,5 +31,6 @@
   "fetchingFormDetails": "Obtención de detalles del formulario. Espera.",
   "formRefreshMessage": "Algo está mal con el formulario solicitado, estamos revisando esto. ¿O puedes probar a refrescar?",
   "doNotHaveAnAccount": "¿No tienes una cuenta? Crea uno.",
-  "formProcessErrorMessage": "Algo salió mal al procesar la solicitud de formulario. Inténtelo de nuevo o verifique todos los detalles completados por usted. También estamos estudiando esto."
+  "formProcessErrorMessage": "Algo salió mal al procesar la solicitud de formulario. Inténtelo de nuevo o verifique todos los detalles completados por usted. También estamos estudiando esto.",
+  "submittingFormDetails": "Envío de los detalles del formulario. Espera."
 }

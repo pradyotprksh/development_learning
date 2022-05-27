@@ -19,14 +19,19 @@ class SplashScreen extends StatelessWidget {
     return BlocListener<AuthorizationBloc, AuthorizationState>(
       listener: (BuildContext context, state) {
         switch (state.authenticationStatus) {
-          case UtilsAuthenticationStatus.unknown:
-            break;
           case UtilsAuthenticationStatus.authenticated:
+            Navigator.pushNamedAndRemoveUntil(
+              context,
+              NavigatorsConstants().homeRoute,
+              (Route<dynamic> route) => false,
+            );
             break;
+          case UtilsAuthenticationStatus.unknown:
           case UtilsAuthenticationStatus.unauthenticated:
-            Navigator.pushReplacementNamed(
+            Navigator.pushNamedAndRemoveUntil(
               context,
               NavigatorsConstants().formRoute,
+              (Route<dynamic> route) => false,
               arguments: FormArguments(
                 Constants().loginFormId,
               ),
@@ -35,7 +40,7 @@ class SplashScreen extends StatelessWidget {
         }
       },
       child: Scaffold(
-        backgroundColor: context.themeData().backgroundColor,
+        backgroundColor: context.themeData().scaffoldBackgroundColor,
         extendBody: true,
         extendBodyBehindAppBar: true,
         body: SafeArea(

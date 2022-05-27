@@ -29,6 +29,7 @@ class FormBloc extends Bloc<FormEvent, FormState> {
       state.copyWith(
         formStatus: FormzStatus.submissionInProgress,
         loadingMessage: LocalizationValues().fetchingFormDetailsKey,
+        formData: null,
       ),
     );
 
@@ -228,6 +229,7 @@ class FormBloc extends Bloc<FormEvent, FormState> {
               emit(
                 state.copyWith(
                   formStatus: FormzStatus.submissionInProgress,
+                  loadingMessage: LocalizationValues().submittingFormDetailsKey,
                 ),
               );
               final parameters = actionDetails.parametersFrom;
@@ -247,7 +249,6 @@ class FormBloc extends Bloc<FormEvent, FormState> {
                     emailId.isNotEmpty &&
                     password != null &&
                     password.isNotEmpty) {
-
                   if (actionDetails.name == UserActions.loginUser) {
                     await _authService.authenticateUser(
                       email: emailId,

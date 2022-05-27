@@ -130,5 +130,9 @@
   "formProcessErrorMessage": "Something went wrong while processing the form request. Please try again or check all the details filled by you. We are looking into this as well.",
   "@formProcessErrorMessage": {
     "description": "An error message which is shown when there is a something wrong while processing the request."
+  },
+  "submittingFormDetails": "Submitting form details. Please wait.",
+  "@submittingFormDetails": {
+    "description": "A loader message to be shown when a form is being submitted"
   }
 }
