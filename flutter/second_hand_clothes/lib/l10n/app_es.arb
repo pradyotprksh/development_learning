@@ -32,5 +32,9 @@
   "formRefreshMessage": "Algo está mal con el formulario solicitado, estamos revisando esto. ¿O puedes probar a refrescar?",
   "doNotHaveAnAccount": "¿No tienes una cuenta? Crea uno.",
   "formProcessErrorMessage": "Algo salió mal al procesar la solicitud de formulario. Inténtelo de nuevo o verifique todos los detalles completados por usted. También estamos estudiando esto.",
-  "submittingFormDetails": "Envío de los detalles del formulario. Espera."
+  "submittingFormDetails": "Envío de los detalles del formulario. Espera.",
+  "warning": "Advertencia",
+  "closeConfirmationMessage": "Al cerrar el formulario se perderán todos los cambios.\\n¿Está seguro de que desea salir?",
+  "yesLeave": "Sí, vete",
+  "noStay": "No, quédate"
 }

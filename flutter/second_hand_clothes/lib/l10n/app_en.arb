@@ -134,5 +134,21 @@
   "submittingFormDetails": "Submitting form details. Please wait.",
   "@submittingFormDetails": {
     "description": "A loader message to be shown when a form is being submitted"
+  },
+  "warning": "Warning",
+  "@warning": {
+    "description": "A warning title"
+  },
+  "closeConfirmationMessage": "By closing the form will loose all your changes.\\nAre you sure you want to quit?",
+  "@closeConfirmationMessage": {
+    "description": "A close confirmation message which will be shown to the user"
+  },
+  "yesLeave": "Yes, leave",
+  "@yesLeave": {
+    "description": "Confirmation message for going back from a page"
+  },
+  "noStay": "No, stay",
+  "@noStay": {
+    "description": "Confirmation message for staying back"
   }
 }

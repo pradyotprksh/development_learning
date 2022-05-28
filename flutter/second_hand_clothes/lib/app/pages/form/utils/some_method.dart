@@ -31,6 +31,75 @@ class FormUtilsSomeMethod {
     );
   }
 
+  /// Show a dialog for confirmation before the user dismiss the form.
+  ///
+  /// This will be required because sometimes the back gesture is accidental and
+  /// user will loose all the data. if entered.
+  Future<bool> askFormExitConfirmation(BuildContext context) async =>
+      await showModalBottomSheet<bool>(
+        context: context,
+        backgroundColor: context.themeData().bottomSheetTheme.backgroundColor,
+        builder: (_) => Padding(
+          padding: ThemesEdgeInsets().all15,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                Icons.warning,
+                color: context.themeData().iconTheme.color,
+              ),
+              ThemesBox().height15,
+              Text(
+                context.localizationValues().warning,
+                style: context.themeData().textTheme.headlineMedium,
+              ),
+              ThemesBox().height20,
+              Text(
+                context.localizationValues().closeConfirmationMessage,
+                style: context.themeData().textTheme.bodyText1,
+                textAlign: TextAlign.center,
+              ),
+              ThemesBox().height20,
+              Divider(
+                color: context.themeData().dividerColor,
+                height: 0.0,
+              ),
+              SizedBox(
+                width: double.infinity,
+                child: MaterialButton(
+                  onPressed: () {
+                    Navigator.pop(context, true);
+                  },
+                  color: context.themeData().errorColor,
+                  child: Text(
+                    context.localizationValues().yesLeave,
+                    style: context.themeData().textTheme.button,
+                  ),
+                ),
+              ),
+              Divider(
+                color: context.themeData().dividerColor,
+                height: 0.0,
+              ),
+              SizedBox(
+                width: double.infinity,
+                child: MaterialButton(
+                  onPressed: () {
+                    Navigator.pop(context, false);
+                  },
+                  child: Text(
+                    context.localizationValues().noStay,
+                    style: context.themeData().textTheme.button,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ) ??
+      false;
+
   /// Get the text style based on the [ItemTextStyle] enum value.
   ///
   /// [context] = Current context of the tree

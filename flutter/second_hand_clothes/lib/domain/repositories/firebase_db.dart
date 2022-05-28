@@ -1,3 +1,4 @@
+import 'package:second_hand_clothes/app_details.dart';
 import 'package:second_hand_clothes/data/data.dart';
 import 'package:second_hand_clothes/data/repositories/firebase_db.dart';
 import 'package:second_hand_clothes/device/device.dart';
@@ -21,10 +22,14 @@ class RepositoriesFirebaseDB extends ServicesFirebaseDB {
   @override
   Future<FormData> getFormDetails(String formId) async {
     var formStringData = '';
-    try {
-      formStringData = await _dataFirebaseDB.getStringFormDetails(formId);
-    } catch (_) {
+    if (UtilsAppDetails().isDebugMode && UtilsAppDetails().useMockResponses) {
       formStringData = await _deviceFirebaseDB.getStringFormDetails(formId);
+    } else {
+      try {
+        formStringData = await _dataFirebaseDB.getStringFormDetails(formId);
+      } catch (_) {
+        formStringData = await _deviceFirebaseDB.getStringFormDetails(formId);
+      }
     }
     return formDataFromJson(formStringData);
   }

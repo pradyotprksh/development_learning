@@ -32,5 +32,9 @@
   "formRefreshMessage": "要求されたフォームに何か問題があります、私たちはこれをチェックインしています。それとも、さわやかにしてみませんか?",
   "doNotHaveAnAccount": "アカウントをお持ちではありませんか?作成します。",
   "formProcessErrorMessage": "フォーム要求の処理中に問題が発生しました。もう一度やり直すか、記入したすべての詳細を確認してください。これも検討中です。",
-  "submittingFormDetails": "フォームの詳細を送信する。お待ちください。"
+  "submittingFormDetails": "フォームの詳細を送信する。お待ちください。",
+  "warning": "警告",
+  "closeConfirmationMessage": "フォームを閉じると、すべての変更が失われます。\\n終了しますか?",
+  "yesLeave": "はい、残します",
+  "noStay": "いいえ、滞在"
 }

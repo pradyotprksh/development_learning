@@ -10,5 +10,5 @@ class Constants {
   final loginFormId = 'login_form';
   final signUpFormId = 'sign_up_form';
 
-  final formStatusChangeDuration = const Duration(seconds: 1);
+  final formStatusChangeDuration = const Duration(seconds: 0);
 }

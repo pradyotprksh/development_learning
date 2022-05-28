@@ -16,6 +16,12 @@ class UtilsAppDetails {
   /// Return true/false
   final bool isDebugMode = foundation.kDebugMode;
 
+  /// If want to use mock responses then value of this should be true.
+  ///
+  /// Keep in mind not all responses can be mocked, some will required
+  /// remote connectivity.
+  final bool useMockResponses = true;
+
   /// Is the application currently running on profile mode?
   ///
   /// Return true/false

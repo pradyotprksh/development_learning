@@ -22,4 +22,9 @@ abstract class ServicesFirebaseAuth {
   ///
   /// Returns true if a user is found otherwise false.
   bool isUserLoggedIn();
+
+  /// Get the current user details
+  ///
+  /// Returns the user details for the given [userId].
+  Future<UserDetails> getUserDetails(String userId);
 }

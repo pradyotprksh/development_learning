@@ -97,6 +97,12 @@ class LocalizationValues {
     'submittingFormDetails':
         AppLocalizations.of(_buildContext)?.submittingFormDetails ??
             'submittingFormDetails',
+    'warning': AppLocalizations.of(_buildContext)?.warning ?? 'warning',
+    'closeConfirmationMessage':
+        AppLocalizations.of(_buildContext)?.closeConfirmationMessage ??
+            'closeConfirmationMessage',
+    'yesLeave': AppLocalizations.of(_buildContext)?.yesLeave ?? 'yesLeave',
+    'noStay': AppLocalizations.of(_buildContext)?.noStay ?? 'noStay',
   };
 
   final formParsingErrorKey = 'formParsingError';
@@ -109,9 +115,20 @@ class LocalizationValues {
 
   final fetchingFormDetailsKey = 'fetchingFormDetails';
 
-  String get doNotHaveAnAccount => mapLocalization['doNotHaveAnAccount'] ?? '****';
+  String get warning => mapLocalization['warning'] ?? '****';
 
-  String get formProcessErrorMessage => mapLocalization['formProcessErrorMessage'] ?? '****';
+  String get closeConfirmationMessage =>
+      mapLocalization['closeConfirmationMessage'] ?? '****';
+
+  String get yesLeave => mapLocalization['yesLeave'] ?? '****';
+
+  String get noStay => mapLocalization['noStay'] ?? '****';
+
+  String get doNotHaveAnAccount =>
+      mapLocalization['doNotHaveAnAccount'] ?? '****';
+
+  String get formProcessErrorMessage =>
+      mapLocalization['formProcessErrorMessage'] ?? '****';
 
   String get formParsingError => mapLocalization['formParsingError'] ?? '****';
 

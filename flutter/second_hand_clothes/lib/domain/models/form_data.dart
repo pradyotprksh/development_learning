@@ -24,6 +24,8 @@ class FormData extends Equatable {
     required this.padding,
     required this.items,
     required this.orientation,
+    required this.showCrossButton,
+    required this.askCloseConfirmation,
   });
 
   const FormData.noData()
@@ -36,6 +38,8 @@ class FormData extends Equatable {
           padding: null,
           items: null,
           orientation: null,
+          showCrossButton: false,
+          askCloseConfirmation: true,
         );
 
   factory FormData.fromJson(Map<String, dynamic> json) => FormData(
@@ -46,6 +50,8 @@ class FormData extends Equatable {
             axisMap[json['orientation'] as String? ?? ''] ?? Axis.vertical,
         extendBody: json['extendBody'] as bool?,
         extendBodyBehindAppBar: json['extendBodyBehindAppBar'] as bool?,
+        showCrossButton: json['showCrossButton'] as bool?,
+        askCloseConfirmation: json['askCloseConfirmation'] as bool?,
         padding: json['padding'] as String?,
         items: List<FormItem>.from(
           (json['items'] as List<dynamic>? ?? <dynamic>[]).map<dynamic>(
@@ -64,6 +70,8 @@ class FormData extends Equatable {
   final String? padding;
   final List<FormItem>? items;
   final Axis? orientation;
+  final bool? showCrossButton;
+  final bool? askCloseConfirmation;
 
   FormData copyWith({
     String? id,
@@ -71,6 +79,8 @@ class FormData extends Equatable {
     FormSubType? formSubType,
     bool? extendBody,
     bool? extendBodyBehindAppBar,
+    bool? showCrossButton,
+    bool? askCloseConfirmation,
     String? padding,
     List<FormItem>? items,
     Axis? orientation,
@@ -85,6 +95,8 @@ class FormData extends Equatable {
         padding: padding ?? this.padding,
         items: items ?? this.items,
         orientation: orientation ?? this.orientation,
+        showCrossButton: showCrossButton ?? this.showCrossButton,
+        askCloseConfirmation: askCloseConfirmation ?? this.askCloseConfirmation,
       );
 
   Map<String, dynamic> toJson() => <String, dynamic>{
@@ -93,6 +105,8 @@ class FormData extends Equatable {
         'subType': formSubType?.name,
         'extendBody': extendBody,
         'extendBodyBehindAppBar': extendBodyBehindAppBar,
+        'showCrossButton': showCrossButton,
+        'askCloseConfirmation': askCloseConfirmation,
         'padding': padding,
         'orientation': orientation?.name,
         'items': items == null
@@ -521,8 +535,8 @@ class Style extends Equatable {
         obscureText: json['obscureText'] as bool?,
         obscuringCharacter: json['obscuringCharacter'] as String?,
         maxLength: json['maxLength'] as int?,
-        height: (json['height'] as int?)?.toDouble(),
-        width: (json['width'] as int?)?.toDouble(),
+        height: getDoubleValue(json['height'] as num?),
+        width: getDoubleValue(json['width'] as num?),
         indent: Indent.fromJson(
           json['indent'] as Map<String, dynamic>? ?? <String, dynamic>{},
         ),
@@ -661,8 +675,8 @@ class Indent {
   });
 
   factory Indent.fromJson(Map<String, dynamic> json) => Indent(
-        start: (json['start'] as int?)?.toDouble(),
-        end: (json['end'] as int?)?.toDouble(),
+        start: getDoubleValue(json['start'] as num?),
+        end: getDoubleValue(json['end'] as num?),
       );
 
   final double? start;
@@ -682,4 +696,12 @@ class Indent {
         'start': start,
         'end': end,
       };
+}
+
+double getDoubleValue(num? value) {
+  try {
+    return value?.toDouble() ?? 0.0;
+  } catch (_) {
+    return 0.0;
+  }
 }

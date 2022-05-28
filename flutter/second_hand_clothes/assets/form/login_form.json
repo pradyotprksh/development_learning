@@ -6,6 +6,8 @@
   "extendBodyBehindAppBar": true,
   "padding": "20_40_20_40",
   "orientation": "vertical",
+  "showCrossButton": false,
+  "askCloseConfirmation": false,
   "items": [
     {
       "id": "1",

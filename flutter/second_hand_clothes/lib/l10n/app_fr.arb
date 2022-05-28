@@ -32,5 +32,9 @@
   "formRefreshMessage": "Quelque chose ne va pas avec le formulaire demandé, nous vérifions cela. Ou pouvez-vous essayer de vous rafraîchir?",
   "doNotHaveAnAccount": "Vous n’avez pas de compte ? Créez-en un.",
   "formProcessErrorMessage": "Quelque chose s’est mal passé lors du traitement de la demande de formulaire. Veuillez réessayer ou vérifier tous les détails que vous avez remplis. Nous nous penchons également sur cette question.",
-  "submittingFormDetails": "Envoi des détails du formulaire. Veuillez patienter."
+  "submittingFormDetails": "Envoi des détails du formulaire. Veuillez patienter.",
+  "warning": "Avertissement",
+  "closeConfirmationMessage": "En fermant le formulaire, vous perdrez toutes vos modifications.\\nÊtes-vous sûr de vouloir quitter ?",
+  "yesLeave": "Oui, partez",
+  "noStay": "Non, restez"
 }

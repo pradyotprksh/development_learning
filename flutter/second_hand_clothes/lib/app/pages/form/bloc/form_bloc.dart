@@ -34,10 +34,9 @@ class FormBloc extends Bloc<FormEvent, FormState> {
     );
 
     final formId = event.formId;
+    final formData = await _firebaseDB.getFormDetails(formId);
 
     try {
-      final formData = await _firebaseDB.getFormDetails(formId);
-
       final flatFormItems = _flatten(formData.items ?? []);
 
       final formLabelState = flatFormItems
