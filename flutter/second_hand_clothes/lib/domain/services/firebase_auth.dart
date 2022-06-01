@@ -2,7 +2,7 @@ import 'package:second_hand_clothes/domain/domain.dart';
 
 /// A service class for firebase authentication, which will be used
 /// to do all the firebase operation related to authentication.
-abstract class ServicesFirebaseAuth {
+abstract class ServicesFirebaseAuth extends DomainServices {
   const ServicesFirebaseAuth();
 
   /// Authenticate user and get the details from firebase.
@@ -22,9 +22,4 @@ abstract class ServicesFirebaseAuth {
   ///
   /// Returns true if a user is found otherwise false.
   bool isUserLoggedIn();
-
-  /// Get the current user details
-  ///
-  /// Returns the user details for the given [userId].
-  Future<UserDetails> getUserDetails(String userId);
 }

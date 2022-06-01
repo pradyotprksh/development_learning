@@ -34,6 +34,7 @@ void main() async {
           BlocProvider(
             create: (_) => AuthorizationBloc(
               RepositoriesFirebaseAuth(),
+              RepositoriesFirebaseDB(),
             ),
           ),
         ],

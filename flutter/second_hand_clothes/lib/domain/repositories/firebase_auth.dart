@@ -8,8 +8,13 @@ import 'package:second_hand_clothes/domain/domain.dart';
 ///
 /// This will keep the implementation away from other layers.
 class RepositoriesFirebaseAuth extends ServicesFirebaseAuth {
-  RepositoriesFirebaseAuth()
-      : _dataFirebaseAuth = const RepositoriesDataFirebaseAuth();
+  factory RepositoriesFirebaseAuth() => _instance;
+
+  RepositoriesFirebaseAuth._privateConstructor()
+      : _dataFirebaseAuth = RepositoriesDataFirebaseAuth();
+
+  static final RepositoriesFirebaseAuth _instance =
+      RepositoriesFirebaseAuth._privateConstructor();
 
   final ServicesDataFirebaseAuth _dataFirebaseAuth;
 
@@ -37,4 +42,9 @@ class RepositoriesFirebaseAuth extends ServicesFirebaseAuth {
 
   @override
   bool isUserLoggedIn() => _dataFirebaseAuth.isUserLoggedIn();
+
+  @override
+  void dispose() {
+    _dataFirebaseAuth.dispose();
+  }
 }

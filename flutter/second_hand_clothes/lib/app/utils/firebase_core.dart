@@ -30,4 +30,7 @@ class FirebaseCore extends ServicesFirebaseCore {
   Future<void> initializeFirebaseApp() async {
     await Firebase.initializeApp();
   }
+
+  @override
+  void dispose() {}
 }

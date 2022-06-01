@@ -6,3 +6,12 @@
 export 'firebase_auth.dart';
 export 'firebase_core.dart';
 export 'firebase_db.dart';
+
+/// A common domain services class which will contain the common functionality
+/// for the domain layer and also the intermediate layers.
+abstract class DomainServices {
+  const DomainServices();
+
+  /// Dispose all the services at end.
+  void dispose();
+}

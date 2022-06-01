@@ -5,6 +5,13 @@ import 'package:second_hand_clothes/second_hand_clothes.dart';
 /// A repository class for firebase realtime database,
 /// this will implement the firebase db service of the data layer.
 class RepositoriesDeviceFirebaseDB extends ServicesDeviceFirebaseDB {
+  factory RepositoriesDeviceFirebaseDB() => _instance;
+
+  RepositoriesDeviceFirebaseDB._privateConstructor();
+
+  static final RepositoriesDeviceFirebaseDB _instance =
+      RepositoriesDeviceFirebaseDB._privateConstructor();
+
   @override
   Future<String> getStringFormDetails(String formId) async {
     var formJson = '';
@@ -24,4 +31,17 @@ class RepositoriesDeviceFirebaseDB extends ServicesDeviceFirebaseDB {
   Future<FormData> getFormDetails(String formId) {
     throw UnimplementedError();
   }
+
+  @override
+  Stream<String?> getStringCurrentUserDetails(String userId) {
+    throw UnimplementedError();
+  }
+
+  @override
+  Stream<UserDetails?> getCurrentUserDetails() {
+    throw UnimplementedError();
+  }
+
+  @override
+  void dispose() {}
 }

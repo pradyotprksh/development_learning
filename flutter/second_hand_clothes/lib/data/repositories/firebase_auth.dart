@@ -5,8 +5,14 @@ import 'package:second_hand_clothes/domain/domain.dart';
 /// A repository class for firebase auth, this will implement the firebase
 /// auth service of the data layer.
 class RepositoriesDataFirebaseAuth extends ServicesDataFirebaseAuth {
-  const RepositoriesDataFirebaseAuth();
+  factory RepositoriesDataFirebaseAuth() => _instance;
 
+  RepositoriesDataFirebaseAuth._privateConstructor();
+
+  static final RepositoriesDataFirebaseAuth _instance =
+      RepositoriesDataFirebaseAuth._privateConstructor();
+
+  // TODO: Mapping of the data layer results should be in domain layer. Data layer should only return the value it got from remote.
   @override
   Future<UserDetails?> authenticateUser({
     required String email,
@@ -36,10 +42,13 @@ class RepositoriesDataFirebaseAuth extends ServicesDataFirebaseAuth {
       emailId: user?.email,
       displayName: user?.displayName,
       uid: user?.uid,
+      profilePic: user?.photoURL,
     );
   }
 
   @override
-  bool isUserLoggedIn() =>
-      FirebaseAuth.instance.currentUser != null;
+  bool isUserLoggedIn() => FirebaseAuth.instance.currentUser != null;
+
+  @override
+  void dispose() {}
 }

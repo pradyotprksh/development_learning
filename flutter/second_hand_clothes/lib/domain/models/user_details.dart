@@ -1,24 +1,36 @@
+import 'dart:convert';
+
 import 'package:equatable/equatable.dart';
 
-/// A class for user details which will hold the details of the user.
+UserDetails userDetailsFromJson(String str) => UserDetails.fromJson(
+      json.decode(str) as Map<String, dynamic>,
+    );
+
 class UserDetails extends Equatable {
-  /// [emailId] = Email address of the user
-  ///
-  /// [displayName] = Name of the user
   const UserDetails({
     required this.emailId,
     required this.displayName,
     required this.uid,
+    required this.profilePic,
   });
+
+  factory UserDetails.fromJson(Map<String, dynamic> json) => UserDetails(
+        emailId: json['emailId'] as String?,
+        displayName: json['displayName'] as String?,
+        uid: json['uid'] as String?,
+        profilePic: json['profilePic'] as String?,
+      );
 
   final String? emailId;
   final String? displayName;
   final String? uid;
+  final String? profilePic;
 
   @override
   List<Object?> get props => [
         emailId,
         displayName,
         uid,
+        profilePic,
       ];
 }

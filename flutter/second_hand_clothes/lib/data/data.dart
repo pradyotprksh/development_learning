@@ -6,3 +6,4 @@
 /// from where to get/put the data.
 export 'repositories/repositories.dart';
 export 'services/services.dart';
+export 'utils/utils.dart';

@@ -27,6 +27,7 @@ class SplashScreen extends StatelessWidget {
             );
             break;
           case UtilsAuthenticationStatus.unknown:
+            break;
           case UtilsAuthenticationStatus.unauthenticated:
             Navigator.pushNamedAndRemoveUntil(
               context,
