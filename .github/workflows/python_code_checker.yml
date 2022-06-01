@@ -2,6 +2,8 @@ on:
   push:
     branches:
       - main
+    paths:
+      - python/**
 name: Python Projects
 jobs:
   practice:
