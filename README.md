@@ -18,6 +18,7 @@ I will be getting ideas of the project which I want to work on and will be creat
   - ⚠️ [flublog](https://github.com/pradyotprksh/development_learning/tree/main/flutter/flublog)
   - ⚠️ [stackoverflow](https://github.com/pradyotprksh/development_learning/tree/main/flutter/stackoverflow)
   - ⚠️ [second_hand_clothes](https://github.com/pradyotprksh/development_learning/tree/main/flutter/second_hand_clothes)
+  - ⚠️ [bang_bang](https://github.com/pradyotprksh/development_learning/tree/main/flutter/bang_bang)
 
 [<img src="https://img.shields.io/badge/iOS-E34C26?style=for-the-badge&logo=ios&logoColor=white" />](https://github.com/pradyotprksh/development_learning/tree/main/ios)
   - [Angela Udemy iOS Course](https://github.com/pradyotprksh/development_learning/tree/main/ios/angela_udemy) 

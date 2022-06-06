@@ -24,6 +24,8 @@ jobs:
         working-directory: ./flutter/flublog
         run: |
           flutter clean
+          flutter pub outdated
+          flutter pub upgrade
           flutter pub get
           flutter analyze
   stackoverflow:
@@ -40,6 +42,8 @@ jobs:
         working-directory: ./flutter/stackoverflow
         run: |
           flutter clean
+          flutter pub outdated
+          flutter pub upgrade
           flutter pub get
           flutter analyze
   second_hand_clothes:
@@ -56,5 +60,25 @@ jobs:
         working-directory: ./flutter/second_hand_clothes
         run: |
           flutter clean
+          flutter pub outdated
+          flutter pub upgrade
+          flutter pub get
+          flutter analyze
+  bang_bang:
+    name: bang_bang Code Checker
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-java@v1
+        with:
+          java-version: '12.x'
+      - uses: subosito/flutter-action@v1
+      - run: flutter doctor
+      - name: Checking bang_bang
+        working-directory: ./flutter/bang_bang
+        run: |
+          flutter clean
+          flutter pub outdated
+          flutter pub upgrade
           flutter pub get
           flutter analyze
