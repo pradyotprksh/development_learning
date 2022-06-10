@@ -1,0 +1,7 @@
+{
+  "@@locale": "en",
+  "play": "Play",
+  "@play": {
+    "description": "Text displayed on the landing page play button"
+  }
+}
