@@ -4,6 +4,7 @@
     package="com.project.pradyotprakash.twitter" >
 
     <application
+        android:name=".di.MainApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"

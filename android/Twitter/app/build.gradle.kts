@@ -1,6 +1,8 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    kotlin("kapt")
+    id("dagger.hilt.android.plugin")
 }
 
 android {
@@ -43,7 +45,7 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.1.0-beta01"
+        kotlinCompilerExtensionVersion = libs.versions.androidxCompose2.get()
     }
 
     packagingOptions {
@@ -51,6 +53,14 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+
+    dataBinding {
+        isEnabled = true
+    }
+}
+
+kapt {
+    correctErrorTypes = true
 }
 
 dependencies {
@@ -60,6 +70,13 @@ dependencies {
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.lifecycle)
     implementation(libs.androidx.compose.activity)
+    implementation(libs.android.hilt)
+    implementation(libs.androidx.navigation)
+
+    kapt(libs.android.hilt.compiler)
+
+    implementation(projects.core.utils)
+    implementation(projects.core.navigator)
 
     testImplementation(libs.testing.junit)
 
