@@ -7,7 +7,7 @@ class StackImpl: Stack {
 
     private fun readInput(message: String = ""): Int {
         println(message)
-        return  readLine()?.toInt() ?: -1
+        return readLine()?.toInt() ?: -1
     }
 
     override fun startStack() {
@@ -68,20 +68,20 @@ class StackImpl: Stack {
     }
 
     override fun push(element: Int) {
-        println("Adding element $element")
+        println("Started adding element $element")
         stack?.let {
             if (!isStackFull()) {
                 it[++top] = element
                 showStackDetails()
             } else {
-                println("Stack is full")
+                println("OOPS!! Stack is full. Can't add new elements. Please pop items.")
             }
         }
     }
 
     override fun pop(): Int {
         if (isStackEmpty()) {
-            println("Stack is empty")
+            println("OOPS!! Stack is empty. Can't pop any elements now. Please push items.")
             return -1
         }
         val item = stack?.let {
@@ -96,6 +96,7 @@ class StackImpl: Stack {
     }
 
     override fun closeStack() {
+        println("Closing stack, and clearing the data")
         stack = null
     }
 }
