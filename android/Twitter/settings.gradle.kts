@@ -34,5 +34,11 @@ include(
     ":feature:authentication:options",
     ":feature:authentication:register",
     ":feature:authentication:login",
-    ":feature:home"
+    ":feature:home",
+    ":feature:splash"
+)
+
+// UI
+include(
+    ":ui:twiteme"
 )

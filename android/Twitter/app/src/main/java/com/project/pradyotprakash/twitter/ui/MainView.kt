@@ -10,10 +10,12 @@ import androidx.compose.material.Surface
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.project.pradyotprakash.twitter.navigator.Navigator
 import com.project.pradyotprakash.twitter.navigator.Routes
-import com.project.pradyotprakash.twitter.ui.theme.TwitterTheme
+import com.project.pradyotprakash.twitter.splash.splash.SplashView
+import com.project.pradyotprakash.twitter.twiteme.theme.Twiteme
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -33,13 +35,13 @@ class MainView : ComponentActivity() {
         setContent {
             navController = rememberNavController()
 
-            TwitterTheme {
+            Twiteme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
                     NavHost(navController = navController, startDestination = Routes.Splash.route) {
-
+                        composable(Routes.Splash.route) { SplashView() }
                     }
                 }
             }

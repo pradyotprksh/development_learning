@@ -1,5 +1,5 @@
 plugins {
-    id("com.android.application")
+    id("com.android.library")
     id("org.jetbrains.kotlin.android")
     kotlin("kapt")
     id("dagger.hilt.android.plugin")
@@ -9,16 +9,11 @@ android {
     compileSdk = 32
 
     defaultConfig {
-        applicationId = "com.project.pradyotprakash.twitter"
         minSdk = 21
         targetSdk = 32
-        versionCode = 1
-        versionName = "1.0.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        vectorDrawables {
-            useSupportLibrary = true
-        }
+        consumerProguardFiles("consumer-rules.pro")
     }
 
     buildTypes {
@@ -38,24 +33,6 @@ android {
 
     kotlinOptions {
         jvmTarget = "1.8"
-    }
-
-    buildFeatures {
-        compose = true
-    }
-
-    composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.androidxCompose2.get()
-    }
-
-    packagingOptions {
-        resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
-        }
-    }
-
-    dataBinding {
-        isEnabled = true
     }
 }
 
@@ -77,8 +54,6 @@ dependencies {
 
     implementation(projects.core.utils)
     implementation(projects.core.navigator)
-    implementation(projects.feature.splash)
-    implementation(projects.ui.twiteme)
 
     debugImplementation(libs.debug.compose.ui.tooling)
     debugImplementation(libs.debug.androidx.compose.ui)
