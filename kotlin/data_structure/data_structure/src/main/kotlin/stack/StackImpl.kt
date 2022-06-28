@@ -38,6 +38,8 @@ class StackImpl: Stack {
                         2 -> pop()
                         3 -> showStackDetails()
                         4 -> {
+                            println("Stack details at the end is:")
+                            showStackDetails()
                             closeStack()
                             input = 5
                         }
