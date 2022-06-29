@@ -63,14 +63,14 @@ class MainView : ComponentActivity() {
      * Start the app review check for the user.
      */
     private fun initiateNativeAppReview() {
-        TODO("Not yet implemented")
+
     }
 
     /**
      * Check if a new update is available, if available show the option to update
      */
     private fun checkForAppUpdate() {
-        TODO("Not yet implemented")
+
     }
 
     /**
@@ -78,14 +78,14 @@ class MainView : ComponentActivity() {
      * all the toasts will be handled in one place.
      */
     private fun showToastMessageListener() {
-        TODO("Not yet implemented")
+
     }
 
     /**
      * A dialog listener to see if a new dialog has to be shown or not.
      */
     private fun showDialogListener() {
-        TODO("Not yet implemented")
+
     }
 
     /**
@@ -94,7 +94,9 @@ class MainView : ComponentActivity() {
      */
     private fun navigationChangeListener() {
         navigator.navigateAction.observe(this) {
-            it(navController)
+            if (this::navController.isInitialized) {
+                it(navController)
+            }
         }
     }
 
@@ -103,7 +105,7 @@ class MainView : ComponentActivity() {
      * in let the user know that the app is offline.
      */
     private fun checkForNetworkConnectivityListener() {
-        TODO("Not yet implemented")
+
     }
 
     /**
@@ -111,6 +113,6 @@ class MainView : ComponentActivity() {
      * the application is, authenticated or not.
      */
     private fun checkForAuthChangeListener() {
-        TODO("Not yet implemented")
+
     }
 }

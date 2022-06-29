@@ -2,7 +2,8 @@ package com.project.pradyotprakash.twitter.twiteme.theme
 
 import androidx.compose.ui.graphics.Color
 
-val Purple200 = Color(0xFFBB86FC)
-val Purple500 = Color(0xFF6200EE)
-val Purple700 = Color(0xFF3700B3)
-val Teal200 = Color(0xFF03DAC5)
+val DodgeBlue = Color(0xFF1DA1F2)
+val BlackPerl = Color(0xFF14171A)
+val Lynch = Color(0xFF657786)
+val Heather = Color(0xFFAAB8C2)
+val Solitude = Color(0xFFE1E8ED)
