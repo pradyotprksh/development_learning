@@ -5,19 +5,14 @@ class StackImpl: Stack {
     private var top: Int = -1
     private var stackSize: Int = -1
 
-    private fun readInput(message: String = ""): Int {
-        println(message)
-        return readLine()?.toInt() ?: -1
-    }
-
     override fun startStack() {
         println("Hello User, let's start with stack")
-        stackSize = readInput("Please choose the size of the stack")
-        if (stackSize < 1) {
+        val size = Utils.readInput("Please choose the size of the stack")
+        if (size < 1) {
             println("Please enter a valid stack size")
         } else {
-            println("Stack Size is $stackSize")
-            createStack(stackSize)
+            println("Stack Size is $size")
+            createStack(size)
 
             var input = -1
             while (input != 5) {
@@ -26,13 +21,13 @@ class StackImpl: Stack {
                 println("2 > Pop")
                 println("3 > Show stack details")
                 println("4 > Done")
-                input = readInput()
+                input = Utils.readInput()
                 if (input < 1) {
                     println("Please enter a valid input")
                 } else {
                     when (input) {
                         1 -> {
-                            val item = readInput("Enter the number you want push")
+                            val item = Utils.readInput("Enter the number you want push")
                             push(item)
                         }
                         2 -> pop()
@@ -51,6 +46,7 @@ class StackImpl: Stack {
 
     override fun createStack(size: Int) {
         stack = Array(size){ 0 }
+        stackSize = size
     }
 
     override fun showStackDetails() {
@@ -61,16 +57,12 @@ class StackImpl: Stack {
         println("$items {top=$top}")
     }
 
-    override fun isStackFull(): Boolean {
-        return top == stackSize - 1
-    }
+    override fun isStackFull(): Boolean = top == stackSize - 1
 
-    override fun isStackEmpty(): Boolean {
-        return top == -1
-    }
+    override fun isStackEmpty(): Boolean = top == -1
 
     override fun push(element: Int) {
-        println("Started adding element $element")
+        println("Pushing element $element")
         stack?.let {
             if (!isStackFull()) {
                 it[++top] = element
