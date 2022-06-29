@@ -68,6 +68,7 @@ dependencies {
 
     implementation(projects.core.utils)
     implementation(projects.core.navigator)
+    implementation(projects.ui.twiteme)
 
     debugImplementation(libs.debug.compose.ui.tooling)
     debugImplementation(libs.debug.androidx.compose.ui)
