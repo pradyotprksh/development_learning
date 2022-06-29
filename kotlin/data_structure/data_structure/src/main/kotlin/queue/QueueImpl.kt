@@ -17,12 +17,13 @@ class QueueImpl: Queue {
 
             var input = -1
             while (input != 5) {
-                println("Please choose any one of the option")
-                println("1 > Enqueue")
-                println("2 > Dequeue")
-                println("3 > Show queue details")
-                println("4 > Done")
-                input = Utils.readInput()
+                input = Utils.readInput(
+                    "Please choose any one of the option" +
+                            "\n1 > Enqueue" +
+                            "\n2 > Dequeue" +
+                            "\n3 > Show queue details" +
+                            "\n4 > Done"
+                )
                 if (input < 1) {
                     println("Please enter a valid input")
                 } else {

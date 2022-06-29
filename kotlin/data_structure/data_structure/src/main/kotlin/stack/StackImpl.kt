@@ -16,12 +16,13 @@ class StackImpl: Stack {
 
             var input = -1
             while (input != 5) {
-                println("Please choose any one of the option")
-                println("1 > Push")
-                println("2 > Pop")
-                println("3 > Show stack details")
-                println("4 > Done")
-                input = Utils.readInput()
+                input = Utils.readInput(
+                    "Please choose any one of the option" +
+                            "\n1 > Push" +
+                            "\n2 > Pop" +
+                            "\n3 > Show stack details" +
+                            "\n4 > Done"
+                )
                 if (input < 1) {
                     println("Please enter a valid input")
                 } else {
