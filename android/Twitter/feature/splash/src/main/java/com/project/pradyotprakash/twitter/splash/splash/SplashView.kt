@@ -1,34 +1,22 @@
 package com.project.pradyotprakash.twitter.splash.splash
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.Text
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.unit.dp
-import com.project.pradyotprakash.twitter.twiteme.theme.DodgeBlue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import com.project.pradyotprakash.twitter.twiteme.composables.TwitterLoader
 
 @Composable
-fun SplashView() {
-    /*Box(
-        modifier = Modifier
-            .background(DodgeBlue)
-            .fillMaxSize(),
+fun SplashView(splashViewModel: SplashViewModel) {
+    splashViewModel.navigateToAuthOptionScreen()
+
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center,
+        modifier = Modifier.fillMaxSize(),
     ) {
-        Image(
-            painter = painterResource(id = R.mipmap.ic_launcher_round),
-            contentDescription = "",
-            modifier = Modifier
-                .align(Alignment.Center)
-                .size(120.dp)
-        )
-    }*/
-    Column {
-        CircularProgressIndicator(
-            color = DodgeBlue,
-            strokeWidth = 2.dp
-        )
-        Text(
-            "Loading..."
-        )
+        TwitterLoader(footerMessage = "Loading...")
     }
 }

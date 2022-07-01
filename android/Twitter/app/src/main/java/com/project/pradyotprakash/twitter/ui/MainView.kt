@@ -8,6 +8,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.Observer
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -41,7 +43,7 @@ class MainView : ComponentActivity() {
                     color = MaterialTheme.colors.background
                 ) {
                     NavHost(navController = navController, startDestination = Routes.Splash.route) {
-                        composable(Routes.Splash.route) { SplashView() }
+                        composable(Routes.Splash.route) { SplashView(hiltViewModel()) }
                     }
                 }
             }

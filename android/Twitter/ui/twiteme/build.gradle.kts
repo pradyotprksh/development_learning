@@ -53,4 +53,6 @@ dependencies {
     implementation(libs.androidx.compose.ui)
     implementation(libs.androidx.compose.material)
     implementation(libs.accompanist.systemuicontroller)
+
+    implementation(projects.core.utils)
 }
