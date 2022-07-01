@@ -24,23 +24,20 @@ class QueueImpl: Queue {
                             "\n3 > Show queue details" +
                             "\n4 > Done"
                 )
-                if (input < 1) {
-                    println("Please enter a valid input")
-                } else {
-                    when (input) {
-                        1 -> {
-                            val item = Utils.readInput("Enter the number you want enqueue")
-                            enqueue(item)
-                        }
-                        2 -> dequeue()
-                        3 -> showQueueDetails()
-                        4 -> {
-                            println("Queue details at the end is:")
-                            showQueueDetails()
-                            closeQueue()
-                            input = 5
-                        }
+                when (input) {
+                    1 -> {
+                        val item = Utils.readInput("Enter the number you want enqueue")
+                        enqueue(item)
                     }
+                    2 -> dequeue()
+                    3 -> showQueueDetails()
+                    4 -> {
+                        println("Queue details at the end is:")
+                        showQueueDetails()
+                        closeQueue()
+                        input = 5
+                    }
+                    else -> println("Please enter a valid input")
                 }
             }
         }

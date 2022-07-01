@@ -23,23 +23,20 @@ class StackImpl: Stack {
                             "\n3 > Show stack details" +
                             "\n4 > Done"
                 )
-                if (input < 1) {
-                    println("Please enter a valid input")
-                } else {
-                    when (input) {
-                        1 -> {
-                            val item = Utils.readInput("Enter the number you want push")
-                            push(item)
-                        }
-                        2 -> pop()
-                        3 -> showStackDetails()
-                        4 -> {
-                            println("Stack details at the end is:")
-                            showStackDetails()
-                            closeStack()
-                            input = 5
-                        }
+                when (input) {
+                    1 -> {
+                        val item = Utils.readInput("Enter the number you want push")
+                        push(item)
                     }
+                    2 -> pop()
+                    3 -> showStackDetails()
+                    4 -> {
+                        println("Stack details at the end is:")
+                        showStackDetails()
+                        closeStack()
+                        input = 5
+                    }
+                    else -> println("Please enter a valid option")
                 }
             }
         }
