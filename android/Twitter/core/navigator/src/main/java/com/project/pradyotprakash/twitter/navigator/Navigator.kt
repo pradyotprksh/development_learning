@@ -14,11 +14,11 @@ typealias NavigationAction = (NavController) -> Unit
  * This will create a single place to change the destination.
  */
 class Navigator @Inject constructor() {
-    private val _navigateActions: MutableLiveData<NavigationAction> = MutableLiveData()
+    private val _navigateActions = MutableLiveData<NavigationAction>()
     val navigateAction: LiveData<NavigationAction>
         get() = _navigateActions
 
     fun navigate(navigationAction: NavigationAction) {
-        _navigateActions.value = navigationAction
+        _navigateActions.postValue(navigationAction)
     }
 }

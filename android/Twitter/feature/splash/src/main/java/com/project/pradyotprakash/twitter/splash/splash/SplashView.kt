@@ -11,7 +11,6 @@ import com.project.pradyotprakash.twitter.twiteme.composables.TwitterLoader
 @Composable
 fun SplashView(splashViewModel: SplashViewModel) {
     splashViewModel.navigateToAuthOptionScreen()
-
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,

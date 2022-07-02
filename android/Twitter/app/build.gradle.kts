@@ -73,6 +73,8 @@ dependencies {
     implementation(libs.android.hilt)
     implementation(libs.androidx.navigation)
     implementation(libs.androidx.hilt.navigation)
+    implementation(libs.corutines.android)
+    implementation(libs.corutines.core)
 
     kapt(libs.android.hilt.compiler)
 

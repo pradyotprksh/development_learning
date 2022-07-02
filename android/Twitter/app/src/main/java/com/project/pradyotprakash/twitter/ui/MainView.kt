@@ -9,7 +9,6 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.Observer
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -44,6 +43,7 @@ class MainView : ComponentActivity() {
                 ) {
                     NavHost(navController = navController, startDestination = Routes.Splash.route) {
                         composable(Routes.Splash.route) { SplashView(hiltViewModel()) }
+                        composable(Routes.AuthOption.route) { SplashView(hiltViewModel()) }
                     }
                 }
             }
@@ -96,9 +96,7 @@ class MainView : ComponentActivity() {
      */
     private fun navigationChangeListener() {
         navigator.navigateAction.observe(this) {
-            if (this::navController.isInitialized) {
-                it(navController)
-            }
+            it(navController)
         }
     }
 
