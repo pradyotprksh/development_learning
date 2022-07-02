@@ -52,7 +52,6 @@ I will be getting ideas of the project which I want to work on and will be creat
   - [FlashChat](https://github.com/pradyotprksh/development_learning/tree/main/android/FlashChat)
   - [WhatsApp Compose](https://github.com/pradyotprksh/development_learning/tree/main/android/WhatsAppCompose)
     - For more details go to this [link](https://medium.com/geekculture/whatsapp-clone-jetpack-compose-d90120723d88)
-  - ⚠️ [Twitter](https://github.com/pradyotprksh/development_learning/tree/main/android/Twitter)
 
 [<img src="https://img.shields.io/badge/Kotlin-0095D5?&style=for-the-badge&logo=kotlin&logoColor=white" />](https://github.com/pradyotprksh/development_learning/tree/main/kotlin)
   - [basics](https://github.com/pradyotprksh/development_learning/tree/main/kotlin/basics)
