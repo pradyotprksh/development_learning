@@ -1,14 +1,13 @@
-package linked_list.singly
+package linked_list.doubly
 
-import Utils
-import linked_list.Node
+import linked_list.DoublyNode
 
-class SinglyLinkedListImpl: SinglyLinkedList {
-    private var head: Node? = null
+class DoubleLinkedListImpl: DoublyLinkedList {
+    private var head: DoublyNode? = null
     private var linkedListSize: Int = 0
 
     override fun startLinkedList() {
-        println("Hello User, let's start with singly linked list")
+        println("Hello User, let's start with doubly linked list")
         var input = -1
         while (input != 9) {
             input = Utils.readInput(
@@ -54,12 +53,12 @@ class SinglyLinkedListImpl: SinglyLinkedList {
         }
     }
 
-    override fun createNode(data: Int): Node {
+    override fun createNode(data: Int): DoublyNode {
         println("Creating node with data $data")
-        return Node(data = data, next = null)
+        return DoublyNode(prev = null, data = data, next = null)
     }
 
-    override fun addAtLast(node: Node) {
+    override fun addAtLast(node: DoublyNode) {
         ++linkedListSize
         println("Adding $node at the end of the linked list")
         if (head == null) {
@@ -74,19 +73,20 @@ class SinglyLinkedListImpl: SinglyLinkedList {
         showLinkedListDetails()
     }
 
-    override fun addAtFront(node: Node) {
+    override fun addAtFront(node: DoublyNode) {
         ++linkedListSize
         println("Adding $node at the front of the linked list")
         if (head == null) {
             head = node
         } else {
+            head?.prev = node
             node.next = head
             head = node
         }
         showLinkedListDetails()
     }
 
-    override fun addAtAGivenNode(prevNode: Node, node: Node) {
+    override fun addAtAGivenNode(prevNode: DoublyNode, node: DoublyNode) {
         println("Adding $node after $prevNode in the linked list")
         if (head == null) {
             println("OOPS!! SinglyLinkedList is empty.")
@@ -97,8 +97,11 @@ class SinglyLinkedListImpl: SinglyLinkedList {
             }
             if (temp != null) {
                 ++linkedListSize
-                node.next = temp.next
+                val nextNode = temp.next
+                nextNode?.prev = node
+                node.next = nextNode
                 temp.next = node
+                node.prev = temp
                 showLinkedListDetails()
             } else {
                 println("OOPS!! No node with $prevNode details was found")
@@ -106,69 +109,16 @@ class SinglyLinkedListImpl: SinglyLinkedList {
         }
     }
 
-    override fun deleteFirst(): Node? {
-        var temp = head
-        if (head == null) {
-            println("OOPS!! Linked list is empty. Please add few elements before deleting.")
-        } else {
-            --linkedListSize
-            if (head?.next == null) {
-                println("Only one element is available in the SinglyLinkedList, deleting the SinglyLinkedList data")
-                deleteLinkedList()
-            } else {
-                println("Deleting $temp node at first from linked list")
-                temp = head
-                head = head?.next
-                showLinkedListDetails()
-            }
-        }
-        return temp
+    override fun deleteFirst(): DoublyNode? {
+        TODO("Not yet implemented")
     }
 
-    override fun deleteLast(): Node? {
-        var temp = head
-        if (head == null) {
-            println("OOPS!! Linked list is empty. Please add few elements before deleting.")
-        } else {
-            --linkedListSize
-            if (head?.next == null) {
-                println("Only one element is available in the SinglyLinkedList, deleting the linked list data")
-                deleteLinkedList()
-            } else {
-                while (temp?.next?.next != null) {
-                    temp = temp.next
-                }
-                println("Deleting ${temp?.next} node at end from linked list")
-                temp?.next = null
-                showLinkedListDetails()
-            }
-        }
-        return temp
+    override fun deleteLast(): DoublyNode? {
+        TODO("Not yet implemented")
     }
 
-    override fun deleteMiddle(toDelete: Node): Node? {
-        var temp = head
-        if (head == null) {
-            println("OOPS!! Linked list is empty. Please add few elements before deleting.")
-        } else {
-            if (head?.next == null) {
-                println("Only one element is available in the SinglyLinkedList, deleting the linked list data")
-                deleteLinkedList()
-            } else {
-                while (temp?.next?.data != toDelete.data && temp != null) {
-                    temp = temp.next
-                }
-                if (temp != null) {
-                    println("Deleting ${temp.next} node from linked list")
-                    --linkedListSize
-                    temp.next = temp.next?.next
-                    showLinkedListDetails()
-                } else {
-                    println("OOPS!! No node with $toDelete details was found")
-                }
-            }
-        }
-        return temp
+    override fun deleteMiddle(toDelete: DoublyNode): DoublyNode? {
+        TODO("Not yet implemented")
     }
 
     override fun showLinkedListDetails() {
@@ -179,11 +129,11 @@ class SinglyLinkedListImpl: SinglyLinkedList {
                 items = if (items.isEmpty()) {
                     "${temp.data}"
                 } else {
-                    "$items --> ${temp.data}"
+                    "$items <==> ${temp.data}"
                 }
                 temp = temp.next
             }
-            println(items.plus(" --> null"))
+            println(items.plus(" <==> null"))
         } else {
             println("OOPS!! Linked list is empty. Please add few elements.")
         }

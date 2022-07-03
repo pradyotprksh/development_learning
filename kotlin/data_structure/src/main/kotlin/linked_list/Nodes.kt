@@ -1,4 +1,4 @@
-package linked_list.singly
+package linked_list
 
 data class Node(val data: Int, var next: Node?) {
     override fun toString(): String {

@@ -1,5 +1,7 @@
 package linked_list.singly
 
+import linked_list.Node
+
 interface SinglyLinkedList {
     fun startLinkedList()
 
