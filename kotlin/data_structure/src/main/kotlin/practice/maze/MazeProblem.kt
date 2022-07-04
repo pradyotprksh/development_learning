@@ -42,14 +42,14 @@ class MazeProblem {
         node32.nodes = listOf(node22)
         node31.nodes = listOf(node32)
         node30.nodes = listOf(node31)
-        node23.nodes = listOf(node33, exit)
+        node23.nodes = listOf(node33)
         node22.nodes = listOf(node21, node23)
         node21.nodes = listOf(node20)
         node20.nodes = listOf(node30)
         node13.nodes = emptyList()
         node12.nodes = listOf(node02, node13)
         node11.nodes = listOf(node10, node12, node21)
-        node10.nodes = emptyList()
+        node10.nodes = listOf(exit)
         node03.nodes = emptyList()
         node02.nodes = listOf(node03)
         node01.nodes = listOf(node11)
@@ -67,22 +67,30 @@ class MazeProblem {
 
     fun findTheExitNode() {
         val nodeStack = arrayListOf(head)
-        while (true) {
-            if (nodeStack.isNotEmpty()) {
-                val item = nodeStack.removeFirstOrNull()
-                if (item != null) {
-                    for (node in item.nodes) {
-                        if (node == exit) {
-                            println("Found the exit at $item")
-                            break
-                        } else {
-                            nodeStack.add(node)
-                        }
+        var lastElement: Node? = null
+        var numberOfIterations = 0
+        mainLoop@ while (true) {
+            val item = nodeStack.removeLast()
+            println("Current Stack:" +
+                    "\n${nodeStack}" +
+                    "\nNumber of iteration $numberOfIterations" +
+                    "\nCurrent element $item Last element $lastElement"
+            )
+            if (item == lastElement) {
+                println("No exit found for the current maze")
+                break@mainLoop
+            }
+            ++numberOfIterations
+            lastElement = item
+            if (item != null) {
+                for (node in item.nodes) {
+                    if (node == exit) {
+                        println("Found the exit at $item")
+                        break@mainLoop
+                    } else {
+                        nodeStack.add(node)
                     }
                 }
-            } else {
-                println("No exit found for the current maze")
-                break
             }
         }
     }
