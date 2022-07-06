@@ -1,6 +1,6 @@
 package practice.maze
 
-data class Node(val indices: Pair<Int, Int>, var nodes: List<Node> = emptyList()) {
+data class Node(val indices: Pair<Int, Int>, var nodes: List<Node> = emptyList(), var isVisited: Boolean = false) {
     override fun toString(): String = "Node(${indices.first},${indices.second})"
 
     override fun equals(other: Any?): Boolean {
@@ -42,14 +42,14 @@ class MazeProblem {
         node32.nodes = listOf(node22)
         node31.nodes = listOf(node32)
         node30.nodes = listOf(node31)
-        node23.nodes = listOf(node33)
+        node23.nodes = listOf(node33, exit)
         node22.nodes = listOf(node21, node23)
         node21.nodes = listOf(node20)
         node20.nodes = listOf(node30)
         node13.nodes = emptyList()
         node12.nodes = listOf(node02, node13)
         node11.nodes = listOf(node10, node12, node21)
-        node10.nodes = listOf(exit)
+        node10.nodes = emptyList()
         node03.nodes = emptyList()
         node02.nodes = listOf(node03)
         node01.nodes = listOf(node11)
@@ -66,33 +66,34 @@ class MazeProblem {
     }
 
     fun findTheExitNode() {
+        val exitNode = findTheNode()
+        println("=".repeat(100))
+        if (exitNode == null) {
+            println("No exit for the current maze")
+        } else {
+            println("Exit node found at $exitNode")
+        }
+        println("=".repeat(100))
+    }
+
+    private fun findTheNode(): Node? {
         val nodeStack = arrayListOf(head)
-        var lastElement: Node? = null
-        var numberOfIterations = 0
-        mainLoop@ while (true) {
+        mainLoop@ do {
             val item = nodeStack.removeLast()
-            println("Current Stack:" +
-                    "\n${nodeStack}" +
-                    "\nNumber of iteration $numberOfIterations" +
-                    "\nCurrent element $item Last element $lastElement"
-            )
-            if (item == lastElement) {
-                println("No exit found for the current maze")
-                break@mainLoop
-            }
-            ++numberOfIterations
-            lastElement = item
             if (item != null) {
                 for (node in item.nodes) {
                     if (node == exit) {
-                        println("Found the exit at $item")
-                        break@mainLoop
+                        return item
                     } else {
-                        nodeStack.add(node)
+                        if (!node.isVisited) {
+                            node.isVisited = true
+                            nodeStack.add(node)
+                        }
                     }
                 }
             }
-        }
+        } while (nodeStack.isNotEmpty())
+        return null
     }
 
     fun showMazeDetails() {
