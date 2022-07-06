@@ -1,9 +1,10 @@
 package linked_list.singly
 
 import Utils
+import linked_list.LinkedList
 import linked_list.Node
 
-class SinglyLinkedListImpl: SinglyLinkedList {
+class SinglyLinkedListImpl: LinkedList<Node> {
     private var head: Node? = null
     private var linkedListSize: Int = 0
 

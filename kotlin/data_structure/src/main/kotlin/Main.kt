@@ -1,6 +1,7 @@
+import linked_list.DoublyNode
+import linked_list.LinkedList
+import linked_list.Node
 import linked_list.doubly.DoubleLinkedListImpl
-import linked_list.doubly.DoublyLinkedList
-import linked_list.singly.SinglyLinkedList
 import linked_list.singly.SinglyLinkedListImpl
 import queue.Queue
 import queue.QueueImpl
@@ -31,11 +32,11 @@ fun main() {
                         "\n4. Doubly Circular Linked List"
             )) {
                 1 -> {
-                    val singlyLinkedList: SinglyLinkedList = SinglyLinkedListImpl()
+                    val singlyLinkedList: LinkedList<Node> = SinglyLinkedListImpl()
                     singlyLinkedList.startLinkedList()
                 }
                 2 -> {
-                    val doublyLinkedList: DoublyLinkedList = DoubleLinkedListImpl()
+                    val doublyLinkedList: LinkedList<DoublyNode> = DoubleLinkedListImpl()
                     doublyLinkedList.startLinkedList()
                 }
                 3 -> {}

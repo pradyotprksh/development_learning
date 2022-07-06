@@ -1,4 +1,4 @@
-package practice.maze
+package maze
 
 data class Node(val indices: Pair<Int, Int>, var nodes: List<Node> = emptyList(), var isVisited: Boolean = false) {
     override fun toString(): String = "Node(${indices.first},${indices.second})"

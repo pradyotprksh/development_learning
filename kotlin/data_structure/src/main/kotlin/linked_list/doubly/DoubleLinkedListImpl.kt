@@ -1,8 +1,9 @@
 package linked_list.doubly
 
 import linked_list.DoublyNode
+import linked_list.LinkedList
 
-class DoubleLinkedListImpl: DoublyLinkedList {
+class DoubleLinkedListImpl: LinkedList<DoublyNode> {
     private var head: DoublyNode? = null
     private var linkedListSize: Int = 0
 

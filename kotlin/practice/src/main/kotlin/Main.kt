@@ -1,4 +1,4 @@
-import practice.maze.MazeProblem
+import maze.MazeProblem
 
 fun main() {
     when (Utils.readInput(
