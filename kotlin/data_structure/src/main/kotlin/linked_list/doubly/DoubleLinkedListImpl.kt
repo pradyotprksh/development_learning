@@ -110,11 +110,42 @@ class DoubleLinkedListImpl: DoublyLinkedList {
     }
 
     override fun deleteFirst(): DoublyNode? {
-        TODO("Not yet implemented")
+        val temp = head
+        if (head == null) {
+            println("OOPS!! Linked list is empty. Please add few elements.")
+        } else {
+            --linkedListSize
+            if (head?.next == null) {
+                println("Only one element is available in the DoublyLinkedList, deleting the DoublyLinkedList data")
+                deleteLinkedList()
+            } else {
+                println("Deleting $temp node at first from linked list")
+                head = head?.next
+                showLinkedListDetails()
+            }
+        }
+        return temp
     }
 
     override fun deleteLast(): DoublyNode? {
-        TODO("Not yet implemented")
+        var temp = head
+        if (head == null) {
+            println("OOPS!! Linked list is empty. Please add few elements.")
+        } else {
+            --linkedListSize
+            if (head?.next == null) {
+                println("Only one element is available in the DoublyLinkedList, deleting the DoublyLinkedList data")
+                deleteLinkedList()
+            } else {
+                while (temp?.next?.next != null) {
+                    temp = temp.next
+                }
+                println("Deleting ${temp?.next} node at end from linked list")
+                temp?.next = null
+                showLinkedListDetails()
+            }
+        }
+        return temp
     }
 
     override fun deleteMiddle(toDelete: DoublyNode): DoublyNode? {

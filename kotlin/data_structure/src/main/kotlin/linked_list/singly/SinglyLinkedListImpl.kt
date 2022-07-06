@@ -117,7 +117,6 @@ class SinglyLinkedListImpl: SinglyLinkedList {
                 deleteLinkedList()
             } else {
                 println("Deleting $temp node at first from linked list")
-                temp = head
                 head = head?.next
                 showLinkedListDetails()
             }
