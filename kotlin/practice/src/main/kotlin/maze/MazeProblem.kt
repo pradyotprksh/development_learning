@@ -67,13 +67,11 @@ class MazeProblem {
 
     fun findTheExitNode() {
         val exitNode = findTheNode()
-        println("=".repeat(100))
         if (exitNode == null) {
             println("No exit for the current maze")
         } else {
             println("Exit node found at $exitNode")
         }
-        println("=".repeat(100))
     }
 
     private fun findTheNode(): Node? {
