@@ -149,7 +149,24 @@ class DoubleLinkedListImpl: DoublyLinkedList {
     }
 
     override fun deleteMiddle(toDelete: DoublyNode): DoublyNode? {
-        TODO("Not yet implemented")
+        var temp = head
+        if (head == null) {
+            println("OOPS!! Linked list is empty. Please add few elements.")
+        } else {
+            --linkedListSize
+            while (temp?.next?.data != toDelete.data && temp != null) {
+                temp = temp.next
+            }
+            if (temp != null) {
+                println("Deleting ${temp.next} node from linked list")
+                --linkedListSize
+                temp.next = temp.next?.next
+                showLinkedListDetails()
+            } else {
+                println("OOPS!! No node with $toDelete details was found")
+            }
+        }
+        return temp
     }
 
     override fun showLinkedListDetails() {
