@@ -2,21 +2,63 @@ package hackerrank
 
 class Arrays {
     fun solveAllProblems() {
-        hourglassSum()
+        println("Solution for hour glass sum problem")
+        val hourglassSumArr = arrayOf(
+            arrayOf(1, 1, 1, 0, 0, 0),
+            arrayOf(0, 1, 0, 0, 0, 0),
+            arrayOf(1, 1, 1, 0, 0, 0),
+            arrayOf(0, 0, 2, 4, 4, 0),
+            arrayOf(0, 0, 0, 2, 0, 0),
+            arrayOf(0, 0, 1, 2, 4, 0),
+        )
+        printHourGlass(hourglassSumArr)
+        println("The max sum in the given array is ${hourglassSum(hourglassSumArr)}")
+        println()
+
+        println("Solution for rotate left problem")
+        val leftRotationArr = arrayOf(1, 2, 3, 4, 5)
+        println("Using array ${leftRotationArr.toList()}")
+        val numberOfTurns = (1..10).random()
+        println("After $numberOfTurns rotation new array is ${rotLeft(leftRotationArr, numberOfTurns).toList()}")
+        println()
+
+        println("Solution for minimum bribes")
+        val minimumBribesArr = arrayOf(1, 2, 5, 3, 7, 8, 6, 4)
+        println("Using array ${minimumBribesArr.toList()}")
+        minimumBribes(minimumBribesArr)
     }
 
-    // https://www.hackerrank.com/challenges/2d-array/problem?isFullScreen=true&h_l=interview&playlist_slugs%5B%5D=interview-preparation-kit&playlist_slugs%5B%5D=arrays
-    private fun hourglassSum() {
-        println("Solution for hour glass sum problem")
-        val arr = listOf(
-            listOf(1, 1, 1, 0, 0, 0),
-            listOf(0, 1, 0, 0, 0, 0),
-            listOf(1, 1, 1, 0, 0, 0),
-            listOf(0, 0, 2, 4, 4, 0),
-            listOf(0, 0, 0, 2, 0, 0),
-            listOf(0, 0, 1, 2, 4, 0),
-        )
-        printHourGlass(arr)
+    private fun minimumBribes(q: Array<Int>) {
+        var numberOfBribes = 0
+        for (i in q.indices) {
+            var bribe = 0
+            if (i < q[i] - 1) bribe = q[i] - (i + 1)
+            if (bribe > 2) {
+                println("Too chaotic")
+                break
+            } else {
+                numberOfBribes += bribe
+                if (i == q.size - 1) {
+                    println(numberOfBribes)
+                }
+            }
+        }
+    }
+
+    private fun rotLeft(a: Array<Int>, d: Int): Array<Int> {
+        if (d % a.size != 0) {
+            for (i in 1..d) {
+                val first = a.first()
+                for (index in 1 until a.size) {
+                    a[index - 1] = a[index]
+                }
+                a[a.size - 1] = first
+            }
+        }
+        return a
+    }
+
+    private fun hourglassSum(arr: Array<Array<Int>>): Int {
         var maxSum = Int.MIN_VALUE
         for (row in arr.indices) {
             if (row + 2 >= arr.size) {
@@ -40,10 +82,10 @@ class Arrays {
                 maxSum = maxOf(sum, maxSum)
             }
         }
-        println("The max sum in the given array is $maxSum")
+        return maxSum
     }
 
-    private fun printHourGlass(arr: List<List<Int>>) {
+    private fun printHourGlass(arr: Array<Array<Int>>) {
         println("The array which we are going to use is")
         var message = ""
         for (item in arr) {
