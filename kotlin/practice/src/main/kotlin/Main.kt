@@ -1,5 +1,6 @@
 import hackerrank.HackerRank
 import maze.MazeProblem
+import random.Random
 
 /**
  * Please keep in mind that these are not the best solution out there for the questions,
@@ -12,7 +13,8 @@ fun main() {
     when (Utils.readInput(
         "Please select the practice question:" +
                 "\n1. Maze" +
-                "\n2. HackerRank"
+                "\n2. HackerRank" +
+                "\n3. Random"
     )) {
         1 -> {
             val mazeProblem = MazeProblem()
@@ -23,6 +25,10 @@ fun main() {
         2 -> {
             val hackerRank = HackerRank()
             hackerRank.solveAllProblems()
+        }
+        3 -> {
+            val random = Random()
+            random.start()
         }
         else -> println("Please enter a valid option.")
     }

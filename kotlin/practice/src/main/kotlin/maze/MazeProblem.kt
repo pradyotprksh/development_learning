@@ -76,7 +76,7 @@ class MazeProblem {
 
     private fun findTheNode(): Node? {
         val nodeStack = arrayListOf(head)
-        mainLoop@ do {
+        do {
             val item = nodeStack.removeLast()
             if (item != null) {
                 for (node in item.nodes) {
