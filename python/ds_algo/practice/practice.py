@@ -1,4 +1,8 @@
+"""Practice questions"""
+
+
 def run_practice_problems():
+    """All practice questions calls are added here"""
     print(f"{_reverse_string('Pradyot')}")
     print(f"{_merge_sorted_array([1, 2, 3, 7], [4])}")
     print(f"{_two_sum([3, 1, 4, 2], 7)}")
@@ -46,11 +50,10 @@ def _merge_sorted_array(arr1, arr2):
 
 def _two_sum(arr, target):
     diff = {}
-    for i in range(0, len(arr)):
-        if arr[i] in diff.values():
-            return [get_key(diff, arr[i]), i]
-        else:
-            diff[i] = target - arr[i]
+    for i, item in enumerate(arr):
+        if item in diff.values():
+            return [get_key(diff, item), i]
+        diff[i] = target - item
     return [-1, -1]
 
 
@@ -67,8 +70,8 @@ def _max_sub_array(arr):
 
 
 def _move_zeroes(arr):
-    for i in range(0, len(arr)):
-        if arr[i] == 0:
+    for i, item in enumerate(arr):
+        if item == 0:
             arr.append(arr.pop(i))
     return arr
 
@@ -78,20 +81,20 @@ def _contains_duplicate(arr):
     for item in arr:
         if item in items:
             return True
-        else:
-            items.add(item)
+        items.add(item)
     return False
 
 
 def _rotate(arr, k):
     if k % len(arr) == 0:
         return arr
-    for i in range(0, k):
+    for _ in range(0, k):
         arr.insert(0, arr.pop())
     return arr
 
 
 def get_key(my_dict, val):
+    """Get the key from the value in the dictionary"""
     for key, value in my_dict.items():
         if val == value:
             return key
