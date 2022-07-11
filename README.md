@@ -6,19 +6,14 @@ Will be adding new projects for different platforms as I move forward and learn.
 
 Each project is divided into folders based on the platforms and the courses. And also added the final screenshot of the project (if possible).
 
-I will be getting ideas of the project which I want to work on and will be creating the project and marking it as ⚠️, this doesn't mean I will be working on that. Check commits for the project I am currently working on. The only intention is keep track of the projects I want to work on.
+README will be only updated when the project/learning is completed. So make sure to check the folders for more 😁.
 
 [<img src="https://img.shields.io/badge/Dart-0175C2?style=for-the-badge&logo=dart&logoColor=white" />](https://github.com/pradyotprksh/development_learning/tree/main/dart)
   - [data_structures](https://github.com/pradyotprksh/development_learning/tree/main/dart/data_structures)
   - [algorithms](https://github.com/pradyotprksh/development_learning/tree/main/dart/algorithms)
-  - ⚠️ [Stack Exchange SDK](https://github.com/pradyotprksh/development_learning/tree/main/dart/stackexchange_api)
 
 [<img src="https://img.shields.io/badge/Flutter-02569B?style=for-the-badge&logo=flutter&logoColor=white" />](https://github.com/pradyotprksh/development_learning/tree/main/flutter)
   - [snake_ladders](https://github.com/pradyotprksh/development_learning/tree/main/flutter/snake_ladders)
-  - ⚠️ [flublog](https://github.com/pradyotprksh/development_learning/tree/main/flutter/flublog)
-  - ⚠️ [stackoverflow](https://github.com/pradyotprksh/development_learning/tree/main/flutter/stackoverflow)
-  - ⚠️ [second_hand_clothes](https://github.com/pradyotprksh/development_learning/tree/main/flutter/second_hand_clothes)
-  - ⚠️ [bang_bang](https://github.com/pradyotprksh/development_learning/tree/main/flutter/bang_bang)
   - [clean_architecture_example](https://github.com/pradyotprksh/development_learning/tree/main/flutter/clean_architecture_example)
 
 [<img src="https://img.shields.io/badge/iOS-E34C26?style=for-the-badge&logo=ios&logoColor=white" />](https://github.com/pradyotprksh/development_learning/tree/main/ios)
@@ -56,14 +51,12 @@ I will be getting ideas of the project which I want to work on and will be creat
 
 [<img src="https://img.shields.io/badge/Kotlin-0095D5?&style=for-the-badge&logo=kotlin&logoColor=white" />](https://github.com/pradyotprksh/development_learning/tree/main/kotlin)
   - [basics](https://github.com/pradyotprksh/development_learning/tree/main/kotlin/basics)
-  - ⚠️ [Data Structure](https://github.com/pradyotprksh/development_learning/tree/main/kotlin/data_structure)
-  - [Practice Questions](https://github.com/pradyotprksh/development_learning/tree/main/kotlin/practice)
-
+  
 [<img src="https://img.shields.io/badge/Python-FFD43B?style=for-the-badge&logo=python&logoColor=blue" />](https://github.com/pradyotprksh/development_learning/tree/main/python)
   - [2022 Bootcamp Udemy Python Course](https://github.com/pradyotprksh/development_learning/tree/main/python/UdemyCourse/2022_Python_Bootcamp) 
-  - ⚠️ [PyBlog 🐍](https://github.com/pradyotprksh/development_learning/tree/main/python/pyblog)
+  - [PyBlog 🐍](https://github.com/pradyotprksh/development_learning/tree/main/python/pyblog)
     - For more details go to this [link](https://pradyotprksh4.medium.com/pyblog-python-firebase-448233b9baa2)
-  - [Practice](https://github.com/pradyotprksh/development_learning/tree/main/python/practice)
+  - [ds_algo](https://github.com/pradyotprksh/development_learning/tree/main/python/ds_algo)
 
 ---
 
