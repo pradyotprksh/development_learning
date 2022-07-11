@@ -108,7 +108,7 @@ class SinglyLinkedListImpl: LinkedList<Node> {
     }
 
     override fun deleteFirst(): Node? {
-        var temp = head
+        val temp = head
         if (head == null) {
             println("OOPS!! Linked list is empty. Please add few elements before deleting.")
         } else {

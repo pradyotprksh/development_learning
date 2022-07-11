@@ -26,3 +26,11 @@ jobs:
       - uses: ricardochaves/python-lint@master
         with:
           python-root-list: "python/pyblog"
+  ds_algo:
+    name: ds_algo Code Checker
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: ricardochaves/python-lint@master
+        with:
+          python-root-list: "python/ds_algo"
