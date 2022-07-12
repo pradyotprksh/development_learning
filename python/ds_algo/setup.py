@@ -14,9 +14,12 @@ setup(
     author='Pradyot Prakash',
     author_email='pradyotprksh4@gmail.com',
     keywords='basics, ds, algo, practice',
+    data_files=[(
+        'data', []
+    )],
     packages=find_packages(
         include=[
-            'practice',
+            'src', 'practice', 'linked_list'
         ]
     ),
     install_requires=[],
