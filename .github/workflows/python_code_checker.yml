@@ -1,36 +1,36 @@
-on:
-  push:
-    branches:
-      - main
-    paths:
-      - python/**
-name: Python Projects
-jobs:
-  practice:
-    name: practice Code Checker
-    runs-on: ubuntu-latest
-    steps:
-      - name: Cancel Previous Runs
-        uses: styfle/cancel-workflow-action@0.9.1
-        with:
-          access_token: ${{ github.token }}
-      - uses: actions/checkout@v1
-      - uses: ricardochaves/python-lint@master
-        with:
-          python-root-list: "python/practice"
-  pyblog:
-    name: pyblog Code Checker
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v1
-      - uses: ricardochaves/python-lint@master
-        with:
-          python-root-list: "python/pyblog"
-  ds_algo:
-    name: ds_algo Code Checker
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v1
-      - uses: ricardochaves/python-lint@master
-        with:
-          python-root-list: "python/ds_algo"
+#on:
+#  push:
+#    branches:
+#      - main
+#    paths:
+#      - python/**
+#name: Python Projects
+#jobs:
+#  practice:
+#    name: practice Code Checker
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: Cancel Previous Runs
+#        uses: styfle/cancel-workflow-action@0.9.1
+#        with:
+#          access_token: ${{ github.token }}
+#      - uses: actions/checkout@v1
+#      - uses: ricardochaves/python-lint@master
+#        with:
+#          python-root-list: "python/practice"
+#  pyblog:
+#    name: pyblog Code Checker
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@v1
+#      - uses: ricardochaves/python-lint@master
+#        with:
+#          python-root-list: "python/pyblog"
+#  ds_algo:
+#    name: ds_algo Code Checker
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@v1
+#      - uses: ricardochaves/python-lint@master
+#        with:
+#          python-root-list: "python/ds_algo"
