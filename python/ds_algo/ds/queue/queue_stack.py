@@ -34,7 +34,7 @@ def start_with_queue_stack():
 
     queue = None
     user_selection = 1
-    while user_selection != 4:
+    while user_selection in [1, 2, 3]:
         user_selection = src.UserInput.get_user_selection(
             "**THIS IMPLEMENTATION IS DONE USING STACK AS A SUPER CLASS SO YOU MIGHT SEE LOGS FROM STACK CLASSES, "
             "BUT THE REQUIREMENT IS FULL FILLED FOR USING A STACK AS A QUEUE**"
@@ -42,7 +42,6 @@ def start_with_queue_stack():
             "\n1. Peek"
             "\n2. Enqueue"
             "\n3. Dequeue"
-            "\n4. Done"
         )
         if user_selection == 1:
             if queue is None:

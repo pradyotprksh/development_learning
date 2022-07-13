@@ -53,13 +53,12 @@ def start_with_queue_linked_list():
 
     queue = None
     user_selection = 1
-    while user_selection != 4:
+    while user_selection in [1, 2, 3]:
         user_selection = src.UserInput.get_user_selection(
             "Please select an option"
             "\n1. Peek"
             "\n2. Enqueue"
             "\n3. Dequeue"
-            "\n4. Done"
         )
         if user_selection == 1:
             if queue is None:

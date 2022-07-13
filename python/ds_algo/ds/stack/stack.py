@@ -35,13 +35,12 @@ def start_with_stack_arrays():
 
     stack = None
     user_selection = 1
-    while user_selection != 4:
+    while user_selection in [1, 2, 3]:
         user_selection = src.UserInput.get_user_selection(
             "Please select an option"
             "\n1. Peek"
             "\n2. Push"
             "\n3. Pop"
-            "\n4. Done"
         )
         if user_selection == 1:
             if stack is None:

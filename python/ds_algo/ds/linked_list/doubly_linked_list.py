@@ -98,7 +98,7 @@ def start_with_doubly_linked_list():
     linked_list = None
 
     user_selection = 1
-    while user_selection != 6:
+    while user_selection in [1, 2, 3, 4, 5]:
         user_selection = src.UserInput.get_user_selection(
             "Please select an option"
             "\n1. Append"
@@ -106,7 +106,6 @@ def start_with_doubly_linked_list():
             "\n3. Insert"
             "\n4. Delete"
             "\n5. Reverse"
-            "\n6. Done"
         )
         if user_selection == 1:
             value_input = src.UserInput.get_user_selection("Please enter the value")
