@@ -57,43 +57,43 @@ class BinarySearchTree:
 
     def remove(self, value):
         # Not able to understand
-        if self.root is None:
-            print("BST is empty")
-            return
-        found_node = self.root
-        parent_node = None
-        while found_node is not None:
-            if found_node.data == value:
-                # No right child for found_node
-                if found_node.right is None:
-                    if parent_node is None:
-                        self.root = found_node.left
-                    else:
-                        # parent value is > found_node value
-                        if parent_node.data > found_node.data:
-                            parent_node.right = found_node.left
-                        else:
-                            parent_node.left = found_node.left
-                # No left child for the found_node right child
-                elif found_node.right.left is None:
-                    if parent_node is None:
-                        self.root = found_node.left
-                    else:
-                        # parent is > found_node value
-                        if parent_node.data > found_node.data:
-                            parent_node.right = found_node.left
-                        else:
-                            parent_node.left = found_node.left
-                # Right child has a left child
-                else:
-                    # 😅
-                    pass
-            else:
-                parent_node = found_node
-                if found_node.data < value:
-                    found_node = found_node.right
-                else:
-                    found_node = found_node.left
+        # 😅
+        pass
+        # if self.root is None:
+        #     print("BST is empty")
+        #     return
+        # found_node = self.root
+        # parent_node = None
+        # while found_node is not None:
+        #     if found_node.data == value:
+        #         # No right child for found_node
+        #         if found_node.right is None:
+        #             if parent_node is None:
+        #                 self.root = found_node.left
+        #             else:
+        #                 # parent value is > found_node value
+        #                 if parent_node.data > found_node.data:
+        #                     parent_node.right = found_node.left
+        #                 else:
+        #                     parent_node.left = found_node.left
+        #         # No left child for the found_node right child
+        #         elif found_node.right.left is None:
+        #             if parent_node is None:
+        #                 self.root = found_node.left
+        #             else:
+        #                 # parent is > found_node value
+        #                 if parent_node.data > found_node.data:
+        #                     parent_node.right = found_node.left
+        #                 else:
+        #                     parent_node.left = found_node.left
+        #         # Right child has a left child
+        #         else:
+        #     else:
+        #         parent_node = found_node
+        #         if found_node.data < value:
+        #             found_node = found_node.right
+        #         else:
+        #             found_node = found_node.left
 
     def print_binary_search_tree(self):
         print(f"{self.root}")
