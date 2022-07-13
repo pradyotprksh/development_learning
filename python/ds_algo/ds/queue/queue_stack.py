@@ -1,5 +1,5 @@
+from ds import stack
 import src
-import stack
 
 
 class QueueStack(stack.Stack):
