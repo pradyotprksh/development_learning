@@ -11,6 +11,39 @@ def run_practice_problems():
     print(f"{_contains_duplicate([1, 2, 3, 4])}")
     print(f"{_rotate([1, 2, 3, 4, 5, 6, 7], 3)}")
     print(f"{_rotate([-1, -100, 3, 99], 2)}")
+    arr = [2, 3, 4, 5, 6, 7, 6, 5, 4]
+    print(f"{_find_peak(arr)}")
+    print(f"{_find_peak_2(arr, len(arr), 0, len(arr) - 1)}")
+
+
+def _find_peak_2(arr, n, low, high):
+    low = low
+    high = high
+    mid = int((low + high) / 2)
+
+    if arr[mid - 1] <= arr[mid] and arr[mid + 1] <= arr[mid]:
+        return arr[mid]
+    elif arr[mid - 1] > arr[mid]:
+        return _find_peak_2(arr, n, low=low, high=mid - 1)
+    elif arr[mid + 1] > arr[mid]:
+        return _find_peak_2(arr, n, low=mid + 1, high=high)
+
+
+def _find_peak(arr):
+    """Fina a peak if it exists"""
+    """if and only if arr[i] >= arr[i-1] && arr[i] >= arr[i+1] then arr[i] is a peak"""
+    """if no left or right element then arr[i] >= arr[i-1] for left and arr[i] >= arr[i+1] for right"""
+    """Solutions:"""
+    """1. Straightforward solution is traversal with O(n)"""
+    """2. Divide and conquer"""
+    length = int(len(arr) / 2)
+    print(f"length={length} arr={arr}")
+    if length - 1 > 0 and arr[length] < arr[length - 1]:
+        return _find_peak(arr[:length])
+    elif length + 1 < len(arr) and arr[length] < arr[length + 1]:
+        return _find_peak(arr[length:])
+    else:
+        return arr[length]
 
 
 def _reverse_string(input_str):
