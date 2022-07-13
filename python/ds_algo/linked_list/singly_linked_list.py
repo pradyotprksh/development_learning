@@ -61,6 +61,17 @@ class SinglyLinkedList:
     def __str__(self) -> str:
         return f"{self.head} length={self.length}"
 
+    def reverse(self):
+        prev_node = None
+        self.tail = self.head
+        next_node = self.head.next
+        while self.head.next is not None:
+            self.head.next = prev_node
+            prev_node = self.head
+            self.head = next_node
+            next_node = self.head.next
+        self.head.next = prev_node
+
 
 class Node:
     def __init__(self, data, next=None):
@@ -77,14 +88,15 @@ def start_with_singly_linked_list():
     linked_list = None
 
     user_selection = 1
-    while user_selection != 5:
+    while user_selection != 6:
         user_selection = src.UserInput.get_user_selection(
             "Please select an option"
             "\n1. Append"
             "\n2. Prepend"
             "\n3. Insert"
             "\n4. Delete"
-            "\n5. Done"
+            "\n5. Reverse"
+            "\n6. Done"
         )
         if user_selection == 1:
             value_input = src.UserInput.get_user_selection("Please enter the value")
@@ -112,5 +124,10 @@ def start_with_singly_linked_list():
                 print("Linked list is empty, create one first")
             else:
                 linked_list.remove(index=index_input)
+        elif user_selection == 5:
+            if linked_list is None:
+                print("Linked list is empty, create one first")
+            else:
+                linked_list.reverse()
         if linked_list is not None:
             linked_list.print_linked_list()
