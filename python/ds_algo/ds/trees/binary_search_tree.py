@@ -105,8 +105,8 @@ class BinarySearchTree:
                     while left_most_node.left is not None:
                         left_most_node_parent = left_most_node
                         left_most_node = left_most_node.left
-                    # whatever is there is in the left most left we move it to left most parent's left
-                    left_most_node_parent.left = left_most_node.left
+                    # whatever is there is in the left most right we move it to left most parent's left
+                    left_most_node_parent.left = left_most_node.right
                     # we make the node's left and right to left most node's left and right
                     left_most_node.left = current_node.left
                     left_most_node.right = current_node.right
