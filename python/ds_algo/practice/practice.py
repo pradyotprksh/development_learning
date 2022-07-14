@@ -1,19 +1,29 @@
 """Practice questions"""
+from .document_distance_algorithm import DocumentDistanceAlgorithm
 
 
 def run_practice_problems():
     """All practice questions calls are added here"""
-    print(f"{_reverse_string('Pradyot')}")
-    print(f"{_merge_sorted_array([1, 2, 3, 7], [4])}")
-    print(f"{_two_sum([3, 1, 4, 2], 7)}")
-    print(f"{_max_sub_array([5, 4, -1, 7, 8])}")
-    print(f"{_move_zeroes([0, 1, 0, 3, 12])}")
-    print(f"{_contains_duplicate([1, 2, 3, 4])}")
-    print(f"{_rotate([1, 2, 3, 4, 5, 6, 7], 3)}")
-    print(f"{_rotate([-1, -100, 3, 99], 2)}")
+    print(f"_reverse_string {_reverse_string('Pradyot')}")
+    print(f"_merge_sorted_array {_merge_sorted_array([1, 2, 3, 7], [4])}")
+    print(f"_two_sum {_two_sum([3, 1, 4, 2], 7)}")
+    print(f"_max_sub_array {_max_sub_array([5, 4, -1, 7, 8])}")
+    print(f"_move_zeroes {_move_zeroes([0, 1, 0, 3, 12])}")
+    print(f"_contains_duplicate {_contains_duplicate([1, 2, 3, 4])}")
+    print(f"_rotate {_rotate([1, 2, 3, 4, 5, 6, 7], 3)}")
+    print(f"_rotate {_rotate([-1, -100, 3, 99], 2)}")
     arr = [2, 3, 4, 5, 6, 7, 6, 5, 4]
-    print(f"{_find_peak(arr)}")
-    print(f"{_find_peak_2(arr, len(arr), 0, len(arr) - 1)}")
+    print(f"_find_peak {_find_peak(arr)}")
+    print(f"_find_peak_2 {_find_peak_2(arr, len(arr), 0, len(arr) - 1)}")
+    document_distance = DocumentDistanceAlgorithm(
+        file1="Algorithms are fun and educating!\n"
+              "Solving the algorithms are as fun as writing about them.\n"
+              "Written by a random person",
+        file2="Algorithms are fun and educating!\n"
+              "Solving the algorithms are as fun as writing about them.\n"
+              "Written by Filip"
+    )
+    print(document_distance.get_document_distance())
 
 
 def _find_peak_2(arr, n, low, high):
