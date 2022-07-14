@@ -35,16 +35,17 @@ class Node:
         self.parent = None
         self.left = None
         self.right = None
+        self.sub_tree_size = 1
 
     def __str__(self) -> str:
         if self.left is None and self.right is None:
-            return f"{self.key}"
+            return f"{self.key}({self.sub_tree_size})"
         elif self.left is None:
-            return f"{self.key}-->[{self.right}]"
+            return f"{self.key}({self.sub_tree_size})-->[{self.right}]"
         elif self.right is None:
-            return f"[{self.left}]<--{self.key}"
+            return f"[{self.left}]<--{self.key}({self.sub_tree_size})"
         else:
-            return f"[{self.left}]<--{self.key}-->[{self.right}]"
+            return f"[{self.left}]<--{self.key}({self.sub_tree_size})-->[{self.right}]"
 
 
 class RunwayReservationSystem:
@@ -69,18 +70,49 @@ class RunwayReservationSystem:
                     break
                 if last_node.key > new_time.key:
                     if last_node.left is None:
-                        last_node.left = new_time
                         new_time.parent = last_node
+                        last_node.left = new_time
+
+                        update_size_pnt = new_time.parent
+                        while True:
+                            update_size_pnt.sub_tree_size += 1
+                            update_size_pnt = update_size_pnt.parent
+                            if update_size_pnt is None:
+                                break
                         break
                     else:
                         last_node = last_node.left
                 else:
                     if last_node.right is None:
-                        last_node.right = new_time
                         new_time.parent = last_node
+                        last_node.right = new_time
+
+                        update_size_pnt = new_time.parent
+                        while True:
+                            update_size_pnt.sub_tree_size += 1
+                            update_size_pnt = update_size_pnt.parent
+                            if update_size_pnt is None:
+                                break
                         break
                     else:
                         last_node = last_node.right
+
+    def number_of_planes_going_to_land(self, time):
+        temp = self.root
+        number_of_planes = 0
+        while True:
+            if temp is None:
+                break
+            if temp.key >= time:
+                number_of_planes += 1
+            if temp.key < time:
+                number_of_planes += 1
+                if temp.left is not None:
+                    number_of_planes += temp.left.sub_tree_size
+                temp = temp.right
+            else:
+                temp = temp.left
+        return number_of_planes
 
     def print_current_reservations(self):
         print(f"{self.root}")
@@ -88,9 +120,10 @@ class RunwayReservationSystem:
 
 def start_reservation_process():
     runway_reservation_system = RunwayReservationSystem()
-    for item in [49, 46, 41, 79, 42, 45]:
+    for item in [48, 45, 42, 84, 74, 100, 71, 82, 92, 105]:
         runway_reservation_system.add_new_flight_land_time(item)
         runway_reservation_system.print_current_reservations()
+    print(runway_reservation_system.number_of_planes_going_to_land(105))
 
     # Example with user input
     # user_selection = 1
