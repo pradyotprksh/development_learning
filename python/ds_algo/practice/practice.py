@@ -1,5 +1,13 @@
 """Practice questions"""
 from .document_distance_algorithm import DocumentDistanceAlgorithm
+from .runway_reservation_system import start_reservation_process
+
+
+"""
+Some of the problems are taken from
+https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-fall-2011/, contains 
+set of lectures related to algorithms.
+"""
 
 
 def run_practice_problems():
@@ -23,7 +31,9 @@ def run_practice_problems():
               "Solving the algorithms are as fun as writing about them.\n"
               "Written by Filip"
     )
-    print(document_distance.get_document_distance())
+    print(f"get_document_distance {document_distance.get_document_distance()}")
+    print("start_reservation_process")
+    start_reservation_process()
 
 
 def _find_peak_2(arr, n, low, high):

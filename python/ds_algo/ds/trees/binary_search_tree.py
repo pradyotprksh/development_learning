@@ -108,6 +108,7 @@ def start_with_binary_search_tree():
             "Please select an option"
             "\n1. Insert"
             "\n2. Lookup"
+            "\n3. Remove"
         )
         if user_selection == 1:
             value_input = src.UserInput.get_user_selection("Please enter the value")
@@ -124,5 +125,11 @@ def start_with_binary_search_tree():
                     print(f"Found node\n{node}")
                 else:
                     print(f"Couldn't found {value_input} in")
+        elif user_selection == 3:
+            value_input = src.UserInput.get_user_selection("Please enter the value")
+            if binary_search_tree is None:
+                print("Binary search tree is not created yet")
+            else:
+                binary_search_tree.remove(value_input)
         if binary_search_tree is not None:
             binary_search_tree.print_binary_search_tree()
