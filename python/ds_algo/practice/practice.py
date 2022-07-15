@@ -56,7 +56,7 @@ def _find_peak(arr):
     """Solutions:"""
     """1. Straightforward solution is traversal with O(n)"""
     """2. Divide and conquer"""
-    length = int(len(arr) / 2)
+    length = len(arr) // 2
     print(f"length={length} arr={arr}")
     if length - 1 > 0 and arr[length] < arr[length - 1]:
         return _find_peak(arr[:length])
