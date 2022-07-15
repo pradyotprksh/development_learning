@@ -27,12 +27,13 @@ class DocumentDistanceAlgorithm:
 
     def _compute_distance(self, hash_file1, hash_file2):
         # Copied the formula from the lecture
-        #     --    N1N2     --
-        # cos | ------------- |
-        #     | |N1N1|*|N2N2| |
-        #     --             --
+        #        --       N1N2        --
+        # arccos | ------------------- |
+        #        | sqrt(|N1N1|*|N2N2|) |
+        #        --                   --
         # where N is the inner product for a given dictionary
         # and 1 and 2 denotes the files
+        # Details on [arccos](https://www.math.net/arccos)
         numerator = self._compute_inner_product(hash_file1, hash_file2)
         denominator = math.sqrt(
             self._compute_inner_product(hash_file1, hash_file1) *
