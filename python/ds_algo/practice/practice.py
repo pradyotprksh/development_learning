@@ -2,7 +2,6 @@
 from .document_distance_algorithm import DocumentDistanceAlgorithm
 from .runway_reservation_system import start_reservation_process
 
-
 """
 Some of the problems are taken from
 https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-fall-2011/, contains 
@@ -34,6 +33,74 @@ def run_practice_problems():
     print(f"get_document_distance {document_distance.get_document_distance()}")
     print("start_reservation_process")
     start_reservation_process()
+    print(f"_sock_merchant {_sock_merchant([10, 20, 20, 10, 10, 30, 50, 10, 20])}")
+    print(f"_counting_valleys {_counting_valleys('DDUUUUDD')}")
+    print(f"_repeated_string {_repeated_string('aba', 10)}")
+    print(f"_jumping_on_clouds {_jumping_on_clouds([0, 0, 1, 0, 0, 1, 0])}")
+    print(f"_diagonal_difference {_diagonal_difference([[11, 2, 4], [4, 5, 6], [10, 8, -12]])}")
+
+
+def _diagonal_difference(arr):
+    pass
+
+
+def _jumping_on_clouds(c):
+    jumps = 0
+    i = 0
+    while i < len(c):
+        if i + 2 < len(c) and c[i + 2] == 0:
+            jumps += 1
+            i += 2
+        elif i + 1 < len(c) and c[i + 1] == 0:
+            jumps += 1
+            i += 1
+        else:
+            i += 1
+    return jumps
+
+
+def _sock_merchant(ar):
+    socks_details = {}
+    pairs = 0
+    for item in ar:
+        if item in socks_details.keys():
+            socks_details[item] = socks_details[item] + 1
+            if socks_details[item] == 2:
+                pairs += 1
+                socks_details[item] = 0
+        else:
+            socks_details[item] = 1
+    return pairs
+
+
+def _counting_valleys(path):
+    is_going_down = False
+    down_count = 0
+    valleys = 0
+    for step in path:
+        if step == 'D':
+            is_going_down = True
+            down_count += 1
+        else:
+            down_count -= 1
+            if is_going_down:
+                if down_count == 0:
+                    is_going_down = False
+                    valleys += 1
+    return valleys
+
+
+def _repeated_string(s, n):
+    num_as = 0
+    for c in s:
+        if c == 'a':
+            num_as += 1
+    total_as = n // len(s) * num_as
+    extra_char_len = n % len(s)
+    for i in range(0, extra_char_len):
+        if s[i] == 'a':
+            total_as += 1
+    return total_as
 
 
 def _find_peak_2(arr, n, low, high):
