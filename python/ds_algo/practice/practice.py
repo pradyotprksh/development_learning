@@ -42,6 +42,35 @@ def run_practice_problems():
     print(f"_mini_max_sum {_mini_max_sum([1, 2, 3, 4, 5])}")
     print(f"_birthday_cake_candles {_birthday_cake_candles([4, 4, 1, 3])}")
     print(f"_time_conversion {_time_conversion('12:01:00PM')}")
+    print(f"_grading_students {_grading_students([73, 67, 38, 33])}")
+    print(f"_count_apples_and_oranges {_count_apples_and_oranges(7, 11, 5, 15, [-2, 2, 1], [5, -6])}")
+    print(f"_is_palindrome {_is_palindrome('abbabba')}")
+
+
+def _is_palindrome(s):
+    if len(s) <= 1:
+        return True
+    return s[0] == s[-1] and _is_palindrome(s[1:len(s) - 1])
+
+
+def _count_apples_and_oranges(s, t, a, b, apples, oranges):
+    apple_landed = 0
+    orange_landed = 0
+    for apple in apples:
+        if s <= apple + a <= t:
+            apple_landed += 1
+    for orange in oranges:
+        if s <= orange + b <= t:
+            orange_landed += 1
+    return apple_landed, orange_landed
+
+
+def _grading_students(grades):
+    for index, grade in enumerate(grades):
+        next_div_five = (int(grade / 5) + 1) * 5
+        if next_div_five - grade < 3 and grade >= 38:
+            grades[index] = next_div_five
+    return grades
 
 
 def _birthday_cake_candles(candles):
