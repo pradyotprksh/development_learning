@@ -38,10 +38,62 @@ def run_practice_problems():
     print(f"_repeated_string {_repeated_string('aba', 10)}")
     print(f"_jumping_on_clouds {_jumping_on_clouds([0, 0, 1, 0, 0, 1, 0])}")
     print(f"_diagonal_difference {_diagonal_difference([[11, 2, 4], [4, 5, 6], [10, 8, -12]])}")
+    print(f"_staircase {_staircase(6)}")
+    print(f"_mini_max_sum {_mini_max_sum([1, 2, 3, 4, 5])}")
+    print(f"_birthday_cake_candles {_birthday_cake_candles([4, 4, 1, 3])}")
+    print(f"_time_conversion {_time_conversion('12:01:00PM')}")
+
+
+def _birthday_cake_candles(candles):
+    tallest = 1
+    current_tallest = candles[0]
+    for candle in candles[1:]:
+        if current_tallest == candle:
+            tallest += 1
+        elif current_tallest < candle:
+            current_tallest = candle
+            tallest = 1
+    return tallest
+
+
+def _time_conversion(s):
+    hour = s[:2]
+    am_pm = s[len(s) - 2:]
+    if am_pm == 'AM':
+        if hour == "12":
+            return "00" + s[2:len(s) - 2]
+        return hour + s[2:len(s) - 2]
+    else:
+        if hour == "12":
+            return s[:len(s) - 2]
+        return f"{12 + int(hour)}" + s[2:len(s) - 2]
+
+
+def _mini_max_sum(arr):
+    arr.sort()
+    min_sum = 0
+    max_sum = 0
+    for i, item in enumerate(arr):
+        if i == 0:
+            min_sum += item
+        elif i == len(arr) - 1:
+            max_sum += item
+        else:
+            min_sum += item
+            max_sum += item
+    print(min_sum, max_sum)
+
+
+def _staircase(n):
+    for i in range(1, n + 1):
+        print(" " * (n - i) + "#" * i)
 
 
 def _diagonal_difference(arr):
-    pass
+    diagonal_sum = 0
+    for i in range(0, len(arr)):
+        diagonal_sum += arr[i][i] - arr[i][len(arr) - 1 - i]
+    return abs(diagonal_sum)
 
 
 def _jumping_on_clouds(c):
