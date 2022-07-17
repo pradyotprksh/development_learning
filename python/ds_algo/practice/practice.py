@@ -45,6 +45,65 @@ def run_practice_problems():
     print(f"_grading_students {_grading_students([73, 67, 38, 33])}")
     print(f"_count_apples_and_oranges {_count_apples_and_oranges(7, 11, 5, 15, [-2, 2, 1], [5, -6])}")
     print(f"_is_palindrome {_is_palindrome('abbabba')}")
+    print(f"_get_total_x {_get_total_x([1], [100])}")
+    print(f"_breaking_records {_breaking_records([10, 5, 20, 20, 4, 5, 2, 25, 1])}")
+    print(f"_birthday {_birthday([1, 2, 1, 3, 2], 3, 2)}")
+    print(f"_divisible_sum_pairs {_divisible_sum_pairs(6, 3, [1, 3, 2, 6, 1, 2])}")
+    print(f"_day_of_programmer {_day_of_programmer(1800)}")
+
+
+# TODO: In-Progress
+def _day_of_programmer(year):
+    sep_day = 10
+    return f"{sep_day}.09.{year}"
+
+
+def _divisible_sum_pairs(n, k, ar):
+    pair = 0
+    for i in range(0, n):
+        for j in range(i + 1, n):
+            print(i, j, ar[i], ar[j], ar[i] + ar[j], k, (ar[i] + ar[j]) % k, pair)
+            if (ar[i] + ar[j]) % k == 0:
+                pair += 1
+    return pair
+
+
+def _birthday(s, d, m):
+    count = 0
+    for i in range(0, len(s)):
+        bar_sum = sum(s[i:m + i])
+        print(i, bar_sum)
+        if bar_sum == d:
+            count += 1
+    return count
+
+
+def _breaking_records(scores):
+    current_min = scores[0]
+    current_max = scores[0]
+    min_scores = 0
+    max_scores = 0
+    for i in range(1, len(scores)):
+        if scores[i] < current_min:
+            current_min = scores[i]
+            min_scores += 1
+        elif scores[i] > current_max:
+            current_max = scores[i]
+            max_scores += 1
+    return [max_scores, min_scores]
+
+
+def _get_total_x(a, b):
+    total_x = 0
+    for item_b in b:
+        is_divisible_all = True
+        for item_a in a:
+            if item_b % item_a != 0:
+                is_divisible_all = False
+                break
+        if is_divisible_all:
+            total_x += 1
+    return total_x
 
 
 def _is_palindrome(s):
