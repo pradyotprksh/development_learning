@@ -51,6 +51,39 @@ def run_practice_problems():
     print(f"_divisible_sum_pairs {_divisible_sum_pairs(6, 3, [1, 3, 2, 6, 1, 2])}")
     print(f"_day_of_programmer {_day_of_programmer(1800)}")
     print(f"_bon_appetit {_bon_appetit([3, 10, 2, 9], 1, 12)}")
+    print(f"_climbing_leaderboard {_climbing_leaderboard([100, 100, 50, 40, 40, 20, 10], [5, 25, 50, 120])}")
+
+
+# TODO: Fix Time Exceed error, optimise solution needed
+# https://www.hackerrank.com/challenges/climbing-the-leaderboard/problem?isFullScreen=true
+def _climbing_leaderboard(ranked, player):
+    current_leaderboard_rank = []
+    for i in range(0, len(ranked)):
+        if i - 1 >= 0:
+            if ranked[i] == ranked[i - 1]:
+                current_leaderboard_rank.append(current_leaderboard_rank[i - 1])
+            else:
+                current_leaderboard_rank.append(current_leaderboard_rank[i - 1] + 1)
+        else:
+            current_leaderboard_rank.append(1)
+
+    all_rank = []
+    last_found_i = len(ranked)
+    for score in player:
+        cs_rank = None
+        for i in range(0, last_found_i):
+            if score < ranked[i]:
+                continue
+            else:
+                last_found_i = i + 1
+                cs_rank = current_leaderboard_rank[i]
+                break
+        if cs_rank is None:
+            all_rank.append(current_leaderboard_rank[-1] + 1)
+        else:
+            all_rank.append(cs_rank)
+
+    return all_rank
 
 
 def _bon_appetit(bill, k, b):
