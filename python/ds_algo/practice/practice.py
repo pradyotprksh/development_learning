@@ -50,6 +50,22 @@ def run_practice_problems():
     print(f"_birthday {_birthday([1, 2, 1, 3, 2], 3, 2)}")
     print(f"_divisible_sum_pairs {_divisible_sum_pairs(6, 3, [1, 3, 2, 6, 1, 2])}")
     print(f"_day_of_programmer {_day_of_programmer(1800)}")
+    print(f"_bon_appetit {_bon_appetit([3, 10, 2, 9], 1, 12)}")
+
+
+def _bon_appetit(bill, k, b):
+    actual_split = 0
+    for i, item in enumerate(bill):
+        if i == k:
+            continue
+        actual_split += item
+
+    print(actual_split)
+
+    if actual_split / 2 == b:
+        return "Bon Appetit"
+    else:
+        return int(b - (actual_split / 2))
 
 
 # TODO: In-Progress
