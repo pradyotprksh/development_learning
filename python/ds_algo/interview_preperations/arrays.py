@@ -2,13 +2,25 @@
 def start_with_array_questions():
     print("Starting with arrays questions")
     print(f"_left_rotation {_left_rotation([1, 2, 3, 4, 5], 4)}")
+    arr = [[1, 1, 1, 0, 0, 0], [0, 1, 0, 0, 0, 0], [1, 1, 1, 0, 0, 0],
+           [0, 0, 2, 4, 4, 0], [0, 0, 0, 2, 0, 0], [0, 0, 1, 2, 4, 0]]
     print(
         f"_hourglass_sum "
-        f"{_hourglass_sum([[1, 1, 1, 0, 0, 0], [0, 1, 0, 0, 0, 0], [1, 1, 1, 0, 0, 0], [0, 0, 2, 4, 4, 0], [0, 0, 0, 2, 0, 0], [0, 0, 1, 2, 4, 0]])}")
+        f"{_hourglass_sum(arr)}")
     print("_minimum_bribes")
     _minimum_bribes([1, 2, 5, 3, 7, 8, 6, 4])
     print(f"_minimum_swaps {_minimum_swaps([1, 3, 5, 2, 4, 6, 7])}")
-    print(f"_array_manipulation {_array_manipulation(10, [[1, 5, 3], [4, 8, 7], [6, 9, 1]])}")
+    queries = []
+    try:
+        with open('data/array_manipulation_test', 'r+') as file_data:
+            data = file_data.read().split("\n")
+            n = int(data[0].split(" ")[0])
+            for i in range(1, len(data)):
+                a, b, k = data[i].split(" ")
+                queries.append([int(a), int(b), int(k)])
+            print(f"_array_manipulation {_array_manipulation(n, queries)}")
+    except FileNotFoundError:
+        pass
 
 
 # https://www.hackerrank.com/challenges/ctci-array-left-rotation/problem?isFullScreen=true&h_l=interview&playlist_slugs%5B%5D=interview-preparation-kit&playlist_slugs%5B%5D=arrays
@@ -62,14 +74,13 @@ def _minimum_swaps(arr):
 
 
 # https://www.hackerrank.com/challenges/crush/problem?isFullScreen=true&h_l=interview&playlist_slugs%5B%5D=interview-preparation-kit&playlist_slugs%5B%5D=arrays
-# TODO: Runtime error for some of the test cases
+# Runtime error for some test cases, it's working here but not in hackerrank
 def _array_manipulation(n, queries):
-    sum_arr = []
-    for _ in range(0, n):
-        sum_arr.append(0)
+    sum_arr = [0] * n
     for i in range(0, len(queries)):
-        sum_arr[queries[i][0] - 1] += queries[i][2]
-        if queries[i][1] < len(sum_arr):
+        if 0 <= queries[i][0] - 1 < len(sum_arr):
+            sum_arr[queries[i][0] - 1] += queries[i][2]
+        if 0 <= queries[i][1] < len(sum_arr):
             sum_arr[queries[i][1]] -= queries[i][2]
     max_sum = sum_arr[0]
     for i in range(1, len(sum_arr)):
