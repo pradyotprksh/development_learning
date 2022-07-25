@@ -13,10 +13,33 @@ def start_with_dictionaries_hashmap():
     print(f"_sherlock_and_anagrams {_sherlock_and_anagrams('ifailuhkqq')}")
     print(f"_sherlock_and_anagrams {_sherlock_and_anagrams('kkkk')}")
     print(f"_sherlock_and_anagrams {_sherlock_and_anagrams('abcd')}")
+    print(f"_count_triplets {_count_triplets([1, 2, 2, 4], 2)}")
+    print(f"_count_triplets {_count_triplets([1, 3, 9, 9, 27, 81], 3)}")
+
+
+# https://www.hackerrank.com/challenges/count-triplets-1/problem?h_l=interview&isFullScreen=true&playlist_slugs%5B%5D%5B%5D=interview-preparation-kit&playlist_slugs%5B%5D%5B%5D=dictionaries-hashmaps
+def _count_triplets(arr, r):
+    arr_dict = {}
+
+    for i, item in enumerate(arr):
+        arr_dict.setdefault(item, [])
+        arr_dict[item].append(i)
+
+    sum_triplets = 0
+
+    for item in arr_dict.keys():
+        if item in arr_dict and item * r in arr_dict and (item * r) * r in arr_dict:
+            sum_triplets += 1
+            sum_triplets += len(arr_dict[item]) - 1
+            sum_triplets += len(arr_dict[item * r]) - 1
+            sum_triplets += len(arr_dict[(item * r) * r]) - 1
+
+    return sum_triplets
 
 
 # https://www.hackerrank.com/challenges/sherlock-and-anagrams/problem?h_l=interview&isFullScreen=true&playlist_slugs%5B%5D%5B%5D=interview-preparation-kit&playlist_slugs%5B%5D%5B%5D=dictionaries-hashmaps&h_r=next-challenge&h_v=zen
 def _sherlock_and_anagrams(s):
+    # TODO
     pass
 
 
