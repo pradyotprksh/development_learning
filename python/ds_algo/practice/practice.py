@@ -52,6 +52,38 @@ def run_practice_problems():
     print(f"_day_of_programmer {_day_of_programmer(1800)}")
     print(f"_bon_appetit {_bon_appetit([3, 10, 2, 9], 1, 12)}")
     print(f"_climbing_leaderboard {_climbing_leaderboard([100, 100, 50, 40, 40, 20, 10], [5, 25, 50, 120])}")
+    print(f"_is_isomorphic {_is_isomorphic('badc', 'baba')}")
+    print(f"_is_isomorphic {_is_isomorphic('foo', 'bar')}")
+    print(f"_is_subsequence {_is_subsequence('abc', 'ahbgdc')}")
+
+
+def _is_subsequence(s: str, t: str) -> bool:
+    if len(s) > len(t):
+        return False
+    s_itr = 0
+    t_itr = 0
+    while s_itr < len(s) and t_itr < len(t):
+        print(s[s_itr], t[t_itr])
+        if s[s_itr] == t[t_itr]:
+            s_itr += 1
+        t_itr += 1
+    if s_itr == len(s):
+        return True
+    return False
+
+
+def _is_isomorphic(s: str, t: str) -> bool:
+    if len(s) != len(t):
+        return False
+    map_s_t = {}
+    map_t_s = {}
+    for s1, t1 in zip(s, t):
+        if s1 not in map_s_t and t1 not in map_t_s:
+            map_s_t[s1] = t1
+            map_t_s[t1] = s1
+        elif map_s_t.get(s1) != t1 and map_t_s.get(t1) != s1:
+            return False
+    return True
 
 
 # TODO: Fix Time Exceed error, optimise solution needed
