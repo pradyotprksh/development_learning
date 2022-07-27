@@ -2,6 +2,16 @@
 from .document_distance_algorithm import DocumentDistanceAlgorithm
 from .runway_reservation_system import start_reservation_process
 
+
+class ListNode:
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
+
+    def __str__(self):
+        return f"{self.val}-->{self.next}"
+
+
 """
 Some of the problems are taken from
 https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-fall-2011/, contains 
@@ -55,6 +65,54 @@ def run_practice_problems():
     print(f"_is_isomorphic {_is_isomorphic('badc', 'baba')}")
     print(f"_is_isomorphic {_is_isomorphic('foo', 'bar')}")
     print(f"_is_subsequence {_is_subsequence('abc', 'ahbgdc')}")
+    list1 = ListNode(1, ListNode(2, ListNode(4)))
+    list2 = ListNode(1, ListNode(3, ListNode(4)))
+    print(f"_merge_two_lists {_merge_two_lists(list1, list2)}")
+    head = ListNode(1, ListNode(2, ListNode(3, ListNode(4, ListNode(5)))))
+    print(f"_reverse_list {_reverse_list(head)}")
+
+
+def _reverse_list(head: [ListNode]) -> [ListNode]:
+    prev_node = None
+    next_node = head.next
+    while next_node is not None:
+        head.next = prev_node
+        prev_node = head
+        head = next_node
+        next_node = next_node.next
+    head.next = prev_node
+    return head
+
+
+def _merge_two_lists(list1: [ListNode], list2: [ListNode]) -> [ListNode]:
+    new_node = None
+    last_node = new_node
+
+    while list1 is not None and list2 is not None:
+        if list1.val < list2.val:
+            if new_node is None:
+                new_node = list1
+                last_node = new_node
+            else:
+                last_node.next = ListNode(val=list1.val)
+                last_node = last_node.next
+            list1 = list1.next
+        else:
+            if new_node is None:
+                new_node = list2
+                last_node = new_node
+            else:
+                last_node.next = ListNode(val=list2.val)
+                last_node = last_node.next
+            list2 = list2.next
+
+    if last_node is not None:
+        if list1 is not None:
+            last_node.next = list1
+        if list2 is not None:
+            last_node.next = list2
+
+    return new_node or list1 or list2
 
 
 def _is_subsequence(s: str, t: str) -> bool:
