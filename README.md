@@ -56,7 +56,6 @@ README will be only updated when the project/learning is completed. So make sure
   - [2022 Bootcamp Udemy Python Course](https://github.com/pradyotprksh/development_learning/tree/main/python/UdemyCourse/2022_Python_Bootcamp) 
   - [PyBlog 🐍](https://github.com/pradyotprksh/development_learning/tree/main/python/pyblog)
     - For more details go to this [link](https://pradyotprksh4.medium.com/pyblog-python-firebase-448233b9baa2)
-  - [ds_algo](https://github.com/pradyotprksh/development_learning/tree/main/python/ds_algo)
 
 ---
 
