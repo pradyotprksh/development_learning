@@ -1,4 +1,4 @@
-package com.project.pradyotprakash.rental.ui.theme
+package com.project.pradyotprakash.rental.app.theme
 
 import android.app.Activity
 import android.os.Build

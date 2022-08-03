@@ -16,8 +16,5 @@ dependencyResolutionManagement {
 
 rootProject.name = "Rental"
 
-enableFeaturePreview("VERSION_CATALOGS")
-enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
-
 // App
 include(":app")
