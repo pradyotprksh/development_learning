@@ -19,7 +19,19 @@ class Navigator @Inject constructor() {
     val navigateAction: LiveData<NavigationAction>
         get() = _navigateActions
 
+    /**
+     * Navigate to a certain page
+     */
     fun navigate(navigationAction: NavigationAction) {
         _navigateActions.postValue(navigationAction)
+    }
+
+    /**
+     * Pop the current page from the stack and go back
+     */
+    fun navigateBack() {
+        navigate {
+            it.popBackStack()
+        }
     }
 }

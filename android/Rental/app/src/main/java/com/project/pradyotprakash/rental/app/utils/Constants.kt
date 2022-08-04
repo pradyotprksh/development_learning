@@ -1,8 +1,19 @@
 package com.project.pradyotprakash.rental.app.utils
 
 /**
- * A constant class for the application.
+ * A constant file for the app layer, which will contains all
+ * the constants related to the application layer.
  */
+
 object Constants {
     const val defaultLanguage = "en"
+}
+
+enum class UserType {
+    Owner,
+    Renter,
+}
+
+object WelcomeScreenArguments {
+    const val userType = "userType"
 }

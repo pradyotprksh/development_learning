@@ -43,7 +43,7 @@ fun OptionsView(optionsViewModel: OptionsViewModel) {
         ) {
             Icon(
                 imageVector = Icons.Default.Info,
-                contentDescription = "",
+                contentDescription = Icons.Default.Info.name,
                 tint = MaterialTheme.colorScheme.primary
             )
         }

@@ -1,5 +1,9 @@
 {
   "appName": "Renter",
   "owner": "Owner",
-  "renter": "Renter"
+  "renter": "Renter",
+  "welcomeMessage": "Welcome %s,\n\nBefore you start adding your details we need to authenticate you.\n\nPlease select any one of the way from below to move forward.",
+  "phone": "Phone",
+  "email": "Email",
+  "signInWithGoogle": "Sign In With Google"
 }

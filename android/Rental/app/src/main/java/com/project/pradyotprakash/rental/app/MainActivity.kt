@@ -11,17 +11,23 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.project.pradyotprakash.rental.app.localization.Translation
 import com.project.pradyotprakash.rental.app.pages.options.view.OptionsView
 import com.project.pradyotprakash.rental.app.pages.splash.view.SplashView
+import com.project.pradyotprakash.rental.app.pages.welcome.view.WelcomeScreen
 import com.project.pradyotprakash.rental.app.theme.RentalTheme
+import com.project.pradyotprakash.rental.app.utils.UserType
+import com.project.pradyotprakash.rental.app.utils.WelcomeScreenArguments
 import com.project.pradyotprakash.rental.core.auth.AuthState
 import com.project.pradyotprakash.rental.core.auth.AuthStateListener
 import com.project.pradyotprakash.rental.core.navigation.Navigator
 import com.project.pradyotprakash.rental.core.navigation.Routes
+import com.project.pradyotprakash.rental.core.navigation.path
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -34,8 +40,12 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     private val mainViewModel: MainViewModel by viewModels()
-    @Inject lateinit var navigator: Navigator
-    @Inject lateinit var authStateListener: AuthStateListener
+
+    @Inject
+    lateinit var navigator: Navigator
+
+    @Inject
+    lateinit var authStateListener: AuthStateListener
 
     private lateinit var navController: NavHostController
 
@@ -55,8 +65,23 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     NavHost(navController = navController, startDestination = Routes.Splash.route) {
-                        composable(Routes.Splash.route) { SplashView() }
-                        composable(Routes.Option.route) { OptionsView(hiltViewModel()) }
+                        composable(Routes.Splash.path()) { SplashView() }
+                        composable(Routes.Option.path()) { OptionsView(hiltViewModel()) }
+                        composable(
+                            Routes.Welcome.path(),
+                            arguments = Routes.Welcome.arguments.map {
+                                navArgument(it) { type = NavType.StringType }
+                            }
+                        ) {
+                            WelcomeScreen(
+                                hiltViewModel(),
+                                UserType.valueOf(
+                                    it.arguments?.getString(
+                                        WelcomeScreenArguments.userType
+                                    ) ?: ""
+                                )
+                            )
+                        }
                     }
                 }
             }
@@ -79,14 +104,18 @@ class MainActivity : ComponentActivity() {
         lifecycleScope.launch {
             authStateListener.authState.collect { authState ->
                 when (authState) {
-                    AuthState.Authenticated -> TODO()
+                    AuthState.Authenticated -> {}
                     AuthState.Unauthenticated -> {
                         navigator.navigate { navController ->
-                            navController.navigate(Routes.Splash.route)
+                            navController.navigate(Routes.Splash.path())
                         }
                         delay(2000)
                         navigator.navigate { navController ->
-                            navController.navigate(Routes.Option.route)
+                            navController.navigate(Routes.Option.path()) {
+                                popUpTo(Routes.Splash.path()) {
+                                    inclusive = true
+                                }
+                            }
                         }
                     }
                 }
