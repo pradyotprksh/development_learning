@@ -5,5 +5,9 @@
   "welcomeMessage": "Welcome %s,\n\nBefore you start adding your details we need to authenticate you.\n\nPlease select any one of the way from below to move forward.",
   "phone": "Phone",
   "email": "Email",
-  "signInWithGoogle": "Sign In With Google"
+  "signInWithGoogle": "Sign In With Google",
+  "back": "Back",
+  "defaultErrorTitle": "Oops!!",
+  "defaultErrorSubTitle": "Seems like you are lost.",
+  "defaultErrorDescription": "Either it's you or it's us. Most probably its us only but please go back and retry, we have recorded this error and will soon be working on it. If the error persists please sends us a mail from your profile page."
 }

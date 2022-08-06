@@ -1,5 +1,7 @@
 package com.project.pradyotprakash.rental.core.navigation
 
+import com.project.pradyotprakash.rental.app.utils.ErrorScreenArguments
+import com.project.pradyotprakash.rental.app.utils.InformationScreenArguments
 import com.project.pradyotprakash.rental.app.utils.WelcomeScreenArguments
 
 /**
@@ -20,5 +22,15 @@ enum class Routes(
 ) {
     Splash("splash/"),
     Option("option/"),
-    Welcome("welcome/", listOf(WelcomeScreenArguments.userType))
+    Welcome("welcome/", listOf(WelcomeScreenArguments.userType)),
+    Information("information/",
+        listOf(InformationScreenArguments.userType, InformationScreenArguments.onlyPreview)
+    ),
+    Error("error/",
+        listOf(
+            ErrorScreenArguments.title,
+            ErrorScreenArguments.subtitle,
+            ErrorScreenArguments.description,
+        )
+    )
 }

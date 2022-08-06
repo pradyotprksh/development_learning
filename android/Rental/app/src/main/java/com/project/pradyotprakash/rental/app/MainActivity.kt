@@ -7,6 +7,7 @@ import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.lifecycleScope
@@ -17,10 +18,17 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.project.pradyotprakash.rental.app.localization.Translation
+import com.project.pradyotprakash.rental.app.pages.error.view.ErrorScreen
+import com.project.pradyotprakash.rental.app.pages.error.viewmodel.ErrorViewModel
+import com.project.pradyotprakash.rental.app.pages.information.view.InformationScreen
+import com.project.pradyotprakash.rental.app.pages.information.viewmodel.InformationViewModel
 import com.project.pradyotprakash.rental.app.pages.options.view.OptionsView
 import com.project.pradyotprakash.rental.app.pages.splash.view.SplashView
 import com.project.pradyotprakash.rental.app.pages.welcome.view.WelcomeScreen
+import com.project.pradyotprakash.rental.app.pages.welcome.viewmodel.WelcomeViewModel
 import com.project.pradyotprakash.rental.app.theme.RentalTheme
+import com.project.pradyotprakash.rental.app.utils.ErrorScreenArguments
+import com.project.pradyotprakash.rental.app.utils.InformationScreenArguments
 import com.project.pradyotprakash.rental.app.utils.UserType
 import com.project.pradyotprakash.rental.app.utils.WelcomeScreenArguments
 import com.project.pradyotprakash.rental.core.auth.AuthState
@@ -73,19 +81,84 @@ class MainActivity : ComponentActivity() {
                                 navArgument(it) { type = NavType.StringType }
                             }
                         ) {
-                            WelcomeScreen(
-                                hiltViewModel(),
-                                UserType.valueOf(
-                                    it.arguments?.getString(
-                                        WelcomeScreenArguments.userType
-                                    ) ?: ""
-                                )
+                            val userType = it.arguments?.getString(
+                                WelcomeScreenArguments.userType
+                            )
+
+                            userType?.let { type ->
+                                if (type.isEmpty()) {
+                                    goToErrorScreen()
+                                } else {
+                                    WelcomeScreen(
+                                        hiltViewModel<WelcomeViewModel>().also { viewModel ->
+                                            viewModel.start(
+                                                UserType.valueOf(type)
+                                            )
+                                        }
+                                    )
+                                }
+                            }
+                        }
+                        composable(
+                            Routes.Error.path(),
+                            arguments = Routes.Error.arguments.map {
+                                navArgument(it) { type = NavType.StringType }
+                            }
+                        ) {
+                            ErrorScreen(
+                                hiltViewModel<ErrorViewModel>().also { viewModel ->
+                                    viewModel.start(
+                                        it.arguments?.getString(
+                                            ErrorScreenArguments.title
+                                        ) ?: "",
+                                        it.arguments?.getString(
+                                            ErrorScreenArguments.subtitle
+                                        ) ?: "",
+                                        it.arguments?.getString(
+                                            ErrorScreenArguments.description
+                                        ) ?: "",
+                                    )
+                                }
+                            )
+                        }
+                        composable(
+                            Routes.Information.path(),
+                            arguments = Routes.Information.arguments.map {
+                                navArgument(it) { type = NavType.StringType }
+                            }
+                        ) {
+                            InformationScreen(
+                                hiltViewModel<InformationViewModel>().also { viewmodel ->
+                                    viewmodel.start(
+                                        UserType.valueOf(
+                                            it.arguments?.getString(
+                                                InformationScreenArguments.userType
+                                            ) ?: ""
+                                        ),
+                                        it.arguments?.getBoolean(
+                                            InformationScreenArguments.onlyPreview
+                                        ) ?: false
+                                    )
+                                }
                             )
                         }
                     }
                 }
             }
         }
+    }
+
+    @Composable
+    private fun goToErrorScreen(title: String = "", subtitle: String = "", description: String = "") {
+        ErrorScreen(
+            hiltViewModel<ErrorViewModel>().also { viewModel ->
+                viewModel.start(
+                    title = title,
+                    subtitle = subtitle,
+                    description = description,
+                )
+            }
+        )
     }
 
     override fun onResume() {

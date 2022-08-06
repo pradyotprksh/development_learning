@@ -12,4 +12,8 @@ object TR {
     var phone = Translation.getString("phone")
     var email = Translation.getString("email")
     var signInWithGoogle = Translation.getString("signInWithGoogle")
+    var back = Translation.getString("back")
+    var defaultErrorTitle = Translation.getString("defaultErrorTitle")
+    var defaultErrorSubTitle = Translation.getString("defaultErrorSubTitle")
+    var defaultErrorDescription = Translation.getString("defaultErrorDescription")
 }

@@ -27,7 +27,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.project.pradyotprakash.rental.app.localization.TR
 import com.project.pradyotprakash.rental.app.pages.welcome.viewmodel.WelcomeViewModel
-import com.project.pradyotprakash.rental.app.utils.UserType
 
 /**
  * A welcome screen for the user, this will help the user to
@@ -36,8 +35,7 @@ import com.project.pradyotprakash.rental.app.utils.UserType
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun WelcomeScreen(
-    welcomeViewModel: WelcomeViewModel,
-    userType: UserType
+    welcomeViewModel: WelcomeViewModel
 ) {
     Column {
         SmallTopAppBar(
@@ -58,7 +56,7 @@ fun WelcomeScreen(
                 .padding(top = 10.dp, bottom = 20.dp),
         ) {
             Text(
-                text = String.format(TR.welcomeMessage, userType.name),
+                text = String.format(TR.welcomeMessage, welcomeViewModel.userType.name),
                 style = MaterialTheme.typography.bodyLarge,
                 textAlign = TextAlign.Center,
             )

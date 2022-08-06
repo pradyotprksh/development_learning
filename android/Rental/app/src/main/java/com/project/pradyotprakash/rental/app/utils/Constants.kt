@@ -17,3 +17,14 @@ enum class UserType {
 object WelcomeScreenArguments {
     const val userType = "userType"
 }
+
+object InformationScreenArguments {
+    const val userType = "userType"
+    const val onlyPreview = "onlyPreview"
+}
+
+object ErrorScreenArguments {
+    const val title = "title"
+    const val subtitle = "subtitle"
+    const val description = "description"
+}
