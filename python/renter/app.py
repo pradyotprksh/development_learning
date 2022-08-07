@@ -7,17 +7,25 @@ Also helps in start the application and make it usable by external applications.
 """
 from flask import Flask
 from flask_restful import Api
-from src import Renter, User
+from src import Renter, User, get_mongo_details
+from pymongo import MongoClient
 
 # Create flask app object
 app = Flask(__name__)
 # Create the flask restful object
 api = Api(app)
 
+# Create mongo db
+client = MongoClient(
+    get_mongo_details(),
+    connect=False,
+)
+db = client["renter"]
+
 # Below are all the resources used by the application
 # 1. Renter
 Renter(api=api)
-# 2. User
+# 2. User, with the user collection
 User(api=api)
 
 # Start the application

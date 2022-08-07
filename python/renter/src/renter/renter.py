@@ -7,8 +7,8 @@ details of the project, terms and condition, information etc.
 This will help in making the api file cleaner and making the refactoring easy.
 """
 from flask_restful import Resource
-from .utils import constants
-from .utils import default_response
+from src.utils import constants
+from src.utils import default_response
 
 
 class Renter:

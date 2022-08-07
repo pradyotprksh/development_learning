@@ -1,3 +1,3 @@
 flask
 flask-restful
-loguru
+pymongo[srv]
