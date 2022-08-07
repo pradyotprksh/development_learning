@@ -1,6 +1,12 @@
+"""
+Modals Module
+
+A module which contains all the modals/entity related to the project.
+"""
 from collections import namedtuple
 from src.utils.constants import Keys
 
+# A named tuple for the user details
 UserDetails = namedtuple(
     "UserDetails",
     [

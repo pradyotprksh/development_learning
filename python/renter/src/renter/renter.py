@@ -7,8 +7,8 @@ details of the project, terms and condition, information etc.
 This will help in making the api file cleaner and making the refactoring easy.
 """
 from flask_restful import Resource
-from src.utils import constants
-from src.utils import default_response
+from src.utils.constants import USER_TYPE
+from src.utils.response_mapper import response_creator
 
 
 class Renter:
@@ -28,7 +28,7 @@ class _Details(Resource):
     """A Details class which will be performing any operation when <path>/ endpoint is called"""
     @staticmethod
     def get():
-        return default_response.response_creator(
+        return response_creator(
             code=200,
             message="Hello User to Renter, this is a Python created RESTFUL API which is used by our Renter "
                     "Android application. If you want to you can also use this and make requests."
@@ -43,12 +43,12 @@ class _TermsAndCondition(Resource):
     """
     @staticmethod
     def get(user_type):
-        if user_type not in constants.USER_TYPE:
-            return default_response.response_creator(
+        if user_type not in USER_TYPE:
+            return response_creator(
                 code=404,
                 message=f"{user_type} is not a valid user type, Please provide a valid one.",
             )
-        return default_response.response_creator(
+        return response_creator(
             code=200,
             message=f"Hello {user_type}, this is to inform you that you will be "
                     f"virtually signing our terms and condition.",
@@ -60,7 +60,7 @@ class _Information(Resource):
     <path>/information endpoint is called"""
     @staticmethod
     def get():
-        return default_response.response_creator(
+        return response_creator(
             code=200,
             message="Owner and Renter Details are as below."
         )

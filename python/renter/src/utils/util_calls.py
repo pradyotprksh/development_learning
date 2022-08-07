@@ -1,3 +1,11 @@
+"""
+Util class module
+
+A module which contains all the common calls required at most places, or keeping the calls at one place
+which doesn't do much.
+
+This helps in organising the stuff which is important and keeping normal things in one place.
+"""
 from .constants import MONGO_DB_DETAILS_FILE
 
 

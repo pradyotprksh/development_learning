@@ -8,8 +8,8 @@ This will help in making the api file cleaner and making the refactoring easy.
 """
 from flask_restful import Resource
 from flask import request
-from src.db import get_collection
-from src.utils import default_response
+from src.core.services.db import get_collection
+from src.utils.response_mapper import response_creator
 from src.utils.constants import Keys
 from src.core.modals import UserDetails
 
@@ -27,14 +27,14 @@ class User:
 
 
 class _User(Resource):
-    def __init__(self):
-        self.user_collection = get_collection(Keys.User.collection_name)
-
     """A User class which will help in handling all the requests made on
     <path>/user/
-    
+
     The user_id will be coming in the headers
     """
+    def __init__(self):
+        # Get the user collection to be used by the user resource
+        self.user_collection = get_collection(Keys.User.collection_name)
 
     def get(self):
         # headers
@@ -43,12 +43,12 @@ class _User(Resource):
         # find the user in db
         user = self.user_collection.find_one({Keys.User.user_id: user_id})
         if user is None:
-            return default_response.response_creator(
+            return response_creator(
                 code=404,
                 message=f"Asked user is not present. Please create one before asking for it.",
             )
 
-        return default_response.response_creator(
+        return response_creator(
             code=200,
             message="User Found",
             other_data={
@@ -67,7 +67,7 @@ class _User(Resource):
         if user is not None:
             username = f"{user.get(Keys.User.first_name)} {user.get(Keys.User.last_name)}"
 
-            return default_response.response_creator(
+            return response_creator(
                 code=409,
                 message=f"{username} exists, you are trying to create one which is already there."
             )
@@ -91,7 +91,7 @@ class _User(Resource):
         # get the user details from db
         db_user_details = self.user_collection.find_one({Keys.User.user_id: user_id})
 
-        return default_response.response_creator(
+        return response_creator(
             code=200,
             message="User created",
             other_data={

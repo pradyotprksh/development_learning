@@ -1,4 +1,9 @@
+"""
+Src module
+
+A module for Renter which contains all the logic and implementation insides it.
+
+Only the ones which are required outside are imported here rest can be accessed directly.
+"""
 from .renter.renter import Renter
 from .user.user import User
-from .utils import get_mongo_details
-from .db import get_collection
