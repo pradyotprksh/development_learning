@@ -11,13 +11,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import com.project.pradyotprakash.rental.app.localization.TR
 import com.project.pradyotprakash.rental.app.localization.Translation
+import com.project.pradyotprakash.rental.app.pages.splash.viewmodel.SplashViewModel
 
 /**
  * The splash screen which will be used to perform some initial
  * processes.
  */
 @Composable
-fun SplashView() {
+fun SplashView(
+    splashViewModel: SplashViewModel
+) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,

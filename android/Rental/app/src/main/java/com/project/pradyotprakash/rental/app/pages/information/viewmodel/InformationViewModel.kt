@@ -11,7 +11,7 @@ import javax.inject.Inject
 @HiltViewModel
 class InformationViewModel @Inject constructor() : ViewModel() {
     lateinit var userType: UserType
-    var onlyPreview: Boolean = false
+    private var onlyPreview: Boolean = false
 
     /**
      * Set the initial value of the view model

@@ -11,7 +11,7 @@ import org.json.JSONObject
  * get the values, etc.
  */
 object Translation {
-    lateinit var translationJSON: JSONObject
+    private lateinit var translationJSON: JSONObject
 
     fun updateLocalizationMap(lan_key: String = Constants.defaultLanguage, context: Context) {
         val inputSystem = context.assets.open(Assets.Localization(lanKey = lan_key).path)

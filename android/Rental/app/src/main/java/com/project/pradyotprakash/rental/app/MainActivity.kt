@@ -37,7 +37,6 @@ import com.project.pradyotprakash.rental.core.navigation.Navigator
 import com.project.pradyotprakash.rental.core.navigation.Routes
 import com.project.pradyotprakash.rental.core.navigation.path
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -73,7 +72,7 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     NavHost(navController = navController, startDestination = Routes.Splash.route) {
-                        composable(Routes.Splash.path()) { SplashView() }
+                        composable(Routes.Splash.path()) { SplashView(hiltViewModel()) }
                         composable(Routes.Option.path()) { OptionsView(hiltViewModel()) }
                         composable(
                             Routes.Welcome.path(),
@@ -105,20 +104,16 @@ class MainActivity : ComponentActivity() {
                                 navArgument(it) { type = NavType.StringType }
                             }
                         ) {
-                            ErrorScreen(
-                                hiltViewModel<ErrorViewModel>().also { viewModel ->
-                                    viewModel.start(
-                                        it.arguments?.getString(
-                                            ErrorScreenArguments.title
-                                        ) ?: "",
-                                        it.arguments?.getString(
-                                            ErrorScreenArguments.subtitle
-                                        ) ?: "",
-                                        it.arguments?.getString(
-                                            ErrorScreenArguments.description
-                                        ) ?: "",
-                                    )
-                                }
+                            goToErrorScreen(
+                                title = it.arguments?.getString(
+                                    ErrorScreenArguments.title
+                                ) ?: "",
+                                subtitle = it.arguments?.getString(
+                                    ErrorScreenArguments.subtitle
+                                ) ?: "",
+                                description = it.arguments?.getString(
+                                    ErrorScreenArguments.description
+                                ) ?: ""
                             )
                         }
                         composable(
@@ -128,8 +123,8 @@ class MainActivity : ComponentActivity() {
                             }
                         ) {
                             InformationScreen(
-                                hiltViewModel<InformationViewModel>().also { viewmodel ->
-                                    viewmodel.start(
+                                hiltViewModel<InformationViewModel>().also { viewModel ->
+                                    viewModel.start(
                                         UserType.valueOf(
                                             it.arguments?.getString(
                                                 InformationScreenArguments.userType
@@ -149,7 +144,11 @@ class MainActivity : ComponentActivity() {
     }
 
     @Composable
-    private fun goToErrorScreen(title: String = "", subtitle: String = "", description: String = "") {
+    private fun goToErrorScreen(
+        title: String = "",
+        subtitle: String = "",
+        description: String = ""
+    ) {
         ErrorScreen(
             hiltViewModel<ErrorViewModel>().also { viewModel ->
                 viewModel.start(
@@ -181,14 +180,6 @@ class MainActivity : ComponentActivity() {
                     AuthState.Unauthenticated -> {
                         navigator.navigate { navController ->
                             navController.navigate(Routes.Splash.path())
-                        }
-                        delay(2000)
-                        navigator.navigate { navController ->
-                            navController.navigate(Routes.Option.path()) {
-                                popUpTo(Routes.Splash.path()) {
-                                    inclusive = true
-                                }
-                            }
                         }
                     }
                 }

@@ -13,7 +13,10 @@ from .utils import default_response
 
 class Renter:
     """A Renter class which will initiate all the resources required for the Renter module
-    to execute the operations"""
+    to execute the operations
+
+    * [api] : An API instance of the flask_restful which will be used to add resources for renter class.
+    """
     def __init__(self, api):
         self.common_path = "/renter"
         api.add_resource(_Details, f"{self.common_path}/")
@@ -22,7 +25,7 @@ class Renter:
 
 
 class _Details(Resource):
-    """A Details class which will be performing any operation when <path>/renter/ endpoint is called"""
+    """A Details class which will be performing any operation when <path>/ endpoint is called"""
     @staticmethod
     def get():
         return default_response.response_creator(
@@ -34,7 +37,7 @@ class _Details(Resource):
 
 class _TermsAndCondition(Resource):
     """A Terns and Condition class which will be performing any operation when
-    <path>/renter/terms_condition/<user_type> endpoint is called
+    <path>/terms_condition/<user_type> endpoint is called
 
     * <user_type> : is required and not all type is accepted, it should be in USER_TYPE
     """
@@ -54,7 +57,7 @@ class _TermsAndCondition(Resource):
 
 class _Information(Resource):
     """An Information class which will be performing any operation when
-    <path>/renter/information endpoint is called"""
+    <path>/information endpoint is called"""
     @staticmethod
     def get():
         return default_response.response_creator(

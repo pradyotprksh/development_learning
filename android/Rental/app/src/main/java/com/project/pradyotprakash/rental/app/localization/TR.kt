@@ -16,4 +16,5 @@ object TR {
     var defaultErrorTitle = Translation.getString("defaultErrorTitle")
     var defaultErrorSubTitle = Translation.getString("defaultErrorSubTitle")
     var defaultErrorDescription = Translation.getString("defaultErrorDescription")
+    val noDataFoundError = Translation.getString("noDataFoundError")
 }

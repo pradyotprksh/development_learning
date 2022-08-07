@@ -9,5 +9,4 @@ import javax.inject.Inject
  * View model class for the [MainActivity], this will handle all the business logic
  * and helps in keeping the view class clean.
  */
-class MainViewModel @Inject constructor() : ViewModel() {
-}
+class MainViewModel @Inject constructor() : ViewModel()
