@@ -10,7 +10,7 @@ from flask_restful import Resource
 from flask import request
 from src.core.services.db import get_collection
 from src.utils.response_mapper import response_creator
-from src.utils.constants import Keys
+from src.utils.constants import Keys, ERROR_RESPONSE_MESSAGES, DEFAULT_ERROR_MESSAGE
 from src.core.modals import UserDetails
 
 
@@ -45,7 +45,7 @@ class _User(Resource):
         if user is None:
             return response_creator(
                 code=404,
-                message=f"Asked user is not present. Please create one before asking for it.",
+                message="Asked user is not present. Please create one before asking for it.",
             )
 
         return response_creator(
@@ -72,12 +72,41 @@ class _User(Resource):
                 message=f"{username} exists, you are trying to create one which is already there."
             )
 
+        user_form = request.form.to_dict()
+
+        first_name = user_form.get(Keys.User.first_name)
+        last_name = user_form.get(Keys.User.last_name, "")
+        permanent_address = user_form.get(Keys.User.permanent_address, "")
+        date_of_birth = user_form.get(Keys.User.date_of_birth, -1)
+        email_address = user_form.get(Keys.User.email_address)
+        profession = user_form.get(Keys.User.profession, "")
+        phone_number = user_form.get(Keys.User.phone_number, "")
+        profile_pic_url = user_form.get(Keys.User.profile_pic_url, "")
+
+        if first_name is None:
+            return response_creator(
+                code=404,
+                message=ERROR_RESPONSE_MESSAGES.get(Keys.User.first_name, DEFAULT_ERROR_MESSAGE)
+                .format(" ".join(Keys.User.first_name.split("_")))
+            )
+        if email_address is None:
+            return response_creator(
+                code=404,
+                message=ERROR_RESPONSE_MESSAGES.get(Keys.User.email_address, DEFAULT_ERROR_MESSAGE)
+                .format(" ".join(Keys.User.email_address.split("_")))
+            )
+
         # payload
         user_details = UserDetails(
             user_id=user_id,
-            first_name=request.json[Keys.User.first_name],
-            last_name=request.json[Keys.User.last_name],
-            permanent_address=request.json[Keys.User.permanent_address],
+            first_name=first_name,
+            last_name=last_name,
+            permanent_address=permanent_address,
+            date_of_birth=date_of_birth,
+            email_address=email_address,
+            profession=profession,
+            phone_number=phone_number,
+            profile_pic_url=profile_pic_url
         )
 
         # add user details to mongo db

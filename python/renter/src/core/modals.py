@@ -14,5 +14,10 @@ UserDetails = namedtuple(
         Keys.User.first_name,
         Keys.User.last_name,
         Keys.User.permanent_address,
+        Keys.User.date_of_birth,
+        Keys.User.email_address,
+        Keys.User.profession,
+        Keys.User.phone_number,
+        Keys.User.profile_pic_url,
     ]
 )
