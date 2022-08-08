@@ -13,13 +13,13 @@ setup(
     long_description=long_description,
     author='Pradyot Prakash',
     author_email='pradyotprksh4@gmail.com',
-    keywords='basics, ds, algo, practice',
+    keywords='basics, ds, algo, practice, interview, questions',
     data_files=[(
         'data', []
     )],
     packages=find_packages(
         include=[
-            'src', 'practice', 'linked_list'
+            'src', 'practice', 'interview_preperations', 'ds', 'algo'
         ]
     ),
     install_requires=[],

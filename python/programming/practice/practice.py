@@ -1,6 +1,7 @@
 """Practice questions"""
 from .document_distance_algorithm import DocumentDistanceAlgorithm
 from .runway_reservation_system import start_reservation_process
+from .google_question.google_questions import run_google_questions
 
 
 class ListNode:
@@ -70,6 +71,7 @@ def run_practice_problems():
     print(f"_merge_two_lists {_merge_two_lists(list1, list2)}")
     head = ListNode(1, ListNode(2, ListNode(3, ListNode(4, ListNode(5)))))
     print(f"_reverse_list {_reverse_list(head)}")
+    run_google_questions()
 
 
 def _reverse_list(head: [ListNode]) -> [ListNode]:
