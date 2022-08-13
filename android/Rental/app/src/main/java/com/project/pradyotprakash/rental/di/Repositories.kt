@@ -1,7 +1,9 @@
 package com.project.pradyotprakash.rental.di
 
+import com.project.pradyotprakash.rental.domain.repositories.AuthenticationRepository
 import com.project.pradyotprakash.rental.domain.repositories.BasicRepository
-import com.project.pradyotprakash.rental.domain.usecase.BasicUseCase
+import com.project.pradyotprakash.rental.domain.services.AuthenticationService
+import com.project.pradyotprakash.rental.domain.services.BasicService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -16,5 +18,10 @@ import javax.inject.Singleton
 object Repositories {
     @Singleton
     @Provides
-    fun providesRepository(basicUseCase: BasicUseCase) = BasicRepository(basicUseCase)
+    fun providesBasicRepository(basicService: BasicService) = BasicRepository(basicService)
+
+    @Singleton
+    @Provides
+    fun providesAuthenticationRepository(authenticationService: AuthenticationService) =
+        AuthenticationRepository(authenticationService)
 }

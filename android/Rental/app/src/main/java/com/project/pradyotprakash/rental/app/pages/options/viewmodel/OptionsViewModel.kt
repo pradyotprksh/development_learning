@@ -31,9 +31,4 @@ class OptionsViewModel @Inject constructor(
             it.navigate("${Routes.Welcome.route}${UserType.Renter}")
         }
     }
-
-    /**
-     * Show the more info page, for extra information needed by the user.
-     */
-    fun showMoreInfo() {}
 }

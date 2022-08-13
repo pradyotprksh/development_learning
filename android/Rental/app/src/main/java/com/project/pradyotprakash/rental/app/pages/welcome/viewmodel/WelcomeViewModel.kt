@@ -4,8 +4,15 @@ import androidx.lifecycle.ViewModel
 import com.project.pradyotprakash.rental.app.utils.UserType
 import com.project.pradyotprakash.rental.core.navigation.Navigator
 import com.project.pradyotprakash.rental.core.navigation.Routes
+import com.project.pradyotprakash.rental.domain.usecase.AuthenticationUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
+
+enum class AuthType {
+    Email,
+    Phone,
+    Google,
+}
 
 /**
  * The view model class which will handle the business logic.
@@ -13,6 +20,7 @@ import javax.inject.Inject
 @HiltViewModel
 class WelcomeViewModel @Inject constructor(
     private val navigator: Navigator,
+    private val authenticationUseCase: AuthenticationUseCase,
 ) : ViewModel() {
     lateinit var userType: UserType
 
@@ -27,6 +35,25 @@ class WelcomeViewModel @Inject constructor(
      * Navigate back
      */
     fun navigateBack() = navigator.navigateBack()
+
+    fun initiateAuthCall(authType: AuthType) {
+        when (authType) {
+            AuthType.Email -> {
+                authenticationUseCase.createUserWithEmailPassword(
+                    "",
+                    ""
+                ) {
+                    
+                }
+            }
+            AuthType.Phone -> {
+
+            }
+            AuthType.Google -> {
+
+            }
+        }
+    }
 
     /**
      * Go to the get information details screen

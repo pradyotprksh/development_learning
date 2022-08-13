@@ -1,30 +1,25 @@
 package com.project.pradyotprakash.rental.domain.repositories
 
-import com.project.pradyotprakash.rental.app.utils.UserType
-import com.project.pradyotprakash.rental.domain.usecase.BasicUseCase
+import com.project.pradyotprakash.rental.core.response.parseResponse
+import com.project.pradyotprakash.rental.domain.services.BasicService
 
 /**
  * A basic repository class which will initiate the calls
  */
 class BasicRepository(
-    private val basicUseCase: BasicUseCase,
+    private val basicService: BasicService,
 ) {
     /**
      * Get the details
      */
-    suspend fun getDetails() = basicUseCase.getDetails()
+    suspend fun getDetails() = basicService.details().parseResponse()
+
 
     /**
      * Get the terms and condition details based on the user type
      *
      * @param userType Type of the user
      */
-    suspend fun getTermsAndCondition(userType: UserType) =
-        basicUseCase.getTermsAndCondition(userType = userType.name.lowercase())
-
-    /**
-     * Get the information related to the project from the
-     * remote.
-     */
-    suspend fun getInformation() = basicUseCase.getInformation()
+    suspend fun getTermsAndCondition(userType: String) =
+        basicService.termsAndCondition(userType = userType).parseResponse()
 }

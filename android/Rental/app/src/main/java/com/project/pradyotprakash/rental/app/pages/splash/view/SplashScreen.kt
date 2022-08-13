@@ -21,6 +21,8 @@ import com.project.pradyotprakash.rental.app.pages.splash.viewmodel.SplashViewMo
 fun SplashView(
     splashViewModel: SplashViewModel
 ) {
+    splashViewModel.checkIfUserIsPresent()
+
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,

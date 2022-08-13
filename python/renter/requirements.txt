@@ -1,3 +1,5 @@
 flask
 flask-restful
+py3dns
 pymongo[srv]
+validate_email

@@ -2,7 +2,7 @@ package com.project.pradyotprakash.rental.app.localization
 
 import android.content.Context
 import com.project.pradyotprakash.rental.app.utils.Assets
-import com.project.pradyotprakash.rental.app.utils.Constants
+import com.project.pradyotprakash.rental.app.utils.Constants.defaultLanguage
 import org.json.JSONObject
 
 /**
@@ -13,19 +13,35 @@ import org.json.JSONObject
 object Translation {
     private lateinit var translationJSON: JSONObject
 
-    fun updateLocalizationMap(lan_key: String = Constants.defaultLanguage, context: Context) {
-        val inputSystem = context.assets.open(Assets.Localization(lanKey = lan_key).path)
-        val buffer = ByteArray(inputSystem.available())
-        inputSystem.read(buffer)
-        inputSystem.close()
-        val json = String(buffer, Charsets.UTF_8)
-        translationJSON = JSONObject(json)
+    /**
+     * Update the localization map with the language code
+     *
+     * @param lan_key Language key to be used
+     */
+    fun updateLocalizationMap(lan_key: String = defaultLanguage, context: Context) {
+        try {
+            val inputSystem = context.assets.open(Assets.Localization(lanKey = lan_key).path)
+            val buffer = ByteArray(inputSystem.available())
+            inputSystem.read(buffer)
+            inputSystem.close()
+            val json = String(buffer, Charsets.UTF_8)
+            translationJSON = JSONObject(json)
+        } catch (e: Exception) {}
     }
 
+    /**
+     * Get the value from the translation
+     *
+     * @param key Key to be used to get the value
+     */
     fun getString(key: String): String {
-        return try {
-            translationJSON.getString(key)
-        } catch (e: Exception) {
+        return if (this::translationJSON.isInitialized) {
+            try {
+                translationJSON.getString(key)
+            } catch (e: Exception) {
+                key
+            }
+        } else {
             key
         }
     }

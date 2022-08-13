@@ -1,9 +1,13 @@
 package com.project.pradyotprakash.rental.di
 
+import android.content.Context
+import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.project.pradyotprakash.rental.BuildConfig
+import com.project.pradyotprakash.rental.core.utils.Constants.BASE_URL
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -18,8 +22,6 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object Api {
-    private const val BASE_URL = "http://192.168.1.34:5000/"
-
     @Singleton
     @Provides
     fun providesHttpLoggingInterceptor() = HttpLoggingInterceptor()
@@ -32,10 +34,14 @@ object Api {
 
     @Singleton
     @Provides
-    fun providesOkHttpClient(httpLoggingInterceptor: HttpLoggingInterceptor): OkHttpClient =
+    fun providesOkHttpClient(
+        httpLoggingInterceptor: HttpLoggingInterceptor,
+        @ApplicationContext context: Context
+    ): OkHttpClient =
         OkHttpClient
             .Builder()
             .addInterceptor(httpLoggingInterceptor)
+            .addInterceptor(ChuckerInterceptor.Builder(context = context).build())
             .build()
 
     @Singleton

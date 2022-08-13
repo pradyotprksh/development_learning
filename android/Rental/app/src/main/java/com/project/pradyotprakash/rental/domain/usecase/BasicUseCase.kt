@@ -1,16 +1,19 @@
 package com.project.pradyotprakash.rental.domain.usecase
 
-import com.project.pradyotprakash.rental.core.response.parseResponse
-import com.project.pradyotprakash.rental.domain.services.BasicService
+import com.project.pradyotprakash.rental.domain.repositories.BasicRepository
 import javax.inject.Inject
 
+/**
+ * Use case for the the basic services, will be used to connect to the
+ * service classes.
+ */
 class BasicUseCase @Inject constructor(
-    private val basicService: BasicService
+    private val basicRepository: BasicRepository
 ) {
     /**
      * Get the details
      */
-    suspend fun getDetails() = basicService.details().parseResponse()
+    suspend fun getDetails() = basicRepository.getDetails()
 
 
     /**
@@ -19,11 +22,5 @@ class BasicUseCase @Inject constructor(
      * @param userType Type of the user
      */
     suspend fun getTermsAndCondition(userType: String) =
-        basicService.termsAndCondition(userType = userType).parseResponse()
-
-    /**
-     * Get the information related to the project from the
-     * remote.
-     */
-    suspend fun getInformation() = basicService.information().parseResponse()
+        basicRepository.getTermsAndCondition(userType = userType)
 }

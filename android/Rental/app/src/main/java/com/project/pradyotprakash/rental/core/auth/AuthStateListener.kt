@@ -11,4 +11,11 @@ import javax.inject.Inject
 class AuthStateListener @Inject constructor() {
     private val _authState = MutableStateFlow(AuthState.Unauthenticated)
     val authState: StateFlow<AuthState> = _authState
+
+    /**
+     * Navigate to a certain page
+     */
+    fun stateChange(authState: AuthState) {
+        _authState.value = authState
+    }
 }

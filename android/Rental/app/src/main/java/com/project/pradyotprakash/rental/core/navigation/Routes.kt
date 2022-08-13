@@ -5,7 +5,8 @@ import com.project.pradyotprakash.rental.app.utils.InformationScreenArguments
 import com.project.pradyotprakash.rental.app.utils.WelcomeScreenArguments
 
 /**
- * A list of all the routes in the whole application
+ * An extension on routes list which will combine the route
+ * and all the arguments into one and return it.
  */
 fun Routes.path(): String {
     if (arguments.isEmpty()) return route
@@ -16,6 +17,9 @@ fun Routes.path(): String {
     return completePath.removeSuffix("/")
 }
 
+/**
+ * A list of all the routes in the whole application
+ */
 enum class Routes(
     val route: String,
     val arguments: List<String> = emptyList()

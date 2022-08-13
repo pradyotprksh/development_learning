@@ -8,10 +8,11 @@ This will help in making the api file cleaner and making the refactoring easy.
 """
 from flask_restful import Resource
 from flask import request
-from src.core.services.db import get_collection
-from src.utils.response_mapper import response_creator
-from src.utils.constants import Keys, ERROR_RESPONSE_MESSAGES, DEFAULT_ERROR_MESSAGE
 from src.core.modals import UserDetails
+from src.core.services.db import get_collection, get_document, insert_document
+from src.utils.constants import Keys, MESSAGES_LIST, DEFAULT_ERROR_MESSAGE
+from src.utils.response_mapper import response_creator
+from src.utils.util_calls import is_email_address_valid
 
 
 class User:
@@ -22,8 +23,8 @@ class User:
     """
 
     def __init__(self, api):
-        self.common_path = "/renter"
-        api.add_resource(_User, f"{self.common_path}/user/")
+        self.common_path = "/renter/user"
+        api.add_resource(_User, f"{self.common_path}/")
 
 
 class _User(Resource):
@@ -32,6 +33,7 @@ class _User(Resource):
 
     The user_id will be coming in the headers
     """
+
     def __init__(self):
         # Get the user collection to be used by the user resource
         self.user_collection = get_collection(Keys.User.collection_name)
@@ -41,16 +43,16 @@ class _User(Resource):
         user_id = request.headers[Keys.User.user_id]
 
         # find the user in db
-        user = self.user_collection.find_one({Keys.User.user_id: user_id})
+        user = get_document(self.user_collection, Keys.User.user_id, user_id)
         if user is None:
             return response_creator(
                 code=404,
-                message="Asked user is not present. Please create one before asking for it.",
+                message=MESSAGES_LIST[Keys.Messages.user_not_found],
             )
 
         return response_creator(
             code=200,
-            message="User Found",
+            message=MESSAGES_LIST[Keys.Messages.user_found],
             other_data={
                 "data": {
                     **user
@@ -63,13 +65,13 @@ class _User(Resource):
         user_id = request.headers[Keys.User.user_id]
 
         # check if the user already exists
-        user = self.user_collection.find_one({Keys.User.user_id: user_id})
+        user = get_document(self.user_collection, Keys.User.user_id, user_id)
         if user is not None:
             username = f"{user.get(Keys.User.first_name)} {user.get(Keys.User.last_name)}"
 
             return response_creator(
                 code=409,
-                message=f"{username} exists, you are trying to create one which is already there."
+                message=MESSAGES_LIST.get(Keys.Messages.user_already_available).format(username)
             )
 
         user_form = request.form.to_dict()
@@ -86,13 +88,19 @@ class _User(Resource):
         if first_name is None:
             return response_creator(
                 code=404,
-                message=ERROR_RESPONSE_MESSAGES.get(Keys.User.first_name, DEFAULT_ERROR_MESSAGE)
+                message=MESSAGES_LIST.get(Keys.User.first_name, DEFAULT_ERROR_MESSAGE)
                 .format(" ".join(Keys.User.first_name.split("_")))
             )
         if email_address is None:
             return response_creator(
                 code=404,
-                message=ERROR_RESPONSE_MESSAGES.get(Keys.User.email_address, DEFAULT_ERROR_MESSAGE)
+                message=MESSAGES_LIST.get(Keys.User.email_address, DEFAULT_ERROR_MESSAGE)
+                .format(" ".join(Keys.User.email_address.split("_")))
+            )
+        if not is_email_address_valid(email=email_address):
+            return response_creator(
+                code=404,
+                message=MESSAGES_LIST.get(Keys.Messages.invalid_input, DEFAULT_ERROR_MESSAGE)
                 .format(" ".join(Keys.User.email_address.split("_")))
             )
 
@@ -110,7 +118,8 @@ class _User(Resource):
         )
 
         # add user details to mongo db
-        self.user_collection.insert_one(
+        insert_document(
+            self.user_collection,
             {
                 "_id": user_details.user_id,
                 **user_details._asdict(),
@@ -118,11 +127,11 @@ class _User(Resource):
         )
 
         # get the user details from db
-        db_user_details = self.user_collection.find_one({Keys.User.user_id: user_id})
+        db_user_details = get_document(self.user_collection, Keys.User.user_id, user_id)
 
         return response_creator(
             code=200,
-            message="User created",
+            message=MESSAGES_LIST.get(Keys.Messages.user_created),
             other_data={
                 "data": {
                     **db_user_details
