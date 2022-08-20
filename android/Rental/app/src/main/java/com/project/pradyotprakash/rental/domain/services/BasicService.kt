@@ -21,4 +21,10 @@ interface BasicService {
      */
     @GET("renter/terms_condition/{user_type}")
     suspend fun termsAndCondition(@Path("user_type") userType: String): Response<DefaultEntity<Nothing>>
+
+    /**
+     * A verify email address call which returns the response if the email is valid or not
+     */
+    @GET("renter/email/{email_address}")
+    suspend fun verifyEmailAddress(@Path("email_address") emailAddress: String): Response<DefaultEntity<Nothing>>
 }

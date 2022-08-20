@@ -1,0 +1,4 @@
+{
+    "code": 200,
+    "message": "Hello User to Renter, this is a Python created RESTFUL API which is used by our Renter Android application. If you want to you can also use this and make requests."
+}

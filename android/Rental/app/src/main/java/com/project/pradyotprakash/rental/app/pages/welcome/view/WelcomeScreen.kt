@@ -21,11 +21,14 @@ import androidx.compose.material3.SmallTopAppBar
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.project.pradyotprakash.rental.app.composables.PageStateComposable
 import com.project.pradyotprakash.rental.app.localization.TR
+import com.project.pradyotprakash.rental.app.pages.welcome.viewmodel.AuthType
 import com.project.pradyotprakash.rental.app.pages.welcome.viewmodel.WelcomeViewModel
 
 /**
@@ -37,75 +40,90 @@ import com.project.pradyotprakash.rental.app.pages.welcome.viewmodel.WelcomeView
 fun WelcomeScreen(
     welcomeViewModel: WelcomeViewModel
 ) {
-    Column {
-        SmallTopAppBar(
-            title = {},
-            colors = TopAppBarDefaults.smallTopAppBarColors(),
-            navigationIcon = {
-                IconButton(onClick = welcomeViewModel::navigateBack) {
-                    Icon(
-                        imageVector = Icons.Default.ArrowBack,
-                        contentDescription = Icons.Default.Phone.name,
-                    )
-                }
-            },
-        )
-        Column(
-            modifier = Modifier
-                .padding(horizontal = 30.dp)
-                .padding(top = 10.dp, bottom = 20.dp),
-        ) {
-            Text(
-                text = String.format(TR.welcomeMessage, welcomeViewModel.userType.name),
-                style = MaterialTheme.typography.bodyLarge,
-                textAlign = TextAlign.Center,
+    val loading = welcomeViewModel.loading.observeAsState(false)
+    val error = welcomeViewModel.error.observeAsState("")
+
+    PageStateComposable(
+        isLoading = loading.value,
+        errorMessage = error.value,
+        dismissErrorAlert = welcomeViewModel::updateErrorState
+    ) {
+        Column {
+            SmallTopAppBar(
+                title = {},
+                colors = TopAppBarDefaults.smallTopAppBarColors(),
+                navigationIcon = {
+                    IconButton(onClick = welcomeViewModel::navigateBack) {
+                        Icon(
+                            imageVector = Icons.Default.ArrowBack,
+                            contentDescription = Icons.Default.Phone.name,
+                        )
+                    }
+                },
             )
-            Spacer(modifier = Modifier.weight(1f))
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceEvenly,
+            Column(
+                modifier = Modifier
+                    .padding(horizontal = 30.dp)
+                    .padding(top = 10.dp, bottom = 20.dp),
             ) {
-                Button(
-                    onClick = welcomeViewModel::goToInformationScreen,
-                    modifier = Modifier.weight(1f)
+                Text(
+                    text = String.format(TR.welcomeMessage, welcomeViewModel.userType.name),
+                    style = MaterialTheme.typography.bodyLarge,
+                    textAlign = TextAlign.Center,
+                )
+                Spacer(modifier = Modifier.weight(1f))
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceEvenly,
                 ) {
-                    Row(
-                        horizontalArrangement = Arrangement.Center,
-                        verticalAlignment = Alignment.CenterVertically,
+                    Button(
+                        onClick = {
+                            welcomeViewModel.initiateAuthCall(AuthType.Phone)
+                        },
+                        modifier = Modifier.weight(1f)
                     ) {
-                        Icon(
-                            imageVector = Icons.Default.Phone,
-                            contentDescription = Icons.Default.Phone.name,
-                        )
-                        Spacer(modifier = Modifier.width(10.dp))
-                        Text(TR.phone)
+                        Row(
+                            horizontalArrangement = Arrangement.Center,
+                            verticalAlignment = Alignment.CenterVertically,
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.Phone,
+                                contentDescription = Icons.Default.Phone.name,
+                            )
+                            Spacer(modifier = Modifier.width(10.dp))
+                            Text(TR.phone)
+                        }
+                    }
+                    Spacer(modifier = Modifier.width(10.dp))
+                    Button(
+                        onClick = {
+                            welcomeViewModel.initiateAuthCall(AuthType.Email)
+                        },
+                        modifier = Modifier.weight(1f)
+                    ) {
+                        Row(
+                            horizontalArrangement = Arrangement.Center,
+                            verticalAlignment = Alignment.CenterVertically,
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.Email,
+                                contentDescription = Icons.Default.Phone.name,
+                            )
+                            Spacer(modifier = Modifier.width(10.dp))
+                            Text(TR.email)
+                        }
                     }
                 }
-                Spacer(modifier = Modifier.width(10.dp))
+                Spacer(modifier = Modifier.height(10.dp))
                 Button(
-                    onClick = welcomeViewModel::goToInformationScreen,
-                    modifier = Modifier.weight(1f)
+                    onClick = {
+                        welcomeViewModel.initiateAuthCall(AuthType.Google)
+                    },
+                    modifier = Modifier.fillMaxWidth()
                 ) {
-                    Row(
-                        horizontalArrangement = Arrangement.Center,
-                        verticalAlignment = Alignment.CenterVertically,
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.Email,
-                            contentDescription = Icons.Default.Phone.name,
-                        )
-                        Spacer(modifier = Modifier.width(10.dp))
-                        Text(TR.email)
+                    Row {
+                        Text(TR.signInWithGoogle)
                     }
-                }
-            }
-            Spacer(modifier = Modifier.height(10.dp))
-            Button(
-                onClick = welcomeViewModel::goToInformationScreen,
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Row {
-                    Text(TR.signInWithGoogle)
                 }
             }
         }

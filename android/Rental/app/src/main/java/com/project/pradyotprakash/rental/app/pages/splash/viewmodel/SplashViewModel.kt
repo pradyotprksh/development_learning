@@ -1,8 +1,10 @@
 package com.project.pradyotprakash.rental.app.pages.splash.viewmodel
 
-import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.project.pradyotprakash.rental.app.utils.UserType
 import com.project.pradyotprakash.rental.core.auth.AuthState
 import com.project.pradyotprakash.rental.core.auth.AuthStateListener
 import com.project.pradyotprakash.rental.core.navigation.Navigator
@@ -26,8 +28,17 @@ class SplashViewModel @Inject constructor(
     private val authenticationUseCase: AuthenticationUseCase,
     private val authStateListener: AuthStateListener,
 ) : ViewModel() {
+    private val _errorText = MutableLiveData("")
+    val error: LiveData<String>
+        get() = _errorText
+
     init {
+        checkIfUserIsPresent()
         checkApiCalls()
+    }
+
+    fun updateErrorState() {
+        _errorText.value = ""
     }
 
     /**
@@ -39,10 +50,17 @@ class SplashViewModel @Inject constructor(
                 .let {
                     when (it) {
                         is RenterResponse.Success -> {
+                            // TODO: Need to redirect user to home if logged in
+                            delay(2000)
                             if (authenticationUseCase.isUserLoggedIn()) {
-                                delay(2000)
+                                navigator.navigate { navController ->
+                                    navController.navigate("${Routes.Information.route}${UserType.Owner}/${false}") {
+                                        popUpTo(Routes.Splash.path()) {
+                                            inclusive = true
+                                        }
+                                    }
+                                }
                             } else {
-                                delay(2000)
                                 navigator.navigate { navController ->
                                     navController.navigate(Routes.Option.path()) {
                                         popUpTo(Routes.Splash.path()) {
@@ -53,7 +71,7 @@ class SplashViewModel @Inject constructor(
                             }
                         }
                         is RenterResponse.Error -> {
-                            Log.d("error", it.exception.toString())
+                            _errorText.value = it.exception.message
                         }
                         else -> {}
                     }
@@ -61,7 +79,7 @@ class SplashViewModel @Inject constructor(
         }
     }
 
-    fun checkIfUserIsPresent() {
+    private fun checkIfUserIsPresent() {
         if (authenticationUseCase.isUserLoggedIn()) {
             authStateListener.stateChange(AuthState.Authenticated)
         } else {

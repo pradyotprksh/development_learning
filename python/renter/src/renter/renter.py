@@ -8,8 +8,10 @@ This will help in making the api file cleaner and making the refactoring easy.
 """
 from flask import render_template
 from flask_restful import Resource
-from src.utils.constants import USER_TYPE, Endpoints, MESSAGES_LIST, Keys, INFORMATION_HTML_FILE
+from src.utils.constants import USER_TYPE, Endpoints, MESSAGES_LIST, Keys, INFORMATION_HTML_FILE, \
+    DEFAULT_ERROR_MESSAGE, DEFAULT_VALID_DATA
 from src.utils.response_mapper import response_creator
+from src.utils.util_calls import is_email_address_valid
 
 
 class Renter:
@@ -24,6 +26,7 @@ class Renter:
         api.add_resource(_Details, f"{self.common_path}{Endpoints.Renter.home}")
         api.add_resource(_TermsAndCondition, f"{self.common_path}{Endpoints.Renter.terms_and_condition}")
         api.add_resource(_Information, f"{self.common_path}{Endpoints.Renter.information}")
+        api.add_resource(_Email, f"{self.common_path}{Endpoints.Renter.email}")
 
 
 class _Details(Resource):
@@ -64,3 +67,21 @@ class _Information(Resource):
     @staticmethod
     def get():
         return render_template(INFORMATION_HTML_FILE)
+
+
+class _Email(Resource):
+    """An email class which will be performing any operation when
+    <path>/email endpoint is called"""
+
+    @staticmethod
+    def get(email_address):
+        if not is_email_address_valid(email=email_address):
+            return response_creator(
+                code=400,
+                message=MESSAGES_LIST.get(Keys.Messages.invalid_input, DEFAULT_ERROR_MESSAGE)
+                .format(" ".join(Keys.User.email_address.split("_")))
+            )
+        return response_creator(
+            code=200,
+            message=MESSAGES_LIST.get(Keys.Messages.valid, DEFAULT_VALID_DATA)
+        )

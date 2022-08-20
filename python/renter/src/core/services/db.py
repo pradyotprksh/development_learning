@@ -20,7 +20,7 @@ db = client["renter"]
 def get_collection(collection_name):
     """Get the collection from the database
 
-    :argument collection_name: Name of the collection to be returned
+    :arg collection_name: Name of the collection to be returned
     """
     return db[collection_name]
 

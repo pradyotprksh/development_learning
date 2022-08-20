@@ -19,6 +19,8 @@ DEFAULT_ERROR_MESSAGE = "Something went wrong with parsing the request. Please c
 DEFAULT_FORM_DATA_NOT_AVAILABLE = "Missing your {} in the form"
 # Default error message for data invalid
 DEFAULT_INVALID_DATA = "Invalid {}, please provide a valid one."
+# Default no issue message for data
+DEFAULT_VALID_DATA = "Detail/s provided are correct."
 
 
 class Endpoints:
@@ -29,6 +31,7 @@ class Endpoints:
         home = "/"
         terms_and_condition = "/terms_condition/<string:user_type>"
         information = "/information"
+        email = "/email/<string:email_address>"
 
 
 class Keys:
@@ -45,6 +48,7 @@ class Keys:
         user_found = "user_found"
         user_already_available = "user_already_available"
         user_created = "user_created"
+        valid = "valid"
 
     class User:
         """A set of keys related to the User section"""
@@ -76,4 +80,5 @@ MESSAGES_LIST = {
     Keys.Messages.user_found: "User found",
     Keys.Messages.user_already_available: "{} exists, you are trying to create one which is already there.",
     Keys.Messages.user_created: "User created",
+    Keys.Messages.valid: "Valid",
 }

@@ -2,7 +2,7 @@
 Default response module
 
 A module which will create the response for any calls and send it back, since the structure of the response
-is almost same for all so its better to have it this way.
+is almost same for all, so it is better to have it this way.
 """
 
 

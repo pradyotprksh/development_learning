@@ -22,4 +22,12 @@ class BasicRepository(
      */
     suspend fun getTermsAndCondition(userType: String) =
         basicService.termsAndCondition(userType = userType).parseResponse()
+
+    /**
+     * Get if the email address is valid or not
+     *
+     * @param emailAddress Email to be verified
+     */
+    suspend fun isEmailAddressValid(emailAddress: String) =
+        basicService.verifyEmailAddress(emailAddress = emailAddress).parseResponse()
 }
