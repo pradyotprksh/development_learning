@@ -62,6 +62,7 @@ class Keys:
         profession = "profession"
         phone_number = "phone_number"
         profile_pic_url = "profile_pic_url"
+        user_type = "user_type"
 
 
 # Dictionary of messages

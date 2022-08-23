@@ -10,7 +10,7 @@ from flask_restful import Resource
 from flask import request
 from src.core.modals import UserDetails
 from src.core.services.db import get_collection, get_document, insert_document
-from src.utils.constants import Keys, MESSAGES_LIST, DEFAULT_ERROR_MESSAGE
+from src.utils.constants import Keys, MESSAGES_LIST, DEFAULT_ERROR_MESSAGE, USER_TYPE
 from src.utils.response_mapper import response_creator
 from src.utils.util_calls import is_email_address_valid
 
@@ -84,6 +84,7 @@ class _User(Resource):
         profession = user_form.get(Keys.User.profession, "")
         phone_number = user_form.get(Keys.User.phone_number, "")
         profile_pic_url = user_form.get(Keys.User.profile_pic_url, "")
+        user_type = user_form.get(Keys.User.user_type)
 
         if first_name is None:
             return response_creator(
@@ -103,6 +104,11 @@ class _User(Resource):
                 message=MESSAGES_LIST.get(Keys.Messages.invalid_input, DEFAULT_ERROR_MESSAGE)
                 .format(" ".join(Keys.User.email_address.split("_")))
             )
+        if user_type not in USER_TYPE:
+            return response_creator(
+                code=404,
+                message=MESSAGES_LIST[Keys.Messages.invalid_user_type].format(user_type)
+            )
 
         # payload
         user_details = UserDetails(
@@ -114,7 +120,8 @@ class _User(Resource):
             email_address=email_address,
             profession=profession,
             phone_number=phone_number,
-            profile_pic_url=profile_pic_url
+            profile_pic_url=profile_pic_url,
+            user_type=user_type,
         )
 
         # add user details to mongo db

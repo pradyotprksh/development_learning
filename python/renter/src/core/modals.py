@@ -19,5 +19,6 @@ UserDetails = namedtuple(
         Keys.User.profession,
         Keys.User.phone_number,
         Keys.User.profile_pic_url,
+        Keys.User.user_type,
     ]
 )
