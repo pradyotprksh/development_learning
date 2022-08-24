@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.project.pradyotprakash.rental.app.utils.UserType
 import com.project.pradyotprakash.rental.core.navigation.Navigator
 import com.project.pradyotprakash.rental.core.navigation.Routes
+import com.project.pradyotprakash.rental.core.navigation.path
 import com.project.pradyotprakash.rental.core.response.RenterResponse
 import com.project.pradyotprakash.rental.core.utils.Constants
 import com.project.pradyotprakash.rental.domain.usecase.AuthenticationUseCase
@@ -67,7 +68,8 @@ class WelcomeViewModel @Inject constructor(
                                 }
                                 is RenterResponse.Loading -> _loading.value = true
                                 is RenterResponse.Success -> {
-                                    updateUserDetails(userType, "pradyot@gmail.com")
+                                    _loading.value = true
+                                    goToHomeScreen()
                                 }
                             }
                         }
@@ -79,31 +81,6 @@ class WelcomeViewModel @Inject constructor(
         }
     }
 
-    private fun updateUserDetails(userType: UserType, emailAddress: String) {
-        authenticationUseCase.getCurrentUserId()?.let { userId ->
-            viewModelScope.launch {
-                authenticationUseCase.setUserType(
-                    userId = userId,
-                    emailAddress = emailAddress,
-                    userType = userType
-                ).let {
-                    when (it) {
-                        is RenterResponse.Error -> {
-                            authenticationUseCase.logoutUser()
-                            _loading.value = false
-                            _errorText.value = it.exception.message
-                        }
-                        is RenterResponse.Loading -> _loading.value = true
-                        is RenterResponse.Success -> {
-                            _loading.value = false
-                            goToInformationScreen()
-                        }
-                    }
-                }
-            }
-        }
-    }
-
     fun updateErrorState() {
         _errorText.value = ""
     }
@@ -111,9 +88,13 @@ class WelcomeViewModel @Inject constructor(
     /**
      * Go to the get information details screen
      */
-    private fun goToInformationScreen() {
-        navigator.navigate {
-            it.navigate("${Routes.Information.route}${userType}/${false}/${false}")
+    private fun goToHomeScreen() {
+        navigator.navigate { navController ->
+            navController.navigate(Routes.Home.path()) {
+                popUpTo(Routes.Welcome.path()) {
+                    inclusive = true
+                }
+            }
         }
     }
 }

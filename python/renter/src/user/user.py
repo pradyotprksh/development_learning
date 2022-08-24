@@ -9,7 +9,7 @@ This will help in making the api file cleaner and making the refactoring easy.
 from flask_restful import Resource
 from flask import request
 from src.core.modals import UserDetails
-from src.core.services.db import get_collection, get_document, insert_document
+from src.core.services.db import get_collection, get_document, insert_document, update_a_document
 from src.utils.constants import Keys, MESSAGES_LIST, DEFAULT_ERROR_MESSAGE, USER_TYPE
 from src.utils.response_mapper import response_creator
 from src.utils.util_calls import is_email_address_valid
@@ -52,10 +52,103 @@ class _User(Resource):
 
         return response_creator(
             code=200,
-            message=MESSAGES_LIST[Keys.Messages.user_found],
+            message=MESSAGES_LIST.get(Keys.Messages.user_found),
             other_data={
                 "data": {
                     **user
+                }
+            }
+        )
+
+    def patch(self):
+        # headers
+        user_id = request.headers[Keys.User.user_id]
+
+        # check if the user already exists
+        user = get_document(self.user_collection, Keys.User.user_id, user_id)
+
+        if user is None:
+            return response_creator(
+                code=404,
+                message=MESSAGES_LIST[Keys.Messages.user_not_found],
+            )
+
+        user_form = request.form.to_dict()
+
+        first_name = user_form.get(Keys.User.first_name, user.get(Keys.User.first_name))
+        last_name = user_form.get(Keys.User.last_name, user.get(Keys.User.last_name))
+        permanent_address = user_form.get(Keys.User.permanent_address, user.get(Keys.User.permanent_address))
+        date_of_birth = user_form.get(Keys.User.date_of_birth, user.get(Keys.User.date_of_birth))
+        email_address = user_form.get(Keys.User.email_address)
+        profession = user_form.get(Keys.User.profession, user.get(Keys.User.profession))
+        phone_number = user_form.get(Keys.User.phone_number, user.get(Keys.User.phone_number))
+        profile_pic_url = user_form.get(Keys.User.profile_pic_url, user.get(Keys.User.profile_pic_url))
+        user_type = user_form.get(Keys.User.user_type, user.get(Keys.User.user_type))
+        is_all_details_available = user_form.get(Keys.User.is_all_details_available,
+                                                 user.get(Keys.User.is_all_details_available, False))
+
+        if first_name is None:
+            return response_creator(
+                code=404,
+                message=MESSAGES_LIST.get(Keys.User.first_name, DEFAULT_ERROR_MESSAGE)
+                .format(" ".join(Keys.User.first_name.split("_")))
+            )
+        if email_address is None:
+            return response_creator(
+                code=404,
+                message=MESSAGES_LIST.get(Keys.User.email_address, DEFAULT_ERROR_MESSAGE)
+                .format(" ".join(Keys.User.email_address.split("_")))
+            )
+        if not is_email_address_valid(email=email_address):
+            return response_creator(
+                code=404,
+                message=MESSAGES_LIST.get(Keys.Messages.invalid_input, DEFAULT_ERROR_MESSAGE)
+                .format(" ".join(Keys.User.email_address.split("_")))
+            )
+        if email_address != user.get(Keys.User.email_address):
+            return response_creator(
+                code=404,
+                message=MESSAGES_LIST.get(Keys.Messages.can_not_update_value)
+                .format(" ".join(Keys.User.email_address.split("_")))
+            )
+        if user_type not in USER_TYPE:
+            return response_creator(
+                code=404,
+                message=MESSAGES_LIST[Keys.Messages.invalid_user_type].format(user_type)
+            )
+
+        # payload
+        user_details = UserDetails(
+            user_id=user_id,
+            first_name=first_name,
+            last_name=last_name,
+            permanent_address=permanent_address,
+            date_of_birth=date_of_birth,
+            email_address=email_address,
+            profession=profession,
+            phone_number=phone_number,
+            profile_pic_url=profile_pic_url,
+            user_type=user_type,
+            is_all_details_available=is_all_details_available,
+        )
+
+        # add user details to mongo db
+        update_a_document(
+            self.user_collection,
+            Keys.User.user_id,
+            user_id,
+            user_details._asdict(),
+        )
+
+        # get the user details from db
+        db_user_details = get_document(self.user_collection, Keys.User.user_id, user_id)
+
+        return response_creator(
+            code=200,
+            message=MESSAGES_LIST.get(Keys.Messages.user_created),
+            other_data={
+                "data": {
+                    **db_user_details
                 }
             }
         )
@@ -66,40 +159,32 @@ class _User(Resource):
 
         # check if the user already exists
         user = get_document(self.user_collection, Keys.User.user_id, user_id)
-
-        first_name_user = ""
-        last_name_user = ""
-        permanent_address_user = ""
-        date_of_birth_user = -1
-        email_address_user = ""
-        profession_user = ""
-        phone_number_user = ""
-        profile_pic_url_user = ""
-        user_type_user = ""
         if user is not None:
-            first_name_user = user.get(Keys.User.first_name, "")
-            last_name_user = user.get(Keys.User.last_name, "")
-            permanent_address_user = user.get(Keys.User.permanent_address, "")
-            date_of_birth_user = user.get(Keys.User.date_of_birth, -1)
-            email_address_user = user.get(Keys.User.email_address)
-            profession_user = user.get(Keys.User.profession, "")
-            phone_number_user = user.get(Keys.User.phone_number, "")
-            profile_pic_url_user = user.get(Keys.User.profile_pic_url, "")
-            user_type_user = user.get(Keys.User.user_type)
+            username = f"{user.get(Keys.User.first_name)} {user.get(Keys.User.last_name)}"
+
+            return response_creator(
+                code=409,
+                message=MESSAGES_LIST.get(Keys.Messages.user_already_available).format(username)
+            )
 
         user_form = request.form.to_dict()
-        first_name = user_form.get(Keys.User.first_name, first_name_user)
-        last_name = user_form.get(Keys.User.last_name, last_name_user)
-        permanent_address = user_form.get(Keys.User.permanent_address, permanent_address_user)
-        date_of_birth = user_form.get(Keys.User.date_of_birth, date_of_birth_user)
-        email_address = user_form.get(Keys.User.email_address, email_address_user)
-        profession = user_form.get(Keys.User.profession, profession_user)
-        phone_number = user_form.get(Keys.User.phone_number, phone_number_user)
-        profile_pic_url = user_form.get(Keys.User.profile_pic_url, profile_pic_url_user)
-        user_type = user_form.get(Keys.User.user_type, user_type_user)
 
-        is_all_details_available = True
+        first_name = user_form.get(Keys.User.first_name)
+        last_name = user_form.get(Keys.User.last_name, "")
+        permanent_address = user_form.get(Keys.User.permanent_address, "")
+        date_of_birth = user_form.get(Keys.User.date_of_birth, "")
+        email_address = user_form.get(Keys.User.email_address)
+        profession = user_form.get(Keys.User.profession, "")
+        phone_number = user_form.get(Keys.User.phone_number, "")
+        profile_pic_url = user_form.get(Keys.User.profile_pic_url, "")
+        user_type = user_form.get(Keys.User.user_type)
 
+        if first_name is None:
+            return response_creator(
+                code=404,
+                message=MESSAGES_LIST.get(Keys.User.first_name, DEFAULT_ERROR_MESSAGE)
+                .format(" ".join(Keys.User.first_name.split("_")))
+            )
         if email_address is None:
             return response_creator(
                 code=404,
@@ -118,18 +203,6 @@ class _User(Resource):
                 message=MESSAGES_LIST[Keys.Messages.invalid_user_type].format(user_type)
             )
 
-        if first_name == "":
-            is_all_details_available = False
-
-        if not is_all_details_available:
-            if user is not None:
-                username = f"{user.get(Keys.User.first_name)} {user.get(Keys.User.last_name)}"
-
-                return response_creator(
-                    code=409,
-                    message=MESSAGES_LIST.get(Keys.Messages.user_already_available).format(username)
-                )
-
         # payload
         user_details = UserDetails(
             user_id=user_id,
@@ -142,7 +215,6 @@ class _User(Resource):
             phone_number=phone_number,
             profile_pic_url=profile_pic_url,
             user_type=user_type,
-            is_all_details_available=is_all_details_available,
         )
 
         # add user details to mongo db

@@ -21,21 +21,54 @@ class AuthenticationUseCase @Inject constructor(
     suspend fun getCurrentUserDetails(userId: String) = authenticationRepository
         .getCurrentUserDetails(userId = userId)
 
-    suspend fun setUserType(
+    suspend fun setUserDetails(
         userId: String,
+        firstName: String,
+        lastName: String,
+        permanentAddress: String,
+        dateOfBirth: String,
         emailAddress: String,
+        profession: String,
+        phoneNumber: String,
+        profilePicUrl: String,
         userType: UserType,
     ) = authenticationRepository.setCurrentUserDetails(
         userId = userId,
-        firstName = "",
-        lastName = "",
-        permanentAddress = "",
-        dateOfBirth = -1,
+        firstName = firstName,
+        lastName = lastName,
+        permanentAddress = permanentAddress,
+        dateOfBirth = dateOfBirth,
         emailAddress = emailAddress,
-        profession = "",
-        phoneNumber = "",
-        profilePicUrl = "",
+        profession = profession,
+        phoneNumber = phoneNumber,
+        profilePicUrl = profilePicUrl,
         userType = userType,
+    )
+
+    suspend fun updateUserDetails(
+        userId: String,
+        firstName: String = "",
+        lastName: String = "",
+        permanentAddress: String = "",
+        dateOfBirth: String = "",
+        emailAddress: String = "",
+        profession: String = "",
+        phoneNumber: String = "",
+        profilePicUrl: String = "",
+        userType: UserType,
+        isAllDetailsAvailable: Boolean,
+    ) = authenticationRepository.updateCurrentUserDetails(
+        userId = userId,
+        firstName = firstName,
+        lastName = lastName,
+        permanentAddress = permanentAddress,
+        dateOfBirth = dateOfBirth,
+        emailAddress = emailAddress,
+        profession = profession,
+        phoneNumber = phoneNumber,
+        profilePicUrl = profilePicUrl,
+        userType = userType,
+        isAllDetailsAvailable = isAllDetailsAvailable,
     )
 
     suspend fun signInUserWithEmailPassword(

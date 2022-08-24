@@ -49,6 +49,7 @@ class Keys:
         user_already_available = "user_already_available"
         user_created = "user_created"
         valid = "valid"
+        can_not_update_value = "can_not_update_value"
 
     class User:
         """A set of keys related to the User section"""
@@ -83,4 +84,5 @@ MESSAGES_LIST = {
     Keys.Messages.user_already_available: "{} exists, you are trying to create one which is already there.",
     Keys.Messages.user_created: "User created",
     Keys.Messages.valid: "Valid",
+    Keys.Messages.can_not_update_value: "Cannot update {} to a new one.",
 }

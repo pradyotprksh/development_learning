@@ -51,7 +51,7 @@ class AuthenticationRepository(
         firstName: String,
         lastName: String,
         permanentAddress: String,
-        dateOfBirth: Int,
+        dateOfBirth: String,
         emailAddress: String,
         profession: String,
         phoneNumber: String,
@@ -69,6 +69,34 @@ class AuthenticationRepository(
                 profession = profession,
                 phoneNumber = phoneNumber,
                 profilePicUrl = profilePicUrl,
-                userType = userType.name.lowercase(),
+                userType = userType.name,
+            ).parseResponse()
+
+    suspend fun updateCurrentUserDetails(
+        userId: String,
+        firstName: String,
+        lastName: String,
+        permanentAddress: String,
+        dateOfBirth: String,
+        emailAddress: String,
+        profession: String,
+        phoneNumber: String,
+        profilePicUrl: String,
+        userType: UserType,
+        isAllDetailsAvailable: Boolean,
+    ) =
+        authenticationService
+            .updateUserDetails(
+                userId = userId,
+                firstName = firstName,
+                lastName = lastName,
+                permanentAddress = permanentAddress,
+                dateOfBirth = dateOfBirth,
+                emailAddress = emailAddress,
+                profession = profession,
+                phoneNumber = phoneNumber,
+                profilePicUrl = profilePicUrl,
+                userType = userType.name,
+                isAllDetailsAvailable = isAllDetailsAvailable,
             ).parseResponse()
 }

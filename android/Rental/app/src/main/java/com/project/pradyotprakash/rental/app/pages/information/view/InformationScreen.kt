@@ -36,8 +36,14 @@ fun InformationScreen(
     informationViewModel: InformationViewModel
 ) {
     val fields = informationViewModel.fields.observeAsState(emptyList())
+    val loading = informationViewModel.loading.observeAsState(false)
+    val error = informationViewModel.error.observeAsState("")
 
-    PageStateComposable {
+    PageStateComposable(
+        isLoading = loading.value,
+        errorMessage = error.value,
+        dismissErrorAlert = informationViewModel::updateErrorState
+    ) {
         LazyColumn(
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
@@ -45,7 +51,7 @@ fun InformationScreen(
                 SmallTopAppBar(
                     title = {
                         Text(
-                            text = "Please enter the below informations.",
+                            text = "Please enter the below information.",
                             style = MaterialTheme.typography.bodyLarge,
                             textAlign = TextAlign.Center,
                         )
@@ -68,11 +74,24 @@ fun InformationScreen(
 
             items(fields.value.size) { index ->
                 val field = fields.value[index]
+                val filedValue = field.value.observeAsState("")
 
                 OutlinedTextField(
-                    value = field.value,
-                    onValueChange = { informationViewModel.updateFieldState(index, it) },
+                    value = filedValue.value,
+                    onValueChange = {
+                        if (field.maxChar == -1) {
+                            informationViewModel.updateFieldState(index, it)
+                        } else {
+                            if (it.length <= field.maxChar) {
+                                informationViewModel.updateFieldState(index, it)
+                            }
+                        }
+                    },
                     label = { Text(field.label) },
+                    readOnly = field.readOnly,
+                    keyboardOptions = field.keyboardOptions,
+                    visualTransformation = field.visualTransformation,
+                    keyboardActions = field.keyboardActions,
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = 15.dp)

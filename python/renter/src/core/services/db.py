@@ -42,3 +42,17 @@ def insert_document(collection, data):
     :argument data: Data which needs to be added to the collection
     """
     collection.insert_one(data)
+
+
+def update_a_document(collection, key, value, data):
+    """Update the first document
+
+    :argument collection: Collection in which the data needs to be updated
+    :argument key: Key to be used to get the document
+    :argument value: Value for the key
+    :argument data: Data which needs to be updated to the collection
+    """
+    collection.update_one(
+        {key: value},
+        {"$set": data},
+    )

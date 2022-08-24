@@ -9,6 +9,7 @@ import com.project.pradyotprakash.rental.core.auth.AuthStateListener
 import com.project.pradyotprakash.rental.core.navigation.Navigator
 import com.project.pradyotprakash.rental.core.navigation.Routes
 import com.project.pradyotprakash.rental.core.response.RenterResponse
+import com.project.pradyotprakash.rental.domain.modal.UserEntity
 import com.project.pradyotprakash.rental.domain.usecase.AuthenticationUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -26,6 +27,8 @@ class HomeViewModel @Inject constructor(
     private val _errorText = MutableLiveData("")
     val error: LiveData<String>
         get() = _errorText
+    val userDetails: LiveData<UserEntity>
+        get() = authStateListener.userDetails
 
     init {
         checkForUserDetails()
@@ -40,7 +43,10 @@ class HomeViewModel @Inject constructor(
                         is RenterResponse.Success -> {
                             _loading.value = false
                             it.data.data?.let { userDetails ->
-                                goToInformationScreen(userDetails.user_type)
+                                authStateListener.updateUserDetails(userDetails)
+                                if (!userDetails.is_all_details_available) {
+                                    goToInformationScreen(userDetails.user_type)
+                                }
                             } ?: kotlin.run {
                                 authenticationUseCase.logoutUser()
                                 authStateListener.stateChange(AuthState.Unauthenticated)
@@ -66,5 +72,9 @@ class HomeViewModel @Inject constructor(
         navigator.navigate {
             it.navigate("${Routes.Information.route}${userType}/${false}/${false}")
         }
+    }
+
+    fun updateErrorState() {
+        _errorText.value = ""
     }
 }
