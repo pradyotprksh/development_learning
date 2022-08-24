@@ -9,7 +9,7 @@ plugins {
 }
 
 tasks.register<de.undercouch.gradle.tasks.download.Download>("checkEnvironment") {
-    src("http://192.168.1.34:5000/renter/")
+    src("http://192.168.1.35:5000/renter/")
     dest("$rootDir")
 }
 

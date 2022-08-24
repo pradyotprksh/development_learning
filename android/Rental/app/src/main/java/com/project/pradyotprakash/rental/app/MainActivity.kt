@@ -10,7 +10,6 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -20,6 +19,7 @@ import androidx.navigation.navArgument
 import com.project.pradyotprakash.rental.app.localization.Translation
 import com.project.pradyotprakash.rental.app.pages.error.view.ErrorScreen
 import com.project.pradyotprakash.rental.app.pages.error.viewmodel.ErrorViewModel
+import com.project.pradyotprakash.rental.app.pages.home.view.HomeScreen
 import com.project.pradyotprakash.rental.app.pages.information.view.InformationScreen
 import com.project.pradyotprakash.rental.app.pages.information.viewmodel.InformationViewModel
 import com.project.pradyotprakash.rental.app.pages.options.view.OptionsView
@@ -37,7 +37,6 @@ import com.project.pradyotprakash.rental.core.navigation.Navigator
 import com.project.pradyotprakash.rental.core.navigation.Routes
 import com.project.pradyotprakash.rental.core.navigation.path
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 /**
@@ -73,6 +72,7 @@ class MainActivity : ComponentActivity() {
                 ) {
                     NavHost(navController = navController, startDestination = Routes.Splash.route) {
                         composable(Routes.Splash.path()) { SplashView(hiltViewModel()) }
+                        composable(Routes.Home.path()) { HomeScreen(hiltViewModel()) }
                         composable(Routes.Option.path()) { OptionsView(hiltViewModel()) }
                         composable(
                             Routes.Welcome.path(),
@@ -122,20 +122,39 @@ class MainActivity : ComponentActivity() {
                                 navArgument(it) { type = NavType.StringType }
                             }
                         ) {
-                            InformationScreen(
-                                hiltViewModel<InformationViewModel>().also { viewModel ->
-                                    viewModel.start(
-                                        UserType.valueOf(
-                                            it.arguments?.getString(
-                                                InformationScreenArguments.userType
-                                            ) ?: ""
-                                        ),
-                                        it.arguments?.getBoolean(
-                                            InformationScreenArguments.onlyPreview
-                                        ) ?: false
-                                    )
-                                }
+                            val userType = it.arguments?.getString(
+                                WelcomeScreenArguments.userType
                             )
+                            val onlyPreview = it.arguments?.getBoolean(
+                                InformationScreenArguments.onlyPreview
+                            )
+                            val allowBackOption = it.arguments?.getBoolean(
+                                InformationScreenArguments.allowBackOption
+                            )
+
+                            userType?.let { type ->
+                                if (type.isEmpty()) {
+                                    goToErrorScreen()
+                                } else {
+                                    onlyPreview?.let {
+                                        allowBackOption?.let {
+                                            InformationScreen(
+                                                hiltViewModel<InformationViewModel>().also { viewModel ->
+                                                    viewModel.start(
+                                                        UserType.valueOf(userType),
+                                                        onlyPreview,
+                                                        allowBackOption,
+                                                    )
+                                                }
+                                            )
+                                        } ?: kotlin.run {
+                                            goToErrorScreen()
+                                        }
+                                    } ?: kotlin.run {
+                                        goToErrorScreen()
+                                    }
+                                }
+                            }
                         }
                     }
                 }
@@ -173,16 +192,15 @@ class MainActivity : ComponentActivity() {
      * This will also help in navigation, which will navigate to the required screen.
      */
     private fun startAuthStateListener() {
-        lifecycleScope.launch {
-            authStateListener.authState.collect { authState ->
-                when (authState) {
-                    AuthState.Authenticated -> {}
-                    AuthState.Unauthenticated -> {
-                        navigator.navigate { navController ->
-                            navController.navigate(Routes.Splash.path())
-                        }
+        authStateListener.authState.observe(this) {
+            when (it) {
+                AuthState.Authenticated -> {}
+                AuthState.Unauthenticated -> {
+                    navigator.navigate { navController ->
+                        navController.navigate(Routes.Splash.path())
                     }
                 }
+                else -> {}
             }
         }
     }

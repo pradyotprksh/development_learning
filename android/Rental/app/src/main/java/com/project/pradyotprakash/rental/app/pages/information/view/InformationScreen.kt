@@ -52,11 +52,13 @@ fun InformationScreen(
                     },
                     colors = TopAppBarDefaults.smallTopAppBarColors(),
                     navigationIcon = {
-                        IconButton(onClick = informationViewModel::navigateBack) {
-                            Icon(
-                                imageVector = Icons.Default.ArrowBack,
-                                contentDescription = Icons.Default.Phone.name,
-                            )
+                        if (informationViewModel.allowBackOption) {
+                            IconButton(onClick = informationViewModel::navigateBack) {
+                                Icon(
+                                    imageVector = Icons.Default.ArrowBack,
+                                    contentDescription = Icons.Default.Phone.name,
+                                )
+                            }
                         }
                     },
                 )

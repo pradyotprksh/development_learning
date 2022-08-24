@@ -70,6 +70,7 @@ class InformationViewModel @Inject constructor(
 
     lateinit var userType: UserType
     private var onlyPreview: Boolean = false
+    var allowBackOption: Boolean = false
 
     /**
      * Navigate back
@@ -79,9 +80,10 @@ class InformationViewModel @Inject constructor(
     /**
      * Set the initial value of the view model
      */
-    fun start(userType: UserType, onlyPreview: Boolean) {
+    fun start(userType: UserType, onlyPreview: Boolean, allowBackOption: Boolean) {
         this.userType = userType
         this.onlyPreview = onlyPreview
+        this.allowBackOption = allowBackOption
     }
 
     fun updateFieldState(index: Int, value: String = "") {

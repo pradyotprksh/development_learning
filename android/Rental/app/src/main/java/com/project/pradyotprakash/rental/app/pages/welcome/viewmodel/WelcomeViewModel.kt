@@ -8,6 +8,7 @@ import com.project.pradyotprakash.rental.app.utils.UserType
 import com.project.pradyotprakash.rental.core.navigation.Navigator
 import com.project.pradyotprakash.rental.core.navigation.Routes
 import com.project.pradyotprakash.rental.core.response.RenterResponse
+import com.project.pradyotprakash.rental.core.utils.Constants
 import com.project.pradyotprakash.rental.domain.usecase.AuthenticationUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -49,32 +50,57 @@ class WelcomeViewModel @Inject constructor(
     fun navigateBack() = navigator.navigateBack()
 
     fun initiateAuthCall(authType: AuthType) {
-        _loading.value = true
-        when (authType) {
-            AuthType.Email -> {
-                // TODO: Give option to create user as well
-                viewModelScope.launch {
-                    authenticationUseCase.signInUserWithEmailPassword(
-                        "pradyot@gmail.com",
-                        "pradyot@gmail.com"
-                    ) {
-                        when (it) {
-                            is RenterResponse.Error -> {
-                                _loading.value = false
-                                _errorText.value = it.exception.message
+        Constants.currentUserType?.let { userType ->
+            _loading.value = true
+            when (authType) {
+                AuthType.Email -> {
+                    // TODO: Give option to create user as well
+                    viewModelScope.launch {
+                        authenticationUseCase.signInUserWithEmailPassword(
+                            "pradyot@gmail.com",
+                            "pradyot@gmail.com",
+                        ) {
+                            when (it) {
+                                is RenterResponse.Error -> {
+                                    _loading.value = false
+                                    _errorText.value = it.exception.message
+                                }
+                                is RenterResponse.Loading -> _loading.value = true
+                                is RenterResponse.Success -> {
+                                    updateUserDetails(userType, "pradyot@gmail.com")
+                                }
                             }
-                            is RenterResponse.Loading -> _loading.value = true
-                            is RenterResponse.Success -> {
-                                _loading.value = false
-                                goToInformationScreen()
-                            }
-                            null -> _loading.value = false
+                        }
+                    }
+                }
+                AuthType.Phone -> {}
+                AuthType.Google -> {}
+            }
+        }
+    }
+
+    private fun updateUserDetails(userType: UserType, emailAddress: String) {
+        authenticationUseCase.getCurrentUserId()?.let { userId ->
+            viewModelScope.launch {
+                authenticationUseCase.setUserType(
+                    userId = userId,
+                    emailAddress = emailAddress,
+                    userType = userType
+                ).let {
+                    when (it) {
+                        is RenterResponse.Error -> {
+                            authenticationUseCase.logoutUser()
+                            _loading.value = false
+                            _errorText.value = it.exception.message
+                        }
+                        is RenterResponse.Loading -> _loading.value = true
+                        is RenterResponse.Success -> {
+                            _loading.value = false
+                            goToInformationScreen()
                         }
                     }
                 }
             }
-            AuthType.Phone -> {}
-            AuthType.Google -> {}
         }
     }
 
@@ -87,7 +113,7 @@ class WelcomeViewModel @Inject constructor(
      */
     private fun goToInformationScreen() {
         navigator.navigate {
-            it.navigate("${Routes.Information.route}${userType}/${false}")
+            it.navigate("${Routes.Information.route}${userType}/${false}/${false}")
         }
     }
 }

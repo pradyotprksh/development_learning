@@ -11,4 +11,6 @@ data class UserEntity(
     val profession: String,
     val phone_number: String,
     val profile_pic_url: String,
+    val user_type: String,
+    val is_all_details_available: Boolean,
 )

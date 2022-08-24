@@ -24,6 +24,12 @@ fun <T> Response<T>.parseResponse() =
                         message = jsonError.getString("message")
                     )
                 )
+            } ?: kotlin.run {
+                RenterResponse.Error(
+                    RenterException(
+                        message = TR.noDataFoundError
+                    )
+                )
             }
         }
     } catch (e: Exception) {

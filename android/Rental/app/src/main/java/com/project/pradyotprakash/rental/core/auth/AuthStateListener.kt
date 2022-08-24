@@ -1,7 +1,7 @@
 package com.project.pradyotprakash.rental.core.auth
 
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import javax.inject.Inject
 
 /**
@@ -9,13 +9,14 @@ import javax.inject.Inject
  * getting the current state.
  */
 class AuthStateListener @Inject constructor() {
-    private val _authState = MutableStateFlow(AuthState.Unauthenticated)
-    val authState: StateFlow<AuthState> = _authState
+    private val _authState = MutableLiveData(AuthState.Unauthenticated)
+    val authState: LiveData<AuthState>
+        get() = _authState
 
     /**
      * Navigate to a certain page
      */
     fun stateChange(authState: AuthState) {
-        _authState.value = authState
+        _authState.postValue(authState)
     }
 }

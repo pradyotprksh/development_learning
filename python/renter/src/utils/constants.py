@@ -6,7 +6,7 @@ A module for constants which will be used to add all the constants needed for th
 This will help in not hard coding the values needed at many places.
 """
 # Type of the user
-USER_TYPE = ["owner", "renter"]
+USER_TYPE = ["Owner", "Renter"]
 # Path for the file which contains the mongo db
 MONGO_DB_DETAILS_FILE = "./data/confidential/mongo_db_details"
 # Path for information HTML file
@@ -63,6 +63,7 @@ class Keys:
         phone_number = "phone_number"
         profile_pic_url = "profile_pic_url"
         user_type = "user_type"
+        is_all_details_available = "is_all_details_available"
 
 
 # Dictionary of messages

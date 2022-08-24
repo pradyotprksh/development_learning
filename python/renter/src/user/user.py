@@ -66,32 +66,40 @@ class _User(Resource):
 
         # check if the user already exists
         user = get_document(self.user_collection, Keys.User.user_id, user_id)
-        if user is not None:
-            username = f"{user.get(Keys.User.first_name)} {user.get(Keys.User.last_name)}"
 
-            return response_creator(
-                code=409,
-                message=MESSAGES_LIST.get(Keys.Messages.user_already_available).format(username)
-            )
+        first_name_user = ""
+        last_name_user = ""
+        permanent_address_user = ""
+        date_of_birth_user = -1
+        email_address_user = ""
+        profession_user = ""
+        phone_number_user = ""
+        profile_pic_url_user = ""
+        user_type_user = ""
+        if user is not None:
+            first_name_user = user.get(Keys.User.first_name, "")
+            last_name_user = user.get(Keys.User.last_name, "")
+            permanent_address_user = user.get(Keys.User.permanent_address, "")
+            date_of_birth_user = user.get(Keys.User.date_of_birth, -1)
+            email_address_user = user.get(Keys.User.email_address)
+            profession_user = user.get(Keys.User.profession, "")
+            phone_number_user = user.get(Keys.User.phone_number, "")
+            profile_pic_url_user = user.get(Keys.User.profile_pic_url, "")
+            user_type_user = user.get(Keys.User.user_type)
 
         user_form = request.form.to_dict()
+        first_name = user_form.get(Keys.User.first_name, first_name_user)
+        last_name = user_form.get(Keys.User.last_name, last_name_user)
+        permanent_address = user_form.get(Keys.User.permanent_address, permanent_address_user)
+        date_of_birth = user_form.get(Keys.User.date_of_birth, date_of_birth_user)
+        email_address = user_form.get(Keys.User.email_address, email_address_user)
+        profession = user_form.get(Keys.User.profession, profession_user)
+        phone_number = user_form.get(Keys.User.phone_number, phone_number_user)
+        profile_pic_url = user_form.get(Keys.User.profile_pic_url, profile_pic_url_user)
+        user_type = user_form.get(Keys.User.user_type, user_type_user)
 
-        first_name = user_form.get(Keys.User.first_name)
-        last_name = user_form.get(Keys.User.last_name, "")
-        permanent_address = user_form.get(Keys.User.permanent_address, "")
-        date_of_birth = user_form.get(Keys.User.date_of_birth, -1)
-        email_address = user_form.get(Keys.User.email_address)
-        profession = user_form.get(Keys.User.profession, "")
-        phone_number = user_form.get(Keys.User.phone_number, "")
-        profile_pic_url = user_form.get(Keys.User.profile_pic_url, "")
-        user_type = user_form.get(Keys.User.user_type)
+        is_all_details_available = True
 
-        if first_name is None:
-            return response_creator(
-                code=404,
-                message=MESSAGES_LIST.get(Keys.User.first_name, DEFAULT_ERROR_MESSAGE)
-                .format(" ".join(Keys.User.first_name.split("_")))
-            )
         if email_address is None:
             return response_creator(
                 code=404,
@@ -110,6 +118,18 @@ class _User(Resource):
                 message=MESSAGES_LIST[Keys.Messages.invalid_user_type].format(user_type)
             )
 
+        if first_name == "":
+            is_all_details_available = False
+
+        if not is_all_details_available:
+            if user is not None:
+                username = f"{user.get(Keys.User.first_name)} {user.get(Keys.User.last_name)}"
+
+                return response_creator(
+                    code=409,
+                    message=MESSAGES_LIST.get(Keys.Messages.user_already_available).format(username)
+                )
+
         # payload
         user_details = UserDetails(
             user_id=user_id,
@@ -122,6 +142,7 @@ class _User(Resource):
             phone_number=phone_number,
             profile_pic_url=profile_pic_url,
             user_type=user_type,
+            is_all_details_available=is_all_details_available,
         )
 
         # add user details to mongo db

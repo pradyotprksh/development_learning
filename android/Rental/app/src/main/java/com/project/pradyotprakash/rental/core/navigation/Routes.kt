@@ -26,9 +26,14 @@ enum class Routes(
 ) {
     Splash("splash/"),
     Option("option/"),
+    Home("home/"),
     Welcome("welcome/", listOf(WelcomeScreenArguments.userType)),
     Information("information/",
-        listOf(InformationScreenArguments.userType, InformationScreenArguments.onlyPreview)
+        listOf(
+            InformationScreenArguments.userType,
+            InformationScreenArguments.onlyPreview,
+            InformationScreenArguments.allowBackOption,
+        )
     ),
     Error("error/",
         listOf(

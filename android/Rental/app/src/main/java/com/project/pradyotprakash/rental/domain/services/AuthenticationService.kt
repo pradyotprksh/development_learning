@@ -1,14 +1,30 @@
 package com.project.pradyotprakash.rental.domain.services
 
-import com.google.firebase.auth.FirebaseUser
-import com.project.pradyotprakash.rental.core.response.RenterResponse
+import com.project.pradyotprakash.rental.domain.modal.DefaultEntity
+import com.project.pradyotprakash.rental.domain.modal.UserEntity
+import retrofit2.Response
+import retrofit2.http.Field
+import retrofit2.http.FormUrlEncoded
+import retrofit2.http.GET
+import retrofit2.http.Header
+import retrofit2.http.POST
 
 interface AuthenticationService {
-    fun currentUser(): FirebaseUser?
+    @GET("/renter/user")
+    suspend fun getUserDetails(@Header("user_id") userId: String): Response<DefaultEntity<UserEntity>>
 
-    fun isUserLoggedIn(): Boolean
-
-    fun createUserUsingEmailPassword(email: String, password: String, result: (RenterResponse<*>) -> Unit)
-
-    fun signInUserUsingEmailPassword(email: String, password: String, result: (RenterResponse<*>) -> Unit)
+    @FormUrlEncoded
+    @POST("/renter/user")
+    suspend fun setUserDetails(
+        @Header("user_id") userId: String,
+        @Field("first_name") firstName: String,
+        @Field("last_name") lastName: String,
+        @Field("permanent_address") permanentAddress: String,
+        @Field("date_of_birth") dateOfBirth: Int,
+        @Field("email_address") emailAddress: String,
+        @Field("profession") profession: String,
+        @Field("phone_number") phoneNumber: String,
+        @Field("profile_pic_url") profilePicUrl: String,
+        @Field("user_type") userType: String,
+    ): Response<DefaultEntity<UserEntity>>
 }

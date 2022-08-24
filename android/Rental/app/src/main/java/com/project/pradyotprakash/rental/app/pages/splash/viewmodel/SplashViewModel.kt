@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.project.pradyotprakash.rental.app.utils.UserType
 import com.project.pradyotprakash.rental.core.auth.AuthState
 import com.project.pradyotprakash.rental.core.auth.AuthStateListener
 import com.project.pradyotprakash.rental.core.navigation.Navigator
@@ -50,11 +49,10 @@ class SplashViewModel @Inject constructor(
                 .let {
                     when (it) {
                         is RenterResponse.Success -> {
-                            // TODO: Need to redirect user to home if logged in
                             delay(2000)
                             if (authenticationUseCase.isUserLoggedIn()) {
                                 navigator.navigate { navController ->
-                                    navController.navigate("${Routes.Information.route}${UserType.Owner}/${false}") {
+                                    navController.navigate(Routes.Home.path()) {
                                         popUpTo(Routes.Splash.path()) {
                                             inclusive = true
                                         }

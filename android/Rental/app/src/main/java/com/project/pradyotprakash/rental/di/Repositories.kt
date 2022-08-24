@@ -4,6 +4,7 @@ import com.project.pradyotprakash.rental.domain.repositories.AuthenticationRepos
 import com.project.pradyotprakash.rental.domain.repositories.BasicRepository
 import com.project.pradyotprakash.rental.domain.services.AuthenticationService
 import com.project.pradyotprakash.rental.domain.services.BasicService
+import com.project.pradyotprakash.rental.domain.services.FirebaseAuthenticationService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -22,6 +23,8 @@ object Repositories {
 
     @Singleton
     @Provides
-    fun providesAuthenticationRepository(authenticationService: AuthenticationService) =
-        AuthenticationRepository(authenticationService)
+    fun providesAuthenticationRepository(
+        firebaseAuthenticationService: FirebaseAuthenticationService,
+        authenticationService: AuthenticationService
+    ) = AuthenticationRepository(firebaseAuthenticationService, authenticationService)
 }
