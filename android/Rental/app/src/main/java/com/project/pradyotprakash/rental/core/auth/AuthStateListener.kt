@@ -4,11 +4,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.project.pradyotprakash.rental.domain.modal.UserEntity
 import javax.inject.Inject
+import javax.inject.Singleton
 
 /**
  * A listener class for authentication which will also helps in updating and
  * getting the current state.
  */
+@Singleton
 class AuthStateListener @Inject constructor() {
     private val _authState = MutableLiveData(AuthState.Unauthenticated)
     val authState: LiveData<AuthState>
@@ -19,7 +21,7 @@ class AuthStateListener @Inject constructor() {
         get() = _userDetails
 
     fun updateUserDetails(userDetails: UserEntity? = null) {
-        _userDetails.postValue(userDetails)
+        _userDetails.value = userDetails
     }
 
     /**
@@ -29,6 +31,6 @@ class AuthStateListener @Inject constructor() {
         if (authState == AuthState.Unauthenticated) {
             updateUserDetails(null)
         }
-        _authState.postValue(authState)
+        _authState.value = authState
     }
 }

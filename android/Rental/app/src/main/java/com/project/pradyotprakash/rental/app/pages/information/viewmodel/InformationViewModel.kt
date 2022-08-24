@@ -77,7 +77,7 @@ class InformationViewModel @Inject constructor(
         get() = _errorText
 
     init {
-        checkForUserDetails()
+        updateFieldDetails(authStateListener.userDetails.value)
     }
 
     private fun checkForUserDetails() {
@@ -114,104 +114,106 @@ class InformationViewModel @Inject constructor(
         }
     }
 
-    private fun updateFieldDetails(userDetails: UserEntity) {
-        userType = UserType.valueOf(userDetails.user_type)
-        val fields = listOf(
-            FieldStates(
-                id = FieldId.FirstName.id,
-                value = MutableLiveData(userDetails.first_name),
-                label = "First Name",
-                keyboardOptions = KeyboardOptions(
-                    capitalization = KeyboardCapitalization.Words,
-                    autoCorrect = false,
-                    keyboardType = KeyboardType.Text,
-                    imeAction = ImeAction.Next,
+    private fun updateFieldDetails(userDetails: UserEntity?) {
+        userDetails?.let {
+            userType = UserType.valueOf(userDetails.user_type)
+            val fields = listOf(
+                FieldStates(
+                    id = FieldId.FirstName.id,
+                    value = MutableLiveData(userDetails.first_name),
+                    label = "First Name",
+                    keyboardOptions = KeyboardOptions(
+                        capitalization = KeyboardCapitalization.Words,
+                        autoCorrect = false,
+                        keyboardType = KeyboardType.Text,
+                        imeAction = ImeAction.Next,
+                    ),
+                    readOnly = onlyPreview
                 ),
-                readOnly = onlyPreview
-            ),
-            FieldStates(
-                id = FieldId.LastName.id,
-                value = MutableLiveData(userDetails.last_name),
-                label = "Last Name",
-                keyboardOptions = KeyboardOptions(
-                    capitalization = KeyboardCapitalization.Words,
-                    autoCorrect = false,
-                    keyboardType = KeyboardType.Text,
-                    imeAction = ImeAction.Next,
+                FieldStates(
+                    id = FieldId.LastName.id,
+                    value = MutableLiveData(userDetails.last_name),
+                    label = "Last Name",
+                    keyboardOptions = KeyboardOptions(
+                        capitalization = KeyboardCapitalization.Words,
+                        autoCorrect = false,
+                        keyboardType = KeyboardType.Text,
+                        imeAction = ImeAction.Next,
+                    ),
+                    readOnly = onlyPreview
                 ),
-                readOnly = onlyPreview
-            ),
-            FieldStates(
-                id = FieldId.DOB.id,
-                value = MutableLiveData(userDetails.date_of_birth),
-                label = "Date of Birth (dd/mm/yyyy)",
-                inputType = InputType.Date,
-                keyboardOptions = KeyboardOptions(
-                    autoCorrect = false,
-                    keyboardType = KeyboardType.Number,
-                    imeAction = ImeAction.Next,
+                FieldStates(
+                    id = FieldId.DOB.id,
+                    value = MutableLiveData(userDetails.date_of_birth),
+                    label = "Date of Birth (dd/mm/yyyy)",
+                    inputType = InputType.Date,
+                    keyboardOptions = KeyboardOptions(
+                        autoCorrect = false,
+                        keyboardType = KeyboardType.Number,
+                        imeAction = ImeAction.Next,
+                    ),
+                    visualTransformation = DateTransformation(),
+                    maxChar = 8,
+                    readOnly = onlyPreview
                 ),
-                visualTransformation = DateTransformation(),
-                maxChar = 8,
-                readOnly = onlyPreview
-            ),
-            FieldStates(
-                id = FieldId.EmailAddress.id,
-                value = MutableLiveData(userDetails.email_address),
-                label = "Email Address",
-                inputType = InputType.Email,
-                readOnly = true,
-                keyboardOptions = KeyboardOptions(
-                    autoCorrect = false,
-                    keyboardType = KeyboardType.Email,
-                    imeAction = ImeAction.Next,
-                )
-            ),
-            FieldStates(
-                id = FieldId.Profession.id,
-                value = MutableLiveData(userDetails.profession),
-                label = "Profession",
-                keyboardOptions = KeyboardOptions(
-                    capitalization = KeyboardCapitalization.Words,
-                    autoCorrect = false,
-                    keyboardType = KeyboardType.Text,
-                    imeAction = ImeAction.Next,
+                FieldStates(
+                    id = FieldId.EmailAddress.id,
+                    value = MutableLiveData(userDetails.email_address),
+                    label = "Email Address",
+                    inputType = InputType.Email,
+                    readOnly = true,
+                    keyboardOptions = KeyboardOptions(
+                        autoCorrect = false,
+                        keyboardType = KeyboardType.Email,
+                        imeAction = ImeAction.Next,
+                    )
                 ),
-                readOnly = onlyPreview
-            ),
-            FieldStates(
-                id = FieldId.PermanentAddress.id,
-                value = MutableLiveData(userDetails.permanent_address),
-                label = "Permanent Address",
-                keyboardOptions = KeyboardOptions(
-                    capitalization = KeyboardCapitalization.Words,
-                    autoCorrect = false,
-                    keyboardType = KeyboardType.Text,
-                    imeAction = ImeAction.Next,
+                FieldStates(
+                    id = FieldId.Profession.id,
+                    value = MutableLiveData(userDetails.profession),
+                    label = "Profession",
+                    keyboardOptions = KeyboardOptions(
+                        capitalization = KeyboardCapitalization.Words,
+                        autoCorrect = false,
+                        keyboardType = KeyboardType.Text,
+                        imeAction = ImeAction.Next,
+                    ),
+                    readOnly = onlyPreview
                 ),
-                readOnly = onlyPreview
-            ),
-            FieldStates(
-                id = FieldId.PhoneNumber.id,
-                value = MutableLiveData(userDetails.phone_number),
-                label = "Phone Number",
-                inputType = InputType.Phone,
-                keyboardOptions = KeyboardOptions(
-                    capitalization = KeyboardCapitalization.Words,
-                    autoCorrect = false,
-                    keyboardType = KeyboardType.Phone,
-                    imeAction = ImeAction.Done,
+                FieldStates(
+                    id = FieldId.PermanentAddress.id,
+                    value = MutableLiveData(userDetails.permanent_address),
+                    label = "Permanent Address",
+                    keyboardOptions = KeyboardOptions(
+                        capitalization = KeyboardCapitalization.Words,
+                        autoCorrect = false,
+                        keyboardType = KeyboardType.Text,
+                        imeAction = ImeAction.Next,
+                    ),
+                    readOnly = onlyPreview
                 ),
-                readOnly = onlyPreview,
-                keyboardActions = KeyboardActions(
-                    onDone = {
-                        updateUserDetails()
-                    }
-                )
-            ),
-        )
+                FieldStates(
+                    id = FieldId.PhoneNumber.id,
+                    value = MutableLiveData(userDetails.phone_number),
+                    label = "Phone Number",
+                    inputType = InputType.Phone,
+                    keyboardOptions = KeyboardOptions(
+                        capitalization = KeyboardCapitalization.Words,
+                        autoCorrect = false,
+                        keyboardType = KeyboardType.Phone,
+                        imeAction = ImeAction.Done,
+                    ),
+                    readOnly = onlyPreview,
+                    keyboardActions = KeyboardActions(
+                        onDone = {
+                            updateUserDetails()
+                        }
+                    )
+                ),
+            )
 
-        _fields.value = fields
+            _fields.value = fields
+        }
     }
 
     private fun updateUserDetails() {

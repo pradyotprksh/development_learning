@@ -125,12 +125,12 @@ class MainActivity : ComponentActivity() {
                             val userType = it.arguments?.getString(
                                 WelcomeScreenArguments.userType
                             )
-                            val onlyPreview = it.arguments?.getBoolean(
+                            val onlyPreview = it.arguments?.getString(
                                 InformationScreenArguments.onlyPreview
-                            )
-                            val allowBackOption = it.arguments?.getBoolean(
+                            )?.toBoolean()
+                            val allowBackOption = it.arguments?.getString(
                                 InformationScreenArguments.allowBackOption
-                            )
+                            )?.toBoolean()
 
                             userType?.let { type ->
                                 if (type.isEmpty()) {
@@ -210,7 +210,9 @@ class MainActivity : ComponentActivity() {
      */
     private fun navigationChangeListener() {
         navigator.navigateAction.observe(this) {
-            it(navController)
+            if (this::navController.isInitialized) {
+                it(navController)
+            }
         }
     }
 }
