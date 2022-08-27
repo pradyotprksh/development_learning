@@ -1,7 +1,9 @@
 package com.project.pradyotprakash.rental.domain.repositories
 
+import com.project.pradyotprakash.rental.core.response.RenterResponse
 import com.project.pradyotprakash.rental.core.response.parseResponse
 import com.project.pradyotprakash.rental.domain.services.BasicService
+import kotlinx.coroutines.flow.flow
 
 /**
  * A basic repository class which will initiate the calls
@@ -28,6 +30,9 @@ class BasicRepository(
      *
      * @param emailAddress Email to be verified
      */
-    suspend fun isEmailAddressValid(emailAddress: String) =
-        basicService.verifyEmailAddress(emailAddress = emailAddress).parseResponse()
+    suspend fun isEmailAddressValid(emailAddress: String) = flow {
+        emit(RenterResponse.Loading)
+        emit(basicService.verifyEmailAddress(emailAddress = emailAddress).parseResponse())
+        emit(RenterResponse.Idle)
+    }
 }

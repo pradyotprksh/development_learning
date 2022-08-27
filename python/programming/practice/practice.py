@@ -71,6 +71,7 @@ def run_practice_problems():
     print(f"_merge_two_lists {_merge_two_lists(list1, list2)}")
     head = ListNode(1, ListNode(2, ListNode(3, ListNode(4, ListNode(5)))))
     print(f"_reverse_list {_reverse_list(head)}")
+    print(f"_repeated_character {_repeated_character('abccbaacz')}")
     run_google_questions()
 
 
@@ -500,3 +501,13 @@ def get_key(my_dict, val):
         if val == value:
             return key
     return None
+
+
+# https://leetcode.com/problems/first-letter-to-appear-twice/
+def _repeated_character(s) -> str:
+    char_count = {}
+    for i, c in enumerate(s):
+        char_count.setdefault(c, [])
+        char_count[c].append(i)
+        if len(char_count[c]) == 2:
+            return c

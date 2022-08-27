@@ -23,7 +23,7 @@ class Navigator @Inject constructor() {
      * Navigate to a certain page
      */
     fun navigate(navigationAction: NavigationAction) {
-        _navigateActions.value = navigationAction
+        _navigateActions.postValue(navigationAction)
     }
 
     /**

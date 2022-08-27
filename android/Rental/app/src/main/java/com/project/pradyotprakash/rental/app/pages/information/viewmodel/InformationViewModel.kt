@@ -84,10 +84,14 @@ class InformationViewModel @Inject constructor(
         viewModelScope.launch {
             authenticationUseCase.getCurrentUserId()?.let { userId ->
                 _loading.value = true
-                authenticationUseCase.getCurrentUserDetails(userId = userId).let {
+                authenticationUseCase.getCurrentUserDetails(userId = userId).collect {
                     when (it) {
+                        is RenterResponse.Error -> {
+                            authenticationUseCase.logoutUser()
+                            authStateListener.stateChange(AuthState.Unauthenticated)
+                        }
+                        is RenterResponse.Loading -> _loading.value = true
                         is RenterResponse.Success -> {
-                            _loading.value = false
                             it.data.data?.let { userDetails ->
                                 authStateListener.updateUserDetails(userDetails)
                                 if (userDetails.is_all_details_available) {
@@ -98,16 +102,9 @@ class InformationViewModel @Inject constructor(
                             } ?: kotlin.run {
                                 authenticationUseCase.logoutUser()
                                 authStateListener.stateChange(AuthState.Unauthenticated)
-                                _loading.value = false
                             }
                         }
-                        is RenterResponse.Error -> {
-                            authenticationUseCase.logoutUser()
-                            authStateListener.stateChange(AuthState.Unauthenticated)
-                            _loading.value = false
-                            updateErrorState(it.exception.message)
-                        }
-                        is RenterResponse.Loading -> _loading.value = true
+                        is RenterResponse.Idle -> _loading.value = false
                     }
                 }
             }
@@ -278,16 +275,12 @@ class InformationViewModel @Inject constructor(
                     phoneNumber = phoneNumber,
                     emailAddress = emailAddress,
                     isAllDetailsAvailable = true,
-                ).let {
+                ).collect {
                     when (it) {
-                        is RenterResponse.Error -> {
-                            _loading.value = false
-                            updateErrorState(it.exception.message)
-                        }
+                        is RenterResponse.Error -> updateErrorState(it.exception.message)
                         is RenterResponse.Loading -> _loading.value = true
-                        is RenterResponse.Success -> {
-                            checkForUserDetails()
-                        }
+                        is RenterResponse.Success -> checkForUserDetails()
+                        is RenterResponse.Idle -> _loading.value = false
                     }
                 }
             }

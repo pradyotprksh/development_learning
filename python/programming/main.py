@@ -3,6 +3,7 @@ import practice
 from ds import start_with_ds
 from algo import start_with_algo
 from interview_preperations import start_with_interview_preparation
+from google import google_questions
 import src
 
 if __name__ == '__main__':
@@ -15,6 +16,7 @@ if __name__ == '__main__':
             "\n2. Algorithm"
             "\n3. Practice Problems"
             "\n4. Interview Preparations"
+            "\n5. Google Questions"
         )
         if user_selection == 1:
             start_with_ds()
@@ -24,3 +26,5 @@ if __name__ == '__main__':
             practice.run_practice_problems()
         elif user_selection == 4:
             start_with_interview_preparation()
+        elif user_selection == 5:
+            google_questions()

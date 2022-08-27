@@ -22,6 +22,11 @@ sealed class RenterResponse<out R> {
      * The loading type, when the request is initiated
      * */
     object Loading : RenterResponse<Nothing>()
+
+    /**
+     * The Idle type, when the request is done
+     * */
+    object Idle : RenterResponse<Nothing>()
 }
 
 /**

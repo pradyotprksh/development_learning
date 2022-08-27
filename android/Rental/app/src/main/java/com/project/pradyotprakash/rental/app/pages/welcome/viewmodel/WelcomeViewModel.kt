@@ -9,7 +9,6 @@ import com.project.pradyotprakash.rental.core.navigation.Navigator
 import com.project.pradyotprakash.rental.core.navigation.Routes
 import com.project.pradyotprakash.rental.core.navigation.path
 import com.project.pradyotprakash.rental.core.response.RenterResponse
-import com.project.pradyotprakash.rental.core.utils.Constants
 import com.project.pradyotprakash.rental.domain.usecase.AuthenticationUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -51,33 +50,32 @@ class WelcomeViewModel @Inject constructor(
     fun navigateBack() = navigator.navigateBack()
 
     fun initiateAuthCall(authType: AuthType) {
-        Constants.currentUserType?.let { userType ->
-            _loading.value = true
-            when (authType) {
-                AuthType.Email -> {
-                    // TODO: Give option to create user as well
-                    viewModelScope.launch {
-                        authenticationUseCase.signInUserWithEmailPassword(
-                            "pradyot@gmail.com",
-                            "pradyot@gmail.com",
-                        ) {
-                            when (it) {
-                                is RenterResponse.Error -> {
-                                    _loading.value = false
-                                    _errorText.value = it.exception.message
-                                }
-                                is RenterResponse.Loading -> _loading.value = true
-                                is RenterResponse.Success -> {
-                                    _loading.value = true
-                                    goToHomeScreen()
-                                }
+        _loading.value = true
+        when (authType) {
+            AuthType.Email -> {
+                // TODO: Give option to create user as well
+                viewModelScope.launch {
+                    authenticationUseCase.signInUserWithEmailPassword(
+                        "pradyot@gmail.com",
+                        "pradyot@gmail.com",
+                    ) {
+                        when (it) {
+                            is RenterResponse.Error -> {
+                                _loading.value = false
+                                _errorText.value = it.exception.message
                             }
+                            is RenterResponse.Loading -> _loading.value = true
+                            is RenterResponse.Success -> {
+                                _loading.value = true
+                                goToHomeScreen()
+                            }
+                            RenterResponse.Idle -> {}
                         }
                     }
                 }
-                AuthType.Phone -> {}
-                AuthType.Google -> {}
             }
+            AuthType.Phone -> {}
+            AuthType.Google -> {}
         }
     }
 

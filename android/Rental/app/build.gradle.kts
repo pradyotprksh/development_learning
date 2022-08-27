@@ -78,7 +78,7 @@ dependencies {
     implementation("androidx.activity:activity-compose:1.5.1")
 
     // Coroutines
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.3")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4")
 
     // Core
     implementation("androidx.core:core-ktx:1.8.0")
@@ -93,9 +93,9 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-test-manifest:1.2.1")
 
     // Dependency Injection
-    implementation("com.google.dagger:hilt-android:2.43.1")
+    implementation("com.google.dagger:hilt-android:2.43.2")
     implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
-    kapt("com.google.dagger:hilt-android-compiler:2.43.1")
+    kapt("com.google.dagger:hilt-android-compiler:2.43.2")
 
     // Lifecycle
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.5.1")
@@ -104,7 +104,7 @@ dependencies {
     // Retrofit
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
-    implementation("com.squareup.okhttp3:logging-interceptor:4.10.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.10")
     debugImplementation("com.github.chuckerteam.chucker:library:3.5.2")
     releaseImplementation("com.github.chuckerteam.chucker:library-no-op:3.5.2")
 

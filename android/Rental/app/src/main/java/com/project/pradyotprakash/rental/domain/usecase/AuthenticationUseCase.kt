@@ -4,6 +4,7 @@ import com.project.pradyotprakash.rental.app.utils.UserType
 import com.project.pradyotprakash.rental.core.response.RenterResponse
 import com.project.pradyotprakash.rental.domain.repositories.AuthenticationRepository
 import com.project.pradyotprakash.rental.domain.repositories.BasicRepository
+import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class AuthenticationUseCase @Inject constructor(
@@ -18,8 +19,12 @@ class AuthenticationUseCase @Inject constructor(
 
     fun logoutUser() = authenticationRepository.logoutUser()
 
-    suspend fun getCurrentUserDetails(userId: String) = authenticationRepository
-        .getCurrentUserDetails(userId = userId)
+    suspend fun getCurrentUserDetails(userId: String) =
+        flow {
+            emit(RenterResponse.Loading)
+            emit(authenticationRepository.getCurrentUserDetails(userId = userId))
+            emit(RenterResponse.Idle)
+        }
 
     suspend fun setUserDetails(
         userId: String,
@@ -32,18 +37,24 @@ class AuthenticationUseCase @Inject constructor(
         phoneNumber: String,
         profilePicUrl: String,
         userType: UserType,
-    ) = authenticationRepository.setCurrentUserDetails(
-        userId = userId,
-        firstName = firstName,
-        lastName = lastName,
-        permanentAddress = permanentAddress,
-        dateOfBirth = dateOfBirth,
-        emailAddress = emailAddress,
-        profession = profession,
-        phoneNumber = phoneNumber,
-        profilePicUrl = profilePicUrl,
-        userType = userType,
-    )
+    ) = flow {
+        emit(RenterResponse.Loading)
+        emit(
+            authenticationRepository.setCurrentUserDetails(
+                userId = userId,
+                firstName = firstName,
+                lastName = lastName,
+                permanentAddress = permanentAddress,
+                dateOfBirth = dateOfBirth,
+                emailAddress = emailAddress,
+                profession = profession,
+                phoneNumber = phoneNumber,
+                profilePicUrl = profilePicUrl,
+                userType = userType,
+            ),
+        )
+        emit(RenterResponse.Idle)
+    }
 
     suspend fun updateUserDetails(
         userId: String,
@@ -57,26 +68,32 @@ class AuthenticationUseCase @Inject constructor(
         profilePicUrl: String = "",
         userType: UserType,
         isAllDetailsAvailable: Boolean,
-    ) = authenticationRepository.updateCurrentUserDetails(
-        userId = userId,
-        firstName = firstName,
-        lastName = lastName,
-        permanentAddress = permanentAddress,
-        dateOfBirth = dateOfBirth,
-        emailAddress = emailAddress,
-        profession = profession,
-        phoneNumber = phoneNumber,
-        profilePicUrl = profilePicUrl,
-        userType = userType,
-        isAllDetailsAvailable = isAllDetailsAvailable,
-    )
+    ) = flow {
+        emit(RenterResponse.Loading)
+        emit(
+            authenticationRepository.updateCurrentUserDetails(
+                userId = userId,
+                firstName = firstName,
+                lastName = lastName,
+                permanentAddress = permanentAddress,
+                dateOfBirth = dateOfBirth,
+                emailAddress = emailAddress,
+                profession = profession,
+                phoneNumber = phoneNumber,
+                profilePicUrl = profilePicUrl,
+                userType = userType,
+                isAllDetailsAvailable = isAllDetailsAvailable,
+            ),
+        )
+        emit(RenterResponse.Idle)
+    }
 
     suspend fun signInUserWithEmailPassword(
         email: String,
         password: String,
         result: (RenterResponse<*>) -> Unit
     ) {
-        basicRepository.isEmailAddressValid(emailAddress = email).let { emailResult ->
+        basicRepository.isEmailAddressValid(emailAddress = email).collect { emailResult ->
             when (emailResult) {
                 is RenterResponse.Success -> {
                     authenticationRepository.signInUserWithEmailPassword(
@@ -86,7 +103,8 @@ class AuthenticationUseCase @Inject constructor(
                         result(it)
                     }
                 }
-                else -> result(emailResult)
+                is RenterResponse.Loading, is RenterResponse.Error -> result(emailResult)
+                else -> {}
             }
         }
     }
@@ -96,7 +114,7 @@ class AuthenticationUseCase @Inject constructor(
         password: String,
         result: (RenterResponse<*>) -> Unit
     ) {
-        basicRepository.isEmailAddressValid(emailAddress = email).let { emailResult ->
+        basicRepository.isEmailAddressValid(emailAddress = email).collect { emailResult ->
             when (emailResult) {
                 is RenterResponse.Success -> {
                     authenticationRepository.createUserWithEmailPassword(

@@ -6,14 +6,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.project.pradyotprakash.rental.core.auth.AuthState
 import com.project.pradyotprakash.rental.core.auth.AuthStateListener
-import com.project.pradyotprakash.rental.core.navigation.Navigator
-import com.project.pradyotprakash.rental.core.navigation.Routes
-import com.project.pradyotprakash.rental.core.navigation.path
 import com.project.pradyotprakash.rental.core.response.RenterResponse
 import com.project.pradyotprakash.rental.domain.usecase.AuthenticationUseCase
 import com.project.pradyotprakash.rental.domain.usecase.BasicUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -23,7 +19,6 @@ import javax.inject.Inject
 @HiltViewModel
 class SplashViewModel @Inject constructor(
     private val basicUseCase: BasicUseCase,
-    private val navigator: Navigator,
     private val authenticationUseCase: AuthenticationUseCase,
     private val authStateListener: AuthStateListener,
 ) : ViewModel() {
@@ -32,7 +27,6 @@ class SplashViewModel @Inject constructor(
         get() = _errorText
 
     init {
-        checkIfUserIsPresent()
         checkApiCalls()
     }
 
@@ -46,26 +40,13 @@ class SplashViewModel @Inject constructor(
     private fun checkApiCalls() {
         viewModelScope.launch {
             basicUseCase.getDetails()
-                .let {
+                .collect {
                     when (it) {
                         is RenterResponse.Success -> {
-                            delay(2000)
                             if (authenticationUseCase.isUserLoggedIn()) {
-                                navigator.navigate { navController ->
-                                    navController.navigate(Routes.Home.path()) {
-                                        popUpTo(Routes.Splash.path()) {
-                                            inclusive = true
-                                        }
-                                    }
-                                }
+                                authStateListener.stateChange(AuthState.Authenticated)
                             } else {
-                                navigator.navigate { navController ->
-                                    navController.navigate(Routes.Option.path()) {
-                                        popUpTo(Routes.Splash.path()) {
-                                            inclusive = true
-                                        }
-                                    }
-                                }
+                                authStateListener.stateChange(AuthState.Unauthenticated)
                             }
                         }
                         is RenterResponse.Error -> {
@@ -74,14 +55,6 @@ class SplashViewModel @Inject constructor(
                         else -> {}
                     }
                 }
-        }
-    }
-
-    private fun checkIfUserIsPresent() {
-        if (authenticationUseCase.isUserLoggedIn()) {
-            authStateListener.stateChange(AuthState.Authenticated)
-        } else {
-            authStateListener.stateChange(AuthState.Unauthenticated)
         }
     }
 }

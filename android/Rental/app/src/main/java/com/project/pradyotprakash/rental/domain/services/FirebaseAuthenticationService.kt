@@ -9,9 +9,17 @@ interface FirebaseAuthenticationService {
 
     fun isUserLoggedIn(): Boolean
 
-    fun createUserUsingEmailPassword(email: String, password: String, result: (RenterResponse<AuthResult>) -> Unit)
+    fun createUserUsingEmailPassword(
+        email: String,
+        password: String,
+        result: (RenterResponse<AuthResult>) -> Unit
+    )
 
-    fun signInUserUsingEmailPassword(email: String, password: String, result: (RenterResponse<AuthResult>) -> Unit)
+    fun signInUserUsingEmailPassword(
+        email: String,
+        password: String,
+        result: (RenterResponse<AuthResult>) -> Unit
+    )
 
     fun logoutUser()
 }

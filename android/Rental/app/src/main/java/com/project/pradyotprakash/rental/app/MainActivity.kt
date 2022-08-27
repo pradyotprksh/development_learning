@@ -194,10 +194,22 @@ class MainActivity : ComponentActivity() {
     private fun startAuthStateListener() {
         authStateListener.authState.observe(this) {
             when (it) {
-                AuthState.Authenticated -> {}
+                AuthState.Authenticated -> {
+                    navigator.navigate { navController ->
+                        navController.navigate(Routes.Home.path()) {
+                            popUpTo(Routes.Splash.path()) {
+                                inclusive = true
+                            }
+                        }
+                    }
+                }
                 AuthState.Unauthenticated -> {
                     navigator.navigate { navController ->
-                        navController.navigate(Routes.Splash.path())
+                        navController.navigate(Routes.Option.path()) {
+                            popUpTo(Routes.Splash.path()) {
+                                inclusive = true
+                            }
+                        }
                     }
                 }
                 else -> {}
@@ -210,9 +222,7 @@ class MainActivity : ComponentActivity() {
      */
     private fun navigationChangeListener() {
         navigator.navigateAction.observe(this) {
-            if (this::navController.isInitialized) {
-                it(navController)
-            }
+            it(navController)
         }
     }
 }

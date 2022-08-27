@@ -1,6 +1,9 @@
 package com.project.pradyotprakash.rental.domain.usecase
 
+import com.project.pradyotprakash.rental.core.response.RenterResponse
 import com.project.pradyotprakash.rental.domain.repositories.BasicRepository
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 /**
@@ -13,7 +16,12 @@ class BasicUseCase @Inject constructor(
     /**
      * Get the details
      */
-    suspend fun getDetails() = basicRepository.getDetails()
+    suspend fun getDetails() = flow {
+        emit(RenterResponse.Loading)
+        delay(2000)
+        emit(basicRepository.getDetails())
+        emit(RenterResponse.Idle)
+    }
 
 
     /**
@@ -21,6 +29,9 @@ class BasicUseCase @Inject constructor(
      *
      * @param userType Type of the user
      */
-    suspend fun getTermsAndCondition(userType: String) =
-        basicRepository.getTermsAndCondition(userType = userType)
+    suspend fun getTermsAndCondition(userType: String) = flow {
+        emit(RenterResponse.Loading)
+        emit(basicRepository.getTermsAndCondition(userType = userType))
+        emit(RenterResponse.Idle)
+    }
 }

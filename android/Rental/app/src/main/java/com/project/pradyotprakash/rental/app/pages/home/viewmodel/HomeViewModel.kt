@@ -37,11 +37,14 @@ class HomeViewModel @Inject constructor(
     private fun checkForUserDetails() {
         viewModelScope.launch {
             authenticationUseCase.getCurrentUserId()?.let { userId ->
-                _loading.value = true
-                authenticationUseCase.getCurrentUserDetails(userId = userId).let {
+                authenticationUseCase.getCurrentUserDetails(userId = userId).collect {
                     when (it) {
+                        is RenterResponse.Error -> {
+                            authenticationUseCase.logoutUser()
+                            authStateListener.stateChange(AuthState.Unauthenticated)
+                        }
+                        is RenterResponse.Loading -> _loading.value = true
                         is RenterResponse.Success -> {
-                            _loading.value = false
                             it.data.data?.let { userDetails ->
                                 authStateListener.updateUserDetails(userDetails)
                                 if (!userDetails.is_all_details_available) {
@@ -50,15 +53,9 @@ class HomeViewModel @Inject constructor(
                             } ?: kotlin.run {
                                 authenticationUseCase.logoutUser()
                                 authStateListener.stateChange(AuthState.Unauthenticated)
-                                _loading.value = false
                             }
                         }
-                        is RenterResponse.Error -> {
-                            authenticationUseCase.logoutUser()
-                            authStateListener.stateChange(AuthState.Unauthenticated)
-                            _loading.value = false
-                        }
-                        is RenterResponse.Loading -> _loading.value = true
+                        is RenterResponse.Idle -> _loading.value = false
                     }
                 }
             }

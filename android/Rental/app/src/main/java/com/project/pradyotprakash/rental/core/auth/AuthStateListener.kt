@@ -7,12 +7,21 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 /**
+ * A list of states for the authentication in the current application.
+ */
+enum class AuthState {
+    Authenticated,
+    Unauthenticated,
+    Idle,
+}
+
+/**
  * A listener class for authentication which will also helps in updating and
  * getting the current state.
  */
 @Singleton
 class AuthStateListener @Inject constructor() {
-    private val _authState = MutableLiveData(AuthState.Unauthenticated)
+    private val _authState = MutableLiveData(AuthState.Idle)
     val authState: LiveData<AuthState>
         get() = _authState
 
@@ -21,7 +30,7 @@ class AuthStateListener @Inject constructor() {
         get() = _userDetails
 
     fun updateUserDetails(userDetails: UserEntity? = null) {
-        _userDetails.value = userDetails
+        _userDetails.postValue(userDetails)
     }
 
     /**
@@ -31,6 +40,6 @@ class AuthStateListener @Inject constructor() {
         if (authState == AuthState.Unauthenticated) {
             updateUserDetails(null)
         }
-        _authState.value = authState
+        _authState.postValue(authState)
     }
 }
