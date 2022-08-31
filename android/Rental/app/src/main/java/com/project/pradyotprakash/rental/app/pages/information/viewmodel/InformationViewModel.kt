@@ -10,6 +10,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.project.pradyotprakash.rental.app.localization.TR
 import com.project.pradyotprakash.rental.app.utils.DateTransformation
 import com.project.pradyotprakash.rental.app.utils.UserType
 import com.project.pradyotprakash.rental.core.auth.AuthState
@@ -118,7 +119,7 @@ class InformationViewModel @Inject constructor(
                 FieldStates(
                     id = FieldId.FirstName.id,
                     value = MutableLiveData(userDetails.first_name),
-                    label = "First Name",
+                    label = TR.firstName,
                     keyboardOptions = KeyboardOptions(
                         capitalization = KeyboardCapitalization.Words,
                         autoCorrect = false,
@@ -130,7 +131,7 @@ class InformationViewModel @Inject constructor(
                 FieldStates(
                     id = FieldId.LastName.id,
                     value = MutableLiveData(userDetails.last_name),
-                    label = "Last Name",
+                    label = TR.lastName,
                     keyboardOptions = KeyboardOptions(
                         capitalization = KeyboardCapitalization.Words,
                         autoCorrect = false,
@@ -142,7 +143,7 @@ class InformationViewModel @Inject constructor(
                 FieldStates(
                     id = FieldId.DOB.id,
                     value = MutableLiveData(userDetails.date_of_birth),
-                    label = "Date of Birth (dd/mm/yyyy)",
+                    label = TR.dobWithHelp,
                     inputType = InputType.Date,
                     keyboardOptions = KeyboardOptions(
                         autoCorrect = false,
@@ -156,7 +157,7 @@ class InformationViewModel @Inject constructor(
                 FieldStates(
                     id = FieldId.EmailAddress.id,
                     value = MutableLiveData(userDetails.email_address),
-                    label = "Email Address",
+                    label = TR.emailAddress,
                     inputType = InputType.Email,
                     readOnly = true,
                     keyboardOptions = KeyboardOptions(
@@ -168,7 +169,7 @@ class InformationViewModel @Inject constructor(
                 FieldStates(
                     id = FieldId.Profession.id,
                     value = MutableLiveData(userDetails.profession),
-                    label = "Profession",
+                    label = TR.profession,
                     keyboardOptions = KeyboardOptions(
                         capitalization = KeyboardCapitalization.Words,
                         autoCorrect = false,
@@ -180,7 +181,7 @@ class InformationViewModel @Inject constructor(
                 FieldStates(
                     id = FieldId.PermanentAddress.id,
                     value = MutableLiveData(userDetails.permanent_address),
-                    label = "Permanent Address",
+                    label = TR.permanentAddress,
                     keyboardOptions = KeyboardOptions(
                         capitalization = KeyboardCapitalization.Words,
                         autoCorrect = false,
@@ -192,7 +193,7 @@ class InformationViewModel @Inject constructor(
                 FieldStates(
                     id = FieldId.PhoneNumber.id,
                     value = MutableLiveData(userDetails.phone_number),
-                    label = "Phone Number",
+                    label = TR.phoneNumber,
                     inputType = InputType.Phone,
                     keyboardOptions = KeyboardOptions(
                         capitalization = KeyboardCapitalization.Words,
@@ -213,7 +214,7 @@ class InformationViewModel @Inject constructor(
         }
     }
 
-    private fun updateUserDetails() {
+    fun updateUserDetails() {
         _fields.value?.let { fields ->
             val firstName = fields.find { it.id == FieldId.FirstName.id }?.value?.value
             val lastName = fields.find { it.id == FieldId.LastName.id }?.value?.value
@@ -242,13 +243,13 @@ class InformationViewModel @Inject constructor(
                                             emailAddress,
                                         )
                                     }
-                                        ?: kotlin.run { updateErrorState("Need your permanent address") }
-                                } ?: kotlin.run { updateErrorState("Need your permanent address") }
-                            } ?: kotlin.run { updateErrorState("Need your phone number") }
-                        } ?: kotlin.run { updateErrorState("Need your profession") }
-                    } ?: kotlin.run { updateErrorState("Need your date of birth") }
-                } ?: kotlin.run { updateErrorState("Need your last name") }
-            } ?: kotlin.run { updateErrorState("Need your first name") }
+                                        ?: kotlin.run { updateErrorState(TR.dataMissing) }
+                                } ?: kotlin.run { updateErrorState(TR.dataMissing) }
+                            } ?: kotlin.run { updateErrorState(TR.dataMissing) }
+                        } ?: kotlin.run { updateErrorState(TR.dataMissing) }
+                    } ?: kotlin.run { updateErrorState(TR.dataMissing) }
+                } ?: kotlin.run { updateErrorState(TR.dataMissing) }
+            } ?: kotlin.run { updateErrorState(TR.dataMissing) }
         }
     }
 

@@ -12,5 +12,15 @@
   "defaultErrorDescription": "Either it's you or it's us. Most probably its us only but please go back and retry, we have recorded this error and will soon be working on it. If the error persists please sends us a mail from your profile page.",
   "noDataFoundError": "We were not able to find any data, please try again.",
   "signIn": "Sign In",
-  "okay": "Okay"
+  "okay": "Okay",
+  "save": "Save",
+  "informationMessage": "Please enter the below information.",
+  "firstName": "First Name",
+  "lastName": "Last Name",
+  "dobWithHelp": "Date of Birth (dd/mm/yyyy)",
+  "emailAddress": "Email Address",
+  "profession": "Profession",
+  "permanentAddress": "Permanent Address",
+  "phoneNumber": "Phone Number",
+  "dataMissing": "Some of the required fields are empty."
 }

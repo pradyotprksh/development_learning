@@ -9,6 +9,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Phone
+import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -24,6 +25,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.project.pradyotprakash.rental.app.composables.PageStateComposable
+import com.project.pradyotprakash.rental.app.localization.TR
 import com.project.pradyotprakash.rental.app.pages.information.viewmodel.InformationViewModel
 
 /**
@@ -51,7 +53,7 @@ fun InformationScreen(
                 SmallTopAppBar(
                     title = {
                         Text(
-                            text = "Please enter the below information.",
+                            text = TR.informationMessage,
                             style = MaterialTheme.typography.bodyLarge,
                             textAlign = TextAlign.Center,
                         )
@@ -101,7 +103,18 @@ fun InformationScreen(
             }
 
             item {
+                Spacer(modifier = Modifier.height(10.dp))
 
+                Button(
+                    onClick = {
+                        informationViewModel.updateUserDetails()
+                    },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 15.dp)
+                ) {
+                    Text(text = TR.save)
+                }
             }
         }
     }
