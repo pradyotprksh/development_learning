@@ -65,6 +65,12 @@ class Keys:
         profile_pic_url = "profile_pic_url"
         user_type = "user_type"
         is_all_details_available = "is_all_details_available"
+        account_created_on = "account_created_on"
+        account_updated_on = "account_updated_on"
+
+    class Property:
+        """A set of keys related to property section"""
+        collection_name = "property"
 
 
 # Dictionary of messages

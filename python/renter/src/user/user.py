@@ -12,7 +12,7 @@ from src.core.modals import UserDetails
 from src.core.services.db import get_collection, get_document, insert_document, update_a_document
 from src.utils.constants import Keys, MESSAGES_LIST, DEFAULT_ERROR_MESSAGE, USER_TYPE
 from src.utils.response_mapper import response_creator
-from src.utils.util_calls import is_email_address_valid
+from src.utils.util_calls import is_email_address_valid, get_current_timestamp
 
 
 class User:
@@ -31,7 +31,7 @@ class _User(Resource):
     """A User class which will help in handling all the requests made on
     <path>/user/
 
-    The user_id will be coming in the headers
+    headers: user_id
     """
 
     def __init__(self):
@@ -84,8 +84,10 @@ class _User(Resource):
         phone_number = user_form.get(Keys.User.phone_number, user.get(Keys.User.phone_number))
         profile_pic_url = user_form.get(Keys.User.profile_pic_url, user.get(Keys.User.profile_pic_url))
         user_type = user_form.get(Keys.User.user_type, user.get(Keys.User.user_type))
+        account_created_on = user.get(Keys.User.account_created_on)
         is_all_details_available = user_form.get(Keys.User.is_all_details_available,
                                                  user.get(Keys.User.is_all_details_available, False))
+        account_updated_on = get_current_timestamp()
 
         if first_name is None:
             return response_creator(
@@ -93,6 +95,8 @@ class _User(Resource):
                 message=MESSAGES_LIST.get(Keys.User.first_name, DEFAULT_ERROR_MESSAGE)
                 .format(" ".join(Keys.User.first_name.split("_")))
             )
+        if account_created_on is None:
+            account_created_on = get_current_timestamp()
         if email_address is None:
             return response_creator(
                 code=404,
@@ -130,6 +134,8 @@ class _User(Resource):
             profile_pic_url=profile_pic_url,
             user_type=user_type,
             is_all_details_available=is_all_details_available,
+            account_created_on=account_created_on,
+            account_updated_on=account_updated_on,
         )
 
         # add user details to mongo db
@@ -178,12 +184,22 @@ class _User(Resource):
         phone_number = user_form.get(Keys.User.phone_number, "")
         profile_pic_url = user_form.get(Keys.User.profile_pic_url, "")
         user_type = user_form.get(Keys.User.user_type)
+        account_created_on = user_form.get(Keys.User.account_created_on)
+        account_updated_on = user_form.get(Keys.User.account_updated_on)
 
         if first_name is None:
             return response_creator(
                 code=404,
                 message=MESSAGES_LIST.get(Keys.User.first_name, DEFAULT_ERROR_MESSAGE)
                 .format(" ".join(Keys.User.first_name.split("_")))
+            )
+        if account_created_on is None:
+            account_created_on = get_current_timestamp()
+        if account_updated_on is None:
+            return response_creator(
+                code=404,
+                message=MESSAGES_LIST.get(Keys.User.account_updated_on, DEFAULT_ERROR_MESSAGE)
+                .format(" ".join(Keys.User.account_updated_on.split("_")))
             )
         if email_address is None:
             return response_creator(
@@ -215,6 +231,8 @@ class _User(Resource):
             phone_number=phone_number,
             profile_pic_url=profile_pic_url,
             user_type=user_type,
+            account_created_on=account_created_on,
+            account_updated_on=account_updated_on,
         )
 
         # add user details to mongo db

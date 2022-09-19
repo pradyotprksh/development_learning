@@ -5,7 +5,6 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.VisualTransformation
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -17,41 +16,15 @@ import com.project.pradyotprakash.rental.core.auth.AuthState
 import com.project.pradyotprakash.rental.core.auth.AuthStateListener
 import com.project.pradyotprakash.rental.core.navigation.Navigator
 import com.project.pradyotprakash.rental.core.response.RenterResponse
+import com.project.pradyotprakash.rental.core.models.ComposeType
+import com.project.pradyotprakash.rental.core.models.FieldId
+import com.project.pradyotprakash.rental.core.models.FieldStates
+import com.project.pradyotprakash.rental.core.models.InputType
 import com.project.pradyotprakash.rental.domain.modal.UserEntity
 import com.project.pradyotprakash.rental.domain.usecase.AuthenticationUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-
-enum class FieldId(val id: String) {
-    None("none"),
-    FirstName("first_name"),
-    LastName("last_name"),
-    DOB("date_of_birth"),
-    EmailAddress("email_address"),
-    Profession("profession"),
-    PhoneNumber("phone_number"),
-    PermanentAddress("permanent_address")
-}
-
-enum class InputType {
-    Text,
-    Date,
-    Email,
-    Phone,
-}
-
-data class FieldStates(
-    val id: String = FieldId.None.id,
-    var value: MutableLiveData<String>,
-    val label: String,
-    val inputType: InputType = InputType.Text,
-    val readOnly: Boolean = false,
-    val keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
-    val visualTransformation: VisualTransformation = VisualTransformation.None,
-    val maxChar: Int = -1,
-    val keyboardActions: KeyboardActions = KeyboardActions.Default,
-)
 
 /**
  * A view model class for the information screen
@@ -69,7 +42,6 @@ class InformationViewModel @Inject constructor(
     private val _fields = MutableLiveData(emptyList<FieldStates>())
     val fields: LiveData<List<FieldStates>>
         get() = _fields
-
     private val _loading = MutableLiveData(false)
     val loading: LiveData<Boolean>
         get() = _loading
@@ -88,7 +60,6 @@ class InformationViewModel @Inject constructor(
                 authenticationUseCase.getCurrentUserDetails(userId = userId).collect {
                     when (it) {
                         is RenterResponse.Error -> {
-                            authenticationUseCase.logoutUser()
                             authStateListener.stateChange(AuthState.Unauthenticated)
                         }
                         is RenterResponse.Loading -> _loading.value = true
@@ -101,7 +72,6 @@ class InformationViewModel @Inject constructor(
                                     updateFieldDetails(userDetails)
                                 }
                             } ?: kotlin.run {
-                                authenticationUseCase.logoutUser()
                                 authStateListener.stateChange(AuthState.Unauthenticated)
                             }
                         }
@@ -117,7 +87,7 @@ class InformationViewModel @Inject constructor(
             userType = UserType.valueOf(userDetails.user_type)
             val fields = listOf(
                 FieldStates(
-                    id = FieldId.FirstName.id,
+                    id = FieldId.User.FirstName.id,
                     value = MutableLiveData(userDetails.first_name),
                     label = TR.firstName,
                     keyboardOptions = KeyboardOptions(
@@ -126,10 +96,11 @@ class InformationViewModel @Inject constructor(
                         keyboardType = KeyboardType.Text,
                         imeAction = ImeAction.Next,
                     ),
-                    readOnly = onlyPreview
+                    readOnly = onlyPreview,
+                    composeType = ComposeType.OutlinedTextField,
                 ),
                 FieldStates(
-                    id = FieldId.LastName.id,
+                    id = FieldId.User.LastName.id,
                     value = MutableLiveData(userDetails.last_name),
                     label = TR.lastName,
                     keyboardOptions = KeyboardOptions(
@@ -138,10 +109,11 @@ class InformationViewModel @Inject constructor(
                         keyboardType = KeyboardType.Text,
                         imeAction = ImeAction.Next,
                     ),
-                    readOnly = onlyPreview
+                    readOnly = onlyPreview,
+                    composeType = ComposeType.OutlinedTextField,
                 ),
                 FieldStates(
-                    id = FieldId.DOB.id,
+                    id = FieldId.User.DOB.id,
                     value = MutableLiveData(userDetails.date_of_birth),
                     label = TR.dobWithHelp,
                     inputType = InputType.Date,
@@ -152,10 +124,11 @@ class InformationViewModel @Inject constructor(
                     ),
                     visualTransformation = DateTransformation(),
                     maxChar = 8,
-                    readOnly = onlyPreview
+                    readOnly = onlyPreview,
+                    composeType = ComposeType.OutlinedTextField,
                 ),
                 FieldStates(
-                    id = FieldId.EmailAddress.id,
+                    id = FieldId.User.EmailAddress.id,
                     value = MutableLiveData(userDetails.email_address),
                     label = TR.emailAddress,
                     inputType = InputType.Email,
@@ -164,10 +137,11 @@ class InformationViewModel @Inject constructor(
                         autoCorrect = false,
                         keyboardType = KeyboardType.Email,
                         imeAction = ImeAction.Next,
-                    )
+                    ),
+                    composeType = ComposeType.OutlinedTextField,
                 ),
                 FieldStates(
-                    id = FieldId.Profession.id,
+                    id = FieldId.User.Profession.id,
                     value = MutableLiveData(userDetails.profession),
                     label = TR.profession,
                     keyboardOptions = KeyboardOptions(
@@ -176,10 +150,11 @@ class InformationViewModel @Inject constructor(
                         keyboardType = KeyboardType.Text,
                         imeAction = ImeAction.Next,
                     ),
-                    readOnly = onlyPreview
+                    readOnly = onlyPreview,
+                    composeType = ComposeType.OutlinedTextField,
                 ),
                 FieldStates(
-                    id = FieldId.PermanentAddress.id,
+                    id = FieldId.Address.id,
                     value = MutableLiveData(userDetails.permanent_address),
                     label = TR.permanentAddress,
                     keyboardOptions = KeyboardOptions(
@@ -188,10 +163,11 @@ class InformationViewModel @Inject constructor(
                         keyboardType = KeyboardType.Text,
                         imeAction = ImeAction.Next,
                     ),
-                    readOnly = onlyPreview
+                    readOnly = onlyPreview,
+                    composeType = ComposeType.OutlinedTextField,
                 ),
                 FieldStates(
-                    id = FieldId.PhoneNumber.id,
+                    id = FieldId.User.PhoneNumber.id,
                     value = MutableLiveData(userDetails.phone_number),
                     label = TR.phoneNumber,
                     inputType = InputType.Phone,
@@ -206,7 +182,8 @@ class InformationViewModel @Inject constructor(
                         onDone = {
                             updateUserDetails()
                         }
-                    )
+                    ),
+                    composeType = ComposeType.OutlinedTextField,
                 ),
             )
 
@@ -216,15 +193,15 @@ class InformationViewModel @Inject constructor(
 
     fun updateUserDetails() {
         _fields.value?.let { fields ->
-            val firstName = fields.find { it.id == FieldId.FirstName.id }?.value?.value
-            val lastName = fields.find { it.id == FieldId.LastName.id }?.value?.value
-            val dateOfBirth = fields.find { it.id == FieldId.DOB.id }?.value?.value
-            val profession = fields.find { it.id == FieldId.Profession.id }?.value?.value
-            val phoneNumber = fields.find { it.id == FieldId.PhoneNumber.id }?.value?.value
+            val firstName = fields.find { it.id == FieldId.User.FirstName.id }?.value?.value
+            val lastName = fields.find { it.id == FieldId.User.LastName.id }?.value?.value
+            val dateOfBirth = fields.find { it.id == FieldId.User.DOB.id }?.value?.value
+            val profession = fields.find { it.id == FieldId.User.Profession.id }?.value?.value
+            val phoneNumber = fields.find { it.id == FieldId.User.PhoneNumber.id }?.value?.value
             val permanentAddress =
-                fields.find { it.id == FieldId.PermanentAddress.id }?.value?.value
+                fields.find { it.id == FieldId.Address.id }?.value?.value
             val emailAddress =
-                fields.find { it.id == FieldId.EmailAddress.id }?.value?.value
+                fields.find { it.id == FieldId.User.EmailAddress.id }?.value?.value
 
             firstName?.let {
                 lastName?.let {
@@ -302,7 +279,7 @@ class InformationViewModel @Inject constructor(
         this.allowBackOption = allowBackOption
     }
 
-    fun updateFieldState(index: Int, value: String = "") {
+    fun updateFieldState(value: String = "", index: Int) {
         _fields.value?.get(index)?.let {
             it.value.value = value
         }

@@ -40,7 +40,6 @@ class HomeViewModel @Inject constructor(
                 authenticationUseCase.getCurrentUserDetails(userId = userId).collect {
                     when (it) {
                         is RenterResponse.Error -> {
-                            authenticationUseCase.logoutUser()
                             authStateListener.stateChange(AuthState.Unauthenticated)
                         }
                         is RenterResponse.Loading -> _loading.value = true
@@ -51,7 +50,6 @@ class HomeViewModel @Inject constructor(
                                     goToInformationScreen(userDetails.user_type)
                                 }
                             } ?: kotlin.run {
-                                authenticationUseCase.logoutUser()
                                 authStateListener.stateChange(AuthState.Unauthenticated)
                             }
                         }
@@ -73,5 +71,11 @@ class HomeViewModel @Inject constructor(
 
     fun updateErrorState() {
         _errorText.value = ""
+    }
+
+    fun goToAddPropertyScreen() {
+        navigator.navigate {
+            it.navigate(Routes.Property.route)
+        }
     }
 }

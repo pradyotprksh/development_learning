@@ -7,7 +7,7 @@ Also helps in start the application and make it usable by external applications.
 """
 from flask import Flask
 from flask_restful import Api
-from src import Renter, User
+from src import Renter, User, Property
 from src.utils.util_calls import get_mongo_details
 from pymongo import MongoClient
 
@@ -26,8 +26,10 @@ db = client["renter"]
 # Below are all the resources used by the application
 # 1. Renter
 Renter(api=api)
-# 2. User, with the user collection
+# 2. User
 User(api=api)
+# 3. Property
+Property(api=api)
 
 # Start the application
 app.run(host="0.0.0.0", port=5000, debug=True)

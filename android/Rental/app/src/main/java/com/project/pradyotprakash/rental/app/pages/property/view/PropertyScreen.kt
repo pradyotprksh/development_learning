@@ -1,6 +1,5 @@
-package com.project.pradyotprakash.rental.app.pages.information.view
+package com.project.pradyotprakash.rental.app.pages.property.view
 
-import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -22,59 +21,44 @@ import androidx.compose.ui.unit.dp
 import com.project.pradyotprakash.rental.app.composables.FieldComposable
 import com.project.pradyotprakash.rental.app.composables.PageStateComposable
 import com.project.pradyotprakash.rental.app.localization.TR
-import com.project.pradyotprakash.rental.app.pages.information.viewmodel.InformationViewModel
+import com.project.pradyotprakash.rental.app.pages.property.viewmodel.PropertyViewModel
 
-/**
- * A screen for showing all the details related to the user,
- * if needed edit the details as well.
- */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun InformationScreen(
-    informationViewModel: InformationViewModel
-) {
-    val fields = informationViewModel.fields.observeAsState(emptyList())
-    val loading = informationViewModel.loading.observeAsState(false)
-    val error = informationViewModel.error.observeAsState("")
+fun PropertyScreen(propertyViewModel: PropertyViewModel) {
+    val fields = propertyViewModel.fields.observeAsState(emptyList())
+    val loading = propertyViewModel.loading.observeAsState(false)
+    val error = propertyViewModel.error.observeAsState("")
 
-    BackHandler {
-        if (informationViewModel.allowBackOption) {
-            informationViewModel.navigateBack()
-        }
-    }
     PageStateComposable(
         isLoading = loading.value,
         errorMessage = error.value,
-        dismissErrorAlert = informationViewModel::updateErrorState
+        dismissErrorAlert = propertyViewModel::updateErrorState
     ) {
         Scaffold(
             topBar = {
                 SmallTopAppBar(
                     title = {
                         Text(
-                            text = TR.informationMessage,
+                            text = "Add A New Property",
                             style = MaterialTheme.typography.bodyLarge,
                             textAlign = TextAlign.Center,
                         )
                     },
                     colors = TopAppBarDefaults.smallTopAppBarColors(),
                     navigationIcon = {
-                        if (informationViewModel.allowBackOption) {
-                            IconButton(onClick = informationViewModel::navigateBack) {
-                                Icon(
-                                    imageVector = Icons.Default.ArrowBack,
-                                    contentDescription = Icons.Default.ArrowBack.name,
-                                )
-                            }
+                        IconButton(onClick = propertyViewModel::navigateBack) {
+                            Icon(
+                                imageVector = Icons.Default.ArrowBack,
+                                contentDescription = Icons.Default.ArrowBack.name,
+                            )
                         }
-                    },
+                    }
                 )
             },
             bottomBar = {
                 Button(
-                    onClick = {
-                        informationViewModel.updateUserDetails()
-                    },
+                    onClick = { },
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = 15.dp)
@@ -86,7 +70,7 @@ fun InformationScreen(
             FieldComposable(
                 paddingValues = paddingValues,
                 fields = fields,
-                onValueChange = informationViewModel::updateFieldState,
+                onValueChange = propertyViewModel::updateFieldState,
             )
         }
     }

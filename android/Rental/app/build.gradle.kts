@@ -9,7 +9,7 @@ plugins {
 }
 
 tasks.register<de.undercouch.gradle.tasks.download.Download>("checkEnvironment") {
-    src("http://192.168.1.35:5000/renter/")
+    src("${rootProject.extra.get("baseUrl")}/renter")
     dest("$rootDir")
 }
 
@@ -27,10 +27,24 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+
+        buildConfigField(
+            name = "baseUrl",
+            value = "\"${rootProject.extra.get("baseUrl").toString()}\"",
+            type = "String"
+        )
     }
 
     buildTypes {
         release {
+            isMinifyEnabled = false
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+        }
+
+        debug {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
@@ -85,8 +99,7 @@ dependencies {
 
     // Compose
     implementation("androidx.compose.ui:ui:1.2.1")
-    implementation("androidx.compose.material3:material3:1.0.0-alpha16")
-    implementation("androidx.compose.ui:ui-tooling-preview:1.2.1")
+    implementation("androidx.compose.material3:material3:1.0.0-beta01")
     implementation("androidx.navigation:navigation-compose:2.5.1")
     implementation("androidx.compose.runtime:runtime-livedata:1.2.1")
     debugImplementation("androidx.compose.ui:ui-tooling:1.2.1")

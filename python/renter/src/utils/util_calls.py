@@ -8,6 +8,8 @@ This helps in organising the stuff which is important and keeping normal things 
 """
 from .constants import MONGO_DB_DETAILS_FILE
 from validate_email import validate_email
+import calendar
+import time
 
 
 def get_mongo_details():
@@ -24,3 +26,9 @@ def is_email_address_valid(email):
     if result is None:
         return False
     return result
+
+
+def get_current_timestamp():
+    """Returns the current timestamp"""
+    current_gmt = time.gmtime()
+    return calendar.timegm(current_gmt)

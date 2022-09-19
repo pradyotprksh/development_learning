@@ -1,5 +1,6 @@
 package com.project.pradyotprakash.rental.core.utils
 
+import com.project.pradyotprakash.rental.BuildConfig
 import com.project.pradyotprakash.rental.app.utils.UserType
 
 /**
@@ -7,7 +8,7 @@ import com.project.pradyotprakash.rental.app.utils.UserType
  */
 object Constants {
     private const val INFORMATION_URL = "renter/information"
-    const val BASE_URL = "http://192.168.1.35:5000"
+    const val BASE_URL = BuildConfig.baseUrl
     const val informationURL = "$BASE_URL$INFORMATION_URL"
     var currentUserType: UserType? = null
 }

@@ -4,6 +4,8 @@ plugins {
     id("org.jetbrains.kotlin.android") version "1.7.0" apply false
 }
 
+val baseUrl by rootProject.extra { "http://192.168.238.203:5000/" }
+
 buildscript {
     repositories {
         google()
@@ -11,7 +13,7 @@ buildscript {
 
     dependencies {
         classpath("com.google.dagger:hilt-android-gradle-plugin:2.42")
-        classpath("com.google.gms:google-services:4.3.13")
+        classpath("com.google.gms:google-services:4.3.14")
     }
 }
 

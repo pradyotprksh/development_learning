@@ -35,11 +35,12 @@ enum class Routes(
             InformationScreenArguments.allowBackOption,
         )
     ),
+    Property("property/"),
     Error("error/",
         listOf(
             ErrorScreenArguments.title,
             ErrorScreenArguments.subtitle,
             ErrorScreenArguments.description,
         )
-    )
+    ),
 }

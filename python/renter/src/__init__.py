@@ -7,3 +7,4 @@ Only the ones which are required outside are imported here rest can be accessed 
 """
 from .renter.renter import Renter
 from .user.user import User
+from .property.property import Property

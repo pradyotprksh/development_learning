@@ -1,6 +1,7 @@
 package com.project.pradyotprakash.rental.app
 
 import androidx.lifecycle.ViewModel
+import com.project.pradyotprakash.rental.domain.usecase.AuthenticationUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -9,4 +10,8 @@ import javax.inject.Inject
  * and helps in keeping the view class clean.
  */
 @HiltViewModel
-class MainViewModel @Inject constructor() : ViewModel()
+class MainViewModel @Inject constructor(
+    private val authenticationUseCase: AuthenticationUseCase,
+) : ViewModel() {
+    fun logoutUser() = authenticationUseCase.logoutUser()
+}

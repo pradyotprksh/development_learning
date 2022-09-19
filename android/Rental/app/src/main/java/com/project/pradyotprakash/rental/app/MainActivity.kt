@@ -23,6 +23,7 @@ import com.project.pradyotprakash.rental.app.pages.home.view.HomeScreen
 import com.project.pradyotprakash.rental.app.pages.information.view.InformationScreen
 import com.project.pradyotprakash.rental.app.pages.information.viewmodel.InformationViewModel
 import com.project.pradyotprakash.rental.app.pages.options.view.OptionsView
+import com.project.pradyotprakash.rental.app.pages.property.view.PropertyScreen
 import com.project.pradyotprakash.rental.app.pages.splash.view.SplashView
 import com.project.pradyotprakash.rental.app.pages.welcome.view.WelcomeScreen
 import com.project.pradyotprakash.rental.app.pages.welcome.viewmodel.WelcomeViewModel
@@ -74,6 +75,7 @@ class MainActivity : ComponentActivity() {
                         composable(Routes.Splash.path()) { SplashView(hiltViewModel()) }
                         composable(Routes.Home.path()) { HomeScreen(hiltViewModel()) }
                         composable(Routes.Option.path()) { OptionsView(hiltViewModel()) }
+                        composable(Routes.Property.path()) { PropertyScreen(hiltViewModel()) }
                         composable(
                             Routes.Welcome.path(),
                             arguments = Routes.Welcome.arguments.map {
@@ -204,6 +206,7 @@ class MainActivity : ComponentActivity() {
                     }
                 }
                 AuthState.Unauthenticated -> {
+                    mainViewModel.logoutUser()
                     navigator.navigate { navController ->
                         navController.navigate(Routes.Option.path()) {
                             popUpTo(Routes.Splash.path()) {

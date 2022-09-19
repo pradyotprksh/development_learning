@@ -21,5 +21,6 @@ UserDetails = namedtuple(
         Keys.User.profile_pic_url,
         Keys.User.user_type,
         Keys.User.is_all_details_available,
+        Keys.User.account_created_on,
     ]
 )
