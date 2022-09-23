@@ -5,6 +5,8 @@ A module for constants which will be used to add all the constants needed for th
 
 This will help in not hard coding the values needed at many places.
 """
+# Project name for Firebase
+PROJECT_NAME = "Rental"
 # Type of the user
 USER_TYPE = ["Owner", "Renter"]
 # Path for the file which contains the mongo db
@@ -37,6 +39,10 @@ class Endpoints:
 class Keys:
     """A Keys class which contains all the keys used everywhere"""
 
+    class Rental:
+        """A set of common keys used in the whole application"""
+        firebase_app_check_token = "X-Firebase-AppCheck"
+
     class Messages:
         """A set of keys related to messages"""
         invalid_input = "invalid_input"
@@ -51,6 +57,7 @@ class Keys:
         property_created = "property_created"
         valid = "valid"
         can_not_update_value = "can_not_update_value"
+        cannot_validate_request = "cannot_validate_request"
 
     class User:
         """A set of keys related to the User section"""
@@ -110,4 +117,7 @@ MESSAGES_LIST = {
     Keys.Messages.property_created: "Property created",
     Keys.Messages.valid: "Valid",
     Keys.Messages.can_not_update_value: "Cannot update {} to a new one.",
+    Keys.Messages.cannot_validate_request: "We were not able to validate the given request. Seems like some suspicious "
+                                           "activity is going on, or something wrong from our end to validate"
+                                           " the request. Please try again.",
 }

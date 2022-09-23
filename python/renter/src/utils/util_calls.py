@@ -22,7 +22,7 @@ def get_mongo_details():
 
 def is_email_address_valid(email):
     """Returns True is the email address is valid"""
-    result = validate_email(email=email, check_mx=True, verify=True)
+    result = validate_email(email=email)
     if result is None:
         return False
     return result

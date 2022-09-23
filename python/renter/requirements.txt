@@ -1,3 +1,4 @@
+firebase-admin
 flask
 flask-restful
 py3dns

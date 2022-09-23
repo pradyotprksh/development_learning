@@ -81,7 +81,6 @@ android {
     }
 
     project.tasks.preBuild.dependsOn("checkEnvironment")
-    namespace = "com.project.pradyotprakash.rental"
 }
 
 kapt {
@@ -128,6 +127,7 @@ dependencies {
     implementation("com.google.firebase:firebase-auth-ktx")
     implementation("com.google.firebase:firebase-firestore-ktx")
     implementation("com.google.firebase:firebase-appcheck-playintegrity")
+    implementation("com.google.firebase:firebase-appcheck-safetynet:16.0.2")
 
     // Testing
     testImplementation("junit:junit:4.13.2")

@@ -14,7 +14,9 @@ class BasicRepository(
     /**
      * Get the details
      */
-    suspend fun getDetails() = basicService.details().parseResponse()
+    suspend fun getDetails(appCheckToken: String) = basicService.details(
+        appCheckToken = appCheckToken,
+    ).parseResponse()
 
 
     /**
@@ -22,17 +24,23 @@ class BasicRepository(
      *
      * @param userType Type of the user
      */
-    suspend fun getTermsAndCondition(userType: String) =
-        basicService.termsAndCondition(userType = userType).parseResponse()
+    suspend fun getTermsAndCondition(userType: String, appCheckToken: String) =
+        basicService.termsAndCondition(userType = userType, appCheckToken = appCheckToken)
+            .parseResponse()
 
     /**
      * Get if the email address is valid or not
      *
      * @param emailAddress Email to be verified
      */
-    suspend fun isEmailAddressValid(emailAddress: String) = flow {
+    suspend fun isEmailAddressValid(emailAddress: String, appCheckToken: String) = flow {
         emit(RenterResponse.Loading)
-        emit(basicService.verifyEmailAddress(emailAddress = emailAddress).parseResponse())
+        emit(
+            basicService.verifyEmailAddress(
+                emailAddress = emailAddress,
+                appCheckToken = appCheckToken
+            ).parseResponse()
+        )
         emit(RenterResponse.Idle)
     }
 }

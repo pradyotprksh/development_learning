@@ -37,6 +37,7 @@ class HomeViewModel @Inject constructor(
     }
 
     private fun checkForUserDetails() {
+        _loading.value = true
         appCheckService.getAppCheckToken(
             onSuccess = { appCheckToken ->
                 viewModelScope.launch {
@@ -47,7 +48,7 @@ class HomeViewModel @Inject constructor(
                         ).collect {
                             when (it) {
                                 is RenterResponse.Error -> {
-                                    authStateListener.stateChange(AuthState.Unauthenticated)
+                                    updateErrorState(it.exception.localizedMessage)
                                 }
                                 is RenterResponse.Loading -> _loading.value = true
                                 is RenterResponse.Success -> {
@@ -67,7 +68,7 @@ class HomeViewModel @Inject constructor(
                 }
             },
             onFailure = {
-                authStateListener.stateChange(AuthState.Unauthenticated)
+                updateErrorState(it.localizedMessage)
             }
         )
     }
@@ -81,8 +82,9 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun updateErrorState() {
-        _errorText.value = ""
+    fun updateErrorState(message: String? = "") {
+        _loading.value = false
+        _errorText.value = message
     }
 
     fun goToAddPropertyScreen() {

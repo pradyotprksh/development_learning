@@ -20,6 +20,7 @@ interface AuthenticationService {
     @FormUrlEncoded
     @POST("/renter/user")
     suspend fun setUserDetails(
+        @Header("X-Firebase-AppCheck") appCheckToken: String,
         @Header("user_id") userId: String,
         @Field("first_name") firstName: String,
         @Field("last_name") lastName: String,
@@ -35,6 +36,7 @@ interface AuthenticationService {
     @FormUrlEncoded
     @PATCH("/renter/user")
     suspend fun updateUserDetails(
+        @Header("X-Firebase-AppCheck") appCheckToken: String,
         @Header("user_id") userId: String,
         @Field("first_name") firstName: String,
         @Field("last_name") lastName: String,

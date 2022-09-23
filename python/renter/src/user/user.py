@@ -40,6 +40,13 @@ class _User(Resource):
 
     def get(self):
         # headers
+        # Check for app token to validate request
+        app_check_token = request.headers[Keys.Rental.firebase_app_check_token]
+        if app_check_token is None or app_check_token == "":
+            return response_creator(
+                code=401,
+                message=MESSAGES_LIST[Keys.Messages.cannot_validate_request],
+            )
         user_id = request.headers[Keys.User.user_id]
 
         # find the user in db
@@ -62,6 +69,13 @@ class _User(Resource):
 
     def patch(self):
         # headers
+        # Check for app token to validate request
+        app_check_token = request.headers[Keys.Rental.firebase_app_check_token]
+        if app_check_token is None or app_check_token == "":
+            return response_creator(
+                code=401,
+                message=MESSAGES_LIST[Keys.Messages.cannot_validate_request],
+            )
         user_id = request.headers[Keys.User.user_id]
 
         # check if the user already exists
@@ -161,6 +175,13 @@ class _User(Resource):
 
     def post(self):
         # headers
+        # Check for app token to validate request
+        app_check_token = request.headers[Keys.Rental.firebase_app_check_token]
+        if app_check_token is None or app_check_token == "":
+            return response_creator(
+                code=401,
+                message=MESSAGES_LIST[Keys.Messages.cannot_validate_request],
+            )
         user_id = request.headers[Keys.User.user_id]
 
         # check if the user already exists

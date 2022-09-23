@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.project.pradyotprakash.rental.core.auth.AuthState
 import com.project.pradyotprakash.rental.core.auth.AuthStateListener
 import com.project.pradyotprakash.rental.core.response.RenterResponse
+import com.project.pradyotprakash.rental.domain.services.AppCheckService
 import com.project.pradyotprakash.rental.domain.usecase.AuthenticationUseCase
 import com.project.pradyotprakash.rental.domain.usecase.BasicUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -21,6 +22,7 @@ class SplashViewModel @Inject constructor(
     private val basicUseCase: BasicUseCase,
     private val authenticationUseCase: AuthenticationUseCase,
     private val authStateListener: AuthStateListener,
+    private val appCheckService: AppCheckService,
 ) : ViewModel() {
     private val _errorText = MutableLiveData("")
     val error: LiveData<String>
@@ -38,23 +40,30 @@ class SplashViewModel @Inject constructor(
      * Check if the app server is running
      */
     private fun checkApiCalls() {
-        viewModelScope.launch {
-            basicUseCase.getDetails()
-                .collect {
-                    when (it) {
-                        is RenterResponse.Success -> {
-                            if (authenticationUseCase.isUserLoggedIn()) {
-                                authStateListener.stateChange(AuthState.Authenticated)
-                            } else {
-                                authStateListener.stateChange(AuthState.Unauthenticated)
+        appCheckService.getAppCheckToken(
+            onSuccess = { appCheckToken ->
+                viewModelScope.launch {
+                    basicUseCase.getDetails(appCheckToken = appCheckToken)
+                        .collect {
+                            when (it) {
+                                is RenterResponse.Success -> {
+                                    if (authenticationUseCase.isUserLoggedIn()) {
+                                        authStateListener.stateChange(AuthState.Authenticated)
+                                    } else {
+                                        authStateListener.stateChange(AuthState.Unauthenticated)
+                                    }
+                                }
+                                is RenterResponse.Error -> {
+                                    _errorText.value = it.exception.message
+                                }
+                                else -> {}
                             }
                         }
-                        is RenterResponse.Error -> {
-                            _errorText.value = it.exception.message
-                        }
-                        else -> {}
-                    }
                 }
-        }
+            },
+            onFailure = {
+                _errorText.value = it.localizedMessage
+            }
+        )
     }
 }

@@ -18,33 +18,28 @@ class AuthenticationRepository(
     fun logoutUser() = firebaseAuthenticationService.logoutUser()
 
     fun signInUserWithEmailPassword(
-        email: String,
-        password: String,
-        result: (RenterResponse<AuthResult>) -> Unit
+        email: String, password: String, result: (RenterResponse<AuthResult>) -> Unit
     ) {
         firebaseAuthenticationService.signInUserUsingEmailPassword(
-            email = email,
-            password = password
+            email = email, password = password
         ) {
             result(it)
         }
     }
 
     fun createUserWithEmailPassword(
-        email: String,
-        password: String,
-        result: (RenterResponse<AuthResult>) -> Unit
+        email: String, password: String, result: (RenterResponse<AuthResult>) -> Unit
     ) {
         firebaseAuthenticationService.createUserUsingEmailPassword(
-            email = email,
-            password = password
+            email = email, password = password
         ) {
             result(it)
         }
     }
 
-    suspend fun getCurrentUserDetails(userId: String, appCheckToken: String) = authenticationService
-        .getUserDetails(userId = userId, appCheckToken = appCheckToken).parseResponse()
+    suspend fun getCurrentUserDetails(userId: String, appCheckToken: String) =
+        authenticationService.getUserDetails(userId = userId, appCheckToken = appCheckToken)
+            .parseResponse()
 
     suspend fun setCurrentUserDetails(
         userId: String,
@@ -57,20 +52,20 @@ class AuthenticationRepository(
         phoneNumber: String,
         profilePicUrl: String,
         userType: UserType,
-    ) =
-        authenticationService
-            .setUserDetails(
-                userId = userId,
-                firstName = firstName,
-                lastName = lastName,
-                permanentAddress = permanentAddress,
-                dateOfBirth = dateOfBirth,
-                emailAddress = emailAddress,
-                profession = profession,
-                phoneNumber = phoneNumber,
-                profilePicUrl = profilePicUrl,
-                userType = userType.name,
-            ).parseResponse()
+        appCheckToken: String,
+    ) = authenticationService.setUserDetails(
+            userId = userId,
+            firstName = firstName,
+            lastName = lastName,
+            permanentAddress = permanentAddress,
+            dateOfBirth = dateOfBirth,
+            emailAddress = emailAddress,
+            profession = profession,
+            phoneNumber = phoneNumber,
+            profilePicUrl = profilePicUrl,
+            userType = userType.name,
+            appCheckToken = appCheckToken,
+        ).parseResponse()
 
     suspend fun updateCurrentUserDetails(
         userId: String,
@@ -84,19 +79,19 @@ class AuthenticationRepository(
         profilePicUrl: String,
         userType: UserType,
         isAllDetailsAvailable: Boolean,
-    ) =
-        authenticationService
-            .updateUserDetails(
-                userId = userId,
-                firstName = firstName,
-                lastName = lastName,
-                permanentAddress = permanentAddress,
-                dateOfBirth = dateOfBirth,
-                emailAddress = emailAddress,
-                profession = profession,
-                phoneNumber = phoneNumber,
-                profilePicUrl = profilePicUrl,
-                userType = userType.name,
-                isAllDetailsAvailable = isAllDetailsAvailable,
-            ).parseResponse()
+        appCheckToken: String,
+    ) = authenticationService.updateUserDetails(
+            userId = userId,
+            firstName = firstName,
+            lastName = lastName,
+            permanentAddress = permanentAddress,
+            dateOfBirth = dateOfBirth,
+            emailAddress = emailAddress,
+            profession = profession,
+            phoneNumber = phoneNumber,
+            profilePicUrl = profilePicUrl,
+            userType = userType.name,
+            isAllDetailsAvailable = isAllDetailsAvailable,
+            appCheckToken = appCheckToken,
+        ).parseResponse()
 }

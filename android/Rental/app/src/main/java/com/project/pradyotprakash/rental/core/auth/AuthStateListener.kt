@@ -30,7 +30,9 @@ class AuthStateListener @Inject constructor() {
         get() = _userDetails
 
     fun updateUserDetails(userDetails: UserEntity? = null) {
-        _userDetails.postValue(userDetails)
+        userDetails?.let {
+            _userDetails.postValue(it)
+        }
     }
 
     /**

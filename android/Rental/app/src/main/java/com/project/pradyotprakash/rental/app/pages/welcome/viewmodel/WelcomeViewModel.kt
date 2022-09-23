@@ -9,6 +9,7 @@ import com.project.pradyotprakash.rental.core.navigation.Navigator
 import com.project.pradyotprakash.rental.core.navigation.Routes
 import com.project.pradyotprakash.rental.core.navigation.path
 import com.project.pradyotprakash.rental.core.response.RenterResponse
+import com.project.pradyotprakash.rental.domain.services.AppCheckService
 import com.project.pradyotprakash.rental.domain.usecase.AuthenticationUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -27,6 +28,7 @@ enum class AuthType {
 class WelcomeViewModel @Inject constructor(
     private val navigator: Navigator,
     private val authenticationUseCase: AuthenticationUseCase,
+    private val appCheckService: AppCheckService,
 ) : ViewModel() {
     lateinit var userType: UserType
 
@@ -51,36 +53,45 @@ class WelcomeViewModel @Inject constructor(
 
     fun initiateAuthCall(authType: AuthType) {
         _loading.value = true
-        when (authType) {
-            AuthType.Email -> {
-                // TODO: Give option to create user as well
-                viewModelScope.launch {
-                    authenticationUseCase.signInUserWithEmailPassword(
-                        "pradyot@gmail.com",
-                        "pradyot@gmail.com",
-                    ) {
-                        when (it) {
-                            is RenterResponse.Error -> {
-                                _loading.value = false
-                                _errorText.value = it.exception.message
+        appCheckService.getAppCheckToken(
+            onSuccess = { appCheckToken ->
+                when (authType) {
+                    AuthType.Email -> {
+                        // TODO: Give option to create user as well
+                        viewModelScope.launch {
+                            authenticationUseCase.signInUserWithEmailPassword(
+                                "pradyot@gmail.com",
+                                "pradyot@gmail.com",
+                                appCheckToken = appCheckToken,
+                            ) {
+                                when (it) {
+                                    is RenterResponse.Error -> {
+                                        _loading.value = false
+                                        _errorText.value = it.exception.message
+                                    }
+                                    is RenterResponse.Loading -> _loading.value = true
+                                    is RenterResponse.Success -> {
+                                        _loading.value = true
+                                        goToHomeScreen()
+                                    }
+                                    RenterResponse.Idle -> {}
+                                }
                             }
-                            is RenterResponse.Loading -> _loading.value = true
-                            is RenterResponse.Success -> {
-                                _loading.value = true
-                                goToHomeScreen()
-                            }
-                            RenterResponse.Idle -> {}
                         }
                     }
+                    AuthType.Phone -> {}
+                    AuthType.Google -> {}
                 }
+            },
+            onFailure = {
+                _errorText.value = it.localizedMessage
             }
-            AuthType.Phone -> {}
-            AuthType.Google -> {}
-        }
+        )
     }
 
-    fun updateErrorState() {
-        _errorText.value = ""
+    fun updateErrorState(message: String? = "") {
+        _loading.value = false
+        _errorText.value = message
     }
 
     /**

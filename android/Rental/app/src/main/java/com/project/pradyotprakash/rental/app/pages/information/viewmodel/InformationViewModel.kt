@@ -57,11 +57,11 @@ class InformationViewModel @Inject constructor(
     }
 
     private fun checkForUserDetails() {
+        _loading.value = true
         appCheckService.getAppCheckToken(
             onSuccess = { appCheckToken ->
                 viewModelScope.launch {
                     authenticationUseCase.getCurrentUserId()?.let { userId ->
-                        _loading.value = true
                         authenticationUseCase.getCurrentUserDetails(
                             userId = userId,
                             appCheckToken = appCheckToken,
@@ -90,6 +90,7 @@ class InformationViewModel @Inject constructor(
                 }
             },
             onFailure = {
+                _loading.value = false
                 authStateListener.stateChange(AuthState.Unauthenticated)
             }
         )
@@ -205,6 +206,7 @@ class InformationViewModel @Inject constructor(
     }
 
     fun updateUserDetails() {
+        _loading.value = true
         _fields.value?.let { fields ->
             val firstName = fields.find { it.id == FieldId.User.FirstName.id }?.value?.value
             val lastName = fields.find { it.id == FieldId.User.LastName.id }?.value?.value
@@ -216,33 +218,43 @@ class InformationViewModel @Inject constructor(
             val emailAddress =
                 fields.find { it.id == FieldId.User.EmailAddress.id }?.value?.value
 
-            isAllNotNull(
-                firstName,
-                lastName,
-                dateOfBirth,
-                profession,
-                phoneNumber,
-                permanentAddress,
-                emailAddress,
-                onNull = {
-                    updateErrorState(TR.dataMissing)
-                },
-                onNotNull = {
-                    initiateUpdateUserDetails(
-                        firstName!!,
-                        lastName!!,
-                        dateOfBirth!!,
-                        profession!!,
-                        phoneNumber!!,
-                        permanentAddress!!,
-                        emailAddress!!,
+            appCheckService.getAppCheckToken(
+                onSuccess = { appCheckToken ->
+                    isAllNotNull(
+                        appCheckToken,
+                        firstName,
+                        lastName,
+                        dateOfBirth,
+                        profession,
+                        phoneNumber,
+                        permanentAddress,
+                        emailAddress,
+                        onNull = {
+                            updateErrorState(TR.dataMissing)
+                        },
+                        onNotNull = {
+                            initiateUpdateUserDetails(
+                                appCheckToken,
+                                firstName!!,
+                                lastName!!,
+                                dateOfBirth!!,
+                                profession!!,
+                                phoneNumber!!,
+                                permanentAddress!!,
+                                emailAddress!!,
+                            )
+                        }
                     )
+                },
+                onFailure = {
+                    updateErrorState(it.localizedMessage)
                 }
             )
         }
     }
 
     private fun initiateUpdateUserDetails(
+        appCheckToken: String,
         firstName: String,
         lastName: String,
         dateOfBirth: String,
@@ -264,6 +276,7 @@ class InformationViewModel @Inject constructor(
                     phoneNumber = phoneNumber,
                     emailAddress = emailAddress,
                     isAllDetailsAvailable = true,
+                    appCheckToken = appCheckToken,
                 ).collect {
                     when (it) {
                         is RenterResponse.Error -> updateErrorState(it.exception.message)
@@ -297,6 +310,7 @@ class InformationViewModel @Inject constructor(
     }
 
     fun updateErrorState(errorText: String? = null) {
+        _loading.value = false
         _errorText.value = errorText ?: ""
     }
 }

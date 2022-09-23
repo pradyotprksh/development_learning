@@ -6,7 +6,7 @@ details of the project, terms and condition, information etc.
 
 This will help in making the api file cleaner and making the refactoring easy.
 """
-from flask import render_template
+from flask import render_template, request
 from flask_restful import Resource
 from src.utils.constants import USER_TYPE, Endpoints, MESSAGES_LIST, Keys, INFORMATION_HTML_FILE, \
     DEFAULT_ERROR_MESSAGE, DEFAULT_VALID_DATA
@@ -49,6 +49,15 @@ class _TermsAndCondition(Resource):
 
     @staticmethod
     def get(user_type):
+        # Headers
+        # Check for app token to validate request
+        app_check_token = request.headers[Keys.Rental.firebase_app_check_token]
+        if app_check_token is None or app_check_token == "":
+            return response_creator(
+                code=401,
+                message=MESSAGES_LIST[Keys.Messages.cannot_validate_request],
+            )
+
         if user_type not in USER_TYPE:
             return response_creator(
                 code=404,
@@ -66,6 +75,15 @@ class _Information(Resource):
 
     @staticmethod
     def get():
+        # Headers
+        # Check for app token to validate request
+        app_check_token = request.headers[Keys.Rental.firebase_app_check_token]
+        if app_check_token is None or app_check_token == "":
+            return response_creator(
+                code=401,
+                message=MESSAGES_LIST[Keys.Messages.cannot_validate_request],
+            )
+
         return render_template(INFORMATION_HTML_FILE)
 
 
@@ -75,6 +93,15 @@ class _Email(Resource):
 
     @staticmethod
     def get(email_address):
+        # Headers
+        # Check for app token to validate request
+        app_check_token = request.headers[Keys.Rental.firebase_app_check_token]
+        if app_check_token is None or app_check_token == "":
+            return response_creator(
+                code=401,
+                message=MESSAGES_LIST[Keys.Messages.cannot_validate_request],
+            )
+
         if not is_email_address_valid(email=email_address):
             return response_creator(
                 code=400,

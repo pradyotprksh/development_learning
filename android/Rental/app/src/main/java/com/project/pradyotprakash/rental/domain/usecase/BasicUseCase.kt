@@ -16,10 +16,10 @@ class BasicUseCase @Inject constructor(
     /**
      * Get the details
      */
-    suspend fun getDetails() = flow {
+    suspend fun getDetails(appCheckToken: String) = flow {
         emit(RenterResponse.Loading)
         delay(2000)
-        emit(basicRepository.getDetails())
+        emit(basicRepository.getDetails(appCheckToken = appCheckToken))
         emit(RenterResponse.Idle)
     }
 
@@ -29,9 +29,9 @@ class BasicUseCase @Inject constructor(
      *
      * @param userType Type of the user
      */
-    suspend fun getTermsAndCondition(userType: String) = flow {
+    suspend fun getTermsAndCondition(userType: String, appCheckToken: String) = flow {
         emit(RenterResponse.Loading)
-        emit(basicRepository.getTermsAndCondition(userType = userType))
+        emit(basicRepository.getTermsAndCondition(userType = userType, appCheckToken = appCheckToken))
         emit(RenterResponse.Idle)
     }
 }

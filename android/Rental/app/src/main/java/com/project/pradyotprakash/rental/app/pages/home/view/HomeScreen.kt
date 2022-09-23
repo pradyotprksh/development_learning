@@ -1,12 +1,13 @@
 package com.project.pradyotprakash.rental.app.pages.home.view
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SmallTopAppBar
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
@@ -30,7 +31,7 @@ fun HomeScreen(homeViewModel: HomeViewModel) {
     ) {
         Scaffold(
             topBar = {
-                SmallTopAppBar(
+                TopAppBar(
                     title = {
                         Text(
                             text = "Welcome, ${userDetails.value?.first_name ?: ""}",
@@ -38,7 +39,7 @@ fun HomeScreen(homeViewModel: HomeViewModel) {
                             textAlign = TextAlign.Center,
                         )
                     },
-                    colors = TopAppBarDefaults.smallTopAppBarColors(),
+                    colors = TopAppBarDefaults.smallTopAppBarColors()
                 )
             },
             floatingActionButton = {
@@ -52,7 +53,11 @@ fun HomeScreen(homeViewModel: HomeViewModel) {
                 }
             }
         ) {
+            Box(
+                modifier = Modifier.padding(it)
+            ) {
 
+            }
         }
     }
 }

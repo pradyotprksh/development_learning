@@ -4,10 +4,12 @@ import com.project.pradyotprakash.rental.domain.modal.DefaultEntity
 import com.project.pradyotprakash.rental.domain.modal.PropertyEntity
 import retrofit2.Response
 import retrofit2.http.Field
+import retrofit2.http.FormUrlEncoded
 import retrofit2.http.Header
 import retrofit2.http.POST
 
 interface PropertyService {
+    @FormUrlEncoded
     @POST("/renter/property")
     suspend fun createProperty(
         @Header("X-Firebase-AppCheck") appCheckToken: String,

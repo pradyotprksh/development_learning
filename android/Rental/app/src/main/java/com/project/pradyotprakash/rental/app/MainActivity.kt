@@ -16,9 +16,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.google.firebase.FirebaseApp
-import com.google.firebase.appcheck.FirebaseAppCheck
-import com.google.firebase.appcheck.playintegrity.PlayIntegrityAppCheckProviderFactory
 import com.project.pradyotprakash.rental.app.localization.Translation
 import com.project.pradyotprakash.rental.app.pages.error.view.ErrorScreen
 import com.project.pradyotprakash.rental.app.pages.error.viewmodel.ErrorViewModel
@@ -52,8 +49,6 @@ class MainActivity : ComponentActivity() {
     private val mainViewModel: MainViewModel by viewModels()
 
     @Inject
-    lateinit var firebaseAppCheck: FirebaseAppCheck
-    @Inject
     lateinit var navigator: Navigator
     @Inject
     lateinit var authStateListener: AuthStateListener
@@ -62,8 +57,6 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        firebaseInitializations()
 
         // Fetch and save the translation values at the starting of the application
         // TODO: Handle the language change, currently only fetching the default one
@@ -94,7 +87,7 @@ class MainActivity : ComponentActivity() {
 
                             userType?.let { type ->
                                 if (type.isEmpty()) {
-                                    goToErrorScreen()
+                                    GoToErrorScreen()
                                 } else {
                                     WelcomeScreen(
                                         hiltViewModel<WelcomeViewModel>().also { viewModel ->
@@ -112,7 +105,7 @@ class MainActivity : ComponentActivity() {
                                 navArgument(it) { type = NavType.StringType }
                             }
                         ) {
-                            goToErrorScreen(
+                            GoToErrorScreen(
                                 title = it.arguments?.getString(
                                     ErrorScreenArguments.title
                                 ) ?: "",
@@ -142,7 +135,7 @@ class MainActivity : ComponentActivity() {
 
                             userType?.let { type ->
                                 if (type.isEmpty()) {
-                                    goToErrorScreen()
+                                    GoToErrorScreen()
                                 } else {
                                     onlyPreview?.let {
                                         allowBackOption?.let {
@@ -156,10 +149,10 @@ class MainActivity : ComponentActivity() {
                                                 }
                                             )
                                         } ?: kotlin.run {
-                                            goToErrorScreen()
+                                            GoToErrorScreen()
                                         }
                                     } ?: kotlin.run {
-                                        goToErrorScreen()
+                                        GoToErrorScreen()
                                     }
                                 }
                             }
@@ -170,15 +163,8 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-    private fun firebaseInitializations() {
-        FirebaseApp.initializeApp(this)
-        firebaseAppCheck.installAppCheckProviderFactory(
-            PlayIntegrityAppCheckProviderFactory.getInstance()
-        )
-    }
-
     @Composable
-    private fun goToErrorScreen(
+    private fun GoToErrorScreen(
         title: String = "",
         subtitle: String = "",
         description: String = ""

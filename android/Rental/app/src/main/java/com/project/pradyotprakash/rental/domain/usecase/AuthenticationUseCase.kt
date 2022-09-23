@@ -4,7 +4,6 @@ import com.project.pradyotprakash.rental.app.utils.UserType
 import com.project.pradyotprakash.rental.core.response.RenterResponse
 import com.project.pradyotprakash.rental.domain.repositories.AuthenticationRepository
 import com.project.pradyotprakash.rental.domain.repositories.BasicRepository
-import com.project.pradyotprakash.rental.domain.services.AppCheckService
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
@@ -19,7 +18,6 @@ import javax.inject.Inject
 class AuthenticationUseCase @Inject constructor(
     private val authenticationRepository: AuthenticationRepository,
     private val basicRepository: BasicRepository,
-    private val appCheckService: AppCheckService,
 ) {
     /**
      * Get the current user details
@@ -51,7 +49,12 @@ class AuthenticationUseCase @Inject constructor(
     suspend fun getCurrentUserDetails(userId: String, appCheckToken: String) =
         flow {
             emit(RenterResponse.Loading)
-            emit(authenticationRepository.getCurrentUserDetails(userId = userId, appCheckToken = appCheckToken))
+            emit(
+                authenticationRepository.getCurrentUserDetails(
+                    userId = userId,
+                    appCheckToken = appCheckToken
+                )
+            )
             emit(RenterResponse.Idle)
         }
 
@@ -69,6 +72,7 @@ class AuthenticationUseCase @Inject constructor(
         phoneNumber: String,
         profilePicUrl: String,
         userType: UserType,
+        appCheckToken: String,
     ) = flow {
         emit(RenterResponse.Loading)
         emit(
@@ -83,6 +87,7 @@ class AuthenticationUseCase @Inject constructor(
                 phoneNumber = phoneNumber,
                 profilePicUrl = profilePicUrl,
                 userType = userType,
+                appCheckToken = appCheckToken,
             ),
         )
         emit(RenterResponse.Idle)
@@ -103,6 +108,7 @@ class AuthenticationUseCase @Inject constructor(
         profilePicUrl: String = "",
         userType: UserType,
         isAllDetailsAvailable: Boolean,
+        appCheckToken: String,
     ) = flow {
         emit(RenterResponse.Loading)
         emit(
@@ -118,6 +124,7 @@ class AuthenticationUseCase @Inject constructor(
                 profilePicUrl = profilePicUrl,
                 userType = userType,
                 isAllDetailsAvailable = isAllDetailsAvailable,
+                appCheckToken = appCheckToken,
             ),
         )
         emit(RenterResponse.Idle)
@@ -126,41 +133,45 @@ class AuthenticationUseCase @Inject constructor(
     suspend fun signInUserWithEmailPassword(
         email: String,
         password: String,
+        appCheckToken: String,
         result: (RenterResponse<*>) -> Unit
     ) {
-        basicRepository.isEmailAddressValid(emailAddress = email).collect { emailResult ->
-            when (emailResult) {
-                is RenterResponse.Success -> {
-                    authenticationRepository.signInUserWithEmailPassword(
-                        email = email,
-                        password = password
-                    ) {
-                        result(it)
+        basicRepository.isEmailAddressValid(emailAddress = email, appCheckToken = appCheckToken)
+            .collect { emailResult ->
+                when (emailResult) {
+                    is RenterResponse.Success -> {
+                        authenticationRepository.signInUserWithEmailPassword(
+                            email = email,
+                            password = password
+                        ) {
+                            result(it)
+                        }
                     }
+                    is RenterResponse.Loading, is RenterResponse.Error -> result(emailResult)
+                    else -> {}
                 }
-                is RenterResponse.Loading, is RenterResponse.Error -> result(emailResult)
-                else -> {}
             }
-        }
     }
 
     suspend fun createUserWithEmailPassword(
         email: String,
         password: String,
+        appCheckToken: String,
         result: (RenterResponse<*>) -> Unit
     ) {
-        basicRepository.isEmailAddressValid(emailAddress = email).collect { emailResult ->
-            when (emailResult) {
-                is RenterResponse.Success -> {
-                    authenticationRepository.createUserWithEmailPassword(
-                        email = email,
-                        password = password
-                    ) {
-                        result(it)
+        basicRepository.isEmailAddressValid(emailAddress = email, appCheckToken = appCheckToken)
+            .collect { emailResult ->
+                when (emailResult) {
+                    is RenterResponse.Success -> {
+                        authenticationRepository.createUserWithEmailPassword(
+                            email = email,
+                            password = password
+                        ) {
+                            result(it)
+                        }
                     }
+                    else -> result(emailResult)
                 }
-                else -> result(emailResult)
             }
-        }
     }
 }
