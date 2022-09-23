@@ -9,6 +9,11 @@ enum class FieldId(val id: String) {
     None("none"),
     True("True"),
     False("False"),
+    Society("society"),
+    Apartment("apartment"),
+    House("house"),
+    Deposit("yearly_deposit"),
+    MonthlyRent("monthly_rent"),
     Address("address");
 
     enum class User(val id: String) {
@@ -22,7 +27,20 @@ enum class FieldId(val id: String) {
 
     enum class Property(val id: String) {
         PropertyName("property_name"),
-        IsRentalOwner("is_rental_owner")
+        IsRentalOwner("is_rental_owner"),
+        IsForRental("is_for_rental"),
+        PropertyFor("property_for"),
+        ForFamily("for_family"),
+        ForBachelors("for_bachelors"),
+        DoesNotMatter("does_not_matter"),
+        FurnishedType("furnished_type"),
+        FullyFurnished("fully_furnished"),
+        SemiFurnished("semi_furnished"),
+        PropertyType("property_type"),
+        BathroomNumber("number_of_bathrooms"),
+        WhereItIs("where_it_is"),
+        Perks("perks"),
+        AgreementRules("agreement_rules")
     }
 }
 
@@ -38,6 +56,7 @@ enum class ComposeType {
     OutlinedTextField,
     RadioGroup,
     RadioButton,
+    Switch,
 }
 
 data class FieldStates(
@@ -51,6 +70,6 @@ data class FieldStates(
     val visualTransformation: VisualTransformation = VisualTransformation.None,
     val maxChar: Int = -1,
     val keyboardActions: KeyboardActions = KeyboardActions.Default,
-    val isSelected: Boolean = false,
+    val isSelected: MutableLiveData<Boolean> = MutableLiveData(false),
     val children: List<FieldStates> = emptyList(),
 )

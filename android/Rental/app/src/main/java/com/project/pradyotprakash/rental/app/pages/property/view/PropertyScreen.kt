@@ -58,7 +58,7 @@ fun PropertyScreen(propertyViewModel: PropertyViewModel) {
             },
             bottomBar = {
                 Button(
-                    onClick = { },
+                    onClick = propertyViewModel::createRentalProperty,
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = 15.dp)
@@ -71,6 +71,7 @@ fun PropertyScreen(propertyViewModel: PropertyViewModel) {
                 paddingValues = paddingValues,
                 fields = fields,
                 onValueChange = propertyViewModel::updateFieldState,
+                onSelected = propertyViewModel::updateFieldState,
             )
         }
     }

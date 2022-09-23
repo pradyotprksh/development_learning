@@ -43,8 +43,8 @@ class AuthenticationRepository(
         }
     }
 
-    suspend fun getCurrentUserDetails(userId: String) = authenticationService
-        .getUserDetails(userId = userId).parseResponse()
+    suspend fun getCurrentUserDetails(userId: String, appCheckToken: String) = authenticationService
+        .getUserDetails(userId = userId, appCheckToken = appCheckToken).parseResponse()
 
     suspend fun setCurrentUserDetails(
         userId: String,

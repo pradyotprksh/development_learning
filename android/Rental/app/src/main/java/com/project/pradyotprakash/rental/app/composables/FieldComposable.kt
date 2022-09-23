@@ -1,5 +1,6 @@
 package com.project.pradyotprakash.rental.app.composables
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -7,9 +8,11 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.RadioButton
+import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
@@ -26,7 +29,7 @@ fun FieldComposable(
     paddingValues: PaddingValues = PaddingValues(all = 0.dp),
     fields: State<List<FieldStates>>,
     onValueChange: (String, Int) -> Unit = { _, _ -> },
-    onSelected: (Int) -> Unit = { _ -> },
+    onSelected: (Int, String) -> Unit = { _, _ -> },
 ) {
     LazyColumn(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -37,11 +40,11 @@ fun FieldComposable(
     ) {
         items(fields.value.size) { index ->
             val field = fields.value[index]
+            val filedValue = field.value.observeAsState("")
+            val isSelectedValue = field.isSelected.observeAsState(false)
 
             when (field.composeType) {
                 ComposeType.OutlinedTextField -> {
-                    val filedValue = field.value.observeAsState("")
-
                     OutlinedTextField(
                         value = filedValue.value,
                         onValueChange = {
@@ -64,21 +67,63 @@ fun FieldComposable(
                     )
                 }
                 ComposeType.RadioGroup -> {
-                    field.children.forEach { child ->
-                        when (child.composeType) {
-                            ComposeType.RadioButton -> {
-                                Row(
-                                    modifier = Modifier.fillMaxWidth(),
-                                    verticalAlignment = Alignment.CenterVertically,
-                                ) {
-                                    RadioButton(
-                                        selected = field.value.value == child.id,
-                                        onClick = {},
-                                    )
-                                    Text(text = child.label)
+                    Card(
+                        modifier = Modifier
+                            .padding(horizontal = 15.dp)
+                    ) {
+                        if (field.children.isNotEmpty()) {
+                            Text(
+                                field.label,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(horizontal = 15.dp)
+                            )
+                        }
+
+                        field.children.forEach { child ->
+                            when (child.composeType) {
+                                ComposeType.RadioButton -> {
+                                    Row(
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .clickable {
+                                                onSelected(index, child.id)
+                                            },
+                                        verticalAlignment = Alignment.CenterVertically,
+                                    ) {
+                                        RadioButton(
+                                            selected = filedValue.value == child.id,
+                                            onClick = {
+                                                onSelected(index, child.id)
+                                            },
+                                        )
+                                        Text(text = child.label)
+                                    }
                                 }
+                                else -> {}
                             }
-                            else -> {}
+                        }
+                    }
+                }
+                ComposeType.Switch -> {
+                    Card(
+                        modifier = Modifier
+                            .padding(horizontal = 15.dp)
+                    ) {
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 15.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                        ) {
+                            Text(text = field.label)
+                            Spacer(modifier = Modifier.weight(1f))
+                            Switch(
+                                checked = isSelectedValue.value,
+                                onCheckedChange = {
+                                    onSelected(index, "")
+                                },
+                            )
                         }
                     }
                 }

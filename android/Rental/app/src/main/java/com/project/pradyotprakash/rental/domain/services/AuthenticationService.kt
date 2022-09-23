@@ -12,7 +12,10 @@ import retrofit2.http.POST
 
 interface AuthenticationService {
     @GET("/renter/user")
-    suspend fun getUserDetails(@Header("user_id") userId: String): Response<DefaultEntity<UserEntity>>
+    suspend fun getUserDetails(
+        @Header("user_id") userId: String,
+        @Header("X-Firebase-AppCheck") appCheckToken: String,
+    ): Response<DefaultEntity<UserEntity>>
 
     @FormUrlEncoded
     @POST("/renter/user")

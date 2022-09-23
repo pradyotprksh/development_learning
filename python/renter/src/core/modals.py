@@ -24,3 +24,27 @@ UserDetails = namedtuple(
         Keys.User.account_created_on,
     ]
 )
+
+# A named tuple for the property
+PropertyDetails = namedtuple(
+    "PropertyDetails",
+    [
+        Keys.Property.property_id,
+        Keys.Property.property_name,
+        Keys.Property.property_created_by,
+        Keys.Property.is_rental_owner,
+        Keys.Property.is_for_rental,
+        Keys.Property.property_for,
+        Keys.Property.furnished_type,
+        Keys.Property.property_type,
+        Keys.Property.number_of_bathrooms,
+        Keys.Property.where_it_is,
+        Keys.Property.yearly_deposit,
+        Keys.Property.monthly_rent,
+        Keys.Property.address,
+        Keys.Property.perks,
+        Keys.Property.agreement_rules,
+        Keys.Property.property_created_on,
+        Keys.Property.property_updated_on,
+    ]
+)

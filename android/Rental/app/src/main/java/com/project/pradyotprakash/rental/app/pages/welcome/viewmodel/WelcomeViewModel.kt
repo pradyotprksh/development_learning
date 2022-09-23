@@ -87,12 +87,8 @@ class WelcomeViewModel @Inject constructor(
      * Go to the get information details screen
      */
     private fun goToHomeScreen() {
-        navigator.navigate { navController ->
-            navController.navigate(Routes.Home.path()) {
-                popUpTo(Routes.Welcome.path()) {
-                    inclusive = true
-                }
-            }
+        navigator.navigate {
+            it.navigate(Routes.Home.path())
         }
     }
 }

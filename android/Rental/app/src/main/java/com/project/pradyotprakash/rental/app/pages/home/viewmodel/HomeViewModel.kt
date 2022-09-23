@@ -10,6 +10,7 @@ import com.project.pradyotprakash.rental.core.navigation.Navigator
 import com.project.pradyotprakash.rental.core.navigation.Routes
 import com.project.pradyotprakash.rental.core.response.RenterResponse
 import com.project.pradyotprakash.rental.domain.modal.UserEntity
+import com.project.pradyotprakash.rental.domain.services.AppCheckService
 import com.project.pradyotprakash.rental.domain.usecase.AuthenticationUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -20,6 +21,7 @@ class HomeViewModel @Inject constructor(
     private val navigator: Navigator,
     private val authenticationUseCase: AuthenticationUseCase,
     private val authStateListener: AuthStateListener,
+    private val appCheckService: AppCheckService,
 ) : ViewModel() {
     private val _loading = MutableLiveData(false)
     val loading: LiveData<Boolean>
@@ -35,29 +37,39 @@ class HomeViewModel @Inject constructor(
     }
 
     private fun checkForUserDetails() {
-        viewModelScope.launch {
-            authenticationUseCase.getCurrentUserId()?.let { userId ->
-                authenticationUseCase.getCurrentUserDetails(userId = userId).collect {
-                    when (it) {
-                        is RenterResponse.Error -> {
-                            authStateListener.stateChange(AuthState.Unauthenticated)
-                        }
-                        is RenterResponse.Loading -> _loading.value = true
-                        is RenterResponse.Success -> {
-                            it.data.data?.let { userDetails ->
-                                authStateListener.updateUserDetails(userDetails)
-                                if (!userDetails.is_all_details_available) {
-                                    goToInformationScreen(userDetails.user_type)
+        appCheckService.getAppCheckToken(
+            onSuccess = { appCheckToken ->
+                viewModelScope.launch {
+                    authenticationUseCase.getCurrentUserId()?.let { userId ->
+                        authenticationUseCase.getCurrentUserDetails(
+                            userId = userId,
+                            appCheckToken = appCheckToken,
+                        ).collect {
+                            when (it) {
+                                is RenterResponse.Error -> {
+                                    authStateListener.stateChange(AuthState.Unauthenticated)
                                 }
-                            } ?: kotlin.run {
-                                authStateListener.stateChange(AuthState.Unauthenticated)
+                                is RenterResponse.Loading -> _loading.value = true
+                                is RenterResponse.Success -> {
+                                    it.data.data?.let { userDetails ->
+                                        authStateListener.updateUserDetails(userDetails)
+                                        if (!userDetails.is_all_details_available) {
+                                            goToInformationScreen(userDetails.user_type)
+                                        }
+                                    } ?: kotlin.run {
+                                        authStateListener.stateChange(AuthState.Unauthenticated)
+                                    }
+                                }
+                                is RenterResponse.Idle -> _loading.value = false
                             }
                         }
-                        is RenterResponse.Idle -> _loading.value = false
                     }
                 }
+            },
+            onFailure = {
+                authStateListener.stateChange(AuthState.Unauthenticated)
             }
-        }
+        )
     }
 
     /**

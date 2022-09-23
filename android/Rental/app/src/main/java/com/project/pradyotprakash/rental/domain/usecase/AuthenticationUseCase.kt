@@ -4,6 +4,7 @@ import com.project.pradyotprakash.rental.app.utils.UserType
 import com.project.pradyotprakash.rental.core.response.RenterResponse
 import com.project.pradyotprakash.rental.domain.repositories.AuthenticationRepository
 import com.project.pradyotprakash.rental.domain.repositories.BasicRepository
+import com.project.pradyotprakash.rental.domain.services.AppCheckService
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
@@ -18,6 +19,7 @@ import javax.inject.Inject
 class AuthenticationUseCase @Inject constructor(
     private val authenticationRepository: AuthenticationRepository,
     private val basicRepository: BasicRepository,
+    private val appCheckService: AppCheckService,
 ) {
     /**
      * Get the current user details
@@ -46,10 +48,10 @@ class AuthenticationUseCase @Inject constructor(
      *
      * @param userId Id of the user for which the details is needed
      */
-    suspend fun getCurrentUserDetails(userId: String) =
+    suspend fun getCurrentUserDetails(userId: String, appCheckToken: String) =
         flow {
             emit(RenterResponse.Loading)
-            emit(authenticationRepository.getCurrentUserDetails(userId = userId))
+            emit(authenticationRepository.getCurrentUserDetails(userId = userId, appCheckToken = appCheckToken))
             emit(RenterResponse.Idle)
         }
 

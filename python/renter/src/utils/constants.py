@@ -48,6 +48,7 @@ class Keys:
         user_found = "user_found"
         user_already_available = "user_already_available"
         user_created = "user_created"
+        property_created = "property_created"
         valid = "valid"
         can_not_update_value = "can_not_update_value"
 
@@ -71,6 +72,23 @@ class Keys:
     class Property:
         """A set of keys related to property section"""
         collection_name = "property"
+        property_id = "property_id"
+        property_name = "property_name"
+        is_rental_owner = "is_rental_owner"
+        is_for_rental = "is_for_rental"
+        property_for = "property_for"
+        furnished_type = "furnished_type"
+        property_type = "property_type"
+        number_of_bathrooms = "number_of_bathrooms"
+        where_it_is = "where_it_is"
+        yearly_deposit = "yearly_deposit"
+        monthly_rent = "monthly_rent"
+        address = "address"
+        perks = "perks"
+        agreement_rules = "agreement_rules"
+        property_created_on = "property_created_on"
+        property_updated_on = "property_updated_on"
+        property_created_by = "property_created_by"
 
 
 # Dictionary of messages
@@ -89,6 +107,7 @@ MESSAGES_LIST = {
     Keys.Messages.user_found: "User found",
     Keys.Messages.user_already_available: "{} exists, you are trying to create one which is already there.",
     Keys.Messages.user_created: "User created",
+    Keys.Messages.property_created: "Property created",
     Keys.Messages.valid: "Valid",
     Keys.Messages.can_not_update_value: "Cannot update {} to a new one.",
 }

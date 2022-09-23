@@ -12,15 +12,17 @@ import androidx.lifecycle.viewModelScope
 import com.project.pradyotprakash.rental.app.localization.TR
 import com.project.pradyotprakash.rental.app.utils.DateTransformation
 import com.project.pradyotprakash.rental.app.utils.UserType
+import com.project.pradyotprakash.rental.app.utils.isAllNotNull
 import com.project.pradyotprakash.rental.core.auth.AuthState
 import com.project.pradyotprakash.rental.core.auth.AuthStateListener
-import com.project.pradyotprakash.rental.core.navigation.Navigator
-import com.project.pradyotprakash.rental.core.response.RenterResponse
 import com.project.pradyotprakash.rental.core.models.ComposeType
 import com.project.pradyotprakash.rental.core.models.FieldId
 import com.project.pradyotprakash.rental.core.models.FieldStates
 import com.project.pradyotprakash.rental.core.models.InputType
+import com.project.pradyotprakash.rental.core.navigation.Navigator
+import com.project.pradyotprakash.rental.core.response.RenterResponse
 import com.project.pradyotprakash.rental.domain.modal.UserEntity
+import com.project.pradyotprakash.rental.domain.services.AppCheckService
 import com.project.pradyotprakash.rental.domain.usecase.AuthenticationUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -34,6 +36,7 @@ class InformationViewModel @Inject constructor(
     private val navigator: Navigator,
     private val authenticationUseCase: AuthenticationUseCase,
     private val authStateListener: AuthStateListener,
+    private val appCheckService: AppCheckService,
 ) : ViewModel() {
     lateinit var userType: UserType
     private var onlyPreview: Boolean = false
@@ -54,32 +57,42 @@ class InformationViewModel @Inject constructor(
     }
 
     private fun checkForUserDetails() {
-        viewModelScope.launch {
-            authenticationUseCase.getCurrentUserId()?.let { userId ->
-                _loading.value = true
-                authenticationUseCase.getCurrentUserDetails(userId = userId).collect {
-                    when (it) {
-                        is RenterResponse.Error -> {
-                            authStateListener.stateChange(AuthState.Unauthenticated)
-                        }
-                        is RenterResponse.Loading -> _loading.value = true
-                        is RenterResponse.Success -> {
-                            it.data.data?.let { userDetails ->
-                                authStateListener.updateUserDetails(userDetails)
-                                if (userDetails.is_all_details_available) {
-                                    navigateBack()
-                                } else {
-                                    updateFieldDetails(userDetails)
+        appCheckService.getAppCheckToken(
+            onSuccess = { appCheckToken ->
+                viewModelScope.launch {
+                    authenticationUseCase.getCurrentUserId()?.let { userId ->
+                        _loading.value = true
+                        authenticationUseCase.getCurrentUserDetails(
+                            userId = userId,
+                            appCheckToken = appCheckToken,
+                        ).collect {
+                            when (it) {
+                                is RenterResponse.Error -> {
+                                    authStateListener.stateChange(AuthState.Unauthenticated)
                                 }
-                            } ?: kotlin.run {
-                                authStateListener.stateChange(AuthState.Unauthenticated)
+                                is RenterResponse.Loading -> _loading.value = true
+                                is RenterResponse.Success -> {
+                                    it.data.data?.let { userDetails ->
+                                        authStateListener.updateUserDetails(userDetails)
+                                        if (userDetails.is_all_details_available) {
+                                            navigateBack()
+                                        } else {
+                                            updateFieldDetails(userDetails)
+                                        }
+                                    } ?: kotlin.run {
+                                        authStateListener.stateChange(AuthState.Unauthenticated)
+                                    }
+                                }
+                                is RenterResponse.Idle -> _loading.value = false
                             }
                         }
-                        is RenterResponse.Idle -> _loading.value = false
                     }
                 }
+            },
+            onFailure = {
+                authStateListener.stateChange(AuthState.Unauthenticated)
             }
-        }
+        )
     }
 
     private fun updateFieldDetails(userDetails: UserEntity?) {
@@ -203,30 +216,29 @@ class InformationViewModel @Inject constructor(
             val emailAddress =
                 fields.find { it.id == FieldId.User.EmailAddress.id }?.value?.value
 
-            firstName?.let {
-                lastName?.let {
-                    dateOfBirth?.let {
-                        profession?.let {
-                            phoneNumber?.let {
-                                permanentAddress?.let {
-                                    emailAddress?.let {
-                                        initiateUpdateUserDetails(
-                                            firstName,
-                                            lastName,
-                                            dateOfBirth,
-                                            profession,
-                                            phoneNumber,
-                                            permanentAddress,
-                                            emailAddress,
-                                        )
-                                    }
-                                        ?: kotlin.run { updateErrorState(TR.dataMissing) }
-                                } ?: kotlin.run { updateErrorState(TR.dataMissing) }
-                            } ?: kotlin.run { updateErrorState(TR.dataMissing) }
-                        } ?: kotlin.run { updateErrorState(TR.dataMissing) }
-                    } ?: kotlin.run { updateErrorState(TR.dataMissing) }
-                } ?: kotlin.run { updateErrorState(TR.dataMissing) }
-            } ?: kotlin.run { updateErrorState(TR.dataMissing) }
+            isAllNotNull(
+                firstName,
+                lastName,
+                dateOfBirth,
+                profession,
+                phoneNumber,
+                permanentAddress,
+                emailAddress,
+                onNull = {
+                    updateErrorState(TR.dataMissing)
+                },
+                onNotNull = {
+                    initiateUpdateUserDetails(
+                        firstName!!,
+                        lastName!!,
+                        dateOfBirth!!,
+                        profession!!,
+                        phoneNumber!!,
+                        permanentAddress!!,
+                        emailAddress!!,
+                    )
+                }
+            )
         }
     }
 
@@ -240,7 +252,6 @@ class InformationViewModel @Inject constructor(
         emailAddress: String,
     ) {
         viewModelScope.launch {
-            _loading.value = true
             authenticationUseCase.getCurrentUserId()?.let { userId ->
                 authenticationUseCase.updateUserDetails(
                     userId = userId,

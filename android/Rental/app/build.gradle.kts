@@ -19,7 +19,7 @@ android {
     defaultConfig {
         applicationId = "com.project.pradyotprakash.rental"
         minSdk = 21
-        targetSdk = 32
+        targetSdk = 33
         versionCode = 1
         versionName = "1.0.0"
 
@@ -77,10 +77,11 @@ android {
     }
 
     dataBinding {
-        isEnabled = true
+        enable = true
     }
 
     project.tasks.preBuild.dependsOn("checkEnvironment")
+    namespace = "com.project.pradyotprakash.rental"
 }
 
 kapt {
@@ -95,20 +96,20 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4")
 
     // Core
-    implementation("androidx.core:core-ktx:1.8.0")
+    implementation("androidx.core:core-ktx:1.9.0")
 
     // Compose
     implementation("androidx.compose.ui:ui:1.2.1")
-    implementation("androidx.compose.material3:material3:1.0.0-beta01")
-    implementation("androidx.navigation:navigation-compose:2.5.1")
+    implementation("androidx.compose.material3:material3:1.0.0-beta02")
+    implementation("androidx.navigation:navigation-compose:2.5.2")
     implementation("androidx.compose.runtime:runtime-livedata:1.2.1")
     debugImplementation("androidx.compose.ui:ui-tooling:1.2.1")
     debugImplementation("androidx.compose.ui:ui-test-manifest:1.2.1")
 
     // Dependency Injection
-    implementation("com.google.dagger:hilt-android:2.43.2")
+    implementation("com.google.dagger:hilt-android:2.44")
     implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
-    kapt("com.google.dagger:hilt-android-compiler:2.43.2")
+    kapt("com.google.dagger:hilt-android-compiler:2.44")
 
     // Lifecycle
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.5.1")
@@ -122,9 +123,11 @@ dependencies {
     releaseImplementation("com.github.chuckerteam.chucker:library-no-op:3.5.2")
 
     // Firebase
-    implementation(platform("com.google.firebase:firebase-bom:30.3.2"))
+    implementation(platform("com.google.firebase:firebase-bom:30.5.0"))
     implementation("com.google.firebase:firebase-analytics-ktx")
     implementation("com.google.firebase:firebase-auth-ktx")
+    implementation("com.google.firebase:firebase-firestore-ktx")
+    implementation("com.google.firebase:firebase-appcheck-playintegrity")
 
     // Testing
     testImplementation("junit:junit:4.13.2")

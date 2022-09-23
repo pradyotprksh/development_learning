@@ -2,9 +2,11 @@ package com.project.pradyotprakash.rental.di
 
 import com.project.pradyotprakash.rental.domain.repositories.AuthenticationRepository
 import com.project.pradyotprakash.rental.domain.repositories.BasicRepository
+import com.project.pradyotprakash.rental.domain.repositories.PropertyRepository
 import com.project.pradyotprakash.rental.domain.services.AuthenticationService
 import com.project.pradyotprakash.rental.domain.services.BasicService
 import com.project.pradyotprakash.rental.domain.services.FirebaseAuthenticationService
+import com.project.pradyotprakash.rental.domain.services.PropertyService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -27,4 +29,10 @@ object Repositories {
         firebaseAuthenticationService: FirebaseAuthenticationService,
         authenticationService: AuthenticationService
     ) = AuthenticationRepository(firebaseAuthenticationService, authenticationService)
+
+    @Singleton
+    @Provides
+    fun providesPropertyRepository(
+        propertyService: PropertyService,
+    ) = PropertyRepository(propertyService)
 }
