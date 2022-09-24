@@ -49,7 +49,7 @@ class PropertyViewModel @Inject constructor(
     private fun updateFieldDetails() {
         val fields = listOf(
             FieldStates(
-                id = FieldId.Property.PropertyName.id,
+                id = FieldId.PropertyName.id,
                 composeType = ComposeType.OutlinedTextField,
                 label = "Property Name",
                 keyboardOptions = KeyboardOptions(
@@ -71,7 +71,7 @@ class PropertyViewModel @Inject constructor(
                 composeType = ComposeType.OutlinedTextField,
             ),
             FieldStates(
-                id = FieldId.Property.PropertyType.id,
+                id = FieldId.PropertyType.id,
                 label = "Type of property like 1BHK, 2BHK, etc.",
                 keyboardOptions = KeyboardOptions(
                     capitalization = KeyboardCapitalization.Words,
@@ -82,7 +82,7 @@ class PropertyViewModel @Inject constructor(
                 composeType = ComposeType.OutlinedTextField,
             ),
             FieldStates(
-                id = FieldId.Property.BathroomNumber.id,
+                id = FieldId.BathroomNumber.id,
                 label = "Number Of Bathrooms",
                 keyboardOptions = KeyboardOptions(
                     capitalization = KeyboardCapitalization.None,
@@ -115,7 +115,7 @@ class PropertyViewModel @Inject constructor(
                 composeType = ComposeType.OutlinedTextField,
             ),
             FieldStates(
-                id = FieldId.Property.Perks.id,
+                id = FieldId.Perks.id,
                 composeType = ComposeType.OutlinedTextField,
                 label = "Few perks for the renter to know about, if there",
                 keyboardOptions = KeyboardOptions(
@@ -126,7 +126,7 @@ class PropertyViewModel @Inject constructor(
                 ),
             ),
             FieldStates(
-                id = FieldId.Property.AgreementRules.id,
+                id = FieldId.AgreementRules.id,
                 composeType = ComposeType.OutlinedTextField,
                 label = "Agreement rules which the renter should know about before hand, if there",
                 keyboardOptions = KeyboardOptions(
@@ -142,7 +142,7 @@ class PropertyViewModel @Inject constructor(
                 ),
             ),
             FieldStates(
-                id = FieldId.Property.WhereItIs.id,
+                id = FieldId.WhereItIs.id,
                 composeType = ComposeType.RadioGroup,
                 label = "Where the rental property is?",
                 value = MutableLiveData(FieldId.House.id),
@@ -165,7 +165,7 @@ class PropertyViewModel @Inject constructor(
                 ),
             ),
             FieldStates(
-                id = FieldId.Property.IsRentalOwner.id,
+                id = FieldId.IsRentalOwner.id,
                 composeType = ComposeType.RadioGroup,
                 label = "Are you the owner?",
                 value = MutableLiveData(FieldId.True.id),
@@ -183,47 +183,47 @@ class PropertyViewModel @Inject constructor(
                 ),
             ),
             FieldStates(
-                id = FieldId.Property.IsForRental.id,
+                id = FieldId.IsForRental.id,
                 composeType = ComposeType.Switch,
                 label = "Is for rental?",
                 isSelected = MutableLiveData(true),
             ),
             FieldStates(
-                id = FieldId.Property.PropertyFor.id,
+                id = FieldId.PropertyFor.id,
                 composeType = ComposeType.RadioGroup,
                 label = "What kind of renter is allowed?",
-                value = MutableLiveData(FieldId.Property.DoesNotMatter.id),
+                value = MutableLiveData(FieldId.DoesNotMatter.id),
                 children = listOf(
                     FieldStates(
-                        id = FieldId.Property.ForFamily.id,
+                        id = FieldId.ForFamily.id,
                         label = "Only Families",
                         composeType = ComposeType.RadioButton,
                     ),
                     FieldStates(
-                        id = FieldId.Property.ForBachelors.id,
+                        id = FieldId.ForBachelors.id,
                         label = "Only Bachelors",
                         composeType = ComposeType.RadioButton,
                     ),
                     FieldStates(
-                        id = FieldId.Property.DoesNotMatter.id,
+                        id = FieldId.DoesNotMatter.id,
                         label = "Does Not Matter",
                         composeType = ComposeType.RadioButton,
                     ),
                 ),
             ),
             FieldStates(
-                id = FieldId.Property.FurnishedType.id,
+                id = FieldId.FurnishedType.id,
                 composeType = ComposeType.RadioGroup,
                 label = "Furnished Type",
                 value = MutableLiveData(FieldId.None.id),
                 children = listOf(
                     FieldStates(
-                        id = FieldId.Property.FullyFurnished.id,
+                        id = FieldId.FullyFurnished.id,
                         label = "Fully Furnished",
                         composeType = ComposeType.RadioButton,
                     ),
                     FieldStates(
-                        id = FieldId.Property.SemiFurnished.id,
+                        id = FieldId.SemiFurnished.id,
                         label = "Semi Furnished",
                         composeType = ComposeType.RadioButton,
                     ),
@@ -242,27 +242,27 @@ class PropertyViewModel @Inject constructor(
     fun createRentalProperty() {
         _fields.value?.let { fields ->
             val propertyId = firestoreService.getRandomDocumentId()
-            val name = fields.find { it.id == FieldId.Property.PropertyName.id }?.value?.value
+            val name = fields.find { it.id == FieldId.PropertyName.id }?.value?.value
             val address = fields.find { it.id == FieldId.Address.id }?.value?.value
             val areYouTheOwner =
-                fields.find { it.id == FieldId.Property.IsRentalOwner.id }?.value?.value
+                fields.find { it.id == FieldId.IsRentalOwner.id }?.value?.value
             val isForRental =
-                fields.find { it.id == FieldId.Property.IsForRental.id }?.isSelected?.value
+                fields.find { it.id == FieldId.IsForRental.id }?.isSelected?.value
             val kindOfRenter =
-                fields.find { it.id == FieldId.Property.PropertyFor.id }?.value?.value
+                fields.find { it.id == FieldId.PropertyFor.id }?.value?.value
             val furnishedType =
-                fields.find { it.id == FieldId.Property.FurnishedType.id }?.value?.value
+                fields.find { it.id == FieldId.FurnishedType.id }?.value?.value
             val propertyType =
-                fields.find { it.id == FieldId.Property.PropertyType.id }?.value?.value
+                fields.find { it.id == FieldId.PropertyType.id }?.value?.value
             val numberOfBathroom =
-                fields.find { it.id == FieldId.Property.BathroomNumber.id }?.value?.value
+                fields.find { it.id == FieldId.BathroomNumber.id }?.value?.value
             val wherePropertyIs =
-                fields.find { it.id == FieldId.Property.WhereItIs.id }?.value?.value
+                fields.find { it.id == FieldId.WhereItIs.id }?.value?.value
             val depositAmount = fields.find { it.id == FieldId.Deposit.id }?.value?.value
             val rentAmount = fields.find { it.id == FieldId.MonthlyRent.id }?.value?.value
-            val perks = fields.find { it.id == FieldId.Property.Perks.id }?.value?.value
+            val perks = fields.find { it.id == FieldId.Perks.id }?.value?.value
             val agreementTerms =
-                fields.find { it.id == FieldId.Property.AgreementRules.id }?.value?.value
+                fields.find { it.id == FieldId.AgreementRules.id }?.value?.value
 
             appCheckService.getAppCheckToken(
                 onSuccess = { appCheckToken ->

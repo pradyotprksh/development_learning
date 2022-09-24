@@ -9,9 +9,11 @@ import com.project.pradyotprakash.rental.core.auth.AuthStateListener
 import com.project.pradyotprakash.rental.core.navigation.Navigator
 import com.project.pradyotprakash.rental.core.navigation.Routes
 import com.project.pradyotprakash.rental.core.response.RenterResponse
+import com.project.pradyotprakash.rental.domain.modal.PropertyEntity
 import com.project.pradyotprakash.rental.domain.modal.UserEntity
 import com.project.pradyotprakash.rental.domain.services.AppCheckService
 import com.project.pradyotprakash.rental.domain.usecase.AuthenticationUseCase
+import com.project.pradyotprakash.rental.domain.usecase.PropertyUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -22,6 +24,7 @@ class HomeViewModel @Inject constructor(
     private val authenticationUseCase: AuthenticationUseCase,
     private val authStateListener: AuthStateListener,
     private val appCheckService: AppCheckService,
+    private val propertyUseCase: PropertyUseCase,
 ) : ViewModel() {
     private val _loading = MutableLiveData(false)
     val loading: LiveData<Boolean>
@@ -31,6 +34,9 @@ class HomeViewModel @Inject constructor(
         get() = _errorText
     val userDetails: LiveData<UserEntity>
         get() = authStateListener.userDetails
+    private val _properties = MutableLiveData<List<PropertyEntity>>()
+    val properties: LiveData<List<PropertyEntity>>
+        get() = _properties
 
     init {
         checkForUserDetails()
@@ -54,6 +60,7 @@ class HomeViewModel @Inject constructor(
                                 is RenterResponse.Success -> {
                                     it.data.data?.let { userDetails ->
                                         authStateListener.updateUserDetails(userDetails)
+                                        fetchAllProperties()
                                         if (!userDetails.is_all_details_available) {
                                             goToInformationScreen(userDetails.user_type)
                                         }
@@ -63,6 +70,29 @@ class HomeViewModel @Inject constructor(
                                 }
                                 is RenterResponse.Idle -> _loading.value = false
                             }
+                        }
+                    }
+                }
+            },
+            onFailure = {
+                updateErrorState(it.localizedMessage)
+            }
+        )
+    }
+
+    private fun fetchAllProperties() {
+        appCheckService.getAppCheckToken(
+            onSuccess = { appCheckToken ->
+                viewModelScope.launch {
+                    propertyUseCase.getProperties(
+                        appCheckToken = appCheckToken,
+                    ).collect {
+                        when (it) {
+                            is RenterResponse.Error -> updateErrorState(it.exception.message)
+                            is RenterResponse.Idle -> _loading.value = false
+                            is RenterResponse.Loading -> _loading.value = true
+                            is RenterResponse.Success -> _properties.value =
+                                it.data.data ?: emptyList()
                         }
                     }
                 }

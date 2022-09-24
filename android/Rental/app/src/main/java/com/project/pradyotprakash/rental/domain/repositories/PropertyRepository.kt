@@ -7,6 +7,17 @@ import com.project.pradyotprakash.rental.domain.services.PropertyService
 class PropertyRepository(
     private val propertyService: PropertyService,
 ) {
+    suspend fun getProperties(
+        userId: String,
+        appCheckToken: String,
+        propertyId: String,
+    ) = propertyService.getProperties(
+        appCheckToken = appCheckToken,
+        userId = userId,
+        propertyId = propertyId,
+    ).parseResponse()
+
+
     suspend fun createProperty(
         userId: String,
         appCheckToken: String,

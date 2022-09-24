@@ -10,8 +10,8 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SmallTopAppBar
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
@@ -37,7 +37,7 @@ fun PropertyScreen(propertyViewModel: PropertyViewModel) {
     ) {
         Scaffold(
             topBar = {
-                SmallTopAppBar(
+                TopAppBar(
                     title = {
                         Text(
                             text = "Add A New Property",
@@ -45,7 +45,6 @@ fun PropertyScreen(propertyViewModel: PropertyViewModel) {
                             textAlign = TextAlign.Center,
                         )
                     },
-                    colors = TopAppBarDefaults.smallTopAppBarColors(),
                     navigationIcon = {
                         IconButton(onClick = propertyViewModel::navigateBack) {
                             Icon(
@@ -53,7 +52,8 @@ fun PropertyScreen(propertyViewModel: PropertyViewModel) {
                                 contentDescription = Icons.Default.ArrowBack.name,
                             )
                         }
-                    }
+                    },
+                    colors = TopAppBarDefaults.smallTopAppBarColors()
                 )
             },
             bottomBar = {

@@ -1,5 +1,7 @@
 package com.project.pradyotprakash.rental.domain.modal
 
+import com.project.pradyotprakash.rental.core.models.FieldId
+
 data class PropertyEntity(
     val _id: String,
     val property_id: String,
@@ -19,4 +21,29 @@ data class PropertyEntity(
     val property_created_on: String,
     val property_updated_on: String,
     val property_created_by: String,
-)
+    val property_created_by_details: UserEntity? = null,
+) {
+    val isForRental
+        get() = is_for_rental.toBoolean()
+
+    val isRentalOwner
+        get() = is_rental_owner.toBoolean()
+
+    val propertyFor: String
+        get() {
+            return when (FieldId.values().find { it.id == property_for }) {
+                FieldId.ForFamily -> "Families"
+                FieldId.ForBachelors -> "Bachelors"
+                else -> "Families | Bachelors"
+            }
+        }
+
+    val furnishedType: String
+        get() {
+            return when (FieldId.values().find { it.id == furnished_type }) {
+                FieldId.FullyFurnished -> "Fully Furnished"
+                FieldId.SemiFurnished -> "Semi Furnished"
+                else -> "No Furniture"
+            }
+        }
+}

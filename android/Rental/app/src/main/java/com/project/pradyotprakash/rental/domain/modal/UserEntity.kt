@@ -13,4 +13,7 @@ data class UserEntity(
     val profile_pic_url: String,
     val user_type: String,
     val is_all_details_available: Boolean,
-)
+) {
+    val fullName
+        get() = "$first_name $last_name"
+}

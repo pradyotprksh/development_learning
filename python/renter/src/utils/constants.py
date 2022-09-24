@@ -23,6 +23,8 @@ DEFAULT_FORM_DATA_NOT_AVAILABLE = "Missing your {} in the form"
 DEFAULT_INVALID_DATA = "Invalid {}, please provide a valid one."
 # Default no issue message for data
 DEFAULT_VALID_DATA = "Detail/s provided are correct."
+# Invalid request
+DEFAULT_INVALID_REQUEST_PARAMS = "Invalid request details were provided"
 
 
 class Endpoints:
@@ -46,13 +48,19 @@ class Keys:
     class Messages:
         """A set of keys related to messages"""
         invalid_input = "invalid_input"
+        invalid_request = "invalid_request"
         renter_details = "renter_details"
         invalid_user_type = "invalid_user_type"
         terms_condition_message = "terms_condition_message"
         information_message = "information_message"
         user_not_found = "user_not_found"
+        property_not_found = "property_not_found"
+        property_found = "property_found"
+        properties_not_found = "properties_not_found"
+        properties_found = "properties_found"
         user_found = "user_found"
         user_already_available = "user_already_available"
+        property_already_available = "property_already_available"
         user_created = "user_created"
         property_created = "property_created"
         valid = "valid"
@@ -96,6 +104,7 @@ class Keys:
         property_created_on = "property_created_on"
         property_updated_on = "property_updated_on"
         property_created_by = "property_created_by"
+        property_created_by_details = "property_created_by_details"
 
 
 # Dictionary of messages
@@ -103,6 +112,7 @@ MESSAGES_LIST = {
     Keys.User.first_name: DEFAULT_FORM_DATA_NOT_AVAILABLE,
     Keys.User.email_address: DEFAULT_FORM_DATA_NOT_AVAILABLE,
     Keys.Messages.invalid_input: DEFAULT_INVALID_DATA,
+    Keys.Messages.invalid_request: DEFAULT_INVALID_REQUEST_PARAMS,
     Keys.Messages.renter_details: "Hello User to Renter, this is a Python created RESTFUL API which is used by "
                                   "our Renter Android application. If you want to you can also use this and make "
                                   "requests.",
@@ -110,14 +120,19 @@ MESSAGES_LIST = {
     Keys.Messages.terms_condition_message: "Hello {}, this is to inform you that you will be virtually signing our "
                                            "terms and condition.",
     Keys.Messages.information_message: "Owner and Renter Details are as below.",
-    Keys.Messages.user_not_found: "Asked user is not present. Please create one before asking for it.",
+    Keys.Messages.user_not_found: "Asked user is not present. Ask the user to create an account or try again.",
     Keys.Messages.user_found: "User found",
     Keys.Messages.user_already_available: "{} exists, you are trying to create one which is already there.",
+    Keys.Messages.property_already_available: "{} exists, you are trying to create one which is already there.",
     Keys.Messages.user_created: "User created",
-    Keys.Messages.property_created: "Property created",
     Keys.Messages.valid: "Valid",
     Keys.Messages.can_not_update_value: "Cannot update {} to a new one.",
     Keys.Messages.cannot_validate_request: "We were not able to validate the given request. Seems like some suspicious "
                                            "activity is going on, or something wrong from our end to validate"
                                            " the request. Please try again.",
+    Keys.Messages.property_created: "Property created",
+    Keys.Messages.property_found: "Property found",
+    Keys.Messages.properties_found: "Properties found",
+    Keys.Messages.property_not_found: "Asked property is not present. Please create the property or try again.",
+    Keys.Messages.properties_not_found: "Properties couldn't be found",
 }

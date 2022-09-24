@@ -101,7 +101,7 @@ class InformationViewModel @Inject constructor(
             userType = UserType.valueOf(userDetails.user_type)
             val fields = listOf(
                 FieldStates(
-                    id = FieldId.User.FirstName.id,
+                    id = FieldId.FirstName.id,
                     value = MutableLiveData(userDetails.first_name),
                     label = TR.firstName,
                     keyboardOptions = KeyboardOptions(
@@ -114,7 +114,7 @@ class InformationViewModel @Inject constructor(
                     composeType = ComposeType.OutlinedTextField,
                 ),
                 FieldStates(
-                    id = FieldId.User.LastName.id,
+                    id = FieldId.LastName.id,
                     value = MutableLiveData(userDetails.last_name),
                     label = TR.lastName,
                     keyboardOptions = KeyboardOptions(
@@ -127,7 +127,7 @@ class InformationViewModel @Inject constructor(
                     composeType = ComposeType.OutlinedTextField,
                 ),
                 FieldStates(
-                    id = FieldId.User.DOB.id,
+                    id = FieldId.DOB.id,
                     value = MutableLiveData(userDetails.date_of_birth),
                     label = TR.dobWithHelp,
                     inputType = InputType.Date,
@@ -142,7 +142,7 @@ class InformationViewModel @Inject constructor(
                     composeType = ComposeType.OutlinedTextField,
                 ),
                 FieldStates(
-                    id = FieldId.User.EmailAddress.id,
+                    id = FieldId.EmailAddress.id,
                     value = MutableLiveData(userDetails.email_address),
                     label = TR.emailAddress,
                     inputType = InputType.Email,
@@ -155,7 +155,7 @@ class InformationViewModel @Inject constructor(
                     composeType = ComposeType.OutlinedTextField,
                 ),
                 FieldStates(
-                    id = FieldId.User.Profession.id,
+                    id = FieldId.Profession.id,
                     value = MutableLiveData(userDetails.profession),
                     label = TR.profession,
                     keyboardOptions = KeyboardOptions(
@@ -181,7 +181,7 @@ class InformationViewModel @Inject constructor(
                     composeType = ComposeType.OutlinedTextField,
                 ),
                 FieldStates(
-                    id = FieldId.User.PhoneNumber.id,
+                    id = FieldId.PhoneNumber.id,
                     value = MutableLiveData(userDetails.phone_number),
                     label = TR.phoneNumber,
                     inputType = InputType.Phone,
@@ -208,15 +208,15 @@ class InformationViewModel @Inject constructor(
     fun updateUserDetails() {
         _loading.value = true
         _fields.value?.let { fields ->
-            val firstName = fields.find { it.id == FieldId.User.FirstName.id }?.value?.value
-            val lastName = fields.find { it.id == FieldId.User.LastName.id }?.value?.value
-            val dateOfBirth = fields.find { it.id == FieldId.User.DOB.id }?.value?.value
-            val profession = fields.find { it.id == FieldId.User.Profession.id }?.value?.value
-            val phoneNumber = fields.find { it.id == FieldId.User.PhoneNumber.id }?.value?.value
+            val firstName = fields.find { it.id == FieldId.FirstName.id }?.value?.value
+            val lastName = fields.find { it.id == FieldId.LastName.id }?.value?.value
+            val dateOfBirth = fields.find { it.id == FieldId.DOB.id }?.value?.value
+            val profession = fields.find { it.id == FieldId.Profession.id }?.value?.value
+            val phoneNumber = fields.find { it.id == FieldId.PhoneNumber.id }?.value?.value
             val permanentAddress =
                 fields.find { it.id == FieldId.Address.id }?.value?.value
             val emailAddress =
-                fields.find { it.id == FieldId.User.EmailAddress.id }?.value?.value
+                fields.find { it.id == FieldId.EmailAddress.id }?.value?.value
 
             appCheckService.getAppCheckToken(
                 onSuccess = { appCheckToken ->

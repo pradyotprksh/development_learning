@@ -25,8 +25,20 @@ def get_collection(collection_name):
     return db[collection_name]
 
 
+def get_documents(collection, key="", value=""):
+    """Get all the documents from the collection
+
+    :argument collection: Collection from which the document is needed
+    :argument key: Key to be used to get the document
+    :argument value: Value for the key
+    """
+    if key == "" and value == "":
+        return collection.find({})
+    return collection.find({key: value})
+
+
 def get_document(collection, key, value):
-    """Get the document from the collection
+    """Get single document from the collection
 
     :argument collection: Collection from which the document is needed
     :argument key: Key to be used to get the document

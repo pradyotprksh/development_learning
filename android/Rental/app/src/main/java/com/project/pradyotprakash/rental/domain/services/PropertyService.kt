@@ -5,10 +5,19 @@ import com.project.pradyotprakash.rental.domain.modal.PropertyEntity
 import retrofit2.Response
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
+import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
+import retrofit2.http.Query
 
 interface PropertyService {
+    @GET("/renter/property")
+    suspend fun getProperties(
+        @Header("X-Firebase-AppCheck") appCheckToken: String,
+        @Query("property_id") propertyId: String,
+        @Query("user_id") userId: String,
+    ): Response<DefaultEntity<List<PropertyEntity>>>
+
     @FormUrlEncoded
     @POST("/renter/property")
     suspend fun createProperty(

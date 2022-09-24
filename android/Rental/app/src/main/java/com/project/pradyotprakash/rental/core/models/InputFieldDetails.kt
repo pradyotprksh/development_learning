@@ -14,34 +14,28 @@ enum class FieldId(val id: String) {
     House("house"),
     Deposit("yearly_deposit"),
     MonthlyRent("monthly_rent"),
-    Address("address");
-
-    enum class User(val id: String) {
-        FirstName("first_name"),
-        LastName("last_name"),
-        DOB("date_of_birth"),
-        EmailAddress("email_address"),
-        Profession("profession"),
-        PhoneNumber("phone_number"),
-    }
-
-    enum class Property(val id: String) {
-        PropertyName("property_name"),
-        IsRentalOwner("is_rental_owner"),
-        IsForRental("is_for_rental"),
-        PropertyFor("property_for"),
-        ForFamily("for_family"),
-        ForBachelors("for_bachelors"),
-        DoesNotMatter("does_not_matter"),
-        FurnishedType("furnished_type"),
-        FullyFurnished("fully_furnished"),
-        SemiFurnished("semi_furnished"),
-        PropertyType("property_type"),
-        BathroomNumber("number_of_bathrooms"),
-        WhereItIs("where_it_is"),
-        Perks("perks"),
-        AgreementRules("agreement_rules")
-    }
+    Address("address"),
+    PropertyName("property_name"),
+    IsRentalOwner("is_rental_owner"),
+    IsForRental("is_for_rental"),
+    PropertyFor("property_for"),
+    ForFamily("for_family"),
+    ForBachelors("for_bachelors"),
+    DoesNotMatter("does_not_matter"),
+    FurnishedType("furnished_type"),
+    FullyFurnished("fully_furnished"),
+    SemiFurnished("semi_furnished"),
+    PropertyType("property_type"),
+    BathroomNumber("number_of_bathrooms"),
+    WhereItIs("where_it_is"),
+    Perks("perks"),
+    AgreementRules("agreement_rules"),
+    FirstName("first_name"),
+    LastName("last_name"),
+    DOB("date_of_birth"),
+    EmailAddress("email_address"),
+    Profession("profession"),
+    PhoneNumber("phone_number"),
 }
 
 enum class InputType {

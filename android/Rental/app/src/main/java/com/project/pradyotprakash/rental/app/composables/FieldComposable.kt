@@ -1,6 +1,7 @@
 package com.project.pradyotprakash.rental.app.composables
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -71,36 +72,41 @@ fun FieldComposable(
                         modifier = Modifier
                             .padding(horizontal = 15.dp)
                     ) {
-                        if (field.children.isNotEmpty()) {
-                            Text(
-                                field.label,
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(horizontal = 15.dp)
-                            )
-                        }
+                        Column(
+                            modifier = Modifier
+                                .padding(all = 10.dp)
+                        ) {
+                            if (field.children.isNotEmpty()) {
+                                Text(
+                                    field.label,
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(horizontal = 15.dp)
+                                )
+                            }
 
-                        field.children.forEach { child ->
-                            when (child.composeType) {
-                                ComposeType.RadioButton -> {
-                                    Row(
-                                        modifier = Modifier
-                                            .fillMaxWidth()
-                                            .clickable {
-                                                onSelected(index, child.id)
-                                            },
-                                        verticalAlignment = Alignment.CenterVertically,
-                                    ) {
-                                        RadioButton(
-                                            selected = filedValue.value == child.id,
-                                            onClick = {
-                                                onSelected(index, child.id)
-                                            },
-                                        )
-                                        Text(text = child.label)
+                            field.children.forEach { child ->
+                                when (child.composeType) {
+                                    ComposeType.RadioButton -> {
+                                        Row(
+                                            modifier = Modifier
+                                                .fillMaxWidth()
+                                                .clickable {
+                                                    onSelected(index, child.id)
+                                                },
+                                            verticalAlignment = Alignment.CenterVertically,
+                                        ) {
+                                            RadioButton(
+                                                selected = filedValue.value == child.id,
+                                                onClick = {
+                                                    onSelected(index, child.id)
+                                                },
+                                            )
+                                            Text(text = child.label)
+                                        }
                                     }
+                                    else -> {}
                                 }
-                                else -> {}
                             }
                         }
                     }
@@ -110,20 +116,25 @@ fun FieldComposable(
                         modifier = Modifier
                             .padding(horizontal = 15.dp)
                     ) {
-                        Row(
+                        Column(
                             modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(horizontal = 15.dp),
-                            verticalAlignment = Alignment.CenterVertically,
+                                .padding(all  = 10.dp)
                         ) {
-                            Text(text = field.label)
-                            Spacer(modifier = Modifier.weight(1f))
-                            Switch(
-                                checked = isSelectedValue.value,
-                                onCheckedChange = {
-                                    onSelected(index, "")
-                                },
-                            )
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(horizontal = 15.dp),
+                                verticalAlignment = Alignment.CenterVertically,
+                            ) {
+                                Text(text = field.label)
+                                Spacer(modifier = Modifier.weight(1f))
+                                Switch(
+                                    checked = isSelectedValue.value,
+                                    onCheckedChange = {
+                                        onSelected(index, "")
+                                    },
+                                )
+                            }
                         }
                     }
                 }

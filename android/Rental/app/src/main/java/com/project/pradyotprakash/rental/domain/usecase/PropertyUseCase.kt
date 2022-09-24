@@ -9,6 +9,22 @@ import javax.inject.Inject
 class PropertyUseCase @Inject constructor(
     private val propertyRepository: PropertyRepository,
 ) {
+    suspend fun getProperties(
+        appCheckToken: String,
+        userId: String = "",
+        propertyId: String = "",
+    ) = flow {
+        emit(RenterResponse.Loading)
+        emit(
+            propertyRepository.getProperties(
+                appCheckToken = appCheckToken,
+                userId = userId,
+                propertyId = propertyId,
+            )
+        )
+        emit(RenterResponse.Idle)
+    }
+
     suspend fun createProperty(
         appCheckToken: String,
         userId: String,
