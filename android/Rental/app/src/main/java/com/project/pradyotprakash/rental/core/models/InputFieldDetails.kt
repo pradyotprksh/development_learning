@@ -4,6 +4,7 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.lifecycle.MutableLiveData
+import com.google.firebase.storage.StorageReference
 
 enum class FieldId(val id: String) {
     None("none"),
@@ -69,4 +70,5 @@ data class FieldStates(
     val isSelected: MutableLiveData<Boolean> = MutableLiveData(false),
     val children: List<FieldStates> = emptyList(),
     val values: MutableLiveData<List<String>> = MutableLiveData(emptyList()),
+    val storageReference: StorageReference? = null,
 )

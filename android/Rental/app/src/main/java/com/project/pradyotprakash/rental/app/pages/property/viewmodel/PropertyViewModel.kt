@@ -9,6 +9,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.firebase.storage.StorageReference
 import com.project.pradyotprakash.rental.app.localization.TR
 import com.project.pradyotprakash.rental.app.utils.isAllNotNull
 import com.project.pradyotprakash.rental.core.models.ComposeType
@@ -16,6 +17,7 @@ import com.project.pradyotprakash.rental.core.models.FieldId
 import com.project.pradyotprakash.rental.core.models.FieldStates
 import com.project.pradyotprakash.rental.core.navigation.Navigator
 import com.project.pradyotprakash.rental.core.response.RenterResponse
+import com.project.pradyotprakash.rental.di.Constants
 import com.project.pradyotprakash.rental.domain.services.AppCheckService
 import com.project.pradyotprakash.rental.domain.services.FirestoreService
 import com.project.pradyotprakash.rental.domain.usecase.AuthenticationUseCase
@@ -23,6 +25,7 @@ import com.project.pradyotprakash.rental.domain.usecase.PropertyUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import javax.inject.Named
 
 @HiltViewModel
 class PropertyViewModel @Inject constructor(
@@ -31,6 +34,7 @@ class PropertyViewModel @Inject constructor(
     private val authenticationUseCase: AuthenticationUseCase,
     private val propertyUseCase: PropertyUseCase,
     private val appCheckService: AppCheckService,
+    @Named(Constants.propertyStorageReference) private val propertyStorageReference: StorageReference,
 ) : ViewModel() {
     private val _loading = MutableLiveData(false)
     val loading: LiveData<Boolean>
@@ -145,6 +149,7 @@ class PropertyViewModel @Inject constructor(
                 id = FieldId.PropertyImagePicker.id,
                 composeType = ComposeType.MultipleImagePicker,
                 label = "Please add images for the property",
+                storageReference = propertyStorageReference,
             ),
             FieldStates(
                 id = FieldId.WhereItIs.id,

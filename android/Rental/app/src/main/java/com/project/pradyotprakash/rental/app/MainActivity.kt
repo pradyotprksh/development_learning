@@ -58,9 +58,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // Fetch and save the translation values at the starting of the application
-        // TODO: Handle the language change, currently only fetching the default one
-        Translation.updateLocalizationMap(context = this)
+        setAppBasicRequirements()
 
         setContent {
             navController = rememberNavController()
@@ -163,6 +161,15 @@ class MainActivity : ComponentActivity() {
         }
     }
 
+    private fun setAppBasicRequirements() {
+        // Fetch and save the translation values at the starting of the application
+        // TODO: Handle the language change, currently only fetching the default one
+        Translation.updateLocalizationMap(context = this)
+
+        navigationChangeListener()
+        startAuthStateListener()
+    }
+
     @Composable
     private fun GoToErrorScreen(
         title: String = "",
@@ -178,12 +185,6 @@ class MainActivity : ComponentActivity() {
                 )
             }
         )
-    }
-
-    override fun onResume() {
-        super.onResume()
-        navigationChangeListener()
-        startAuthStateListener()
     }
 
     /**
