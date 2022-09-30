@@ -8,11 +8,11 @@ Each project is divided into folders based on the platforms and the courses. And
 
 README will be only updated when the project/learning is completed. So make sure to check the folders for more 😁.
 
-[<img src="https://img.shields.io/badge/Dart-0175C2?style=for-the-badge&logo=dart&logoColor=white" />](https://github.com/pradyotprksh/development_learning/tree/main/dart)
+[<img src="https://img.shields.io/badge/Dart-0175C2?style=for-the-badge&logo=dart&logoColor=white" />](https://github.com/pradyotprksh/development_learning/tree/main/dart) [![Dart Projects](https://github.com/pradyotprksh/development_learning/actions/workflows/dart_code_checker.yml/badge.svg)](https://github.com/pradyotprksh/development_learning/actions/workflows/dart_code_checker.yml)
   - [data_structures](https://github.com/pradyotprksh/development_learning/tree/main/dart/data_structures)
   - [algorithms](https://github.com/pradyotprksh/development_learning/tree/main/dart/algorithms)
 
-[<img src="https://img.shields.io/badge/Flutter-02569B?style=for-the-badge&logo=flutter&logoColor=white" />](https://github.com/pradyotprksh/development_learning/tree/main/flutter)
+[<img src="https://img.shields.io/badge/Flutter-02569B?style=for-the-badge&logo=flutter&logoColor=white" />](https://github.com/pradyotprksh/development_learning/tree/main/flutter) [![Flutter Projects](https://github.com/pradyotprksh/development_learning/actions/workflows/flutter_code_checker.yml/badge.svg)](https://github.com/pradyotprksh/development_learning/actions/workflows/flutter_code_checker.yml)
   - [snake_ladders](https://github.com/pradyotprksh/development_learning/tree/main/flutter/snake_ladders)
   - [clean_architecture_example](https://github.com/pradyotprksh/development_learning/tree/main/flutter/clean_architecture_example)
 
@@ -41,7 +41,7 @@ README will be only updated when the project/learning is completed. So make sure
     - [H4XOR-News](https://github.com/pradyotprksh/development_learning/tree/main/ios/angela_udemy/SwiftUI/H4XOR-News)
     - [Calculator-Advanced-Swift-iOS13](https://github.com/pradyotprksh/development_learning/tree/main/ios/angela_udemy/Calculator-Advanced-Swift-iOS13)
 
-[<img src="https://img.shields.io/badge/Android-3DDC84?style=for-the-badge&logo=android&logoColor=white" />](https://github.com/pradyotprksh/development_learning/tree/main/jetpack_compose)
+[<img src="https://img.shields.io/badge/Android-3DDC84?style=for-the-badge&logo=android&logoColor=white" />](https://github.com/pradyotprksh/development_learning/tree/main/android) [![Android Projects](https://github.com/pradyotprksh/development_learning/actions/workflows/android_code_checker.yml/badge.svg)](https://github.com/pradyotprksh/development_learning/actions/workflows/android_code_checker.yml)
   - [Basics](https://github.com/pradyotprksh/development_learning/tree/main/android/basics)
   - [IAmRich](https://github.com/pradyotprksh/development_learning/tree/main/android/IAmRich)
   - [Dicee](https://github.com/pradyotprksh/development_learning/tree/main/android/Dicee)

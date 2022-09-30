@@ -8,6 +8,6 @@ import javax.inject.Inject
 @HiltViewModel
 class ImagePickerViewModel @Inject constructor() : ViewModel() {
     fun startImagePicker(imagePickerType: ImagePickerType, fieldStates: FieldStates) {
-
+        print("Checking github action")
     }
 }
