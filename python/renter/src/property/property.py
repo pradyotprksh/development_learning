@@ -186,6 +186,7 @@ class _Property(Resource):
         address = property_form.get(Keys.Property.address)
         perks = property_form.get(Keys.Property.perks)
         agreement_rules = property_form.get(Keys.Property.agreement_rules)
+        property_images = property_form.get(Keys.Property.property_images)
         property_created_on = get_current_timestamp()
         property_updated_on = get_current_timestamp()
 
@@ -259,6 +260,8 @@ class _Property(Resource):
             perks = ""
         if agreement_rules is None:
             agreement_rules = ""
+        if property_images is None:
+            property_images = []
 
         # Payload
         property_details = PropertyDetails(
@@ -279,6 +282,7 @@ class _Property(Resource):
             agreement_rules=agreement_rules,
             property_created_on=property_created_on,
             property_updated_on=property_updated_on,
+            property_images=property_images,
         )
 
         # add user details to mongo db

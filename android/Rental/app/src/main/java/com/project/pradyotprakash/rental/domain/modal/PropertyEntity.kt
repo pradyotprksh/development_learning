@@ -22,6 +22,7 @@ data class PropertyEntity(
     val property_updated_on: String,
     val property_created_by: String,
     val property_created_by_details: UserEntity? = null,
+    val property_images: List<String>,
 ) {
     val isForRental
         get() = is_for_rental.toBoolean()

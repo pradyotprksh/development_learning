@@ -21,6 +21,9 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.project.pradyotprakash.rental.app.composables.imagePicker.ImagePicker
+import com.project.pradyotprakash.rental.app.composables.imagePicker.ImagePickerType
 import com.project.pradyotprakash.rental.core.models.ComposeType
 import com.project.pradyotprakash.rental.core.models.FieldStates
 
@@ -81,7 +84,6 @@ fun FieldComposable(
                                     field.label,
                                     modifier = Modifier
                                         .fillMaxWidth()
-                                        .padding(horizontal = 15.dp)
                                 )
                             }
 
@@ -116,26 +118,52 @@ fun FieldComposable(
                         modifier = Modifier
                             .padding(horizontal = 15.dp)
                     ) {
-                        Column(
+                        Row(
                             modifier = Modifier
-                                .padding(all  = 10.dp)
+                                .fillMaxWidth()
+                                .padding(horizontal = 15.dp),
+                            verticalAlignment = Alignment.CenterVertically,
                         ) {
-                            Row(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(horizontal = 15.dp),
-                                verticalAlignment = Alignment.CenterVertically,
-                            ) {
-                                Text(text = field.label)
-                                Spacer(modifier = Modifier.weight(1f))
-                                Switch(
-                                    checked = isSelectedValue.value,
-                                    onCheckedChange = {
-                                        onSelected(index, "")
-                                    },
-                                )
-                            }
+                            Text(text = field.label)
+                            Spacer(modifier = Modifier.weight(1f))
+                            Switch(
+                                checked = isSelectedValue.value,
+                                onCheckedChange = {
+                                    onSelected(index, "")
+                                },
+                            )
                         }
+                    }
+                }
+                ComposeType.MultipleImagePicker -> {
+                    Card(
+                        modifier = Modifier
+                            .padding(horizontal = 15.dp)
+                            .fillMaxWidth()
+                    ) {
+                        ImagePicker(
+                            imagePickerViewModel = hiltViewModel(),
+                            imagePickerType = ImagePickerType.MultipleImagePicker,
+                            field = field,
+                        )
+                    }
+                }
+                ComposeType.RadioButton -> {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .clickable {
+                                onSelected(index, field.id)
+                            },
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        RadioButton(
+                            selected = filedValue.value == field.id,
+                            onClick = {
+                                onSelected(index, field.id)
+                            },
+                        )
+                        Text(text = field.label)
                     }
                 }
                 else -> {}

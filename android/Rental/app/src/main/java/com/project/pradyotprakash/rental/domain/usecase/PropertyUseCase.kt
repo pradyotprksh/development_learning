@@ -42,6 +42,7 @@ class PropertyUseCase @Inject constructor(
         rentAmount: String,
         perks: String,
         agreementTerms: String,
+        images: List<String>,
     ) = flow {
         emit(RenterResponse.Loading)
         emit(
@@ -67,6 +68,7 @@ class PropertyUseCase @Inject constructor(
                     property_created_on = "",
                     property_updated_on = "",
                     property_created_by = "",
+                    property_images = images,
                 ),
             ),
         )

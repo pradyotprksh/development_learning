@@ -36,6 +36,7 @@ enum class FieldId(val id: String) {
     EmailAddress("email_address"),
     Profession("profession"),
     PhoneNumber("phone_number"),
+    PropertyImagePicker("property_image_picker")
 }
 
 enum class InputType {
@@ -51,6 +52,7 @@ enum class ComposeType {
     RadioGroup,
     RadioButton,
     Switch,
+    MultipleImagePicker,
 }
 
 data class FieldStates(
@@ -66,4 +68,5 @@ data class FieldStates(
     val keyboardActions: KeyboardActions = KeyboardActions.Default,
     val isSelected: MutableLiveData<Boolean> = MutableLiveData(false),
     val children: List<FieldStates> = emptyList(),
+    val values: MutableLiveData<List<String>> = MutableLiveData(emptyList()),
 )

@@ -142,6 +142,11 @@ class PropertyViewModel @Inject constructor(
                 ),
             ),
             FieldStates(
+                id = FieldId.PropertyImagePicker.id,
+                composeType = ComposeType.MultipleImagePicker,
+                label = "Please add images for the property",
+            ),
+            FieldStates(
                 id = FieldId.WhereItIs.id,
                 composeType = ComposeType.RadioGroup,
                 label = "Where the rental property is?",
@@ -349,6 +354,7 @@ class PropertyViewModel @Inject constructor(
                     rentAmount = rentAmount,
                     perks = perks,
                     agreementTerms = agreementTerms,
+                    images = emptyList(),
                 ).collect {
                     when (it) {
                         is RenterResponse.Error -> updateErrorState(it.exception.message)

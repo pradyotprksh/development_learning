@@ -46,5 +46,6 @@ PropertyDetails = namedtuple(
         Keys.Property.agreement_rules,
         Keys.Property.property_created_on,
         Keys.Property.property_updated_on,
+        Keys.Property.property_images,
     ]
 )

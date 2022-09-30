@@ -1,5 +1,3 @@
-import com.android.build.gradle.internal.tasks.factory.dependsOn
-
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -79,8 +77,6 @@ android {
     dataBinding {
         enable = true
     }
-
-    project.tasks.preBuild.dependsOn("checkEnvironment")
 }
 
 kapt {
@@ -89,7 +85,7 @@ kapt {
 
 dependencies {
     // Activity
-    implementation("androidx.activity:activity-compose:1.5.1")
+    implementation("androidx.activity:activity-compose:1.6.0")
 
     // Coroutines
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4")
@@ -99,7 +95,7 @@ dependencies {
 
     // Compose
     implementation("androidx.compose.ui:ui:1.2.1")
-    implementation("androidx.compose.material3:material3:1.0.0-beta02")
+    implementation("androidx.compose.material3:material3:1.0.0-beta03")
     implementation("androidx.navigation:navigation-compose:2.5.2")
     implementation("androidx.compose.runtime:runtime-livedata:1.2.1")
     debugImplementation("androidx.compose.ui:ui-tooling:1.2.1")
@@ -137,4 +133,7 @@ dependencies {
 
     // Chrome browser
     implementation("androidx.browser:browser:1.4.0")
+
+    // Permissions
+    implementation("com.google.accompanist:accompanist-permissions:0.25.0")
 }

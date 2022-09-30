@@ -89,6 +89,7 @@ class Keys:
         collection_name = "property"
         property_id = "property_id"
         property_name = "property_name"
+        property_images = "property_images"
         is_rental_owner = "is_rental_owner"
         is_for_rental = "is_for_rental"
         property_for = "property_for"
