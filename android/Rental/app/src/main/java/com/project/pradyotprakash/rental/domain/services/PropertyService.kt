@@ -37,5 +37,6 @@ interface PropertyService {
         @Field("address") address: String,
         @Field("perks") perks: String,
         @Field("agreement_rules") agreement_rules: String,
+        @Field("property_images") propertyImages: List<String>,
     ): Response<DefaultEntity<PropertyEntity>>
 }

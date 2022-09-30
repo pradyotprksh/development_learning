@@ -273,6 +273,7 @@ class PropertyViewModel @Inject constructor(
             val perks = fields.find { it.id == FieldId.Perks.id }?.value?.value
             val agreementTerms =
                 fields.find { it.id == FieldId.AgreementRules.id }?.value?.value
+            val images = fields.find { it.id == FieldId.PropertyImagePicker.id }?.values?.value ?: emptyList()
 
             appCheckService.getAppCheckToken(
                 onSuccess = { appCheckToken ->
@@ -312,6 +313,7 @@ class PropertyViewModel @Inject constructor(
                                 rentAmount!!,
                                 perks!!,
                                 agreementTerms!!,
+                                images,
                             )
                         },
                     )
@@ -339,6 +341,7 @@ class PropertyViewModel @Inject constructor(
         rentAmount: String,
         perks: String,
         agreementTerms: String,
+        images: List<String>,
     ) {
         viewModelScope.launch {
             authenticationUseCase.getCurrentUserId()?.let { userId ->
@@ -359,7 +362,7 @@ class PropertyViewModel @Inject constructor(
                     rentAmount = rentAmount,
                     perks = perks,
                     agreementTerms = agreementTerms,
-                    images = emptyList(),
+                    images = images,
                 ).collect {
                     when (it) {
                         is RenterResponse.Error -> updateErrorState(it.exception.message)

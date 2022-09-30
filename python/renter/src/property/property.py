@@ -166,8 +166,8 @@ class _Property(Resource):
             )
         else:
             property_details = get_document(self.property_collection, Keys.Property.property_id, property_id)
-            property_name = property_details.get(Keys.Property.property_name)
             if property_details is not None:
+                property_name = property_details.get(Keys.Property.property_name)
                 return response_creator(
                     code=409,
                     message=MESSAGES_LIST.get(Keys.Messages.property_already_available).format(property_name)

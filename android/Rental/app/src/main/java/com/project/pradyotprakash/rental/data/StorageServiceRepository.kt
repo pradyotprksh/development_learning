@@ -15,21 +15,25 @@ class StorageServiceRepository : StorageService {
         onFailure: (Exception) -> Unit,
         onProgress: (Float) -> Unit,
     ) {
-        val baos = ByteArrayOutputStream()
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
-        val data = baos.toByteArray()
-        val uploadTask = storageReference.child(fileName).putBytes(data)
-        uploadTask.addOnFailureListener {
-            onFailure(it)
-        }.addOnSuccessListener {
-            storageReference.downloadUrl.addOnSuccessListener {
-                onSuccess(it.toString())
-            }.addOnFailureListener {
+        try {
+            val baos = ByteArrayOutputStream()
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
+            val data = baos.toByteArray()
+            val uploadTask = storageReference.child(fileName).putBytes(data)
+            uploadTask.addOnFailureListener {
                 onFailure(it)
+            }.addOnSuccessListener {
+                it.storage.downloadUrl.addOnSuccessListener { uri ->
+                    onSuccess(uri.toString())
+                }.addOnFailureListener { exception ->
+                    onFailure(exception)
+                }
+            }.addOnProgressListener {
+                val progress = ((100 * it.bytesTransferred) / it.totalByteCount).toInt().toProgress()
+                onProgress(progress)
             }
-        }.addOnProgressListener {
-            val progress = ((100 * it.bytesTransferred) / it.totalByteCount).toInt().toProgress()
-            onProgress(progress)
+        } catch (e: Exception) {
+            onFailure(e)
         }
     }
 }

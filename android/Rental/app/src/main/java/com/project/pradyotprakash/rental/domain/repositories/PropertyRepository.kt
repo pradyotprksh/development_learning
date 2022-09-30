@@ -39,5 +39,6 @@ class PropertyRepository(
         address = propertyEntity.address,
         perks = propertyEntity.perks,
         agreement_rules = propertyEntity.agreement_rules,
+        propertyImages = propertyEntity.property_images,
     ).parseResponse()
 }

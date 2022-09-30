@@ -93,6 +93,7 @@ dependencies {
 
     // Coroutines
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.6.4")
 
     // Core
     implementation("androidx.core:core-ktx:1.9.0")
@@ -141,4 +142,7 @@ dependencies {
 
     // Permissions
     implementation("com.google.accompanist:accompanist-permissions:0.25.0")
+
+    // Coil
+    implementation("io.coil-kt:coil-compose:2.2.1")
 }
