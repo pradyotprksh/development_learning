@@ -52,41 +52,42 @@ class WelcomeViewModel @Inject constructor(
     fun navigateBack() = navigator.navigateBack()
 
     fun initiateAuthCall(authType: AuthType) {
-        _loading.value = true
-        appCheckService.getAppCheckToken(
-            onSuccess = { appCheckToken ->
-                when (authType) {
-                    AuthType.Email -> {
-                        // TODO: Give option to create user as well
-                        viewModelScope.launch {
-                            authenticationUseCase.signInUserWithEmailPassword(
-                                "pradyot@gmail.com",
-                                "pradyot@gmail.com",
-                                appCheckToken = appCheckToken,
-                            ) {
-                                when (it) {
-                                    is RenterResponse.Error -> {
-                                        _loading.value = false
-                                        _errorText.value = it.exception.message
+        viewModelScope.launch {
+            appCheckService.getAppCheckToken().collect { appCheckToken ->
+                when (appCheckToken) {
+                    is RenterResponse.Error -> updateErrorState(appCheckToken.exception.message)
+                    is RenterResponse.Idle -> _loading.value = false
+                    is RenterResponse.Loading -> _loading.value = true
+                    is RenterResponse.Success -> {
+                        when (authType) {
+                            AuthType.Email -> {
+                                // TODO: Give option to create user as well
+                                authenticationUseCase.signInUserWithEmailPassword(
+                                    "pradyot@gmail.com",
+                                    "pradyot@gmail.com",
+                                    appCheckToken = appCheckToken.data,
+                                ) {
+                                    when (it) {
+                                        is RenterResponse.Error -> {
+                                            _loading.value = false
+                                            _errorText.value = it.exception.message
+                                        }
+                                        is RenterResponse.Loading -> _loading.value = true
+                                        is RenterResponse.Success -> {
+                                            _loading.value = true
+                                            goToHomeScreen()
+                                        }
+                                        RenterResponse.Idle -> {}
                                     }
-                                    is RenterResponse.Loading -> _loading.value = true
-                                    is RenterResponse.Success -> {
-                                        _loading.value = true
-                                        goToHomeScreen()
-                                    }
-                                    RenterResponse.Idle -> {}
                                 }
                             }
+                            AuthType.Phone -> {}
+                            AuthType.Google -> {}
                         }
                     }
-                    AuthType.Phone -> {}
-                    AuthType.Google -> {}
                 }
-            },
-            onFailure = {
-                _errorText.value = it.localizedMessage
             }
-        )
+        }
     }
 
     fun updateErrorState(message: String? = "") {

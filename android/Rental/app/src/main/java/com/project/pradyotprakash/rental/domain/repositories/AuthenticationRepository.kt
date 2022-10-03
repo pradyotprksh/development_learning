@@ -1,8 +1,6 @@
 package com.project.pradyotprakash.rental.domain.repositories
 
-import com.google.firebase.auth.AuthResult
 import com.project.pradyotprakash.rental.app.utils.UserType
-import com.project.pradyotprakash.rental.core.response.RenterResponse
 import com.project.pradyotprakash.rental.core.response.parseResponse
 import com.project.pradyotprakash.rental.domain.services.AuthenticationService
 import com.project.pradyotprakash.rental.domain.services.FirebaseAuthenticationService
@@ -17,25 +15,17 @@ class AuthenticationRepository(
 
     fun logoutUser() = firebaseAuthenticationService.logoutUser()
 
-    fun signInUserWithEmailPassword(
-        email: String, password: String, result: (RenterResponse<AuthResult>) -> Unit
-    ) {
-        firebaseAuthenticationService.signInUserUsingEmailPassword(
-            email = email, password = password
-        ) {
-            result(it)
-        }
-    }
+    suspend fun signInUserWithEmailPassword(
+        email: String, password: String
+    ) = firebaseAuthenticationService.signInUserUsingEmailPassword(
+        email = email, password = password
+    )
 
-    fun createUserWithEmailPassword(
-        email: String, password: String, result: (RenterResponse<AuthResult>) -> Unit
-    ) {
-        firebaseAuthenticationService.createUserUsingEmailPassword(
-            email = email, password = password
-        ) {
-            result(it)
-        }
-    }
+    suspend fun createUserWithEmailPassword(
+        email: String, password: String
+    ) = firebaseAuthenticationService.createUserUsingEmailPassword(
+        email = email, password = password
+    )
 
     suspend fun getCurrentUserDetails(userId: String, appCheckToken: String) =
         authenticationService.getUserDetails(userId = userId, appCheckToken = appCheckToken)

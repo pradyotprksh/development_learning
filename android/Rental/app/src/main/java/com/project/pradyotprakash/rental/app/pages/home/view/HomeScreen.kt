@@ -1,5 +1,6 @@
 package com.project.pradyotprakash.rental.app.pages.home.view
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -9,8 +10,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
@@ -23,9 +28,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
+import coil.imageLoader
+import com.project.pradyotprakash.rental.R
 import com.project.pradyotprakash.rental.app.composables.PageStateComposable
 import com.project.pradyotprakash.rental.app.localization.TR
 import com.project.pradyotprakash.rental.app.pages.home.viewmodel.HomeViewModel
@@ -37,6 +49,8 @@ fun HomeScreen(homeViewModel: HomeViewModel) {
     val error = homeViewModel.error.observeAsState("")
     val userDetails = homeViewModel.userDetails.observeAsState()
     val properties = homeViewModel.properties.observeAsState()
+
+    val context = LocalContext.current
 
     PageStateComposable(
         isLoading = loading.value,
@@ -94,6 +108,9 @@ fun HomeScreen(homeViewModel: HomeViewModel) {
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .padding(5.dp)
+                                    .clickable {
+                                        homeViewModel.navigateToPropertyDetails(property.property_id)
+                                    }
                             ) {
                                 Column(
                                     modifier = Modifier.padding(10.dp)
@@ -117,6 +134,26 @@ fun HomeScreen(homeViewModel: HomeViewModel) {
                                     Text(text = property.furnishedType)
                                     Spacer(modifier = Modifier.height(10.dp))
                                     Text(text = String.format(TR.bathrooms, "${property.property_type} & ${property.number_of_bathrooms}"))
+                                    property.property_images?.let { images ->
+                                        if (images.isNotEmpty()) {
+                                            Spacer(modifier = Modifier.height(10.dp))
+                                            LazyRow {
+                                                items(images) { images ->
+                                                    AsyncImage(
+                                                        model = images,
+                                                        contentDescription = TR.onlineImageDescription,
+                                                        imageLoader = context.imageLoader,
+                                                        modifier = Modifier
+                                                            .size(50.dp)
+                                                            .clip(RoundedCornerShape(5.dp)),
+                                                        contentScale = ContentScale.Crop,
+                                                        error = painterResource(id = R.drawable.error)
+                                                    )
+                                                    Spacer(modifier = Modifier.width(5.dp))
+                                                }
+                                            }
+                                        }
+                                    }
                                 }
                             }
                         }

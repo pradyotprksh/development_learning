@@ -29,3 +29,7 @@ object ErrorScreenArguments {
     const val subtitle = "subtitle"
     const val description = "description"
 }
+
+object PropertyDetailsArguments {
+    const val propertyId = "propertyId"
+}

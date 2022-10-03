@@ -23,13 +23,16 @@ import com.project.pradyotprakash.rental.app.pages.home.view.HomeScreen
 import com.project.pradyotprakash.rental.app.pages.information.view.InformationScreen
 import com.project.pradyotprakash.rental.app.pages.information.viewmodel.InformationViewModel
 import com.project.pradyotprakash.rental.app.pages.options.view.OptionsView
-import com.project.pradyotprakash.rental.app.pages.property.view.PropertyScreen
+import com.project.pradyotprakash.rental.app.pages.property.details.view.PropertyDetailsScreen
+import com.project.pradyotprakash.rental.app.pages.property.details.viewmodel.PropertyDetailsViewModel
+import com.project.pradyotprakash.rental.app.pages.property.add.view.PropertyScreen
 import com.project.pradyotprakash.rental.app.pages.splash.view.SplashView
 import com.project.pradyotprakash.rental.app.pages.welcome.view.WelcomeScreen
 import com.project.pradyotprakash.rental.app.pages.welcome.viewmodel.WelcomeViewModel
 import com.project.pradyotprakash.rental.app.theme.RentalTheme
 import com.project.pradyotprakash.rental.app.utils.ErrorScreenArguments
 import com.project.pradyotprakash.rental.app.utils.InformationScreenArguments
+import com.project.pradyotprakash.rental.app.utils.PropertyDetailsArguments
 import com.project.pradyotprakash.rental.app.utils.UserType
 import com.project.pradyotprakash.rental.app.utils.WelcomeScreenArguments
 import com.project.pradyotprakash.rental.core.auth.AuthState
@@ -50,6 +53,7 @@ class MainActivity : ComponentActivity() {
 
     @Inject
     lateinit var navigator: Navigator
+
     @Inject
     lateinit var authStateListener: AuthStateListener
 
@@ -74,6 +78,30 @@ class MainActivity : ComponentActivity() {
                         composable(Routes.Option.path()) { OptionsView(hiltViewModel()) }
                         composable(Routes.Property.path()) { PropertyScreen(hiltViewModel()) }
                         composable(
+                            Routes.PropertyDetails.path(),
+                            arguments = Routes.PropertyDetails.arguments.map {
+                                navArgument(it) { type = NavType.StringType }
+                            }
+                        ) {
+                            val propertyId = it.arguments?.getString(
+                                PropertyDetailsArguments.propertyId
+                            )
+
+                            propertyId?.let { type ->
+                                if (type.isEmpty()) {
+                                    GoToErrorScreen()
+                                } else {
+                                    PropertyDetailsScreen(
+                                        hiltViewModel<PropertyDetailsViewModel>().also { viewModel ->
+                                            viewModel.getPropertyDetails(propertyId)
+                                        },
+                                    )
+                                }
+                            } ?: kotlin.run {
+                                GoToErrorScreen()
+                            }
+                        }
+                        composable(
                             Routes.Welcome.path(),
                             arguments = Routes.Welcome.arguments.map {
                                 navArgument(it) { type = NavType.StringType }
@@ -95,6 +123,8 @@ class MainActivity : ComponentActivity() {
                                         }
                                     )
                                 }
+                            } ?: kotlin.run {
+                                GoToErrorScreen()
                             }
                         }
                         composable(
@@ -153,6 +183,8 @@ class MainActivity : ComponentActivity() {
                                         GoToErrorScreen()
                                     }
                                 }
+                            } ?: kotlin.run {
+                                GoToErrorScreen()
                             }
                         }
                     }

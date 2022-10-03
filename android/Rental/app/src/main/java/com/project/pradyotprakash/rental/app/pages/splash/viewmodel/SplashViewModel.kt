@@ -40,30 +40,33 @@ class SplashViewModel @Inject constructor(
      * Check if the app server is running
      */
     private fun checkApiCalls() {
-        appCheckService.getAppCheckToken(
-            onSuccess = { appCheckToken ->
-                viewModelScope.launch {
-                    basicUseCase.getDetails(appCheckToken = appCheckToken)
-                        .collect {
-                            when (it) {
-                                is RenterResponse.Success -> {
-                                    if (authenticationUseCase.isUserLoggedIn()) {
-                                        authStateListener.stateChange(AuthState.Authenticated)
-                                    } else {
-                                        authStateListener.stateChange(AuthState.Unauthenticated)
+        viewModelScope.launch {
+            appCheckService.getAppCheckToken().collect { appCheckToken ->
+                when (appCheckToken) {
+                    is RenterResponse.Success -> {
+                        basicUseCase.getDetails(appCheckToken = appCheckToken.data)
+                            .collect {
+                                when (it) {
+                                    is RenterResponse.Success -> {
+                                        if (authenticationUseCase.isUserLoggedIn()) {
+                                            authStateListener.stateChange(AuthState.Authenticated)
+                                        } else {
+                                            authStateListener.stateChange(AuthState.Unauthenticated)
+                                        }
                                     }
+                                    is RenterResponse.Error -> {
+                                        _errorText.value = it.exception.message
+                                    }
+                                    else -> {}
                                 }
-                                is RenterResponse.Error -> {
-                                    _errorText.value = it.exception.message
-                                }
-                                else -> {}
                             }
-                        }
+                    }
+                    is RenterResponse.Error -> {
+                        _errorText.value = appCheckToken.exception.message
+                    }
+                    else -> {}
                 }
-            },
-            onFailure = {
-                _errorText.value = it.localizedMessage
             }
-        )
+        }
     }
 }

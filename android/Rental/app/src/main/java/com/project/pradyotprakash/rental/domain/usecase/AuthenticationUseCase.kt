@@ -135,17 +135,14 @@ class AuthenticationUseCase @Inject constructor(
         password: String,
         appCheckToken: String,
         result: (RenterResponse<*>) -> Unit
-    ) {
+    ) = flow {
         basicRepository.isEmailAddressValid(emailAddress = email, appCheckToken = appCheckToken)
             .collect { emailResult ->
                 when (emailResult) {
                     is RenterResponse.Success -> {
-                        authenticationRepository.signInUserWithEmailPassword(
-                            email = email,
-                            password = password
-                        ) {
-                            result(it)
-                        }
+                        emit(authenticationRepository.signInUserWithEmailPassword(
+                            email = email, password = password
+                        ))
                     }
                     is RenterResponse.Loading, is RenterResponse.Error -> result(emailResult)
                     else -> {}
@@ -158,19 +155,17 @@ class AuthenticationUseCase @Inject constructor(
         password: String,
         appCheckToken: String,
         result: (RenterResponse<*>) -> Unit
-    ) {
+    ) = flow {
         basicRepository.isEmailAddressValid(emailAddress = email, appCheckToken = appCheckToken)
             .collect { emailResult ->
                 when (emailResult) {
                     is RenterResponse.Success -> {
-                        authenticationRepository.createUserWithEmailPassword(
-                            email = email,
-                            password = password
-                        ) {
-                            result(it)
-                        }
+                        emit(authenticationRepository.createUserWithEmailPassword(
+                            email = email, password = password
+                        ))
                     }
-                    else -> result(emailResult)
+                    is RenterResponse.Loading, is RenterResponse.Error -> result(emailResult)
+                    else -> {}
                 }
             }
     }

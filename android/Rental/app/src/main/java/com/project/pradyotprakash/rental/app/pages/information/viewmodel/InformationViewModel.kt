@@ -57,43 +57,43 @@ class InformationViewModel @Inject constructor(
     }
 
     private fun checkForUserDetails() {
-        _loading.value = true
-        appCheckService.getAppCheckToken(
-            onSuccess = { appCheckToken ->
-                viewModelScope.launch {
-                    authenticationUseCase.getCurrentUserId()?.let { userId ->
-                        authenticationUseCase.getCurrentUserDetails(
-                            userId = userId,
-                            appCheckToken = appCheckToken,
-                        ).collect {
-                            when (it) {
-                                is RenterResponse.Error -> {
-                                    authStateListener.stateChange(AuthState.Unauthenticated)
-                                }
-                                is RenterResponse.Loading -> _loading.value = true
-                                is RenterResponse.Success -> {
-                                    it.data.data?.let { userDetails ->
-                                        authStateListener.updateUserDetails(userDetails)
-                                        if (userDetails.is_all_details_available) {
-                                            navigateBack()
-                                        } else {
-                                            updateFieldDetails(userDetails)
-                                        }
-                                    } ?: kotlin.run {
+        viewModelScope.launch {
+            appCheckService.getAppCheckToken().collect { appCheckToken ->
+                when (appCheckToken) {
+                    is RenterResponse.Error -> updateErrorState(appCheckToken.exception.message)
+                    is RenterResponse.Idle -> _loading.value = false
+                    is RenterResponse.Loading -> _loading.value = true
+                    is RenterResponse.Success -> {
+                        authenticationUseCase.getCurrentUserId()?.let { userId ->
+                            authenticationUseCase.getCurrentUserDetails(
+                                userId = userId,
+                                appCheckToken = appCheckToken.data,
+                            ).collect {
+                                when (it) {
+                                    is RenterResponse.Error -> {
                                         authStateListener.stateChange(AuthState.Unauthenticated)
                                     }
+                                    is RenterResponse.Loading -> _loading.value = true
+                                    is RenterResponse.Success -> {
+                                        it.data.data?.let { userDetails ->
+                                            authStateListener.updateUserDetails(userDetails)
+                                            if (userDetails.is_all_details_available) {
+                                                navigateBack()
+                                            } else {
+                                                updateFieldDetails(userDetails)
+                                            }
+                                        } ?: kotlin.run {
+                                            authStateListener.stateChange(AuthState.Unauthenticated)
+                                        }
+                                    }
+                                    is RenterResponse.Idle -> _loading.value = false
                                 }
-                                is RenterResponse.Idle -> _loading.value = false
                             }
                         }
                     }
                 }
-            },
-            onFailure = {
-                _loading.value = false
-                authStateListener.stateChange(AuthState.Unauthenticated)
             }
-        )
+        }
     }
 
     private fun updateFieldDetails(userDetails: UserEntity?) {
@@ -206,7 +206,6 @@ class InformationViewModel @Inject constructor(
     }
 
     fun updateUserDetails() {
-        _loading.value = true
         _fields.value?.let { fields ->
             val firstName = fields.find { it.id == FieldId.FirstName.id }?.value?.value
             val lastName = fields.find { it.id == FieldId.LastName.id }?.value?.value
@@ -218,38 +217,42 @@ class InformationViewModel @Inject constructor(
             val emailAddress =
                 fields.find { it.id == FieldId.EmailAddress.id }?.value?.value
 
-            appCheckService.getAppCheckToken(
-                onSuccess = { appCheckToken ->
-                    isAllNotNull(
-                        appCheckToken,
-                        firstName,
-                        lastName,
-                        dateOfBirth,
-                        profession,
-                        phoneNumber,
-                        permanentAddress,
-                        emailAddress,
-                        onNull = {
-                            updateErrorState(TR.dataMissing)
-                        },
-                        onNotNull = {
-                            initiateUpdateUserDetails(
+            viewModelScope.launch {
+                appCheckService.getAppCheckToken().collect { appCheckToken ->
+                    when (appCheckToken) {
+                        is RenterResponse.Error -> updateErrorState(appCheckToken.exception.message)
+                        is RenterResponse.Idle -> _loading.value = false
+                        is RenterResponse.Loading -> _loading.value = true
+                        is RenterResponse.Success -> {
+                            isAllNotNull(
                                 appCheckToken,
-                                firstName!!,
-                                lastName!!,
-                                dateOfBirth!!,
-                                profession!!,
-                                phoneNumber!!,
-                                permanentAddress!!,
-                                emailAddress!!,
+                                firstName,
+                                lastName,
+                                dateOfBirth,
+                                profession,
+                                phoneNumber,
+                                permanentAddress,
+                                emailAddress,
+                                onNull = {
+                                    updateErrorState(TR.dataMissing)
+                                },
+                                onNotNull = {
+                                    initiateUpdateUserDetails(
+                                        appCheckToken.data,
+                                        firstName!!,
+                                        lastName!!,
+                                        dateOfBirth!!,
+                                        profession!!,
+                                        phoneNumber!!,
+                                        permanentAddress!!,
+                                        emailAddress!!,
+                                    )
+                                }
                             )
                         }
-                    )
-                },
-                onFailure = {
-                    updateErrorState(it.localizedMessage)
+                    }
                 }
-            )
+            }
         }
     }
 

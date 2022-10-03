@@ -43,64 +43,67 @@ class HomeViewModel @Inject constructor(
     }
 
     private fun checkForUserDetails() {
-        _loading.value = true
-        appCheckService.getAppCheckToken(
-            onSuccess = { appCheckToken ->
-                viewModelScope.launch {
-                    authenticationUseCase.getCurrentUserId()?.let { userId ->
-                        authenticationUseCase.getCurrentUserDetails(
-                            userId = userId,
-                            appCheckToken = appCheckToken,
-                        ).collect {
-                            when (it) {
-                                is RenterResponse.Error -> {
-                                    updateErrorState(it.exception.localizedMessage)
-                                }
-                                is RenterResponse.Loading -> _loading.value = true
-                                is RenterResponse.Success -> {
-                                    it.data.data?.let { userDetails ->
-                                        authStateListener.updateUserDetails(userDetails)
-                                        fetchAllProperties()
-                                        if (!userDetails.is_all_details_available) {
-                                            goToInformationScreen(userDetails.user_type)
-                                        }
-                                    } ?: kotlin.run {
-                                        authStateListener.stateChange(AuthState.Unauthenticated)
+        viewModelScope.launch {
+            appCheckService.getAppCheckToken().collect { appCheckToken ->
+                when (appCheckToken) {
+                    is RenterResponse.Error -> updateErrorState(appCheckToken.exception.message)
+                    is RenterResponse.Idle -> _loading.value = false
+                    is RenterResponse.Loading -> _loading.value = true
+                    is RenterResponse.Success -> {
+                        authenticationUseCase.getCurrentUserId()?.let { userId ->
+                            authenticationUseCase.getCurrentUserDetails(
+                                userId = userId,
+                                appCheckToken = appCheckToken.data,
+                            ).collect {
+                                when (it) {
+                                    is RenterResponse.Error -> {
+                                        updateErrorState(it.exception.localizedMessage)
                                     }
+                                    is RenterResponse.Loading -> _loading.value = true
+                                    is RenterResponse.Success -> {
+                                        it.data.data?.let { userDetails ->
+                                            authStateListener.updateUserDetails(userDetails)
+                                            fetchAllProperties()
+                                            if (!userDetails.is_all_details_available) {
+                                                goToInformationScreen(userDetails.user_type)
+                                            }
+                                        } ?: kotlin.run {
+                                            authStateListener.stateChange(AuthState.Unauthenticated)
+                                        }
+                                    }
+                                    is RenterResponse.Idle -> _loading.value = false
                                 }
-                                is RenterResponse.Idle -> _loading.value = false
                             }
                         }
                     }
                 }
-            },
-            onFailure = {
-                updateErrorState(it.localizedMessage)
             }
-        )
+        }
     }
 
     private fun fetchAllProperties() {
-        appCheckService.getAppCheckToken(
-            onSuccess = { appCheckToken ->
-                viewModelScope.launch {
-                    propertyUseCase.getProperties(
-                        appCheckToken = appCheckToken,
-                    ).collect {
-                        when (it) {
-                            is RenterResponse.Error -> updateErrorState(it.exception.message)
-                            is RenterResponse.Idle -> _loading.value = false
-                            is RenterResponse.Loading -> _loading.value = true
-                            is RenterResponse.Success -> _properties.value =
-                                it.data.data ?: emptyList()
+        viewModelScope.launch {
+            appCheckService.getAppCheckToken().collect { appCheckToken ->
+                when (appCheckToken) {
+                    is RenterResponse.Error -> updateErrorState(appCheckToken.exception.message)
+                    is RenterResponse.Idle -> _loading.value = false
+                    is RenterResponse.Loading -> _loading.value = true
+                    is RenterResponse.Success -> {
+                        propertyUseCase.getProperties(
+                            appCheckToken = appCheckToken.data,
+                        ).collect {
+                            when (it) {
+                                is RenterResponse.Error -> updateErrorState(it.exception.message)
+                                is RenterResponse.Idle -> _loading.value = false
+                                is RenterResponse.Loading -> _loading.value = true
+                                is RenterResponse.Success -> _properties.value =
+                                    it.data.data ?: emptyList()
+                            }
                         }
                     }
                 }
-            },
-            onFailure = {
-                updateErrorState(it.localizedMessage)
             }
-        )
+        }
     }
 
     /**
@@ -120,6 +123,12 @@ class HomeViewModel @Inject constructor(
     fun goToAddPropertyScreen() {
         navigator.navigate {
             it.navigate(Routes.Property.route)
+        }
+    }
+
+    fun navigateToPropertyDetails(propertyId: String) {
+        navigator.navigate {
+            it.navigate("${Routes.PropertyDetails.route}${propertyId}")
         }
     }
 }

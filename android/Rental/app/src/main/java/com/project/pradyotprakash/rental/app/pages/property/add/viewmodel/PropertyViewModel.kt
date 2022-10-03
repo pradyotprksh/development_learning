@@ -1,4 +1,4 @@
-package com.project.pradyotprakash.rental.app.pages.property.viewmodel
+package com.project.pradyotprakash.rental.app.pages.property.add.viewmodel
 
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -275,53 +275,57 @@ class PropertyViewModel @Inject constructor(
                 fields.find { it.id == FieldId.AgreementRules.id }?.value?.value
             val images = fields.find { it.id == FieldId.PropertyImagePicker.id }?.values?.value ?: emptyList()
 
-            appCheckService.getAppCheckToken(
-                onSuccess = { appCheckToken ->
-                    isAllNotNull(
-                        appCheckToken,
-                        propertyId,
-                        name,
-                        address,
-                        areYouTheOwner,
-                        isForRental,
-                        kindOfRenter,
-                        furnishedType,
-                        propertyType,
-                        numberOfBathroom,
-                        wherePropertyIs,
-                        depositAmount,
-                        rentAmount,
-                        perks,
-                        agreementTerms,
-                        onNull = {
-                            updateErrorState(TR.dataMissing)
-                        },
-                        onNotNull = {
-                            initiateAddPropertyDetails(
+            viewModelScope.launch {
+                appCheckService.getAppCheckToken().collect { appCheckToken ->
+                    when (appCheckToken) {
+                        is RenterResponse.Error -> updateErrorState(appCheckToken.exception.message)
+                        is RenterResponse.Idle -> _loading.value = false
+                        is RenterResponse.Loading -> _loading.value = true
+                        is RenterResponse.Success -> {
+                            isAllNotNull(
                                 appCheckToken,
                                 propertyId,
-                                name!!,
-                                address!!,
-                                areYouTheOwner!!,
-                                isForRental!!,
-                                kindOfRenter!!,
-                                furnishedType!!,
-                                propertyType!!,
-                                numberOfBathroom!!,
-                                wherePropertyIs!!,
-                                depositAmount!!,
-                                rentAmount!!,
-                                perks!!,
-                                agreementTerms!!,
-                                images,
+                                name,
+                                address,
+                                areYouTheOwner,
+                                isForRental,
+                                kindOfRenter,
+                                furnishedType,
+                                propertyType,
+                                numberOfBathroom,
+                                wherePropertyIs,
+                                depositAmount,
+                                rentAmount,
+                                perks,
+                                agreementTerms,
+                                onNull = {
+                                    updateErrorState(TR.dataMissing)
+                                },
+                                onNotNull = {
+                                    initiateAddPropertyDetails(
+                                        appCheckToken.data,
+                                        propertyId,
+                                        name!!,
+                                        address!!,
+                                        areYouTheOwner!!,
+                                        isForRental!!,
+                                        kindOfRenter!!,
+                                        furnishedType!!,
+                                        propertyType!!,
+                                        numberOfBathroom!!,
+                                        wherePropertyIs!!,
+                                        depositAmount!!,
+                                        rentAmount!!,
+                                        perks!!,
+                                        agreementTerms!!,
+                                        images,
+                                    )
+                                },
                             )
-                        },
-                    )
-                },
-                onFailure = { appCheckException ->
-                    updateErrorState(appCheckException.localizedMessage)
+                        }
+                    }
                 }
-            )
+            }
         }
     }
 

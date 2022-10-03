@@ -1,4 +1,4 @@
-package com.project.pradyotprakash.rental.app.pages.property.view
+package com.project.pradyotprakash.rental.app.pages.property.add.view
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -21,7 +21,7 @@ import androidx.compose.ui.unit.dp
 import com.project.pradyotprakash.rental.app.composables.FieldComposable
 import com.project.pradyotprakash.rental.app.composables.PageStateComposable
 import com.project.pradyotprakash.rental.app.localization.TR
-import com.project.pradyotprakash.rental.app.pages.property.viewmodel.PropertyViewModel
+import com.project.pradyotprakash.rental.app.pages.property.add.viewmodel.PropertyViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

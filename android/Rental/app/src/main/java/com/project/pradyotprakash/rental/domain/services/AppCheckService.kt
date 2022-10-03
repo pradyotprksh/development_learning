@@ -1,8 +1,8 @@
 package com.project.pradyotprakash.rental.domain.services
 
+import com.project.pradyotprakash.rental.core.response.RenterResponse
+import kotlinx.coroutines.flow.Flow
+
 interface AppCheckService {
-    fun getAppCheckToken(
-        onSuccess: (String) -> Unit,
-        onFailure: (Exception) -> Unit,
-    )
+    suspend fun getAppCheckToken() : Flow<RenterResponse<String>>
 }

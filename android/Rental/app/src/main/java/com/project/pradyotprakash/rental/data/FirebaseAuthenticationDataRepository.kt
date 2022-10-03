@@ -3,10 +3,12 @@ package com.project.pradyotprakash.rental.data
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.project.pradyotprakash.rental.app.localization.TR
 import com.project.pradyotprakash.rental.core.response.RenterException
 import com.project.pradyotprakash.rental.core.response.RenterResponse
 import com.project.pradyotprakash.rental.domain.services.FirebaseAuthenticationService
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.tasks.await
 
 class FirebaseAuthenticationDataRepository(
     private val auth: FirebaseAuth,
@@ -15,44 +17,30 @@ class FirebaseAuthenticationDataRepository(
 
     override fun isUserLoggedIn(): Boolean = currentUser() != null
 
-    override fun createUserUsingEmailPassword(
+    override suspend fun createUserUsingEmailPassword(
         email: String,
-        password: String,
-        result: (RenterResponse<AuthResult>) -> Unit,
-    ) {
-        auth.createUserWithEmailAndPassword(email, password)
-            .addOnSuccessListener {
-                result(RenterResponse.Success(it))
-            }
-            .addOnFailureListener {
-                result(
-                    RenterResponse.Error(
-                        RenterException(
-                            message = it.localizedMessage ?: TR.noDataFoundError
-                        )
-                    )
-                )
-            }
+        password: String
+    ): Flow<RenterResponse<AuthResult>> = flow {
+        try {
+            emit(RenterResponse.Loading)
+            val createUserResult = auth.createUserWithEmailAndPassword(email, password).await()
+            emit(RenterResponse.Success(createUserResult))
+        } catch (e: Exception) {
+            emit(RenterResponse.Error(RenterException(message = e.localizedMessage ?: "")))
+        }
     }
 
-    override fun signInUserUsingEmailPassword(
+    override suspend fun signInUserUsingEmailPassword(
         email: String,
-        password: String,
-        result: (RenterResponse<AuthResult>) -> Unit,
-    ) {
-        auth.signInWithEmailAndPassword(email, password)
-            .addOnSuccessListener {
-                result(RenterResponse.Success(it))
-            }
-            .addOnFailureListener {
-                result(
-                    RenterResponse.Error(
-                        RenterException(
-                            message = it.localizedMessage ?: TR.noDataFoundError
-                        )
-                    )
-                )
-            }
+        password: String
+    ): Flow<RenterResponse<AuthResult>> = flow {
+        try {
+            emit(RenterResponse.Loading)
+            val createUserResult = auth.signInWithEmailAndPassword(email, password).await()
+            emit(RenterResponse.Success(createUserResult))
+        } catch (e: Exception) {
+            emit(RenterResponse.Error(RenterException(message = e.localizedMessage ?: "")))
+        }
     }
 
     override fun logoutUser() {

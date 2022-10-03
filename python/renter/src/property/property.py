@@ -82,9 +82,7 @@ class _Property(Resource):
                 # Get all the properties from the collection
                 property_details = get_document(self.property_collection, Keys.Property.property_id, property_id)
                 user_id = property_details.get(Keys.Property.property_created_by)
-                print(user_id)
                 user_details = self.find_user_by_user_id(user_id)
-                print(user_details)
                 property_details[Keys.Property.property_created_by_details] = user_details
                 property_list = [
                     property_details

@@ -2,6 +2,7 @@ package com.project.pradyotprakash.rental.core.navigation
 
 import com.project.pradyotprakash.rental.app.utils.ErrorScreenArguments
 import com.project.pradyotprakash.rental.app.utils.InformationScreenArguments
+import com.project.pradyotprakash.rental.app.utils.PropertyDetailsArguments
 import com.project.pradyotprakash.rental.app.utils.WelcomeScreenArguments
 
 /**
@@ -28,7 +29,8 @@ enum class Routes(
     Option("option/"),
     Home("home/"),
     Welcome("welcome/", listOf(WelcomeScreenArguments.userType)),
-    Information("information/",
+    Information(
+        "information/",
         listOf(
             InformationScreenArguments.userType,
             InformationScreenArguments.onlyPreview,
@@ -36,7 +38,14 @@ enum class Routes(
         )
     ),
     Property("property/"),
-    Error("error/",
+    PropertyDetails(
+        "property-details/",
+        listOf(
+            PropertyDetailsArguments.propertyId,
+        )
+    ),
+    Error(
+        "error/",
         listOf(
             ErrorScreenArguments.title,
             ErrorScreenArguments.subtitle,

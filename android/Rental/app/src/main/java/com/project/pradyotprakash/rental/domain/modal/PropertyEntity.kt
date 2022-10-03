@@ -23,7 +23,7 @@ data class PropertyEntity(
     val property_updated_on: String,
     val property_created_by: String,
     val property_created_by_details: UserEntity? = null,
-    val property_images: List<String>,
+    val property_images: List<String>? = null,
 ) {
     val isForRental
         get() = is_for_rental.toBoolean()
@@ -49,5 +49,5 @@ data class PropertyEntity(
             }
         }
 
-    val arrayTypeForPropertyImages: ArrayList<String> = ArrayList(property_images)
+    val arrayTypeForPropertyImages: ArrayList<String> = ArrayList(property_images ?: emptyList())
 }
