@@ -40,7 +40,7 @@ fun PropertyScreen(propertyViewModel: PropertyViewModel) {
                 TopAppBar(
                     title = {
                         Text(
-                            text = "Add A New Property",
+                            text = TR.addANewProperty,
                             style = MaterialTheme.typography.bodyLarge,
                             textAlign = TextAlign.Center,
                         )

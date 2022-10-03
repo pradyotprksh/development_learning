@@ -8,6 +8,10 @@ plugins {
     kotlin("kapt")
 }
 
+tasks.register("updateTranslations") {
+    Runtime.getRuntime().exec("python3 ./script/generate_translation_file.py")
+}
+
 tasks.register<de.undercouch.gradle.tasks.download.Download>("checkEnvironment") {
     src("${rootProject.extra.get("baseUrl")}/renter")
     dest("$rootDir")
@@ -81,6 +85,7 @@ android {
     }
 
     project.tasks.preBuild.dependsOn("checkEnvironment")
+    project.tasks.preBuild.dependsOn("updateTranslations")
 }
 
 kapt {

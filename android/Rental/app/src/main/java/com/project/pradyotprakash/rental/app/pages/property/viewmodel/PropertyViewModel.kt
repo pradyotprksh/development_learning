@@ -55,7 +55,7 @@ class PropertyViewModel @Inject constructor(
             FieldStates(
                 id = FieldId.PropertyName.id,
                 composeType = ComposeType.OutlinedTextField,
-                label = "Property Name",
+                label = TR.propertyName,
                 keyboardOptions = KeyboardOptions(
                     capitalization = KeyboardCapitalization.Words,
                     autoCorrect = false,
@@ -65,7 +65,7 @@ class PropertyViewModel @Inject constructor(
             ),
             FieldStates(
                 id = FieldId.Address.id,
-                label = "Address",
+                label = TR.address,
                 keyboardOptions = KeyboardOptions(
                     capitalization = KeyboardCapitalization.Words,
                     autoCorrect = false,
@@ -76,9 +76,9 @@ class PropertyViewModel @Inject constructor(
             ),
             FieldStates(
                 id = FieldId.PropertyType.id,
-                label = "Type of property like 1BHK, 2BHK, etc.",
+                label = TR.typeOfProperty,
                 keyboardOptions = KeyboardOptions(
-                    capitalization = KeyboardCapitalization.Words,
+                    capitalization = KeyboardCapitalization.Characters,
                     autoCorrect = false,
                     keyboardType = KeyboardType.Text,
                     imeAction = ImeAction.Next,
@@ -87,7 +87,7 @@ class PropertyViewModel @Inject constructor(
             ),
             FieldStates(
                 id = FieldId.BathroomNumber.id,
-                label = "Number Of Bathrooms",
+                label = TR.numberOfBathrooms,
                 keyboardOptions = KeyboardOptions(
                     capitalization = KeyboardCapitalization.None,
                     autoCorrect = false,
@@ -98,7 +98,7 @@ class PropertyViewModel @Inject constructor(
             ),
             FieldStates(
                 id = FieldId.Deposit.id,
-                label = "Deposit (For 1 year)",
+                label = TR.deposit,
                 keyboardOptions = KeyboardOptions(
                     capitalization = KeyboardCapitalization.None,
                     autoCorrect = false,
@@ -109,7 +109,7 @@ class PropertyViewModel @Inject constructor(
             ),
             FieldStates(
                 id = FieldId.MonthlyRent.id,
-                label = "Rent (For 1 month)",
+                label = TR.rent,
                 keyboardOptions = KeyboardOptions(
                     capitalization = KeyboardCapitalization.None,
                     autoCorrect = false,
@@ -121,7 +121,7 @@ class PropertyViewModel @Inject constructor(
             FieldStates(
                 id = FieldId.Perks.id,
                 composeType = ComposeType.OutlinedTextField,
-                label = "Few perks for the renter to know about, if there",
+                label = TR.propertyPerks,
                 keyboardOptions = KeyboardOptions(
                     capitalization = KeyboardCapitalization.Words,
                     autoCorrect = false,
@@ -132,7 +132,7 @@ class PropertyViewModel @Inject constructor(
             FieldStates(
                 id = FieldId.AgreementRules.id,
                 composeType = ComposeType.OutlinedTextField,
-                label = "Agreement rules which the renter should know about before hand, if there",
+                label = TR.propertyAgreements,
                 keyboardOptions = KeyboardOptions(
                     capitalization = KeyboardCapitalization.Words,
                     autoCorrect = false,
@@ -148,28 +148,28 @@ class PropertyViewModel @Inject constructor(
             FieldStates(
                 id = FieldId.PropertyImagePicker.id,
                 composeType = ComposeType.MultipleImagePicker,
-                label = "Please add images for the property",
+                label = TR.propertyImages,
                 storageReference = propertyStorageReference,
             ),
             FieldStates(
                 id = FieldId.WhereItIs.id,
                 composeType = ComposeType.RadioGroup,
-                label = "Where the rental property is?",
+                label = TR.wherePropertyIs,
                 value = MutableLiveData(FieldId.House.id),
                 children = listOf(
                     FieldStates(
                         id = FieldId.Society.id,
-                        label = "In Society",
+                        label = TR.inSociety,
                         composeType = ComposeType.RadioButton,
                     ),
                     FieldStates(
                         id = FieldId.Apartment.id,
-                        label = "An apartment or owner doesn't stay in the same place",
+                        label = TR.inApartment,
                         composeType = ComposeType.RadioButton,
                     ),
                     FieldStates(
                         id = FieldId.House.id,
-                        label = "House",
+                        label = TR.inHouse,
                         composeType = ComposeType.RadioButton,
                     ),
                 ),
@@ -177,17 +177,17 @@ class PropertyViewModel @Inject constructor(
             FieldStates(
                 id = FieldId.IsRentalOwner.id,
                 composeType = ComposeType.RadioGroup,
-                label = "Are you the owner?",
+                label = TR.areYouOwner,
                 value = MutableLiveData(FieldId.True.id),
                 children = listOf(
                     FieldStates(
                         id = FieldId.True.id,
-                        label = "Yes",
+                        label = TR.yes,
                         composeType = ComposeType.RadioButton,
                     ),
                     FieldStates(
                         id = FieldId.False.id,
-                        label = "No",
+                        label = TR.no,
                         composeType = ComposeType.RadioButton,
                     )
                 ),
@@ -195,28 +195,28 @@ class PropertyViewModel @Inject constructor(
             FieldStates(
                 id = FieldId.IsForRental.id,
                 composeType = ComposeType.Switch,
-                label = "Is for rental?",
+                label = TR.isForRental,
                 isSelected = MutableLiveData(true),
             ),
             FieldStates(
                 id = FieldId.PropertyFor.id,
                 composeType = ComposeType.RadioGroup,
-                label = "What kind of renter is allowed?",
+                label = TR.kindOfRentalAllowed,
                 value = MutableLiveData(FieldId.DoesNotMatter.id),
                 children = listOf(
                     FieldStates(
                         id = FieldId.ForFamily.id,
-                        label = "Only Families",
+                        label = TR.onlyFamilies,
                         composeType = ComposeType.RadioButton,
                     ),
                     FieldStates(
                         id = FieldId.ForBachelors.id,
-                        label = "Only Bachelors",
+                        label = TR.onlyBachelors,
                         composeType = ComposeType.RadioButton,
                     ),
                     FieldStates(
                         id = FieldId.DoesNotMatter.id,
-                        label = "Does Not Matter",
+                        label = TR.doesNotMatter,
                         composeType = ComposeType.RadioButton,
                     ),
                 ),
@@ -224,22 +224,22 @@ class PropertyViewModel @Inject constructor(
             FieldStates(
                 id = FieldId.FurnishedType.id,
                 composeType = ComposeType.RadioGroup,
-                label = "Furnished Type",
+                label = TR.furnishedType,
                 value = MutableLiveData(FieldId.None.id),
                 children = listOf(
                     FieldStates(
                         id = FieldId.FullyFurnished.id,
-                        label = "Fully Furnished",
+                        label = TR.fullyFurnished,
                         composeType = ComposeType.RadioButton,
                     ),
                     FieldStates(
                         id = FieldId.SemiFurnished.id,
-                        label = "Semi Furnished",
+                        label = TR.semiFurnished,
                         composeType = ComposeType.RadioButton,
                     ),
                     FieldStates(
                         id = FieldId.None.id,
-                        label = "None",
+                        label = TR.none,
                         composeType = ComposeType.RadioButton,
                     ),
                 ),

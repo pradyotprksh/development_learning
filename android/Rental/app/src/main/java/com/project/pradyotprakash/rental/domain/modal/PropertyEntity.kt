@@ -1,5 +1,6 @@
 package com.project.pradyotprakash.rental.domain.modal
 
+import com.project.pradyotprakash.rental.app.localization.TR
 import com.project.pradyotprakash.rental.core.models.FieldId
 
 data class PropertyEntity(
@@ -33,18 +34,18 @@ data class PropertyEntity(
     val propertyFor: String
         get() {
             return when (FieldId.values().find { it.id == property_for }) {
-                FieldId.ForFamily -> "Families"
-                FieldId.ForBachelors -> "Bachelors"
-                else -> "Families | Bachelors"
+                FieldId.ForFamily -> TR.families
+                FieldId.ForBachelors -> TR.bachelors
+                else -> TR.familiesBachelors
             }
         }
 
     val furnishedType: String
         get() {
             return when (FieldId.values().find { it.id == furnished_type }) {
-                FieldId.FullyFurnished -> "Fully Furnished"
-                FieldId.SemiFurnished -> "Semi Furnished"
-                else -> "No Furniture"
+                FieldId.FullyFurnished -> TR.fullyFurnished
+                FieldId.SemiFurnished -> TR.semiFurnished
+                else -> TR.noFurniture
             }
         }
 

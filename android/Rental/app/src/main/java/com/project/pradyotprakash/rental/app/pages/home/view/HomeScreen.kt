@@ -27,6 +27,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.project.pradyotprakash.rental.app.composables.PageStateComposable
+import com.project.pradyotprakash.rental.app.localization.TR
 import com.project.pradyotprakash.rental.app.pages.home.viewmodel.HomeViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -47,7 +48,7 @@ fun HomeScreen(homeViewModel: HomeViewModel) {
                 TopAppBar(
                     title = {
                         Text(
-                            text = "Welcome, ${userDetails.value?.first_name ?: ""}",
+                            text = String.format(TR.welcomeWithComma, userDetails.value?.first_name ?: ""),
                             style = MaterialTheme.typography.bodyLarge,
                             textAlign = TextAlign.Center,
                         )
@@ -58,7 +59,7 @@ fun HomeScreen(homeViewModel: HomeViewModel) {
             floatingActionButton = {
                 FloatingActionButton(onClick = homeViewModel::goToAddPropertyScreen) {
                     Text(
-                        text = "Add A Property",
+                        text = TR.addAProperty,
                         modifier = Modifier.padding(
                             all = 15.dp
                         )
@@ -76,7 +77,7 @@ fun HomeScreen(homeViewModel: HomeViewModel) {
                         contentAlignment = Alignment.Center,
                     ) {
                         Text(
-                            text = "No Properties is being added by anyone. You can initiative from your end. Click on the Add A Property button in bottom right",
+                            text = TR.noPropertiesAvailable,
                             textAlign = TextAlign.Center,
                         )
                     }
@@ -104,18 +105,18 @@ fun HomeScreen(homeViewModel: HomeViewModel) {
                                         )
                                         Spacer(modifier = Modifier.weight(1f))
                                         Text(
-                                            text = "Is For Rental",
+                                            text = TR.isForRental,
                                             color = if (property.isForRental) Color.Green else Color.Red
                                         )
                                     }
                                     Spacer(modifier = Modifier.height(10.dp))
-                                    Text(text = "Address: ${property.address}")
+                                    Text(text = String.format(TR.addressColon, property.address))
                                     Spacer(modifier = Modifier.height(10.dp))
-                                    Text(text = "Property For: ${property.propertyFor}")
+                                    Text(text = String.format(TR.propertyForColon, property.propertyFor))
                                     Spacer(modifier = Modifier.height(10.dp))
                                     Text(text = property.furnishedType)
                                     Spacer(modifier = Modifier.height(10.dp))
-                                    Text(text = "${property.property_type} & ${property.number_of_bathrooms} bathrooms")
+                                    Text(text = String.format(TR.bathrooms, "${property.property_type} & ${property.number_of_bathrooms}"))
                                 }
                             }
                         }

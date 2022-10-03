@@ -29,6 +29,7 @@ import coil.imageLoader
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.project.pradyotprakash.rental.app.composables.AnimatedProgressBar
 import com.project.pradyotprakash.rental.app.composables.PageStateComposable
+import com.project.pradyotprakash.rental.app.localization.TR
 import com.project.pradyotprakash.rental.core.models.FieldStates
 import com.project.pradyotprakash.rental.core.permissions.PermissionHandler
 
@@ -78,7 +79,7 @@ fun ImagePicker(
                 items(uploadedImages.value) { images ->
                     AsyncImage(
                         model = images,
-                        contentDescription = "Image",
+                        contentDescription = TR.onlineImageDescription,
                         imageLoader = context.imageLoader,
                         modifier = Modifier
                             .size(50.dp)

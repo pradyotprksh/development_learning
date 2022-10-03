@@ -8,6 +8,7 @@ import android.provider.MediaStore
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.project.pradyotprakash.rental.app.localization.TR
 import com.project.pradyotprakash.rental.core.models.FieldStates
 import com.project.pradyotprakash.rental.domain.services.StorageService
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -47,7 +48,7 @@ class ImagePickerViewModel @Inject constructor(
                     },
                     onFailure = { exception ->
                         _imageUploading.value = 0.0f
-                        _errorText.value = exception.localizedMessage ?: "Something went wrong while uploading the image. Please try again."
+                        _errorText.value = exception.localizedMessage ?: TR.somethingWentWrongImageUpload
                     },
                     onProgress = { progress ->
                         _imageUploading.value = progress
