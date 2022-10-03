@@ -47,4 +47,6 @@ data class PropertyEntity(
                 else -> "No Furniture"
             }
         }
+
+    val arrayTypeForPropertyImages: ArrayList<String> = ArrayList(property_images)
 }

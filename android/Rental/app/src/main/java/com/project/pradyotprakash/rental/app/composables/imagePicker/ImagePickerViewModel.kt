@@ -43,7 +43,7 @@ class ImagePickerViewModel @Inject constructor(
                     reference,
                     onSuccess = { downloadUrl ->
                         _imageUploading.value = 0.0f
-                        fieldStates.values.value = (fieldStates.values.value ?: emptyList()) + downloadUrl
+                        fieldStates.values.value = (fieldStates.values.value ?: emptyList()) + listOf(downloadUrl)
                     },
                     onFailure = { exception ->
                         _imageUploading.value = 0.0f

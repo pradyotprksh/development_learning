@@ -155,7 +155,16 @@ class _Property(Resource):
                 message=MESSAGES_LIST[Keys.Messages.user_not_found],
             )
 
-        property_form = request.form.to_dict()
+        property_request = request.form
+        property_form = property_request.to_dict()
+
+        # Get the array of images
+        property_images = property_request.getlist(Keys.Property.property_images)
+        if property_images is None:
+            property_images = []
+        else:
+            if type(property_images) != list:
+                property_images = [property_images]
 
         property_id = property_form.get(Keys.Property.property_id)
         if property_id is None:
@@ -186,7 +195,6 @@ class _Property(Resource):
         address = property_form.get(Keys.Property.address)
         perks = property_form.get(Keys.Property.perks)
         agreement_rules = property_form.get(Keys.Property.agreement_rules)
-        property_images = property_form.get(Keys.Property.property_images)
         property_created_on = get_current_timestamp()
         property_updated_on = get_current_timestamp()
 
@@ -260,8 +268,6 @@ class _Property(Resource):
             perks = ""
         if agreement_rules is None:
             agreement_rules = ""
-        if property_images is None:
-            property_images = []
 
         # Payload
         property_details = PropertyDetails(
