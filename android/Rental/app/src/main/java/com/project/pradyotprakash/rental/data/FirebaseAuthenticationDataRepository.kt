@@ -6,8 +6,6 @@ import com.google.firebase.auth.FirebaseUser
 import com.project.pradyotprakash.rental.core.response.RenterException
 import com.project.pradyotprakash.rental.core.response.RenterResponse
 import com.project.pradyotprakash.rental.domain.services.FirebaseAuthenticationService
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.tasks.await
 
 class FirebaseAuthenticationDataRepository(
@@ -20,27 +18,21 @@ class FirebaseAuthenticationDataRepository(
     override suspend fun createUserUsingEmailPassword(
         email: String,
         password: String
-    ): Flow<RenterResponse<AuthResult>> = flow {
-        try {
-            emit(RenterResponse.Loading)
-            val createUserResult = auth.createUserWithEmailAndPassword(email, password).await()
-            emit(RenterResponse.Success(createUserResult))
-        } catch (e: Exception) {
-            emit(RenterResponse.Error(RenterException(message = e.localizedMessage ?: "")))
-        }
+    ): RenterResponse<AuthResult> = try {
+        val createUserResult = auth.createUserWithEmailAndPassword(email, password).await()
+        RenterResponse.Success(createUserResult)
+    } catch (e: Exception) {
+        RenterResponse.Error(RenterException(message = e.localizedMessage ?: ""))
     }
 
     override suspend fun signInUserUsingEmailPassword(
         email: String,
         password: String
-    ): Flow<RenterResponse<AuthResult>> = flow {
-        try {
-            emit(RenterResponse.Loading)
-            val createUserResult = auth.signInWithEmailAndPassword(email, password).await()
-            emit(RenterResponse.Success(createUserResult))
-        } catch (e: Exception) {
-            emit(RenterResponse.Error(RenterException(message = e.localizedMessage ?: "")))
-        }
+    ) = try {
+        val createUserResult = auth.signInWithEmailAndPassword(email, password).await()
+        RenterResponse.Success(createUserResult)
+    } catch (e: Exception) {
+        RenterResponse.Error(RenterException(message = e.localizedMessage ?: ""))
     }
 
     override fun logoutUser() {

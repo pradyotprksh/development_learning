@@ -133,40 +133,22 @@ class AuthenticationUseCase @Inject constructor(
     suspend fun signInUserWithEmailPassword(
         email: String,
         password: String,
-        appCheckToken: String,
-        result: (RenterResponse<*>) -> Unit
     ) = flow {
-        basicRepository.isEmailAddressValid(emailAddress = email, appCheckToken = appCheckToken)
-            .collect { emailResult ->
-                when (emailResult) {
-                    is RenterResponse.Success -> {
-                        emit(authenticationRepository.signInUserWithEmailPassword(
-                            email = email, password = password
-                        ))
-                    }
-                    is RenterResponse.Loading, is RenterResponse.Error -> result(emailResult)
-                    else -> {}
-                }
-            }
+        emit(RenterResponse.Loading)
+        emit(authenticationRepository.signInUserWithEmailPassword(
+            email = email, password = password
+        ))
+        emit(RenterResponse.Idle)
     }
 
     suspend fun createUserWithEmailPassword(
         email: String,
         password: String,
-        appCheckToken: String,
-        result: (RenterResponse<*>) -> Unit
     ) = flow {
-        basicRepository.isEmailAddressValid(emailAddress = email, appCheckToken = appCheckToken)
-            .collect { emailResult ->
-                when (emailResult) {
-                    is RenterResponse.Success -> {
-                        emit(authenticationRepository.createUserWithEmailPassword(
-                            email = email, password = password
-                        ))
-                    }
-                    is RenterResponse.Loading, is RenterResponse.Error -> result(emailResult)
-                    else -> {}
-                }
-            }
+        emit(RenterResponse.Loading)
+        emit(authenticationRepository.createUserWithEmailPassword(
+            email = email, password = password
+        ))
+        emit(RenterResponse.Idle)
     }
 }

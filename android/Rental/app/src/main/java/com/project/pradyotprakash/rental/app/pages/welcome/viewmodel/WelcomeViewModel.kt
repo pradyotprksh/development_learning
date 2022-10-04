@@ -11,6 +11,7 @@ import com.project.pradyotprakash.rental.core.navigation.path
 import com.project.pradyotprakash.rental.core.response.RenterResponse
 import com.project.pradyotprakash.rental.domain.services.AppCheckService
 import com.project.pradyotprakash.rental.domain.usecase.AuthenticationUseCase
+import com.project.pradyotprakash.rental.domain.usecase.BasicUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -27,6 +28,7 @@ enum class AuthType {
 @HiltViewModel
 class WelcomeViewModel @Inject constructor(
     private val navigator: Navigator,
+    private val basicUseCase: BasicUseCase,
     private val authenticationUseCase: AuthenticationUseCase,
     private val appCheckService: AppCheckService,
 ) : ViewModel() {
@@ -62,22 +64,34 @@ class WelcomeViewModel @Inject constructor(
                         when (authType) {
                             AuthType.Email -> {
                                 // TODO: Give option to create user as well
-                                authenticationUseCase.signInUserWithEmailPassword(
-                                    "pradyot@gmail.com",
-                                    "pradyot@gmail.com",
-                                    appCheckToken = appCheckToken.data,
-                                ) {
-                                    when (it) {
-                                        is RenterResponse.Error -> {
-                                            _loading.value = false
-                                            _errorText.value = it.exception.message
-                                        }
+                                val email = "pradyot@gmail.com"
+                                val password = "pradyot@gmail.com"
+                                basicUseCase.isEmailAddressValid(
+                                    emailAddress = email,
+                                    appCheckToken = appCheckToken.data
+                                ).collect { emailVerificationResponse ->
+                                    when (emailVerificationResponse) {
                                         is RenterResponse.Loading -> _loading.value = true
                                         is RenterResponse.Success -> {
-                                            _loading.value = true
-                                            goToHomeScreen()
+                                            authenticationUseCase.signInUserWithEmailPassword(
+                                                email,
+                                                password,
+                                            ).collect { signInResponse ->
+                                                when (signInResponse) {
+                                                    is RenterResponse.Error -> updateErrorState(
+                                                        signInResponse.exception.message
+                                                    )
+                                                    is RenterResponse.Loading -> _loading.value =
+                                                        true
+                                                    is RenterResponse.Success<*> -> goToHomeScreen()
+                                                    RenterResponse.Idle -> _loading.value = false
+                                                }
+                                            }
                                         }
-                                        RenterResponse.Idle -> {}
+                                        is RenterResponse.Error -> updateErrorState(
+                                            emailVerificationResponse.exception.message
+                                        )
+                                        else -> {}
                                     }
                                 }
                             }

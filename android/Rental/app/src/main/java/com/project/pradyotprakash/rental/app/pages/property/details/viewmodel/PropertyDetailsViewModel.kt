@@ -30,7 +30,6 @@ class PropertyDetailsViewModel @Inject constructor(
             appCheckService.getAppCheckToken().collect { appCheckToken ->
                 when (appCheckToken) {
                     is RenterResponse.Error -> updateErrorState(appCheckToken.exception.message)
-                    is RenterResponse.Idle -> _loading.value = false
                     is RenterResponse.Loading -> _loading.value = true
                     is RenterResponse.Success -> {
                         propertyUseCase.getProperties(
@@ -45,6 +44,7 @@ class PropertyDetailsViewModel @Inject constructor(
                             }
                         }
                     }
+                    else -> {}
                 }
             }
         }

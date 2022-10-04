@@ -31,7 +31,23 @@ class BasicUseCase @Inject constructor(
      */
     suspend fun getTermsAndCondition(userType: String, appCheckToken: String) = flow {
         emit(RenterResponse.Loading)
-        emit(basicRepository.getTermsAndCondition(userType = userType, appCheckToken = appCheckToken))
+        emit(
+            basicRepository.getTermsAndCondition(
+                userType = userType,
+                appCheckToken = appCheckToken
+            )
+        )
+        emit(RenterResponse.Idle)
+    }
+
+    suspend fun isEmailAddressValid(emailAddress: String, appCheckToken: String) = flow {
+        emit(RenterResponse.Loading)
+        emit(
+            basicRepository.isEmailAddressValid(
+                emailAddress = emailAddress,
+                appCheckToken = appCheckToken
+            )
+        )
         emit(RenterResponse.Idle)
     }
 }

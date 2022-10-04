@@ -3,7 +3,6 @@ package com.project.pradyotprakash.rental.domain.services
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseUser
 import com.project.pradyotprakash.rental.core.response.RenterResponse
-import kotlinx.coroutines.flow.Flow
 
 interface FirebaseAuthenticationService {
     fun currentUser(): FirebaseUser?
@@ -13,12 +12,12 @@ interface FirebaseAuthenticationService {
     suspend fun createUserUsingEmailPassword(
         email: String,
         password: String,
-    ) : Flow<RenterResponse<AuthResult>>
+    ) : RenterResponse<AuthResult>
 
     suspend fun signInUserUsingEmailPassword(
         email: String,
         password: String,
-    ) : Flow<RenterResponse<AuthResult>>
+    ) : RenterResponse<AuthResult>
 
     fun logoutUser()
 }
