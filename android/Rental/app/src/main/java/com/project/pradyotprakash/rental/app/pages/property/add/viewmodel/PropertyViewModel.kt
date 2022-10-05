@@ -18,8 +18,8 @@ import com.project.pradyotprakash.rental.core.models.FieldStates
 import com.project.pradyotprakash.rental.core.navigation.Navigator
 import com.project.pradyotprakash.rental.core.response.RenterResponse
 import com.project.pradyotprakash.rental.di.Constants
-import com.project.pradyotprakash.rental.domain.services.AppCheckService
-import com.project.pradyotprakash.rental.domain.services.FirestoreService
+import com.project.pradyotprakash.rental.core.services.AppCheckService
+import com.project.pradyotprakash.rental.core.services.FirestoreService
 import com.project.pradyotprakash.rental.domain.usecase.AuthenticationUseCase
 import com.project.pradyotprakash.rental.domain.usecase.PropertyUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel

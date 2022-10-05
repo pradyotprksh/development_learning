@@ -11,7 +11,7 @@ import com.project.pradyotprakash.rental.core.navigation.Routes
 import com.project.pradyotprakash.rental.core.response.RenterResponse
 import com.project.pradyotprakash.rental.domain.modal.PropertyEntity
 import com.project.pradyotprakash.rental.domain.modal.UserEntity
-import com.project.pradyotprakash.rental.domain.services.AppCheckService
+import com.project.pradyotprakash.rental.core.services.AppCheckService
 import com.project.pradyotprakash.rental.domain.usecase.AuthenticationUseCase
 import com.project.pradyotprakash.rental.domain.usecase.PropertyUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel

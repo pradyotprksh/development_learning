@@ -1,4 +1,4 @@
-package com.project.pradyotprakash.rental.domain.services
+package com.project.pradyotprakash.rental.core.services
 
 import com.project.pradyotprakash.rental.core.response.RenterResponse
 import kotlinx.coroutines.flow.Flow

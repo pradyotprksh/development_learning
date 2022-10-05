@@ -1,4 +1,4 @@
-package com.project.pradyotprakash.rental.domain.services
+package com.project.pradyotprakash.rental.data.services
 
 import com.project.pradyotprakash.rental.domain.modal.DefaultEntity
 import com.project.pradyotprakash.rental.domain.modal.UserEntity

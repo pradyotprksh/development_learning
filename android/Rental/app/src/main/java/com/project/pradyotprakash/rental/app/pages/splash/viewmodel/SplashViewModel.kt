@@ -7,7 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.project.pradyotprakash.rental.core.auth.AuthState
 import com.project.pradyotprakash.rental.core.auth.AuthStateListener
 import com.project.pradyotprakash.rental.core.response.RenterResponse
-import com.project.pradyotprakash.rental.domain.services.AppCheckService
+import com.project.pradyotprakash.rental.core.services.AppCheckService
 import com.project.pradyotprakash.rental.domain.usecase.AuthenticationUseCase
 import com.project.pradyotprakash.rental.domain.usecase.BasicUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel

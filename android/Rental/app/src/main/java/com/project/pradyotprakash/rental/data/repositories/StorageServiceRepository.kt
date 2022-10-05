@@ -1,9 +1,9 @@
-package com.project.pradyotprakash.rental.data
+package com.project.pradyotprakash.rental.data.repositories
 
 import android.graphics.Bitmap
 import com.google.firebase.storage.StorageReference
 import com.project.pradyotprakash.rental.app.utils.toProgress
-import com.project.pradyotprakash.rental.domain.services.StorageService
+import com.project.pradyotprakash.rental.core.services.StorageService
 import java.io.ByteArrayOutputStream
 
 class StorageServiceRepository : StorageService {

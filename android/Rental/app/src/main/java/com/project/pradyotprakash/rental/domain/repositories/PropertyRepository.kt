@@ -2,7 +2,7 @@ package com.project.pradyotprakash.rental.domain.repositories
 
 import com.project.pradyotprakash.rental.core.response.parseResponse
 import com.project.pradyotprakash.rental.domain.modal.PropertyEntity
-import com.project.pradyotprakash.rental.domain.services.PropertyService
+import com.project.pradyotprakash.rental.data.services.PropertyService
 
 class PropertyRepository(
     private val propertyService: PropertyService,

@@ -1,11 +1,11 @@
-package com.project.pradyotprakash.rental.data
+package com.project.pradyotprakash.rental.data.repositories
 
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.project.pradyotprakash.rental.core.response.RenterException
 import com.project.pradyotprakash.rental.core.response.RenterResponse
-import com.project.pradyotprakash.rental.domain.services.FirebaseAuthenticationService
+import com.project.pradyotprakash.rental.core.services.FirebaseAuthenticationService
 import kotlinx.coroutines.tasks.await
 
 class FirebaseAuthenticationDataRepository(

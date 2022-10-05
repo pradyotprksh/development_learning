@@ -2,8 +2,8 @@ package com.project.pradyotprakash.rental.domain.repositories
 
 import com.project.pradyotprakash.rental.app.utils.UserType
 import com.project.pradyotprakash.rental.core.response.parseResponse
-import com.project.pradyotprakash.rental.domain.services.AuthenticationService
-import com.project.pradyotprakash.rental.domain.services.FirebaseAuthenticationService
+import com.project.pradyotprakash.rental.data.services.AuthenticationService
+import com.project.pradyotprakash.rental.core.services.FirebaseAuthenticationService
 
 class AuthenticationRepository(
     private val firebaseAuthenticationService: FirebaseAuthenticationService,

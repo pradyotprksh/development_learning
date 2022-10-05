@@ -10,7 +10,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.project.pradyotprakash.rental.app.localization.TR
 import com.project.pradyotprakash.rental.core.models.FieldStates
-import com.project.pradyotprakash.rental.domain.services.StorageService
+import com.project.pradyotprakash.rental.core.services.StorageService
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

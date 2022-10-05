@@ -22,7 +22,7 @@ import com.project.pradyotprakash.rental.core.models.InputType
 import com.project.pradyotprakash.rental.core.navigation.Navigator
 import com.project.pradyotprakash.rental.core.response.RenterResponse
 import com.project.pradyotprakash.rental.domain.modal.UserEntity
-import com.project.pradyotprakash.rental.domain.services.AppCheckService
+import com.project.pradyotprakash.rental.core.services.AppCheckService
 import com.project.pradyotprakash.rental.domain.usecase.AuthenticationUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch

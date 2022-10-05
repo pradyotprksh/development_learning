@@ -1,4 +1,4 @@
-package com.project.pradyotprakash.rental.domain.services
+package com.project.pradyotprakash.rental.core.services
 
 import android.graphics.Bitmap
 import com.google.firebase.storage.StorageReference

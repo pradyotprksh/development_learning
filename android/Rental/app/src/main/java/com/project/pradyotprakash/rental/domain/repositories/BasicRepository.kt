@@ -1,7 +1,7 @@
 package com.project.pradyotprakash.rental.domain.repositories
 
 import com.project.pradyotprakash.rental.core.response.parseResponse
-import com.project.pradyotprakash.rental.domain.services.BasicService
+import com.project.pradyotprakash.rental.data.services.BasicService
 
 /**
  * A basic repository class which will initiate the calls
