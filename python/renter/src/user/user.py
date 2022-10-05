@@ -68,6 +68,8 @@ class _User(Resource):
         )
 
     def patch(self):
+        # TODO: Fix update call getting <lambda>() got an unexpected keyword argument 'account_updated_on' error
+
         # headers
         # Check for app token to validate request
         app_check_token = request.headers[Keys.Rental.firebase_app_check_token]

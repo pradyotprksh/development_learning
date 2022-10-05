@@ -195,7 +195,7 @@ class PropertyViewModel @Inject constructor(
             FieldStates(
                 id = FieldId.IsForRental.id,
                 composeType = ComposeType.Switch,
-                label = TR.isForRental,
+                label = TR.isForRentalWithQuestionMark,
                 isSelected = MutableLiveData(true),
             ),
             FieldStates(

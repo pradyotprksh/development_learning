@@ -20,6 +20,7 @@
   "dobWithHelp": "Date of Birth (dd/mm/yyyy)",
   "emailAddress": "Email Address",
   "profession": "Profession",
+  "professionColon": "Profession: %s",
   "permanentAddress": "Permanent Address",
   "phoneNumber": "Phone Number",
   "dataMissing": "Some of the required fields are empty.",
@@ -61,5 +62,18 @@
   "families": "Families",
   "bachelors": "Bachelors",
   "familiesBachelors": "Families | Bachelors",
-  "noFurniture": "No Furniture"
+  "noFurniture": "No Furniture",
+  "propertyDetailsNotFound": "We were not able to find the property details. Please try again. Or might be the data is deleted or corrupted from the other end. We will look into this.",
+  "loading": "Loading...",
+  "basicDetails": "Basic Details",
+  "ownerDetails": "Owner Details",
+  "rentDetails": "Rent Details",
+  "moneyDetails": "Money Details",
+  "images": "Images",
+  "otherDetails": "Other Details",
+  "createdByColon": "Created by: %s",
+  "createdOnColon": "Created on: %s",
+  "updatedOnColon": "Updated on: %s",
+  "sendProposalToOwner": "Send proposal to owner",
+  "searchForRenter": "Search for renter"
 }

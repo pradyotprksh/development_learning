@@ -7,11 +7,9 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Icon
@@ -20,16 +18,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import coil.compose.AsyncImage
-import coil.imageLoader
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.project.pradyotprakash.rental.app.composables.AnimatedProgressBar
+import com.project.pradyotprakash.rental.app.composables.NetworkImageComposable
 import com.project.pradyotprakash.rental.app.composables.PageStateComposable
-import com.project.pradyotprakash.rental.app.localization.TR
 import com.project.pradyotprakash.rental.core.models.FieldStates
 import com.project.pradyotprakash.rental.core.permissions.PermissionHandler
 
@@ -77,15 +71,7 @@ fun ImagePicker(
             Spacer(modifier = Modifier.height(10.dp))
             LazyRow {
                 items(uploadedImages.value) { images ->
-                    AsyncImage(
-                        model = images,
-                        contentDescription = TR.onlineImageDescription,
-                        imageLoader = context.imageLoader,
-                        modifier = Modifier
-                            .size(50.dp)
-                            .clip(RoundedCornerShape(5.dp)),
-                        contentScale = ContentScale.Crop,
-                    )
+                    NetworkImageComposable(imageUrl = images, size = 50.dp, cornerSize = 5.dp)
                     Spacer(modifier = Modifier.width(5.dp))
                 }
 

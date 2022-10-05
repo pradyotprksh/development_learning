@@ -1,12 +1,24 @@
 package com.project.pradyotprakash.rental.domain.modal
 
+import com.github.marlonlom.utilities.timeago.TimeAgo
 import com.project.pradyotprakash.rental.app.localization.TR
 import com.project.pradyotprakash.rental.core.models.FieldId
 
 data class PropertyEntity(
     val _id: String,
     val property_id: String,
+
+    // Basic Details
     val property_name: String,
+    val address: String,
+    val property_created_on: String,
+    val property_updated_on: String,
+    val property_created_by: String,
+
+    // Owner Details
+    val property_created_by_details: UserEntity? = null,
+
+    // Rent Details
     val is_rental_owner: String,
     val is_for_rental: String,
     val property_for: String,
@@ -14,16 +26,17 @@ data class PropertyEntity(
     val property_type: String,
     val number_of_bathrooms: String,
     val where_it_is: String,
+
+    // Money Details
     val yearly_deposit: String,
     val monthly_rent: String,
-    val address: String,
+
+    // Images
+    val property_images: List<String>? = null,
+
+    // Other Details
     val perks: String,
     val agreement_rules: String,
-    val property_created_on: String,
-    val property_updated_on: String,
-    val property_created_by: String,
-    val property_created_by_details: UserEntity? = null,
-    val property_images: List<String>? = null,
 ) {
     val isForRental
         get() = is_for_rental.toBoolean()
@@ -50,4 +63,25 @@ data class PropertyEntity(
         }
 
     val arrayTypeForPropertyImages: ArrayList<String> = ArrayList(property_images ?: emptyList())
+
+    val createdOnTimeAgo: String
+        get() {
+            return try {
+                TimeAgo.using(property_created_on.toLong() * 1000)
+            } catch (e: Exception) {
+                "*"
+            }
+        }
+
+    val updatedOnTimeAgo: String
+        get() {
+            return try {
+                TimeAgo.using(property_updated_on.toLong() * 1000)
+            } catch (e: Exception) {
+                "*"
+            }
+        }
+
+    val isUpdated: Boolean
+        get() = createdOnTimeAgo != updatedOnTimeAgo
 }

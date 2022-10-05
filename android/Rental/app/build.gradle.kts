@@ -150,4 +150,7 @@ dependencies {
 
     // Coil
     implementation("io.coil-kt:coil-compose:2.2.1")
+
+    // Time ago
+    implementation("com.github.marlonlom:timeago:4.0.3")
 }

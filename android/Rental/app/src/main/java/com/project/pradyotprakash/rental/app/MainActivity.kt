@@ -23,9 +23,8 @@ import com.project.pradyotprakash.rental.app.pages.home.view.HomeScreen
 import com.project.pradyotprakash.rental.app.pages.information.view.InformationScreen
 import com.project.pradyotprakash.rental.app.pages.information.viewmodel.InformationViewModel
 import com.project.pradyotprakash.rental.app.pages.options.view.OptionsView
-import com.project.pradyotprakash.rental.app.pages.property.details.view.PropertyDetailsScreen
-import com.project.pradyotprakash.rental.app.pages.property.details.viewmodel.PropertyDetailsViewModel
 import com.project.pradyotprakash.rental.app.pages.property.add.view.PropertyScreen
+import com.project.pradyotprakash.rental.app.pages.property.details.view.PropertyDetailsScreen
 import com.project.pradyotprakash.rental.app.pages.splash.view.SplashView
 import com.project.pradyotprakash.rental.app.pages.welcome.view.WelcomeScreen
 import com.project.pradyotprakash.rental.app.pages.welcome.viewmodel.WelcomeViewModel
@@ -87,14 +86,13 @@ class MainActivity : ComponentActivity() {
                                 PropertyDetailsArguments.propertyId
                             )
 
-                            propertyId?.let { type ->
-                                if (type.isEmpty()) {
+                            propertyId?.let {
+                                if (propertyId.isEmpty()) {
                                     GoToErrorScreen()
                                 } else {
                                     PropertyDetailsScreen(
-                                        hiltViewModel<PropertyDetailsViewModel>().also { viewModel ->
-                                            viewModel.getPropertyDetails(propertyId)
-                                        },
+                                        propertyId,
+                                        hiltViewModel(),
                                     )
                                 }
                             } ?: kotlin.run {

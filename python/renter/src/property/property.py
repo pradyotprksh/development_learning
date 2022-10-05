@@ -34,12 +34,7 @@ class _Property(Resource):
     headers: user_id
     """
 
-    def find_user_by_user_id(self, user_id):
-        # Get all user details
-        users_list = []
-        for doc in get_documents(self.user_collection):
-            users_list.append(doc)
-
+    def find_user_by_user_id(self, user_id, users_list):
         for user in users_list:
             if user.get(Keys.User.user_id) == user_id:
                 return user
@@ -61,6 +56,11 @@ class _Property(Resource):
                 message=MESSAGES_LIST[Keys.Messages.cannot_validate_request],
             )
 
+        # Get all user details
+        users_list = []
+        for doc in get_documents(self.user_collection):
+            users_list.append(doc)
+
         # Query parameters
         property_id = request.args.get("property_id")
         user_id = request.args.get("user_id")
@@ -74,7 +74,7 @@ class _Property(Resource):
                 property_list = []
                 for doc in property_cursor:
                     user_id = doc.get(Keys.Property.property_created_by)
-                    user_details = self.find_user_by_user_id(user_id)
+                    user_details = self.find_user_by_user_id(user_id, users_list)
                     doc[Keys.Property.property_created_by_details] = user_details
                     property_list.append(doc)
             # But property id is present
@@ -82,7 +82,7 @@ class _Property(Resource):
                 # Get all the properties from the collection
                 property_details = get_document(self.property_collection, Keys.Property.property_id, property_id)
                 user_id = property_details.get(Keys.Property.property_created_by)
-                user_details = self.find_user_by_user_id(user_id)
+                user_details = self.find_user_by_user_id(user_id, users_list)
                 property_details[Keys.Property.property_created_by_details] = user_details
                 property_list = [
                     property_details
@@ -104,7 +104,7 @@ class _Property(Resource):
                 property_list = []
                 for doc in property_cursor:
                     user_id = doc.get(Keys.Property.property_created_by)
-                    user_details = self.find_user_by_user_id(user_id)
+                    user_details = self.find_user_by_user_id(user_id, users_list)
                     doc[Keys.Property.property_created_by_details] = user_details
                     property_list.append(doc)
             # And property id is also present
@@ -112,7 +112,7 @@ class _Property(Resource):
                 # Get the property details for the give property id which belongs to the given user id
                 property_details = get_document(self.property_collection, Keys.Property.property_id, property_id)
                 user_id = property_details.get(Keys.Property.property_created_by)
-                user_details = self.find_user_by_user_id(user_id)
+                user_details = self.find_user_by_user_id(user_id, users_list)
                 property_details[Keys.Property.property_created_by_details] = user_details
                 property_list = [
                     property_details
