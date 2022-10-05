@@ -34,7 +34,8 @@ class _Property(Resource):
     headers: user_id
     """
 
-    def find_user_by_user_id(self, user_id, users_list):
+    @staticmethod
+    def find_user_by_user_id(user_id, users_list):
         for user in users_list:
             if user.get(Keys.User.user_id) == user_id:
                 return user
