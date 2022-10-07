@@ -1,0 +1,19 @@
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - python/**
+concurrency:
+  group: ${{ github.ref }}
+  cancel-in-progress: true
+name: Python Projects
+jobs:
+  renter:
+    name: renter Code Checker
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: ricardochaves/python-lint@master
+        with:
+          python-root-list: "python/renter"
