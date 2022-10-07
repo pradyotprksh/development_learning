@@ -6,7 +6,6 @@ get, update, etc.
 
 This will help in making the api file cleaner and making the refactoring easy.
 """
-
 from flask_restful import Resource
 from flask import request
 from src.core.services.db import get_collection, get_document, get_documents, insert_document
