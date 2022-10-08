@@ -1,5 +1,7 @@
 package com.project.pradyotprakash.rental.domain.modal
 
+import com.project.pradyotprakash.rental.app.utils.UserType
+
 data class UserEntity(
     val _id: String,
     val user_id: String,
@@ -13,7 +15,16 @@ data class UserEntity(
     val profile_pic_url: String,
     val user_type: String,
     val is_all_details_available: Boolean,
+    val properties: List<PropertyEntity>? = null,
 ) {
     val fullName
         get() = "$first_name $last_name"
+
+    val userType: UserType
+        get() {
+            return when (UserType.values().find { it.name == user_type }) {
+                UserType.Owner -> UserType.Owner
+                else -> UserType.Renter
+            }
+        }
 }

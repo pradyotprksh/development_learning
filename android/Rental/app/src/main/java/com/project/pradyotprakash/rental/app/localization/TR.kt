@@ -83,5 +83,8 @@ object TR {
     var sendProposalToOwner = Translation.getString("sendProposalToOwner")
     var searchForRenter = Translation.getString("searchForRenter")
     var propertyListerDetails = Translation.getString("propertyListerDetails")
+    var edit = Translation.getString("edit")
+    var addToWishList = Translation.getString("addToWishList")
+    var searchForProperty = Translation.getString("searchForProperty")
     
 }

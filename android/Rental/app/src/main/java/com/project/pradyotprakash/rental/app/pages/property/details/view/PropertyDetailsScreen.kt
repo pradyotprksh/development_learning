@@ -1,6 +1,7 @@
 package com.project.pradyotprakash.rental.app.pages.property.details.view
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -80,13 +81,24 @@ fun PropertyDetailsScreen(
             },
             floatingActionButton = {
                 if (!loading.value) {
-                    FloatingActionButton(onClick = {}) {
-                        Text(
-                            text = if (propertyDetailsViewModel.isPropertyOwner(propertyDetails.value?.property_created_by)) TR.searchForRenter else TR.sendProposalToOwner,
-                            modifier = Modifier.padding(
-                                all = 15.dp
+                    Row {
+                        FloatingActionButton(onClick = { TODO() }) {
+                            Text(
+                                text = if (propertyDetailsViewModel.isPropertyOwner(propertyDetails.value?.property_created_by)) TR.searchForRenter else TR.sendProposalToOwner,
+                                modifier = Modifier.padding(
+                                    all = 15.dp
+                                )
                             )
-                        )
+                        }
+                        Spacer(modifier = Modifier.width(10.dp))
+                        FloatingActionButton(onClick = { TODO() }) {
+                            Text(
+                                text = if (propertyDetailsViewModel.isPropertyOwner(propertyDetails.value?.property_created_by)) TR.edit else TR.addToWishList,
+                                modifier = Modifier.padding(
+                                    all = 15.dp
+                                )
+                            )
+                        }
                     }
                 }
             },

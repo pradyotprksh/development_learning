@@ -21,6 +21,7 @@ fun NetworkImageComposable(
     cornerSize: Dp,
     contentScale: ContentScale = ContentScale.Crop,
     error: Int = R.drawable.error,
+    modifier: Modifier = Modifier,
 ) {
     val context = LocalContext.current
 
@@ -28,7 +29,7 @@ fun NetworkImageComposable(
         model = imageUrl,
         contentDescription = TR.onlineImageDescription,
         imageLoader = context.imageLoader,
-        modifier = Modifier
+        modifier = modifier
             .size(size)
             .clip(RoundedCornerShape(cornerSize)),
         contentScale = contentScale,
