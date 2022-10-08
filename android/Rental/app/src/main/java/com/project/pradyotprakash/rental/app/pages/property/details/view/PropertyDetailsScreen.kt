@@ -29,8 +29,11 @@ import com.project.pradyotprakash.rental.app.composables.HeaderComposable
 import com.project.pradyotprakash.rental.app.composables.NetworkImageComposable
 import com.project.pradyotprakash.rental.app.composables.PageStateComposable
 import com.project.pradyotprakash.rental.app.localization.TR
+import com.project.pradyotprakash.rental.app.pages.property.details.view.composables.MoneyDetailsComposable
 import com.project.pradyotprakash.rental.app.pages.property.details.view.composables.NoPropertyDetailsComposable
+import com.project.pradyotprakash.rental.app.pages.property.details.view.composables.OtherDetailsComposable
 import com.project.pradyotprakash.rental.app.pages.property.details.view.composables.PropertyDetailsComposable
+import com.project.pradyotprakash.rental.app.pages.property.details.view.composables.RentDetailsComposable
 import com.project.pradyotprakash.rental.app.pages.property.details.view.composables.UserDetailsComposable
 import com.project.pradyotprakash.rental.app.pages.property.details.viewmodel.PropertyDetailsViewModel
 
@@ -109,7 +112,12 @@ fun PropertyDetailsScreen(
 
                             property.property_created_by_details?.let { userDetails ->
                                 stickyHeader {
-                                    HeaderComposable(title = TR.ownerDetails)
+                                    HeaderComposable(title =
+                                        if (property.isRentalOwner)
+                                            TR.ownerDetails
+                                        else
+                                            TR.propertyListerDetails
+                                    )
                                 }
                                 item {
                                     UserDetailsComposable(userDetails = userDetails)
@@ -119,8 +127,15 @@ fun PropertyDetailsScreen(
                             stickyHeader {
                                 HeaderComposable(title = TR.rentDetails)
                             }
+                            item {
+                                RentDetailsComposable(property = property)
+                            }
+
                             stickyHeader {
                                 HeaderComposable(title = TR.moneyDetails)
+                            }
+                            item {
+                                MoneyDetailsComposable(property = property)
                             }
 
                             property.property_images?.let { images ->
@@ -145,8 +160,17 @@ fun PropertyDetailsScreen(
                                 }
                             }
 
-                            stickyHeader {
-                                HeaderComposable(title = TR.otherDetails)
+                            if (property.perks.isNotEmpty() || property.agreement_rules.isNotEmpty()) {
+                                stickyHeader {
+                                    HeaderComposable(title = TR.otherDetails)
+                                }
+
+                                item {
+                                    OtherDetailsComposable(
+                                        perks = property.perks,
+                                        agreement = property.agreement_rules
+                                    )
+                                }
                             }
                         }
                     }

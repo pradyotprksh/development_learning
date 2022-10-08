@@ -75,5 +75,6 @@
   "createdOnColon": "Created on: %s",
   "updatedOnColon": "Updated on: %s",
   "sendProposalToOwner": "Send proposal to owner",
-  "searchForRenter": "Search for renter"
+  "searchForRenter": "Search for renter",
+  "propertyListerDetails": "Property lister details"
 }

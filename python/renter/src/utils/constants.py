@@ -83,6 +83,7 @@ class Keys:
         is_all_details_available = "is_all_details_available"
         account_created_on = "account_created_on"
         account_updated_on = "account_updated_on"
+        properties = "properties"
 
     class Property:
         """A set of keys related to property section"""

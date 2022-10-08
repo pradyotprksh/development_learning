@@ -53,6 +53,15 @@ data class PropertyEntity(
             }
         }
 
+    val propertyLocation: String
+        get() {
+            return when (FieldId.values().find { it.id == where_it_is }) {
+                FieldId.Society -> TR.inSociety
+                FieldId.Apartment -> TR.inApartment
+                else -> TR.inHouse
+            }
+        }
+
     val furnishedType: String
         get() {
             return when (FieldId.values().find { it.id == furnished_type }) {

@@ -82,5 +82,6 @@ object TR {
     var updatedOnColon = Translation.getString("updatedOnColon")
     var sendProposalToOwner = Translation.getString("sendProposalToOwner")
     var searchForRenter = Translation.getString("searchForRenter")
+    var propertyListerDetails = Translation.getString("propertyListerDetails")
     
 }

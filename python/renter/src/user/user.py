@@ -9,7 +9,7 @@ This will help in making the api file cleaner and making the refactoring easy.
 from flask_restful import Resource
 from flask import request
 from src.core.modals import UserDetails
-from src.core.services.db import get_collection, get_document, insert_document, update_a_document
+from src.core.services.db import get_collection, get_document, insert_document, update_a_document, get_documents
 from src.utils.constants import Keys, MESSAGES_LIST, DEFAULT_ERROR_MESSAGE, USER_TYPE
 from src.utils.response_mapper import response_creator
 from src.utils.util_calls import is_email_address_valid, get_current_timestamp
@@ -37,6 +37,8 @@ class _User(Resource):
     def __init__(self):
         # Get the user collection to be used by the user resource
         self.user_collection = get_collection(Keys.User.collection_name)
+        # Get the property collection to be used by the property resource
+        self.property_collection = get_collection(Keys.Property.collection_name)
 
     def get(self):
         # headers
@@ -56,6 +58,13 @@ class _User(Resource):
                 code=404,
                 message=MESSAGES_LIST[Keys.Messages.user_not_found],
             )
+
+        # Get properties added by the user
+        property_cursor = get_documents(self.property_collection, Keys.Property.property_created_by, user_id)
+        property_list = []
+        for doc in property_cursor:
+            property_list.append(doc)
+        user[Keys.User.properties] = property_list
 
         return response_creator(
             code=200,
