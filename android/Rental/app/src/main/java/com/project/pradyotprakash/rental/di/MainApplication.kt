@@ -13,6 +13,9 @@ import javax.inject.Inject
  */
 @HiltAndroidApp
 class MainApplication : Application() {
+    // TODO: AdMob
+    // TODO: Location wise result for renter
+
     @Inject
     lateinit var firebaseAppCheck: FirebaseAppCheck
 
@@ -24,6 +27,11 @@ class MainApplication : Application() {
 
     private fun firebaseInitializations() {
         FirebaseApp.initializeApp(this)
+
+        setupFirebaseAppCheck()
+    }
+
+    private fun setupFirebaseAppCheck() {
         firebaseAppCheck.installAppCheckProviderFactory(
             PlayIntegrityAppCheckProviderFactory.getInstance(),
         )

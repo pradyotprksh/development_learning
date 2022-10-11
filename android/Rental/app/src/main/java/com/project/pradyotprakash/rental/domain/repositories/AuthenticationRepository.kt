@@ -2,12 +2,14 @@ package com.project.pradyotprakash.rental.domain.repositories
 
 import com.project.pradyotprakash.rental.app.utils.UserType
 import com.project.pradyotprakash.rental.core.response.parseResponse
-import com.project.pradyotprakash.rental.data.services.AuthenticationService
+import com.project.pradyotprakash.rental.core.services.CrashlyticsService
 import com.project.pradyotprakash.rental.core.services.FirebaseAuthenticationService
+import com.project.pradyotprakash.rental.data.services.AuthenticationService
 
 class AuthenticationRepository(
     private val firebaseAuthenticationService: FirebaseAuthenticationService,
     private val authenticationService: AuthenticationService,
+    private val crashlytics: CrashlyticsService,
 ) {
     fun getCurrentUser() = firebaseAuthenticationService.currentUser()
 
@@ -29,7 +31,7 @@ class AuthenticationRepository(
 
     suspend fun getCurrentUserDetails(userId: String, appCheckToken: String) =
         authenticationService.getUserDetails(userId = userId, appCheckToken = appCheckToken)
-            .parseResponse()
+            .parseResponse(crashlytics)
 
     suspend fun setCurrentUserDetails(
         userId: String,
@@ -55,7 +57,7 @@ class AuthenticationRepository(
             profilePicUrl = profilePicUrl,
             userType = userType.name,
             appCheckToken = appCheckToken,
-        ).parseResponse()
+        ).parseResponse(crashlytics)
 
     suspend fun updateCurrentUserDetails(
         userId: String,
@@ -83,5 +85,5 @@ class AuthenticationRepository(
             userType = userType.name,
             isAllDetailsAvailable = isAllDetailsAvailable,
             appCheckToken = appCheckToken,
-        ).parseResponse()
+        ).parseResponse(crashlytics)
 }

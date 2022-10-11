@@ -5,6 +5,8 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("dagger.hilt.android.plugin")
     id("com.google.gms.google-services")
+    id("com.google.firebase.crashlytics")
+    id("com.google.firebase.firebase-perf")
     kotlin("kapt")
 }
 
@@ -130,8 +132,10 @@ dependencies {
     // Firebase
     implementation(platform("com.google.firebase:firebase-bom:30.5.0"))
     implementation("com.google.firebase:firebase-analytics-ktx")
+    implementation("com.google.firebase:firebase-crashlytics-ktx")
     implementation("com.google.firebase:firebase-auth-ktx")
     implementation("com.google.firebase:firebase-firestore-ktx")
+    implementation("com.google.firebase:firebase-perf-ktx")
     implementation("com.google.firebase:firebase-storage-ktx")
     implementation("com.google.firebase:firebase-appcheck-playintegrity")
     implementation("com.google.firebase:firebase-appcheck-safetynet:16.0.2")
@@ -149,7 +153,7 @@ dependencies {
     implementation("com.google.accompanist:accompanist-permissions:0.25.0")
 
     // Coil
-    implementation("io.coil-kt:coil-compose:2.2.1")
+    implementation("io.coil-kt:coil-compose:2.2.2")
 
     // Time ago
     implementation("com.github.marlonlom:timeago:4.0.3")

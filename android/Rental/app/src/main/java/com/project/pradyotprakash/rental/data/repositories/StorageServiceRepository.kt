@@ -3,10 +3,13 @@ package com.project.pradyotprakash.rental.data.repositories
 import android.graphics.Bitmap
 import com.google.firebase.storage.StorageReference
 import com.project.pradyotprakash.rental.app.utils.toProgress
+import com.project.pradyotprakash.rental.core.services.CrashlyticsService
 import com.project.pradyotprakash.rental.core.services.StorageService
 import java.io.ByteArrayOutputStream
 
-class StorageServiceRepository : StorageService {
+class StorageServiceRepository(
+    private val crashlyticsService: CrashlyticsService,
+) : StorageService {
     override fun uploadFile(
         bitmap: Bitmap,
         storageReference: StorageReference,
@@ -33,6 +36,7 @@ class StorageServiceRepository : StorageService {
                 onProgress(progress)
             }
         } catch (e: Exception) {
+            crashlyticsService.submitCaughtException(e)
             onFailure(e)
         }
     }

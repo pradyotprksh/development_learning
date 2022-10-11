@@ -1,11 +1,13 @@
 package com.project.pradyotprakash.rental.domain.repositories
 
 import com.project.pradyotprakash.rental.core.response.parseResponse
-import com.project.pradyotprakash.rental.domain.modal.PropertyEntity
+import com.project.pradyotprakash.rental.core.services.CrashlyticsService
 import com.project.pradyotprakash.rental.data.services.PropertyService
+import com.project.pradyotprakash.rental.domain.modal.PropertyEntity
 
 class PropertyRepository(
     private val propertyService: PropertyService,
+    private val crashlytics: CrashlyticsService,
 ) {
     suspend fun getProperties(
         userId: String,
@@ -15,7 +17,7 @@ class PropertyRepository(
         appCheckToken = appCheckToken,
         userId = userId,
         propertyId = propertyId,
-    ).parseResponse()
+    ).parseResponse(crashlytics)
 
 
     suspend fun createProperty(
@@ -40,5 +42,5 @@ class PropertyRepository(
         perks = propertyEntity.perks,
         agreement_rules = propertyEntity.agreement_rules,
         propertyImages = propertyEntity.arrayTypeForPropertyImages,
-    ).parseResponse()
+    ).parseResponse(crashlytics)
 }

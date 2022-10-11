@@ -1,6 +1,7 @@
 package com.project.pradyotprakash.rental.domain.repositories
 
 import com.project.pradyotprakash.rental.core.response.parseResponse
+import com.project.pradyotprakash.rental.core.services.CrashlyticsService
 import com.project.pradyotprakash.rental.data.services.BasicService
 
 /**
@@ -8,13 +9,14 @@ import com.project.pradyotprakash.rental.data.services.BasicService
  */
 class BasicRepository(
     private val basicService: BasicService,
+    private val crashlytics: CrashlyticsService,
 ) {
     /**
      * Get the details
      */
     suspend fun getDetails(appCheckToken: String) = basicService.details(
         appCheckToken = appCheckToken,
-    ).parseResponse()
+    ).parseResponse(crashlytics)
 
 
     /**
@@ -24,7 +26,7 @@ class BasicRepository(
      */
     suspend fun getTermsAndCondition(userType: String, appCheckToken: String) =
         basicService.termsAndCondition(userType = userType, appCheckToken = appCheckToken)
-            .parseResponse()
+            .parseResponse(crashlytics)
 
     /**
      * Get if the email address is valid or not
@@ -34,5 +36,5 @@ class BasicRepository(
     suspend fun isEmailAddressValid(emailAddress: String, appCheckToken: String) = basicService.verifyEmailAddress(
         emailAddress = emailAddress,
         appCheckToken = appCheckToken
-    ).parseResponse()
+    ).parseResponse(crashlytics)
 }

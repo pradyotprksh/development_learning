@@ -35,14 +35,20 @@ object Api {
 
     @Singleton
     @Provides
+    fun providesChuckerInterceptor(
+        @ApplicationContext context: Context,
+    ) = ChuckerInterceptor.Builder(context = context).build()
+
+    @Singleton
+    @Provides
     fun providesOkHttpClient(
         httpLoggingInterceptor: HttpLoggingInterceptor,
-        @ApplicationContext context: Context
+        chuckerInterceptor: ChuckerInterceptor,
     ): OkHttpClient =
         OkHttpClient
             .Builder()
             .addInterceptor(httpLoggingInterceptor)
-            .addInterceptor(ChuckerInterceptor.Builder(context = context).build())
+            .addInterceptor(chuckerInterceptor)
             .callTimeout(60, TimeUnit.SECONDS)
             .connectTimeout(60, TimeUnit.SECONDS)
             .readTimeout(60, TimeUnit.SECONDS)

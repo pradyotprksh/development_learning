@@ -3,22 +3,26 @@ package com.project.pradyotprakash.rental.di
 import com.google.firebase.appcheck.FirebaseAppCheck
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.crashlytics.FirebaseCrashlytics
+import com.google.firebase.crashlytics.ktx.crashlytics
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.ktx.storage
+import com.project.pradyotprakash.rental.core.services.AppCheckService
+import com.project.pradyotprakash.rental.core.services.CrashlyticsService
+import com.project.pradyotprakash.rental.core.services.FirebaseAuthenticationService
+import com.project.pradyotprakash.rental.core.services.FirestoreService
+import com.project.pradyotprakash.rental.core.services.StorageService
 import com.project.pradyotprakash.rental.data.repositories.AppCheckRepository
+import com.project.pradyotprakash.rental.data.repositories.CrashlyticsRepository
 import com.project.pradyotprakash.rental.data.repositories.FirebaseAuthenticationDataRepository
 import com.project.pradyotprakash.rental.data.repositories.FirestoreServiceRepository
 import com.project.pradyotprakash.rental.data.repositories.StorageServiceRepository
-import com.project.pradyotprakash.rental.core.services.AppCheckService
 import com.project.pradyotprakash.rental.data.services.AuthenticationService
 import com.project.pradyotprakash.rental.data.services.BasicService
-import com.project.pradyotprakash.rental.core.services.FirebaseAuthenticationService
-import com.project.pradyotprakash.rental.core.services.FirestoreService
 import com.project.pradyotprakash.rental.data.services.PropertyService
-import com.project.pradyotprakash.rental.core.services.StorageService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -62,6 +66,10 @@ object Services {
 
     @Singleton
     @Provides
+    fun provideFirebaseCrashlytics(): FirebaseCrashlytics = Firebase.crashlytics
+
+    @Singleton
+    @Provides
     @Named(Constants.propertyStorageReference)
     fun providePropertyStorageReference(storage: FirebaseStorage): StorageReference =
         storage.getReference("${Constants.propertyStorageReference}/")
@@ -72,13 +80,24 @@ object Services {
 
     @Singleton
     @Provides
-    fun provideAppCheckService(firebaseAppCheck: FirebaseAppCheck): AppCheckService =
-        AppCheckRepository(firebaseAppCheck)
+    fun provideAppCheckService(
+        firebaseAppCheck: FirebaseAppCheck,
+        crashlytics: CrashlyticsService
+    ): AppCheckService =
+        AppCheckRepository(firebaseAppCheck, crashlytics)
 
     @Singleton
     @Provides
-    fun provideDataAuthenticationService(firebaseAuth: FirebaseAuth): FirebaseAuthenticationService =
-        FirebaseAuthenticationDataRepository(firebaseAuth)
+    fun provideCrashlyticsService(crashlytics: FirebaseCrashlytics): CrashlyticsService =
+        CrashlyticsRepository(crashlytics)
+
+    @Singleton
+    @Provides
+    fun provideDataAuthenticationService(
+        firebaseAuth: FirebaseAuth,
+        crashlytics: CrashlyticsService
+    ): FirebaseAuthenticationService =
+        FirebaseAuthenticationDataRepository(firebaseAuth, crashlytics)
 
     @Singleton
     @Provides
@@ -87,5 +106,6 @@ object Services {
 
     @Singleton
     @Provides
-    fun provideStorageService(): StorageService = StorageServiceRepository()
+    fun provideStorageService(crashlytics: CrashlyticsService): StorageService =
+        StorageServiceRepository(crashlytics)
 }

@@ -1,12 +1,13 @@
 package com.project.pradyotprakash.rental.di
 
+import com.project.pradyotprakash.rental.core.services.CrashlyticsService
+import com.project.pradyotprakash.rental.core.services.FirebaseAuthenticationService
+import com.project.pradyotprakash.rental.data.services.AuthenticationService
+import com.project.pradyotprakash.rental.data.services.BasicService
+import com.project.pradyotprakash.rental.data.services.PropertyService
 import com.project.pradyotprakash.rental.domain.repositories.AuthenticationRepository
 import com.project.pradyotprakash.rental.domain.repositories.BasicRepository
 import com.project.pradyotprakash.rental.domain.repositories.PropertyRepository
-import com.project.pradyotprakash.rental.data.services.AuthenticationService
-import com.project.pradyotprakash.rental.data.services.BasicService
-import com.project.pradyotprakash.rental.core.services.FirebaseAuthenticationService
-import com.project.pradyotprakash.rental.data.services.PropertyService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -21,18 +22,27 @@ import javax.inject.Singleton
 object Repositories {
     @Singleton
     @Provides
-    fun providesBasicRepository(basicService: BasicService) = BasicRepository(basicService)
+    fun providesBasicRepository(
+        basicService: BasicService,
+        crashlyticsService: CrashlyticsService
+    ) = BasicRepository(basicService, crashlyticsService)
 
     @Singleton
     @Provides
     fun providesAuthenticationRepository(
         firebaseAuthenticationService: FirebaseAuthenticationService,
-        authenticationService: AuthenticationService
-    ) = AuthenticationRepository(firebaseAuthenticationService, authenticationService)
+        authenticationService: AuthenticationService,
+        crashlyticsService: CrashlyticsService,
+    ) = AuthenticationRepository(
+        firebaseAuthenticationService,
+        authenticationService,
+        crashlyticsService
+    )
 
     @Singleton
     @Provides
     fun providesPropertyRepository(
         propertyService: PropertyService,
-    ) = PropertyRepository(propertyService)
+        crashlyticsService: CrashlyticsService
+    ) = PropertyRepository(propertyService, crashlyticsService)
 }
