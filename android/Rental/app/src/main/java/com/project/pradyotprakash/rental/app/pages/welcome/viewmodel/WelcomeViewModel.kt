@@ -10,6 +10,7 @@ import com.project.pradyotprakash.rental.core.navigation.Routes
 import com.project.pradyotprakash.rental.core.navigation.path
 import com.project.pradyotprakash.rental.core.response.RenterResponse
 import com.project.pradyotprakash.rental.core.services.AppCheckService
+import com.project.pradyotprakash.rental.core.utils.Constants
 import com.project.pradyotprakash.rental.domain.usecase.AuthenticationUseCase
 import com.project.pradyotprakash.rental.domain.usecase.BasicUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -64,8 +65,8 @@ class WelcomeViewModel @Inject constructor(
                         when (authType) {
                             AuthType.Email -> {
                                 // TODO: Give option to create user as well
-                                val email = "pradyot@gmail.com"
-                                val password = "pradyot@gmail.com"
+                                val email = if (Constants.currentUserType == UserType.Owner) "pradyot@gmail.com" else "pradyotRenter@gmail.com"
+                                val password = if (Constants.currentUserType == UserType.Owner) "pradyot@gmail.com" else "pradyotRenter@gmail.com"
                                 basicUseCase.isEmailAddressValid(
                                     emailAddress = email,
                                     appCheckToken = appCheckToken.data
@@ -83,7 +84,7 @@ class WelcomeViewModel @Inject constructor(
                                                     )
                                                     is RenterResponse.Loading -> _loading.value =
                                                         true
-                                                    is RenterResponse.Success<*> -> goToHomeScreen()
+                                                    is RenterResponse.Success<*> -> checkForUserDetails()
                                                     RenterResponse.Idle -> _loading.value = false
                                                 }
                                             }
@@ -95,12 +96,66 @@ class WelcomeViewModel @Inject constructor(
                                     }
                                 }
                             }
-                            AuthType.Phone -> {}
-                            AuthType.Google -> {}
+                            AuthType.Phone -> TODO()
+                            AuthType.Google -> TODO()
                         }
                     }
                 }
             }
+        }
+    }
+
+    private suspend fun checkForUserDetails() {
+        appCheckService.getAppCheckToken().collect { appCheckToken ->
+            when (appCheckToken) {
+                is RenterResponse.Error -> updateErrorState(appCheckToken.exception.message)
+                is RenterResponse.Idle -> _loading.value = false
+                is RenterResponse.Loading -> _loading.value = true
+                is RenterResponse.Success -> {
+                    authenticationUseCase.getCurrentUserId()?.let { userId ->
+                        authenticationUseCase.getCurrentUserDetails(
+                            appCheckToken = appCheckToken.data,
+                            userId = userId,
+                        ).collect { userDetails ->
+                            when (userDetails) {
+                                is RenterResponse.Error -> {
+                                    if (userDetails.exception.isNotFound()) {
+                                        goToInformationScreen(
+                                            Constants.currentUserType?.name ?: "",
+                                            true,
+                                        )
+                                    } else {
+                                        updateErrorState(
+                                            userDetails.exception.message
+                                        )
+                                    }
+                                }
+                                is RenterResponse.Idle -> _loading.value = false
+                                is RenterResponse.Loading -> _loading.value = true
+                                is RenterResponse.Success -> {
+                                    if (userDetails.data.data?.is_all_details_available == false) {
+                                        goToInformationScreen(
+                                            Constants.currentUserType?.name ?: "",
+                                            false,
+                                        )
+                                    } else {
+                                        goToHomeScreen()
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * Go to the get information details screen
+     */
+    private fun goToInformationScreen(userType: String, firstTimeAddingDetails: Boolean) {
+        navigator.navigate {
+            it.navigate("${Routes.Information.route}${userType}/${false}/${false}/$firstTimeAddingDetails")
         }
     }
 

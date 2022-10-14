@@ -79,5 +79,7 @@
   "propertyListerDetails": "Property lister details",
   "edit": "Edit",
   "addToWishList": "Add To Wish List",
-  "searchForProperty": "Search For Property"
+  "searchForProperty": "Search For Property",
+  "yourListedProperties": "Your Listed Properties",
+  "pleaseTryAgain": "Please try again. Something went wrong from our end."
 }

@@ -35,6 +35,7 @@ enum class Routes(
             InformationScreenArguments.userType,
             InformationScreenArguments.onlyPreview,
             InformationScreenArguments.allowBackOption,
+            InformationScreenArguments.firstTimeAddingDetails,
         )
     ),
     Property("property/"),

@@ -86,5 +86,7 @@ object TR {
     var edit = Translation.getString("edit")
     var addToWishList = Translation.getString("addToWishList")
     var searchForProperty = Translation.getString("searchForProperty")
+    var yourListedProperties = Translation.getString("yourListedProperties")
+    var pleaseTryAgain = Translation.getString("pleaseTryAgain")
     
 }

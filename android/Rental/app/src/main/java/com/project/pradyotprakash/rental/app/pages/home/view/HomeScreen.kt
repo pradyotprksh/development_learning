@@ -89,21 +89,23 @@ fun HomeScreen(homeViewModel: HomeViewModel) {
                 )
             },
             floatingActionButton = {
-                FloatingActionButton(
-                    onClick = {
-                        if (userDetails?.userType == UserType.Owner) {
-                            homeViewModel.goToAddPropertyScreen()
-                        } else {
-                            TODO()
+                userDetails?.let {
+                    FloatingActionButton(
+                        onClick = {
+                            if (userDetails.userType == UserType.Owner) {
+                                homeViewModel.goToAddPropertyScreen()
+                            } else {
+                                TODO()
+                            }
                         }
-                    }
-                ) {
-                    Text(
-                        text = if (userDetails?.userType == UserType.Owner) TR.addAProperty else TR.searchForProperty,
-                        modifier = Modifier.padding(
-                            all = 15.dp
+                    ) {
+                        Text(
+                            text = if (userDetails.userType == UserType.Owner) TR.addAProperty else TR.searchForProperty,
+                            modifier = Modifier.padding(
+                                all = 15.dp
+                            )
                         )
-                    )
+                    }
                 }
             }
         ) { paddingValues ->

@@ -158,6 +158,9 @@ class MainActivity : ComponentActivity() {
                             val allowBackOption = it.arguments?.getString(
                                 InformationScreenArguments.allowBackOption
                             )?.toBoolean()
+                            val firstTimeAddingDetails = it.arguments?.getString(
+                                InformationScreenArguments.firstTimeAddingDetails
+                            )?.toBoolean()
 
                             userType?.let { type ->
                                 if (type.isEmpty()) {
@@ -165,15 +168,20 @@ class MainActivity : ComponentActivity() {
                                 } else {
                                     onlyPreview?.let {
                                         allowBackOption?.let {
-                                            InformationScreen(
-                                                hiltViewModel<InformationViewModel>().also { viewModel ->
-                                                    viewModel.start(
-                                                        UserType.valueOf(userType),
-                                                        onlyPreview,
-                                                        allowBackOption,
-                                                    )
-                                                }
-                                            )
+                                            firstTimeAddingDetails?.let {
+                                                InformationScreen(
+                                                    hiltViewModel<InformationViewModel>().also { viewModel ->
+                                                        viewModel.start(
+                                                            UserType.valueOf(userType),
+                                                            onlyPreview,
+                                                            allowBackOption,
+                                                            firstTimeAddingDetails,
+                                                        )
+                                                    }
+                                                )
+                                            } ?: kotlin.run {
+                                                GoToErrorScreen()
+                                            }
                                         } ?: kotlin.run {
                                             GoToErrorScreen()
                                         }

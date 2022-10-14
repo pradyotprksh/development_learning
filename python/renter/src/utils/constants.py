@@ -7,8 +7,12 @@ This will help in not hard coding the values needed at many places.
 """
 # Project name for Firebase
 PROJECT_NAME = "Rental"
+# Renter user type
+RENTER_USER_TYPE = "Renter"
+# Owner user type
+OWNER_USER_TYPE = "Owner"
 # Type of the user
-USER_TYPE = ["Owner", "Renter"]
+USER_TYPE = [RENTER_USER_TYPE, OWNER_USER_TYPE]
 # Path for the file which contains the mongo db
 MONGO_DB_DETAILS_FILE = "./data/confidential/mongo_db_details"
 # Path for information HTML file

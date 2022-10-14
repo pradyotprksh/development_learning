@@ -21,8 +21,8 @@ import com.project.pradyotprakash.rental.core.models.FieldStates
 import com.project.pradyotprakash.rental.core.models.InputType
 import com.project.pradyotprakash.rental.core.navigation.Navigator
 import com.project.pradyotprakash.rental.core.response.RenterResponse
-import com.project.pradyotprakash.rental.domain.modal.UserEntity
 import com.project.pradyotprakash.rental.core.services.AppCheckService
+import com.project.pradyotprakash.rental.domain.modal.UserEntity
 import com.project.pradyotprakash.rental.domain.usecase.AuthenticationUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -41,6 +41,7 @@ class InformationViewModel @Inject constructor(
     lateinit var userType: UserType
     private var onlyPreview: Boolean = false
     var allowBackOption: Boolean = false
+    var firstTimeAddingDetails: Boolean = false
 
     private val _fields = MutableLiveData(emptyList<FieldStates>())
     val fields: LiveData<List<FieldStates>>
@@ -97,112 +98,110 @@ class InformationViewModel @Inject constructor(
     }
 
     private fun updateFieldDetails(userDetails: UserEntity?) {
-        userDetails?.let {
-            userType = UserType.valueOf(userDetails.user_type)
-            val fields = listOf(
-                FieldStates(
-                    id = FieldId.FirstName.id,
-                    value = MutableLiveData(userDetails.first_name),
-                    label = TR.firstName,
-                    keyboardOptions = KeyboardOptions(
-                        capitalization = KeyboardCapitalization.Words,
-                        autoCorrect = false,
-                        keyboardType = KeyboardType.Text,
-                        imeAction = ImeAction.Next,
-                    ),
-                    readOnly = onlyPreview,
-                    composeType = ComposeType.OutlinedTextField,
+        userType = UserType.valueOf(userDetails?.user_type ?: "")
+        val fields = listOf(
+            FieldStates(
+                id = FieldId.FirstName.id,
+                value = MutableLiveData(userDetails?.first_name ?: ""),
+                label = TR.firstName,
+                keyboardOptions = KeyboardOptions(
+                    capitalization = KeyboardCapitalization.Words,
+                    autoCorrect = false,
+                    keyboardType = KeyboardType.Text,
+                    imeAction = ImeAction.Next,
                 ),
-                FieldStates(
-                    id = FieldId.LastName.id,
-                    value = MutableLiveData(userDetails.last_name),
-                    label = TR.lastName,
-                    keyboardOptions = KeyboardOptions(
-                        capitalization = KeyboardCapitalization.Words,
-                        autoCorrect = false,
-                        keyboardType = KeyboardType.Text,
-                        imeAction = ImeAction.Next,
-                    ),
-                    readOnly = onlyPreview,
-                    composeType = ComposeType.OutlinedTextField,
+                readOnly = onlyPreview,
+                composeType = ComposeType.OutlinedTextField,
+            ),
+            FieldStates(
+                id = FieldId.LastName.id,
+                value = MutableLiveData(userDetails?.last_name ?: ""),
+                label = TR.lastName,
+                keyboardOptions = KeyboardOptions(
+                    capitalization = KeyboardCapitalization.Words,
+                    autoCorrect = false,
+                    keyboardType = KeyboardType.Text,
+                    imeAction = ImeAction.Next,
                 ),
-                FieldStates(
-                    id = FieldId.DOB.id,
-                    value = MutableLiveData(userDetails.date_of_birth),
-                    label = TR.dobWithHelp,
-                    inputType = InputType.Date,
-                    keyboardOptions = KeyboardOptions(
-                        autoCorrect = false,
-                        keyboardType = KeyboardType.Number,
-                        imeAction = ImeAction.Next,
-                    ),
-                    visualTransformation = DateTransformation(),
-                    maxChar = 8,
-                    readOnly = onlyPreview,
-                    composeType = ComposeType.OutlinedTextField,
+                readOnly = onlyPreview,
+                composeType = ComposeType.OutlinedTextField,
+            ),
+            FieldStates(
+                id = FieldId.DOB.id,
+                value = MutableLiveData(userDetails?.date_of_birth ?: ""),
+                label = TR.dobWithHelp,
+                inputType = InputType.Date,
+                keyboardOptions = KeyboardOptions(
+                    autoCorrect = false,
+                    keyboardType = KeyboardType.Number,
+                    imeAction = ImeAction.Next,
                 ),
-                FieldStates(
-                    id = FieldId.EmailAddress.id,
-                    value = MutableLiveData(userDetails.email_address),
-                    label = TR.emailAddress,
-                    inputType = InputType.Email,
-                    readOnly = true,
-                    keyboardOptions = KeyboardOptions(
-                        autoCorrect = false,
-                        keyboardType = KeyboardType.Email,
-                        imeAction = ImeAction.Next,
-                    ),
-                    composeType = ComposeType.OutlinedTextField,
+                visualTransformation = DateTransformation(),
+                maxChar = 8,
+                readOnly = onlyPreview,
+                composeType = ComposeType.OutlinedTextField,
+            ),
+            FieldStates(
+                id = FieldId.EmailAddress.id,
+                value = MutableLiveData(userDetails?.email_address ?: ""),
+                label = TR.emailAddress,
+                inputType = InputType.Email,
+                readOnly = true,
+                keyboardOptions = KeyboardOptions(
+                    autoCorrect = false,
+                    keyboardType = KeyboardType.Email,
+                    imeAction = ImeAction.Next,
                 ),
-                FieldStates(
-                    id = FieldId.Profession.id,
-                    value = MutableLiveData(userDetails.profession),
-                    label = TR.profession,
-                    keyboardOptions = KeyboardOptions(
-                        capitalization = KeyboardCapitalization.Words,
-                        autoCorrect = false,
-                        keyboardType = KeyboardType.Text,
-                        imeAction = ImeAction.Next,
-                    ),
-                    readOnly = onlyPreview,
-                    composeType = ComposeType.OutlinedTextField,
+                composeType = ComposeType.OutlinedTextField,
+            ),
+            FieldStates(
+                id = FieldId.Profession.id,
+                value = MutableLiveData(userDetails?.profession ?: ""),
+                label = TR.profession,
+                keyboardOptions = KeyboardOptions(
+                    capitalization = KeyboardCapitalization.Words,
+                    autoCorrect = false,
+                    keyboardType = KeyboardType.Text,
+                    imeAction = ImeAction.Next,
                 ),
-                FieldStates(
-                    id = FieldId.Address.id,
-                    value = MutableLiveData(userDetails.permanent_address),
-                    label = TR.permanentAddress,
-                    keyboardOptions = KeyboardOptions(
-                        capitalization = KeyboardCapitalization.Words,
-                        autoCorrect = false,
-                        keyboardType = KeyboardType.Text,
-                        imeAction = ImeAction.Next,
-                    ),
-                    readOnly = onlyPreview,
-                    composeType = ComposeType.OutlinedTextField,
+                readOnly = onlyPreview,
+                composeType = ComposeType.OutlinedTextField,
+            ),
+            FieldStates(
+                id = FieldId.Address.id,
+                value = MutableLiveData(userDetails?.permanent_address ?: ""),
+                label = TR.permanentAddress,
+                keyboardOptions = KeyboardOptions(
+                    capitalization = KeyboardCapitalization.Words,
+                    autoCorrect = false,
+                    keyboardType = KeyboardType.Text,
+                    imeAction = ImeAction.Next,
                 ),
-                FieldStates(
-                    id = FieldId.PhoneNumber.id,
-                    value = MutableLiveData(userDetails.phone_number),
-                    label = TR.phoneNumber,
-                    inputType = InputType.Phone,
-                    keyboardOptions = KeyboardOptions(
-                        capitalization = KeyboardCapitalization.Words,
-                        autoCorrect = false,
-                        keyboardType = KeyboardType.Phone,
-                        imeAction = ImeAction.Done,
-                    ),
-                    readOnly = onlyPreview,
-                    keyboardActions = KeyboardActions(
-                        onDone = {
-                            updateUserDetails()
-                        }
-                    ),
-                    composeType = ComposeType.OutlinedTextField,
+                readOnly = onlyPreview,
+                composeType = ComposeType.OutlinedTextField,
+            ),
+            FieldStates(
+                id = FieldId.PhoneNumber.id,
+                value = MutableLiveData(userDetails?.phone_number ?: ""),
+                label = TR.phoneNumber,
+                inputType = InputType.Phone,
+                keyboardOptions = KeyboardOptions(
+                    capitalization = KeyboardCapitalization.Words,
+                    autoCorrect = false,
+                    keyboardType = KeyboardType.Phone,
+                    imeAction = ImeAction.Done,
                 ),
-            )
+                readOnly = onlyPreview,
+                keyboardActions = KeyboardActions(
+                    onDone = {
+                        updateUserDetails()
+                    }
+                ),
+                composeType = ComposeType.OutlinedTextField,
+            ),
+        )
 
-            _fields.value = fields
-        }
+        _fields.value = fields
     }
 
     fun updateUserDetails() {
@@ -300,10 +299,11 @@ class InformationViewModel @Inject constructor(
     /**
      * Set the initial value of the view model
      */
-    fun start(userType: UserType, onlyPreview: Boolean, allowBackOption: Boolean) {
+    fun start(userType: UserType, onlyPreview: Boolean, allowBackOption: Boolean, firstTimeAddingDetails: Boolean) {
         this.userType = userType
         this.onlyPreview = onlyPreview
         this.allowBackOption = allowBackOption
+        this.firstTimeAddingDetails = firstTimeAddingDetails
     }
 
     fun updateFieldState(value: String = "", index: Int) {

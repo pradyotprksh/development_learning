@@ -22,6 +22,7 @@ object InformationScreenArguments {
     const val userType = "userType"
     const val onlyPreview = "onlyPreview"
     const val allowBackOption = "allowBackOption"
+    const val firstTimeAddingDetails = "firstTimeAddingDetails"
 }
 
 object ErrorScreenArguments {

@@ -10,7 +10,7 @@ from flask_restful import Resource
 from flask import request
 from src.core.modals import UserDetails
 from src.core.services.db import get_collection, get_document, insert_document, update_a_document, get_documents
-from src.utils.constants import Keys, MESSAGES_LIST, DEFAULT_ERROR_MESSAGE, USER_TYPE
+from src.utils.constants import Keys, MESSAGES_LIST, DEFAULT_ERROR_MESSAGE, USER_TYPE, OWNER_USER_TYPE
 from src.utils.response_mapper import response_creator
 from src.utils.util_calls import is_email_address_valid, get_current_timestamp
 
@@ -59,12 +59,15 @@ class _User(Resource):
                 message=MESSAGES_LIST[Keys.Messages.user_not_found],
             )
 
-        # Get properties added by the user
-        property_cursor = get_documents(self.property_collection, Keys.Property.property_created_by, user_id)
-        property_list = []
-        for doc in property_cursor:
-            property_list.append(doc)
-        user[Keys.User.properties] = property_list
+        if user.get(Keys.User.user_type) == OWNER_USER_TYPE:
+            # Get properties added by the user
+            property_cursor = get_documents(self.property_collection, Keys.Property.property_created_by, user_id)
+            property_list = []
+            for doc in property_cursor:
+                property_list.append(doc)
+            user[Keys.User.properties] = property_list
+        else:
+            pass
 
         return response_creator(
             code=200,

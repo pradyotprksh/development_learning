@@ -32,7 +32,13 @@ sealed class RenterResponse<out R> {
 /**
  * An error/exception for the Renter application
  */
-class RenterException(
+data class RenterException(
     val code: Int? = null,
-    message: String = "",
-) : Exception(message)
+    override val message: String = "",
+) : Exception(message) {
+    fun isNotFound() = code == 404
+
+    fun isUnauthorizedRequest() = code == 401
+
+    fun isInvalidRequest() = code == 409
+}

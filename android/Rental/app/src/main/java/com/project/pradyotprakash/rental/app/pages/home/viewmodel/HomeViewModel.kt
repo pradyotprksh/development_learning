@@ -4,16 +4,17 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.project.pradyotprakash.rental.app.utils.UserType
 import com.project.pradyotprakash.rental.core.auth.AuthState
 import com.project.pradyotprakash.rental.core.auth.AuthStateListener
 import com.project.pradyotprakash.rental.core.navigation.Navigator
 import com.project.pradyotprakash.rental.core.navigation.Routes
 import com.project.pradyotprakash.rental.core.response.RenterResponse
+import com.project.pradyotprakash.rental.core.services.AppCheckService
+import com.project.pradyotprakash.rental.core.utils.Constants
 import com.project.pradyotprakash.rental.domain.modal.PropertyEntity
 import com.project.pradyotprakash.rental.domain.modal.UserEntity
-import com.project.pradyotprakash.rental.core.services.AppCheckService
 import com.project.pradyotprakash.rental.domain.usecase.AuthenticationUseCase
-import com.project.pradyotprakash.rental.domain.usecase.PropertyUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -24,7 +25,6 @@ class HomeViewModel @Inject constructor(
     private val authenticationUseCase: AuthenticationUseCase,
     private val authStateListener: AuthStateListener,
     private val appCheckService: AppCheckService,
-    private val propertyUseCase: PropertyUseCase,
 ) : ViewModel() {
     private val _loading = MutableLiveData(false)
     val loading: LiveData<Boolean>
@@ -57,15 +57,32 @@ class HomeViewModel @Inject constructor(
                             ).collect {
                                 when (it) {
                                     is RenterResponse.Error -> {
-                                        updateErrorState(it.exception.localizedMessage)
+                                        if (it.exception.isNotFound()) {
+                                            // TODO change current user type to be saved in local storage
+                                            goToInformationScreen(
+                                                Constants.currentUserType?.name ?: "",
+                                                true,
+                                            )
+                                        } else {
+                                            updateErrorState(it.exception.localizedMessage)
+                                        }
                                     }
                                     is RenterResponse.Loading -> _loading.value = true
                                     is RenterResponse.Success -> {
                                         it.data.data?.let { userDetails ->
                                             authStateListener.updateUserDetails(userDetails)
-                                            fetchAllProperties()
+
+                                            if (userDetails.user_type == UserType.Owner.name) {
+                                                _properties.value = userDetails.properties ?: emptyList()
+                                            } else {
+                                               TODO()
+                                            }
+
                                             if (!userDetails.is_all_details_available) {
-                                                goToInformationScreen(userDetails.user_type)
+                                                goToInformationScreen(
+                                                    userDetails.user_type,
+                                                    false,
+                                                )
                                             }
                                         } ?: kotlin.run {
                                             authStateListener.stateChange(AuthState.Unauthenticated)
@@ -81,37 +98,12 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    private fun fetchAllProperties() {
-        viewModelScope.launch {
-            appCheckService.getAppCheckToken().collect { appCheckToken ->
-                when (appCheckToken) {
-                    is RenterResponse.Error -> updateErrorState(appCheckToken.exception.message)
-                    is RenterResponse.Idle -> _loading.value = false
-                    is RenterResponse.Loading -> _loading.value = true
-                    is RenterResponse.Success -> {
-                        propertyUseCase.getProperties(
-                            appCheckToken = appCheckToken.data,
-                        ).collect {
-                            when (it) {
-                                is RenterResponse.Error -> updateErrorState(it.exception.message)
-                                is RenterResponse.Idle -> _loading.value = false
-                                is RenterResponse.Loading -> _loading.value = true
-                                is RenterResponse.Success -> _properties.value =
-                                    it.data.data ?: emptyList()
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-
     /**
      * Go to the get information details screen
      */
-    private fun goToInformationScreen(userType: String) {
+    private fun goToInformationScreen(userType: String, firstTimeAddingDetails: Boolean) {
         navigator.navigate {
-            it.navigate("${Routes.Information.route}${userType}/${false}/${false}")
+            it.navigate("${Routes.Information.route}${userType}/${false}/${false}/$firstTimeAddingDetails")
         }
     }
 
