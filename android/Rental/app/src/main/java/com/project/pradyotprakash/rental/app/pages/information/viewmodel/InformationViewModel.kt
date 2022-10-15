@@ -9,6 +9,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.firebase.storage.StorageReference
 import com.project.pradyotprakash.rental.app.localization.TR
 import com.project.pradyotprakash.rental.app.utils.DateTransformation
 import com.project.pradyotprakash.rental.app.utils.UserType
@@ -23,11 +24,13 @@ import com.project.pradyotprakash.rental.core.navigation.Navigator
 import com.project.pradyotprakash.rental.core.response.RenterResponse
 import com.project.pradyotprakash.rental.core.services.AppCheckService
 import com.project.pradyotprakash.rental.device.services.UserLocalServices
+import com.project.pradyotprakash.rental.di.Constants
 import com.project.pradyotprakash.rental.domain.modal.UserEntity
 import com.project.pradyotprakash.rental.domain.usecase.AuthenticationUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import javax.inject.Named
 
 /**
  * A view model class for the information screen
@@ -39,6 +42,7 @@ class InformationViewModel @Inject constructor(
     private val authStateListener: AuthStateListener,
     private val appCheckService: AppCheckService,
     private val userLocalServices: UserLocalServices,
+    @Named(Constants.userStorageReference) private val userStorageReference: StorageReference,
 ) : ViewModel() {
     private var onlyPreview: Boolean = false
     var allowBackOption: Boolean = false
@@ -104,6 +108,12 @@ class InformationViewModel @Inject constructor(
         authenticationUseCase.getCurrentUser()?.email ?: ""
 
         val fields = mutableListOf(
+            FieldStates(
+                id = FieldId.UserImagePicker.id,
+                composeType = ComposeType.SingleImagePicker,
+                label = TR.userProfileImage,
+                storageReference = userStorageReference,
+            ),
             FieldStates(
                 id = FieldId.FirstName.id,
                 value = MutableLiveData(userDetails?.first_name ?: ""),
@@ -238,8 +248,7 @@ class InformationViewModel @Inject constructor(
                 fields.find { it.id == FieldId.Address.id }?.value?.value
             val emailAddress =
                 fields.find { it.id == FieldId.EmailAddress.id }?.value?.value
-            // TODO Implement profile pic for user, can use the feature of property one
-            val profilePicUrl = ""
+            val profilePicUrl = fields.find { it.id == FieldId.UserImagePicker.id }?.values?.value?.firstOrNull()
 
             viewModelScope.launch {
                 appCheckService.getAppCheckToken().collect { appCheckToken ->
@@ -258,6 +267,7 @@ class InformationViewModel @Inject constructor(
                                 permanentAddress,
                                 emailAddress,
                                 userType,
+                                profilePicUrl,
                                 onNull = {
                                     updateErrorState(TR.dataMissing)
                                 },
@@ -272,7 +282,7 @@ class InformationViewModel @Inject constructor(
                                         permanentAddress!!,
                                         emailAddress!!,
                                         userType!!,
-                                        profilePicUrl,
+                                        profilePicUrl!!,
                                     )
                                 }
                             )
@@ -325,6 +335,7 @@ class InformationViewModel @Inject constructor(
                         emailAddress = emailAddress,
                         isAllDetailsAvailable = true,
                         appCheckToken = appCheckToken,
+                        profilePicUrl = profilePicUrl,
                     )
                 }.collect {
                     when (it) {

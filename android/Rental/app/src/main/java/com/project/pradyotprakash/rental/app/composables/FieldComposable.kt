@@ -21,7 +21,6 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.project.pradyotprakash.rental.app.composables.imagePicker.ImagePicker
 import com.project.pradyotprakash.rental.app.composables.imagePicker.ImagePickerType
 import com.project.pradyotprakash.rental.core.models.ComposeType
@@ -141,8 +140,19 @@ fun FieldComposable(
                             .fillMaxWidth()
                     ) {
                         ImagePicker(
-                            imagePickerViewModel = hiltViewModel(),
                             imagePickerType = ImagePickerType.MultipleImagePicker,
+                            field = field,
+                        )
+                    }
+                }
+                ComposeType.SingleImagePicker -> {
+                    Card(
+                        modifier = Modifier
+                            .padding(horizontal = 15.dp)
+                            .fillMaxWidth()
+                    ) {
+                        ImagePicker(
+                            imagePickerType = ImagePickerType.SingleImagePicker,
                             field = field,
                         )
                     }

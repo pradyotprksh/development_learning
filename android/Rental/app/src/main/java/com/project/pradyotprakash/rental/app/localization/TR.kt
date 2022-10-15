@@ -91,5 +91,6 @@ object TR {
     var localStorageIssue = Translation.getString("localStorageIssue")
     var pleaseTellUsYourUserType = Translation.getString("pleaseTellUsYourUserType")
     var noPropertiesAddedByYou = Translation.getString("noPropertiesAddedByYou")
+    var userProfileImage = Translation.getString("userProfileImage")
     
 }

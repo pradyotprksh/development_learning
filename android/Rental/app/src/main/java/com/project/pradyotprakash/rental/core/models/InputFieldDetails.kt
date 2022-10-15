@@ -38,6 +38,7 @@ enum class FieldId(val id: String) {
     Profession("profession"),
     PhoneNumber("phone_number"),
     PropertyImagePicker("property_image_picker"),
+    UserImagePicker("user_image_picker"),
     UserType("user_type"),
     Owner("Owner"),
     Renter("Renter")
@@ -57,6 +58,7 @@ enum class ComposeType {
     RadioButton,
     Switch,
     MultipleImagePicker,
+    SingleImagePicker,
 }
 
 data class FieldStates(

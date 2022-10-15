@@ -122,6 +122,12 @@ object FirebaseServices {
         @Named(Constants.propertyStorageReference)
         fun providePropertyStorageReference(storage: FirebaseStorage): StorageReference =
             storage.getReference("${Constants.propertyStorageReference}/")
+
+        @Singleton
+        @Provides
+        @Named(Constants.userStorageReference)
+        fun provideUserStorageReference(storage: FirebaseStorage): StorageReference =
+            storage.getReference("${Constants.userStorageReference}/")
     }
 
     @Module

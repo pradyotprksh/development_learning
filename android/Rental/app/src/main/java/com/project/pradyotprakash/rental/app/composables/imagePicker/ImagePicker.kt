@@ -20,6 +20,7 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.project.pradyotprakash.rental.app.composables.AnimatedProgressBar
 import com.project.pradyotprakash.rental.app.composables.NetworkImageComposable
@@ -30,7 +31,7 @@ import com.project.pradyotprakash.rental.core.permissions.PermissionHandler
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun ImagePicker(
-    imagePickerViewModel: ImagePickerViewModel,
+    imagePickerViewModel: ImagePickerViewModel = hiltViewModel(),
     field: FieldStates,
     imagePickerType: ImagePickerType = ImagePickerType.SingleImagePicker,
 ) {
