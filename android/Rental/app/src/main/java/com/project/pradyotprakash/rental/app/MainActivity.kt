@@ -27,13 +27,10 @@ import com.project.pradyotprakash.rental.app.pages.property.add.view.PropertyScr
 import com.project.pradyotprakash.rental.app.pages.property.details.view.PropertyDetailsScreen
 import com.project.pradyotprakash.rental.app.pages.splash.view.SplashView
 import com.project.pradyotprakash.rental.app.pages.welcome.view.WelcomeScreen
-import com.project.pradyotprakash.rental.app.pages.welcome.viewmodel.WelcomeViewModel
 import com.project.pradyotprakash.rental.app.theme.RentalTheme
 import com.project.pradyotprakash.rental.app.utils.ErrorScreenArguments
 import com.project.pradyotprakash.rental.app.utils.InformationScreenArguments
 import com.project.pradyotprakash.rental.app.utils.PropertyDetailsArguments
-import com.project.pradyotprakash.rental.app.utils.UserType
-import com.project.pradyotprakash.rental.app.utils.WelcomeScreenArguments
 import com.project.pradyotprakash.rental.core.auth.AuthState
 import com.project.pradyotprakash.rental.core.auth.AuthStateListener
 import com.project.pradyotprakash.rental.core.navigation.Navigator
@@ -76,6 +73,7 @@ class MainActivity : ComponentActivity() {
                         composable(Routes.Home.path()) { HomeScreen(hiltViewModel()) }
                         composable(Routes.Option.path()) { OptionsView(hiltViewModel()) }
                         composable(Routes.Property.path()) { PropertyScreen(hiltViewModel()) }
+                        composable(Routes.Welcome.path()) { WelcomeScreen(hiltViewModel()) }
                         composable(
                             Routes.PropertyDetails.path(),
                             arguments = Routes.PropertyDetails.arguments.map {
@@ -93,32 +91,6 @@ class MainActivity : ComponentActivity() {
                                     PropertyDetailsScreen(
                                         propertyId,
                                         hiltViewModel(),
-                                    )
-                                }
-                            } ?: kotlin.run {
-                                GoToErrorScreen()
-                            }
-                        }
-                        composable(
-                            Routes.Welcome.path(),
-                            arguments = Routes.Welcome.arguments.map {
-                                navArgument(it) { type = NavType.StringType }
-                            }
-                        ) {
-                            val userType = it.arguments?.getString(
-                                WelcomeScreenArguments.userType
-                            )
-
-                            userType?.let { type ->
-                                if (type.isEmpty()) {
-                                    GoToErrorScreen()
-                                } else {
-                                    WelcomeScreen(
-                                        hiltViewModel<WelcomeViewModel>().also { viewModel ->
-                                            viewModel.start(
-                                                UserType.valueOf(type)
-                                            )
-                                        }
                                     )
                                 }
                             } ?: kotlin.run {
@@ -149,9 +121,6 @@ class MainActivity : ComponentActivity() {
                                 navArgument(it) { type = NavType.StringType }
                             }
                         ) {
-                            val userType = it.arguments?.getString(
-                                WelcomeScreenArguments.userType
-                            )
                             val onlyPreview = it.arguments?.getString(
                                 InformationScreenArguments.onlyPreview
                             )?.toBoolean()
@@ -162,32 +131,23 @@ class MainActivity : ComponentActivity() {
                                 InformationScreenArguments.firstTimeAddingDetails
                             )?.toBoolean()
 
-                            userType?.let { type ->
-                                if (type.isEmpty()) {
-                                    GoToErrorScreen()
-                                } else {
-                                    onlyPreview?.let {
-                                        allowBackOption?.let {
-                                            firstTimeAddingDetails?.let {
-                                                InformationScreen(
-                                                    hiltViewModel<InformationViewModel>().also { viewModel ->
-                                                        viewModel.start(
-                                                            UserType.valueOf(userType),
-                                                            onlyPreview,
-                                                            allowBackOption,
-                                                            firstTimeAddingDetails,
-                                                        )
-                                                    }
+                            onlyPreview?.let {
+                                allowBackOption?.let {
+                                    firstTimeAddingDetails?.let {
+                                        InformationScreen(
+                                            hiltViewModel<InformationViewModel>().also { viewModel ->
+                                                viewModel.start(
+                                                    onlyPreview,
+                                                    allowBackOption,
+                                                    firstTimeAddingDetails,
                                                 )
-                                            } ?: kotlin.run {
-                                                GoToErrorScreen()
                                             }
-                                        } ?: kotlin.run {
-                                            GoToErrorScreen()
-                                        }
+                                        )
                                     } ?: kotlin.run {
                                         GoToErrorScreen()
                                     }
+                                } ?: kotlin.run {
+                                    GoToErrorScreen()
                                 }
                             } ?: kotlin.run {
                                 GoToErrorScreen()

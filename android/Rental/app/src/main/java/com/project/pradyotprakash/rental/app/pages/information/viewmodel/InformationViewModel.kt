@@ -22,6 +22,7 @@ import com.project.pradyotprakash.rental.core.models.InputType
 import com.project.pradyotprakash.rental.core.navigation.Navigator
 import com.project.pradyotprakash.rental.core.response.RenterResponse
 import com.project.pradyotprakash.rental.core.services.AppCheckService
+import com.project.pradyotprakash.rental.device.services.UserLocalServices
 import com.project.pradyotprakash.rental.domain.modal.UserEntity
 import com.project.pradyotprakash.rental.domain.usecase.AuthenticationUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -37,11 +38,11 @@ class InformationViewModel @Inject constructor(
     private val authenticationUseCase: AuthenticationUseCase,
     private val authStateListener: AuthStateListener,
     private val appCheckService: AppCheckService,
+    private val userLocalServices: UserLocalServices,
 ) : ViewModel() {
-    lateinit var userType: UserType
     private var onlyPreview: Boolean = false
     var allowBackOption: Boolean = false
-    var firstTimeAddingDetails: Boolean = false
+    private var firstTimeAddingDetails: Boolean = false
 
     private val _fields = MutableLiveData(emptyList<FieldStates>())
     val fields: LiveData<List<FieldStates>>
@@ -98,8 +99,11 @@ class InformationViewModel @Inject constructor(
     }
 
     private fun updateFieldDetails(userDetails: UserEntity?) {
-        userType = UserType.valueOf(userDetails?.user_type ?: "")
-        val fields = listOf(
+        val userType = UserType.valueOf(userDetails?.user_type ?: userLocalServices.userType)
+        val emailAddress = userDetails?.email_address ?:
+        authenticationUseCase.getCurrentUser()?.email ?: ""
+
+        val fields = mutableListOf(
             FieldStates(
                 id = FieldId.FirstName.id,
                 value = MutableLiveData(userDetails?.first_name ?: ""),
@@ -143,10 +147,10 @@ class InformationViewModel @Inject constructor(
             ),
             FieldStates(
                 id = FieldId.EmailAddress.id,
-                value = MutableLiveData(userDetails?.email_address ?: ""),
+                value = MutableLiveData(emailAddress),
                 label = TR.emailAddress,
                 inputType = InputType.Email,
-                readOnly = true,
+                readOnly = emailAddress.isNotBlank(),
                 keyboardOptions = KeyboardOptions(
                     autoCorrect = false,
                     keyboardType = KeyboardType.Email,
@@ -199,6 +203,24 @@ class InformationViewModel @Inject constructor(
                 ),
                 composeType = ComposeType.OutlinedTextField,
             ),
+            FieldStates(
+                id = FieldId.UserType.id,
+                composeType = ComposeType.RadioGroup,
+                label = TR.pleaseTellUsYourUserType,
+                value = MutableLiveData(userType.name),
+                children = listOf(
+                    FieldStates(
+                        id = FieldId.Renter.id,
+                        label = TR.renter,
+                        composeType = ComposeType.RadioButton,
+                    ),
+                    FieldStates(
+                        id = FieldId.Owner.id,
+                        label = TR.owner,
+                        composeType = ComposeType.RadioButton,
+                    ),
+                ),
+            ),
         )
 
         _fields.value = fields
@@ -211,10 +233,13 @@ class InformationViewModel @Inject constructor(
             val dateOfBirth = fields.find { it.id == FieldId.DOB.id }?.value?.value
             val profession = fields.find { it.id == FieldId.Profession.id }?.value?.value
             val phoneNumber = fields.find { it.id == FieldId.PhoneNumber.id }?.value?.value
+            val userType = fields.find { it.id == FieldId.UserType.id }?.value?.value
             val permanentAddress =
                 fields.find { it.id == FieldId.Address.id }?.value?.value
             val emailAddress =
                 fields.find { it.id == FieldId.EmailAddress.id }?.value?.value
+            // TODO Implement profile pic for user, can use the feature of property one
+            val profilePicUrl = ""
 
             viewModelScope.launch {
                 appCheckService.getAppCheckToken().collect { appCheckToken ->
@@ -232,6 +257,7 @@ class InformationViewModel @Inject constructor(
                                 phoneNumber,
                                 permanentAddress,
                                 emailAddress,
+                                userType,
                                 onNull = {
                                     updateErrorState(TR.dataMissing)
                                 },
@@ -245,6 +271,8 @@ class InformationViewModel @Inject constructor(
                                         phoneNumber!!,
                                         permanentAddress!!,
                                         emailAddress!!,
+                                        userType!!,
+                                        profilePicUrl,
                                     )
                                 }
                             )
@@ -264,22 +292,41 @@ class InformationViewModel @Inject constructor(
         phoneNumber: String,
         permanentAddress: String,
         emailAddress: String,
+        userType: String,
+        profilePicUrl: String,
     ) {
         viewModelScope.launch {
             authenticationUseCase.getCurrentUserId()?.let { userId ->
-                authenticationUseCase.updateUserDetails(
-                    userId = userId,
-                    userType = userType,
-                    firstName = firstName,
-                    lastName = lastName,
-                    permanentAddress = permanentAddress,
-                    dateOfBirth = dateOfBirth,
-                    profession = profession,
-                    phoneNumber = phoneNumber,
-                    emailAddress = emailAddress,
-                    isAllDetailsAvailable = true,
-                    appCheckToken = appCheckToken,
-                ).collect {
+                if (firstTimeAddingDetails) {
+                    authenticationUseCase.setUserDetails(
+                        userId = userId,
+                        userType = userType,
+                        firstName = firstName,
+                        lastName = lastName,
+                        permanentAddress = permanentAddress,
+                        dateOfBirth = dateOfBirth,
+                        profession = profession,
+                        phoneNumber = phoneNumber,
+                        emailAddress = emailAddress,
+                        isAllDetailsAvailable = true,
+                        appCheckToken = appCheckToken,
+                        profilePicUrl = profilePicUrl,
+                    )
+                } else {
+                    authenticationUseCase.updateUserDetails(
+                        userId = userId,
+                        userType = userType,
+                        firstName = firstName,
+                        lastName = lastName,
+                        permanentAddress = permanentAddress,
+                        dateOfBirth = dateOfBirth,
+                        profession = profession,
+                        phoneNumber = phoneNumber,
+                        emailAddress = emailAddress,
+                        isAllDetailsAvailable = true,
+                        appCheckToken = appCheckToken,
+                    )
+                }.collect {
                     when (it) {
                         is RenterResponse.Error -> updateErrorState(it.exception.message)
                         is RenterResponse.Loading -> _loading.value = true
@@ -299,21 +346,25 @@ class InformationViewModel @Inject constructor(
     /**
      * Set the initial value of the view model
      */
-    fun start(userType: UserType, onlyPreview: Boolean, allowBackOption: Boolean, firstTimeAddingDetails: Boolean) {
-        this.userType = userType
+    fun start(onlyPreview: Boolean, allowBackOption: Boolean, firstTimeAddingDetails: Boolean) {
         this.onlyPreview = onlyPreview
         this.allowBackOption = allowBackOption
         this.firstTimeAddingDetails = firstTimeAddingDetails
     }
 
-    fun updateFieldState(value: String = "", index: Int) {
-        _fields.value?.get(index)?.let {
-            it.value.value = value
-        }
-    }
-
     fun updateErrorState(errorText: String? = null) {
         _loading.value = false
         _errorText.value = errorText ?: ""
+    }
+
+    fun updateFieldState(index: Int, childId: String = "") {
+        _fields.value?.get(index)?.let { field ->
+            if (childId.isNotEmpty()) {
+                field.value.value = childId
+            }
+            field.isSelected.value?.let {
+                field.isSelected.value = !it
+            }
+        }
     }
 }

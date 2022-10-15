@@ -119,7 +119,7 @@ fun HomeScreen(homeViewModel: HomeViewModel) {
                         contentAlignment = Alignment.Center,
                     ) {
                         Text(
-                            text = TR.noPropertiesAvailable,
+                            text = TR.noPropertiesAddedByYou,
                             textAlign = TextAlign.Center,
                         )
                     }

@@ -31,6 +31,7 @@ interface AuthenticationService {
         @Field("phone_number") phoneNumber: String,
         @Field("profile_pic_url") profilePicUrl: String,
         @Field("user_type") userType: String,
+        @Field("is_all_details_available") isAllDetailsAvailable: Boolean,
     ): Response<DefaultEntity<UserEntity>>
 
     @FormUrlEncoded

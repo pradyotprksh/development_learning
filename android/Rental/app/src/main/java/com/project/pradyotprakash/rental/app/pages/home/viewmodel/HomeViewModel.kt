@@ -11,7 +11,6 @@ import com.project.pradyotprakash.rental.core.navigation.Navigator
 import com.project.pradyotprakash.rental.core.navigation.Routes
 import com.project.pradyotprakash.rental.core.response.RenterResponse
 import com.project.pradyotprakash.rental.core.services.AppCheckService
-import com.project.pradyotprakash.rental.core.utils.Constants
 import com.project.pradyotprakash.rental.domain.modal.PropertyEntity
 import com.project.pradyotprakash.rental.domain.modal.UserEntity
 import com.project.pradyotprakash.rental.domain.usecase.AuthenticationUseCase
@@ -60,7 +59,6 @@ class HomeViewModel @Inject constructor(
                                         if (it.exception.isNotFound()) {
                                             // TODO change current user type to be saved in local storage
                                             goToInformationScreen(
-                                                Constants.currentUserType?.name ?: "",
                                                 true,
                                             )
                                         } else {
@@ -80,7 +78,6 @@ class HomeViewModel @Inject constructor(
 
                                             if (!userDetails.is_all_details_available) {
                                                 goToInformationScreen(
-                                                    userDetails.user_type,
                                                     false,
                                                 )
                                             }
@@ -101,9 +98,9 @@ class HomeViewModel @Inject constructor(
     /**
      * Go to the get information details screen
      */
-    private fun goToInformationScreen(userType: String, firstTimeAddingDetails: Boolean) {
+    private fun goToInformationScreen(firstTimeAddingDetails: Boolean) {
         navigator.navigate {
-            it.navigate("${Routes.Information.route}${userType}/${false}/${false}/$firstTimeAddingDetails")
+            it.navigate("${Routes.Information.route}${false}/${false}/$firstTimeAddingDetails")
         }
     }
 

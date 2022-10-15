@@ -1,5 +1,7 @@
 package com.project.pradyotprakash.rental.di
 
+import android.content.Context
+import android.content.SharedPreferences
 import com.google.firebase.appcheck.FirebaseAppCheck
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -23,9 +25,12 @@ import com.project.pradyotprakash.rental.data.repositories.StorageServiceReposit
 import com.project.pradyotprakash.rental.data.services.AuthenticationService
 import com.project.pradyotprakash.rental.data.services.BasicService
 import com.project.pradyotprakash.rental.data.services.PropertyService
+import com.project.pradyotprakash.rental.device.repositories.UserLocalServicesRepository
+import com.project.pradyotprakash.rental.device.services.UserLocalServices
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import javax.inject.Named
@@ -36,7 +41,7 @@ import javax.inject.Singleton
  */
 @Module
 @InstallIn(SingletonComponent::class)
-object Services {
+object RetrofitServices {
     @Singleton
     @Provides
     fun provideBasicService(retrofit: Retrofit): BasicService =
@@ -51,61 +56,100 @@ object Services {
     @Provides
     fun providePropertyService(retrofit: Retrofit): PropertyService =
         retrofit.create(PropertyService::class.java)
+}
+
+@Module
+@InstallIn(SingletonComponent::class)
+object LocalStorageServices {
+    @Singleton
+    @Provides
+    fun providesSharedPreference(
+        @ApplicationContext context: Context,
+    ): SharedPreferences =
+        context.getSharedPreferences(Constants.sharedPreferenceName, Context.MODE_PRIVATE)
 
     @Singleton
     @Provides
-    fun provideFirebaseAuth(): FirebaseAuth = Firebase.auth
+    fun provideUserLocalService(
+        sharedPreferences: SharedPreferences,
+    ): UserLocalServices = UserLocalServicesRepository(sharedPreferences)
+}
 
-    @Singleton
-    @Provides
-    fun provideFirebaseFirestore(): FirebaseFirestore = FirebaseFirestore.getInstance()
+object FirebaseServices {
+    @Module
+    @InstallIn(SingletonComponent::class)
+    object Authentication {
+        @Singleton
+        @Provides
+        fun provideFirebaseAuth(): FirebaseAuth = Firebase.auth
 
-    @Singleton
-    @Provides
-    fun provideFirebaseStorage(): FirebaseStorage = Firebase.storage
+        @Singleton
+        @Provides
+        fun provideDataAuthenticationService(
+            firebaseAuth: FirebaseAuth,
+            crashlytics: CrashlyticsService
+        ): FirebaseAuthenticationService =
+            FirebaseAuthenticationDataRepository(firebaseAuth, crashlytics)
+    }
 
-    @Singleton
-    @Provides
-    fun provideFirebaseCrashlytics(): FirebaseCrashlytics = Firebase.crashlytics
+    @Module
+    @InstallIn(SingletonComponent::class)
+    object Firestore {
+        @Singleton
+        @Provides
+        fun provideFirebaseFirestore(): FirebaseFirestore = FirebaseFirestore.getInstance()
 
-    @Singleton
-    @Provides
-    @Named(Constants.propertyStorageReference)
-    fun providePropertyStorageReference(storage: FirebaseStorage): StorageReference =
-        storage.getReference("${Constants.propertyStorageReference}/")
+        @Singleton
+        @Provides
+        fun provideFirestoreService(firestore: FirebaseFirestore): FirestoreService =
+            FirestoreServiceRepository(firestore)
+    }
 
-    @Singleton
-    @Provides
-    fun provideFirebaseAppCheck(): FirebaseAppCheck = FirebaseAppCheck.getInstance()
+    @Module
+    @InstallIn(SingletonComponent::class)
+    object Storage {
+        @Singleton
+        @Provides
+        fun provideFirebaseStorage(): FirebaseStorage = Firebase.storage
 
-    @Singleton
-    @Provides
-    fun provideAppCheckService(
-        firebaseAppCheck: FirebaseAppCheck,
-        crashlytics: CrashlyticsService
-    ): AppCheckService =
-        AppCheckRepository(firebaseAppCheck, crashlytics)
+        @Singleton
+        @Provides
+        fun provideStorageService(crashlytics: CrashlyticsService): StorageService =
+            StorageServiceRepository(crashlytics)
 
-    @Singleton
-    @Provides
-    fun provideCrashlyticsService(crashlytics: FirebaseCrashlytics): CrashlyticsService =
-        CrashlyticsRepository(crashlytics)
+        @Singleton
+        @Provides
+        @Named(Constants.propertyStorageReference)
+        fun providePropertyStorageReference(storage: FirebaseStorage): StorageReference =
+            storage.getReference("${Constants.propertyStorageReference}/")
+    }
 
-    @Singleton
-    @Provides
-    fun provideDataAuthenticationService(
-        firebaseAuth: FirebaseAuth,
-        crashlytics: CrashlyticsService
-    ): FirebaseAuthenticationService =
-        FirebaseAuthenticationDataRepository(firebaseAuth, crashlytics)
+    @Module
+    @InstallIn(SingletonComponent::class)
+    object Crashlytics {
+        @Singleton
+        @Provides
+        fun provideFirebaseCrashlytics(): FirebaseCrashlytics = Firebase.crashlytics
 
-    @Singleton
-    @Provides
-    fun provideFirestoreService(firestore: FirebaseFirestore): FirestoreService =
-        FirestoreServiceRepository(firestore)
+        @Singleton
+        @Provides
+        fun provideCrashlyticsService(crashlytics: FirebaseCrashlytics): CrashlyticsService =
+            CrashlyticsRepository(crashlytics)
+    }
 
-    @Singleton
-    @Provides
-    fun provideStorageService(crashlytics: CrashlyticsService): StorageService =
-        StorageServiceRepository(crashlytics)
+    @Module
+    @InstallIn(SingletonComponent::class)
+    object AppCheck {
+        @Singleton
+        @Provides
+        fun provideFirebaseAppCheck(): FirebaseAppCheck = FirebaseAppCheck.getInstance()
+
+        @Singleton
+        @Provides
+        fun provideAppCheckService(
+            firebaseAppCheck: FirebaseAppCheck,
+            crashlytics: CrashlyticsService
+        ): AppCheckService =
+            AppCheckRepository(firebaseAppCheck, crashlytics)
+    }
 }

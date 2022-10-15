@@ -12,10 +12,7 @@ object Constants {
 enum class UserType {
     Owner,
     Renter,
-}
-
-object WelcomeScreenArguments {
-    const val userType = "userType"
+    Unknown,
 }
 
 object InformationScreenArguments {

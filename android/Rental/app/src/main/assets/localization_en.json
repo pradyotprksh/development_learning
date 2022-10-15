@@ -81,5 +81,8 @@
   "addToWishList": "Add To Wish List",
   "searchForProperty": "Search For Property",
   "yourListedProperties": "Your Listed Properties",
-  "pleaseTryAgain": "Please try again. Something went wrong from our end."
+  "pleaseTryAgain": "Please try again. Something went wrong from our end.",
+  "localStorageIssue": "Some issue while fetching the details from local storage. Please logout and login again. If issue persists please re-install the application or clear the storage manually. Sorry for the inconvenience. We have captured this issue and will be looking into this.",
+  "pleaseTellUsYourUserType": "Please tell us are you a/an",
+  "noPropertiesAddedByYou": "You haven't added any new property. Please add one and start looking for renters."
 }

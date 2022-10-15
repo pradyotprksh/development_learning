@@ -384,12 +384,6 @@ class PropertyViewModel @Inject constructor(
      */
     fun navigateBack() = navigator.navigateBack()
 
-    fun updateFieldState(value: String = "", index: Int) {
-        _fields.value?.get(index)?.let {
-            it.value.value = value
-        }
-    }
-
     fun updateFieldState(index: Int, childId: String = "") {
         _fields.value?.get(index)?.let { field ->
             if (childId.isNotEmpty()) {

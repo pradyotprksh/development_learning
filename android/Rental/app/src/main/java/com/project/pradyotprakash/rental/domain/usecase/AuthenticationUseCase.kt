@@ -1,6 +1,5 @@
 package com.project.pradyotprakash.rental.domain.usecase
 
-import com.project.pradyotprakash.rental.app.utils.UserType
 import com.project.pradyotprakash.rental.core.response.RenterResponse
 import com.project.pradyotprakash.rental.domain.repositories.AuthenticationRepository
 import com.project.pradyotprakash.rental.domain.repositories.BasicRepository
@@ -71,8 +70,9 @@ class AuthenticationUseCase @Inject constructor(
         profession: String,
         phoneNumber: String,
         profilePicUrl: String,
-        userType: UserType,
+        userType: String,
         appCheckToken: String,
+        isAllDetailsAvailable: Boolean,
     ) = flow {
         emit(RenterResponse.Loading)
         emit(
@@ -88,6 +88,7 @@ class AuthenticationUseCase @Inject constructor(
                 profilePicUrl = profilePicUrl,
                 userType = userType,
                 appCheckToken = appCheckToken,
+                isAllDetailsAvailable = isAllDetailsAvailable,
             ),
         )
         emit(RenterResponse.Idle)
@@ -106,7 +107,7 @@ class AuthenticationUseCase @Inject constructor(
         profession: String = "",
         phoneNumber: String = "",
         profilePicUrl: String = "",
-        userType: UserType,
+        userType: String,
         isAllDetailsAvailable: Boolean,
         appCheckToken: String,
     ) = flow {

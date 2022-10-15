@@ -22,6 +22,7 @@ UserDetails = namedtuple(
         Keys.User.user_type,
         Keys.User.is_all_details_available,
         Keys.User.account_created_on,
+        Keys.User.account_updated_on,
     ]
 )
 

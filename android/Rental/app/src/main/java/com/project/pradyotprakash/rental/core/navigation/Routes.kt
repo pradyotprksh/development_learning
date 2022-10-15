@@ -3,7 +3,6 @@ package com.project.pradyotprakash.rental.core.navigation
 import com.project.pradyotprakash.rental.app.utils.ErrorScreenArguments
 import com.project.pradyotprakash.rental.app.utils.InformationScreenArguments
 import com.project.pradyotprakash.rental.app.utils.PropertyDetailsArguments
-import com.project.pradyotprakash.rental.app.utils.WelcomeScreenArguments
 
 /**
  * An extension on routes list which will combine the route
@@ -28,11 +27,10 @@ enum class Routes(
     Splash("splash/"),
     Option("option/"),
     Home("home/"),
-    Welcome("welcome/", listOf(WelcomeScreenArguments.userType)),
+    Welcome("welcome/"),
     Information(
         "information/",
         listOf(
-            InformationScreenArguments.userType,
             InformationScreenArguments.onlyPreview,
             InformationScreenArguments.allowBackOption,
             InformationScreenArguments.firstTimeAddingDetails,

@@ -87,7 +87,9 @@ android {
     }
 
     project.tasks.preBuild.dependsOn("checkEnvironment")
-    project.tasks.preBuild.dependsOn("updateTranslations")
+    project.tasks.preBuild.dependsOn("updateTranslations"
+    )
+    namespace = "com.project.pradyotprakash.rental"
 }
 
 kapt {
@@ -107,7 +109,7 @@ dependencies {
 
     // Compose
     implementation("androidx.compose.ui:ui:1.2.1")
-    implementation("androidx.compose.material3:material3:1.0.0-beta03")
+    implementation("androidx.compose.material3:material3:1.0.0-rc01")
     implementation("androidx.navigation:navigation-compose:2.5.2")
     implementation("androidx.compose.runtime:runtime-livedata:1.2.1")
     debugImplementation("androidx.compose.ui:ui-tooling:1.2.1")

@@ -10,7 +10,7 @@ import com.project.pradyotprakash.rental.core.navigation.Routes
 import com.project.pradyotprakash.rental.core.navigation.path
 import com.project.pradyotprakash.rental.core.response.RenterResponse
 import com.project.pradyotprakash.rental.core.services.AppCheckService
-import com.project.pradyotprakash.rental.core.utils.Constants
+import com.project.pradyotprakash.rental.device.services.UserLocalServices
 import com.project.pradyotprakash.rental.domain.usecase.AuthenticationUseCase
 import com.project.pradyotprakash.rental.domain.usecase.BasicUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -32,8 +32,10 @@ class WelcomeViewModel @Inject constructor(
     private val basicUseCase: BasicUseCase,
     private val authenticationUseCase: AuthenticationUseCase,
     private val appCheckService: AppCheckService,
+    private val userLocalServices: UserLocalServices,
 ) : ViewModel() {
-    lateinit var userType: UserType
+    var userType: UserType =
+        UserType.values().find { it.name == userLocalServices.userType } ?: UserType.Unknown
 
     private val _loading = MutableLiveData(false)
     val loading: LiveData<Boolean>
@@ -41,13 +43,6 @@ class WelcomeViewModel @Inject constructor(
     private val _errorText = MutableLiveData("")
     val error: LiveData<String>
         get() = _errorText
-
-    /**
-     * Set the initial value of the view model
-     */
-    fun start(userType: UserType) {
-        this.userType = userType
-    }
 
     /**
      * Navigate back
@@ -65,8 +60,11 @@ class WelcomeViewModel @Inject constructor(
                         when (authType) {
                             AuthType.Email -> {
                                 // TODO: Give option to create user as well
-                                val email = if (Constants.currentUserType == UserType.Owner) "pradyot@gmail.com" else "pradyotRenter@gmail.com"
-                                val password = if (Constants.currentUserType == UserType.Owner) "pradyot@gmail.com" else "pradyotRenter@gmail.com"
+                                val userType = userLocalServices.userType
+                                val email =
+                                    if (userType == UserType.Owner.name) "pradyot@gmail.com" else "pradyotRenter@gmail.com"
+                                val password =
+                                    if (userType == UserType.Owner.name) "pradyot@gmail.com" else "pradyotRenter@gmail.com"
                                 basicUseCase.isEmailAddressValid(
                                     emailAddress = email,
                                     appCheckToken = appCheckToken.data
@@ -121,7 +119,6 @@ class WelcomeViewModel @Inject constructor(
                                 is RenterResponse.Error -> {
                                     if (userDetails.exception.isNotFound()) {
                                         goToInformationScreen(
-                                            Constants.currentUserType?.name ?: "",
                                             true,
                                         )
                                     } else {
@@ -135,7 +132,6 @@ class WelcomeViewModel @Inject constructor(
                                 is RenterResponse.Success -> {
                                     if (userDetails.data.data?.is_all_details_available == false) {
                                         goToInformationScreen(
-                                            Constants.currentUserType?.name ?: "",
                                             false,
                                         )
                                     } else {
@@ -153,9 +149,9 @@ class WelcomeViewModel @Inject constructor(
     /**
      * Go to the get information details screen
      */
-    private fun goToInformationScreen(userType: String, firstTimeAddingDetails: Boolean) {
+    private fun goToInformationScreen(firstTimeAddingDetails: Boolean) {
         navigator.navigate {
-            it.navigate("${Routes.Information.route}${userType}/${false}/${false}/$firstTimeAddingDetails")
+            it.navigate("${Routes.Information.route}${false}/${false}/$firstTimeAddingDetails")
         }
     }
 

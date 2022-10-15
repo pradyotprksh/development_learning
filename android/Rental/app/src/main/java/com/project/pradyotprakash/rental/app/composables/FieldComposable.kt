@@ -32,8 +32,7 @@ import com.project.pradyotprakash.rental.core.models.FieldStates
 fun FieldComposable(
     paddingValues: PaddingValues = PaddingValues(all = 0.dp),
     fields: State<List<FieldStates>>,
-    onValueChange: (String, Int) -> Unit = { _, _ -> },
-    onSelected: (Int, String) -> Unit = { _, _ -> },
+    onValueChange: (Int, String) -> Unit = { _, _ -> },
 ) {
     LazyColumn(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -53,10 +52,10 @@ fun FieldComposable(
                         value = filedValue.value,
                         onValueChange = {
                             if (field.maxChar == -1) {
-                                onValueChange(it, index)
+                                onValueChange(index, it)
                             } else {
                                 if (it.length <= field.maxChar) {
-                                    onValueChange(it, index)
+                                    onValueChange(index, it)
                                 }
                             }
                         },
@@ -94,14 +93,14 @@ fun FieldComposable(
                                             modifier = Modifier
                                                 .fillMaxWidth()
                                                 .clickable {
-                                                    onSelected(index, child.id)
+                                                    onValueChange(index, child.id)
                                                 },
                                             verticalAlignment = Alignment.CenterVertically,
                                         ) {
                                             RadioButton(
                                                 selected = filedValue.value == child.id,
                                                 onClick = {
-                                                    onSelected(index, child.id)
+                                                    onValueChange(index, child.id)
                                                 },
                                             )
                                             Text(text = child.label)
@@ -129,7 +128,7 @@ fun FieldComposable(
                             Switch(
                                 checked = isSelectedValue.value,
                                 onCheckedChange = {
-                                    onSelected(index, "")
+                                    onValueChange(index, "")
                                 },
                             )
                         }
@@ -153,14 +152,14 @@ fun FieldComposable(
                         modifier = Modifier
                             .fillMaxWidth()
                             .clickable {
-                                onSelected(index, field.id)
+                                onValueChange(index, field.id)
                             },
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
                         RadioButton(
                             selected = filedValue.value == field.id,
                             onClick = {
-                                onSelected(index, field.id)
+                                onValueChange(index, field.id)
                             },
                         )
                         Text(text = field.label)

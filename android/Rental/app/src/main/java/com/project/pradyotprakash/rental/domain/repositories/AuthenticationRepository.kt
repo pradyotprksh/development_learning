@@ -1,6 +1,5 @@
 package com.project.pradyotprakash.rental.domain.repositories
 
-import com.project.pradyotprakash.rental.app.utils.UserType
 import com.project.pradyotprakash.rental.core.response.parseResponse
 import com.project.pradyotprakash.rental.core.services.CrashlyticsService
 import com.project.pradyotprakash.rental.core.services.FirebaseAuthenticationService
@@ -43,8 +42,9 @@ class AuthenticationRepository(
         profession: String,
         phoneNumber: String,
         profilePicUrl: String,
-        userType: UserType,
+        userType: String,
         appCheckToken: String,
+        isAllDetailsAvailable: Boolean,
     ) = authenticationService.setUserDetails(
             userId = userId,
             firstName = firstName,
@@ -55,8 +55,9 @@ class AuthenticationRepository(
             profession = profession,
             phoneNumber = phoneNumber,
             profilePicUrl = profilePicUrl,
-            userType = userType.name,
+            userType = userType,
             appCheckToken = appCheckToken,
+            isAllDetailsAvailable = isAllDetailsAvailable,
         ).parseResponse(crashlytics)
 
     suspend fun updateCurrentUserDetails(
@@ -69,7 +70,7 @@ class AuthenticationRepository(
         profession: String,
         phoneNumber: String,
         profilePicUrl: String,
-        userType: UserType,
+        userType: String,
         isAllDetailsAvailable: Boolean,
         appCheckToken: String,
     ) = authenticationService.updateUserDetails(
@@ -82,7 +83,7 @@ class AuthenticationRepository(
             profession = profession,
             phoneNumber = phoneNumber,
             profilePicUrl = profilePicUrl,
-            userType = userType.name,
+            userType = userType,
             isAllDetailsAvailable = isAllDetailsAvailable,
             appCheckToken = appCheckToken,
         ).parseResponse(crashlytics)

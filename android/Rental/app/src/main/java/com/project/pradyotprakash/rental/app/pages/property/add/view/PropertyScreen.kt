@@ -71,7 +71,6 @@ fun PropertyScreen(propertyViewModel: PropertyViewModel) {
                 paddingValues = paddingValues,
                 fields = fields,
                 onValueChange = propertyViewModel::updateFieldState,
-                onSelected = propertyViewModel::updateFieldState,
             )
         }
     }

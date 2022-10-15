@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import com.project.pradyotprakash.rental.app.utils.UserType
 import com.project.pradyotprakash.rental.core.navigation.Navigator
 import com.project.pradyotprakash.rental.core.navigation.Routes
-import com.project.pradyotprakash.rental.core.utils.Constants
+import com.project.pradyotprakash.rental.device.services.UserLocalServices
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -14,14 +14,15 @@ import javax.inject.Inject
 @HiltViewModel
 class OptionsViewModel @Inject constructor(
     private val navigator: Navigator,
+    private val userLocalServices: UserLocalServices,
 ) : ViewModel() {
     /**
      * Start navigation to the owner flow
      */
     fun navigateToOwnerFlow() {
-        Constants.currentUserType = UserType.Owner
+        userLocalServices.saveSelectedUserType(UserType.Owner.name)
         navigator.navigate {
-            it.navigate("${Routes.Welcome.route}${UserType.Owner}")
+            it.navigate(Routes.Welcome.route)
         }
     }
 
@@ -29,9 +30,9 @@ class OptionsViewModel @Inject constructor(
      * Start the navigation to the renter flow
      */
     fun navigateToRenterFlow() {
-        Constants.currentUserType = UserType.Renter
+        userLocalServices.saveSelectedUserType(UserType.Renter.name)
         navigator.navigate {
-            it.navigate("${Routes.Welcome.route}${UserType.Renter}")
+            it.navigate(Routes.Welcome.route)
         }
     }
 }

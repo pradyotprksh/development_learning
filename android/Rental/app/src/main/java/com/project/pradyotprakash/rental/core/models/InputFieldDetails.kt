@@ -37,7 +37,10 @@ enum class FieldId(val id: String) {
     EmailAddress("email_address"),
     Profession("profession"),
     PhoneNumber("phone_number"),
-    PropertyImagePicker("property_image_picker")
+    PropertyImagePicker("property_image_picker"),
+    UserType("user_type"),
+    Owner("Owner"),
+    Renter("Renter")
 }
 
 enum class InputType {

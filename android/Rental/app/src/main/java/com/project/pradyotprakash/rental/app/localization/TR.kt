@@ -88,5 +88,8 @@ object TR {
     var searchForProperty = Translation.getString("searchForProperty")
     var yourListedProperties = Translation.getString("yourListedProperties")
     var pleaseTryAgain = Translation.getString("pleaseTryAgain")
+    var localStorageIssue = Translation.getString("localStorageIssue")
+    var pleaseTellUsYourUserType = Translation.getString("pleaseTellUsYourUserType")
+    var noPropertiesAddedByYou = Translation.getString("noPropertiesAddedByYou")
     
 }

@@ -80,8 +80,6 @@ class _User(Resource):
         )
 
     def patch(self):
-        # TODO: Fix update call getting <lambda>() got an unexpected keyword argument 'account_updated_on' error
-
         # headers
         # Check for app token to validate request
         app_check_token = request.headers[Keys.Rental.firebase_app_check_token]
@@ -218,6 +216,7 @@ class _User(Resource):
         profession = user_form.get(Keys.User.profession, "")
         phone_number = user_form.get(Keys.User.phone_number, "")
         profile_pic_url = user_form.get(Keys.User.profile_pic_url, "")
+        is_all_details_available = user_form.get(Keys.User.is_all_details_available, False)
         user_type = user_form.get(Keys.User.user_type)
         account_created_on = user_form.get(Keys.User.account_created_on)
         account_updated_on = user_form.get(Keys.User.account_updated_on)
@@ -231,11 +230,7 @@ class _User(Resource):
         if account_created_on is None:
             account_created_on = get_current_timestamp()
         if account_updated_on is None:
-            return response_creator(
-                code=404,
-                message=MESSAGES_LIST.get(Keys.User.account_updated_on, DEFAULT_ERROR_MESSAGE)
-                .format(" ".join(Keys.User.account_updated_on.split("_")))
-            )
+            account_updated_on = get_current_timestamp()
         if email_address is None:
             return response_creator(
                 code=404,
@@ -268,6 +263,7 @@ class _User(Resource):
             user_type=user_type,
             account_created_on=account_created_on,
             account_updated_on=account_updated_on,
+            is_all_details_available=is_all_details_available,
         )
 
         # add user details to mongo db
