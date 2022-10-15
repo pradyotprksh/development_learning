@@ -19,6 +19,7 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.project.pradyotprakash.rental.app.composables.FieldComposable
 import com.project.pradyotprakash.rental.app.composables.PageStateComposable
 import com.project.pradyotprakash.rental.app.localization.TR
@@ -31,8 +32,15 @@ import com.project.pradyotprakash.rental.app.pages.information.viewmodel.Informa
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun InformationScreen(
-    informationViewModel: InformationViewModel
+    informationViewModel: InformationViewModel = hiltViewModel(),
+    onlyPreview: Boolean,
+    allowBackOption: Boolean,
+    firstTimeAddingDetails: Boolean,
 ) {
+    informationViewModel.start(
+        onlyPreview, allowBackOption, firstTimeAddingDetails
+    )
+
     val fields = informationViewModel.fields.observeAsState(emptyList())
     val loading = informationViewModel.loading.observeAsState(false)
     val error = informationViewModel.error.observeAsState("")

@@ -9,7 +9,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -18,10 +17,8 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.project.pradyotprakash.rental.app.localization.Translation
 import com.project.pradyotprakash.rental.app.pages.error.view.ErrorScreen
-import com.project.pradyotprakash.rental.app.pages.error.viewmodel.ErrorViewModel
 import com.project.pradyotprakash.rental.app.pages.home.view.HomeScreen
 import com.project.pradyotprakash.rental.app.pages.information.view.InformationScreen
-import com.project.pradyotprakash.rental.app.pages.information.viewmodel.InformationViewModel
 import com.project.pradyotprakash.rental.app.pages.options.view.OptionsView
 import com.project.pradyotprakash.rental.app.pages.property.add.view.PropertyScreen
 import com.project.pradyotprakash.rental.app.pages.property.details.view.PropertyDetailsScreen
@@ -69,11 +66,11 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     NavHost(navController = navController, startDestination = Routes.Splash.route) {
-                        composable(Routes.Splash.path()) { SplashView(hiltViewModel()) }
-                        composable(Routes.Home.path()) { HomeScreen(hiltViewModel()) }
-                        composable(Routes.Option.path()) { OptionsView(hiltViewModel()) }
-                        composable(Routes.Property.path()) { PropertyScreen(hiltViewModel()) }
-                        composable(Routes.Welcome.path()) { WelcomeScreen(hiltViewModel()) }
+                        composable(Routes.Splash.path()) { SplashView() }
+                        composable(Routes.Home.path()) { HomeScreen() }
+                        composable(Routes.Option.path()) { OptionsView() }
+                        composable(Routes.Property.path()) { PropertyScreen() }
+                        composable(Routes.Welcome.path()) { WelcomeScreen() }
                         composable(
                             Routes.PropertyDetails.path(),
                             arguments = Routes.PropertyDetails.arguments.map {
@@ -90,7 +87,6 @@ class MainActivity : ComponentActivity() {
                                 } else {
                                     PropertyDetailsScreen(
                                         propertyId,
-                                        hiltViewModel(),
                                     )
                                 }
                             } ?: kotlin.run {
@@ -135,13 +131,9 @@ class MainActivity : ComponentActivity() {
                                 allowBackOption?.let {
                                     firstTimeAddingDetails?.let {
                                         InformationScreen(
-                                            hiltViewModel<InformationViewModel>().also { viewModel ->
-                                                viewModel.start(
-                                                    onlyPreview,
-                                                    allowBackOption,
-                                                    firstTimeAddingDetails,
-                                                )
-                                            }
+                                            onlyPreview = onlyPreview,
+                                            allowBackOption = allowBackOption,
+                                            firstTimeAddingDetails = firstTimeAddingDetails,
                                         )
                                     } ?: kotlin.run {
                                         GoToErrorScreen()
@@ -175,13 +167,9 @@ class MainActivity : ComponentActivity() {
         description: String = ""
     ) {
         ErrorScreen(
-            hiltViewModel<ErrorViewModel>().also { viewModel ->
-                viewModel.start(
-                    title = title,
-                    subtitle = subtitle,
-                    description = description,
-                )
-            }
+            title = title,
+            subtitle = subtitle,
+            description = description,
         )
     }
 

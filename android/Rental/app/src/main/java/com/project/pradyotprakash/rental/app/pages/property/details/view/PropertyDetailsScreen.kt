@@ -26,6 +26,7 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.project.pradyotprakash.rental.app.composables.HeaderComposable
 import com.project.pradyotprakash.rental.app.composables.NetworkImageComposable
 import com.project.pradyotprakash.rental.app.composables.PageStateComposable
@@ -42,7 +43,7 @@ import com.project.pradyotprakash.rental.app.pages.property.details.viewmodel.Pr
 @Composable
 fun PropertyDetailsScreen(
     propertyId: String,
-    propertyDetailsViewModel: PropertyDetailsViewModel,
+    propertyDetailsViewModel: PropertyDetailsViewModel = hiltViewModel(),
 ) {
     LaunchedEffect(Unit) {
         propertyDetailsViewModel.getPropertyDetails(propertyId)

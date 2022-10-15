@@ -18,6 +18,7 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.project.pradyotprakash.rental.app.composables.FieldComposable
 import com.project.pradyotprakash.rental.app.composables.PageStateComposable
 import com.project.pradyotprakash.rental.app.localization.TR
@@ -25,7 +26,7 @@ import com.project.pradyotprakash.rental.app.pages.property.add.viewmodel.Proper
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PropertyScreen(propertyViewModel: PropertyViewModel) {
+fun PropertyScreen(propertyViewModel: PropertyViewModel = hiltViewModel()) {
     val fields = propertyViewModel.fields.observeAsState(emptyList())
     val loading = propertyViewModel.loading.observeAsState(false)
     val error = propertyViewModel.error.observeAsState("")

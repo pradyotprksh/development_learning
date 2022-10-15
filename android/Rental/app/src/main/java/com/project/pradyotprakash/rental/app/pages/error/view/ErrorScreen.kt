@@ -15,6 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.project.pradyotprakash.rental.app.localization.TR
 import com.project.pradyotprakash.rental.app.pages.error.viewmodel.ErrorViewModel
 
@@ -23,7 +24,12 @@ import com.project.pradyotprakash.rental.app.pages.error.viewmodel.ErrorViewMode
  * user needs to know that.
  */
 @Composable
-fun ErrorScreen(errorViewModel: ErrorViewModel) {
+fun ErrorScreen(
+    errorViewModel: ErrorViewModel = hiltViewModel(),
+    title: String = "",
+    subtitle: String = "",
+    description: String = ""
+) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
@@ -33,19 +39,19 @@ fun ErrorScreen(errorViewModel: ErrorViewModel) {
             .padding(top = 30.dp, bottom = 20.dp),
     ) {
         Text(
-            text = errorViewModel.title,
+            text = title,
             style = MaterialTheme.typography.bodyLarge,
             textAlign = TextAlign.Center,
         )
         Spacer(modifier = Modifier.height(10.dp))
         Text(
-            text = errorViewModel.subtitle,
+            text = subtitle,
             style = MaterialTheme.typography.bodySmall,
             textAlign = TextAlign.Center,
         )
         Spacer(modifier = Modifier.height(20.dp))
         Text(
-            text = errorViewModel.description,
+            text = description,
             style = MaterialTheme.typography.bodyMedium,
             textAlign = TextAlign.Center,
         )

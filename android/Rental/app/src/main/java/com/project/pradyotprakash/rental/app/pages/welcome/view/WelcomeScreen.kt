@@ -26,6 +26,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.project.pradyotprakash.rental.app.composables.PageStateComposable
 import com.project.pradyotprakash.rental.app.localization.TR
 import com.project.pradyotprakash.rental.app.pages.welcome.viewmodel.AuthType
@@ -38,7 +39,7 @@ import com.project.pradyotprakash.rental.app.pages.welcome.viewmodel.WelcomeView
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun WelcomeScreen(
-    welcomeViewModel: WelcomeViewModel
+    welcomeViewModel: WelcomeViewModel = hiltViewModel()
 ) {
     val loading = welcomeViewModel.loading.observeAsState(false)
     val error = welcomeViewModel.error.observeAsState("")

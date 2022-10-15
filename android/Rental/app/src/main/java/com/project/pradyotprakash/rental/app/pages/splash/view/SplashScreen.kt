@@ -10,6 +10,7 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.project.pradyotprakash.rental.app.composables.PageStateComposable
 import com.project.pradyotprakash.rental.app.localization.TR
 import com.project.pradyotprakash.rental.app.localization.Translation
@@ -21,7 +22,7 @@ import com.project.pradyotprakash.rental.app.pages.splash.viewmodel.SplashViewMo
  */
 @Composable
 fun SplashView(
-    splashViewModel: SplashViewModel
+    splashViewModel: SplashViewModel = hiltViewModel()
 ) {
     val error = splashViewModel.error.observeAsState("")
 

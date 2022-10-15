@@ -23,6 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.project.pradyotprakash.rental.app.localization.TR
 import com.project.pradyotprakash.rental.app.pages.options.viewmodel.OptionsViewModel
 import com.project.pradyotprakash.rental.app.utils.Assets
@@ -34,7 +35,7 @@ import com.project.pradyotprakash.rental.core.utils.Constants.informationURL
  */
 @Composable
 fun OptionsView(
-    optionsViewModel: OptionsViewModel,
+    optionsViewModel: OptionsViewModel = hiltViewModel(),
 ) {
     val context = LocalContext.current
 
