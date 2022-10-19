@@ -1,4 +1,4 @@
-package com.project.pradyotprakash.rental.app.pages.property.details.view.composables
+package com.project.pradyotprakash.rental.app.composables
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -11,10 +11,10 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.project.pradyotprakash.rental.R
-import com.project.pradyotprakash.rental.app.composables.NetworkImageComposable
 import com.project.pradyotprakash.rental.app.localization.TR
 import com.project.pradyotprakash.rental.domain.modal.UserEntity
 
@@ -28,7 +28,9 @@ fun UserDetailsComposable(userDetails: UserEntity) {
         Column(
             modifier = Modifier.padding(10.dp)
         ) {
-            Row {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
                 NetworkImageComposable(
                     imageUrl = userDetails.profile_pic_url,
                     size = 50.dp,

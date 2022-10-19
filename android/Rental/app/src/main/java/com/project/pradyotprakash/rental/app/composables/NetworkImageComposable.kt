@@ -16,12 +16,12 @@ import com.project.pradyotprakash.rental.app.localization.TR
 
 @Composable
 fun NetworkImageComposable(
+    modifier: Modifier = Modifier,
     imageUrl: String,
     size: Dp,
     cornerSize: Dp,
     contentScale: ContentScale = ContentScale.Crop,
     error: Int = R.drawable.error,
-    modifier: Modifier = Modifier,
 ) {
     val context = LocalContext.current
 

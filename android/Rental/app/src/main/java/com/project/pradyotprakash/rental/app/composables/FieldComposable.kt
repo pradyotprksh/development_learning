@@ -175,6 +175,14 @@ fun FieldComposable(
                         Text(text = field.label)
                     }
                 }
+                ComposeType.ImagePreview -> {
+                    NetworkImageComposable(
+                        imageUrl = filedValue.value,
+                        size = 100.dp,
+                        cornerSize = 10.dp,
+                        error = field.errorImageId,
+                    )
+                }
                 else -> {}
             }
             Spacer(modifier = Modifier.height(10.dp))

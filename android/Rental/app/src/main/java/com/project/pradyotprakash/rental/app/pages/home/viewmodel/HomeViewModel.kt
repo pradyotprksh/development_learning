@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.project.pradyotprakash.rental.app.localization.TR
 import com.project.pradyotprakash.rental.app.utils.UserType
 import com.project.pradyotprakash.rental.core.auth.AuthState
 import com.project.pradyotprakash.rental.core.auth.AuthStateListener
@@ -72,8 +73,6 @@ class HomeViewModel @Inject constructor(
 
                                             if (userDetails.user_type == UserType.Owner.name) {
                                                 _properties.value = userDetails.properties ?: emptyList()
-                                            } else {
-                                               TODO()
                                             }
 
                                             if (!userDetails.is_all_details_available) {
@@ -118,6 +117,16 @@ class HomeViewModel @Inject constructor(
     fun navigateToPropertyDetails(propertyId: String) {
         navigator.navigate {
             it.navigate("${Routes.PropertyDetails.route}${propertyId}")
+        }
+    }
+
+    fun goToUserDetails() {
+        authenticationUseCase.getCurrentUserId()?.let { userId ->
+            navigator.navigate {
+                it.navigate("${Routes.UserDetails.route}${userId}")
+            }
+        } ?: run {
+            updateErrorState(TR.pleaseTryAgain)
         }
     }
 }

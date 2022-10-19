@@ -30,13 +30,13 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.project.pradyotprakash.rental.app.composables.HeaderComposable
 import com.project.pradyotprakash.rental.app.composables.NetworkImageComposable
 import com.project.pradyotprakash.rental.app.composables.PageStateComposable
+import com.project.pradyotprakash.rental.app.composables.UserDetailsComposable
 import com.project.pradyotprakash.rental.app.localization.TR
 import com.project.pradyotprakash.rental.app.pages.property.details.view.composables.MoneyDetailsComposable
 import com.project.pradyotprakash.rental.app.pages.property.details.view.composables.NoPropertyDetailsComposable
 import com.project.pradyotprakash.rental.app.pages.property.details.view.composables.OtherDetailsComposable
 import com.project.pradyotprakash.rental.app.pages.property.details.view.composables.PropertyDetailsComposable
 import com.project.pradyotprakash.rental.app.pages.property.details.view.composables.RentDetailsComposable
-import com.project.pradyotprakash.rental.app.pages.property.details.view.composables.UserDetailsComposable
 import com.project.pradyotprakash.rental.app.pages.property.details.viewmodel.PropertyDetailsViewModel
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)

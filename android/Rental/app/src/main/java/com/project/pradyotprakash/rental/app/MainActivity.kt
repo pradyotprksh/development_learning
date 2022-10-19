@@ -23,11 +23,13 @@ import com.project.pradyotprakash.rental.app.pages.options.view.OptionsView
 import com.project.pradyotprakash.rental.app.pages.property.add.view.PropertyScreen
 import com.project.pradyotprakash.rental.app.pages.property.details.view.PropertyDetailsScreen
 import com.project.pradyotprakash.rental.app.pages.splash.view.SplashView
+import com.project.pradyotprakash.rental.app.pages.user.view.UserView
 import com.project.pradyotprakash.rental.app.pages.welcome.view.WelcomeScreen
 import com.project.pradyotprakash.rental.app.theme.RentalTheme
 import com.project.pradyotprakash.rental.app.utils.ErrorScreenArguments
 import com.project.pradyotprakash.rental.app.utils.InformationScreenArguments
 import com.project.pradyotprakash.rental.app.utils.PropertyDetailsArguments
+import com.project.pradyotprakash.rental.app.utils.UserDetailsArguments
 import com.project.pradyotprakash.rental.core.auth.AuthState
 import com.project.pradyotprakash.rental.core.auth.AuthStateListener
 import com.project.pradyotprakash.rental.core.navigation.Navigator
@@ -87,6 +89,28 @@ class MainActivity : ComponentActivity() {
                                 } else {
                                     PropertyDetailsScreen(
                                         propertyId,
+                                    )
+                                }
+                            } ?: kotlin.run {
+                                GoToErrorScreen()
+                            }
+                        }
+                        composable(
+                            Routes.UserDetails.path(),
+                            arguments = Routes.UserDetails.arguments.map {
+                                navArgument(it) { type = NavType.StringType }
+                            }
+                        ) {
+                            val userId = it.arguments?.getString(
+                                UserDetailsArguments.userId
+                            )
+
+                            userId?.let {
+                                if (userId.isEmpty()) {
+                                    GoToErrorScreen()
+                                } else {
+                                    UserView(
+                                        userId = userId,
                                     )
                                 }
                             } ?: kotlin.run {

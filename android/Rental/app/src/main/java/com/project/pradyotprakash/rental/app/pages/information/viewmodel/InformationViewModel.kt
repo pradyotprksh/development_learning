@@ -10,6 +10,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.storage.StorageReference
+import com.project.pradyotprakash.rental.R
 import com.project.pradyotprakash.rental.app.localization.TR
 import com.project.pradyotprakash.rental.app.utils.DateTransformation
 import com.project.pradyotprakash.rental.app.utils.UserType
@@ -104,16 +105,27 @@ class InformationViewModel @Inject constructor(
 
     private fun updateFieldDetails(userDetails: UserEntity?) {
         val userType = UserType.valueOf(userDetails?.user_type ?: userLocalServices.userType)
-        val emailAddress = userDetails?.email_address ?:
-        authenticationUseCase.getCurrentUser()?.email ?: ""
+        val emailAddress =
+            userDetails?.email_address ?: authenticationUseCase.getCurrentUser()?.email ?: ""
 
         val fields = mutableListOf(
-            FieldStates(
-                id = FieldId.UserImagePicker.id,
-                composeType = ComposeType.SingleImagePicker,
-                label = TR.userProfileImage,
-                storageReference = userStorageReference,
-            ),
+            if ((userDetails?.profile_pic_url ?: "").isNotBlank()) {
+                FieldStates(
+                    id = FieldId.UserImagePicker.id,
+                    composeType = ComposeType.ImagePreview,
+                    label = TR.userProfileImage,
+                    storageReference = userStorageReference,
+                    value = MutableLiveData(userDetails?.profile_pic_url ?: "")
+                )
+            } else {
+                FieldStates(
+                    id = FieldId.UserImagePicker.id,
+                    composeType = ComposeType.SingleImagePicker,
+                    label = TR.userProfileImage,
+                    storageReference = userStorageReference,
+                    errorImageId = R.drawable.user_image,
+                )
+            },
             FieldStates(
                 id = FieldId.FirstName.id,
                 value = MutableLiveData(userDetails?.first_name ?: ""),
@@ -248,7 +260,8 @@ class InformationViewModel @Inject constructor(
                 fields.find { it.id == FieldId.Address.id }?.value?.value
             val emailAddress =
                 fields.find { it.id == FieldId.EmailAddress.id }?.value?.value
-            val profilePicUrl = fields.find { it.id == FieldId.UserImagePicker.id }?.values?.value?.firstOrNull()
+            val profilePicUrl =
+                fields.find { it.id == FieldId.UserImagePicker.id }?.values?.value?.firstOrNull()
 
             viewModelScope.launch {
                 appCheckService.getAppCheckToken().collect { appCheckToken ->

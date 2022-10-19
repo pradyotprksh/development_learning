@@ -3,6 +3,7 @@ package com.project.pradyotprakash.rental.core.navigation
 import com.project.pradyotprakash.rental.app.utils.ErrorScreenArguments
 import com.project.pradyotprakash.rental.app.utils.InformationScreenArguments
 import com.project.pradyotprakash.rental.app.utils.PropertyDetailsArguments
+import com.project.pradyotprakash.rental.app.utils.UserDetailsArguments
 
 /**
  * An extension on routes list which will combine the route
@@ -41,6 +42,12 @@ enum class Routes(
         "property-details/",
         listOf(
             PropertyDetailsArguments.propertyId,
+        )
+    ),
+    UserDetails(
+        "user-details/",
+        listOf(
+            UserDetailsArguments.userId,
         )
     ),
     Error(

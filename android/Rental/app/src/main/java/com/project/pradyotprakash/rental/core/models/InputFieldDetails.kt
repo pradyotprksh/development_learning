@@ -5,6 +5,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.storage.StorageReference
+import com.project.pradyotprakash.rental.R
 
 enum class FieldId(val id: String) {
     None("none"),
@@ -59,6 +60,7 @@ enum class ComposeType {
     Switch,
     MultipleImagePicker,
     SingleImagePicker,
+    ImagePreview,
 }
 
 data class FieldStates(
@@ -76,4 +78,5 @@ data class FieldStates(
     val children: List<FieldStates> = emptyList(),
     val values: MutableLiveData<List<String>> = MutableLiveData(emptyList()),
     val storageReference: StorageReference? = null,
+    val errorImageId: Int = R.drawable.error,
 )
