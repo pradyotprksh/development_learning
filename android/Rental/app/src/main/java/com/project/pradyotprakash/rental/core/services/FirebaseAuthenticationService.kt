@@ -20,4 +20,6 @@ interface FirebaseAuthenticationService {
     ) : RenterResponse<AuthResult>
 
     fun logoutUser()
+
+    fun updateUserDetails(fullName: String, profilePic: String)
 }

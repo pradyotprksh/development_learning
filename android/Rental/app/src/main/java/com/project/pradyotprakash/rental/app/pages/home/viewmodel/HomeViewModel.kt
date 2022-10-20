@@ -10,6 +10,7 @@ import com.project.pradyotprakash.rental.core.auth.AuthState
 import com.project.pradyotprakash.rental.core.auth.AuthStateListener
 import com.project.pradyotprakash.rental.core.navigation.Navigator
 import com.project.pradyotprakash.rental.core.navigation.Routes
+import com.project.pradyotprakash.rental.core.navigation.path
 import com.project.pradyotprakash.rental.core.response.RenterResponse
 import com.project.pradyotprakash.rental.core.services.AppCheckService
 import com.project.pradyotprakash.rental.domain.modal.PropertyEntity
@@ -70,6 +71,10 @@ class HomeViewModel @Inject constructor(
                                     is RenterResponse.Success -> {
                                         it.data.data?.let { userDetails ->
                                             authStateListener.updateUserDetails(userDetails)
+                                            authenticationUseCase.updateUserDetails(
+                                                userDetails.fullName,
+                                                userDetails.profile_pic_url,
+                                            )
 
                                             if (userDetails.user_type == UserType.Owner.name) {
                                                 _properties.value = userDetails.properties ?: emptyList()
@@ -127,6 +132,12 @@ class HomeViewModel @Inject constructor(
             }
         } ?: run {
             updateErrorState(TR.pleaseTryAgain)
+        }
+    }
+
+    fun goToSearchPage() {
+        navigator.navigate {
+            it.navigate(Routes.Search.path())
         }
     }
 }

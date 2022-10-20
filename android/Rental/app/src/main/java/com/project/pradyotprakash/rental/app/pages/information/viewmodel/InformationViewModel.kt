@@ -59,10 +59,6 @@ class InformationViewModel @Inject constructor(
     val error: LiveData<String>
         get() = _errorText
 
-    init {
-        updateFieldDetails(authStateListener.userDetails.value)
-    }
-
     private fun checkForUserDetails() {
         viewModelScope.launch {
             appCheckService.getAppCheckToken().collect { appCheckToken ->
@@ -84,6 +80,10 @@ class InformationViewModel @Inject constructor(
                                     is RenterResponse.Success -> {
                                         it.data.data?.let { userDetails ->
                                             authStateListener.updateUserDetails(userDetails)
+                                            authenticationUseCase.updateUserDetails(
+                                                userDetails.fullName,
+                                                userDetails.profile_pic_url,
+                                            )
                                             if (userDetails.is_all_details_available) {
                                                 navigateBack()
                                             } else {
@@ -374,6 +374,8 @@ class InformationViewModel @Inject constructor(
         this.onlyPreview = onlyPreview
         this.allowBackOption = allowBackOption
         this.firstTimeAddingDetails = firstTimeAddingDetails
+
+        updateFieldDetails(authStateListener.userDetails.value)
     }
 
     fun updateErrorState(errorText: String? = null) {

@@ -52,6 +52,10 @@ class UserViewModel @Inject constructor(
                                 is RenterResponse.Success -> {
                                     it.data.data?.let { userDetails ->
                                         authStateListener.updateUserDetails(userDetails)
+                                        authenticationUseCase.updateUserDetails(
+                                            userDetails.fullName,
+                                            userDetails.profile_pic_url,
+                                        )
                                         _userDetails.value = userDetails
                                     } ?: kotlin.run {
                                         updateErrorState(TR.pleaseTryAgain)
@@ -71,7 +75,7 @@ class UserViewModel @Inject constructor(
      */
     fun goToInformationScreen() {
         navigator.navigate {
-            it.navigate("${Routes.Information.route}${false}/${true}/${false}")
+            it.navigate("${Routes.Information.route}${!isCurrentUser()}/${true}/${false}")
         }
     }
 

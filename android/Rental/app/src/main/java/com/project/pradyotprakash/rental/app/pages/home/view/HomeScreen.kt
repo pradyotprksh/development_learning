@@ -12,7 +12,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Refresh
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
@@ -76,10 +76,10 @@ fun HomeScreen(homeViewModel: HomeViewModel = hiltViewModel()) {
                     },
                     colors = TopAppBarDefaults.smallTopAppBarColors(),
                     actions = {
-                        IconButton(onClick = { TODO() }) {
+                        IconButton(onClick = { homeViewModel.goToSearchPage() }) {
                             Icon(
-                                imageVector = Icons.Default.Refresh,
-                                contentDescription = Icons.Default.Refresh.name,
+                                imageVector = Icons.Default.Search,
+                                contentDescription = Icons.Default.Search.name,
                             )
                         }
                     }

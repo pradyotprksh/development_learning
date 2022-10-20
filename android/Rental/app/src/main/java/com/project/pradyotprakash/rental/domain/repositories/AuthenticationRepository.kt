@@ -16,6 +16,12 @@ class AuthenticationRepository(
 
     fun logoutUser() = firebaseAuthenticationService.logoutUser()
 
+    fun updateUserDetails(fullName: String, profilePic: String) =
+        firebaseAuthenticationService.updateUserDetails(
+            fullName = fullName,
+            profilePic = profilePic
+        )
+
     suspend fun signInUserWithEmailPassword(
         email: String, password: String
     ) = firebaseAuthenticationService.signInUserUsingEmailPassword(
@@ -46,19 +52,19 @@ class AuthenticationRepository(
         appCheckToken: String,
         isAllDetailsAvailable: Boolean,
     ) = authenticationService.setUserDetails(
-            userId = userId,
-            firstName = firstName,
-            lastName = lastName,
-            permanentAddress = permanentAddress,
-            dateOfBirth = dateOfBirth,
-            emailAddress = emailAddress,
-            profession = profession,
-            phoneNumber = phoneNumber,
-            profilePicUrl = profilePicUrl,
-            userType = userType,
-            appCheckToken = appCheckToken,
-            isAllDetailsAvailable = isAllDetailsAvailable,
-        ).parseResponse(crashlytics)
+        userId = userId,
+        firstName = firstName,
+        lastName = lastName,
+        permanentAddress = permanentAddress,
+        dateOfBirth = dateOfBirth,
+        emailAddress = emailAddress,
+        profession = profession,
+        phoneNumber = phoneNumber,
+        profilePicUrl = profilePicUrl,
+        userType = userType,
+        appCheckToken = appCheckToken,
+        isAllDetailsAvailable = isAllDetailsAvailable,
+    ).parseResponse(crashlytics)
 
     suspend fun updateCurrentUserDetails(
         userId: String,
@@ -74,17 +80,17 @@ class AuthenticationRepository(
         isAllDetailsAvailable: Boolean,
         appCheckToken: String,
     ) = authenticationService.updateUserDetails(
-            userId = userId,
-            firstName = firstName,
-            lastName = lastName,
-            permanentAddress = permanentAddress,
-            dateOfBirth = dateOfBirth,
-            emailAddress = emailAddress,
-            profession = profession,
-            phoneNumber = phoneNumber,
-            profilePicUrl = profilePicUrl,
-            userType = userType,
-            isAllDetailsAvailable = isAllDetailsAvailable,
-            appCheckToken = appCheckToken,
-        ).parseResponse(crashlytics)
+        userId = userId,
+        firstName = firstName,
+        lastName = lastName,
+        permanentAddress = permanentAddress,
+        dateOfBirth = dateOfBirth,
+        emailAddress = emailAddress,
+        profession = profession,
+        phoneNumber = phoneNumber,
+        profilePicUrl = profilePicUrl,
+        userType = userType,
+        isAllDetailsAvailable = isAllDetailsAvailable,
+        appCheckToken = appCheckToken,
+    ).parseResponse(crashlytics)
 }

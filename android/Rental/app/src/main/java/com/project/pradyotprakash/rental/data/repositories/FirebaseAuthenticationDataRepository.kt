@@ -1,8 +1,10 @@
 package com.project.pradyotprakash.rental.data.repositories
 
+import android.net.Uri
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.ktx.userProfileChangeRequest
 import com.project.pradyotprakash.rental.core.response.RenterException
 import com.project.pradyotprakash.rental.core.response.RenterResponse
 import com.project.pradyotprakash.rental.core.services.CrashlyticsService
@@ -41,5 +43,20 @@ class FirebaseAuthenticationDataRepository(
 
     override fun logoutUser() {
         auth.signOut()
+    }
+
+    override fun updateUserDetails(fullName: String, profilePic: String) {
+        currentUser()?.let { currentUser ->
+            val profileUpdates = userProfileChangeRequest {
+                if (fullName.isNotBlank()) {
+                    displayName = fullName
+                }
+                if (profilePic.isNotBlank()) {
+                    photoUri = Uri.parse(profilePic)
+                }
+            }
+
+            currentUser.updateProfile(profileUpdates)
+        }
     }
 }

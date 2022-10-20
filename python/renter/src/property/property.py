@@ -63,8 +63,8 @@ class _Property(Resource):
             users_list.append(doc)
 
         # Query parameters
-        property_id = request.args.get("property_id")
-        user_id = request.args.get("user_id")
+        property_id = request.args.get(Keys.Property.property_id)
+        user_id = request.args.get(Keys.User.user_id)
 
         # If user id is empty
         if user_id is None or user_id == "":

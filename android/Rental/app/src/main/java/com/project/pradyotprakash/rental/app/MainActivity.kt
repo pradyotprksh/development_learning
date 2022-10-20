@@ -22,6 +22,7 @@ import com.project.pradyotprakash.rental.app.pages.information.view.InformationS
 import com.project.pradyotprakash.rental.app.pages.options.view.OptionsView
 import com.project.pradyotprakash.rental.app.pages.property.add.view.PropertyScreen
 import com.project.pradyotprakash.rental.app.pages.property.details.view.PropertyDetailsScreen
+import com.project.pradyotprakash.rental.app.pages.search.view.SearchView
 import com.project.pradyotprakash.rental.app.pages.splash.view.SplashView
 import com.project.pradyotprakash.rental.app.pages.user.view.UserView
 import com.project.pradyotprakash.rental.app.pages.welcome.view.WelcomeScreen
@@ -73,6 +74,7 @@ class MainActivity : ComponentActivity() {
                         composable(Routes.Option.path()) { OptionsView() }
                         composable(Routes.Property.path()) { PropertyScreen() }
                         composable(Routes.Welcome.path()) { WelcomeScreen() }
+                        composable(Routes.Search.path()) { SearchView() }
                         composable(
                             Routes.PropertyDetails.path(),
                             arguments = Routes.PropertyDetails.arguments.map {

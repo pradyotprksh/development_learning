@@ -130,6 +130,10 @@ class WelcomeViewModel @Inject constructor(
                                 is RenterResponse.Idle -> _loading.value = false
                                 is RenterResponse.Loading -> _loading.value = true
                                 is RenterResponse.Success -> {
+                                    authenticationUseCase.updateUserDetails(
+                                        userDetails.data.data?.fullName ?: "",
+                                        userDetails.data.data?.profile_pic_url ?: "",
+                                    )
                                     if (userDetails.data.data?.is_all_details_available == false) {
                                         goToInformationScreen(
                                             false,

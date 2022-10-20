@@ -70,6 +70,8 @@ class Keys:
         valid = "valid"
         can_not_update_value = "can_not_update_value"
         cannot_validate_request = "cannot_validate_request"
+        search_result = "search_result"
+        search_error = "search_error"
 
     class User:
         """A set of keys related to the User section"""
@@ -112,6 +114,10 @@ class Keys:
         property_created_by = "property_created_by"
         property_created_by_details = "property_created_by_details"
 
+    class Search:
+        """A set of keys related to search section"""
+        search_text = "search_text"
+
 
 # Dictionary of messages
 MESSAGES_LIST = {
@@ -141,4 +147,5 @@ MESSAGES_LIST = {
     Keys.Messages.properties_found: "Properties found",
     Keys.Messages.property_not_found: "Asked property is not present. Please create the property or try again.",
     Keys.Messages.properties_not_found: "Properties couldn't be found",
+    Keys.Messages.search_result: "Search result",
 }

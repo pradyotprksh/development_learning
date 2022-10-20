@@ -40,6 +40,12 @@ class AuthenticationUseCase @Inject constructor(
      */
     fun logoutUser() = authenticationRepository.logoutUser()
 
+    fun updateUserDetails(fullName: String, profilePic: String) =
+        authenticationRepository.updateUserDetails(
+            fullName = fullName,
+            profilePic = profilePic
+        )
+
     /**
      * Get the user details from the DB. Update with the UserEntity.
      *

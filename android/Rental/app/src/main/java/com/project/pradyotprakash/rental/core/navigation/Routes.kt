@@ -58,4 +58,5 @@ enum class Routes(
             ErrorScreenArguments.description,
         )
     ),
+    Search("search/")
 }
