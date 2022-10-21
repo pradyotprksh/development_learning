@@ -25,6 +25,7 @@ import com.project.pradyotprakash.rental.data.repositories.StorageServiceReposit
 import com.project.pradyotprakash.rental.data.services.AuthenticationService
 import com.project.pradyotprakash.rental.data.services.BasicService
 import com.project.pradyotprakash.rental.data.services.PropertyService
+import com.project.pradyotprakash.rental.data.services.SearchService
 import com.project.pradyotprakash.rental.device.repositories.UserLocalServicesRepository
 import com.project.pradyotprakash.rental.device.services.UserLocalServices
 import dagger.Module
@@ -56,6 +57,11 @@ object RetrofitServices {
     @Provides
     fun providePropertyService(retrofit: Retrofit): PropertyService =
         retrofit.create(PropertyService::class.java)
+
+    @Singleton
+    @Provides
+    fun provideSearchService(retrofit: Retrofit): SearchService =
+        retrofit.create(SearchService::class.java)
 }
 
 @Module

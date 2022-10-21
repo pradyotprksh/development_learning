@@ -5,9 +5,11 @@ import com.project.pradyotprakash.rental.core.services.FirebaseAuthenticationSer
 import com.project.pradyotprakash.rental.data.services.AuthenticationService
 import com.project.pradyotprakash.rental.data.services.BasicService
 import com.project.pradyotprakash.rental.data.services.PropertyService
+import com.project.pradyotprakash.rental.data.services.SearchService
 import com.project.pradyotprakash.rental.domain.repositories.AuthenticationRepository
 import com.project.pradyotprakash.rental.domain.repositories.BasicRepository
 import com.project.pradyotprakash.rental.domain.repositories.PropertyRepository
+import com.project.pradyotprakash.rental.domain.repositories.SearchRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -45,4 +47,11 @@ object Repositories {
         propertyService: PropertyService,
         crashlyticsService: CrashlyticsService
     ) = PropertyRepository(propertyService, crashlyticsService)
+
+    @Singleton
+    @Provides
+    fun providesSearchRepository(
+        searchService: SearchService,
+        crashlyticsService: CrashlyticsService
+    ) = SearchRepository(searchService, crashlyticsService)
 }
