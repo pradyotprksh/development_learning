@@ -34,8 +34,8 @@ class AuthenticationRepository(
         email = email, password = password
     )
 
-    suspend fun getCurrentUserDetails(userId: String, appCheckToken: String) =
-        authenticationService.getUserDetails(userId = userId, appCheckToken = appCheckToken)
+    suspend fun getCurrentUserDetails(userId: String) =
+        authenticationService.getUserDetails(userId = userId)
             .parseResponse(crashlytics)
 
     suspend fun setCurrentUserDetails(
@@ -49,7 +49,6 @@ class AuthenticationRepository(
         phoneNumber: String,
         profilePicUrl: String,
         userType: String,
-        appCheckToken: String,
         isAllDetailsAvailable: Boolean,
     ) = authenticationService.setUserDetails(
         userId = userId,
@@ -62,7 +61,6 @@ class AuthenticationRepository(
         phoneNumber = phoneNumber,
         profilePicUrl = profilePicUrl,
         userType = userType,
-        appCheckToken = appCheckToken,
         isAllDetailsAvailable = isAllDetailsAvailable,
     ).parseResponse(crashlytics)
 
@@ -78,7 +76,6 @@ class AuthenticationRepository(
         profilePicUrl: String,
         userType: String,
         isAllDetailsAvailable: Boolean,
-        appCheckToken: String,
     ) = authenticationService.updateUserDetails(
         userId = userId,
         firstName = firstName,
@@ -91,6 +88,5 @@ class AuthenticationRepository(
         profilePicUrl = profilePicUrl,
         userType = userType,
         isAllDetailsAvailable = isAllDetailsAvailable,
-        appCheckToken = appCheckToken,
     ).parseResponse(crashlytics)
 }

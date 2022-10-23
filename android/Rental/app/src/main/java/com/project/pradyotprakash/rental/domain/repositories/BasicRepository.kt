@@ -14,9 +14,7 @@ class BasicRepository(
     /**
      * Get the details
      */
-    suspend fun getDetails(appCheckToken: String) = basicService.details(
-        appCheckToken = appCheckToken,
-    ).parseResponse(crashlytics)
+    suspend fun getDetails() = basicService.details().parseResponse(crashlytics)
 
 
     /**
@@ -24,8 +22,8 @@ class BasicRepository(
      *
      * @param userType Type of the user
      */
-    suspend fun getTermsAndCondition(userType: String, appCheckToken: String) =
-        basicService.termsAndCondition(userType = userType, appCheckToken = appCheckToken)
+    suspend fun getTermsAndCondition(userType: String) =
+        basicService.termsAndCondition(userType = userType)
             .parseResponse(crashlytics)
 
     /**
@@ -33,8 +31,7 @@ class BasicRepository(
      *
      * @param emailAddress Email to be verified
      */
-    suspend fun isEmailAddressValid(emailAddress: String, appCheckToken: String) = basicService.verifyEmailAddress(
-        emailAddress = emailAddress,
-        appCheckToken = appCheckToken
+    suspend fun isEmailAddressValid(emailAddress: String) = basicService.verifyEmailAddress(
+        emailAddress = emailAddress
     ).parseResponse(crashlytics)
 }

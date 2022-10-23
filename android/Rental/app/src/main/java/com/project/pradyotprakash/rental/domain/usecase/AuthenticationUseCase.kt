@@ -51,13 +51,12 @@ class AuthenticationUseCase @Inject constructor(
      *
      * @param userId Id of the user for which the details is needed
      */
-    suspend fun getCurrentUserDetails(userId: String, appCheckToken: String) =
+    suspend fun getCurrentUserDetails(userId: String) =
         flow {
             emit(RenterResponse.Loading)
             emit(
                 authenticationRepository.getCurrentUserDetails(
                     userId = userId,
-                    appCheckToken = appCheckToken
                 )
             )
             emit(RenterResponse.Idle)
@@ -77,7 +76,6 @@ class AuthenticationUseCase @Inject constructor(
         phoneNumber: String,
         profilePicUrl: String,
         userType: String,
-        appCheckToken: String,
         isAllDetailsAvailable: Boolean,
     ) = flow {
         emit(RenterResponse.Loading)
@@ -93,7 +91,6 @@ class AuthenticationUseCase @Inject constructor(
                 phoneNumber = phoneNumber,
                 profilePicUrl = profilePicUrl,
                 userType = userType,
-                appCheckToken = appCheckToken,
                 isAllDetailsAvailable = isAllDetailsAvailable,
             ),
         )
@@ -115,7 +112,6 @@ class AuthenticationUseCase @Inject constructor(
         profilePicUrl: String = "",
         userType: String,
         isAllDetailsAvailable: Boolean,
-        appCheckToken: String,
     ) = flow {
         emit(RenterResponse.Loading)
         emit(
@@ -131,7 +127,6 @@ class AuthenticationUseCase @Inject constructor(
                 profilePicUrl = profilePicUrl,
                 userType = userType,
                 isAllDetailsAvailable = isAllDetailsAvailable,
-                appCheckToken = appCheckToken,
             ),
         )
         emit(RenterResponse.Idle)

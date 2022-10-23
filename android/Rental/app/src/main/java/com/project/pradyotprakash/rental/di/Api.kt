@@ -3,6 +3,7 @@ package com.project.pradyotprakash.rental.di
 import android.content.Context
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.project.pradyotprakash.rental.BuildConfig
+import com.project.pradyotprakash.rental.core.interceptor.AuthorizationInterceptor
 import com.project.pradyotprakash.rental.core.utils.Constants.BASE_URL
 import dagger.Module
 import dagger.Provides
@@ -44,11 +45,13 @@ object Api {
     fun providesOkHttpClient(
         httpLoggingInterceptor: HttpLoggingInterceptor,
         chuckerInterceptor: ChuckerInterceptor,
+        authorizationInterceptor: AuthorizationInterceptor,
     ): OkHttpClient =
         OkHttpClient
             .Builder()
             .addInterceptor(httpLoggingInterceptor)
             .addInterceptor(chuckerInterceptor)
+            .addInterceptor(authorizationInterceptor)
             .callTimeout(60, TimeUnit.SECONDS)
             .connectTimeout(60, TimeUnit.SECONDS)
             .readTimeout(60, TimeUnit.SECONDS)

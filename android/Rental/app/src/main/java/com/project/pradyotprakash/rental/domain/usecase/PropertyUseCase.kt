@@ -10,14 +10,12 @@ class PropertyUseCase @Inject constructor(
     private val propertyRepository: PropertyRepository,
 ) {
     suspend fun getProperties(
-        appCheckToken: String,
         userId: String = "",
         propertyId: String = "",
     ) = flow {
         emit(RenterResponse.Loading)
         emit(
             propertyRepository.getProperties(
-                appCheckToken = appCheckToken,
                 userId = userId,
                 propertyId = propertyId,
             )
@@ -26,7 +24,6 @@ class PropertyUseCase @Inject constructor(
     }
 
     suspend fun createProperty(
-        appCheckToken: String,
         userId: String,
         propertyId: String,
         name: String,
@@ -48,7 +45,6 @@ class PropertyUseCase @Inject constructor(
         emit(
             propertyRepository.createProperty(
                 userId = userId,
-                appCheckToken = appCheckToken,
                 propertyEntity = PropertyEntity(
                     _id = "",
                     property_id = propertyId,

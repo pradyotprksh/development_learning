@@ -13,7 +13,6 @@ import retrofit2.http.Query
 interface PropertyService {
     @GET("/renter/property")
     suspend fun getProperties(
-        @Header("X-Firebase-AppCheck") appCheckToken: String,
         @Query("property_id") propertyId: String,
         @Query("user_id") userId: String,
     ): Response<DefaultEntity<List<PropertyEntity>>>
@@ -21,7 +20,6 @@ interface PropertyService {
     @FormUrlEncoded
     @POST("/renter/property")
     suspend fun createProperty(
-        @Header("X-Firebase-AppCheck") appCheckToken: String,
         @Header("user_id") userId: String,
         @Field("property_id") property_id: String,
         @Field("property_name") property_name: String,

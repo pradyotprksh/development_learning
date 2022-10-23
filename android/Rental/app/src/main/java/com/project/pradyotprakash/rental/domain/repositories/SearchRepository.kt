@@ -9,10 +9,8 @@ class SearchRepository(
     private val crashlytics: CrashlyticsService,
 ) {
     suspend fun performSearchQuery(
-        appCheckToken: String,
         searchedText: String,
     ) = searchService.performSearch(
-        appCheckToken = appCheckToken,
         searchedText = searchedText,
     ).parseResponse(crashlytics)
 }

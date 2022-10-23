@@ -36,6 +36,17 @@ import androidx.compose.ui.unit.sp
 // Code taken from https://stackoverflow.com/a/73665177/8244668
 // Code credit is to the user who answered the question.
 
+/**
+ * An app bar text field composable, which will be used to show a text field on the appbar. Usually
+ * for search.
+ *
+ * @param modifier Modifier attributes of the composable
+ * @param value Current value of the text field
+ * @param onValueChange Callback for value change in the text field
+ * @param hint Hint for the text field
+ * @param keyboardActions Keyboard actions for the app bar text field
+ * @param keyboardOptions Set of options for the text field key board
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AppBarTextField(

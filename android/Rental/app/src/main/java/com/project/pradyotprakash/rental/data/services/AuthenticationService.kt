@@ -14,13 +14,11 @@ interface AuthenticationService {
     @GET("/renter/user")
     suspend fun getUserDetails(
         @Header("user_id") userId: String,
-        @Header("X-Firebase-AppCheck") appCheckToken: String,
     ): Response<DefaultEntity<UserEntity>>
 
     @FormUrlEncoded
     @POST("/renter/user")
     suspend fun setUserDetails(
-        @Header("X-Firebase-AppCheck") appCheckToken: String,
         @Header("user_id") userId: String,
         @Field("first_name") firstName: String,
         @Field("last_name") lastName: String,
@@ -37,7 +35,6 @@ interface AuthenticationService {
     @FormUrlEncoded
     @PATCH("/renter/user")
     suspend fun updateUserDetails(
-        @Header("X-Firebase-AppCheck") appCheckToken: String,
         @Header("user_id") userId: String,
         @Field("first_name") firstName: String,
         @Field("last_name") lastName: String,

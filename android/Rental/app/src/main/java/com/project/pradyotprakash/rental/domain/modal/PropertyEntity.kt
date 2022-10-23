@@ -1,6 +1,7 @@
 package com.project.pradyotprakash.rental.domain.modal
 
 import com.github.marlonlom.utilities.timeago.TimeAgo
+import com.orhanobut.logger.Logger
 import com.project.pradyotprakash.rental.app.localization.TR
 import com.project.pradyotprakash.rental.core.models.FieldId
 
@@ -78,6 +79,7 @@ data class PropertyEntity(
             return try {
                 TimeAgo.using(property_created_on.toLong() * 1000)
             } catch (e: Exception) {
+                Logger.e(e.toString())
                 "*"
             }
         }
@@ -87,6 +89,7 @@ data class PropertyEntity(
             return try {
                 TimeAgo.using(property_updated_on.toLong() * 1000)
             } catch (e: Exception) {
+                Logger.e(e.toString())
                 "*"
             }
         }

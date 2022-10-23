@@ -2,6 +2,7 @@ package com.project.pradyotprakash.rental.data.repositories
 
 import android.graphics.Bitmap
 import com.google.firebase.storage.StorageReference
+import com.orhanobut.logger.Logger
 import com.project.pradyotprakash.rental.app.utils.toProgress
 import com.project.pradyotprakash.rental.core.services.CrashlyticsService
 import com.project.pradyotprakash.rental.core.services.StorageService
@@ -36,6 +37,7 @@ class StorageServiceRepository(
                 onProgress(progress)
             }
         } catch (e: Exception) {
+            Logger.e(e.toString())
             crashlyticsService.submitCaughtException(e)
             onFailure(e)
         }

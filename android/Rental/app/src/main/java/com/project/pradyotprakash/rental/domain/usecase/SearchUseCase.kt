@@ -9,13 +9,11 @@ class SearchUseCase @Inject constructor(
     private val searchRepository: SearchRepository,
 ) {
     suspend fun performSearchQuery(
-        appCheckToken: String,
         searchedText: String,
     ) = flow {
         emit(RenterResponse.Loading)
         emit(
             searchRepository.performSearchQuery(
-                appCheckToken = appCheckToken,
                 searchedText = searchedText,
             )
         )

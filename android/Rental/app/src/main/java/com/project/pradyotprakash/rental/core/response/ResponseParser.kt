@@ -1,5 +1,6 @@
 package com.project.pradyotprakash.rental.core.response
 
+import com.orhanobut.logger.Logger
 import com.project.pradyotprakash.rental.app.localization.TR
 import com.project.pradyotprakash.rental.core.services.CrashlyticsService
 import org.json.JSONObject
@@ -34,6 +35,7 @@ fun <T> Response<T>.parseResponse(crashlyticsService: CrashlyticsService) =
             }
         }
     } catch (e: Exception) {
+        Logger.e(e.toString())
         crashlyticsService.submitCaughtException(e)
         RenterResponse.Error(
             RenterException(

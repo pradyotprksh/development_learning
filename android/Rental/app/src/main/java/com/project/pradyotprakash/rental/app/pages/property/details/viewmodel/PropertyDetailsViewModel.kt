@@ -7,7 +7,6 @@ import androidx.lifecycle.viewModelScope
 import com.project.pradyotprakash.rental.core.navigation.Navigator
 import com.project.pradyotprakash.rental.core.response.RenterResponse
 import com.project.pradyotprakash.rental.domain.modal.PropertyEntity
-import com.project.pradyotprakash.rental.core.services.AppCheckService
 import com.project.pradyotprakash.rental.domain.usecase.AuthenticationUseCase
 import com.project.pradyotprakash.rental.domain.usecase.PropertyUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,7 +16,6 @@ import javax.inject.Inject
 @HiltViewModel
 class PropertyDetailsViewModel @Inject constructor(
     private val navigator: Navigator,
-    private val appCheckService: AppCheckService,
     private val propertyUseCase: PropertyUseCase,
     private val authenticationUseCase: AuthenticationUseCase,
 ) : ViewModel() {
@@ -36,38 +34,25 @@ class PropertyDetailsViewModel @Inject constructor(
 
     fun getPropertyDetails(propertyId: String) {
         viewModelScope.launch {
-            appCheckService.getAppCheckToken().collect { appCheckToken ->
-                when (appCheckToken) {
+            propertyUseCase.getProperties(
+                propertyId = propertyId,
+            ).collect {
+                when (it) {
                     is RenterResponse.Error -> {
-                        updateErrorState(appCheckToken.exception.message)
+                        updateErrorState(it.exception.message)
                         _noProperties.value = true
                     }
+                    is RenterResponse.Idle -> _loading.value = false
                     is RenterResponse.Loading -> _loading.value = true
                     is RenterResponse.Success -> {
-                        propertyUseCase.getProperties(
-                            appCheckToken = appCheckToken.data,
-                            propertyId = propertyId,
-                        ).collect {
-                            when (it) {
-                                is RenterResponse.Error -> {
-                                    updateErrorState(it.exception.message)
-                                    _noProperties.value = true
-                                }
-                                is RenterResponse.Idle -> _loading.value = false
-                                is RenterResponse.Loading -> _loading.value = true
-                                is RenterResponse.Success -> {
-                                    val data = it.data.data
-                                    data?.firstOrNull()?.let { propertyDetails ->
-                                        _noProperties.value = false
-                                        _propertyDetails.value = propertyDetails
-                                    } ?: kotlin.run {
-                                        _noProperties.value = true
-                                    }
-                                }
-                            }
+                        val data = it.data.data
+                        data?.firstOrNull()?.let { propertyDetails ->
+                            _noProperties.value = false
+                            _propertyDetails.value = propertyDetails
+                        } ?: kotlin.run {
+                            _noProperties.value = true
                         }
                     }
-                    else -> {}
                 }
             }
         }

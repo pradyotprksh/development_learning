@@ -10,7 +10,6 @@ import com.project.pradyotprakash.rental.core.auth.AuthStateListener
 import com.project.pradyotprakash.rental.core.navigation.Navigator
 import com.project.pradyotprakash.rental.core.navigation.Routes
 import com.project.pradyotprakash.rental.core.response.RenterResponse
-import com.project.pradyotprakash.rental.core.services.AppCheckService
 import com.project.pradyotprakash.rental.domain.modal.UserEntity
 import com.project.pradyotprakash.rental.domain.usecase.AuthenticationUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,7 +18,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class UserViewModel @Inject constructor(
-    private val appCheckService: AppCheckService,
     private val authenticationUseCase: AuthenticationUseCase,
     private val authStateListener: AuthStateListener,
     private val navigator: Navigator,
@@ -36,35 +34,25 @@ class UserViewModel @Inject constructor(
 
     fun getUserDetails(userId: String) {
         viewModelScope.launch {
-            appCheckService.getAppCheckToken().collect { appCheckToken ->
-                when (appCheckToken) {
-                    is RenterResponse.Error -> updateErrorState(appCheckToken.exception.message)
-                    is RenterResponse.Idle -> _loading.value = false
+            authenticationUseCase.getCurrentUserDetails(
+                userId = userId,
+            ).collect {
+                when (it) {
+                    is RenterResponse.Error -> updateErrorState(it.exception.localizedMessage)
                     is RenterResponse.Loading -> _loading.value = true
                     is RenterResponse.Success -> {
-                        authenticationUseCase.getCurrentUserDetails(
-                            userId = userId,
-                            appCheckToken = appCheckToken.data,
-                        ).collect {
-                            when (it) {
-                                is RenterResponse.Error -> updateErrorState(it.exception.localizedMessage)
-                                is RenterResponse.Loading -> _loading.value = true
-                                is RenterResponse.Success -> {
-                                    it.data.data?.let { userDetails ->
-                                        authStateListener.updateUserDetails(userDetails)
-                                        authenticationUseCase.updateUserDetails(
-                                            userDetails.fullName,
-                                            userDetails.profile_pic_url,
-                                        )
-                                        _userDetails.value = userDetails
-                                    } ?: kotlin.run {
-                                        updateErrorState(TR.pleaseTryAgain)
-                                    }
-                                }
-                                is RenterResponse.Idle -> _loading.value = false
-                            }
+                        it.data.data?.let { userDetails ->
+                            authStateListener.updateUserDetails(userDetails)
+                            authenticationUseCase.updateUserDetails(
+                                userDetails.fullName,
+                                userDetails.profile_pic_url,
+                            )
+                            _userDetails.value = userDetails
+                        } ?: kotlin.run {
+                            updateErrorState(TR.pleaseTryAgain)
                         }
                     }
+                    is RenterResponse.Idle -> _loading.value = false
                 }
             }
         }
@@ -110,7 +98,6 @@ class UserViewModel @Inject constructor(
     }
 
     fun logoutUser() {
-        authenticationUseCase.logoutUser()
         authStateListener.stateChange(AuthState.Unauthenticated)
     }
 

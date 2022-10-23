@@ -23,7 +23,6 @@ import com.project.pradyotprakash.rental.core.models.FieldStates
 import com.project.pradyotprakash.rental.core.models.InputType
 import com.project.pradyotprakash.rental.core.navigation.Navigator
 import com.project.pradyotprakash.rental.core.response.RenterResponse
-import com.project.pradyotprakash.rental.core.services.AppCheckService
 import com.project.pradyotprakash.rental.device.services.UserLocalServices
 import com.project.pradyotprakash.rental.di.Constants
 import com.project.pradyotprakash.rental.domain.modal.UserEntity
@@ -41,7 +40,6 @@ class InformationViewModel @Inject constructor(
     private val navigator: Navigator,
     private val authenticationUseCase: AuthenticationUseCase,
     private val authStateListener: AuthStateListener,
-    private val appCheckService: AppCheckService,
     private val userLocalServices: UserLocalServices,
     @Named(Constants.userStorageReference) private val userStorageReference: StorageReference,
 ) : ViewModel() {
@@ -61,42 +59,32 @@ class InformationViewModel @Inject constructor(
 
     private fun checkForUserDetails() {
         viewModelScope.launch {
-            appCheckService.getAppCheckToken().collect { appCheckToken ->
-                when (appCheckToken) {
-                    is RenterResponse.Error -> updateErrorState(appCheckToken.exception.message)
-                    is RenterResponse.Idle -> _loading.value = false
-                    is RenterResponse.Loading -> _loading.value = true
-                    is RenterResponse.Success -> {
-                        authenticationUseCase.getCurrentUserId()?.let { userId ->
-                            authenticationUseCase.getCurrentUserDetails(
-                                userId = userId,
-                                appCheckToken = appCheckToken.data,
-                            ).collect {
-                                when (it) {
-                                    is RenterResponse.Error -> {
-                                        authStateListener.stateChange(AuthState.Unauthenticated)
-                                    }
-                                    is RenterResponse.Loading -> _loading.value = true
-                                    is RenterResponse.Success -> {
-                                        it.data.data?.let { userDetails ->
-                                            authStateListener.updateUserDetails(userDetails)
-                                            authenticationUseCase.updateUserDetails(
-                                                userDetails.fullName,
-                                                userDetails.profile_pic_url,
-                                            )
-                                            if (userDetails.is_all_details_available) {
-                                                navigateBack()
-                                            } else {
-                                                updateFieldDetails(userDetails)
-                                            }
-                                        } ?: kotlin.run {
-                                            authStateListener.stateChange(AuthState.Unauthenticated)
-                                        }
-                                    }
-                                    is RenterResponse.Idle -> _loading.value = false
+            authenticationUseCase.getCurrentUserId()?.let { userId ->
+                authenticationUseCase.getCurrentUserDetails(
+                    userId = userId,
+                ).collect {
+                    when (it) {
+                        is RenterResponse.Error -> {
+                            authStateListener.stateChange(AuthState.Unauthenticated)
+                        }
+                        is RenterResponse.Loading -> _loading.value = true
+                        is RenterResponse.Success -> {
+                            it.data.data?.let { userDetails ->
+                                authStateListener.updateUserDetails(userDetails)
+                                authenticationUseCase.updateUserDetails(
+                                    userDetails.fullName,
+                                    userDetails.profile_pic_url,
+                                )
+                                if (userDetails.is_all_details_available) {
+                                    navigateBack()
+                                } else {
+                                    updateFieldDetails(userDetails)
                                 }
+                            } ?: kotlin.run {
+                                authStateListener.stateChange(AuthState.Unauthenticated)
                             }
                         }
+                        is RenterResponse.Idle -> _loading.value = false
                     }
                 }
             }
@@ -263,51 +251,37 @@ class InformationViewModel @Inject constructor(
             val profilePicUrl =
                 fields.find { it.id == FieldId.UserImagePicker.id }?.values?.value?.firstOrNull()
 
-            viewModelScope.launch {
-                appCheckService.getAppCheckToken().collect { appCheckToken ->
-                    when (appCheckToken) {
-                        is RenterResponse.Error -> updateErrorState(appCheckToken.exception.message)
-                        is RenterResponse.Idle -> _loading.value = false
-                        is RenterResponse.Loading -> _loading.value = true
-                        is RenterResponse.Success -> {
-                            isAllNotNull(
-                                appCheckToken,
-                                firstName,
-                                lastName,
-                                dateOfBirth,
-                                profession,
-                                phoneNumber,
-                                permanentAddress,
-                                emailAddress,
-                                userType,
-                                profilePicUrl,
-                                onNull = {
-                                    updateErrorState(TR.dataMissing)
-                                },
-                                onNotNull = {
-                                    initiateUpdateUserDetails(
-                                        appCheckToken.data,
-                                        firstName!!,
-                                        lastName!!,
-                                        dateOfBirth!!,
-                                        profession!!,
-                                        phoneNumber!!,
-                                        permanentAddress!!,
-                                        emailAddress!!,
-                                        userType!!,
-                                        profilePicUrl!!,
-                                    )
-                                }
-                            )
-                        }
-                    }
+            isAllNotNull(
+                firstName,
+                lastName,
+                dateOfBirth,
+                profession,
+                phoneNumber,
+                permanentAddress,
+                emailAddress,
+                userType,
+                profilePicUrl,
+                onNull = {
+                    updateErrorState(TR.dataMissing)
+                },
+                onNotNull = {
+                    initiateUpdateUserDetails(
+                        firstName!!,
+                        lastName!!,
+                        dateOfBirth!!,
+                        profession!!,
+                        phoneNumber!!,
+                        permanentAddress!!,
+                        emailAddress!!,
+                        userType!!,
+                        profilePicUrl!!,
+                    )
                 }
-            }
+            )
         }
     }
 
     private fun initiateUpdateUserDetails(
-        appCheckToken: String,
         firstName: String,
         lastName: String,
         dateOfBirth: String,
@@ -332,7 +306,6 @@ class InformationViewModel @Inject constructor(
                         phoneNumber = phoneNumber,
                         emailAddress = emailAddress,
                         isAllDetailsAvailable = true,
-                        appCheckToken = appCheckToken,
                         profilePicUrl = profilePicUrl,
                     )
                 } else {
@@ -347,7 +320,6 @@ class InformationViewModel @Inject constructor(
                         phoneNumber = phoneNumber,
                         emailAddress = emailAddress,
                         isAllDetailsAvailable = true,
-                        appCheckToken = appCheckToken,
                         profilePicUrl = profilePicUrl,
                     )
                 }.collect {

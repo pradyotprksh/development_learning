@@ -5,8 +5,11 @@ import com.google.firebase.FirebaseApp
 import com.google.firebase.appcheck.FirebaseAppCheck
 import com.google.firebase.appcheck.playintegrity.PlayIntegrityAppCheckProviderFactory
 import com.google.firebase.appcheck.safetynet.SafetyNetAppCheckProviderFactory
+import com.orhanobut.logger.AndroidLogAdapter
+import com.orhanobut.logger.Logger
 import dagger.hilt.android.HiltAndroidApp
 import javax.inject.Inject
+
 
 /**
  * The main application of the project.
@@ -23,6 +26,11 @@ class MainApplication : Application() {
         super.onCreate()
 
         firebaseInitializations()
+        loggerInitialInitialization()
+    }
+
+    private fun loggerInitialInitialization() {
+        Logger.addLogAdapter(AndroidLogAdapter())
     }
 
     private fun firebaseInitializations() {

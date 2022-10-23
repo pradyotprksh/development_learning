@@ -11,10 +11,8 @@ class PropertyRepository(
 ) {
     suspend fun getProperties(
         userId: String,
-        appCheckToken: String,
         propertyId: String,
     ) = propertyService.getProperties(
-        appCheckToken = appCheckToken,
         userId = userId,
         propertyId = propertyId,
     ).parseResponse(crashlytics)
@@ -22,10 +20,8 @@ class PropertyRepository(
 
     suspend fun createProperty(
         userId: String,
-        appCheckToken: String,
         propertyEntity: PropertyEntity,
     ) = propertyService.createProperty(
-        appCheckToken = appCheckToken,
         userId = userId,
         property_id = propertyEntity.property_id,
         property_name = propertyEntity.property_name,

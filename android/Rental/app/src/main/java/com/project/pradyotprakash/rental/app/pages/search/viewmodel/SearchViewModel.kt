@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.project.pradyotprakash.rental.core.navigation.Navigator
 import com.project.pradyotprakash.rental.core.response.RenterResponse
-import com.project.pradyotprakash.rental.core.services.AppCheckService
 import com.project.pradyotprakash.rental.domain.modal.SearchEntity
 import com.project.pradyotprakash.rental.domain.usecase.SearchUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,7 +18,6 @@ import javax.inject.Inject
 class SearchViewModel @Inject constructor(
     private val navigator: Navigator,
     private val searchUseCase: SearchUseCase,
-    private val appCheckService: AppCheckService,
 ) : ViewModel() {
     private val _loading = MutableLiveData(false)
     val loading: LiveData<Boolean>
@@ -62,26 +60,16 @@ class SearchViewModel @Inject constructor(
     private suspend fun callForSearchApi() {
         _searchText.value?.let { searchedText ->
             if (searchedText.length > 3) {
-                appCheckService.getAppCheckToken().collect { appCheckToken ->
-                    when (appCheckToken) {
-                        is RenterResponse.Error -> updateErrorState(appCheckToken.exception.message)
+                searchUseCase.performSearchQuery(
+                    searchedText = searchedText,
+                ).collect {
+                    when (it) {
+                        is RenterResponse.Error -> updateErrorState(it.exception.message)
+                        is RenterResponse.Idle -> _loading.value = false
                         is RenterResponse.Loading -> _loading.value = true
                         is RenterResponse.Success -> {
-                            searchUseCase.performSearchQuery(
-                                searchedText = searchedText,
-                                appCheckToken = appCheckToken.data,
-                            ).collect {
-                                when (it) {
-                                    is RenterResponse.Error -> updateErrorState(it.exception.message)
-                                    is RenterResponse.Idle -> _loading.value = false
-                                    is RenterResponse.Loading -> _loading.value = true
-                                    is RenterResponse.Success -> {
-                                        _searchResult.value = it.data.data
-                                    }
-                                }
-                            }
+                            _searchResult.value = it.data.data
                         }
-                        else -> {}
                     }
                 }
             }

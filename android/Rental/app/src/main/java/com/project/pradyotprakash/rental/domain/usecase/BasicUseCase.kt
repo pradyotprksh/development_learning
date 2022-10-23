@@ -16,10 +16,10 @@ class BasicUseCase @Inject constructor(
     /**
      * Get the details
      */
-    suspend fun getDetails(appCheckToken: String) = flow {
+    suspend fun getDetails() = flow {
         emit(RenterResponse.Loading)
         delay(2000)
-        emit(basicRepository.getDetails(appCheckToken = appCheckToken))
+        emit(basicRepository.getDetails())
         emit(RenterResponse.Idle)
     }
 
@@ -29,23 +29,21 @@ class BasicUseCase @Inject constructor(
      *
      * @param userType Type of the user
      */
-    suspend fun getTermsAndCondition(userType: String, appCheckToken: String) = flow {
+    suspend fun getTermsAndCondition(userType: String) = flow {
         emit(RenterResponse.Loading)
         emit(
             basicRepository.getTermsAndCondition(
                 userType = userType,
-                appCheckToken = appCheckToken
             )
         )
         emit(RenterResponse.Idle)
     }
 
-    suspend fun isEmailAddressValid(emailAddress: String, appCheckToken: String) = flow {
+    suspend fun isEmailAddressValid(emailAddress: String) = flow {
         emit(RenterResponse.Loading)
         emit(
             basicRepository.isEmailAddressValid(
                 emailAddress = emailAddress,
-                appCheckToken = appCheckToken
             )
         )
         emit(RenterResponse.Idle)

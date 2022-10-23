@@ -14,6 +14,12 @@ import com.project.pradyotprakash.rental.core.services.StorageService
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
+/**
+ * A view model class for the [ImagePicker] composable.
+ *
+ * @param storageService A service for storage which will be used to upload the selected
+ * file, either single or multiple.
+ */
 @HiltViewModel
 class ImagePickerViewModel @Inject constructor(
     private val storageService: StorageService,

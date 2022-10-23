@@ -10,6 +10,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 
+/**
+ * An animated progress bar indicator which will be used to show the current progress
+ * of an action.
+ *
+ * @param indicatorProgress Progress completed value
+ */
 @Composable
 fun AnimatedProgressBar(indicatorProgress: Float) {
     val animatedProgress = animateFloatAsState(

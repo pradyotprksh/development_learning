@@ -9,7 +9,6 @@ import com.project.pradyotprakash.rental.core.navigation.Navigator
 import com.project.pradyotprakash.rental.core.navigation.Routes
 import com.project.pradyotprakash.rental.core.navigation.path
 import com.project.pradyotprakash.rental.core.response.RenterResponse
-import com.project.pradyotprakash.rental.core.services.AppCheckService
 import com.project.pradyotprakash.rental.device.services.UserLocalServices
 import com.project.pradyotprakash.rental.domain.usecase.AuthenticationUseCase
 import com.project.pradyotprakash.rental.domain.usecase.BasicUseCase
@@ -31,7 +30,6 @@ class WelcomeViewModel @Inject constructor(
     private val navigator: Navigator,
     private val basicUseCase: BasicUseCase,
     private val authenticationUseCase: AuthenticationUseCase,
-    private val appCheckService: AppCheckService,
     private val userLocalServices: UserLocalServices,
 ) : ViewModel() {
     var userType: UserType =
@@ -51,98 +49,78 @@ class WelcomeViewModel @Inject constructor(
 
     fun initiateAuthCall(authType: AuthType) {
         viewModelScope.launch {
-            appCheckService.getAppCheckToken().collect { appCheckToken ->
-                when (appCheckToken) {
-                    is RenterResponse.Error -> updateErrorState(appCheckToken.exception.message)
-                    is RenterResponse.Idle -> _loading.value = false
-                    is RenterResponse.Loading -> _loading.value = true
-                    is RenterResponse.Success -> {
-                        when (authType) {
-                            AuthType.Email -> {
-                                // TODO: Give option to create user as well
-                                val userType = userLocalServices.userType
-                                val email =
-                                    if (userType == UserType.Owner.name) "pradyot@gmail.com" else "pradyotRenter@gmail.com"
-                                val password =
-                                    if (userType == UserType.Owner.name) "pradyot@gmail.com" else "pradyotRenter@gmail.com"
-                                basicUseCase.isEmailAddressValid(
-                                    emailAddress = email,
-                                    appCheckToken = appCheckToken.data
-                                ).collect { emailVerificationResponse ->
-                                    when (emailVerificationResponse) {
-                                        is RenterResponse.Loading -> _loading.value = true
-                                        is RenterResponse.Success -> {
-                                            authenticationUseCase.signInUserWithEmailPassword(
-                                                email,
-                                                password,
-                                            ).collect { signInResponse ->
-                                                when (signInResponse) {
-                                                    is RenterResponse.Error -> updateErrorState(
-                                                        signInResponse.exception.message
-                                                    )
-                                                    is RenterResponse.Loading -> _loading.value =
-                                                        true
-                                                    is RenterResponse.Success<*> -> checkForUserDetails()
-                                                    RenterResponse.Idle -> _loading.value = false
-                                                }
-                                            }
-                                        }
+            when (authType) {
+                AuthType.Email -> {
+                    // TODO: Give option to create user as well
+                    val userType = userLocalServices.userType
+                    val email =
+                        if (userType == UserType.Owner.name) "pradyot@gmail.com" else "pradyotRenter@gmail.com"
+                    val password =
+                        if (userType == UserType.Owner.name) "pradyot@gmail.com" else "pradyotRenter@gmail.com"
+                    basicUseCase.isEmailAddressValid(
+                        emailAddress = email,
+                    ).collect { emailVerificationResponse ->
+                        when (emailVerificationResponse) {
+                            is RenterResponse.Loading -> _loading.value = true
+                            is RenterResponse.Success -> {
+                                authenticationUseCase.signInUserWithEmailPassword(
+                                    email,
+                                    password,
+                                ).collect { signInResponse ->
+                                    when (signInResponse) {
                                         is RenterResponse.Error -> updateErrorState(
-                                            emailVerificationResponse.exception.message
+                                            signInResponse.exception.message
                                         )
-                                        else -> {}
+                                        is RenterResponse.Loading -> _loading.value =
+                                            true
+                                        is RenterResponse.Success<*> -> checkForUserDetails()
+                                        RenterResponse.Idle -> _loading.value = false
                                     }
                                 }
                             }
-                            AuthType.Phone -> TODO()
-                            AuthType.Google -> TODO()
+                            is RenterResponse.Error -> updateErrorState(
+                                emailVerificationResponse.exception.message
+                            )
+                            else -> {}
                         }
                     }
                 }
+                AuthType.Phone -> TODO()
+                AuthType.Google -> TODO()
             }
         }
     }
 
     private suspend fun checkForUserDetails() {
-        appCheckService.getAppCheckToken().collect { appCheckToken ->
-            when (appCheckToken) {
-                is RenterResponse.Error -> updateErrorState(appCheckToken.exception.message)
-                is RenterResponse.Idle -> _loading.value = false
-                is RenterResponse.Loading -> _loading.value = true
-                is RenterResponse.Success -> {
-                    authenticationUseCase.getCurrentUserId()?.let { userId ->
-                        authenticationUseCase.getCurrentUserDetails(
-                            appCheckToken = appCheckToken.data,
-                            userId = userId,
-                        ).collect { userDetails ->
-                            when (userDetails) {
-                                is RenterResponse.Error -> {
-                                    if (userDetails.exception.isNotFound()) {
-                                        goToInformationScreen(
-                                            true,
-                                        )
-                                    } else {
-                                        updateErrorState(
-                                            userDetails.exception.message
-                                        )
-                                    }
-                                }
-                                is RenterResponse.Idle -> _loading.value = false
-                                is RenterResponse.Loading -> _loading.value = true
-                                is RenterResponse.Success -> {
-                                    authenticationUseCase.updateUserDetails(
-                                        userDetails.data.data?.fullName ?: "",
-                                        userDetails.data.data?.profile_pic_url ?: "",
-                                    )
-                                    if (userDetails.data.data?.is_all_details_available == false) {
-                                        goToInformationScreen(
-                                            false,
-                                        )
-                                    } else {
-                                        goToHomeScreen()
-                                    }
-                                }
-                            }
+        authenticationUseCase.getCurrentUserId()?.let { userId ->
+            authenticationUseCase.getCurrentUserDetails(
+                userId = userId,
+            ).collect { userDetails ->
+                when (userDetails) {
+                    is RenterResponse.Error -> {
+                        if (userDetails.exception.isNotFound()) {
+                            goToInformationScreen(
+                                true,
+                            )
+                        } else {
+                            updateErrorState(
+                                userDetails.exception.message
+                            )
+                        }
+                    }
+                    is RenterResponse.Idle -> _loading.value = false
+                    is RenterResponse.Loading -> _loading.value = true
+                    is RenterResponse.Success -> {
+                        authenticationUseCase.updateUserDetails(
+                            userDetails.data.data?.fullName ?: "",
+                            userDetails.data.data?.profile_pic_url ?: "",
+                        )
+                        if (userDetails.data.data?.is_all_details_available == false) {
+                            goToInformationScreen(
+                                false,
+                            )
+                        } else {
+                            goToHomeScreen()
                         }
                     }
                 }

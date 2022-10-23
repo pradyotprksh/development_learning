@@ -159,4 +159,7 @@ dependencies {
 
     // Time ago
     implementation("com.github.marlonlom:timeago:4.0.3")
+
+    // Logger
+    implementation("com.orhanobut:logger:2.2.0")
 }

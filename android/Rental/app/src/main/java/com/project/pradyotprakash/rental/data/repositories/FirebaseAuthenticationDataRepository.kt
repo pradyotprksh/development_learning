@@ -5,6 +5,7 @@ import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.userProfileChangeRequest
+import com.orhanobut.logger.Logger
 import com.project.pradyotprakash.rental.core.response.RenterException
 import com.project.pradyotprakash.rental.core.response.RenterResponse
 import com.project.pradyotprakash.rental.core.services.CrashlyticsService
@@ -26,6 +27,7 @@ class FirebaseAuthenticationDataRepository(
         val createUserResult = auth.createUserWithEmailAndPassword(email, password).await()
         RenterResponse.Success(createUserResult)
     } catch (e: Exception) {
+        Logger.e(e.toString())
         crashlyticsService.submitCaughtException(e)
         RenterResponse.Error(RenterException(message = e.localizedMessage ?: ""))
     }
@@ -37,6 +39,7 @@ class FirebaseAuthenticationDataRepository(
         val createUserResult = auth.signInWithEmailAndPassword(email, password).await()
         RenterResponse.Success(createUserResult)
     } catch (e: Exception) {
+        Logger.e(e.toString())
         crashlyticsService.submitCaughtException(e)
         RenterResponse.Error(RenterException(message = e.localizedMessage ?: ""))
     }

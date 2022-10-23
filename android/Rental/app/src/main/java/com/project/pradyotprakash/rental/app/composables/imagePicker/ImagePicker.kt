@@ -28,6 +28,13 @@ import com.project.pradyotprakash.rental.app.composables.PageStateComposable
 import com.project.pradyotprakash.rental.core.models.FieldStates
 import com.project.pradyotprakash.rental.core.permissions.PermissionHandler
 
+/**
+ * An image picker composable which will be used to allow the user to pick an image.
+ *
+ * @param imagePickerType Type of picker, either multiple images or single image
+ * @param imagePickerViewModel View model for the composable
+ * @param field Details required for the composable
+ */
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun ImagePicker(

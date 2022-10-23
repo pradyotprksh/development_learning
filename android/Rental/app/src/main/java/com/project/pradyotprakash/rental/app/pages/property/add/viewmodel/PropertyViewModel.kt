@@ -17,7 +17,6 @@ import com.project.pradyotprakash.rental.core.models.FieldId
 import com.project.pradyotprakash.rental.core.models.FieldStates
 import com.project.pradyotprakash.rental.core.navigation.Navigator
 import com.project.pradyotprakash.rental.core.response.RenterResponse
-import com.project.pradyotprakash.rental.core.services.AppCheckService
 import com.project.pradyotprakash.rental.core.services.FirestoreService
 import com.project.pradyotprakash.rental.di.Constants
 import com.project.pradyotprakash.rental.domain.usecase.AuthenticationUseCase
@@ -33,7 +32,6 @@ class PropertyViewModel @Inject constructor(
     private val firestoreService: FirestoreService,
     private val authenticationUseCase: AuthenticationUseCase,
     private val propertyUseCase: PropertyUseCase,
-    private val appCheckService: AppCheckService,
     @Named(Constants.propertyStorageReference) private val propertyStorageReference: StorageReference,
 ) : ViewModel() {
     private val _loading = MutableLiveData(false)
@@ -275,62 +273,48 @@ class PropertyViewModel @Inject constructor(
                 fields.find { it.id == FieldId.AgreementRules.id }?.value?.value
             val images = fields.find { it.id == FieldId.PropertyImagePicker.id }?.values?.value ?: emptyList()
 
-            viewModelScope.launch {
-                appCheckService.getAppCheckToken().collect { appCheckToken ->
-                    when (appCheckToken) {
-                        is RenterResponse.Error -> updateErrorState(appCheckToken.exception.message)
-                        is RenterResponse.Idle -> _loading.value = false
-                        is RenterResponse.Loading -> _loading.value = true
-                        is RenterResponse.Success -> {
-                            isAllNotNull(
-                                appCheckToken,
-                                propertyId,
-                                name,
-                                address,
-                                areYouTheOwner,
-                                isForRental,
-                                kindOfRenter,
-                                furnishedType,
-                                propertyType,
-                                numberOfBathroom,
-                                wherePropertyIs,
-                                depositAmount,
-                                rentAmount,
-                                perks,
-                                agreementTerms,
-                                onNull = {
-                                    updateErrorState(TR.dataMissing)
-                                },
-                                onNotNull = {
-                                    initiateAddPropertyDetails(
-                                        appCheckToken.data,
-                                        propertyId,
-                                        name!!,
-                                        address!!,
-                                        areYouTheOwner!!,
-                                        isForRental!!,
-                                        kindOfRenter!!,
-                                        furnishedType!!,
-                                        propertyType!!,
-                                        numberOfBathroom!!,
-                                        wherePropertyIs!!,
-                                        depositAmount!!,
-                                        rentAmount!!,
-                                        perks!!,
-                                        agreementTerms!!,
-                                        images,
-                                    )
-                                },
-                            )
-                        }
-                    }
-                }
-            }
+            isAllNotNull(
+                propertyId,
+                name,
+                address,
+                areYouTheOwner,
+                isForRental,
+                kindOfRenter,
+                furnishedType,
+                propertyType,
+                numberOfBathroom,
+                wherePropertyIs,
+                depositAmount,
+                rentAmount,
+                perks,
+                agreementTerms,
+                onNull = {
+                    updateErrorState(TR.dataMissing)
+                },
+                onNotNull = {
+                    initiateAddPropertyDetails(
+                        propertyId,
+                        name!!,
+                        address!!,
+                        areYouTheOwner!!,
+                        isForRental!!,
+                        kindOfRenter!!,
+                        furnishedType!!,
+                        propertyType!!,
+                        numberOfBathroom!!,
+                        wherePropertyIs!!,
+                        depositAmount!!,
+                        rentAmount!!,
+                        perks!!,
+                        agreementTerms!!,
+                        images,
+                    )
+                },
+            )
         }
     }
 
     private fun initiateAddPropertyDetails(
-        appCheckToken: String,
         propertyId: String,
         name: String,
         address: String,
@@ -350,7 +334,6 @@ class PropertyViewModel @Inject constructor(
         viewModelScope.launch {
             authenticationUseCase.getCurrentUserId()?.let { userId ->
                 propertyUseCase.createProperty(
-                    appCheckToken = appCheckToken,
                     userId = userId,
                     propertyId = propertyId,
                     name = name,

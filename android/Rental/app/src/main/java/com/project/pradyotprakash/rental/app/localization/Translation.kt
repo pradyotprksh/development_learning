@@ -1,6 +1,7 @@
 package com.project.pradyotprakash.rental.app.localization
 
 import android.content.Context
+import com.orhanobut.logger.Logger
 import com.project.pradyotprakash.rental.app.utils.Assets
 import com.project.pradyotprakash.rental.app.utils.Constants.defaultLanguage
 import org.json.JSONObject
@@ -26,7 +27,9 @@ object Translation {
             inputSystem.close()
             val json = String(buffer, Charsets.UTF_8)
             translationJSON = JSONObject(json)
-        } catch (e: Exception) {}
+        } catch (e: Exception) {
+            Logger.e(e.toString())
+        }
     }
 
     /**
@@ -39,6 +42,7 @@ object Translation {
             try {
                 translationJSON.getString(key)
             } catch (e: Exception) {
+                Logger.e(e.toString())
                 key
             }
         } else {
