@@ -23,6 +23,7 @@ import com.project.pradyotprakash.rental.domain.modal.UserEntity
 fun UserDetailsComposable(
     userDetails: UserEntity,
     onClick: ((String) -> Unit)? = null,
+    showOtherDetails: Boolean = false,
 ) {
     Card(
         modifier = Modifier
@@ -48,7 +49,7 @@ fun UserDetailsComposable(
                 )
                 Spacer(modifier = Modifier.width(10.dp))
                 Text(
-                    text = userDetails.fullName,
+                    text = "${userDetails.fullName} (${userDetails.user_type})",
                     style = MaterialTheme.typography.titleMedium,
                 )
             }
@@ -66,6 +67,16 @@ fun UserDetailsComposable(
                     userDetails.profession
                 )
             )
+            if (showOtherDetails) {
+                Spacer(modifier = Modifier.height(10.dp))
+                Text(text = String.format(TR.joinedAgo, userDetails.accountCreateOnTimeAgo))
+                Spacer(modifier = Modifier.height(10.dp))
+                Text(text = "${TR.emailAddress}: ${userDetails.email_address}")
+                Spacer(modifier = Modifier.height(10.dp))
+                Text(text = "${TR.phoneNumber}: ${userDetails.phone_number}")
+                Spacer(modifier = Modifier.height(10.dp))
+                Text(text = "${TR.permanentAddress}: ${userDetails.permanent_address}")
+            }
         }
     }
 }

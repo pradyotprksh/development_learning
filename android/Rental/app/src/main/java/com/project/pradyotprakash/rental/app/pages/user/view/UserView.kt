@@ -96,7 +96,10 @@ fun UserView(
             ) {
                 userDetails.value?.let { details ->
                     item {
-                        UserDetailsComposable(userDetails = details)
+                        UserDetailsComposable(
+                            userDetails = details,
+                            showOtherDetails = true,
+                        )
                     }
 
                     details.properties?.let { properties ->

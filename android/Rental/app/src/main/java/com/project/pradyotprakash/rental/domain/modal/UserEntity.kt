@@ -1,5 +1,7 @@
 package com.project.pradyotprakash.rental.domain.modal
 
+import com.github.marlonlom.utilities.timeago.TimeAgo
+import com.orhanobut.logger.Logger
 import com.project.pradyotprakash.rental.app.utils.UserType
 
 data class UserEntity(
@@ -16,6 +18,8 @@ data class UserEntity(
     val user_type: String,
     val is_all_details_available: Boolean,
     val properties: List<PropertyEntity>? = null,
+    val account_created_on: String,
+    val account_updated_on: String,
 ) {
     val fullName
         get() = "$first_name $last_name"
@@ -25,6 +29,16 @@ data class UserEntity(
             return when (UserType.values().find { it.name == user_type }) {
                 UserType.Owner -> UserType.Owner
                 else -> UserType.Renter
+            }
+        }
+
+    val accountCreateOnTimeAgo: String
+        get() {
+            return try {
+                TimeAgo.using(account_created_on.toLong() * 1000)
+            } catch (e: Exception) {
+                Logger.e(e.toString())
+                "*"
             }
         }
 }

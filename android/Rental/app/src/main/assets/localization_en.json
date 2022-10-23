@@ -91,5 +91,6 @@
   "searchResultProperties": "Properties (%s)",
   "searchResultUsers": "Users (%s)",
   "searchResultOwners": "Owners (%s)",
-  "searchResultRenters": "Renters (%s)"
+  "searchResultRenters": "Renters (%s)",
+  "joinedAgo": "Joined %s"
 }
