@@ -1,5 +1,6 @@
 package com.project.pradyotprakash.rental.app.composables
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -19,11 +20,19 @@ import com.project.pradyotprakash.rental.app.localization.TR
 import com.project.pradyotprakash.rental.domain.modal.UserEntity
 
 @Composable
-fun UserDetailsComposable(userDetails: UserEntity) {
+fun UserDetailsComposable(
+    userDetails: UserEntity,
+    onClick: ((String) -> Unit)? = null,
+) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(15.dp)
+            .padding(5.dp)
+            .clickable {
+                onClick?.let {
+                    it(userDetails.user_id)
+                }
+            }
     ) {
         Column(
             modifier = Modifier.padding(10.dp)

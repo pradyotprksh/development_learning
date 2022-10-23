@@ -23,14 +23,16 @@ import com.project.pradyotprakash.rental.domain.modal.PropertyEntity
 @Composable
 fun PropertyDetailsComposable(
     property: PropertyEntity,
-    onClick: (String) -> Unit,
+    onClick: ((String) -> Unit)? = null,
 ) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(5.dp)
             .clickable {
-                onClick(property.property_id)
+                onClick?.let {
+                    it(property.property_id)
+                }
             }
     ) {
         Column(

@@ -94,5 +94,9 @@ object TR {
     var userProfileImage = Translation.getString("userProfileImage")
     var properties = Translation.getString("properties")
     var logout = Translation.getString("logout")
+    var searchResultProperties = Translation.getString("searchResultProperties")
+    var searchResultUsers = Translation.getString("searchResultUsers")
+    var searchResultOwners = Translation.getString("searchResultOwners")
+    var searchResultRenters = Translation.getString("searchResultRenters")
     
 }

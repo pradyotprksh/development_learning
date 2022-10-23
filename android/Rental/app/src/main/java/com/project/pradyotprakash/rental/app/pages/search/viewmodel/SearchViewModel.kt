@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.project.pradyotprakash.rental.core.navigation.Navigator
+import com.project.pradyotprakash.rental.core.navigation.Routes
 import com.project.pradyotprakash.rental.core.response.RenterResponse
 import com.project.pradyotprakash.rental.domain.modal.SearchEntity
 import com.project.pradyotprakash.rental.domain.usecase.SearchUseCase
@@ -46,6 +47,7 @@ class SearchViewModel @Inject constructor(
 
     fun updateSearchText(newValue: String) {
         _searchText.value = newValue
+        _loading.value = newValue.isNotBlank()
         restartApiCall()
     }
 
@@ -59,20 +61,30 @@ class SearchViewModel @Inject constructor(
 
     private suspend fun callForSearchApi() {
         _searchText.value?.let { searchedText ->
-            if (searchedText.length > 3) {
-                searchUseCase.performSearchQuery(
-                    searchedText = searchedText,
-                ).collect {
-                    when (it) {
-                        is RenterResponse.Error -> updateErrorState(it.exception.message)
-                        is RenterResponse.Idle -> _loading.value = false
-                        is RenterResponse.Loading -> _loading.value = true
-                        is RenterResponse.Success -> {
-                            _searchResult.value = it.data.data
-                        }
+            searchUseCase.performSearchQuery(
+                searchedText = searchedText,
+            ).collect {
+                when (it) {
+                    is RenterResponse.Error -> updateErrorState(it.exception.message)
+                    is RenterResponse.Idle -> _loading.value = false
+                    is RenterResponse.Loading -> _loading.value = true
+                    is RenterResponse.Success -> {
+                        _searchResult.value = it.data.data
                     }
                 }
             }
+        }
+    }
+
+    fun navigateToPropertyDetails(propertyId: String) {
+        navigator.navigate {
+            it.navigate("${Routes.PropertyDetails.route}${propertyId}")
+        }
+    }
+
+    fun goToUserDetails(userId: String) {
+        navigator.navigate {
+            it.navigate("${Routes.UserDetails.route}${userId}")
         }
     }
 }

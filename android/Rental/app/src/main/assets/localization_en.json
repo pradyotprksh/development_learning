@@ -87,5 +87,9 @@
   "noPropertiesAddedByYou": "You haven't added any new property. Please add one and start looking for renters.",
   "userProfileImage": "Please select an image for your profile",
   "properties": "Properties",
-  "logout": "Logout"
+  "logout": "Logout",
+  "searchResultProperties": "Properties (%s)",
+  "searchResultUsers": "Users (%s)",
+  "searchResultOwners": "Owners (%s)",
+  "searchResultRenters": "Renters (%s)"
 }
