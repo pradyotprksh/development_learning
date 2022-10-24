@@ -13,7 +13,6 @@ import com.google.firebase.storage.StorageReference
 import com.project.pradyotprakash.rental.R
 import com.project.pradyotprakash.rental.app.localization.TR
 import com.project.pradyotprakash.rental.app.utils.DateTransformation
-import com.project.pradyotprakash.rental.app.utils.UserType
 import com.project.pradyotprakash.rental.app.utils.isAllNotNull
 import com.project.pradyotprakash.rental.core.auth.AuthState
 import com.project.pradyotprakash.rental.core.auth.AuthStateListener
@@ -92,7 +91,7 @@ class InformationViewModel @Inject constructor(
     }
 
     private fun updateFieldDetails(userDetails: UserEntity?) {
-        val userType = UserType.valueOf(userDetails?.user_type ?: userLocalServices.userType)
+        val userType = userLocalServices.userType
         val emailAddress =
             userDetails?.email_address ?: authenticationUseCase.getCurrentUser()?.email ?: ""
 
@@ -355,11 +354,9 @@ class InformationViewModel @Inject constructor(
         _errorText.value = errorText ?: ""
     }
 
-    fun updateFieldState(index: Int, childId: String = "") {
+    fun updateFieldState(index: Int, value: String = "") {
         _fields.value?.get(index)?.let { field ->
-            if (childId.isNotEmpty()) {
-                field.value.value = childId
-            }
+            field.value.value = value
             field.isSelected.value?.let {
                 field.isSelected.value = !it
             }

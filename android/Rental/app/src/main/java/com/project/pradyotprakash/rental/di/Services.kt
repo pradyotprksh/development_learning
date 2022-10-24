@@ -24,6 +24,7 @@ import com.project.pradyotprakash.rental.data.repositories.FirestoreServiceRepos
 import com.project.pradyotprakash.rental.data.repositories.StorageServiceRepository
 import com.project.pradyotprakash.rental.data.services.AuthenticationService
 import com.project.pradyotprakash.rental.data.services.BasicService
+import com.project.pradyotprakash.rental.data.services.LocationService
 import com.project.pradyotprakash.rental.data.services.PropertyService
 import com.project.pradyotprakash.rental.data.services.SearchService
 import com.project.pradyotprakash.rental.device.repositories.UserLocalServicesRepository
@@ -62,6 +63,11 @@ object RetrofitServices {
     @Provides
     fun provideSearchService(retrofit: Retrofit): SearchService =
         retrofit.create(SearchService::class.java)
+
+    @Singleton
+    @Provides
+    fun provideLocationService(retrofit: Retrofit): LocationService =
+        retrofit.create(LocationService::class.java)
 }
 
 @Module

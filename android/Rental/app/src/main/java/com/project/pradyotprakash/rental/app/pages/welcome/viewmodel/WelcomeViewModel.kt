@@ -32,8 +32,7 @@ class WelcomeViewModel @Inject constructor(
     private val authenticationUseCase: AuthenticationUseCase,
     private val userLocalServices: UserLocalServices,
 ) : ViewModel() {
-    var userType: UserType =
-        UserType.values().find { it.name == userLocalServices.userType } ?: UserType.Unknown
+    var userType: UserType = userLocalServices.userType
 
     private val _loading = MutableLiveData(false)
     val loading: LiveData<Boolean>
@@ -52,11 +51,10 @@ class WelcomeViewModel @Inject constructor(
             when (authType) {
                 AuthType.Email -> {
                     // TODO: Give option to create user as well
-                    val userType = userLocalServices.userType
                     val email =
-                        if (userType == UserType.Owner.name) "pradyot@gmail.com" else "pradyotRenter@gmail.com"
+                        if (userType == UserType.Owner) "pradyotOwner@gmail.com" else "pradyotRenter@gmail.com"
                     val password =
-                        if (userType == UserType.Owner.name) "pradyot@gmail.com" else "pradyotRenter@gmail.com"
+                        if (userType == UserType.Owner) "pradyotOwner@gmail.com" else "pradyotRenter@gmail.com"
                     basicUseCase.isEmailAddressValid(
                         emailAddress = email,
                     ).collect { emailVerificationResponse ->
@@ -85,8 +83,14 @@ class WelcomeViewModel @Inject constructor(
                         }
                     }
                 }
-                AuthType.Phone -> TODO()
-                AuthType.Google -> TODO()
+                AuthType.Phone -> {
+                    _loading.value = false
+                    TODO()
+                }
+                AuthType.Google -> {
+                    _loading.value = false
+                    TODO()
+                }
             }
         }
     }

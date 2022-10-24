@@ -154,7 +154,6 @@ MESSAGES_LIST = {
     Keys.Messages.properties_not_found: "Properties couldn't be found",
     Keys.Messages.search_result: "Search result",
     Keys.Messages.location_found: "Location found",
-    Keys.Messages.location_not_found: "Sorry the requested location was not found. If possible "
-                                      "please provide the latitude and longitude or search for a nearby location. We "
-                                      "are using a free location service for now.",
+    Keys.Messages.location_not_found: "Sorry the requested location was not found. For better results use all available"
+                                      " options. We are using a free location service for now.",
 }

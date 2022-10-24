@@ -15,7 +15,11 @@ class UserLocalServicesRepository(
         }
     }
 
-    override val userType: String
-        get() = sharedPreference.getString(LocalStorageConstants.userType, UserType.Unknown.name)
-            ?: UserType.Unknown.name
+    override val userType: UserType
+        get() = UserType.values().find {
+            it.name == sharedPreference.getString(
+                LocalStorageConstants.userType,
+                UserType.Unknown.name
+            )
+        } ?: UserType.Unknown
 }
