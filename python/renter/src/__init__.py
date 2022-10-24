@@ -10,3 +10,4 @@ from .user.user import User
 from .property.property import Property
 from .firebase.firebase import Firebase
 from .search.search import Search
+from .location.location import Location

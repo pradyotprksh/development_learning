@@ -62,6 +62,8 @@ class Keys:
         property_found = "property_found"
         properties_not_found = "properties_not_found"
         properties_found = "properties_found"
+        location_found = "location_found"
+        location_not_found = "location_not_found"
         user_found = "user_found"
         user_already_available = "user_already_available"
         property_already_available = "property_already_available"
@@ -117,6 +119,9 @@ class Keys:
     class Search:
         """A set of keys related to search section"""
         search_text = "search_text"
+        zip_code = "zip_code"
+        latitude = "latitude"
+        longitude = "longitude"
 
 
 # Dictionary of messages
@@ -148,4 +153,8 @@ MESSAGES_LIST = {
     Keys.Messages.property_not_found: "Asked property is not present. Please create the property or try again.",
     Keys.Messages.properties_not_found: "Properties couldn't be found",
     Keys.Messages.search_result: "Search result",
+    Keys.Messages.location_found: "Location found",
+    Keys.Messages.location_not_found: "Sorry the requested location was not found. If possible "
+                                      "please provide the latitude and longitude or search for a nearby location. We "
+                                      "are using a free location service for now.",
 }

@@ -7,7 +7,7 @@ Also helps in start the application and make it usable by external applications.
 """
 from flask import Flask
 from flask_restful import Api
-from src import Renter, User, Property, Search
+from src import Renter, User, Property, Search, Location
 from src.utils.util_calls import get_mongo_details
 from pymongo import MongoClient
 
@@ -32,6 +32,8 @@ User(api=api)
 Property(api=api)
 # 4. Search
 Search(api=api)
+# 4. Location
+Location(api=api)
 
 # Start the application
 app.run(host="0.0.0.0", port=5000, debug=True)
