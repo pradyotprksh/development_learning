@@ -100,5 +100,6 @@ object TR {
     var searchResultRenters = Translation.getString("searchResultRenters")
     var joinedAgo = Translation.getString("joinedAgo")
     var pleaseSearchLocation = Translation.getString("pleaseSearchLocation")
+    var authenticateYourself = Translation.getString("authenticateYourself")
     
 }

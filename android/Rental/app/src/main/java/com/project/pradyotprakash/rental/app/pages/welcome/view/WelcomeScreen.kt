@@ -1,16 +1,13 @@
 package com.project.pradyotprakash.rental.app.pages.welcome.view
 
-import androidx.compose.foundation.layout.Arrangement
+import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Phone
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -22,14 +19,15 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.firebase.ui.auth.AuthUI
+import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
+import com.project.pradyotprakash.rental.R
 import com.project.pradyotprakash.rental.app.composables.PageStateComposable
 import com.project.pradyotprakash.rental.app.localization.TR
-import com.project.pradyotprakash.rental.app.pages.welcome.viewmodel.AuthType
 import com.project.pradyotprakash.rental.app.pages.welcome.viewmodel.WelcomeViewModel
 
 /**
@@ -41,6 +39,12 @@ import com.project.pradyotprakash.rental.app.pages.welcome.viewmodel.WelcomeView
 fun WelcomeScreen(
     welcomeViewModel: WelcomeViewModel = hiltViewModel()
 ) {
+    val signInLauncher = rememberLauncherForActivityResult(
+        FirebaseAuthUIActivityResultContract()
+    ) { res ->
+        welcomeViewModel.firebaseAuthResponse(res)
+    }
+
     val loading = welcomeViewModel.loading.observeAsState(false)
     val error = welcomeViewModel.error.observeAsState("")
 
@@ -73,57 +77,24 @@ fun WelcomeScreen(
                     textAlign = TextAlign.Center,
                 )
                 Spacer(modifier = Modifier.weight(1f))
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceEvenly,
-                ) {
-                    Button(
-                        onClick = {
-                            welcomeViewModel.initiateAuthCall(AuthType.Phone)
-                        },
-                        modifier = Modifier.weight(1f)
-                    ) {
-                        Row(
-                            horizontalArrangement = Arrangement.Center,
-                            verticalAlignment = Alignment.CenterVertically,
-                        ) {
-                            Icon(
-                                imageVector = Icons.Default.Phone,
-                                contentDescription = Icons.Default.Phone.name,
-                            )
-                            Spacer(modifier = Modifier.width(10.dp))
-                            Text(TR.phone)
-                        }
-                    }
-                    Spacer(modifier = Modifier.width(10.dp))
-                    Button(
-                        onClick = {
-                            welcomeViewModel.initiateAuthCall(AuthType.Email)
-                        },
-                        modifier = Modifier.weight(1f)
-                    ) {
-                        Row(
-                            horizontalArrangement = Arrangement.Center,
-                            verticalAlignment = Alignment.CenterVertically,
-                        ) {
-                            Icon(
-                                imageVector = Icons.Default.Email,
-                                contentDescription = Icons.Default.Phone.name,
-                            )
-                            Spacer(modifier = Modifier.width(10.dp))
-                            Text(TR.email)
-                        }
-                    }
-                }
-                Spacer(modifier = Modifier.height(10.dp))
                 Button(
                     onClick = {
-                        welcomeViewModel.initiateAuthCall(AuthType.Google)
+                        val providers = arrayListOf(
+                            AuthUI.IdpConfig.EmailBuilder().build(),
+                            AuthUI.IdpConfig.PhoneBuilder().build(),
+                            AuthUI.IdpConfig.GoogleBuilder().build()
+                        )
+                        val signInIntent = AuthUI.getInstance()
+                            .createSignInIntentBuilder()
+                            .setAvailableProviders(providers)
+                            .setLogo(R.drawable.app_icon)
+                            .build()
+                        signInLauncher.launch(signInIntent)
                     },
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     Row {
-                        Text(TR.signInWithGoogle)
+                        Text(TR.authenticateYourself)
                     }
                 }
             }

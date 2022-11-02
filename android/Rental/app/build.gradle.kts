@@ -143,6 +143,7 @@ dependencies {
     implementation("com.google.firebase:firebase-storage-ktx")
     implementation("com.google.firebase:firebase-appcheck-playintegrity")
     implementation("com.google.firebase:firebase-appcheck-safetynet:16.1.0")
+    implementation("com.firebaseui:firebase-ui-auth:8.0.2")
 
     // Testing
     testImplementation("junit:junit:4.13.2")

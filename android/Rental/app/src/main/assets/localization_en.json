@@ -93,5 +93,6 @@
   "searchResultOwners": "Owners (%s)",
   "searchResultRenters": "Renters (%s)",
   "joinedAgo": "Joined %s",
-  "pleaseSearchLocation": "Please search for the location"
+  "pleaseSearchLocation": "Please search for the location",
+  "authenticateYourself": "Please authenticate yourself"
 }
