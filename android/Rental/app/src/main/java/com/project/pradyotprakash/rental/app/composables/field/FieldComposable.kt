@@ -51,11 +51,6 @@ import com.project.pradyotprakash.rental.core.models.ComposeType
 import com.project.pradyotprakash.rental.core.models.FieldStates
 import kotlinx.coroutines.launch
 
-sealed class FieldPageState {
-    object Normal : FieldPageState()
-    data class Location(val fieldStates: FieldStates) : FieldPageState()
-}
-
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterialApi::class)
 @Composable
 fun FieldComposable(
