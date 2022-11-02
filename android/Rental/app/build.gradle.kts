@@ -98,7 +98,7 @@ kapt {
 
 dependencies {
     // Activity
-    implementation("androidx.activity:activity-compose:1.6.0")
+    implementation("androidx.activity:activity-compose:1.6.1")
 
     // Coroutines
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4")
@@ -108,12 +108,14 @@ dependencies {
     implementation("androidx.core:core-ktx:1.9.0")
 
     // Compose
-    implementation("androidx.compose.ui:ui:1.2.1")
-    implementation("androidx.compose.material3:material3:1.0.0-rc01")
-    implementation("androidx.navigation:navigation-compose:2.5.2")
-    implementation("androidx.compose.runtime:runtime-livedata:1.2.1")
-    debugImplementation("androidx.compose.ui:ui-tooling:1.2.1")
-    debugImplementation("androidx.compose.ui:ui-test-manifest:1.2.1")
+    implementation("androidx.compose.ui:ui:1.3.0")
+    implementation("androidx.compose.material3:material3:1.0.0")
+    implementation("androidx.compose.material:material:1.3.0")
+    implementation("androidx.compose.material3:material3-window-size-class:1.0.0")
+    implementation("androidx.navigation:navigation-compose:2.5.3")
+    implementation("androidx.compose.runtime:runtime-livedata:1.3.0")
+    debugImplementation("androidx.compose.ui:ui-tooling:1.3.0")
+    debugImplementation("androidx.compose.ui:ui-test-manifest:1.3.0")
 
     // Dependency Injection
     implementation("com.google.dagger:hilt-android:2.44")
@@ -146,7 +148,7 @@ dependencies {
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.3")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
-    androidTestImplementation("androidx.compose.ui:ui-test-junit4:1.2.1")
+    androidTestImplementation("androidx.compose.ui:ui-test-junit4:1.3.0")
 
     // Chrome browser
     implementation("androidx.browser:browser:1.4.0")
@@ -162,4 +164,7 @@ dependencies {
 
     // Logger
     implementation("com.orhanobut:logger:2.2.0")
+
+    // Leak Canary
+    debugImplementation("com.squareup.leakcanary:leakcanary-android:2.9.1")
 }

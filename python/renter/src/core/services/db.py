@@ -8,11 +8,15 @@ Helps in getting the collection, creating the client, etc.
 """
 from src.utils.util_calls import get_mongo_details
 from pymongo import MongoClient
+import certifi
 
 # Create mongo db
 client = MongoClient(
     get_mongo_details(),
     connect=False,
+    # Getting "[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get
+    # local issuer certificate error", the below line fix the error.
+    tlsCAFile=certifi.where(),
 )
 db = client["renter"]
 

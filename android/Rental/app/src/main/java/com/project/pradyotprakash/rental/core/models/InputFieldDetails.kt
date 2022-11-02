@@ -6,6 +6,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.storage.StorageReference
 import com.project.pradyotprakash.rental.R
+import com.project.pradyotprakash.rental.domain.modal.LocationEntity
 
 enum class FieldId(val id: String) {
     None("none"),
@@ -61,12 +62,15 @@ enum class ComposeType {
     MultipleImagePicker,
     SingleImagePicker,
     ImagePreview,
+    LocationPicker,
 }
 
 data class FieldStates(
     val id: String = FieldId.None.id,
     val composeType: ComposeType = ComposeType.None,
     var value: MutableLiveData<String> = MutableLiveData(""),
+    val values: MutableLiveData<List<String>> = MutableLiveData(emptyList()),
+    val locationDetails: MutableLiveData<LocationEntity> = MutableLiveData(null),
     val label: String = "",
     val inputType: InputType = InputType.Text,
     val readOnly: Boolean = false,
@@ -76,7 +80,6 @@ data class FieldStates(
     val keyboardActions: KeyboardActions = KeyboardActions.Default,
     val isSelected: MutableLiveData<Boolean> = MutableLiveData(false),
     val children: List<FieldStates> = emptyList(),
-    val values: MutableLiveData<List<String>> = MutableLiveData(emptyList()),
     val storageReference: StorageReference? = null,
     val errorImageId: Int = R.drawable.error,
 )

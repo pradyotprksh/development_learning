@@ -99,5 +99,6 @@ object TR {
     var searchResultOwners = Translation.getString("searchResultOwners")
     var searchResultRenters = Translation.getString("searchResultRenters")
     var joinedAgo = Translation.getString("joinedAgo")
+    var pleaseSearchLocation = Translation.getString("pleaseSearchLocation")
     
 }

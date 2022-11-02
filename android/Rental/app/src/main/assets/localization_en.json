@@ -92,5 +92,6 @@
   "searchResultUsers": "Users (%s)",
   "searchResultOwners": "Owners (%s)",
   "searchResultRenters": "Renters (%s)",
-  "joinedAgo": "Joined %s"
+  "joinedAgo": "Joined %s",
+  "pleaseSearchLocation": "Please search for the location"
 }

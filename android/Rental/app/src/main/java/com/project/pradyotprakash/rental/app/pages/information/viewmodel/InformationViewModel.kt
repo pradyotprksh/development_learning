@@ -184,14 +184,7 @@ class InformationViewModel @Inject constructor(
                 id = FieldId.Address.id,
                 value = MutableLiveData(userDetails?.permanent_address ?: ""),
                 label = TR.permanentAddress,
-                keyboardOptions = KeyboardOptions(
-                    capitalization = KeyboardCapitalization.Words,
-                    autoCorrect = false,
-                    keyboardType = KeyboardType.Text,
-                    imeAction = ImeAction.Next,
-                ),
-                readOnly = onlyPreview,
-                composeType = ComposeType.OutlinedTextField,
+                composeType = ComposeType.LocationPicker,
             ),
             FieldStates(
                 id = FieldId.PhoneNumber.id,

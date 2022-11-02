@@ -1,7 +1,7 @@
-firebase-admin==6.0.1
+certifi
 flask
 flask-restful
 geopy
 py3dns
-pymongo[srv]==4.3.2
+pymongo[srv]
 validate_email

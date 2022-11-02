@@ -18,6 +18,7 @@ import javax.inject.Inject
 class MainApplication : Application() {
     // TODO: AdMob
     // TODO: Location wise result for renter
+    // TODO: Firebase Auth UI
 
     @Inject
     lateinit var firebaseAppCheck: FirebaseAppCheck
