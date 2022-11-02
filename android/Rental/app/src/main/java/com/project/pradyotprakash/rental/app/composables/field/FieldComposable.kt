@@ -1,4 +1,4 @@
-package com.project.pradyotprakash.rental.app.composables
+package com.project.pradyotprakash.rental.app.composables.field
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.clickable
@@ -42,9 +42,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
+import com.project.pradyotprakash.rental.app.composables.NetworkImageComposable
 import com.project.pradyotprakash.rental.app.composables.imagePicker.ImagePicker
 import com.project.pradyotprakash.rental.app.composables.imagePicker.ImagePickerType
-import com.project.pradyotprakash.rental.app.composables.location.view.LocationPicker
+import com.project.pradyotprakash.rental.app.composables.location.LocationPicker
 import com.project.pradyotprakash.rental.app.localization.TR
 import com.project.pradyotprakash.rental.core.models.ComposeType
 import com.project.pradyotprakash.rental.core.models.FieldStates

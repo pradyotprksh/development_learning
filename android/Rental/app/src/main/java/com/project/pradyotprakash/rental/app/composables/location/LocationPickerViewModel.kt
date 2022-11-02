@@ -1,4 +1,4 @@
-package com.project.pradyotprakash.rental.app.composables.location.viewmodel
+package com.project.pradyotprakash.rental.app.composables.location
 
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel

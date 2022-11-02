@@ -14,8 +14,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.project.pradyotprakash.rental.app.composables.FieldComposable
 import com.project.pradyotprakash.rental.app.composables.PageStateComposable
+import com.project.pradyotprakash.rental.app.composables.field.FieldComposable
 import com.project.pradyotprakash.rental.app.localization.TR
 import com.project.pradyotprakash.rental.app.pages.property.add.viewmodel.PropertyViewModel
 
