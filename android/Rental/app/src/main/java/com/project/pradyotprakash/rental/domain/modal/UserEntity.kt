@@ -9,7 +9,7 @@ data class UserEntity(
     val user_id: String,
     val first_name: String,
     val last_name: String,
-    val permanent_address: String,
+    val permanent_address: LocationEntity,
     val date_of_birth: String,
     val email_address: String,
     val profession: String,

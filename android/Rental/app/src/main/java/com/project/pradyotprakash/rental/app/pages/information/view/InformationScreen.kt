@@ -9,6 +9,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
@@ -30,9 +31,11 @@ fun InformationScreen(
     allowBackOption: Boolean,
     firstTimeAddingDetails: Boolean,
 ) {
-    informationViewModel.start(
-        onlyPreview, allowBackOption, firstTimeAddingDetails
-    )
+    LaunchedEffect(onlyPreview, allowBackOption, firstTimeAddingDetails) {
+        informationViewModel.start(
+            onlyPreview, allowBackOption, firstTimeAddingDetails
+        )
+    }
 
     val fields = informationViewModel.fields.observeAsState(emptyList())
     val loading = informationViewModel.loading.observeAsState(false)

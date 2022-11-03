@@ -12,7 +12,7 @@ from src.core.modals import UserDetails
 from src.core.services.db import get_collection, get_document, insert_document, update_a_document, get_documents
 from src.utils.constants import Keys, MESSAGES_LIST, DEFAULT_ERROR_MESSAGE, USER_TYPE, OWNER_USER_TYPE
 from src.utils.response_mapper import response_creator
-from src.utils.util_calls import is_email_address_valid, get_current_timestamp
+from src.utils.util_calls import is_email_address_valid, get_current_timestamp, convert_string_to_json
 
 
 class User:
@@ -101,9 +101,13 @@ class _User(Resource):
 
         user_form = request.form.to_dict()
 
+        try:
+            permanent_address = convert_string_to_json(user_form.get(Keys.User.permanent_address))
+        except:
+            permanent_address = user.get(Keys.User.permanent_address)
+
         first_name = user_form.get(Keys.User.first_name, user.get(Keys.User.first_name))
         last_name = user_form.get(Keys.User.last_name, user.get(Keys.User.last_name))
-        permanent_address = user_form.get(Keys.User.permanent_address, user.get(Keys.User.permanent_address))
         date_of_birth = user_form.get(Keys.User.date_of_birth, user.get(Keys.User.date_of_birth))
         email_address = user_form.get(Keys.User.email_address)
         profession = user_form.get(Keys.User.profession, user.get(Keys.User.profession))
@@ -206,20 +210,21 @@ class _User(Resource):
                 message=MESSAGES_LIST.get(Keys.Messages.user_already_available).format(username)
             )
 
-        user_form = request.form.to_dict()
+        user_form = request.form
+        user_dict = user_form.to_dict()
 
-        first_name = user_form.get(Keys.User.first_name)
-        last_name = user_form.get(Keys.User.last_name, "")
-        permanent_address = user_form.get(Keys.User.permanent_address, "")
-        date_of_birth = user_form.get(Keys.User.date_of_birth, "")
-        email_address = user_form.get(Keys.User.email_address)
-        profession = user_form.get(Keys.User.profession, "")
-        phone_number = user_form.get(Keys.User.phone_number, "")
-        profile_pic_url = user_form.get(Keys.User.profile_pic_url, "")
-        is_all_details_available = user_form.get(Keys.User.is_all_details_available, False)
-        user_type = user_form.get(Keys.User.user_type)
-        account_created_on = user_form.get(Keys.User.account_created_on)
-        account_updated_on = user_form.get(Keys.User.account_updated_on)
+        permanent_address = convert_string_to_json(user_form.get(Keys.User.permanent_address))
+        first_name = user_dict.get(Keys.User.first_name)
+        last_name = user_dict.get(Keys.User.last_name, "")
+        date_of_birth = user_dict.get(Keys.User.date_of_birth, "")
+        email_address = user_dict.get(Keys.User.email_address)
+        profession = user_dict.get(Keys.User.profession, "")
+        phone_number = user_dict.get(Keys.User.phone_number, "")
+        profile_pic_url = user_dict.get(Keys.User.profile_pic_url, "")
+        is_all_details_available = user_dict.get(Keys.User.is_all_details_available, False)
+        user_type = user_dict.get(Keys.User.user_type)
+        account_created_on = user_dict.get(Keys.User.account_created_on)
+        account_updated_on = user_dict.get(Keys.User.account_updated_on)
 
         if first_name is None:
             return response_creator(

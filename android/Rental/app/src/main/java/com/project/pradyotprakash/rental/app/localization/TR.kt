@@ -101,5 +101,12 @@ object TR {
     var joinedAgo = Translation.getString("joinedAgo")
     var pleaseSearchLocation = Translation.getString("pleaseSearchLocation")
     var authenticateYourself = Translation.getString("authenticateYourself")
+    var textSearch = Translation.getString("textSearch")
+    var zipCodeSearch = Translation.getString("zipCodeSearch")
+    var latitude = Translation.getString("latitude")
+    var longitude = Translation.getString("longitude")
+    var or = Translation.getString("or")
+    var and = Translation.getString("and")
+    var locationSearchError = Translation.getString("locationSearchError")
     
 }

@@ -24,6 +24,7 @@ import com.project.pradyotprakash.rental.core.navigation.Navigator
 import com.project.pradyotprakash.rental.core.response.RenterResponse
 import com.project.pradyotprakash.rental.device.services.UserLocalServices
 import com.project.pradyotprakash.rental.di.Constants
+import com.project.pradyotprakash.rental.domain.modal.LocationEntity
 import com.project.pradyotprakash.rental.domain.modal.UserEntity
 import com.project.pradyotprakash.rental.domain.usecase.AuthenticationUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -102,7 +103,8 @@ class InformationViewModel @Inject constructor(
                     composeType = ComposeType.ImagePreview,
                     label = TR.userProfileImage,
                     storageReference = userStorageReference,
-                    value = MutableLiveData(userDetails?.profile_pic_url ?: "")
+                    value = MutableLiveData(userDetails?.profile_pic_url ?: ""),
+                    values = MutableLiveData(listOf(userDetails?.profile_pic_url ?: ""))
                 )
             } else {
                 FieldStates(
@@ -111,6 +113,7 @@ class InformationViewModel @Inject constructor(
                     label = TR.userProfileImage,
                     storageReference = userStorageReference,
                     errorImageId = R.drawable.user_image,
+                    values = MutableLiveData(listOf(userDetails?.profile_pic_url ?: ""))
                 )
             },
             FieldStates(
@@ -182,9 +185,9 @@ class InformationViewModel @Inject constructor(
             ),
             FieldStates(
                 id = FieldId.Address.id,
-                value = MutableLiveData(userDetails?.permanent_address ?: ""),
                 label = TR.permanentAddress,
                 composeType = ComposeType.LocationPicker,
+                locationDetails = MutableLiveData(userDetails?.permanent_address),
             ),
             FieldStates(
                 id = FieldId.PhoneNumber.id,
@@ -237,11 +240,12 @@ class InformationViewModel @Inject constructor(
             val phoneNumber = fields.find { it.id == FieldId.PhoneNumber.id }?.value?.value
             val userType = fields.find { it.id == FieldId.UserType.id }?.value?.value
             val permanentAddress =
-                fields.find { it.id == FieldId.Address.id }?.value?.value
+                fields.find { it.id == FieldId.Address.id }?.locationDetails?.value
             val emailAddress =
                 fields.find { it.id == FieldId.EmailAddress.id }?.value?.value
             val profilePicUrl =
                 fields.find { it.id == FieldId.UserImagePicker.id }?.values?.value?.firstOrNull()
+                    ?: ""
 
             isAllNotNull(
                 firstName,
@@ -279,7 +283,7 @@ class InformationViewModel @Inject constructor(
         dateOfBirth: String,
         profession: String,
         phoneNumber: String,
-        permanentAddress: String,
+        permanentAddress: LocationEntity,
         emailAddress: String,
         userType: String,
         profilePicUrl: String,

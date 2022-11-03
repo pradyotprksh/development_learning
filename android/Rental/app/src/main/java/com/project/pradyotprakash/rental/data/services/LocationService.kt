@@ -1,7 +1,7 @@
 package com.project.pradyotprakash.rental.data.services
 
 import com.project.pradyotprakash.rental.domain.modal.DefaultEntity
-import com.project.pradyotprakash.rental.domain.modal.SearchEntity
+import com.project.pradyotprakash.rental.domain.modal.LocationEntity
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -13,5 +13,5 @@ interface LocationService {
         @Query("zip_code") zipCode: String,
         @Query("latitude") latitude: String,
         @Query("longitude") longitude: String,
-    ): Response<DefaultEntity<SearchEntity>>
+    ): Response<DefaultEntity<List<LocationEntity>>>
 }

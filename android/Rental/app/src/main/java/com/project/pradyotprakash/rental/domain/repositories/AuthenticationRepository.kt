@@ -4,6 +4,7 @@ import com.project.pradyotprakash.rental.core.response.parseResponse
 import com.project.pradyotprakash.rental.core.services.CrashlyticsService
 import com.project.pradyotprakash.rental.core.services.FirebaseAuthenticationService
 import com.project.pradyotprakash.rental.data.services.AuthenticationService
+import com.project.pradyotprakash.rental.domain.modal.LocationEntity
 
 class AuthenticationRepository(
     private val firebaseAuthenticationService: FirebaseAuthenticationService,
@@ -42,7 +43,7 @@ class AuthenticationRepository(
         userId: String,
         firstName: String,
         lastName: String,
-        permanentAddress: String,
+        permanentAddress: LocationEntity,
         dateOfBirth: String,
         emailAddress: String,
         profession: String,
@@ -54,7 +55,7 @@ class AuthenticationRepository(
         userId = userId,
         firstName = firstName,
         lastName = lastName,
-        permanentAddress = permanentAddress,
+        permanentAddress = permanentAddress.toMap(),
         dateOfBirth = dateOfBirth,
         emailAddress = emailAddress,
         profession = profession,
@@ -68,7 +69,7 @@ class AuthenticationRepository(
         userId: String,
         firstName: String,
         lastName: String,
-        permanentAddress: String,
+        permanentAddress: LocationEntity?,
         dateOfBirth: String,
         emailAddress: String,
         profession: String,
@@ -80,7 +81,7 @@ class AuthenticationRepository(
         userId = userId,
         firstName = firstName,
         lastName = lastName,
-        permanentAddress = permanentAddress,
+        permanentAddress = permanentAddress?.toMap() ?: "",
         dateOfBirth = dateOfBirth,
         emailAddress = emailAddress,
         profession = profession,

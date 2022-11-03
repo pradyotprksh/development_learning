@@ -63,25 +63,31 @@ class _Location(Resource):
 
         search_text_location_details = []
         if is_search_query_available:
-            search_text_location_details = self.loc.geocode(
+            result = self.loc.geocode(
                 search_text,
                 addressdetails=True,
                 exactly_one=False,
             )
+            if not (result is None):
+                search_text_location_details = result
         zip_code_location_details = []
         if is_zip_code_available:
-            zip_code_location_details = self.loc.geocode(
+            result = self.loc.geocode(
                 zip_code,
                 addressdetails=True,
                 exactly_one=False,
             )
+            if not (result is None):
+                zip_code_location_details = result
         coordinates_location_details = []
         if is_coordinates_available:
-            coordinates_location_details = self.loc.reverse(
+            result = self.loc.reverse(
                 f"{latitude}, {longitude}",
                 addressdetails=True,
                 exactly_one=False,
             )
+            if not (result is None):
+                coordinates_location_details = result
 
         location_details = search_text_location_details + zip_code_location_details + coordinates_location_details
 

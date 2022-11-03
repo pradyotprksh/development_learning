@@ -19,4 +19,22 @@ class SearchUseCase @Inject constructor(
         )
         emit(RenterResponse.Idle)
     }
+
+    suspend fun performLocationSearch(
+        searchedText: String,
+        zipCode: String,
+        latitude: String,
+        longitude: String,
+    ) = flow {
+        emit(RenterResponse.Loading)
+        emit(
+            searchRepository.performLocationSearch(
+                searchedText = searchedText,
+                zipCode = zipCode,
+                latitude = latitude,
+                longitude = longitude,
+            )
+        )
+        emit(RenterResponse.Idle)
+    }
 }

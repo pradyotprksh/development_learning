@@ -94,5 +94,12 @@
   "searchResultRenters": "Renters (%s)",
   "joinedAgo": "Joined %s",
   "pleaseSearchLocation": "Please search for the location",
-  "authenticateYourself": "Please authenticate yourself"
+  "authenticateYourself": "Please authenticate yourself",
+  "textSearch": "Text Search",
+  "zipCodeSearch": "Zip Code",
+  "latitude": "Latitude",
+  "longitude": "Longitude",
+  "or": "Or",
+  "and": "And",
+  "locationSearchError": "Please provide a search text or zip code or latitude and longitude. For better results you can provide all the values."
 }

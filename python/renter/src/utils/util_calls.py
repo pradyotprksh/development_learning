@@ -10,6 +10,7 @@ from .constants import MONGO_DB_DETAILS_FILE
 from validate_email import validate_email
 import calendar
 import time
+import json
 
 
 def get_mongo_details():
@@ -32,3 +33,8 @@ def get_current_timestamp():
     """Returns the current timestamp"""
     current_gmt = time.gmtime()
     return calendar.timegm(current_gmt)
+
+
+def convert_string_to_json(value):
+    """Returns the JSON format for the given string"""
+    return json.loads(value)

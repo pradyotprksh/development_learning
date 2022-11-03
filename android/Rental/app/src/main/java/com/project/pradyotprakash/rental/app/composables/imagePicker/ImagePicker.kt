@@ -49,20 +49,22 @@ fun ImagePicker(
     val context = LocalContext.current
 
     val externalStorageState = PermissionHandler.checkForReadExternalStorage()
-    val launcherMultiple = rememberLauncherForActivityResult(ActivityResultContracts.GetMultipleContents()) {
-        imagePickerViewModel.startImagePicker(it, field, context)
-    }
-    val launcherSingle = rememberLauncherForActivityResult(ActivityResultContracts.GetContent()) { uri ->
-        uri?.let {
-            imagePickerViewModel.startImagePicker(
-                listOf(uri), field, context
-            )
-        } ?: run {
-            imagePickerViewModel.startImagePicker(
-                emptyList(), field, context
-            )
+    val launcherMultiple =
+        rememberLauncherForActivityResult(ActivityResultContracts.GetMultipleContents()) {
+            imagePickerViewModel.startImagePicker(it, field, context)
         }
-    }
+    val launcherSingle =
+        rememberLauncherForActivityResult(ActivityResultContracts.GetContent()) { uri ->
+            uri?.let {
+                imagePickerViewModel.startImagePicker(
+                    listOf(uri), field, context
+                )
+            } ?: run {
+                imagePickerViewModel.startImagePicker(
+                    emptyList(), field, context
+                )
+            }
+        }
 
     PageStateComposable(
         errorMessage = error.value,
@@ -85,26 +87,34 @@ fun ImagePicker(
 
                 item {
                     Spacer(modifier = Modifier.width(5.dp))
-                    IconButton(
-                        onClick = {
-                            PermissionHandler.permissionInitiatorWithStateCheck(
-                                state = externalStorageState,
-                                askForPermission = {
-                                    externalStorageState.launchPermissionRequest()
-                                },
-                                onGranted = {
-                                    when (imagePickerType) {
-                                        ImagePickerType.MultipleImagePicker -> launcherMultiple.launch("image/*")
-                                        ImagePickerType.SingleImagePicker -> launcherSingle.launch("image/*")
+
+                    if ((imagePickerType == ImagePickerType.SingleImagePicker &&
+                                uploadedImages.value.isEmpty())
+                        || imagePickerType == ImagePickerType.MultipleImagePicker
+                    ) {
+                        IconButton(
+                            onClick = {
+                                PermissionHandler.permissionInitiatorWithStateCheck(
+                                    state = externalStorageState,
+                                    askForPermission = {
+                                        externalStorageState.launchPermissionRequest()
+                                    },
+                                    onGranted = {
+                                        when (imagePickerType) {
+                                            ImagePickerType.MultipleImagePicker -> launcherMultiple.launch(
+                                                "image/*"
+                                            )
+                                            ImagePickerType.SingleImagePicker -> launcherSingle.launch("image/*")
+                                        }
                                     }
-                                }
+                                )
+                            }
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.Add,
+                                contentDescription = Icons.Default.Add.name,
                             )
                         }
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.Add,
-                            contentDescription = Icons.Default.Add.name,
-                        )
                     }
                 }
             }

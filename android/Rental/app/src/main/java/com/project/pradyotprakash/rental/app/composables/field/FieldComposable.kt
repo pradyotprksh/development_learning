@@ -1,6 +1,5 @@
 package com.project.pradyotprakash.rental.app.composables.field
 
-import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -315,12 +314,4 @@ fun FieldComposable(
             }
         },
     )
-
-    BackHandler {
-        if (scaffoldState.isConcealed) {
-            closeSheet()
-        } else {
-            appBarNavigationIconAction()
-        }
-    }
 }

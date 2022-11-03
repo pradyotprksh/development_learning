@@ -50,7 +50,6 @@ class HomeViewModel @Inject constructor(
                     when (it) {
                         is RenterResponse.Error -> {
                             if (it.exception.isNotFound()) {
-                                // TODO change current user type to be saved in local storage
                                 goToInformationScreen(
                                     true,
                                 )

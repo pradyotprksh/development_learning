@@ -4,6 +4,7 @@ import com.project.pradyotprakash.rental.core.services.CrashlyticsService
 import com.project.pradyotprakash.rental.core.services.FirebaseAuthenticationService
 import com.project.pradyotprakash.rental.data.services.AuthenticationService
 import com.project.pradyotprakash.rental.data.services.BasicService
+import com.project.pradyotprakash.rental.data.services.LocationService
 import com.project.pradyotprakash.rental.data.services.PropertyService
 import com.project.pradyotprakash.rental.data.services.SearchService
 import com.project.pradyotprakash.rental.domain.repositories.AuthenticationRepository
@@ -52,6 +53,7 @@ object Repositories {
     @Provides
     fun providesSearchRepository(
         searchService: SearchService,
+        locationService: LocationService,
         crashlyticsService: CrashlyticsService
-    ) = SearchRepository(searchService, crashlyticsService)
+    ) = SearchRepository(searchService, locationService, crashlyticsService)
 }

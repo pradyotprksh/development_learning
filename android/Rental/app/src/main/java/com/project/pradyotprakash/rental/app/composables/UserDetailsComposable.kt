@@ -57,7 +57,7 @@ fun UserDetailsComposable(
             Text(
                 text = String.format(
                     TR.addressColon,
-                    userDetails.permanent_address
+                    userDetails.permanent_address.display_name
                 )
             )
             Spacer(modifier = Modifier.height(10.dp))
@@ -74,8 +74,6 @@ fun UserDetailsComposable(
                 Text(text = "${TR.emailAddress}: ${userDetails.email_address}")
                 Spacer(modifier = Modifier.height(10.dp))
                 Text(text = "${TR.phoneNumber}: ${userDetails.phone_number}")
-                Spacer(modifier = Modifier.height(10.dp))
-                Text(text = "${TR.permanentAddress}: ${userDetails.permanent_address}")
             }
         }
     }

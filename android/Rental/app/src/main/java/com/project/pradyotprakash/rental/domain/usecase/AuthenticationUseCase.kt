@@ -1,6 +1,7 @@
 package com.project.pradyotprakash.rental.domain.usecase
 
 import com.project.pradyotprakash.rental.core.response.RenterResponse
+import com.project.pradyotprakash.rental.domain.modal.LocationEntity
 import com.project.pradyotprakash.rental.domain.repositories.AuthenticationRepository
 import com.project.pradyotprakash.rental.domain.repositories.BasicRepository
 import kotlinx.coroutines.flow.flow
@@ -69,7 +70,7 @@ class AuthenticationUseCase @Inject constructor(
         userId: String,
         firstName: String,
         lastName: String,
-        permanentAddress: String,
+        permanentAddress: LocationEntity,
         dateOfBirth: String,
         emailAddress: String,
         profession: String,
@@ -104,7 +105,7 @@ class AuthenticationUseCase @Inject constructor(
         userId: String,
         firstName: String = "",
         lastName: String = "",
-        permanentAddress: String = "",
+        permanentAddress: LocationEntity? = null,
         dateOfBirth: String = "",
         emailAddress: String = "",
         profession: String = "",
