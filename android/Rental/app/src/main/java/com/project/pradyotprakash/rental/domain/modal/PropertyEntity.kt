@@ -11,7 +11,7 @@ data class PropertyEntity(
 
     // Basic Details
     val property_name: String,
-    val address: String,
+    val address: LocationEntity,
     val property_created_on: String,
     val property_updated_on: String,
     val property_created_by: String,

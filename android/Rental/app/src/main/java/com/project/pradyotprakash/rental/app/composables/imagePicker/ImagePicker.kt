@@ -10,6 +10,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.LinearProgressIndicator
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Icon
@@ -18,6 +20,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -43,6 +46,7 @@ fun ImagePicker(
     imagePickerType: ImagePickerType = ImagePickerType.SingleImagePicker,
 ) {
     val uploadProgress = imagePickerViewModel.imageUploading.observeAsState(0.0f)
+    val loading = imagePickerViewModel.loading.observeAsState(false)
     val error = imagePickerViewModel.error.observeAsState("")
     val uploadedImages = field.values.observeAsState(emptyList())
 
@@ -104,7 +108,9 @@ fun ImagePicker(
                                             ImagePickerType.MultipleImagePicker -> launcherMultiple.launch(
                                                 "image/*"
                                             )
-                                            ImagePickerType.SingleImagePicker -> launcherSingle.launch("image/*")
+                                            ImagePickerType.SingleImagePicker -> launcherSingle.launch(
+                                                "image/*"
+                                            )
                                         }
                                     }
                                 )
@@ -117,6 +123,14 @@ fun ImagePicker(
                         }
                     }
                 }
+            }
+
+            if (loading.value) {
+                LinearProgressIndicator(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clip(RoundedCornerShape(20.dp))
+                )
             }
 
             uploadProgress.value.run {

@@ -99,23 +99,24 @@ class _User(Resource):
                 message=MESSAGES_LIST[Keys.Messages.user_not_found],
             )
 
-        user_form = request.form.to_dict()
+        user_form = request.form
+        user_dict = user_form.to_dict()
 
         try:
             permanent_address = convert_string_to_json(user_form.get(Keys.User.permanent_address))
         except:
             permanent_address = user.get(Keys.User.permanent_address)
 
-        first_name = user_form.get(Keys.User.first_name, user.get(Keys.User.first_name))
-        last_name = user_form.get(Keys.User.last_name, user.get(Keys.User.last_name))
-        date_of_birth = user_form.get(Keys.User.date_of_birth, user.get(Keys.User.date_of_birth))
-        email_address = user_form.get(Keys.User.email_address)
-        profession = user_form.get(Keys.User.profession, user.get(Keys.User.profession))
-        phone_number = user_form.get(Keys.User.phone_number, user.get(Keys.User.phone_number))
-        profile_pic_url = user_form.get(Keys.User.profile_pic_url, user.get(Keys.User.profile_pic_url))
-        user_type = user_form.get(Keys.User.user_type, user.get(Keys.User.user_type))
+        first_name = user_dict.get(Keys.User.first_name, user.get(Keys.User.first_name))
+        last_name = user_dict.get(Keys.User.last_name, user.get(Keys.User.last_name))
+        date_of_birth = user_dict.get(Keys.User.date_of_birth, user.get(Keys.User.date_of_birth))
+        email_address = user_dict.get(Keys.User.email_address)
+        profession = user_dict.get(Keys.User.profession, user.get(Keys.User.profession))
+        phone_number = user_dict.get(Keys.User.phone_number, user.get(Keys.User.phone_number))
+        profile_pic_url = user_dict.get(Keys.User.profile_pic_url, user.get(Keys.User.profile_pic_url))
+        user_type = user_dict.get(Keys.User.user_type, user.get(Keys.User.user_type))
         account_created_on = user.get(Keys.User.account_created_on)
-        is_all_details_available = user_form.get(Keys.User.is_all_details_available,
+        is_all_details_available = user_dict.get(Keys.User.is_all_details_available,
                                                  user.get(Keys.User.is_all_details_available, False))
         account_updated_on = get_current_timestamp()
 

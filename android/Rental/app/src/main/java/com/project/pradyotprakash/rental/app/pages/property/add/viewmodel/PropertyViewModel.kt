@@ -19,6 +19,7 @@ import com.project.pradyotprakash.rental.core.navigation.Navigator
 import com.project.pradyotprakash.rental.core.response.RenterResponse
 import com.project.pradyotprakash.rental.core.services.FirestoreService
 import com.project.pradyotprakash.rental.di.Constants
+import com.project.pradyotprakash.rental.domain.modal.LocationEntity
 import com.project.pradyotprakash.rental.domain.usecase.AuthenticationUseCase
 import com.project.pradyotprakash.rental.domain.usecase.PropertyUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -64,13 +65,7 @@ class PropertyViewModel @Inject constructor(
             FieldStates(
                 id = FieldId.Address.id,
                 label = TR.address,
-                keyboardOptions = KeyboardOptions(
-                    capitalization = KeyboardCapitalization.Words,
-                    autoCorrect = false,
-                    keyboardType = KeyboardType.Text,
-                    imeAction = ImeAction.Next,
-                ),
-                composeType = ComposeType.OutlinedTextField,
+                composeType = ComposeType.LocationPicker,
             ),
             FieldStates(
                 id = FieldId.PropertyType.id,
@@ -251,7 +246,7 @@ class PropertyViewModel @Inject constructor(
         _fields.value?.let { fields ->
             val propertyId = firestoreService.getRandomDocumentId()
             val name = fields.find { it.id == FieldId.PropertyName.id }?.value?.value
-            val address = fields.find { it.id == FieldId.Address.id }?.value?.value
+            val address = fields.find { it.id == FieldId.Address.id }?.locationDetails?.value
             val areYouTheOwner =
                 fields.find { it.id == FieldId.IsRentalOwner.id }?.value?.value
             val isForRental =
@@ -271,7 +266,8 @@ class PropertyViewModel @Inject constructor(
             val perks = fields.find { it.id == FieldId.Perks.id }?.value?.value
             val agreementTerms =
                 fields.find { it.id == FieldId.AgreementRules.id }?.value?.value
-            val images = fields.find { it.id == FieldId.PropertyImagePicker.id }?.values?.value ?: emptyList()
+            val images = fields.find { it.id == FieldId.PropertyImagePicker.id }?.values?.value
+                ?: emptyList()
 
             isAllNotNull(
                 propertyId,
@@ -317,7 +313,7 @@ class PropertyViewModel @Inject constructor(
     private fun initiateAddPropertyDetails(
         propertyId: String,
         name: String,
-        address: String,
+        address: LocationEntity,
         areYouTheOwner: String,
         forRental: Boolean,
         kindOfRenter: String,
@@ -367,11 +363,9 @@ class PropertyViewModel @Inject constructor(
      */
     fun navigateBack() = navigator.navigateBack()
 
-    fun updateFieldState(index: Int, childId: String = "") {
+    fun updateFieldState(index: Int, value: String = "") {
         _fields.value?.get(index)?.let { field ->
-            if (childId.isNotEmpty()) {
-                field.value.value = childId
-            }
+            field.value.value = value
             field.isSelected.value?.let {
                 field.isSelected.value = !it
             }

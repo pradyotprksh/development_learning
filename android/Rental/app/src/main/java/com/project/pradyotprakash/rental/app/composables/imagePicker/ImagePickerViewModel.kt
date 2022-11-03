@@ -27,6 +27,9 @@ class ImagePickerViewModel @Inject constructor(
     private val _imageUploading = MutableLiveData(0.0f)
     val imageUploading: LiveData<Float>
         get() = _imageUploading
+    private val _loading = MutableLiveData(false)
+    val loading: LiveData<Boolean>
+        get() = _loading
     private val _errorText = MutableLiveData("")
     val error: LiveData<String>
         get() = _errorText
@@ -57,6 +60,7 @@ class ImagePickerViewModel @Inject constructor(
                         _errorText.value = exception.localizedMessage ?: TR.somethingWentWrongImageUpload
                     },
                     onProgress = { progress ->
+                        _loading.value = progress <= 0.0f
                         _imageUploading.value = progress
                     }
                 )

@@ -1,6 +1,7 @@
 package com.project.pradyotprakash.rental.domain.usecase
 
 import com.project.pradyotprakash.rental.core.response.RenterResponse
+import com.project.pradyotprakash.rental.domain.modal.LocationEntity
 import com.project.pradyotprakash.rental.domain.modal.PropertyEntity
 import com.project.pradyotprakash.rental.domain.repositories.PropertyRepository
 import kotlinx.coroutines.flow.flow
@@ -27,7 +28,7 @@ class PropertyUseCase @Inject constructor(
         userId: String,
         propertyId: String,
         name: String,
-        address: String,
+        address: LocationEntity,
         areYouTheOwner: String,
         forRental: Boolean,
         kindOfRenter: String,

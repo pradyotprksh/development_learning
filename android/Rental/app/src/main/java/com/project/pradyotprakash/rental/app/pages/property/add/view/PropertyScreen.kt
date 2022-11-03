@@ -19,7 +19,6 @@ import com.project.pradyotprakash.rental.app.composables.field.FieldComposable
 import com.project.pradyotprakash.rental.app.localization.TR
 import com.project.pradyotprakash.rental.app.pages.property.add.viewmodel.PropertyViewModel
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PropertyScreen(propertyViewModel: PropertyViewModel = hiltViewModel()) {
     val fields = propertyViewModel.fields.observeAsState(emptyList())

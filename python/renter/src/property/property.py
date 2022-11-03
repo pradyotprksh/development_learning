@@ -11,7 +11,7 @@ from flask import request
 from src.core.services.db import get_collection, get_document, get_documents, insert_document
 from src.utils.constants import Keys, MESSAGES_LIST, DEFAULT_ERROR_MESSAGE
 from src.utils.response_mapper import response_creator
-from src.utils.util_calls import get_current_timestamp
+from src.utils.util_calls import get_current_timestamp, convert_string_to_json
 from src.core.modals import PropertyDetails
 
 
@@ -181,6 +181,8 @@ class _Property(Resource):
                     message=MESSAGES_LIST.get(Keys.Messages.property_already_available).format(property_name)
                 )
 
+        address = convert_string_to_json(property_request.get(Keys.Property.address))
+
         property_name = property_form.get(Keys.Property.property_name)
         is_rental_owner = property_form.get(Keys.Property.is_rental_owner)
         is_for_rental = property_form.get(Keys.Property.is_for_rental)
@@ -191,7 +193,6 @@ class _Property(Resource):
         where_it_is = property_form.get(Keys.Property.where_it_is)
         yearly_deposit = property_form.get(Keys.Property.yearly_deposit)
         monthly_rent = property_form.get(Keys.Property.monthly_rent)
-        address = property_form.get(Keys.Property.address)
         perks = property_form.get(Keys.Property.perks)
         agreement_rules = property_form.get(Keys.Property.agreement_rules)
         property_created_on = get_current_timestamp()

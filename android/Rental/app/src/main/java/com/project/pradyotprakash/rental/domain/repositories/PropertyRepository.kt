@@ -34,7 +34,7 @@ class PropertyRepository(
         where_it_is = propertyEntity.where_it_is,
         yearly_deposit = propertyEntity.yearly_deposit,
         monthly_rent = propertyEntity.monthly_rent,
-        address = propertyEntity.address,
+        address = propertyEntity.address.toMap(),
         perks = propertyEntity.perks,
         agreement_rules = propertyEntity.agreement_rules,
         propertyImages = propertyEntity.arrayTypeForPropertyImages,
