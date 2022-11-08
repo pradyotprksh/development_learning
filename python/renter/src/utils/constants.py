@@ -122,6 +122,7 @@ class Keys:
         zip_code = "zip_code"
         latitude = "latitude"
         longitude = "longitude"
+        exactly_one = "exactly_one"
 
 
 # Dictionary of messages

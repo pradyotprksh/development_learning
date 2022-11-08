@@ -53,6 +53,7 @@ fun ImagePicker(
     val context = LocalContext.current
 
     val externalStorageState = PermissionHandler.checkForReadExternalStorage()
+
     val launcherMultiple =
         rememberLauncherForActivityResult(ActivityResultContracts.GetMultipleContents()) {
             imagePickerViewModel.startImagePicker(it, field, context)

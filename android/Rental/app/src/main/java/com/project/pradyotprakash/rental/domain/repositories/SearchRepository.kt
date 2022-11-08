@@ -21,10 +21,12 @@ class SearchRepository(
         zipCode: String,
         latitude: String,
         longitude: String,
+        exactly_one: Boolean,
     ) = locationService.searchLocation(
         searchedText = searchedText,
         zipCode = zipCode,
         latitude = latitude,
         longitude = longitude,
+        exactly_one = exactly_one,
     ).parseResponse(crashlytics)
 }

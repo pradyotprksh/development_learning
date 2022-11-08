@@ -22,9 +22,7 @@ class LocationPickerViewModel @Inject constructor(
     private val _errorText = MutableLiveData("")
     val error: LiveData<String>
         get() = _errorText
-    private val _locationResult = MutableLiveData<List<LocationEntity>>(emptyList())
-    val locationResult: LiveData<List<LocationEntity>>
-        get() = _locationResult
+
 
     fun updateErrorState(message: String? = "") {
         _loading.value = false
@@ -46,6 +44,7 @@ class LocationPickerViewModel @Inject constructor(
                     zipCode = zipCode,
                     latitude = latitude,
                     longitude = longitude,
+                    exactly_one = false,
                 ).collect {
                     when (it) {
                         is RenterResponse.Error -> updateErrorState(it.exception.message)

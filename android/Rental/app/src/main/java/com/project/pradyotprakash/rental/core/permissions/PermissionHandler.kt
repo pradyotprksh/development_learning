@@ -32,4 +32,12 @@ object PermissionHandler {
     @Composable
     fun checkForReadExternalStorage() =
         rememberPermissionState(permission = android.Manifest.permission.READ_EXTERNAL_STORAGE)
+    
+    @Composable
+    fun checkForAccurateLocation() =
+        rememberPermissionState(permission = android.Manifest.permission.ACCESS_FINE_LOCATION)
+
+    @Composable
+    fun checkForApproximateLocation() =
+        rememberPermissionState(permission = android.Manifest.permission.ACCESS_COARSE_LOCATION)
 }

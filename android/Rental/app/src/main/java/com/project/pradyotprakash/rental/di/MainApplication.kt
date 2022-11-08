@@ -18,6 +18,8 @@ import javax.inject.Inject
 class MainApplication : Application() {
     // TODO: AdMob
     // TODO: Location wise result for renter
+    // TODO: Permission handler doesn't call onGranted or onDenies on permission state change
+    // TODO: Better the Python Backend Base URL update process
 
     @Inject
     lateinit var firebaseAppCheck: FirebaseAppCheck

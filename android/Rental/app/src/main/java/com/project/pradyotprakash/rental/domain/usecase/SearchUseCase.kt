@@ -25,6 +25,7 @@ class SearchUseCase @Inject constructor(
         zipCode: String,
         latitude: String,
         longitude: String,
+        exactly_one: Boolean,
     ) = flow {
         emit(RenterResponse.Loading)
         emit(
@@ -33,6 +34,7 @@ class SearchUseCase @Inject constructor(
                 zipCode = zipCode,
                 latitude = latitude,
                 longitude = longitude,
+                exactly_one = exactly_one,
             )
         )
         emit(RenterResponse.Idle)

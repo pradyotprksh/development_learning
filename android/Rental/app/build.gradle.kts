@@ -87,8 +87,8 @@ android {
     }
 
     project.tasks.preBuild.dependsOn("checkEnvironment")
-    project.tasks.preBuild.dependsOn("updateTranslations"
-    )
+    project.tasks.preBuild.dependsOn("updateTranslations")
+
     namespace = "com.project.pradyotprakash.rental"
 }
 
@@ -156,6 +156,9 @@ dependencies {
 
     // Permissions
     implementation("com.google.accompanist:accompanist-permissions:0.25.0")
+
+    // Location
+    implementation("com.google.android.gms:play-services-location:21.0.1")
 
     // Coil
     implementation("io.coil-kt:coil-compose:2.2.2")

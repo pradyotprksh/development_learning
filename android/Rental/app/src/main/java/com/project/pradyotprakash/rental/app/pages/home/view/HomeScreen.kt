@@ -29,6 +29,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.project.pradyotprakash.rental.R
 import com.project.pradyotprakash.rental.app.composables.NetworkImageComposable
 import com.project.pradyotprakash.rental.app.composables.PageStateComposable
@@ -36,14 +37,39 @@ import com.project.pradyotprakash.rental.app.composables.PropertyDetailsComposab
 import com.project.pradyotprakash.rental.app.localization.TR
 import com.project.pradyotprakash.rental.app.pages.home.viewmodel.HomeViewModel
 import com.project.pradyotprakash.rental.app.utils.UserType
+import com.project.pradyotprakash.rental.core.permissions.PermissionHandler
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalPermissionsApi::class)
 @Composable
 fun HomeScreen(homeViewModel: HomeViewModel = hiltViewModel()) {
     val loading = homeViewModel.loading.observeAsState(false)
     val error = homeViewModel.error.observeAsState("")
     val userDetails = homeViewModel.userDetails.observeAsState().value
     val properties = homeViewModel.properties.observeAsState()
+    val locationDetails = homeViewModel.locationResult.observeAsState().value?.first()
+
+    val accuratePermission = PermissionHandler.checkForAccurateLocation()
+    val approximatePermission = PermissionHandler.checkForApproximateLocation()
+
+    userDetails?.let {
+        if (userDetails.userType == UserType.Owner) {
+            // TODO: Need to call the location search only once on granted and after user details is available
+            PermissionHandler.permissionInitiatorWithStateCheck(
+                state = accuratePermission,
+                askForPermission = {
+                    accuratePermission.launchPermissionRequest()
+                },
+                onDenied = {
+                    PermissionHandler.permissionInitiatorWithStateCheck(
+                        state = approximatePermission,
+                        askForPermission = {
+                            approximatePermission.launchPermissionRequest()
+                        },
+                    )
+                },
+            )
+        }
+    }
 
     PageStateComposable(
         isLoading = loading.value,

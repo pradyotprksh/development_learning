@@ -48,6 +48,10 @@ class _Location(Resource):
         zip_code = request.args.get(Keys.Search.zip_code)
         latitude = request.args.get(Keys.Search.latitude)
         longitude = request.args.get(Keys.Search.longitude)
+        exactly_one = request.args.get(Keys.Search.exactly_one)
+
+        if exactly_one is None:
+            exactly_one = False
 
         # Find which parameters are present
         is_zip_code_available = not (zip_code is None or zip_code == "")
@@ -99,6 +103,8 @@ class _Location(Resource):
 
         location_details_list = []
         for location in location_details:
+            if exactly_one and len(location_details_list) == 1:
+                break
             location_details_list.append(location.raw)
 
         return response_creator(

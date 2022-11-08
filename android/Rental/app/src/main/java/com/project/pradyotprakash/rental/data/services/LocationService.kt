@@ -13,5 +13,6 @@ interface LocationService {
         @Query("zip_code") zipCode: String,
         @Query("latitude") latitude: String,
         @Query("longitude") longitude: String,
+        @Query("exactly_one") exactly_one: Boolean,
     ): Response<DefaultEntity<List<LocationEntity>>>
 }
