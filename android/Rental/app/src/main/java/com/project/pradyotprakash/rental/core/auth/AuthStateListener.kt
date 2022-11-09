@@ -2,6 +2,7 @@ package com.project.pradyotprakash.rental.core.auth
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.project.pradyotprakash.rental.app.utils.UserType
 import com.project.pradyotprakash.rental.device.services.UserLocalServices
 import com.project.pradyotprakash.rental.domain.modal.UserEntity
 import javax.inject.Inject
@@ -28,15 +29,13 @@ class AuthStateListener @Inject constructor(
     val authState: LiveData<AuthState>
         get() = _authState
 
-    private val _userDetails = MutableLiveData<UserEntity>()
-    val userDetails: LiveData<UserEntity>
+    private val _userDetails = MutableLiveData<UserEntity?>()
+    val userDetails: LiveData<UserEntity?>
         get() = _userDetails
 
     fun updateUserDetails(userDetails: UserEntity? = null) {
-        userDetails?.let {
-            userLocalServices.saveSelectedUserType(userDetails.user_type)
-            _userDetails.postValue(it)
-        }
+        userLocalServices.saveSelectedUserType(userDetails?.user_type ?: UserType.Unknown.name)
+        _userDetails.postValue(userDetails)
     }
 
     /**

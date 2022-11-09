@@ -46,11 +46,17 @@ class HomeViewModel @Inject constructor(
     private val _errorText = MutableLiveData("")
     val error: LiveData<String>
         get() = _errorText
-    val userDetails: LiveData<UserEntity>
+    val userDetails: LiveData<UserEntity?>
         get() = authStateListener.userDetails
     private val _properties = MutableLiveData<List<PropertyEntity>>()
     val properties: LiveData<List<PropertyEntity>>
         get() = _properties
+    private val _nearByProperties = MutableLiveData<List<PropertyEntity>>()
+    val nearByProperties: LiveData<List<PropertyEntity>>
+        get() = _nearByProperties
+    private val _otherProperties = MutableLiveData<List<PropertyEntity>>()
+    val otherProperties: LiveData<List<PropertyEntity>>
+        get() = _otherProperties
     private val _locationResult = MutableLiveData<List<LocationEntity>>(emptyList())
     val locationResult: LiveData<List<LocationEntity>>
         get() = _locationResult
@@ -72,6 +78,7 @@ class HomeViewModel @Inject constructor(
 
     init {
         if (userType == UserType.Renter) {
+            _loading.value = true
             setupLocationService()
         } else {
             checkForUserDetails()
@@ -156,6 +163,9 @@ class HomeViewModel @Inject constructor(
 
                                 if (userDetails.user_type == UserType.Owner.name) {
                                     _properties.value = userDetails.properties ?: emptyList()
+                                } else {
+                                    _nearByProperties.value = userDetails.nearby_properties ?: emptyList()
+                                    _otherProperties.value = userDetails.other_properties ?: emptyList()
                                 }
 
                                 if (!userDetails.is_all_details_available) {

@@ -12,7 +12,7 @@ from src.core.modals import UserDetails
 from src.core.services.db import get_collection, get_document, insert_document, update_a_document, get_documents
 from src.utils.constants import Keys, MESSAGES_LIST, DEFAULT_ERROR_MESSAGE, USER_TYPE, OWNER_USER_TYPE
 from src.utils.response_mapper import response_creator
-from src.utils.util_calls import is_email_address_valid, get_current_timestamp, convert_string_to_json
+from src.utils.util_calls import is_email_address_valid, get_current_timestamp, convert_string_to_json, distance_between
 
 
 class User:
@@ -52,8 +52,8 @@ class _User(Resource):
         user_id = request.headers[Keys.User.user_id]
 
         # Query parameters
-        latitude = request.args.get(Keys.Search.latitude)
-        longitude = request.args.get(Keys.Search.longitude)
+        user_latitude = request.args.get(Keys.Search.latitude)
+        user_longitude = request.args.get(Keys.Search.longitude)
 
         # find the user in db
         user = get_document(self.user_collection, Keys.User.user_id, user_id)
@@ -71,7 +71,24 @@ class _User(Resource):
                 property_list.append(doc)
             user[Keys.User.properties] = property_list
         else:
-            pass
+            # Get all properties
+            property_cursor = get_documents(self.property_collection)
+            nearby_property_list = []
+            other_property_list = []
+            for doc in property_cursor:
+                property_latitude = doc.get(Keys.Property.address).get(Keys.Property.latitude)
+                property_longitude = doc.get(Keys.Property.address).get(Keys.Property.longitude)
+                distance = distance_between((property_latitude, property_longitude), (user_latitude, user_longitude))
+
+                doc[Keys.Property.distance] = distance
+
+                if distance < 5:
+                    nearby_property_list.append(doc)
+                else:
+                    other_property_list.append(doc)
+
+            user[Keys.User.nearby_properties] = nearby_property_list
+            user[Keys.User.other_properties] = other_property_list
 
         return response_creator(
             code=200,

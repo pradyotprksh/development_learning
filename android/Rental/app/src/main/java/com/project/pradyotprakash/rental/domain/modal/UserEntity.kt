@@ -18,6 +18,8 @@ data class UserEntity(
     val user_type: String,
     val is_all_details_available: Boolean,
     val properties: List<PropertyEntity>? = null,
+    val nearby_properties: List<PropertyEntity>? = null,
+    val other_properties: List<PropertyEntity>? = null,
     val account_created_on: String,
     val account_updated_on: String,
 ) {

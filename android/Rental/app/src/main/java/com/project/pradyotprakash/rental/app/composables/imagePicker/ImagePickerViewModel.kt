@@ -34,7 +34,12 @@ class ImagePickerViewModel @Inject constructor(
     val error: LiveData<String>
         get() = _errorText
 
-    fun startImagePicker(uris: List<Uri>, fieldStates: FieldStates, context: Context) {
+    fun startImagePicker(
+        uris: List<Uri>,
+        fieldStates: FieldStates,
+        context: Context,
+        imagePickerType: ImagePickerType = ImagePickerType.SingleImagePicker
+    ) {
         if (uris.isEmpty()) return
         uris.forEach {
             val bitmap = it.let {
@@ -53,11 +58,17 @@ class ImagePickerViewModel @Inject constructor(
                     reference,
                     onSuccess = { downloadUrl ->
                         hideAllLoaders()
-                        fieldStates.values.value = (fieldStates.values.value ?: emptyList()) + listOf(downloadUrl)
+                        if (imagePickerType == ImagePickerType.SingleImagePicker) {
+                            fieldStates.values.value = listOf(downloadUrl)
+                        } else {
+                            fieldStates.values.value =
+                                (fieldStates.values.value ?: emptyList()) + listOf(downloadUrl)
+                        }
                     },
                     onFailure = { exception ->
                         hideAllLoaders()
-                        _errorText.value = exception.localizedMessage ?: TR.somethingWentWrongImageUpload
+                        _errorText.value =
+                            exception.localizedMessage ?: TR.somethingWentWrongImageUpload
                     },
                     onProgress = { progress ->
                         _loading.value = progress <= 0.0f

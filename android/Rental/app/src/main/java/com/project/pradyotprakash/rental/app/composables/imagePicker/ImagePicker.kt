@@ -56,17 +56,17 @@ fun ImagePicker(
 
     val launcherMultiple =
         rememberLauncherForActivityResult(ActivityResultContracts.GetMultipleContents()) {
-            imagePickerViewModel.startImagePicker(it, field, context)
+            imagePickerViewModel.startImagePicker(it, field, context, imagePickerType)
         }
     val launcherSingle =
         rememberLauncherForActivityResult(ActivityResultContracts.GetContent()) { uri ->
             uri?.let {
                 imagePickerViewModel.startImagePicker(
-                    listOf(uri), field, context
+                    listOf(uri), field, context, imagePickerType
                 )
             } ?: run {
                 imagePickerViewModel.startImagePicker(
-                    emptyList(), field, context
+                    emptyList(), field, context, imagePickerType
                 )
             }
         }
@@ -93,35 +93,30 @@ fun ImagePicker(
                 item {
                     Spacer(modifier = Modifier.width(5.dp))
 
-                    if ((imagePickerType == ImagePickerType.SingleImagePicker &&
-                                uploadedImages.value.isEmpty())
-                        || imagePickerType == ImagePickerType.MultipleImagePicker
-                    ) {
-                        IconButton(
-                            onClick = {
-                                PermissionHandler.permissionInitiatorWithStateCheck(
-                                    state = externalStorageState,
-                                    askForPermission = {
-                                        externalStorageState.launchPermissionRequest()
-                                    },
-                                    onGranted = {
-                                        when (imagePickerType) {
-                                            ImagePickerType.MultipleImagePicker -> launcherMultiple.launch(
-                                                "image/*"
-                                            )
-                                            ImagePickerType.SingleImagePicker -> launcherSingle.launch(
-                                                "image/*"
-                                            )
-                                        }
+                    IconButton(
+                        onClick = {
+                            PermissionHandler.permissionInitiatorWithStateCheck(
+                                state = externalStorageState,
+                                askForPermission = {
+                                    externalStorageState.launchPermissionRequest()
+                                },
+                                onGranted = {
+                                    when (imagePickerType) {
+                                        ImagePickerType.MultipleImagePicker -> launcherMultiple.launch(
+                                            "image/*"
+                                        )
+                                        ImagePickerType.SingleImagePicker -> launcherSingle.launch(
+                                            "image/*"
+                                        )
                                     }
-                                )
-                            }
-                        ) {
-                            Icon(
-                                imageVector = Icons.Default.Add,
-                                contentDescription = Icons.Default.Add.name,
+                                }
                             )
                         }
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Add,
+                            contentDescription = Icons.Default.Add.name,
+                        )
                     }
                 }
             }

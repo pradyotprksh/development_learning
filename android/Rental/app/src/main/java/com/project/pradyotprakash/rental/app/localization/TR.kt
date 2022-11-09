@@ -108,5 +108,8 @@ object TR {
     var or = Translation.getString("or")
     var and = Translation.getString("and")
     var locationSearchError = Translation.getString("locationSearchError")
+    var nearbyProperties = Translation.getString("nearbyProperties")
+    var otherProperties = Translation.getString("otherProperties")
+    var kmsAway = Translation.getString("kmsAway")
     
 }

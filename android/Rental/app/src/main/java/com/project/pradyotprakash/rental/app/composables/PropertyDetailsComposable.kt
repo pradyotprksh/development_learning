@@ -67,6 +67,10 @@ fun PropertyDetailsComposable(
                     "${property.property_type} & ${property.number_of_bathrooms}"
                 )
             )
+            Spacer(modifier = Modifier.height(10.dp))
+            property.distance?.let {
+                Text(text = String.format(TR.kmsAway, property.distance))
+            }
             property.property_images?.let { images ->
                 if (images.isNotEmpty()) {
                     Spacer(modifier = Modifier.height(10.dp))

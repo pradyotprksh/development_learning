@@ -21,6 +21,9 @@ class MainApplication : Application() {
     // TODO: Permission handler doesn't call onGranted or onDenies on permission state change
     // TODO: Better the Python Backend Base URL update process
 
+    // TODO: Fix after adding details user gets logged out
+    // TODO: Fix location permission flow, when user allow location then the API should be called for fetching the user details
+
     @Inject
     lateinit var firebaseAppCheck: FirebaseAppCheck
 

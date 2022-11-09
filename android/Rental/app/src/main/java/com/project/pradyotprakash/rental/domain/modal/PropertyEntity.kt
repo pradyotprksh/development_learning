@@ -38,6 +38,7 @@ data class PropertyEntity(
     // Other Details
     val perks: String,
     val agreement_rules: String,
+    val distance: String? = null,
 ) {
     val isForRental
         get() = is_for_rental.toBoolean()

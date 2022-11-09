@@ -101,5 +101,8 @@
   "longitude": "Longitude",
   "or": "Or",
   "and": "And",
-  "locationSearchError": "Please provide a search text or zip code or latitude and longitude. For better results you can provide all the values."
+  "locationSearchError": "Please provide a search text or zip code or latitude and longitude. For better results you can provide all the values.",
+  "nearbyProperties": "Properties near by",
+  "otherProperties": "Other properties",
+  "kmsAway": "%s kms away"
 }

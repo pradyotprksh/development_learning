@@ -92,6 +92,8 @@ class Keys:
         account_created_on = "account_created_on"
         account_updated_on = "account_updated_on"
         properties = "properties"
+        nearby_properties = "nearby_properties"
+        other_properties = "other_properties"
 
     class Property:
         """A set of keys related to property section"""
@@ -116,6 +118,9 @@ class Keys:
         property_updated_on = "property_updated_on"
         property_created_by = "property_created_by"
         property_created_by_details = "property_created_by_details"
+        latitude = "lat"
+        longitude = "lon"
+        distance = "distance"
 
     class Search:
         """A set of keys related to search section"""

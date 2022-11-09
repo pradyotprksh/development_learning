@@ -8,6 +8,7 @@ This helps in organising the stuff which is important and keeping normal things 
 """
 from .constants import MONGO_DB_DETAILS_FILE
 from validate_email import validate_email
+from geopy.distance import geodesic
 import calendar
 import time
 import json
@@ -38,3 +39,8 @@ def get_current_timestamp():
 def convert_string_to_json(value):
     """Returns the JSON format for the given string"""
     return json.loads(value)
+
+
+def distance_between(coordinate_1, coordinate_2):
+    """Returns the distance between 2 coordinates"""
+    return round(geodesic(coordinate_1, coordinate_2).km, 2)
