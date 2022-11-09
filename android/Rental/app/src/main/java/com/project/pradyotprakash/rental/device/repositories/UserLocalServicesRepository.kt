@@ -22,4 +22,19 @@ class UserLocalServicesRepository(
                 UserType.Unknown.name
             )
         } ?: UserType.Unknown
+
+    override fun saveCurrentLocation(latitude: String, longitude: String) {
+        with(sharedPreference.edit()) {
+            putString(LocalStorageConstants.latitude, latitude)
+            putString(LocalStorageConstants.longitude, longitude)
+            apply()
+        }
+    }
+
+    override val currentLocation: Pair<String, String>
+        get() {
+            val latitude = sharedPreference.getString(LocalStorageConstants.latitude, "") ?: ""
+            val longitude = sharedPreference.getString(LocalStorageConstants.longitude, "") ?: ""
+            return Pair(latitude, longitude)
+        }
 }

@@ -35,9 +35,15 @@ class AuthenticationRepository(
         email = email, password = password
     )
 
-    suspend fun getCurrentUserDetails(userId: String) =
-        authenticationService.getUserDetails(userId = userId)
-            .parseResponse(crashlytics)
+    suspend fun getCurrentUserDetails(
+        userId: String,
+        latitude: String,
+        longitude: String,
+    ) = authenticationService.getUserDetails(
+            userId = userId,
+            latitude = latitude,
+            longitude = longitude,
+    ).parseResponse(crashlytics)
 
     suspend fun setCurrentUserDetails(
         userId: String,

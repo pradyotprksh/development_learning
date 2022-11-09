@@ -16,7 +16,9 @@ object PermissionHandler {
         onPermanentlyDenied: () -> Unit = {},
         onGranted: () -> Unit = {},
     ) {
-        askForPermission()
+        if (state.status != PermissionStatus.Granted) {
+            askForPermission()
+        }
         when (state.status) {
             is PermissionStatus.Denied -> {
                 if (state.status.shouldShowRationale) {

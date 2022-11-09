@@ -109,6 +109,7 @@ class Keys:
         yearly_deposit = "yearly_deposit"
         monthly_rent = "monthly_rent"
         address = "address"
+        display_name = "display_name"
         perks = "perks"
         agreement_rules = "agreement_rules"
         property_created_on = "property_created_on"

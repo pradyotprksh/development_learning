@@ -9,11 +9,14 @@ import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.PATCH
 import retrofit2.http.POST
+import retrofit2.http.Query
 
 interface AuthenticationService {
     @GET("/renter/user")
     suspend fun getUserDetails(
         @Header("user_id") userId: String,
+        @Query("latitude") latitude: String,
+        @Query("longitude") longitude: String,
     ): Response<DefaultEntity<UserEntity>>
 
     @FormUrlEncoded

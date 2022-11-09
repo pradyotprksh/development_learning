@@ -67,7 +67,7 @@ class _Search(Resource):
 
         property_search_result = list(filter(
             lambda p: p.get(Keys.Property.property_name).find(search_text) > -1
-                      or p.get(Keys.Property.address).find(search_text) > -1
+                      or p.get(Keys.Property.address).get(Keys.Property.display_name).find(search_text) > -1
                       or p.get(Keys.Property.monthly_rent).find(search_text) > -1
                       or p.get(Keys.Property.yearly_deposit).find(search_text) > -1,
             property_list
@@ -76,7 +76,7 @@ class _Search(Resource):
             lambda u: u.get(Keys.User.email_address).find(search_text) > -1
                       or u.get(Keys.User.first_name).find(search_text) > -1
                       or u.get(Keys.User.last_name).find(search_text) > -1
-                      or u.get(Keys.User.permanent_address).find(search_text) > -1
+                      or u.get(Keys.User.permanent_address).get(Keys.Property.display_name).find(search_text) > -1
                       or u.get(Keys.User.phone_number).find(search_text) > -1
                       or u.get(Keys.User.profession).find(search_text) > -1
                       or u.get(Keys.User.user_type).find(search_text) > -1,

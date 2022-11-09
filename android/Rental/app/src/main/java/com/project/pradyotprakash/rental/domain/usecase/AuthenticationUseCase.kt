@@ -52,16 +52,21 @@ class AuthenticationUseCase @Inject constructor(
      *
      * @param userId Id of the user for which the details is needed
      */
-    suspend fun getCurrentUserDetails(userId: String) =
-        flow {
-            emit(RenterResponse.Loading)
-            emit(
-                authenticationRepository.getCurrentUserDetails(
-                    userId = userId,
-                )
+    suspend fun getCurrentUserDetails(
+        userId: String,
+        latitude: String = "",
+        longitude: String = "",
+    ) = flow {
+        emit(RenterResponse.Loading)
+        emit(
+            authenticationRepository.getCurrentUserDetails(
+                userId = userId,
+                latitude = latitude,
+                longitude = longitude,
             )
-            emit(RenterResponse.Idle)
-        }
+        )
+        emit(RenterResponse.Idle)
+    }
 
     /**
      * Set the user details
@@ -138,9 +143,11 @@ class AuthenticationUseCase @Inject constructor(
         password: String,
     ) = flow {
         emit(RenterResponse.Loading)
-        emit(authenticationRepository.signInUserWithEmailPassword(
-            email = email, password = password
-        ))
+        emit(
+            authenticationRepository.signInUserWithEmailPassword(
+                email = email, password = password
+            )
+        )
         emit(RenterResponse.Idle)
     }
 
@@ -149,9 +156,11 @@ class AuthenticationUseCase @Inject constructor(
         password: String,
     ) = flow {
         emit(RenterResponse.Loading)
-        emit(authenticationRepository.createUserWithEmailPassword(
-            email = email, password = password
-        ))
+        emit(
+            authenticationRepository.createUserWithEmailPassword(
+                email = email, password = password
+            )
+        )
         emit(RenterResponse.Idle)
     }
 }

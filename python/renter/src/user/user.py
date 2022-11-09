@@ -51,6 +51,10 @@ class _User(Resource):
             )
         user_id = request.headers[Keys.User.user_id]
 
+        # Query parameters
+        latitude = request.args.get(Keys.Search.latitude)
+        longitude = request.args.get(Keys.Search.longitude)
+
         # find the user in db
         user = get_document(self.user_collection, Keys.User.user_id, user_id)
         if user is None:

@@ -46,7 +46,7 @@ fun HomeScreen(homeViewModel: HomeViewModel = hiltViewModel()) {
     val error = homeViewModel.error.observeAsState("")
     val userDetails = homeViewModel.userDetails.observeAsState().value
     val properties = homeViewModel.properties.observeAsState()
-    val locationDetails = homeViewModel.locationResult.observeAsState().value?.first()
+    val locationDetails = homeViewModel.locationResult.observeAsState().value?.firstOrNull()
 
     val accuratePermission = PermissionHandler.checkForAccurateLocation()
     val approximatePermission = PermissionHandler.checkForApproximateLocation()

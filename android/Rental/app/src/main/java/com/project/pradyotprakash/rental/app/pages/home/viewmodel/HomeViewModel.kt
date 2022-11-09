@@ -20,6 +20,7 @@ import com.project.pradyotprakash.rental.core.navigation.Navigator
 import com.project.pradyotprakash.rental.core.navigation.Routes
 import com.project.pradyotprakash.rental.core.navigation.path
 import com.project.pradyotprakash.rental.core.response.RenterResponse
+import com.project.pradyotprakash.rental.device.services.UserLocalServices
 import com.project.pradyotprakash.rental.domain.modal.LocationEntity
 import com.project.pradyotprakash.rental.domain.modal.PropertyEntity
 import com.project.pradyotprakash.rental.domain.modal.UserEntity
@@ -36,6 +37,7 @@ class HomeViewModel @Inject constructor(
     private val authenticationUseCase: AuthenticationUseCase,
     private val authStateListener: AuthStateListener,
     private val searchUseCase: SearchUseCase,
+    private val localServices: UserLocalServices,
     @ApplicationContext context: Context,
 ) : ViewModel() {
     private val _loading = MutableLiveData(false)
@@ -58,12 +60,22 @@ class HomeViewModel @Inject constructor(
     private val cancellationToken = object : CancellationToken() {
         override fun onCanceledRequested(listener: OnTokenCanceledListener) =
             CancellationTokenSource().token
-
         override fun isCancellationRequested() = false
     }
 
+    private val userType: UserType
+        get() = localServices.userType
+    private val savedLatitude: String
+        get() = localServices.currentLocation.first
+    private val savedLongitude: String
+        get() = localServices.currentLocation.second
+
     init {
-        checkForUserDetails()
+        if (userType == UserType.Renter) {
+            setupLocationService()
+        } else {
+            checkForUserDetails()
+        }
     }
 
     private fun setupLocationService() {
@@ -76,6 +88,7 @@ class HomeViewModel @Inject constructor(
             Priority.PRIORITY_HIGH_ACCURACY,
             cancellationToken
         ).addOnSuccessListener { currentLocation ->
+            localServices.saveCurrentLocation(currentLocation.latitude.toString(), currentLocation.longitude.toString())
             searchForLocationDetails(currentLocation.latitude, currentLocation.longitude)
         }.addOnFailureListener {
             tryForLastKnownLocation()
@@ -91,6 +104,7 @@ class HomeViewModel @Inject constructor(
                 zipCode = "",
                 exactly_one = true,
             ).collect {
+                checkForUserDetails()
                 when (it) {
                     is RenterResponse.Error -> updateErrorState(it.exception.message)
                     is RenterResponse.Idle -> _loading.value = false
@@ -106,7 +120,10 @@ class HomeViewModel @Inject constructor(
     @SuppressLint("MissingPermission")
     private fun tryForLastKnownLocation() {
         fusedLocationClient.lastLocation.addOnSuccessListener { lastKnownLocation ->
+            localServices.saveCurrentLocation(lastKnownLocation.latitude.toString(), lastKnownLocation.longitude.toString())
             searchForLocationDetails(lastKnownLocation.latitude, lastKnownLocation.longitude)
+        }.addOnFailureListener {
+            checkForUserDetails()
         }
     }
 
@@ -115,6 +132,8 @@ class HomeViewModel @Inject constructor(
             authenticationUseCase.getCurrentUserId()?.let { userId ->
                 authenticationUseCase.getCurrentUserDetails(
                     userId = userId,
+                    latitude = savedLatitude,
+                    longitude = savedLongitude,
                 ).collect {
                     when (it) {
                         is RenterResponse.Error -> {
@@ -137,8 +156,6 @@ class HomeViewModel @Inject constructor(
 
                                 if (userDetails.user_type == UserType.Owner.name) {
                                     _properties.value = userDetails.properties ?: emptyList()
-                                } else {
-                                    setupLocationService()
                                 }
 
                                 if (!userDetails.is_all_details_available) {

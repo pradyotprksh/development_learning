@@ -52,11 +52,11 @@ class ImagePickerViewModel @Inject constructor(
                     bitmap,
                     reference,
                     onSuccess = { downloadUrl ->
-                        _imageUploading.value = 0.0f
+                        hideAllLoaders()
                         fieldStates.values.value = (fieldStates.values.value ?: emptyList()) + listOf(downloadUrl)
                     },
                     onFailure = { exception ->
-                        _imageUploading.value = 0.0f
+                        hideAllLoaders()
                         _errorText.value = exception.localizedMessage ?: TR.somethingWentWrongImageUpload
                     },
                     onProgress = { progress ->
@@ -66,6 +66,11 @@ class ImagePickerViewModel @Inject constructor(
                 )
             }
         }
+    }
+
+    private fun hideAllLoaders() {
+        _loading.value = false
+        _imageUploading.value = 0.0f
     }
 
     fun updateErrorState(errorText: String? = null) {
