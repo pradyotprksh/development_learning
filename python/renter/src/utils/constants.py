@@ -129,6 +129,7 @@ class Keys:
         latitude = "latitude"
         longitude = "longitude"
         exactly_one = "exactly_one"
+        user_type = "user_type"
 
 
 # Dictionary of messages

@@ -12,9 +12,11 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -30,7 +32,15 @@ import com.project.pradyotprakash.rental.app.utils.UserType
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
-fun SearchView(searchViewModel: SearchViewModel = hiltViewModel()) {
+fun SearchView(
+    searchViewModel: SearchViewModel = hiltViewModel(),
+    allowSearch: Boolean,
+    userType: UserType,
+) {
+    LaunchedEffect(allowSearch, userType) {
+        searchViewModel.startSearch(allowSearch, userType)
+    }
+
     val loading = searchViewModel.loading.observeAsState(false)
     val error = searchViewModel.error.observeAsState("")
     val searchText = searchViewModel.searchText.observeAsState("")
@@ -46,10 +56,14 @@ fun SearchView(searchViewModel: SearchViewModel = hiltViewModel()) {
                 TopAppBar(
                     colors = TopAppBarDefaults.smallTopAppBarColors(),
                     title = {
-                        AppBarTextField(
-                            value = searchText.value,
-                            onValueChange = searchViewModel::updateSearchText
-                        )
+                        if (allowSearch) {
+                            AppBarTextField(
+                                value = searchText.value,
+                                onValueChange = searchViewModel::updateSearchText
+                            )
+                        } else {
+                            Text(text = TR.search)
+                        }
                     },
                     navigationIcon = {
                         IconButton(onClick = searchViewModel::navigateBack) {
@@ -72,72 +86,82 @@ fun SearchView(searchViewModel: SearchViewModel = hiltViewModel()) {
                     val properties = result.properties
                     val users = result.users
 
-                    stickyHeader {
-                        HeaderComposable(
-                            title = String.format(
-                                TR.searchResultProperties,
-                                properties.count
-                            )
-                        )
-                    }
-
-                    properties.details.forEach {
-                        item {
-                            PropertyDetailsComposable(
-                                property = it, onClick = searchViewModel::navigateToPropertyDetails
+                    if (userType == UserType.Unknown) {
+                        stickyHeader {
+                            HeaderComposable(
+                                title = String.format(
+                                    TR.searchResultProperties,
+                                    properties.count
+                                )
                             )
                         }
-                    }
 
-                    stickyHeader {
-                        HeaderComposable(
-                            title = String.format(
-                                TR.searchResultUsers,
-                                users.count
+                        properties.details.forEach {
+                            item {
+                                PropertyDetailsComposable(
+                                    property = it,
+                                    onClick = searchViewModel::navigateToPropertyDetails
+                                )
+                            }
+                        }
+
+                        stickyHeader {
+                            HeaderComposable(
+                                title = String.format(
+                                    TR.searchResultUsers,
+                                    users.count
+                                )
                             )
-                        )
+                        }
                     }
 
                     val owners = users.details.filter { it.userType == UserType.Owner }
                     val renters = users.details.filter { it.userType == UserType.Renter }
 
-                    stickyHeader {
-                        Row {
-                            Spacer(modifier = Modifier.width(5.dp))
-                            HeaderComposable(
-                                title = String.format(
-                                    TR.searchResultOwners,
-                                    owners.count()
+                    val showOwners = userType != UserType.Renter
+                    val showRenters = userType != UserType.Owner
+
+                    if (showOwners) {
+                        stickyHeader {
+                            Row {
+                                Spacer(modifier = Modifier.width(5.dp))
+                                HeaderComposable(
+                                    title = String.format(
+                                        TR.searchResultOwners,
+                                        owners.count()
+                                    )
                                 )
-                            )
+                            }
                         }
-                    }
-                    owners.forEach {
-                        item {
-                            UserDetailsComposable(
-                                userDetails = it,
-                                onClick = searchViewModel::goToUserDetails
-                            )
+                        owners.forEach {
+                            item {
+                                UserDetailsComposable(
+                                    userDetails = it,
+                                    onClick = searchViewModel::goToUserDetails
+                                )
+                            }
                         }
                     }
 
-                    stickyHeader {
-                        Row {
-                            Spacer(modifier = Modifier.width(5.dp))
-                            HeaderComposable(
-                                title = String.format(
-                                    TR.searchResultRenters,
-                                    renters.count()
+                    if (showRenters) {
+                        stickyHeader {
+                            Row {
+                                Spacer(modifier = Modifier.width(5.dp))
+                                HeaderComposable(
+                                    title = String.format(
+                                        TR.searchResultRenters,
+                                        renters.count()
+                                    )
                                 )
-                            )
+                            }
                         }
-                    }
-                    renters.forEach {
-                        item {
-                            UserDetailsComposable(
-                                userDetails = it,
-                                onClick = searchViewModel::goToUserDetails
-                            )
+                        renters.forEach {
+                            item {
+                                UserDetailsComposable(
+                                    userDetails = it,
+                                    onClick = searchViewModel::goToUserDetails
+                                )
+                            }
                         }
                     }
                 }

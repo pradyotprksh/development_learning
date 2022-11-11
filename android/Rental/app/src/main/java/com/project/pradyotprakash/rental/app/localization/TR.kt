@@ -111,5 +111,6 @@ object TR {
     var nearbyProperties = Translation.getString("nearbyProperties")
     var otherProperties = Translation.getString("otherProperties")
     var kmsAway = Translation.getString("kmsAway")
+    var search = Translation.getString("search")
     
 }

@@ -45,7 +45,7 @@ fun PropertyDetailsScreen(
     propertyId: String,
     propertyDetailsViewModel: PropertyDetailsViewModel = hiltViewModel(),
 ) {
-    LaunchedEffect(Unit) {
+    LaunchedEffect(propertyId) {
         propertyDetailsViewModel.getPropertyDetails(propertyId)
     }
 
@@ -83,7 +83,15 @@ fun PropertyDetailsScreen(
             floatingActionButton = {
                 if (!loading.value) {
                     Row {
-                        FloatingActionButton(onClick = { TODO() }) {
+                        FloatingActionButton(
+                            onClick = {
+                                if (propertyDetailsViewModel.isPropertyOwner(propertyDetails.value?.property_created_by)) {
+                                    propertyDetailsViewModel.searchForRenter()
+                                } else {
+                                    TODO()
+                                }
+                            }
+                        ) {
                             Text(
                                 text = if (propertyDetailsViewModel.isPropertyOwner(propertyDetails.value?.property_created_by)) TR.searchForRenter else TR.sendProposalToOwner,
                                 modifier = Modifier.padding(

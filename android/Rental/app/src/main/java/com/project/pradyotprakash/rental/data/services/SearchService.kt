@@ -10,5 +10,6 @@ interface SearchService {
     @GET("/renter/search")
     suspend fun performSearch(
         @Query("search_text") searchedText: String,
+        @Query("user_type") userType: String,
     ): Response<DefaultEntity<SearchEntity>>
 }

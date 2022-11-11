@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.project.pradyotprakash.rental.app.utils.UserType
 import com.project.pradyotprakash.rental.core.navigation.Navigator
 import com.project.pradyotprakash.rental.core.navigation.Routes
 import com.project.pradyotprakash.rental.core.response.RenterResponse
@@ -61,16 +62,21 @@ class SearchViewModel @Inject constructor(
 
     private suspend fun callForSearchApi() {
         _searchText.value?.let { searchedText ->
-            searchUseCase.performSearchQuery(
-                searchedText = searchedText,
-            ).collect {
-                when (it) {
-                    is RenterResponse.Error -> updateErrorState(it.exception.message)
-                    is RenterResponse.Idle -> _loading.value = false
-                    is RenterResponse.Loading -> _loading.value = true
-                    is RenterResponse.Success -> {
-                        _searchResult.value = it.data.data
-                    }
+            invokeSearch(searchedText)
+        }
+    }
+
+    private suspend fun invokeSearch(searchedText: String, userType: UserType = UserType.Unknown) {
+        searchUseCase.performSearchQuery(
+            searchedText = searchedText,
+            userType = userType,
+        ).collect {
+            when (it) {
+                is RenterResponse.Error -> updateErrorState(it.exception.message)
+                is RenterResponse.Idle -> _loading.value = false
+                is RenterResponse.Loading -> _loading.value = true
+                is RenterResponse.Success -> {
+                    _searchResult.value = it.data.data
                 }
             }
         }
@@ -85,6 +91,14 @@ class SearchViewModel @Inject constructor(
     fun goToUserDetails(userId: String) {
         navigator.navigate {
             it.navigate("${Routes.UserDetails.route}${userId}")
+        }
+    }
+
+    fun startSearch(allowSearch: Boolean, userType: UserType) {
+        if (!allowSearch) {
+            viewModelScope.launch {
+                invokeSearch(searchedText = "", userType = userType)
+            }
         }
     }
 }

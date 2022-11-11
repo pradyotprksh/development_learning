@@ -56,12 +56,11 @@ fun HomeScreen(homeViewModel: HomeViewModel = hiltViewModel()) {
     val otherProperties = homeViewModel.otherProperties.observeAsState()
     val locationDetails = homeViewModel.locationResult.observeAsState().value?.firstOrNull()
 
-    val accuratePermission = PermissionHandler.checkForAccurateLocation()
-    val approximatePermission = PermissionHandler.checkForApproximateLocation()
-
     userDetails?.let {
         if (userDetails.userType == UserType.Renter) {
-            // TODO: Need to call the location search only once on granted and after user details is available
+            val accuratePermission = PermissionHandler.checkForAccurateLocation()
+            val approximatePermission = PermissionHandler.checkForApproximateLocation()
+
             PermissionHandler.permissionInitiatorWithStateCheck(
                 state = accuratePermission,
                 askForPermission = {

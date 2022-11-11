@@ -30,7 +30,9 @@ import com.project.pradyotprakash.rental.app.theme.RentalTheme
 import com.project.pradyotprakash.rental.app.utils.ErrorScreenArguments
 import com.project.pradyotprakash.rental.app.utils.InformationScreenArguments
 import com.project.pradyotprakash.rental.app.utils.PropertyDetailsArguments
+import com.project.pradyotprakash.rental.app.utils.SearchArguments
 import com.project.pradyotprakash.rental.app.utils.UserDetailsArguments
+import com.project.pradyotprakash.rental.app.utils.UserType
 import com.project.pradyotprakash.rental.core.auth.AuthState
 import com.project.pradyotprakash.rental.core.auth.AuthStateListener
 import com.project.pradyotprakash.rental.core.navigation.Navigator
@@ -74,7 +76,26 @@ class MainActivity : ComponentActivity() {
                         composable(Routes.Option.path()) { OptionsView() }
                         composable(Routes.Property.path()) { PropertyScreen() }
                         composable(Routes.Welcome.path()) { WelcomeScreen() }
-                        composable(Routes.Search.path()) { SearchView() }
+                        composable(
+                            Routes.Search.path(),
+                            arguments = Routes.Search.arguments.map {
+                                navArgument(it) { type = NavType.StringType }
+                            }
+                        ) {
+                            val allowSearch = it.arguments?.getString(
+                                SearchArguments.allowSearch
+                            )?.toBoolean() ?: true
+                            val userType = UserType.values().find { type ->
+                                type.name == it.arguments?.getString(
+                                    SearchArguments.userType
+                                )
+                            } ?: UserType.Unknown
+
+                            SearchView(
+                                allowSearch = allowSearch,
+                                userType = userType,
+                            )
+                        }
                         composable(
                             Routes.PropertyDetails.path(),
                             arguments = Routes.PropertyDetails.arguments.map {

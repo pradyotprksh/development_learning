@@ -3,6 +3,7 @@ package com.project.pradyotprakash.rental.core.navigation
 import com.project.pradyotprakash.rental.app.utils.ErrorScreenArguments
 import com.project.pradyotprakash.rental.app.utils.InformationScreenArguments
 import com.project.pradyotprakash.rental.app.utils.PropertyDetailsArguments
+import com.project.pradyotprakash.rental.app.utils.SearchArguments
 import com.project.pradyotprakash.rental.app.utils.UserDetailsArguments
 
 /**
@@ -58,5 +59,11 @@ enum class Routes(
             ErrorScreenArguments.description,
         )
     ),
-    Search("search/")
+    Search(
+        "search/",
+        listOf(
+            SearchArguments.allowSearch,
+            SearchArguments.userType,
+        )
+    )
 }

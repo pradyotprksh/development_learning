@@ -1,5 +1,6 @@
 package com.project.pradyotprakash.rental.domain.usecase
 
+import com.project.pradyotprakash.rental.app.utils.UserType
 import com.project.pradyotprakash.rental.core.response.RenterResponse
 import com.project.pradyotprakash.rental.domain.repositories.SearchRepository
 import kotlinx.coroutines.flow.flow
@@ -10,11 +11,13 @@ class SearchUseCase @Inject constructor(
 ) {
     suspend fun performSearchQuery(
         searchedText: String,
+        userType: UserType = UserType.Unknown,
     ) = flow {
         emit(RenterResponse.Loading)
         emit(
             searchRepository.performSearchQuery(
                 searchedText = searchedText,
+                userType = userType.name,
             )
         )
         emit(RenterResponse.Idle)

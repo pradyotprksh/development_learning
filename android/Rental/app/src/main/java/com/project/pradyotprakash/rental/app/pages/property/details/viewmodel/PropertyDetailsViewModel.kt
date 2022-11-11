@@ -4,7 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.project.pradyotprakash.rental.app.utils.UserType
 import com.project.pradyotprakash.rental.core.navigation.Navigator
+import com.project.pradyotprakash.rental.core.navigation.Routes
 import com.project.pradyotprakash.rental.core.response.RenterResponse
 import com.project.pradyotprakash.rental.domain.modal.PropertyEntity
 import com.project.pradyotprakash.rental.domain.usecase.AuthenticationUseCase
@@ -73,5 +75,11 @@ class PropertyDetailsViewModel @Inject constructor(
             return authenticationUseCase.getCurrentUserId() == propertyCreatedBy
         }
         return false
+    }
+
+    fun searchForRenter() {
+        navigator.navigate {
+            it.navigate("${Routes.Search.route}${false}/${UserType.Renter.name}")
+        }
     }
 }

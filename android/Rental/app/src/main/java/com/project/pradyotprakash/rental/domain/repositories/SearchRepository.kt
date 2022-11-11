@@ -12,8 +12,10 @@ class SearchRepository(
 ) {
     suspend fun performSearchQuery(
         searchedText: String,
+        userType: String,
     ) = searchService.performSearch(
         searchedText = searchedText,
+        userType = userType,
     ).parseResponse(crashlytics)
 
     suspend fun performLocationSearch(

@@ -18,7 +18,6 @@ import com.project.pradyotprakash.rental.core.auth.AuthState
 import com.project.pradyotprakash.rental.core.auth.AuthStateListener
 import com.project.pradyotprakash.rental.core.navigation.Navigator
 import com.project.pradyotprakash.rental.core.navigation.Routes
-import com.project.pradyotprakash.rental.core.navigation.path
 import com.project.pradyotprakash.rental.core.response.RenterResponse
 import com.project.pradyotprakash.rental.device.services.UserLocalServices
 import com.project.pradyotprakash.rental.domain.modal.LocationEntity
@@ -222,7 +221,7 @@ class HomeViewModel @Inject constructor(
 
     fun goToSearchPage() {
         navigator.navigate {
-            it.navigate(Routes.Search.path())
+            it.navigate("${Routes.Search.route}${true}/${UserType.Unknown.name}")
         }
     }
 }

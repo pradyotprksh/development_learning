@@ -35,3 +35,8 @@ object PropertyDetailsArguments {
 object UserDetailsArguments {
     const val userId = "userId"
 }
+
+object SearchArguments {
+    const val allowSearch = "allowSearch"
+    const val userType = "userType"
+}
