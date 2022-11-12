@@ -13,6 +13,8 @@ dependencies:
 
   cached_network_image: ^3.2.2
 
+  cloud_firestore: ^4.0.5
+
   connectivity_plus: ^3.0.2
 
   cupertino_icons: ^1.0.5
@@ -20,6 +22,20 @@ dependencies:
   device_info_plus: ^8.0.0
 
   equatable: ^2.0.5
+
+  firebase_analytics: ^10.0.5
+
+  firebase_app_check: ^0.1.1+4
+
+  firebase_core: ^2.2.0
+
+  firebase_crashlytics: ^3.0.5
+
+  firebase_dynamic_links: ^5.0.5
+
+  firebase_performance: ^0.9.0+5
+
+  firebase_storage: ^11.0.5
 
   flex_color_scheme: ^6.0.1
 
