@@ -101,3 +101,23 @@ jobs:
           flutter pub get
           flutter analyze
           flutter test
+  whatsapp_clone:
+    name: whatsapp_clone Code Checker
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-java@v1
+        with:
+          java-version: '12.x'
+      - uses: subosito/flutter-action@v1
+      - run: flutter doctor
+      - name: Checking whatsapp_clone
+        working-directory: ./flutter/whatsapp
+        run: |
+          flutter clean
+          flutter pub outdated
+          flutter pub upgrade
+          flutter pub get
+          flutter analyze
+#          Enable test after adding one test
+#          flutter test
