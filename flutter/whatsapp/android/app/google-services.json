@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "473866367991",
+    "project_id": "whatsapp-flutter-b5efe",
+    "storage_bucket": "whatsapp-flutter-b5efe.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:473866367991:android:a0bb6d96d11c73733d34f2",
+        "android_client_info": {
+          "package_name": "com.pradyotprakash.whatsapp.clone.whatsapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "473866367991-i3eqqq8kpinkfjmblfkrl35a3e41p21h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCKxOUSP5Qa65BuZP9076pHEy35iKTeeXw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "473866367991-i3eqqq8kpinkfjmblfkrl35a3e41p21h.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "473866367991-ri2d0qa2ii7hojphvhqak1bncs5tqjor.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.pradyotprakash.whatsapp.clone.whatsapp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
