@@ -53,6 +53,7 @@ fun PropertyDetailsScreen(
     val error = propertyDetailsViewModel.error.observeAsState("")
     val propertyDetails = propertyDetailsViewModel.propertyDetails.observeAsState(null)
     val noProperties = propertyDetailsViewModel.noProperties.observeAsState(false)
+    val isPropertyOwner = propertyDetailsViewModel.isPropertyOwner(propertyDetails.value?.property_created_by)
 
     PageStateComposable(
         isLoading = loading.value,
@@ -85,7 +86,7 @@ fun PropertyDetailsScreen(
                     Row {
                         FloatingActionButton(
                             onClick = {
-                                if (propertyDetailsViewModel.isPropertyOwner(propertyDetails.value?.property_created_by)) {
+                                if (isPropertyOwner) {
                                     propertyDetailsViewModel.searchForRenter()
                                 } else {
                                     TODO()
@@ -93,16 +94,24 @@ fun PropertyDetailsScreen(
                             }
                         ) {
                             Text(
-                                text = if (propertyDetailsViewModel.isPropertyOwner(propertyDetails.value?.property_created_by)) TR.searchForRenter else TR.sendProposalToOwner,
+                                text = if (isPropertyOwner) TR.searchForRenter else TR.sendProposalToOwner,
                                 modifier = Modifier.padding(
                                     all = 15.dp
                                 )
                             )
                         }
                         Spacer(modifier = Modifier.width(10.dp))
-                        FloatingActionButton(onClick = { TODO() }) {
+                        FloatingActionButton(
+                            onClick = {
+                                if (isPropertyOwner) {
+                                    propertyDetailsViewModel.goToPropertyEdit(propertyId)
+                                } else {
+                                    TODO()
+                                }
+                            }
+                        ) {
                             Text(
-                                text = if (propertyDetailsViewModel.isPropertyOwner(propertyDetails.value?.property_created_by)) TR.edit else TR.addToWishList,
+                                text = if (isPropertyOwner) TR.edit else TR.addToWishList,
                                 modifier = Modifier.padding(
                                     all = 15.dp
                                 )

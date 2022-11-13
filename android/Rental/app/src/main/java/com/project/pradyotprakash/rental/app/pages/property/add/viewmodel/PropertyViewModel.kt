@@ -20,6 +20,7 @@ import com.project.pradyotprakash.rental.core.response.RenterResponse
 import com.project.pradyotprakash.rental.core.services.FirestoreService
 import com.project.pradyotprakash.rental.di.Constants
 import com.project.pradyotprakash.rental.domain.modal.LocationEntity
+import com.project.pradyotprakash.rental.domain.modal.PropertyEntity
 import com.project.pradyotprakash.rental.domain.usecase.AuthenticationUseCase
 import com.project.pradyotprakash.rental.domain.usecase.PropertyUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -44,12 +45,13 @@ class PropertyViewModel @Inject constructor(
     private val _fields = MutableLiveData(emptyList<FieldStates>())
     val fields: LiveData<List<FieldStates>>
         get() = _fields
-
-    init {
-        updateFieldDetails()
-    }
+    private val _propertyDetails = MutableLiveData<PropertyEntity?>(null)
+    val propertyDetails: LiveData<PropertyEntity?>
+        get() = _propertyDetails
 
     private fun updateFieldDetails() {
+        val propertyDetails = _propertyDetails.value
+
         val fields = listOf(
             FieldStates(
                 id = FieldId.PropertyName.id,
@@ -61,11 +63,13 @@ class PropertyViewModel @Inject constructor(
                     keyboardType = KeyboardType.Text,
                     imeAction = ImeAction.Next,
                 ),
+                value = MutableLiveData(propertyDetails?.property_name)
             ),
             FieldStates(
                 id = FieldId.Address.id,
                 label = TR.address,
                 composeType = ComposeType.LocationPicker,
+                locationDetails = MutableLiveData(propertyDetails?.address)
             ),
             FieldStates(
                 id = FieldId.PropertyType.id,
@@ -77,6 +81,7 @@ class PropertyViewModel @Inject constructor(
                     imeAction = ImeAction.Next,
                 ),
                 composeType = ComposeType.OutlinedTextField,
+                value = MutableLiveData(propertyDetails?.property_type)
             ),
             FieldStates(
                 id = FieldId.BathroomNumber.id,
@@ -88,6 +93,7 @@ class PropertyViewModel @Inject constructor(
                     imeAction = ImeAction.Next,
                 ),
                 composeType = ComposeType.OutlinedTextField,
+                value = MutableLiveData(propertyDetails?.number_of_bathrooms)
             ),
             FieldStates(
                 id = FieldId.Deposit.id,
@@ -99,6 +105,7 @@ class PropertyViewModel @Inject constructor(
                     imeAction = ImeAction.Next,
                 ),
                 composeType = ComposeType.OutlinedTextField,
+                value = MutableLiveData(propertyDetails?.yearly_deposit)
             ),
             FieldStates(
                 id = FieldId.MonthlyRent.id,
@@ -110,6 +117,7 @@ class PropertyViewModel @Inject constructor(
                     imeAction = ImeAction.Next,
                 ),
                 composeType = ComposeType.OutlinedTextField,
+                value = MutableLiveData(propertyDetails?.monthly_rent)
             ),
             FieldStates(
                 id = FieldId.Perks.id,
@@ -121,6 +129,7 @@ class PropertyViewModel @Inject constructor(
                     keyboardType = KeyboardType.Text,
                     imeAction = ImeAction.Next,
                 ),
+                value = MutableLiveData(propertyDetails?.perks)
             ),
             FieldStates(
                 id = FieldId.AgreementRules.id,
@@ -137,18 +146,20 @@ class PropertyViewModel @Inject constructor(
                         createRentalProperty()
                     }
                 ),
+                value = MutableLiveData(propertyDetails?.agreement_rules)
             ),
             FieldStates(
                 id = FieldId.PropertyImagePicker.id,
                 composeType = ComposeType.MultipleImagePicker,
                 label = TR.propertyImages,
                 storageReference = propertyStorageReference,
+                values = MutableLiveData(propertyDetails?.property_images ?: emptyList())
             ),
             FieldStates(
                 id = FieldId.WhereItIs.id,
                 composeType = ComposeType.RadioGroup,
                 label = TR.wherePropertyIs,
-                value = MutableLiveData(FieldId.House.id),
+                value = MutableLiveData(propertyDetails?.where_it_is ?: FieldId.House.id),
                 children = listOf(
                     FieldStates(
                         id = FieldId.Society.id,
@@ -171,7 +182,7 @@ class PropertyViewModel @Inject constructor(
                 id = FieldId.IsRentalOwner.id,
                 composeType = ComposeType.RadioGroup,
                 label = TR.areYouOwner,
-                value = MutableLiveData(FieldId.True.id),
+                value = MutableLiveData(propertyDetails?.is_rental_owner ?: FieldId.True.id),
                 children = listOf(
                     FieldStates(
                         id = FieldId.True.id,
@@ -189,13 +200,13 @@ class PropertyViewModel @Inject constructor(
                 id = FieldId.IsForRental.id,
                 composeType = ComposeType.Switch,
                 label = TR.isForRentalWithQuestionMark,
-                isSelected = MutableLiveData(true),
+                isSelected = MutableLiveData(propertyDetails?.isForRental ?: true),
             ),
             FieldStates(
                 id = FieldId.PropertyFor.id,
                 composeType = ComposeType.RadioGroup,
                 label = TR.kindOfRentalAllowed,
-                value = MutableLiveData(FieldId.DoesNotMatter.id),
+                value = MutableLiveData(propertyDetails?.property_for ?: FieldId.DoesNotMatter.id),
                 children = listOf(
                     FieldStates(
                         id = FieldId.ForFamily.id,
@@ -218,7 +229,7 @@ class PropertyViewModel @Inject constructor(
                 id = FieldId.FurnishedType.id,
                 composeType = ComposeType.RadioGroup,
                 label = TR.furnishedType,
-                value = MutableLiveData(FieldId.None.id),
+                value = MutableLiveData(propertyDetails?.furnished_type ?: FieldId.None.id),
                 children = listOf(
                     FieldStates(
                         id = FieldId.FullyFurnished.id,
@@ -374,5 +385,34 @@ class PropertyViewModel @Inject constructor(
 
     fun updateErrorState(errorText: String? = null) {
         _errorText.value = errorText ?: ""
+    }
+
+    fun setInitialScreenDetails(propertyId: String) {
+        if (propertyId.isEmpty()) {
+            updateFieldDetails()
+        } else {
+            fetchPropertyDetails(propertyId)
+        }
+    }
+
+    private fun fetchPropertyDetails(propertyId: String) {
+        viewModelScope.launch {
+            propertyUseCase.getProperties(
+                propertyId = propertyId
+            ).collect {
+                when (it) {
+                    is RenterResponse.Error -> updateErrorState(it.exception.message)
+                    is RenterResponse.Loading -> _loading.value = true
+                    is RenterResponse.Success -> {
+                        val data = it.data.data
+                        data?.firstOrNull()?.let { propertyDetails ->
+                            _propertyDetails.value = propertyDetails
+                            updateFieldDetails()
+                        }
+                    }
+                    is RenterResponse.Idle -> _loading.value = false
+                }
+            }
+        }
     }
 }

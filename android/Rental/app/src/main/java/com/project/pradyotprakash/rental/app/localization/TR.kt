@@ -112,5 +112,7 @@ object TR {
     var otherProperties = Translation.getString("otherProperties")
     var kmsAway = Translation.getString("kmsAway")
     var search = Translation.getString("search")
+    var editPropertyWithName = Translation.getString("editPropertyWithName")
+    var update = Translation.getString("update")
     
 }

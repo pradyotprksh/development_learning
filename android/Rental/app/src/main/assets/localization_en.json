@@ -105,5 +105,7 @@
   "nearbyProperties": "Properties near by",
   "otherProperties": "Other properties",
   "kmsAway": "%s kms away",
-  "search": "Search"
+  "search": "Search",
+  "editPropertyWithName": "Edit %s",
+  "update": "Update"
 }

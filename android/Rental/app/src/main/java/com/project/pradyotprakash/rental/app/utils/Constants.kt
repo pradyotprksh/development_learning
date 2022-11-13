@@ -32,6 +32,10 @@ object PropertyDetailsArguments {
     const val propertyId = "propertyId"
 }
 
+object PropertyArguments {
+    const val propertyId = "propertyId"
+}
+
 object UserDetailsArguments {
     const val userId = "userId"
 }

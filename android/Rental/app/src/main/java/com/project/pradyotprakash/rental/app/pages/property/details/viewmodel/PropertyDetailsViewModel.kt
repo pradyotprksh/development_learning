@@ -82,4 +82,10 @@ class PropertyDetailsViewModel @Inject constructor(
             it.navigate("${Routes.Search.route}${false}/${UserType.Renter.name}")
         }
     }
+
+    fun goToPropertyEdit(propertyId: String) {
+        navigator.navigate {
+            it.navigate("${Routes.Property.route}$propertyId")
+        }
+    }
 }

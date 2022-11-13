@@ -2,6 +2,7 @@ package com.project.pradyotprakash.rental.core.navigation
 
 import com.project.pradyotprakash.rental.app.utils.ErrorScreenArguments
 import com.project.pradyotprakash.rental.app.utils.InformationScreenArguments
+import com.project.pradyotprakash.rental.app.utils.PropertyArguments
 import com.project.pradyotprakash.rental.app.utils.PropertyDetailsArguments
 import com.project.pradyotprakash.rental.app.utils.SearchArguments
 import com.project.pradyotprakash.rental.app.utils.UserDetailsArguments
@@ -38,7 +39,12 @@ enum class Routes(
             InformationScreenArguments.firstTimeAddingDetails,
         )
     ),
-    Property("property/"),
+    Property(
+        "property/",
+        listOf(
+            PropertyArguments.propertyId,
+        )
+    ),
     PropertyDetails(
         "property-details/",
         listOf(

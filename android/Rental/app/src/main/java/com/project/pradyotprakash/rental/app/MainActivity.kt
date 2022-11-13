@@ -74,8 +74,8 @@ class MainActivity : ComponentActivity() {
                         composable(Routes.Splash.path()) { SplashView() }
                         composable(Routes.Home.path()) { HomeScreen() }
                         composable(Routes.Option.path()) { OptionsView() }
-                        composable(Routes.Property.path()) { PropertyScreen() }
                         composable(Routes.Welcome.path()) { WelcomeScreen() }
+                        // TODO: Use default value for the arguments
                         composable(
                             Routes.Search.path(),
                             arguments = Routes.Search.arguments.map {
@@ -94,6 +94,21 @@ class MainActivity : ComponentActivity() {
                             SearchView(
                                 allowSearch = allowSearch,
                                 userType = userType,
+                            )
+                        }
+                        // TODO: Use default value for the arguments
+                        composable(
+                            Routes.Property.path(),
+                            arguments = Routes.Property.arguments.map {
+                                navArgument(it) { type = NavType.StringType }
+                            }
+                        ) {
+                            val propertyId = it.arguments?.getString(
+                                PropertyDetailsArguments.propertyId
+                            ) ?: ""
+
+                            PropertyScreen(
+                                propertyId = propertyId,
                             )
                         }
                         composable(
