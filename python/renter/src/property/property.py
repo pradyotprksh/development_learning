@@ -8,7 +8,7 @@ This will help in making the api file cleaner and making the refactoring easy.
 """
 from flask_restful import Resource
 from flask import request
-from src.core.services.db import get_collection, get_document, get_documents, insert_document
+from src.core.services.db import get_collection, get_document, get_documents, insert_document, update_a_document
 from src.utils.constants import Keys, MESSAGES_LIST, DEFAULT_ERROR_MESSAGE
 from src.utils.response_mapper import response_creator
 from src.utils.util_calls import get_current_timestamp, convert_string_to_json
@@ -131,6 +131,133 @@ class _Property(Resource):
             other_data={
                 "count": property_list.__len__(),
                 "data": property_list
+            }
+        )
+
+    def patch(self):
+        # headers
+        # Check for app token to validate request
+        app_check_token = request.headers[Keys.Rental.firebase_app_check_token]
+        if app_check_token is None or app_check_token == "":
+            return response_creator(
+                code=401,
+                message=MESSAGES_LIST[Keys.Messages.cannot_validate_request],
+            )
+        user_id = request.headers[Keys.User.user_id]
+
+        # check if the user already exits
+        user = get_document(self.user_collection, Keys.User.user_id, user_id)
+        if user is None:
+            return response_creator(
+                code=404,
+                message=MESSAGES_LIST[Keys.Messages.user_not_found],
+            )
+
+        property_request = request.form
+        property_form = property_request.to_dict()
+
+        property_id = property_form.get(Keys.Property.property_id)
+
+        # Check if property already available
+        past_property_details = get_document(self.property_collection, Keys.Property.property_id, property_id)
+        if past_property_details is None:
+            return response_creator(
+                code=404,
+                message=MESSAGES_LIST[Keys.Messages.property_not_found],
+            )
+
+        property_created_by = past_property_details.get(Keys.Property.property_created_by)
+
+        # Check if the same user is editing the details
+        if user_id != property_created_by:
+            return response_creator(
+                code=409,
+                message=MESSAGES_LIST[Keys.Messages.invalid_user_property_update]
+            )
+
+        # Get the array of images
+        property_images = property_request.getlist(Keys.Property.property_images)
+        if property_images is None:
+            property_images = []
+        else:
+            if type(property_images) != list:
+                property_images = [property_images]
+
+        try:
+            request_address = property_request.get(Keys.Property.address)
+            if request_address is None:
+                address = user.get(Keys.Property.address)
+            else:
+                address = convert_string_to_json(property_request.get(Keys.Property.address))
+        except:
+            address = user.get(Keys.Property.address)
+
+        property_name = property_form.get(Keys.Property.property_name,
+                                          past_property_details.get(Keys.Property.property_name))
+        is_rental_owner = property_form.get(Keys.Property.is_rental_owner,
+                                            past_property_details.get(Keys.Property.is_rental_owner))
+        is_for_rental = property_form.get(Keys.Property.is_for_rental,
+                                          past_property_details.get(Keys.Property.is_for_rental))
+        property_for = property_form.get(Keys.Property.property_for,
+                                         past_property_details.get(Keys.Property.property_for))
+        furnished_type = property_form.get(Keys.Property.furnished_type,
+                                           past_property_details.get(Keys.Property.furnished_type))
+        property_type = property_form.get(Keys.Property.property_type,
+                                          past_property_details.get(Keys.Property.property_type))
+        number_of_bathrooms = property_form.get(Keys.Property.number_of_bathrooms,
+                                                past_property_details.get(Keys.Property.number_of_bathrooms))
+        where_it_is = property_form.get(Keys.Property.where_it_is,
+                                        past_property_details.get(Keys.Property.where_it_is))
+        yearly_deposit = property_form.get(Keys.Property.yearly_deposit,
+                                           past_property_details.get(Keys.Property.yearly_deposit))
+        monthly_rent = property_form.get(Keys.Property.monthly_rent,
+                                         past_property_details.get(Keys.Property.monthly_rent))
+        perks = property_form.get(Keys.Property.perks, past_property_details.get(Keys.Property.perks))
+        agreement_rules = property_form.get(Keys.Property.agreement_rules,
+                                            past_property_details.get(Keys.Property.agreement_rules))
+        property_created_on = past_property_details.get(Keys.Property.property_created_on)
+        property_updated_on = get_current_timestamp()
+
+        # Payload
+        property_details = PropertyDetails(
+            property_id=property_id,
+            property_name=property_name,
+            property_created_by=property_created_by,
+            is_rental_owner=is_rental_owner,
+            is_for_rental=is_for_rental,
+            property_for=property_for,
+            furnished_type=furnished_type,
+            property_type=property_type,
+            number_of_bathrooms=number_of_bathrooms,
+            where_it_is=where_it_is,
+            yearly_deposit=yearly_deposit,
+            monthly_rent=monthly_rent,
+            address=address,
+            perks=perks,
+            agreement_rules=agreement_rules,
+            property_created_on=property_created_on,
+            property_updated_on=property_updated_on,
+            property_images=property_images,
+        )
+
+        # add user details to mongo db
+        update_a_document(
+            self.property_collection,
+            Keys.Property.property_id,
+            property_id,
+            property_details._asdict(),
+        )
+
+        # get the user details from db
+        db_property_details = get_document(self.property_collection, Keys.Property.property_id, property_id)
+
+        return response_creator(
+            code=200,
+            message=MESSAGES_LIST.get(Keys.Messages.property_updated),
+            other_data={
+                "data": {
+                    **db_property_details
+                }
             }
         )
 

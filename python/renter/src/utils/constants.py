@@ -69,11 +69,13 @@ class Keys:
         property_already_available = "property_already_available"
         user_created = "user_created"
         property_created = "property_created"
+        property_updated = "property_updated"
         valid = "valid"
         can_not_update_value = "can_not_update_value"
         cannot_validate_request = "cannot_validate_request"
         search_result = "search_result"
         search_error = "search_error"
+        invalid_user_property_update = "invalid_user_property_update"
 
     class User:
         """A set of keys related to the User section"""
@@ -161,6 +163,9 @@ MESSAGES_LIST = {
     Keys.Messages.property_not_found: "Asked property is not present. Please create the property or try again.",
     Keys.Messages.properties_not_found: "Properties couldn't be found",
     Keys.Messages.search_result: "Search result",
+    Keys.Messages.property_updated: "Property details updated",
+    Keys.Messages.invalid_user_property_update: "Only the user who created the property can edit it. Please ask the "
+                                                "respective property creator to edit it.",
     Keys.Messages.location_found: "Location found",
     Keys.Messages.location_not_found: "Sorry the requested location was not found. For better results use all available"
                                       " options. We are using a free location service for now.",
