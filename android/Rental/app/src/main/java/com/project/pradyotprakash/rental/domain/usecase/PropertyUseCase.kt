@@ -71,4 +71,52 @@ class PropertyUseCase @Inject constructor(
         )
         emit(RenterResponse.Idle)
     }
+
+    suspend fun updateProperty(
+        userId: String,
+        propertyId: String,
+        name: String,
+        address: LocationEntity,
+        areYouTheOwner: String,
+        forRental: Boolean,
+        kindOfRenter: String,
+        furnishedType: String,
+        propertyType: String,
+        numberOfBathroom: String,
+        wherePropertyIs: String,
+        depositAmount: String,
+        rentAmount: String,
+        perks: String,
+        agreementTerms: String,
+        images: List<String>,
+    ) = flow {
+        emit(RenterResponse.Loading)
+        emit(
+            propertyRepository.updateProperty(
+                userId = userId,
+                propertyEntity = PropertyEntity(
+                    _id = "",
+                    property_id = propertyId,
+                    property_name = name,
+                    is_rental_owner = areYouTheOwner,
+                    is_for_rental = forRental.toString(),
+                    property_for = kindOfRenter,
+                    furnished_type = furnishedType,
+                    property_type = propertyType,
+                    number_of_bathrooms = numberOfBathroom,
+                    where_it_is = wherePropertyIs,
+                    yearly_deposit = depositAmount,
+                    monthly_rent = rentAmount,
+                    address = address,
+                    perks = perks,
+                    agreement_rules = agreementTerms,
+                    property_created_on = "",
+                    property_updated_on = "",
+                    property_created_by = "",
+                    property_images = images,
+                ),
+            ),
+        )
+        emit(RenterResponse.Idle)
+    }
 }

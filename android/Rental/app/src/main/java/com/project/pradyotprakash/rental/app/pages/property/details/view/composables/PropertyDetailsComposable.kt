@@ -32,7 +32,7 @@ fun PropertyDetailsComposable(property: PropertyEntity) {
             Text(
                 text = String.format(
                     TR.addressColon,
-                    property.address.display_name
+                    property.address?.display_name ?: ""
                 )
             )
             property.property_created_by_details?.let { userDetails ->

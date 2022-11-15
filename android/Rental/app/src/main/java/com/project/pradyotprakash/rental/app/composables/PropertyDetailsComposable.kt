@@ -50,7 +50,7 @@ fun PropertyDetailsComposable(
                 )
             }
             Spacer(modifier = Modifier.height(10.dp))
-            Text(text = String.format(TR.addressColon, property.address.display_name))
+            Text(text = String.format(TR.addressColon, property.address?.display_name ?: ""))
             Spacer(modifier = Modifier.height(10.dp))
             Text(
                 text = String.format(

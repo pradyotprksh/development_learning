@@ -177,8 +177,8 @@ class _Property(Resource):
 
         # Get the array of images
         property_images = property_request.getlist(Keys.Property.property_images)
-        if property_images is None:
-            property_images = []
+        if property_images is None or len(property_images) == 0:
+            property_images = past_property_details.get(Keys.Property.property_images)
         else:
             if type(property_images) != list:
                 property_images = [property_images]

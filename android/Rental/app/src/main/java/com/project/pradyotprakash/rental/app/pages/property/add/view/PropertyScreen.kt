@@ -59,6 +59,12 @@ fun PropertyScreen(
                             textAlign = TextAlign.Center,
                         )
                     }
+                } else {
+                    Text(
+                        text = TR.loading,
+                        style = MaterialTheme.typography.bodyLarge,
+                        textAlign = TextAlign.Center,
+                    )
                 }
             },
             appBarNavigationIcon = Icons.Default.ArrowBack,
@@ -66,7 +72,7 @@ fun PropertyScreen(
             bottomBar = {
                 if (!loading.value) {
                     Button(
-                        onClick = propertyViewModel::createRentalProperty,
+                        onClick = propertyViewModel::rentalPropertyDetails,
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(horizontal = 15.dp)

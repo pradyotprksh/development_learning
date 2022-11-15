@@ -143,7 +143,7 @@ class PropertyViewModel @Inject constructor(
                 ),
                 keyboardActions = KeyboardActions(
                     onDone = {
-                        createRentalProperty()
+                        rentalPropertyDetails()
                     }
                 ),
                 value = MutableLiveData(propertyDetails?.agreement_rules)
@@ -253,9 +253,9 @@ class PropertyViewModel @Inject constructor(
         _fields.value = fields
     }
 
-    fun createRentalProperty() {
+    fun rentalPropertyDetails() {
         _fields.value?.let { fields ->
-            val propertyId = firestoreService.getRandomDocumentId()
+            val propertyId = _propertyDetails.value?.property_id ?: firestoreService.getRandomDocumentId()
             val name = fields.find { it.id == FieldId.PropertyName.id }?.value?.value
             val address = fields.find { it.id == FieldId.Address.id }?.locationDetails?.value
             val areYouTheOwner =
@@ -299,7 +299,7 @@ class PropertyViewModel @Inject constructor(
                     updateErrorState(TR.dataMissing)
                 },
                 onNotNull = {
-                    initiateAddPropertyDetails(
+                    initiatePropertyDetailsService(
                         propertyId,
                         name!!,
                         address!!,
@@ -321,7 +321,7 @@ class PropertyViewModel @Inject constructor(
         }
     }
 
-    private fun initiateAddPropertyDetails(
+    private fun initiatePropertyDetailsService(
         propertyId: String,
         name: String,
         address: LocationEntity,
@@ -340,24 +340,45 @@ class PropertyViewModel @Inject constructor(
     ) {
         viewModelScope.launch {
             authenticationUseCase.getCurrentUserId()?.let { userId ->
-                propertyUseCase.createProperty(
-                    userId = userId,
-                    propertyId = propertyId,
-                    name = name,
-                    address = address,
-                    areYouTheOwner = areYouTheOwner,
-                    forRental = forRental,
-                    kindOfRenter = kindOfRenter,
-                    furnishedType = furnishedType,
-                    propertyType = propertyType,
-                    numberOfBathroom = numberOfBathroom,
-                    wherePropertyIs = wherePropertyIs,
-                    depositAmount = depositAmount,
-                    rentAmount = rentAmount,
-                    perks = perks,
-                    agreementTerms = agreementTerms,
-                    images = images,
-                ).collect {
+                if (_propertyDetails.value != null) {
+                    propertyUseCase.updateProperty(
+                        userId = userId,
+                        propertyId = propertyId,
+                        name = name,
+                        address = address,
+                        areYouTheOwner = areYouTheOwner,
+                        forRental = forRental,
+                        kindOfRenter = kindOfRenter,
+                        furnishedType = furnishedType,
+                        propertyType = propertyType,
+                        numberOfBathroom = numberOfBathroom,
+                        wherePropertyIs = wherePropertyIs,
+                        depositAmount = depositAmount,
+                        rentAmount = rentAmount,
+                        perks = perks,
+                        agreementTerms = agreementTerms,
+                        images = images,
+                    )
+                } else {
+                    propertyUseCase.createProperty(
+                        userId = userId,
+                        propertyId = propertyId,
+                        name = name,
+                        address = address,
+                        areYouTheOwner = areYouTheOwner,
+                        forRental = forRental,
+                        kindOfRenter = kindOfRenter,
+                        furnishedType = furnishedType,
+                        propertyType = propertyType,
+                        numberOfBathroom = numberOfBathroom,
+                        wherePropertyIs = wherePropertyIs,
+                        depositAmount = depositAmount,
+                        rentAmount = rentAmount,
+                        perks = perks,
+                        agreementTerms = agreementTerms,
+                        images = images,
+                    )
+                }.collect {
                     when (it) {
                         is RenterResponse.Error -> updateErrorState(it.exception.message)
                         is RenterResponse.Loading -> _loading.value = true
