@@ -110,12 +110,15 @@ class HomeViewModel @Inject constructor(
                 zipCode = "",
                 exactly_one = true,
             ).collect {
-                checkForUserDetails()
                 when (it) {
-                    is RenterResponse.Error -> updateErrorState(it.exception.message)
+                    is RenterResponse.Error -> {
+                        checkForUserDetails()
+                        updateErrorState(it.exception.message)
+                    }
                     is RenterResponse.Idle -> _loading.value = false
                     is RenterResponse.Loading -> _loading.value = true
                     is RenterResponse.Success -> {
+                        checkForUserDetails()
                         _locationResult.value = it.data.data ?: emptyList()
                     }
                 }

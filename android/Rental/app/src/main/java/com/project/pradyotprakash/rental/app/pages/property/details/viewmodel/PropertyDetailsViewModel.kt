@@ -4,6 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.project.pradyotprakash.rental.app.composables.ConfirmationDialog
+import com.project.pradyotprakash.rental.app.localization.TR
 import com.project.pradyotprakash.rental.app.utils.UserType
 import com.project.pradyotprakash.rental.core.navigation.Navigator
 import com.project.pradyotprakash.rental.core.navigation.Routes
@@ -33,6 +35,9 @@ class PropertyDetailsViewModel @Inject constructor(
     private val _noProperties = MutableLiveData(false)
     val noProperties: LiveData<Boolean>
         get() = _noProperties
+    private val _confirmationDialog = MutableLiveData(ConfirmationDialog())
+    val confirmationDialog: LiveData<ConfirmationDialog>
+        get() = _confirmationDialog
 
     fun getPropertyDetails(propertyId: String) {
         viewModelScope.launch {
@@ -87,5 +92,15 @@ class PropertyDetailsViewModel @Inject constructor(
         navigator.navigate {
             it.navigate("${Routes.Property.route}$propertyId")
         }
+    }
+
+    fun addToWishList(propertyId: String, propertyName: String) {
+        _confirmationDialog.value = ConfirmationDialog(
+            text = String.format(TR.confirmAddToWishlistProperty, propertyName),
+            onConfirm = {},
+            onDismiss = {
+                _confirmationDialog.value = ConfirmationDialog()
+            },
+        )
     }
 }

@@ -114,5 +114,7 @@ object TR {
     var search = Translation.getString("search")
     var editPropertyWithName = Translation.getString("editPropertyWithName")
     var update = Translation.getString("update")
+    var confirmAddToWishlistProperty = Translation.getString("confirmAddToWishlistProperty")
+    var yourWatchlist = Translation.getString("yourWatchlist")
     
 }

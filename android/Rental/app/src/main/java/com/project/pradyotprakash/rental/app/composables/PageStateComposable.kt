@@ -16,11 +16,21 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogProperties
 import com.project.pradyotprakash.rental.app.localization.TR
 
+data class ConfirmationDialog(
+    val text: String = "",
+    val onConfirm: () -> Unit = {},
+    val onDismiss: () -> Unit = {},
+) {
+    val showDialog: Boolean
+        get() = text.isNotBlank()
+}
+
 @Composable
 fun PageStateComposable(
     isLoading: Boolean = false,
     errorMessage: String = "",
     dismissErrorAlert: () -> Unit = {},
+    confirmationDialog: ConfirmationDialog = ConfirmationDialog(),
     content: @Composable () -> Unit,
 ) {
     Box(
@@ -55,6 +65,31 @@ fun PageStateComposable(
                 properties = DialogProperties(
                     dismissOnBackPress = true,
                     dismissOnClickOutside = true
+                )
+            )
+        }
+        if (confirmationDialog.showDialog) {
+            AlertDialog(
+                text = {
+                    Text(
+                        text = confirmationDialog.text,
+                        textAlign = TextAlign.Center,
+                    )
+                },
+                onDismissRequest = confirmationDialog.onDismiss,
+                confirmButton = {
+                    TextButton(onClick = confirmationDialog.onConfirm) {
+                        Text(text = TR.okay)
+                    }
+                },
+                dismissButton = {
+                    TextButton(onClick = confirmationDialog.onDismiss) {
+                        Text(text = TR.no)
+                    }
+                },
+                properties = DialogProperties(
+                    dismissOnBackPress = false,
+                    dismissOnClickOutside = false
                 )
             )
         }

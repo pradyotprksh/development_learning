@@ -8,9 +8,9 @@ This will help in making the api file cleaner and making the refactoring easy.
 """
 from flask_restful import Resource
 from flask import request
-from src.core.modals import UserDetails
+from src.core.modals import UserDetails, WishlistDetails
 from src.core.services.db import get_collection, get_document, insert_document, update_a_document, get_documents
-from src.utils.constants import Keys, MESSAGES_LIST, DEFAULT_ERROR_MESSAGE, USER_TYPE, OWNER_USER_TYPE
+from src.utils.constants import Keys, MESSAGES_LIST, DEFAULT_ERROR_MESSAGE, USER_TYPE, OWNER_USER_TYPE, Endpoints
 from src.utils.response_mapper import response_creator
 from src.utils.util_calls import is_email_address_valid, get_current_timestamp, convert_string_to_json, distance_between
 
@@ -24,7 +24,90 @@ class User:
 
     def __init__(self, api):
         self.common_path = "/renter/user"
-        api.add_resource(_User, f"{self.common_path}/")
+        api.add_resource(_User, f"{self.common_path}")
+        api.add_resource(_Wishlist, f"{self.common_path}{Endpoints.Users.wishlist}")
+
+
+class _Wishlist(Resource):
+    """A wishlist class which will help in handling all the request made on
+    <path>/user/wishlist"""
+
+    def __init__(self):
+        # Get the user collection to be used by the user resource
+        self.user_collection = get_collection(Keys.User.collection_name)
+        # Get the property collection to be used by the property resource
+        self.property_collection = get_collection(Keys.Property.collection_name)
+        # Get the property collection to be used by the wishlist resource
+        self.wishlist_collection = get_collection(Keys.Wishlist.collection_name)
+
+    def post(self, property_id):
+        # headers
+        # Check for app token to validate request
+        app_check_token = request.headers[Keys.Rental.firebase_app_check_token]
+        if app_check_token is None or app_check_token == "":
+            return response_creator(
+                code=401,
+                message=MESSAGES_LIST[Keys.Messages.cannot_validate_request],
+            )
+        user_id = request.headers[Keys.User.user_id]
+
+        # find the user in db
+        user = get_document(self.user_collection, Keys.User.user_id, user_id)
+        if user is None:
+            return response_creator(
+                code=404,
+                message=MESSAGES_LIST[Keys.Messages.user_not_found],
+            )
+
+        # Check if property already available
+        property_details = get_document(self.property_collection, Keys.Property.property_id, property_id)
+        if property_details is None:
+            return response_creator(
+                code=404,
+                message=MESSAGES_LIST[Keys.Messages.property_not_found],
+            )
+
+        wishlist_id = f"{user_id}-{property_id}"
+
+        # Check if already added
+        wishlist_details = get_document(self.wishlist_collection, Keys.Wishlist.wishlist_id, wishlist_id)
+        if not (wishlist_details is None):
+            return response_creator(
+                code=409,
+                message=MESSAGES_LIST[Keys.Messages.wishlist_already_added].format(
+                    property_details.get(Keys.Property.property_name)
+                )
+            )
+
+        # Payload
+        wishlist = WishlistDetails(
+            wishlist_id=wishlist_id,
+            property_id=property_id,
+            created_by=user_id,
+            created_on=get_current_timestamp(),
+        )
+
+        # add user details to mongo db
+        insert_document(
+            self.wishlist_collection,
+            {
+                "_id": wishlist.wishlist_id,
+                **wishlist._asdict(),
+            }
+        )
+
+        # get the wishlist details from db
+        db_wishlist_details = get_document(self.wishlist_collection, Keys.Wishlist.wishlist_id, wishlist_id)
+
+        return response_creator(
+            code=200,
+            message=MESSAGES_LIST.get(Keys.Messages.wishlist_created),
+            other_data={
+                "data": {
+                    **db_wishlist_details
+                }
+            }
+        )
 
 
 class _User(Resource):

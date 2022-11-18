@@ -26,6 +26,17 @@ UserDetails = namedtuple(
     ]
 )
 
+# A named tuple for the wishlist
+WishlistDetails = namedtuple(
+    "WishlistDetails",
+    [
+        Keys.Wishlist.wishlist_id,
+        Keys.Wishlist.property_id,
+        Keys.Wishlist.created_by,
+        Keys.Wishlist.created_on,
+    ]
+)
+
 # A named tuple for the property
 PropertyDetails = namedtuple(
     "PropertyDetails",

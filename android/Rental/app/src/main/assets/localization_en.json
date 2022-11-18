@@ -107,5 +107,7 @@
   "kmsAway": "%s kms away",
   "search": "Search",
   "editPropertyWithName": "Edit %s",
-  "update": "Update"
+  "update": "Update",
+  "confirmAddToWishlistProperty": "Do you want to add %s property to your wishlist?",
+  "yourWatchlist": "Your Watchlist"
 }

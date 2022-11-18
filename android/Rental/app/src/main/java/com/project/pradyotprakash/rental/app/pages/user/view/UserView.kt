@@ -1,8 +1,11 @@
 package com.project.pradyotprakash.rental.app.pages.user.view
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -27,6 +30,7 @@ import com.project.pradyotprakash.rental.app.composables.PropertyDetailsComposab
 import com.project.pradyotprakash.rental.app.composables.UserDetailsComposable
 import com.project.pradyotprakash.rental.app.localization.TR
 import com.project.pradyotprakash.rental.app.pages.user.viewmodel.UserViewModel
+import com.project.pradyotprakash.rental.app.utils.UserType
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
@@ -63,15 +67,35 @@ fun UserView(
                 )
             },
             floatingActionButton = {
-                val actionText = userViewModel.floatingActionButtonText()
-                if (actionText.isNotEmpty()) {
-                    FloatingActionButton(onClick = { userViewModel.goToInformationScreen() }) {
-                        Text(
-                            text = userViewModel.floatingActionButtonText(),
-                            modifier = Modifier.padding(
-                                all = 15.dp
+                Row {
+                    if (!loading.value) {
+                        userDetails.value?.let { details ->
+                            if (details.userType == UserType.Renter) {
+                                FloatingActionButton(
+                                    onClick = { TODO() }
+                                ) {
+                                    Text(
+                                        text = TR.yourWatchlist,
+                                        modifier = Modifier.padding(
+                                            all = 15.dp
+                                        )
+                                    )
+                                }
+                                Spacer(modifier = Modifier.width(10.dp))
+                            }
+                        }
+                    }
+
+                    val actionText = userViewModel.floatingActionButtonText()
+                    if (actionText.isNotEmpty()) {
+                        FloatingActionButton(onClick = { userViewModel.goToInformationScreen() }) {
+                            Text(
+                                text = userViewModel.floatingActionButtonText(),
+                                modifier = Modifier.padding(
+                                    all = 15.dp
+                                )
                             )
-                        )
+                        }
                     }
                 }
             },

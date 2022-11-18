@@ -108,14 +108,14 @@ dependencies {
     implementation("androidx.core:core-ktx:1.9.0")
 
     // Compose
-    implementation("androidx.compose.ui:ui:1.3.0")
-    implementation("androidx.compose.material3:material3:1.0.0")
+    implementation("androidx.compose.ui:ui:1.3.1")
+    implementation("androidx.compose.material3:material3:1.0.1")
     implementation("androidx.compose.material:material:1.3.1")
-    implementation("androidx.compose.material3:material3-window-size-class:1.0.0")
+    implementation("androidx.compose.material3:material3-window-size-class:1.0.1")
     implementation("androidx.navigation:navigation-compose:2.5.3")
-    implementation("androidx.compose.runtime:runtime-livedata:1.3.0")
-    debugImplementation("androidx.compose.ui:ui-tooling:1.3.0")
-    debugImplementation("androidx.compose.ui:ui-test-manifest:1.3.0")
+    implementation("androidx.compose.runtime:runtime-livedata:1.3.1")
+    debugImplementation("androidx.compose.ui:ui-tooling:1.3.1")
+    debugImplementation("androidx.compose.ui:ui-test-manifest:1.3.1")
 
     // Dependency Injection
     implementation("com.google.dagger:hilt-android:2.44")
@@ -147,9 +147,9 @@ dependencies {
 
     // Testing
     testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.3")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
-    androidTestImplementation("androidx.compose.ui:ui-test-junit4:1.3.0")
+    androidTestImplementation("androidx.test.ext:junit:1.1.4")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.0")
+    androidTestImplementation("androidx.compose.ui:ui-test-junit4:1.3.1")
 
     // Chrome browser
     implementation("androidx.browser:browser:1.4.0")

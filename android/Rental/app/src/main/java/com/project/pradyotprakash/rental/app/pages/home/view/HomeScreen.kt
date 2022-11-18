@@ -56,11 +56,11 @@ fun HomeScreen(homeViewModel: HomeViewModel = hiltViewModel()) {
     val otherProperties = homeViewModel.otherProperties.observeAsState()
     val locationDetails = homeViewModel.locationResult.observeAsState().value?.firstOrNull()
 
+    val accuratePermission = PermissionHandler.checkForAccurateLocation()
+    val approximatePermission = PermissionHandler.checkForApproximateLocation()
+
     userDetails?.let {
         if (userDetails.userType == UserType.Renter) {
-            val accuratePermission = PermissionHandler.checkForAccurateLocation()
-            val approximatePermission = PermissionHandler.checkForApproximateLocation()
-
             PermissionHandler.permissionInitiatorWithStateCheck(
                 state = accuratePermission,
                 askForPermission = {

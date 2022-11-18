@@ -27,6 +27,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.project.pradyotprakash.rental.app.composables.ConfirmationDialog
 import com.project.pradyotprakash.rental.app.composables.HeaderComposable
 import com.project.pradyotprakash.rental.app.composables.NetworkImageComposable
 import com.project.pradyotprakash.rental.app.composables.PageStateComposable
@@ -53,12 +54,16 @@ fun PropertyDetailsScreen(
     val error = propertyDetailsViewModel.error.observeAsState("")
     val propertyDetails = propertyDetailsViewModel.propertyDetails.observeAsState(null)
     val noProperties = propertyDetailsViewModel.noProperties.observeAsState(false)
+    val confirmationDialog = propertyDetailsViewModel.confirmationDialog.observeAsState(
+        ConfirmationDialog()
+    )
     val isPropertyOwner = propertyDetailsViewModel.isPropertyOwner(propertyDetails.value?.property_created_by)
 
     PageStateComposable(
         isLoading = loading.value,
         errorMessage = error.value,
-        dismissErrorAlert = propertyDetailsViewModel::updateErrorState
+        dismissErrorAlert = propertyDetailsViewModel::updateErrorState,
+        confirmationDialog = confirmationDialog.value,
     ) {
         Scaffold(
             topBar = {
@@ -106,7 +111,10 @@ fun PropertyDetailsScreen(
                                 if (isPropertyOwner) {
                                     propertyDetailsViewModel.goToPropertyEdit(propertyId)
                                 } else {
-                                    TODO()
+                                    propertyDetailsViewModel.addToWishList(
+                                        propertyId,
+                                        propertyDetails.value?.property_name ?: ""
+                                    )
                                 }
                             }
                         ) {
