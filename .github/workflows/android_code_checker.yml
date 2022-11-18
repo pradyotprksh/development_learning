@@ -6,7 +6,7 @@ on:
       - android/**
 name: Android Projects
 jobs:
-  algorithms:
+  rental:
     name: Rental Code Checker
     runs-on: ubuntu-latest
     steps:
@@ -22,6 +22,126 @@ jobs:
           cache: gradle
       - name: Checking Rental
         working-directory: ./android/Rental
+        run: |
+          chmod +x ./gradlew
+          ./gradlew lint
+          ./gradlew build
+  demo:
+    name: Demo Code Checker
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cancel Previous Runs
+        uses: styfle/cancel-workflow-action@0.9.1
+        with:
+          access_token: ${{ github.token }}
+      - uses: actions/checkout@v2
+      - uses: actions/setup-java@v1
+        with:
+          java-version: '12.x'
+          distribution: 'adopt'
+          cache: gradle
+      - name: Checking Demo
+        working-directory: ./android/Demo
+        run: |
+          chmod +x ./gradlew
+          ./gradlew lint
+          ./gradlew build
+  dicee:
+    name: Dicee Code Checker
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cancel Previous Runs
+        uses: styfle/cancel-workflow-action@0.9.1
+        with:
+          access_token: ${{ github.token }}
+      - uses: actions/checkout@v2
+      - uses: actions/setup-java@v1
+        with:
+          java-version: '12.x'
+          distribution: 'adopt'
+          cache: gradle
+      - name: Checking Dicee
+        working-directory: ./android/Dicee
+        run: |
+          chmod +x ./gradlew
+          ./gradlew lint
+          ./gradlew build
+  flashChat:
+    name: FlashChat Code Checker
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cancel Previous Runs
+        uses: styfle/cancel-workflow-action@0.9.1
+        with:
+          access_token: ${{ github.token }}
+      - uses: actions/checkout@v2
+      - uses: actions/setup-java@v1
+        with:
+          java-version: '12.x'
+          distribution: 'adopt'
+          cache: gradle
+      - name: Checking FlashChat
+        working-directory: ./android/FlashChat
+        run: |
+          chmod +x ./gradlew
+          ./gradlew lint
+          ./gradlew build
+  iAmRich:
+    name: IAmRich Code Checker
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cancel Previous Runs
+        uses: styfle/cancel-workflow-action@0.9.1
+        with:
+          access_token: ${{ github.token }}
+      - uses: actions/checkout@v2
+      - uses: actions/setup-java@v1
+        with:
+          java-version: '12.x'
+          distribution: 'adopt'
+          cache: gradle
+      - name: Checking IAmRich
+        working-directory: ./android/IAmRich
+        run: |
+          chmod +x ./gradlew
+          ./gradlew lint
+          ./gradlew build
+  twitter:
+    name: Twitter Code Checker
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cancel Previous Runs
+        uses: styfle/cancel-workflow-action@0.9.1
+        with:
+          access_token: ${{ github.token }}
+      - uses: actions/checkout@v2
+      - uses: actions/setup-java@v1
+        with:
+          java-version: '12.x'
+          distribution: 'adopt'
+          cache: gradle
+      - name: Checking Twitter
+        working-directory: ./android/Twitter
+        run: |
+          chmod +x ./gradlew
+          ./gradlew lint
+          ./gradlew build
+  whatsAppCompose:
+    name: WhatsAppCompose Code Checker
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cancel Previous Runs
+        uses: styfle/cancel-workflow-action@0.9.1
+        with:
+          access_token: ${{ github.token }}
+      - uses: actions/checkout@v2
+      - uses: actions/setup-java@v1
+        with:
+          java-version: '12.x'
+          distribution: 'adopt'
+          cache: gradle
+      - name: Checking WhatsAppCompose
+        working-directory: ./android/WhatsAppCompose
         run: |
           chmod +x ./gradlew
           ./gradlew lint
