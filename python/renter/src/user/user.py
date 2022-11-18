@@ -30,8 +30,7 @@ class User:
 
 class _Wishlist(Resource):
     """A wishlist class which will help in handling all the request made on
-    <path>/user/wishlist
-    """
+    <path>/user/wishlist"""
 
     def __init__(self):
         # Get the user collection to be used by the user resource
