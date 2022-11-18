@@ -111,7 +111,7 @@ fun PropertyDetailsScreen(
                                 if (isPropertyOwner) {
                                     propertyDetailsViewModel.goToPropertyEdit(propertyId)
                                 } else {
-                                    propertyDetailsViewModel.addToWishList(
+                                    propertyDetailsViewModel.confirmAddToWishList(
                                         propertyId,
                                         propertyDetails.value?.property_name ?: ""
                                     )

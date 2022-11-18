@@ -94,13 +94,34 @@ class PropertyDetailsViewModel @Inject constructor(
         }
     }
 
-    fun addToWishList(propertyId: String, propertyName: String) {
+    fun confirmAddToWishList(propertyId: String, propertyName: String) {
         _confirmationDialog.value = ConfirmationDialog(
             text = String.format(TR.confirmAddToWishlistProperty, propertyName),
-            onConfirm = {},
+            onConfirm = {
+                _confirmationDialog.value = ConfirmationDialog()
+                addPropertyToWishlist(propertyId)
+            },
             onDismiss = {
                 _confirmationDialog.value = ConfirmationDialog()
             },
         )
+    }
+
+    private fun addPropertyToWishlist(propertyId: String) {
+        viewModelScope.launch {
+            authenticationUseCase.getCurrentUserId()?.let { userId ->
+                authenticationUseCase.createWishlist(
+                    userId = userId,
+                    propertyId = propertyId,
+                ).collect {
+                    when (it) {
+                        is RenterResponse.Error -> updateErrorState(it.exception.message)
+                        is RenterResponse.Idle -> _loading.value = false
+                        is RenterResponse.Loading -> _loading.value = true
+                        is RenterResponse.Success -> {}
+                    }
+                }
+            }
+        }
     }
 }

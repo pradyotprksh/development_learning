@@ -129,6 +129,7 @@ class Keys:
         latitude = "lat"
         longitude = "lon"
         distance = "distance"
+        is_in_wishlist = "is_in_wishlist"
 
     class Search:
         """A set of keys related to search section"""

@@ -46,6 +46,8 @@ class _Property(Resource):
         self.user_collection = get_collection(Keys.User.collection_name)
         # Get the property collection to be used by the property resource
         self.property_collection = get_collection(Keys.Property.collection_name)
+        # Get the property collection to be used by the wishlist resource
+        self.wishlist_collection = get_collection(Keys.Wishlist.collection_name)
 
     def get(self):
         # headers
@@ -56,6 +58,7 @@ class _Property(Resource):
                 code=401,
                 message=MESSAGES_LIST[Keys.Messages.cannot_validate_request],
             )
+        header_user_id = request.headers[Keys.User.user_id]
 
         # Get all user details
         users_list = []
@@ -77,6 +80,14 @@ class _Property(Resource):
                     user_id = doc.get(Keys.Property.property_created_by)
                     user_details = self.find_user_by_user_id(user_id, users_list)
                     doc[Keys.Property.property_created_by_details] = user_details
+
+                    # Is in wishlist
+                    doc_id = doc.get(Keys.Property.property_id)
+                    doc[Keys.Property.is_in_wishlist] = not (
+                            get_document(
+                                self.wishlist_collection, Keys.Wishlist.wishlist_id, f"{header_user_id}-{doc_id}"
+                            ) is None
+                    )
                     property_list.append(doc)
             # But property id is present
             else:
@@ -85,6 +96,15 @@ class _Property(Resource):
                 user_id = property_details.get(Keys.Property.property_created_by)
                 user_details = self.find_user_by_user_id(user_id, users_list)
                 property_details[Keys.Property.property_created_by_details] = user_details
+
+                # Is in wishlist
+                doc_id = property_details.get(Keys.Property.property_id)
+                property_details[Keys.Property.is_in_wishlist] = not (
+                        get_document(
+                            self.wishlist_collection, Keys.Wishlist.wishlist_id, f"{header_user_id}-{doc_id}"
+                        ) is None
+                )
+
                 property_list = [
                     property_details
                 ]
@@ -107,6 +127,15 @@ class _Property(Resource):
                     user_id = doc.get(Keys.Property.property_created_by)
                     user_details = self.find_user_by_user_id(user_id, users_list)
                     doc[Keys.Property.property_created_by_details] = user_details
+
+                    # Is in wishlist
+                    doc_id = doc.get(Keys.Property.property_id)
+                    doc[Keys.Property.is_in_wishlist] = not (
+                            get_document(
+                                self.wishlist_collection, Keys.Wishlist.wishlist_id, f"{header_user_id}-{doc_id}"
+                            ) is None
+                    )
+
                     property_list.append(doc)
             # And property id is also present
             else:
@@ -115,6 +144,15 @@ class _Property(Resource):
                 user_id = property_details.get(Keys.Property.property_created_by)
                 user_details = self.find_user_by_user_id(user_id, users_list)
                 property_details[Keys.Property.property_created_by_details] = user_details
+
+                # Is in wishlist
+                doc_id = property_details.get(Keys.Property.property_id)
+                property_details[Keys.Property.is_in_wishlist] = not (
+                        get_document(
+                            self.wishlist_collection, Keys.Wishlist.wishlist_id, f"{header_user_id}-{doc_id}"
+                        ) is None
+                )
+
                 property_list = [
                     property_details
                 ]
