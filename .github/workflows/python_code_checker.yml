@@ -17,3 +17,27 @@ jobs:
       - uses: ricardochaves/python-lint@master
         with:
           python-root-list: "python/renter"
+  programming:
+    name: programming Code Checker
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: ricardochaves/python-lint@master
+        with:
+          python-root-list: "python/programming"
+  pyblog:
+    name: pyblog Code Checker
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: ricardochaves/python-lint@master
+        with:
+          python-root-list: "python/pyblog"
+  2022_Python_Bootcamp:
+    name: renter Code Checker
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: ricardochaves/python-lint@master
+        with:
+          python-root-list: "python/UdemyCourse/2022_Python_Bootcamp"
