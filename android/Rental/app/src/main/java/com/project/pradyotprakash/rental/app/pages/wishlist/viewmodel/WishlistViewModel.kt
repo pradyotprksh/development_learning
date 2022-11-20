@@ -4,6 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.project.pradyotprakash.rental.app.composables.ConfirmationDialog
+import com.project.pradyotprakash.rental.app.localization.TR
 import com.project.pradyotprakash.rental.core.navigation.Navigator
 import com.project.pradyotprakash.rental.core.navigation.Routes
 import com.project.pradyotprakash.rental.core.response.RenterResponse
@@ -29,6 +31,9 @@ class WishlistViewModel @Inject constructor(
     private val _wishlists = MutableLiveData<List<WishlistEntity>>()
     val wishlists: LiveData<List<WishlistEntity>>
         get() = _wishlists
+    private val _confirmationDialog = MutableLiveData(ConfirmationDialog())
+    val confirmationDialog: LiveData<ConfirmationDialog>
+        get() = _confirmationDialog
 
     fun getAllWishlist() {
         viewModelScope.launch {
@@ -62,6 +67,37 @@ class WishlistViewModel @Inject constructor(
     fun navigateToPropertyDetails(propertyId: String) {
         navigator.navigate {
             it.navigate("${Routes.PropertyDetails.route}${propertyId}")
+        }
+    }
+
+    fun confirmDeleteWishList(propertyId: String, propertyName: String) {
+        _confirmationDialog.value = ConfirmationDialog(
+            text = String.format(TR.confirmDeleteWishlistProperty, propertyName),
+            onConfirm = {
+                _confirmationDialog.value = ConfirmationDialog()
+                deletePropertyFromWishlist(propertyId)
+            },
+            onDismiss = {
+                _confirmationDialog.value = ConfirmationDialog()
+            },
+        )
+    }
+
+    private fun deletePropertyFromWishlist(propertyId: String) {
+        viewModelScope.launch {
+            authenticationUseCase.getCurrentUserId()?.let { userId ->
+                wishlistUseCase.deleteWishlist(
+                    propertyId = propertyId,
+                    userId = userId
+                ).collect {
+                    when (it) {
+                        is RenterResponse.Error -> updateErrorState(it.exception.message)
+                        is RenterResponse.Idle -> _loading.value = false
+                        is RenterResponse.Loading -> _loading.value = true
+                        is RenterResponse.Success -> updateErrorState(it.data.message)
+                    }
+                }
+            }
         }
     }
 }

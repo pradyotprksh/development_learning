@@ -9,7 +9,8 @@ This will help in making the api file cleaner and making the refactoring easy.
 from flask_restful import Resource
 from flask import request
 from src.core.modals import UserDetails, WishlistDetails
-from src.core.services.db import get_collection, get_document, insert_document, update_a_document, get_documents
+from src.core.services.db import get_collection, get_document, insert_document, update_a_document, get_documents, \
+    delete_document
 from src.utils.constants import Keys, MESSAGES_LIST, DEFAULT_ERROR_MESSAGE, USER_TYPE, OWNER_USER_TYPE, Endpoints
 from src.utils.response_mapper import response_creator
 from src.utils.util_calls import is_email_address_valid, get_current_timestamp, convert_string_to_json, distance_between
@@ -39,6 +40,67 @@ class _Wishlist(Resource):
         self.property_collection = get_collection(Keys.Property.collection_name)
         # Get the property collection to be used by the wishlist resource
         self.wishlist_collection = get_collection(Keys.Wishlist.collection_name)
+
+    def delete(self):
+        # headers
+        # Check for app token to validate request
+        app_check_token = request.headers[Keys.Rental.firebase_app_check_token]
+        if app_check_token is None or app_check_token == "":
+            return response_creator(
+                code=401,
+                message=MESSAGES_LIST[Keys.Messages.cannot_validate_request],
+            )
+
+        # Query parameters
+        property_id = request.args.get(Keys.Wishlist.property_id)
+        user_id = request.args.get(Keys.User.user_id)
+
+        # find the user in db
+        user = get_document(self.user_collection, Keys.User.user_id, user_id)
+        if user is None:
+            return response_creator(
+                code=404,
+                message=MESSAGES_LIST[Keys.Messages.user_not_found],
+            )
+
+        # Check if property already available
+        property_details = get_document(self.property_collection, Keys.Property.property_id, property_id)
+        if property_details is None:
+            return response_creator(
+                code=404,
+                message=MESSAGES_LIST[Keys.Messages.property_not_found],
+            )
+
+        wishlist_id = f"{user_id}-{property_id}"
+
+        property_name = property_details.get(Keys.Property.property_name)
+
+        # Check if already added
+        wishlist_details = get_document(self.wishlist_collection, Keys.Wishlist.wishlist_id, wishlist_id)
+        if wishlist_details is None:
+            return response_creator(
+                code=404,
+                message=MESSAGES_LIST[Keys.Messages.wishlist_not_found].format(
+                    property_name
+                )
+            )
+
+        # Delete the wishlist
+        result = delete_document(self.wishlist_collection, Keys.Wishlist.wishlist_id, wishlist_id)
+        if result.deleted_count == 1:
+            return response_creator(
+                code=200,
+                message=MESSAGES_LIST[Keys.Messages.wishlist_deleted].format(
+                    property_name
+                )
+            )
+        else:
+            return response_creator(
+                code=404,
+                message=MESSAGES_LIST[Keys.Messages.wishlist_deleted_error].format(
+                    property_name
+                )
+            )
 
     def get(self):
         # headers
@@ -70,7 +132,7 @@ class _Wishlist(Resource):
                 continue
             property_details = get_document(self.property_collection, Keys.Property.property_id, doc_property_id)
             if property_details is None:
-                # TODO: Delete the wishlist
+                delete_document(self.wishlist_collection, Keys.Wishlist.wishlist_id, doc.get(Keys.Wishlist.wishlist_id))
                 continue
             doc[Keys.Wishlist.property_details] = property_details
             wishlist.append(doc)

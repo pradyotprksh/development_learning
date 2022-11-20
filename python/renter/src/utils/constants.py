@@ -83,6 +83,9 @@ class Keys:
         wishlist_already_added = "wishlist_already_added"
         wishlist_created = "wishlist_created"
         wishlist_found = "wishlist_found"
+        wishlist_not_found = "wishlist_not_found"
+        wishlist_deleted = "wishlist_deleted"
+        wishlist_deleted_error = "wishlist_deleted_error"
 
     class User:
         """A set of keys related to the User section"""
@@ -188,5 +191,8 @@ MESSAGES_LIST = {
                                       " options. We are using a free location service for now.",
     Keys.Messages.wishlist_already_added: "{} property is already in your wishlist.",
     Keys.Messages.wishlist_created: "Wishlist created",
-    Keys.Messages.wishlist_found: "Wishlist found"
+    Keys.Messages.wishlist_found: "Wishlist found",
+    Keys.Messages.wishlist_not_found: "{} not found in your wishlist.",
+    Keys.Messages.wishlist_deleted: "{} removed from your wishlist.",
+    Keys.Messages.wishlist_deleted_error: "We were not able to remove {} from your wishlist. Please try again.",
 }

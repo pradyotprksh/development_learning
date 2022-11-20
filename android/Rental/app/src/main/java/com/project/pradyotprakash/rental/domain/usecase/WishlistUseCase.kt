@@ -33,4 +33,17 @@ class WishlistUseCase @Inject constructor(
         )
         emit(RenterResponse.Idle)
     }
+
+    suspend fun deleteWishlist(
+        userId: String,
+        propertyId: String,
+    ) = flow {
+        emit(RenterResponse.Loading)
+        emit(
+            wishlistRepository.deleteWishlist(
+                userId = userId, propertyId = propertyId
+            )
+        )
+        emit(RenterResponse.Idle)
+    }
 }

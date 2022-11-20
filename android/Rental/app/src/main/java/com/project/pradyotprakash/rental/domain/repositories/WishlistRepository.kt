@@ -23,4 +23,12 @@ class WishlistRepository(
         userId = userId,
         propertyId = propertyId
     ).parseResponse(crashlytics)
+
+    suspend fun deleteWishlist(
+        userId: String,
+        propertyId: String
+    ) = wishlistService.deleteWishlist(
+        userId = userId,
+        propertyId = propertyId
+    ).parseResponse(crashlytics)
 }

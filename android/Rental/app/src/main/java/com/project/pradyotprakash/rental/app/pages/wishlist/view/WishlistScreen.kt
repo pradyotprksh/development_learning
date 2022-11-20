@@ -27,6 +27,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.project.pradyotprakash.rental.app.composables.ConfirmationDialog
 import com.project.pradyotprakash.rental.app.composables.PageStateComposable
 import com.project.pradyotprakash.rental.app.composables.PropertyDetailsComposable
 import com.project.pradyotprakash.rental.app.localization.TR
@@ -44,11 +45,15 @@ fun WishlistScreen(
     val loading = wishlistViewModel.loading.observeAsState(false)
     val error = wishlistViewModel.error.observeAsState("")
     val wishlists = wishlistViewModel.wishlists.observeAsState()
+    val confirmationDialog = wishlistViewModel.confirmationDialog.observeAsState(
+        ConfirmationDialog()
+    )
 
     PageStateComposable(
         isLoading = loading.value,
         errorMessage = error.value,
-        dismissErrorAlert = wishlistViewModel::updateErrorState
+        dismissErrorAlert = wishlistViewModel::updateErrorState,
+        confirmationDialog = confirmationDialog.value,
     ) {
         Scaffold(
             topBar = {
@@ -91,7 +96,16 @@ fun WishlistScreen(
                                 Text(
                                     text = String.format(TR.added, wishlist.wishlistCreateOnTimeAgo)
                                 )
-                                IconButton(onClick = { TODO() }) {
+                                IconButton(
+                                    onClick = {
+                                        propertyDetails?.let {
+                                            wishlistViewModel.confirmDeleteWishList(
+                                                propertyId = propertyDetails.property_id,
+                                                propertyName = propertyDetails.property_name,
+                                            )
+                                        }
+                                    }
+                                ) {
                                     Icon(
                                         imageVector = Icons.Default.Delete,
                                         contentDescription = Icons.Default.Delete.name

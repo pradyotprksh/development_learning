@@ -109,6 +109,7 @@
   "editPropertyWithName": "Edit %s",
   "update": "Update",
   "confirmAddToWishlistProperty": "Do you want to add %s property to your wishlist?",
+  "confirmDeleteWishlistProperty": "Do you want to delete %s property from your wishlist?",
   "yourWatchlist": "Your Watchlist",
   "added": "Added %s"
 }

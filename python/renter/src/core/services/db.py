@@ -72,3 +72,13 @@ def update_a_document(collection, key, value, data):
         {key: value},
         {"$set": data},
     )
+
+
+def delete_document(collection, key, value):
+    """Delete a single document
+
+    :argument collection: Collection from which the document is needs to be deleted
+    :argument key: Key to be used to get the document
+    :argument value: Value for the key
+    """
+    return collection.delete_one({key: value})
