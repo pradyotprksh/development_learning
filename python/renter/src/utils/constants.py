@@ -43,7 +43,7 @@ class Endpoints:
 
     class Users:
         """A user endpoint lists"""
-        wishlist = "/wishlist/<string:property_id>"
+        wishlist = "/wishlist"
 
 
 class Keys:
@@ -82,6 +82,7 @@ class Keys:
         invalid_user_property_update = "invalid_user_property_update"
         wishlist_already_added = "wishlist_already_added"
         wishlist_created = "wishlist_created"
+        wishlist_found = "wishlist_found"
 
     class User:
         """A set of keys related to the User section"""
@@ -147,6 +148,7 @@ class Keys:
         created_by = "created_by"
         created_on = "created_on"
         wishlist_id = "wishlist_id"
+        property_details = "property_details"
 
 
 # Dictionary of messages
@@ -185,5 +187,6 @@ MESSAGES_LIST = {
     Keys.Messages.location_not_found: "Sorry the requested location was not found. For better results use all available"
                                       " options. We are using a free location service for now.",
     Keys.Messages.wishlist_already_added: "{} property is already in your wishlist.",
-    Keys.Messages.wishlist_created: "Wishlist created"
+    Keys.Messages.wishlist_created: "Wishlist created",
+    Keys.Messages.wishlist_found: "Wishlist found"
 }

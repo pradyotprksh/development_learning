@@ -40,7 +40,7 @@ class _Wishlist(Resource):
         # Get the property collection to be used by the wishlist resource
         self.wishlist_collection = get_collection(Keys.Wishlist.collection_name)
 
-    def post(self, property_id):
+    def get(self):
         # headers
         # Check for app token to validate request
         app_check_token = request.headers[Keys.Rental.firebase_app_check_token]
@@ -49,7 +49,56 @@ class _Wishlist(Resource):
                 code=401,
                 message=MESSAGES_LIST[Keys.Messages.cannot_validate_request],
             )
-        user_id = request.headers[Keys.User.user_id]
+
+        # Query parameters
+        property_id = request.args.get(Keys.Wishlist.property_id)
+        user_id = request.args.get(Keys.User.user_id)
+
+        # find the user in db
+        user = get_document(self.user_collection, Keys.User.user_id, user_id)
+        if user is None:
+            return response_creator(
+                code=404,
+                message=MESSAGES_LIST[Keys.Messages.user_not_found],
+            )
+
+        wishlist_cursor = get_documents(self.wishlist_collection, Keys.Wishlist.created_by, user_id)
+        wishlist = []
+        for doc in wishlist_cursor:
+            doc_property_id = doc.get(Keys.Wishlist.property_id)
+            if not (property_id is None) and doc_property_id != property_id:
+                continue
+            property_details = get_document(self.property_collection, Keys.Property.property_id, doc_property_id)
+            if property_details is None:
+                # TODO: Delete the wishlist
+                continue
+            doc[Keys.Wishlist.property_details] = property_details
+            wishlist.append(doc)
+            if not (property_id is None) and doc_property_id == property_id:
+                break
+
+        return response_creator(
+            code=200,
+            message=MESSAGES_LIST.get(Keys.Messages.wishlist_found),
+            other_data={
+                "count": wishlist.__len__(),
+                "data": wishlist
+            }
+        )
+
+    def post(self):
+        # headers
+        # Check for app token to validate request
+        app_check_token = request.headers[Keys.Rental.firebase_app_check_token]
+        if app_check_token is None or app_check_token == "":
+            return response_creator(
+                code=401,
+                message=MESSAGES_LIST[Keys.Messages.cannot_validate_request],
+            )
+
+        # Query parameters
+        property_id = request.args.get(Keys.Wishlist.property_id)
+        user_id = request.args.get(Keys.User.user_id)
 
         # find the user in db
         user = get_document(self.user_collection, Keys.User.user_id, user_id)
