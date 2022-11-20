@@ -106,24 +106,26 @@ fun PropertyDetailsScreen(
                             )
                         }
                         Spacer(modifier = Modifier.width(10.dp))
-                        FloatingActionButton(
-                            onClick = {
-                                if (isPropertyOwner) {
-                                    propertyDetailsViewModel.goToPropertyEdit(propertyId)
-                                } else {
-                                    propertyDetailsViewModel.confirmAddToWishList(
-                                        propertyId,
-                                        propertyDetails.value?.property_name ?: ""
-                                    )
+                        if (propertyDetailsViewModel.showWishListOption()) {
+                            FloatingActionButton(
+                                onClick = {
+                                    if (isPropertyOwner) {
+                                        propertyDetailsViewModel.goToPropertyEdit(propertyId)
+                                    } else {
+                                        propertyDetailsViewModel.confirmAddToWishList(
+                                            propertyId,
+                                            propertyDetails.value?.property_name ?: ""
+                                        )
+                                    }
                                 }
-                            }
-                        ) {
-                            Text(
-                                text = if (isPropertyOwner) TR.edit else TR.addToWishList,
-                                modifier = Modifier.padding(
-                                    all = 15.dp
+                            ) {
+                                Text(
+                                    text = if (isPropertyOwner) TR.edit else TR.addToWishList,
+                                    modifier = Modifier.padding(
+                                        all = 15.dp
+                                    )
                                 )
-                            )
+                            }
                         }
                     }
                 }

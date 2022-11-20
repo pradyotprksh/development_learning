@@ -10,6 +10,7 @@ import com.project.pradyotprakash.rental.app.utils.UserType
 import com.project.pradyotprakash.rental.core.navigation.Navigator
 import com.project.pradyotprakash.rental.core.navigation.Routes
 import com.project.pradyotprakash.rental.core.response.RenterResponse
+import com.project.pradyotprakash.rental.device.services.UserLocalServices
 import com.project.pradyotprakash.rental.domain.modal.PropertyEntity
 import com.project.pradyotprakash.rental.domain.usecase.AuthenticationUseCase
 import com.project.pradyotprakash.rental.domain.usecase.PropertyUseCase
@@ -22,6 +23,7 @@ class PropertyDetailsViewModel @Inject constructor(
     private val navigator: Navigator,
     private val propertyUseCase: PropertyUseCase,
     private val authenticationUseCase: AuthenticationUseCase,
+    private val localServices: UserLocalServices,
 ) : ViewModel() {
     private val _loading = MutableLiveData(false)
     val loading: LiveData<Boolean>
@@ -38,26 +40,31 @@ class PropertyDetailsViewModel @Inject constructor(
     private val _confirmationDialog = MutableLiveData(ConfirmationDialog())
     val confirmationDialog: LiveData<ConfirmationDialog>
         get() = _confirmationDialog
+    private val userType: UserType
+        get() = localServices.userType
 
     fun getPropertyDetails(propertyId: String) {
         viewModelScope.launch {
-            propertyUseCase.getProperties(
-                propertyId = propertyId,
-            ).collect {
-                when (it) {
-                    is RenterResponse.Error -> {
-                        updateErrorState(it.exception.message)
-                        _noProperties.value = true
-                    }
-                    is RenterResponse.Idle -> _loading.value = false
-                    is RenterResponse.Loading -> _loading.value = true
-                    is RenterResponse.Success -> {
-                        val data = it.data.data
-                        data?.firstOrNull()?.let { propertyDetails ->
-                            _noProperties.value = false
-                            _propertyDetails.value = propertyDetails
-                        } ?: kotlin.run {
+            authenticationUseCase.getCurrentUserId()?.let { userId ->
+                propertyUseCase.getProperties(
+                    propertyId = propertyId,
+                    headerUserId = userId,
+                ).collect {
+                    when (it) {
+                        is RenterResponse.Error -> {
+                            updateErrorState(it.exception.message)
                             _noProperties.value = true
+                        }
+                        is RenterResponse.Idle -> _loading.value = false
+                        is RenterResponse.Loading -> _loading.value = true
+                        is RenterResponse.Success -> {
+                            val data = it.data.data
+                            data?.firstOrNull()?.let { propertyDetails ->
+                                _noProperties.value = false
+                                _propertyDetails.value = propertyDetails
+                            } ?: kotlin.run {
+                                _noProperties.value = true
+                            }
                         }
                     }
                 }
@@ -124,4 +131,7 @@ class PropertyDetailsViewModel @Inject constructor(
             }
         }
     }
+
+    fun showWishListOption(): Boolean = userType != UserType.Renter ||
+            _propertyDetails.value?.is_in_wishlist != true
 }

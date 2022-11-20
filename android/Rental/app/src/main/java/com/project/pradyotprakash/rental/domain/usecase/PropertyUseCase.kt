@@ -11,6 +11,7 @@ class PropertyUseCase @Inject constructor(
     private val propertyRepository: PropertyRepository,
 ) {
     suspend fun getProperties(
+        headerUserId: String,
         userId: String = "",
         propertyId: String = "",
     ) = flow {
@@ -19,6 +20,7 @@ class PropertyUseCase @Inject constructor(
             propertyRepository.getProperties(
                 userId = userId,
                 propertyId = propertyId,
+                headerUserId = headerUserId,
             )
         )
         emit(RenterResponse.Idle)

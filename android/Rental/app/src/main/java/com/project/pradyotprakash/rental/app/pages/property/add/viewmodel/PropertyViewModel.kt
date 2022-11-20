@@ -418,20 +418,23 @@ class PropertyViewModel @Inject constructor(
 
     private fun fetchPropertyDetails(propertyId: String) {
         viewModelScope.launch {
-            propertyUseCase.getProperties(
-                propertyId = propertyId
-            ).collect {
-                when (it) {
-                    is RenterResponse.Error -> updateErrorState(it.exception.message)
-                    is RenterResponse.Loading -> _loading.value = true
-                    is RenterResponse.Success -> {
-                        val data = it.data.data
-                        data?.firstOrNull()?.let { propertyDetails ->
-                            _propertyDetails.value = propertyDetails
-                            updateFieldDetails()
+            authenticationUseCase.getCurrentUserId()?.let { userId ->
+                propertyUseCase.getProperties(
+                    propertyId = propertyId,
+                    headerUserId = userId,
+                ).collect {
+                    when (it) {
+                        is RenterResponse.Error -> updateErrorState(it.exception.message)
+                        is RenterResponse.Loading -> _loading.value = true
+                        is RenterResponse.Success -> {
+                            val data = it.data.data
+                            data?.firstOrNull()?.let { propertyDetails ->
+                                _propertyDetails.value = propertyDetails
+                                updateFieldDetails()
+                            }
                         }
+                        is RenterResponse.Idle -> _loading.value = false
                     }
-                    is RenterResponse.Idle -> _loading.value = false
                 }
             }
         }

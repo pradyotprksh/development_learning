@@ -14,6 +14,7 @@ import retrofit2.http.Query
 interface PropertyService {
     @GET("/renter/property")
     suspend fun getProperties(
+        @Header("user_id") headerUserId: String,
         @Query("property_id") propertyId: String,
         @Query("user_id") userId: String,
     ): Response<DefaultEntity<List<PropertyEntity>>>

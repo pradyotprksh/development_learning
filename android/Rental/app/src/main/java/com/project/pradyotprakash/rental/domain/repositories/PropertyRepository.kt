@@ -13,9 +13,11 @@ class PropertyRepository(
     suspend fun getProperties(
         userId: String,
         propertyId: String,
+        headerUserId: String,
     ) = propertyService.getProperties(
         userId = userId,
         propertyId = propertyId,
+        headerUserId = headerUserId,
     ).parseResponse(crashlytics)
 
 
