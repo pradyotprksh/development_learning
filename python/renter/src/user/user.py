@@ -66,7 +66,7 @@ class _Wishlist(Resource):
         wishlist = []
         for doc in wishlist_cursor:
             doc_property_id = doc.get(Keys.Wishlist.property_id)
-            if not (property_id is None) and doc_property_id != property_id:
+            if not (property_id is None or len(property_id) == 0) and doc_property_id != property_id:
                 continue
             property_details = get_document(self.property_collection, Keys.Property.property_id, doc_property_id)
             if property_details is None:

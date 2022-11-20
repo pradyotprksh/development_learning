@@ -2,7 +2,6 @@ package com.project.pradyotprakash.rental.data.services
 
 import com.project.pradyotprakash.rental.domain.modal.DefaultEntity
 import com.project.pradyotprakash.rental.domain.modal.UserEntity
-import com.project.pradyotprakash.rental.domain.modal.WishlistEntity
 import retrofit2.Response
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
@@ -10,7 +9,6 @@ import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.PATCH
 import retrofit2.http.POST
-import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface AuthenticationService {
@@ -52,10 +50,4 @@ interface AuthenticationService {
         @Field("user_type") userType: String,
         @Field("is_all_details_available") isAllDetailsAvailable: Boolean,
     ): Response<DefaultEntity<UserEntity>>
-
-    @POST("/renter/user/wishlist/{property_id}")
-    suspend fun createWishlist(
-        @Header("user_id") userId: String,
-        @Path("property_id") propertyId: String
-    ): Response<DefaultEntity<WishlistEntity>>
 }

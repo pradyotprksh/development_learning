@@ -72,7 +72,7 @@ fun UserView(
                         userDetails.value?.let { details ->
                             if (details.userType == UserType.Renter) {
                                 FloatingActionButton(
-                                    onClick = { TODO() }
+                                    onClick = { userViewModel.goToWishlist() }
                                 ) {
                                     Text(
                                         text = TR.yourWatchlist,

@@ -14,6 +14,7 @@ import com.project.pradyotprakash.rental.device.services.UserLocalServices
 import com.project.pradyotprakash.rental.domain.modal.PropertyEntity
 import com.project.pradyotprakash.rental.domain.usecase.AuthenticationUseCase
 import com.project.pradyotprakash.rental.domain.usecase.PropertyUseCase
+import com.project.pradyotprakash.rental.domain.usecase.WishlistUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -23,6 +24,7 @@ class PropertyDetailsViewModel @Inject constructor(
     private val navigator: Navigator,
     private val propertyUseCase: PropertyUseCase,
     private val authenticationUseCase: AuthenticationUseCase,
+    private val wishlistUseCase: WishlistUseCase,
     private val localServices: UserLocalServices,
 ) : ViewModel() {
     private val _loading = MutableLiveData(false)
@@ -117,7 +119,7 @@ class PropertyDetailsViewModel @Inject constructor(
     private fun addPropertyToWishlist(propertyId: String) {
         viewModelScope.launch {
             authenticationUseCase.getCurrentUserId()?.let { userId ->
-                authenticationUseCase.createWishlist(
+                wishlistUseCase.createWishlist(
                     userId = userId,
                     propertyId = propertyId,
                 ).collect {

@@ -31,6 +31,7 @@ enum class Routes(
     Option("option/"),
     Home("home/"),
     Welcome("welcome/"),
+    Wishlist("wishlist/"),
     Information(
         "information/",
         listOf(

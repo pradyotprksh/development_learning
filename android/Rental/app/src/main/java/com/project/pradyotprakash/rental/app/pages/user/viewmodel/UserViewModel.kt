@@ -106,4 +106,10 @@ class UserViewModel @Inject constructor(
             it.navigate("${Routes.PropertyDetails.route}${propertyId}")
         }
     }
+
+    fun goToWishlist() {
+        navigator.navigate {
+            it.navigate(Routes.Wishlist.route)
+        }
+    }
 }

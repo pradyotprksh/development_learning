@@ -7,10 +7,12 @@ import com.project.pradyotprakash.rental.data.services.BasicService
 import com.project.pradyotprakash.rental.data.services.LocationService
 import com.project.pradyotprakash.rental.data.services.PropertyService
 import com.project.pradyotprakash.rental.data.services.SearchService
+import com.project.pradyotprakash.rental.data.services.WishlistService
 import com.project.pradyotprakash.rental.domain.repositories.AuthenticationRepository
 import com.project.pradyotprakash.rental.domain.repositories.BasicRepository
 import com.project.pradyotprakash.rental.domain.repositories.PropertyRepository
 import com.project.pradyotprakash.rental.domain.repositories.SearchRepository
+import com.project.pradyotprakash.rental.domain.repositories.WishlistRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -48,6 +50,13 @@ object Repositories {
         propertyService: PropertyService,
         crashlyticsService: CrashlyticsService
     ) = PropertyRepository(propertyService, crashlyticsService)
+
+    @Singleton
+    @Provides
+    fun providesWishlistRepository(
+        wishlistService: WishlistService,
+        crashlyticsService: CrashlyticsService
+    ) = WishlistRepository(wishlistService, crashlyticsService)
 
     @Singleton
     @Provides

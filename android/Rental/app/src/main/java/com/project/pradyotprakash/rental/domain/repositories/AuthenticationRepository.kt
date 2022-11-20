@@ -96,12 +96,4 @@ class AuthenticationRepository(
         userType = userType,
         isAllDetailsAvailable = isAllDetailsAvailable,
     ).parseResponse(crashlytics)
-
-    suspend fun createWishlist(
-        userId: String,
-        propertyId: String
-    ) = authenticationService.createWishlist(
-        userId = userId,
-        propertyId = propertyId
-    ).parseResponse(crashlytics)
 }

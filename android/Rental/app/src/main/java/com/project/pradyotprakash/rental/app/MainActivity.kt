@@ -26,6 +26,7 @@ import com.project.pradyotprakash.rental.app.pages.search.view.SearchView
 import com.project.pradyotprakash.rental.app.pages.splash.view.SplashView
 import com.project.pradyotprakash.rental.app.pages.user.view.UserView
 import com.project.pradyotprakash.rental.app.pages.welcome.view.WelcomeScreen
+import com.project.pradyotprakash.rental.app.pages.wishlist.view.WishlistScreen
 import com.project.pradyotprakash.rental.app.theme.RentalTheme
 import com.project.pradyotprakash.rental.app.utils.ErrorScreenArguments
 import com.project.pradyotprakash.rental.app.utils.InformationScreenArguments
@@ -75,6 +76,7 @@ class MainActivity : ComponentActivity() {
                         composable(Routes.Home.path()) { HomeScreen() }
                         composable(Routes.Option.path()) { OptionsView() }
                         composable(Routes.Welcome.path()) { WelcomeScreen() }
+                        composable(Routes.Wishlist.path()) { WishlistScreen() }
                         // TODO: Use default value for the arguments
                         composable(
                             Routes.Search.path(),

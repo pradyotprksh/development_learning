@@ -163,17 +163,4 @@ class AuthenticationUseCase @Inject constructor(
         )
         emit(RenterResponse.Idle)
     }
-
-    suspend fun createWishlist(
-        userId: String,
-        propertyId: String
-    ) = flow {
-        emit(RenterResponse.Loading)
-        emit(
-            authenticationRepository.createWishlist(
-                userId = userId, propertyId = propertyId
-            )
-        )
-        emit(RenterResponse.Idle)
-    }
 }
