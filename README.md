@@ -48,6 +48,7 @@ README will be only updated when the project/learning is completed. So make sure
   - [FlashChat](https://github.com/pradyotprksh/development_learning/tree/main/android/FlashChat)
   - [WhatsApp Compose](https://github.com/pradyotprksh/development_learning/tree/main/android/WhatsAppCompose)
     - For more details go to this [link](https://medium.com/geekculture/whatsapp-clone-jetpack-compose-d90120723d88)
+  - [Rental](https://github.com/pradyotprksh/development_learning/tree/main/android/Rental)
 
 [<img src="https://img.shields.io/badge/Kotlin-0095D5?&style=for-the-badge&logo=kotlin&logoColor=white" />](https://github.com/pradyotprksh/development_learning/tree/main/kotlin)
   - [basics](https://github.com/pradyotprksh/development_learning/tree/main/kotlin/basics)
@@ -56,6 +57,7 @@ README will be only updated when the project/learning is completed. So make sure
   - [2022 Bootcamp Udemy Python Course](https://github.com/pradyotprksh/development_learning/tree/main/python/UdemyCourse/2022_Python_Bootcamp) 
   - [PyBlog 🐍](https://github.com/pradyotprksh/development_learning/tree/main/python/pyblog)
     - For more details go to this [link](https://pradyotprksh4.medium.com/pyblog-python-firebase-448233b9baa2)
+  - [Rental](https://github.com/pradyotprksh/development_learning/tree/main/python/renter)
 
 ---
 
