@@ -13,7 +13,7 @@ dependencies:
 
   cached_network_image: ^3.2.2
 
-  cloud_firestore: ^4.0.5
+  cloud_firestore: ^4.1.0
 
   connectivity_plus: ^3.0.2
 
@@ -23,21 +23,21 @@ dependencies:
 
   equatable: ^2.0.5
 
-  firebase_analytics: ^10.0.5
+  firebase_analytics: ^10.0.6
 
-  firebase_app_check: ^0.1.1+4
+  firebase_app_check: ^0.1.1+5
 
-  firebase_core: ^2.2.0
+  firebase_core: ^2.3.0
 
-  firebase_crashlytics: ^3.0.5
+  firebase_crashlytics: ^3.0.6
 
-  firebase_dynamic_links: ^5.0.5
+  firebase_dynamic_links: ^5.0.6
 
-  firebase_performance: ^0.9.0+5
+  firebase_performance: ^0.9.0+6
 
-  firebase_storage: ^11.0.5
+  firebase_storage: ^11.0.6
 
-  flex_color_scheme: ^6.0.1
+  flex_color_scheme: ^6.1.0
 
   flutter:
     sdk: flutter
