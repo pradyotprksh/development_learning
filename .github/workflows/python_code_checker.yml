@@ -34,7 +34,7 @@ jobs:
         with:
           python-root-list: "python/pyblog"
   pythonBootcamp:
-    name: renter Code Checker
+    name: 2022_Python_Bootcamp Code Checker
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
