@@ -9,8 +9,12 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.BackdropScaffold
+import androidx.compose.material.BackdropValue
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.rememberBackdropScaffoldState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
@@ -23,6 +27,7 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -37,10 +42,15 @@ import com.project.pradyotprakash.rental.app.pages.property.details.view.composa
 import com.project.pradyotprakash.rental.app.pages.property.details.view.composables.NoPropertyDetailsComposable
 import com.project.pradyotprakash.rental.app.pages.property.details.view.composables.OtherDetailsComposable
 import com.project.pradyotprakash.rental.app.pages.property.details.view.composables.PropertyDetailsComposable
+import com.project.pradyotprakash.rental.app.pages.property.details.view.composables.ProposalFormComposable
 import com.project.pradyotprakash.rental.app.pages.property.details.view.composables.RentDetailsComposable
 import com.project.pradyotprakash.rental.app.pages.property.details.viewmodel.PropertyDetailsViewModel
+import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
+@OptIn(
+    ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class,
+    ExperimentalMaterialApi::class
+)
 @Composable
 fun PropertyDetailsScreen(
     propertyId: String,
@@ -57,7 +67,20 @@ fun PropertyDetailsScreen(
     val confirmationDialog = propertyDetailsViewModel.confirmationDialog.observeAsState(
         ConfirmationDialog()
     )
-    val isPropertyOwner = propertyDetailsViewModel.isPropertyOwner(propertyDetails.value?.property_created_by)
+    val isPropertyOwner =
+        propertyDetailsViewModel.isPropertyOwner(propertyDetails.value?.property_created_by)
+
+    val scaffoldState = rememberBackdropScaffoldState(
+        BackdropValue.Revealed
+    )
+    val scope = rememberCoroutineScope()
+
+    val openSendProposal: () -> Unit = {
+        scope.launch { scaffoldState.conceal() }
+    }
+    val closeSheet = {
+        scope.launch { scaffoldState.reveal() }
+    }
 
     PageStateComposable(
         isLoading = loading.value,
@@ -65,8 +88,13 @@ fun PropertyDetailsScreen(
         dismissErrorAlert = propertyDetailsViewModel::updateErrorState,
         confirmationDialog = confirmationDialog.value,
     ) {
-        Scaffold(
-            topBar = {
+        BackdropScaffold(
+            scaffoldState = scaffoldState,
+            peekHeight = 0.dp,
+            headerHeight = 0.dp,
+            backLayerBackgroundColor = MaterialTheme.colorScheme.background,
+            frontLayerBackgroundColor = MaterialTheme.colorScheme.background,
+            appBar = {
                 TopAppBar(
                     title = {
                         Text(
@@ -86,138 +114,152 @@ fun PropertyDetailsScreen(
                     },
                 )
             },
-            floatingActionButton = {
-                if (!loading.value) {
-                    Row {
-                        FloatingActionButton(
-                            onClick = {
-                                if (isPropertyOwner) {
-                                    propertyDetailsViewModel.searchForRenter()
-                                } else {
-                                    TODO()
+            backLayerContent = {
+                Scaffold(
+                    floatingActionButton = {
+                        if (!loading.value) {
+                            Row {
+                                FloatingActionButton(
+                                    onClick = {
+                                        if (isPropertyOwner) {
+                                            propertyDetailsViewModel.searchForRenter()
+                                        } else {
+                                            openSendProposal()
+                                        }
+                                    }
+                                ) {
+                                    Text(
+                                        text = if (isPropertyOwner) TR.searchForRenter else TR.sendProposalToOwner,
+                                        modifier = Modifier.padding(
+                                            all = 15.dp
+                                        )
+                                    )
                                 }
-                            }
-                        ) {
-                            Text(
-                                text = if (isPropertyOwner) TR.searchForRenter else TR.sendProposalToOwner,
-                                modifier = Modifier.padding(
-                                    all = 15.dp
-                                )
-                            )
-                        }
-                        Spacer(modifier = Modifier.width(10.dp))
-                        if (propertyDetailsViewModel.showWishListOption()) {
-                            FloatingActionButton(
-                                onClick = {
-                                    if (isPropertyOwner) {
-                                        propertyDetailsViewModel.goToPropertyEdit(propertyId)
-                                    } else {
-                                        propertyDetailsViewModel.confirmAddToWishList(
-                                            propertyId,
-                                            propertyDetails.value?.property_name ?: ""
+                                Spacer(modifier = Modifier.width(10.dp))
+                                if (propertyDetailsViewModel.showWishListOption()) {
+                                    FloatingActionButton(
+                                        onClick = {
+                                            if (isPropertyOwner) {
+                                                propertyDetailsViewModel.goToPropertyEdit(propertyId)
+                                            } else {
+                                                propertyDetailsViewModel.confirmAddToWishList(
+                                                    propertyId,
+                                                    propertyDetails.value?.property_name ?: ""
+                                                )
+                                            }
+                                        }
+                                    ) {
+                                        Text(
+                                            text = if (isPropertyOwner) TR.edit else TR.addToWishList,
+                                            modifier = Modifier.padding(
+                                                all = 15.dp
+                                            )
                                         )
                                     }
                                 }
-                            ) {
-                                Text(
-                                    text = if (isPropertyOwner) TR.edit else TR.addToWishList,
-                                    modifier = Modifier.padding(
-                                        all = 15.dp
-                                    )
-                                )
                             }
                         }
-                    }
-                }
-            },
-            content = { padding ->
-                LazyColumn(
-                    modifier = Modifier.padding(
-                        bottom = padding.calculateBottomPadding(),
-                        top = padding.calculateTopPadding(),
-                    )
-                ) {
-                    if (noProperties.value) {
-                        item {
-                            NoPropertyDetailsComposable()
-                        }
-                    } else {
-                        propertyDetails.value?.let { property ->
-                            stickyHeader {
-                                HeaderComposable(title = TR.basicDetails)
-                            }
-                            item {
-                                PropertyDetailsComposable(property = property)
-                            }
-
-                            property.property_created_by_details?.let { userDetails ->
-                                stickyHeader {
-                                    HeaderComposable(title =
-                                        if (property.isRentalOwner)
-                                            TR.ownerDetails
-                                        else
-                                            TR.propertyListerDetails
-                                    )
-                                }
+                    },
+                    content = { padding ->
+                        LazyColumn(
+                            modifier = Modifier.padding(
+                                bottom = padding.calculateBottomPadding(),
+                                top = padding.calculateTopPadding(),
+                            )
+                        ) {
+                            if (noProperties.value) {
                                 item {
-                                    UserDetailsComposable(userDetails = userDetails)
+                                    NoPropertyDetailsComposable()
                                 }
-                            }
-
-                            stickyHeader {
-                                HeaderComposable(title = TR.rentDetails)
-                            }
-                            item {
-                                RentDetailsComposable(property = property)
-                            }
-
-                            stickyHeader {
-                                HeaderComposable(title = TR.moneyDetails)
-                            }
-                            item {
-                                MoneyDetailsComposable(property = property)
-                            }
-
-                            property.property_images?.let { images ->
-                                if (images.isNotEmpty()) {
+                            } else {
+                                propertyDetails.value?.let { property ->
                                     stickyHeader {
-                                        HeaderComposable(title = TR.images)
+                                        HeaderComposable(title = TR.basicDetails)
                                     }
                                     item {
-                                        LazyRow(
-                                            modifier = Modifier.padding(15.dp)
-                                        ) {
-                                            items(images) { photo ->
-                                                NetworkImageComposable(
-                                                    imageUrl = photo,
-                                                    size = 150.dp,
-                                                    cornerSize = 5.dp,
-                                                )
-                                                Spacer(modifier = Modifier.width(10.dp))
+                                        PropertyDetailsComposable(property = property)
+                                    }
+
+                                    property.property_created_by_details?.let { userDetails ->
+                                        stickyHeader {
+                                            HeaderComposable(
+                                                title =
+                                                if (property.isRentalOwner)
+                                                    TR.ownerDetails
+                                                else
+                                                    TR.propertyListerDetails
+                                            )
+                                        }
+                                        item {
+                                            UserDetailsComposable(userDetails = userDetails)
+                                        }
+                                    }
+
+                                    stickyHeader {
+                                        HeaderComposable(title = TR.rentDetails)
+                                    }
+                                    item {
+                                        RentDetailsComposable(property = property)
+                                    }
+
+                                    stickyHeader {
+                                        HeaderComposable(title = TR.moneyDetails)
+                                    }
+                                    item {
+                                        MoneyDetailsComposable(property = property)
+                                    }
+
+                                    property.property_images?.let { images ->
+                                        if (images.isNotEmpty()) {
+                                            stickyHeader {
+                                                HeaderComposable(title = TR.images)
                                             }
+                                            item {
+                                                LazyRow(
+                                                    modifier = Modifier.padding(15.dp)
+                                                ) {
+                                                    items(images) { photo ->
+                                                        NetworkImageComposable(
+                                                            imageUrl = photo,
+                                                            size = 150.dp,
+                                                            cornerSize = 5.dp,
+                                                        )
+                                                        Spacer(modifier = Modifier.width(10.dp))
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                    if (property.perks.isNotEmpty() || property.agreement_rules.isNotEmpty()) {
+                                        stickyHeader {
+                                            HeaderComposable(title = TR.otherDetails)
+                                        }
+
+                                        item {
+                                            OtherDetailsComposable(
+                                                perks = property.perks,
+                                                agreement = property.agreement_rules
+                                            )
                                         }
                                     }
                                 }
                             }
 
-                            if (property.perks.isNotEmpty() || property.agreement_rules.isNotEmpty()) {
-                                stickyHeader {
-                                    HeaderComposable(title = TR.otherDetails)
-                                }
-
-                                item {
-                                    OtherDetailsComposable(
-                                        perks = property.perks,
-                                        agreement = property.agreement_rules
-                                    )
-                                }
+                            // Bottom padding
+                            item {
+                                Spacer(modifier = Modifier.height(padding.calculateBottomPadding() + 150.dp))
                             }
                         }
                     }
-
-                    // Bottom padding
-                    item {
-                        Spacer(modifier = Modifier.height(padding.calculateBottomPadding() + 150.dp))
+                )
+            },
+            frontLayerContent = {
+                propertyDetails.value?.let {
+                    ProposalFormComposable(
+                        propertyEntity = it
+                    ) {
+                        closeSheet()
                     }
                 }
             }

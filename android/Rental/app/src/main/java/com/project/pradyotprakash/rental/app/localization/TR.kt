@@ -118,5 +118,8 @@ object TR {
     var confirmDeleteWishlistProperty = Translation.getString("confirmDeleteWishlistProperty")
     var yourWatchlist = Translation.getString("yourWatchlist")
     var added = Translation.getString("added")
+    var sendProposal = Translation.getString("sendProposal")
+    var okayWithRent = Translation.getString("okayWithRent")
+    var okayWithDeposit = Translation.getString("okayWithDeposit")
     
 }

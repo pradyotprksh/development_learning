@@ -111,5 +111,8 @@
   "confirmAddToWishlistProperty": "Do you want to add %s property to your wishlist?",
   "confirmDeleteWishlistProperty": "Do you want to delete %s property from your wishlist?",
   "yourWatchlist": "Your Watchlist",
-  "added": "Added %s"
+  "added": "Added %s",
+  "sendProposal": "Send proposal",
+  "okayWithRent": "Are you okay with the monthly rent of %s?",
+  "okayWithDeposit": "Are you okay with the yearly deposit of %s?"
 }
