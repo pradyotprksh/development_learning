@@ -37,6 +37,23 @@ WishlistDetails = namedtuple(
     ]
 )
 
+# A named tuple for the proposal
+ProposalDetails = namedtuple(
+    "ProposalDetails",
+    [
+        Keys.Proposals.proposal_id,
+        Keys.Proposals.user_id,
+        Keys.Proposals.property_id,
+        Keys.Proposals.confirm_rent,
+        Keys.Proposals.rent_proposal,
+        Keys.Proposals.confirm_deposit,
+        Keys.Proposals.deposit_proposal,
+        Keys.Proposals.confirm_agreements,
+        Keys.Proposals.created_on,
+        Keys.Proposals.updated_on,
+    ]
+)
+
 # A named tuple for the property
 PropertyDetails = namedtuple(
     "PropertyDetails",

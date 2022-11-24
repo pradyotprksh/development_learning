@@ -9,10 +9,10 @@ This will help in making the api file cleaner and making the refactoring easy.
 from flask_restful import Resource
 from flask import request
 from src.core.services.db import get_collection, get_document, get_documents, insert_document, update_a_document
-from src.utils.constants import Keys, MESSAGES_LIST, DEFAULT_ERROR_MESSAGE
+from src.utils.constants import Keys, MESSAGES_LIST, DEFAULT_ERROR_MESSAGE, Endpoints
 from src.utils.response_mapper import response_creator
 from src.utils.util_calls import get_current_timestamp, convert_string_to_json
-from src.core.modals import PropertyDetails
+from src.core.modals import PropertyDetails, ProposalDetails
 
 
 class Property:
@@ -25,10 +25,117 @@ class Property:
     def __init__(self, api):
         self.common_path = "/renter/property"
         api.add_resource(_Property, f"{self.common_path}")
+        api.add_resource(_Proposals, f"{self.common_path}{Endpoints.Property.proposals}")
+
+
+class _Proposals(Resource):
+    """
+    A proposal class which will help in handling all the requests made on <path>/property/proposals
+    """
+
+    def __init__(self):
+        # Get the user collection to be used by the user resource
+        self.user_collection = get_collection(Keys.User.collection_name)
+        # Get the property collection to be used by the property resource
+        self.property_collection = get_collection(Keys.Property.collection_name)
+        # Get the proposal collection to be used by the property resource
+        self.proposal_collection = get_collection(Keys.Proposals.collection_name)
+
+    def post(self):
+        # headers
+        # Check for app token to validate request
+        app_check_token = request.headers[Keys.Rental.firebase_app_check_token]
+        if app_check_token is None or app_check_token == "":
+            return response_creator(
+                code=401,
+                message=MESSAGES_LIST[Keys.Messages.cannot_validate_request],
+            )
+
+        # Query parameters
+        user_id = request.form.get(Keys.Proposals.user_id)
+        property_id = request.form.get(Keys.Proposals.property_id)
+        confirm_rent = request.form.get(Keys.Proposals.confirm_rent) == "True"
+        rent_proposal = request.form.get(Keys.Proposals.rent_proposal)
+        confirm_deposit = request.form.get(Keys.Proposals.confirm_deposit) == "True"
+        deposit_proposal = request.form.get(Keys.Proposals.deposit_proposal)
+        confirm_agreements = request.form.get(Keys.Proposals.confirm_agreements) == "True"
+        created_on = get_current_timestamp()
+        updated_on = get_current_timestamp()
+
+        proposal_id = f"{user_id}-{property_id}"
+
+        # find the user in db
+        user = get_document(self.user_collection, Keys.User.user_id, user_id)
+        if user is None:
+            return response_creator(
+                code=404,
+                message=MESSAGES_LIST[Keys.Messages.user_not_found],
+            )
+
+        # Check if property already available
+        property_details = get_document(self.property_collection, Keys.Property.property_id, property_id)
+        if property_details is None:
+            return response_creator(
+                code=404,
+                message=MESSAGES_LIST[Keys.Messages.property_not_found],
+            )
+
+        # Check if already added
+        proposal_details = get_document(self.proposal_collection, Keys.Proposals.proposal_id, proposal_id)
+        if not (proposal_details is None):
+            return response_creator(
+                code=409,
+                message=MESSAGES_LIST[Keys.Messages.proposal_already_added].format(
+                    property_details.get(Keys.Property.property_name)
+                )
+            )
+
+        # Check if confirm agreements
+        if not confirm_agreements:
+            return response_creator(
+                code=409,
+                message=MESSAGES_LIST[Keys.Messages.need_agreement_conformation],
+            )
+
+        # Payload
+        proposal_details = ProposalDetails(
+            proposal_id=proposal_id,
+            user_id=user_id,
+            property_id=property_id,
+            confirm_rent=confirm_rent,
+            rent_proposal=rent_proposal,
+            confirm_deposit=confirm_deposit,
+            deposit_proposal=deposit_proposal,
+            confirm_agreements=confirm_agreements,
+            created_on=created_on,
+            updated_on=updated_on,
+        )
+
+        # add user details to mongo db
+        insert_document(
+            self.proposal_collection,
+            {
+                "_id": proposal_details.proposal_id,
+                **proposal_details._asdict(),
+            }
+        )
+
+        # get the proposal details from db
+        db_proposal_details = get_document(self.proposal_collection, Keys.Proposals.proposal_id, proposal_id)
+
+        return response_creator(
+            code=200,
+            message=MESSAGES_LIST.get(Keys.Messages.proposal_created),
+            other_data={
+                "data": {
+                    **db_proposal_details
+                }
+            }
+        )
 
 
 class _Property(Resource):
-    """A User class which will help in handling all the requests made on
+    """A Property class which will help in handling all the requests made on
     <path>/property/
 
     headers: user_id

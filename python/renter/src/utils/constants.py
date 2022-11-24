@@ -45,6 +45,10 @@ class Endpoints:
         """A user endpoint lists"""
         wishlist = "/wishlist"
 
+    class Property:
+        """A property endpoint lists"""
+        proposals = "/proposals"
+
 
 class Keys:
     """A Keys class which contains all the keys used everywhere"""
@@ -86,6 +90,9 @@ class Keys:
         wishlist_not_found = "wishlist_not_found"
         wishlist_deleted = "wishlist_deleted"
         wishlist_deleted_error = "wishlist_deleted_error"
+        need_agreement_conformation = "need_agreement_conformation"
+        proposal_already_added = "proposal_already_added"
+        proposal_created = "proposal_created"
 
     class User:
         """A set of keys related to the User section"""
@@ -153,6 +160,20 @@ class Keys:
         wishlist_id = "wishlist_id"
         property_details = "property_details"
 
+    class Proposals:
+        """A set of keys related to proposals section"""
+        collection_name = "proposal"
+        proposal_id = "proposal_id"
+        user_id = "user_id"
+        property_id = "property_id"
+        confirm_rent = "confirm_rent"
+        rent_proposal = "rent_proposal"
+        confirm_deposit = "confirm_deposit"
+        deposit_proposal = "deposit_proposal"
+        confirm_agreements = "confirm_agreements"
+        created_on = "created_on"
+        updated_on = "updated_on"
+
 
 # Dictionary of messages
 MESSAGES_LIST = {
@@ -190,9 +211,13 @@ MESSAGES_LIST = {
     Keys.Messages.location_not_found: "Sorry the requested location was not found. For better results use all available"
                                       " options. We are using a free location service for now.",
     Keys.Messages.wishlist_already_added: "{} property is already in your wishlist.",
+    Keys.Messages.proposal_already_added: "{} property has a proposal already made by you.",
     Keys.Messages.wishlist_created: "Wishlist created",
     Keys.Messages.wishlist_found: "Wishlist found",
+    Keys.Messages.proposal_created: "Proposal created",
     Keys.Messages.wishlist_not_found: "{} not found in your wishlist.",
     Keys.Messages.wishlist_deleted: "{} removed from your wishlist.",
     Keys.Messages.wishlist_deleted_error: "We were not able to remove {} from your wishlist. Please try again.",
+    Keys.Messages.need_agreement_conformation: "You need to confirm to the agreement. Stating you are okay with "
+                                               "the points mentioned by the owner.",
 }
