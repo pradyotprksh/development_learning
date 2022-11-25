@@ -1,1 +1,9 @@
+export 'assets/assets.dart';
+export 'blocs/blocs.dart';
+export 'localizations/localizations.dart';
+export 'pages/pages.dart';
+export 'themes/themes.dart';
+export 'utils/utils.dart';
+export 'whatsapp_app.dart';
 export 'whatsapp_bloc_observer.dart';
+export 'widgets/widgets.dart';
