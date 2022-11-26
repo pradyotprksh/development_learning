@@ -1,6 +1,18 @@
+import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 extension TR on BuildContext {
   AppLocalizations get translator => AppLocalizations.of(this)!;
+
+  ThemeData themeData() => Theme.of(this);
+}
+
+extension StringExtensions on String {
+  /// Convert the string to enum. And it the enum values will be taken from
+  /// [values].
+  T? stringToEnum<T>(List<T> values) => EnumToString.fromString<T>(
+        values,
+        this,
+      );
 }

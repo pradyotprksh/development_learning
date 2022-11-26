@@ -8,11 +8,16 @@ import 'package:whatsapp/core/core.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await _initialSetups();
-  blocSetup();
 
   runApp(
     MultiBlocProvider(
       providers: [
+        BlocProvider(
+          create: (_) => ThemeBloc()
+            ..add(
+              const FetchCurrentThemeEvent(),
+            ),
+        ),
         BlocProvider(
           create: (_) => LocalizationsBloc()
             ..add(
@@ -25,19 +30,21 @@ void main() async {
   );
 }
 
-void blocSetup() {
-  WhatsAppBlocObserver();
-  localStorageSetup();
+Future blocSetup() async {
+  Bloc.observer = WhatsAppBlocObserver();
+  await localStorageSetup();
 }
 
-void localStorageSetup() async {
+Future localStorageSetup() async {
   HydratedBloc.storage = await HydratedStorage.build(
     storageDirectory: await path_provider.getApplicationDocumentsDirectory(),
   );
 }
 
-Future<void> _initialSetups() async {
+Future _initialSetups() async {
   await FirebaseUtils.initiation();
   await FirebaseUtils.appCheckInitiation();
   await FirebaseUtils.crashlyticsInitiation();
+
+  await blocSetup();
 }

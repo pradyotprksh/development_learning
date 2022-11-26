@@ -1,6 +1,7 @@
 export 'assets/assets.dart';
 export 'blocs/blocs.dart';
 export 'localizations/localizations.dart';
+export 'navigators/navigators.dart';
 export 'pages/pages.dart';
 export 'themes/themes.dart';
 export 'utils/utils.dart';
