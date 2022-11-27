@@ -155,6 +155,8 @@ class _Property(Resource):
         self.property_collection = get_collection(Keys.Property.collection_name)
         # Get the property collection to be used by the wishlist resource
         self.wishlist_collection = get_collection(Keys.Wishlist.collection_name)
+        # Get the proposal collection to be used by the property resource
+        self.proposal_collection = get_collection(Keys.Proposals.collection_name)
 
     def get(self):
         # headers
@@ -195,6 +197,14 @@ class _Property(Resource):
                                 self.wishlist_collection, Keys.Wishlist.wishlist_id, f"{header_user_id}-{doc_id}"
                             ) is None
                     )
+
+                    # Get proposal
+                    doc_id = doc.get(Keys.Property.property_id)
+                    proposal_details = get_document(self.proposal_collection, Keys.Proposals.proposal_id,
+                                                    f"{header_user_id}-{doc_id}")
+                    if not (proposal_details is None):
+                        doc[Keys.Property.proposal_details] = proposal_details
+
                     property_list.append(doc)
             # But property id is present
             else:
@@ -211,6 +221,13 @@ class _Property(Resource):
                             self.wishlist_collection, Keys.Wishlist.wishlist_id, f"{header_user_id}-{doc_id}"
                         ) is None
                 )
+
+                # Get proposal
+                doc_id = property_details.get(Keys.Property.property_id)
+                proposal_details = get_document(self.proposal_collection, Keys.Proposals.proposal_id,
+                                                f"{header_user_id}-{doc_id}")
+                if not (proposal_details is None):
+                    property_details[Keys.Property.proposal_details] = proposal_details
 
                 property_list = [
                     property_details
@@ -243,6 +260,13 @@ class _Property(Resource):
                             ) is None
                     )
 
+                    # Get proposal
+                    doc_id = doc.get(Keys.Property.property_id)
+                    proposal_details = get_document(self.proposal_collection, Keys.Proposals.proposal_id,
+                                                    f"{header_user_id}-{doc_id}")
+                    if not (proposal_details is None):
+                        doc[Keys.Property.proposal_details] = proposal_details
+
                     property_list.append(doc)
             # And property id is also present
             else:
@@ -259,6 +283,13 @@ class _Property(Resource):
                             self.wishlist_collection, Keys.Wishlist.wishlist_id, f"{header_user_id}-{doc_id}"
                         ) is None
                 )
+
+                # Get proposal
+                doc_id = property_details.get(Keys.Property.property_id)
+                proposal_details = get_document(self.proposal_collection, Keys.Proposals.proposal_id,
+                                                f"{header_user_id}-{doc_id}")
+                if not (proposal_details is None):
+                    property_details[Keys.Property.proposal_details] = proposal_details
 
                 property_list = [
                     property_details

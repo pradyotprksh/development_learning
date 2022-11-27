@@ -24,6 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.project.pradyotprakash.rental.app.composables.CardSwitchComposable
+import com.project.pradyotprakash.rental.app.composables.HeaderComposable
 import com.project.pradyotprakash.rental.app.localization.TR
 import com.project.pradyotprakash.rental.app.pages.property.details.viewmodel.PropertyDetailsViewModel
 import com.project.pradyotprakash.rental.domain.modal.PropertyEntity
@@ -83,6 +84,16 @@ fun ProposalFormComposable(
         ) {
             stickyHeader {
                 PropertyDetailsComposable(property = propertyEntity)
+            }
+
+            propertyEntity.proposal_details?.let {
+                stickyHeader {
+                    HeaderComposable(
+                        title = String.format(TR.proposalUpdatedOn, it.proposalUpdatedOnTimeAgo),
+                    )
+
+                    Spacer(modifier = Modifier.height(10.dp))
+                }
             }
 
             item {

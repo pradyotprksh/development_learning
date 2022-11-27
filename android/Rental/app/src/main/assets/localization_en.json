@@ -116,5 +116,6 @@
   "okayWithRent": "Are you okay with the monthly rent of %s?",
   "okayWithDeposit": "Are you okay with the yearly deposit of %s?",
   "pleaseEnterProposalRent": "Please enter the rent you want to propose.",
-  "pleaseEnterProposalDeposit": "Please enter the deposit you want to propose."
+  "pleaseEnterProposalDeposit": "Please enter the deposit you want to propose.",
+  "proposalUpdatedOn": "Last proposal updated %s"
 }

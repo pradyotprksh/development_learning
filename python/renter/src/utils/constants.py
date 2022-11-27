@@ -141,6 +141,7 @@ class Keys:
         longitude = "lon"
         distance = "distance"
         is_in_wishlist = "is_in_wishlist"
+        proposal_details = "proposal_details"
 
     class Search:
         """A set of keys related to search section"""

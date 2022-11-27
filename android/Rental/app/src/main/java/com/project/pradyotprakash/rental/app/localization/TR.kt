@@ -123,5 +123,6 @@ object TR {
     var okayWithDeposit = Translation.getString("okayWithDeposit")
     var pleaseEnterProposalRent = Translation.getString("pleaseEnterProposalRent")
     var pleaseEnterProposalDeposit = Translation.getString("pleaseEnterProposalDeposit")
+    var proposalUpdatedOn = Translation.getString("proposalUpdatedOn")
     
 }

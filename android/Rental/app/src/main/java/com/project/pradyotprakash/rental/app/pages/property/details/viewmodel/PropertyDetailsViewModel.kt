@@ -78,6 +78,15 @@ class PropertyDetailsViewModel @Inject constructor(
                             data?.firstOrNull()?.let { propertyDetails ->
                                 _noProperties.value = false
                                 _propertyDetails.value = propertyDetails
+
+                                _okayWithRent.value =
+                                    propertyDetails.proposal_details?.confirm_rent ?: true
+                                _okayWithDeposit.value =
+                                    propertyDetails.proposal_details?.confirm_deposit ?: true
+                                _proposalRent.value =
+                                    propertyDetails.proposal_details?.rent_proposal ?: ""
+                                _proposalDeposit.value =
+                                    propertyDetails.proposal_details?.deposit_proposal ?: ""
                             } ?: kotlin.run {
                                 _noProperties.value = true
                             }
@@ -176,21 +185,25 @@ class PropertyDetailsViewModel @Inject constructor(
     fun createProposal(propertyId: String, closeAction: () -> Unit) {
         viewModelScope.launch {
             authenticationUseCase.getCurrentUserId()?.let { userId ->
-                proposalUseCase.createProposal(
-                    userId = userId,
-                    propertyId = propertyId,
-                    confirmRent = _okayWithRent.value ?: true,
-                    confirmDeposit = _okayWithDeposit.value ?: true,
-                    rentProposal = _proposalRent.value ?: "",
-                    depositProposal = _proposalDeposit.value ?: "",
-                    confirmAgreements = true,
-                ).collect {
-                    when (it) {
-                        is RenterResponse.Error -> updateErrorState(it.exception.message)
-                        is RenterResponse.Idle -> _loading.value = false
-                        is RenterResponse.Loading -> _loading.value = true
-                        is RenterResponse.Success -> closeAction()
+                if (_propertyDetails.value?.proposal_details == null) {
+                    proposalUseCase.createProposal(
+                        userId = userId,
+                        propertyId = propertyId,
+                        confirmRent = _okayWithRent.value ?: true,
+                        confirmDeposit = _okayWithDeposit.value ?: true,
+                        rentProposal = _proposalRent.value ?: "",
+                        depositProposal = _proposalDeposit.value ?: "",
+                        confirmAgreements = true,
+                    ).collect {
+                        when (it) {
+                            is RenterResponse.Error -> updateErrorState(it.exception.message)
+                            is RenterResponse.Idle -> _loading.value = false
+                            is RenterResponse.Loading -> _loading.value = true
+                            is RenterResponse.Success -> closeAction()
+                        }
                     }
+                } else {
+
                 }
             }
         }
