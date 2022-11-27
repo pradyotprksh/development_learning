@@ -25,4 +25,22 @@ class ProposalRepository(
         depositProposal = depositProposal,
         confirmAgreements = confirmAgreements,
     ).parseResponse(crashlytics)
+
+    suspend fun updateProposal(
+        userId: String,
+        propertyId: String,
+        confirmRent: Boolean,
+        rentProposal: String,
+        confirmDeposit: Boolean,
+        depositProposal: String,
+        confirmAgreements: Boolean,
+    ) = proposalService.updateProposal(
+        userId = userId,
+        propertyId = propertyId,
+        confirmRent = confirmRent,
+        rentProposal = rentProposal,
+        confirmDeposit = confirmDeposit,
+        depositProposal = depositProposal,
+        confirmAgreements = confirmAgreements,
+    ).parseResponse(crashlytics)
 }

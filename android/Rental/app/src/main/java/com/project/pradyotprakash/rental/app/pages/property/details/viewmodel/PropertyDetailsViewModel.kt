@@ -182,7 +182,7 @@ class PropertyDetailsViewModel @Inject constructor(
         _proposalDeposit.value = value
     }
 
-    fun createProposal(propertyId: String, closeAction: () -> Unit) {
+    fun validateProposal(propertyId: String, closeAction: () -> Unit) {
         viewModelScope.launch {
             authenticationUseCase.getCurrentUserId()?.let { userId ->
                 if (_propertyDetails.value?.proposal_details == null) {
@@ -194,16 +194,24 @@ class PropertyDetailsViewModel @Inject constructor(
                         rentProposal = _proposalRent.value ?: "",
                         depositProposal = _proposalDeposit.value ?: "",
                         confirmAgreements = true,
-                    ).collect {
-                        when (it) {
-                            is RenterResponse.Error -> updateErrorState(it.exception.message)
-                            is RenterResponse.Idle -> _loading.value = false
-                            is RenterResponse.Loading -> _loading.value = true
-                            is RenterResponse.Success -> closeAction()
-                        }
-                    }
+                    )
                 } else {
-
+                    proposalUseCase.updateProposal(
+                        userId = userId,
+                        propertyId = propertyId,
+                        confirmRent = _okayWithRent.value ?: true,
+                        confirmDeposit = _okayWithDeposit.value ?: true,
+                        rentProposal = _proposalRent.value ?: "",
+                        depositProposal = _proposalDeposit.value ?: "",
+                        confirmAgreements = true,
+                    )
+                }.collect {
+                    when (it) {
+                        is RenterResponse.Error -> updateErrorState(it.exception.message)
+                        is RenterResponse.Idle -> _loading.value = false
+                        is RenterResponse.Loading -> _loading.value = true
+                        is RenterResponse.Success -> closeAction()
+                    }
                 }
             }
         }

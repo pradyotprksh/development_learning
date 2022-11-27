@@ -31,4 +31,28 @@ class ProposalUseCase @Inject constructor(
         )
         emit(RenterResponse.Idle)
     }
+
+    suspend fun updateProposal(
+        userId: String,
+        propertyId: String,
+        confirmRent: Boolean,
+        rentProposal: String,
+        confirmDeposit: Boolean,
+        depositProposal: String,
+        confirmAgreements: Boolean,
+    ) = flow {
+        emit(RenterResponse.Loading)
+        emit(
+            proposalRepository.updateProposal(
+                userId = userId,
+                propertyId = propertyId,
+                confirmRent = confirmRent,
+                rentProposal = rentProposal,
+                confirmDeposit = confirmDeposit,
+                depositProposal = depositProposal,
+                confirmAgreements = confirmAgreements,
+            )
+        )
+        emit(RenterResponse.Idle)
+    }
 }

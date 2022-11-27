@@ -61,7 +61,7 @@ fun ProposalFormComposable(
         bottomBar = {
             Button(
                 onClick = {
-                    propertyDetailsViewModel.createProposal(
+                    propertyDetailsViewModel.validateProposal(
                         propertyEntity.property_id,
                         closeAction
                     )

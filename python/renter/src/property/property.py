@@ -41,6 +41,97 @@ class _Proposals(Resource):
         # Get the proposal collection to be used by the property resource
         self.proposal_collection = get_collection(Keys.Proposals.collection_name)
 
+    def patch(self):
+        # headers
+        # Check for app token to validate request
+        app_check_token = request.headers[Keys.Rental.firebase_app_check_token]
+        if app_check_token is None or app_check_token == "":
+            return response_creator(
+                code=401,
+                message=MESSAGES_LIST[Keys.Messages.cannot_validate_request],
+            )
+
+        # Query parameters
+        user_id = request.args.get(Keys.Proposals.user_id)
+        property_id = request.args.get(Keys.Proposals.property_id)
+
+        # find the user in db
+        user = get_document(self.user_collection, Keys.User.user_id, user_id)
+        if user is None:
+            return response_creator(
+                code=404,
+                message=MESSAGES_LIST[Keys.Messages.user_not_found],
+            )
+
+        # Check if property already available
+        property_details = get_document(self.property_collection, Keys.Property.property_id, property_id)
+        if property_details is None:
+            return response_creator(
+                code=404,
+                message=MESSAGES_LIST[Keys.Messages.property_not_found],
+            )
+
+        proposal_id = f"{user_id}-{property_id}"
+        # Check if already added
+        old_proposal_details = get_document(self.proposal_collection, Keys.Proposals.proposal_id, proposal_id)
+        if old_proposal_details is None:
+            return response_creator(
+                code=409,
+                message=MESSAGES_LIST[Keys.Messages.proposal_not_found].format(
+                    property_details.get(Keys.Property.property_name)
+                )
+            )
+
+        confirm_rent = request.args.get(Keys.Proposals.confirm_rent) == "true"
+        rent_proposal = request.args.get(Keys.Proposals.rent_proposal, "")
+        confirm_deposit = request.args.get(Keys.Proposals.confirm_deposit) == "true"
+        deposit_proposal = request.args.get(Keys.Proposals.deposit_proposal, "")
+        confirm_agreements = request.args.get(Keys.Proposals.confirm_agreements) == "true"
+        created_on = old_proposal_details.get(Keys.Proposals.created_on)
+        updated_on = get_current_timestamp()
+
+        # Check if confirm agreements
+        if not confirm_agreements:
+            return response_creator(
+                code=409,
+                message=MESSAGES_LIST[Keys.Messages.need_agreement_conformation],
+            )
+
+        # Payload
+        proposal_details = ProposalDetails(
+            proposal_id=proposal_id,
+            user_id=user_id,
+            property_id=property_id,
+            confirm_rent=confirm_rent,
+            rent_proposal=rent_proposal,
+            confirm_deposit=confirm_deposit,
+            deposit_proposal=deposit_proposal,
+            confirm_agreements=confirm_agreements,
+            created_on=created_on,
+            updated_on=updated_on,
+        )
+
+        # update the proposal
+        update_a_document(
+            self.proposal_collection,
+            Keys.Proposals.proposal_id,
+            proposal_id,
+            proposal_details._asdict(),
+        )
+
+        # get the proposal details from db
+        db_proposal_details = get_document(self.proposal_collection, Keys.Proposals.proposal_id, proposal_id)
+
+        return response_creator(
+            code=200,
+            message=MESSAGES_LIST.get(Keys.Messages.proposal_updated),
+            other_data={
+                "data": {
+                    **db_proposal_details
+                }
+            }
+        )
+
     def post(self):
         # headers
         # Check for app token to validate request

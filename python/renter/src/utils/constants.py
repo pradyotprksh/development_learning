@@ -93,6 +93,8 @@ class Keys:
         need_agreement_conformation = "need_agreement_conformation"
         proposal_already_added = "proposal_already_added"
         proposal_created = "proposal_created"
+        proposal_updated = "proposal_updated"
+        proposal_not_found = "proposal_not_found"
 
     class User:
         """A set of keys related to the User section"""
@@ -216,7 +218,9 @@ MESSAGES_LIST = {
     Keys.Messages.wishlist_created: "Wishlist created",
     Keys.Messages.wishlist_found: "Wishlist found",
     Keys.Messages.proposal_created: "Proposal created",
+    Keys.Messages.proposal_updated: "Proposal updated",
     Keys.Messages.wishlist_not_found: "{} not found in your wishlist.",
+    Keys.Messages.proposal_not_found: "No proposal found for the {}",
     Keys.Messages.wishlist_deleted: "{} removed from your wishlist.",
     Keys.Messages.wishlist_deleted_error: "We were not able to remove {} from your wishlist. Please try again.",
     Keys.Messages.need_agreement_conformation: "You need to confirm to the agreement. Stating you are okay with "
