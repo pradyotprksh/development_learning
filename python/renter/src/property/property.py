@@ -52,13 +52,13 @@ class _Proposals(Resource):
             )
 
         # Query parameters
-        user_id = request.form.get(Keys.Proposals.user_id)
-        property_id = request.form.get(Keys.Proposals.property_id)
-        confirm_rent = request.form.get(Keys.Proposals.confirm_rent) == "True"
-        rent_proposal = request.form.get(Keys.Proposals.rent_proposal)
-        confirm_deposit = request.form.get(Keys.Proposals.confirm_deposit) == "True"
-        deposit_proposal = request.form.get(Keys.Proposals.deposit_proposal)
-        confirm_agreements = request.form.get(Keys.Proposals.confirm_agreements) == "True"
+        user_id = request.args.get(Keys.Proposals.user_id)
+        property_id = request.args.get(Keys.Proposals.property_id)
+        confirm_rent = request.args.get(Keys.Proposals.confirm_rent) == "true"
+        rent_proposal = request.args.get(Keys.Proposals.rent_proposal, "")
+        confirm_deposit = request.args.get(Keys.Proposals.confirm_deposit) == "true"
+        deposit_proposal = request.args.get(Keys.Proposals.deposit_proposal, "")
+        confirm_agreements = request.args.get(Keys.Proposals.confirm_agreements) == "true"
         created_on = get_current_timestamp()
         updated_on = get_current_timestamp()
 

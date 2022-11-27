@@ -6,11 +6,13 @@ import com.project.pradyotprakash.rental.data.services.AuthenticationService
 import com.project.pradyotprakash.rental.data.services.BasicService
 import com.project.pradyotprakash.rental.data.services.LocationService
 import com.project.pradyotprakash.rental.data.services.PropertyService
+import com.project.pradyotprakash.rental.data.services.ProposalService
 import com.project.pradyotprakash.rental.data.services.SearchService
 import com.project.pradyotprakash.rental.data.services.WishlistService
 import com.project.pradyotprakash.rental.domain.repositories.AuthenticationRepository
 import com.project.pradyotprakash.rental.domain.repositories.BasicRepository
 import com.project.pradyotprakash.rental.domain.repositories.PropertyRepository
+import com.project.pradyotprakash.rental.domain.repositories.ProposalRepository
 import com.project.pradyotprakash.rental.domain.repositories.SearchRepository
 import com.project.pradyotprakash.rental.domain.repositories.WishlistRepository
 import dagger.Module
@@ -57,6 +59,13 @@ object Repositories {
         wishlistService: WishlistService,
         crashlyticsService: CrashlyticsService
     ) = WishlistRepository(wishlistService, crashlyticsService)
+
+    @Singleton
+    @Provides
+    fun providesProposalRepository(
+        proposalService: ProposalService,
+        crashlyticsService: CrashlyticsService
+    ) = ProposalRepository(proposalService, crashlyticsService)
 
     @Singleton
     @Provides

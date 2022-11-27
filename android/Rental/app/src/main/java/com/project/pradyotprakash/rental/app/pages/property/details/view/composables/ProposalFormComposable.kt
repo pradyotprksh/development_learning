@@ -19,18 +19,27 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.project.pradyotprakash.rental.app.composables.CardSwitchComposable
 import com.project.pradyotprakash.rental.app.localization.TR
+import com.project.pradyotprakash.rental.app.pages.property.details.viewmodel.PropertyDetailsViewModel
 import com.project.pradyotprakash.rental.domain.modal.PropertyEntity
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
 fun ProposalFormComposable(
+    propertyDetailsViewModel: PropertyDetailsViewModel = hiltViewModel(),
     propertyEntity: PropertyEntity,
     closeAction: () -> Unit = {},
 ) {
+    val okayWithRent = propertyDetailsViewModel.okayWithRent.observeAsState(true)
+    val okayWithDeposit = propertyDetailsViewModel.okayWithDeposit.observeAsState(true)
+    val proposalRent = propertyDetailsViewModel.proposalRent.observeAsState("")
+    val proposalDeposit = propertyDetailsViewModel.proposalDeposit.observeAsState("")
+
     Scaffold(
         topBar = {
             TopAppBar(
@@ -50,9 +59,15 @@ fun ProposalFormComposable(
         },
         bottomBar = {
             Button(
-                onClick = { TODO() },
+                onClick = {
+                    propertyDetailsViewModel.createProposal(
+                        propertyEntity.property_id,
+                        closeAction
+                    )
+                },
                 modifier = Modifier
-                    .fillMaxWidth().padding(15.dp),
+                    .fillMaxWidth()
+                    .padding(15.dp),
             ) {
                 Text(text = TR.sendProposal)
             }
@@ -74,37 +89,43 @@ fun ProposalFormComposable(
                 Column {
                     CardSwitchComposable(
                         text = String.format(TR.okayWithRent, propertyEntity.monthly_rent),
-                        value = false,
-                        onChange = {}
+                        value = okayWithRent.value,
+                        onChange = propertyDetailsViewModel::okayWithRent
                     )
 
                     Spacer(modifier = Modifier.height(10.dp))
 
-                    OutlinedTextField(
-                        value = "",
-                        onValueChange = {},
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(15.dp),
-                    )
+                    if (!okayWithRent.value) {
+                        OutlinedTextField(
+                            value = proposalRent.value,
+                            onValueChange = propertyDetailsViewModel::proposalRent,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(15.dp),
+                            label = { Text(TR.pleaseEnterProposalRent) },
+                        )
 
-                    Spacer(modifier = Modifier.height(10.dp))
+                        Spacer(modifier = Modifier.height(10.dp))
+                    }
 
                     CardSwitchComposable(
                         text = String.format(TR.okayWithDeposit, propertyEntity.yearly_deposit),
-                        value = false,
-                        onChange = {}
+                        value = okayWithDeposit.value,
+                        onChange = propertyDetailsViewModel::okayWithDeposit
                     )
 
-                    Spacer(modifier = Modifier.height(10.dp))
+                    if (!okayWithDeposit.value) {
+                        Spacer(modifier = Modifier.height(10.dp))
 
-                    OutlinedTextField(
-                        value = "",
-                        onValueChange = {},
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(15.dp),
-                    )
+                        OutlinedTextField(
+                            value = proposalDeposit.value,
+                            onValueChange = propertyDetailsViewModel::proposalDeposit,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(15.dp),
+                            label = { Text(TR.pleaseEnterProposalDeposit) },
+                        )
+                    }
                 }
             }
         }

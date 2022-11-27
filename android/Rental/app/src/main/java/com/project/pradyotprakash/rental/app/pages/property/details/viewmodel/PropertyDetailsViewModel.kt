@@ -14,6 +14,7 @@ import com.project.pradyotprakash.rental.device.services.UserLocalServices
 import com.project.pradyotprakash.rental.domain.modal.PropertyEntity
 import com.project.pradyotprakash.rental.domain.usecase.AuthenticationUseCase
 import com.project.pradyotprakash.rental.domain.usecase.PropertyUseCase
+import com.project.pradyotprakash.rental.domain.usecase.ProposalUseCase
 import com.project.pradyotprakash.rental.domain.usecase.WishlistUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -26,6 +27,7 @@ class PropertyDetailsViewModel @Inject constructor(
     private val authenticationUseCase: AuthenticationUseCase,
     private val wishlistUseCase: WishlistUseCase,
     private val localServices: UserLocalServices,
+    private val proposalUseCase: ProposalUseCase,
 ) : ViewModel() {
     private val _loading = MutableLiveData(false)
     val loading: LiveData<Boolean>
@@ -44,6 +46,18 @@ class PropertyDetailsViewModel @Inject constructor(
         get() = _confirmationDialog
     private val userType: UserType
         get() = localServices.userType
+    private val _okayWithRent = MutableLiveData(true)
+    val okayWithRent: LiveData<Boolean>
+        get() = _okayWithRent
+    private val _okayWithDeposit = MutableLiveData(true)
+    val okayWithDeposit: LiveData<Boolean>
+        get() = _okayWithDeposit
+    private val _proposalRent = MutableLiveData("")
+    val proposalRent: LiveData<String>
+        get() = _proposalRent
+    private val _proposalDeposit = MutableLiveData("")
+    val proposalDeposit: LiveData<String>
+        get() = _proposalDeposit
 
     fun getPropertyDetails(propertyId: String) {
         viewModelScope.launch {
@@ -136,4 +150,49 @@ class PropertyDetailsViewModel @Inject constructor(
 
     fun showWishListOption(): Boolean = userType != UserType.Renter ||
             _propertyDetails.value?.is_in_wishlist != true
+
+    fun okayWithRent(value: Boolean) {
+        _okayWithRent.value = value
+        if (value) {
+            proposalRent("")
+        }
+    }
+
+    fun okayWithDeposit(value: Boolean) {
+        _okayWithDeposit.value = value
+        if (value) {
+            proposalDeposit("")
+        }
+    }
+
+    fun proposalRent(value: String) {
+        _proposalRent.value = value
+    }
+
+    fun proposalDeposit(value: String) {
+        _proposalDeposit.value = value
+    }
+
+    fun createProposal(propertyId: String, closeAction: () -> Unit) {
+        viewModelScope.launch {
+            authenticationUseCase.getCurrentUserId()?.let { userId ->
+                proposalUseCase.createProposal(
+                    userId = userId,
+                    propertyId = propertyId,
+                    confirmRent = _okayWithRent.value ?: true,
+                    confirmDeposit = _okayWithDeposit.value ?: true,
+                    rentProposal = _proposalRent.value ?: "",
+                    depositProposal = _proposalDeposit.value ?: "",
+                    confirmAgreements = true,
+                ).collect {
+                    when (it) {
+                        is RenterResponse.Error -> updateErrorState(it.exception.message)
+                        is RenterResponse.Idle -> _loading.value = false
+                        is RenterResponse.Loading -> _loading.value = true
+                        is RenterResponse.Success -> closeAction()
+                    }
+                }
+            }
+        }
+    }
 }

@@ -26,6 +26,7 @@ import com.project.pradyotprakash.rental.data.services.AuthenticationService
 import com.project.pradyotprakash.rental.data.services.BasicService
 import com.project.pradyotprakash.rental.data.services.LocationService
 import com.project.pradyotprakash.rental.data.services.PropertyService
+import com.project.pradyotprakash.rental.data.services.ProposalService
 import com.project.pradyotprakash.rental.data.services.SearchService
 import com.project.pradyotprakash.rental.data.services.WishlistService
 import com.project.pradyotprakash.rental.device.repositories.UserLocalServicesRepository
@@ -59,6 +60,11 @@ object RetrofitServices {
     @Provides
     fun provideWishlistService(retrofit: Retrofit): WishlistService =
         retrofit.create(WishlistService::class.java)
+
+    @Singleton
+    @Provides
+    fun provideProposalService(retrofit: Retrofit): ProposalService =
+        retrofit.create(ProposalService::class.java)
 
     @Singleton
     @Provides
