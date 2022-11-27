@@ -8,7 +8,8 @@ This will help in making the api file cleaner and making the refactoring easy.
 """
 from flask_restful import Resource
 from flask import request
-from src.core.services.db import get_collection, get_document, get_documents, insert_document, update_a_document
+from src.core.services.db import get_collection, get_document, get_documents, insert_document, update_a_document, \
+    delete_document
 from src.utils.constants import Keys, MESSAGES_LIST, DEFAULT_ERROR_MESSAGE, Endpoints
 from src.utils.response_mapper import response_creator
 from src.utils.util_calls import get_current_timestamp, convert_string_to_json
@@ -40,6 +41,67 @@ class _Proposals(Resource):
         self.property_collection = get_collection(Keys.Property.collection_name)
         # Get the proposal collection to be used by the property resource
         self.proposal_collection = get_collection(Keys.Proposals.collection_name)
+
+    def delete(self):
+        # headers
+        # Check for app token to validate request
+        app_check_token = request.headers[Keys.Rental.firebase_app_check_token]
+        if app_check_token is None or app_check_token == "":
+            return response_creator(
+                code=401,
+                message=MESSAGES_LIST[Keys.Messages.cannot_validate_request],
+            )
+
+        # Query parameters
+        user_id = request.args.get(Keys.Proposals.user_id)
+        property_id = request.args.get(Keys.Proposals.property_id)
+
+        # find the user in db
+        user = get_document(self.user_collection, Keys.User.user_id, user_id)
+        if user is None:
+            return response_creator(
+                code=404,
+                message=MESSAGES_LIST[Keys.Messages.user_not_found],
+            )
+
+        # Check if property already available
+        property_details = get_document(self.property_collection, Keys.Property.property_id, property_id)
+        if property_details is None:
+            return response_creator(
+                code=404,
+                message=MESSAGES_LIST[Keys.Messages.property_not_found],
+            )
+
+        proposal_id = f"{user_id}-{property_id}"
+
+        # Check if already added
+        proposal_details = get_document(self.proposal_collection, Keys.Proposals.proposal_id, proposal_id)
+        if proposal_details is None:
+            return response_creator(
+                code=409,
+                message=MESSAGES_LIST[Keys.Messages.proposal_not_found].format(
+                    property_details.get(Keys.Property.property_name)
+                )
+            )
+
+        property_name = property_details.get(Keys.Property.property_name)
+
+        # Delete the wishlist
+        result = delete_document(self.proposal_collection, Keys.Proposals.proposal_id, proposal_id)
+        if result.deleted_count == 1:
+            return response_creator(
+                code=200,
+                message=MESSAGES_LIST[Keys.Messages.proposal_deleted].format(
+                    property_name
+                )
+            )
+        else:
+            return response_creator(
+                code=404,
+                message=MESSAGES_LIST[Keys.Messages.proposal_deleted_error].format(
+                    property_name
+                )
+            )
 
     def patch(self):
         # headers
