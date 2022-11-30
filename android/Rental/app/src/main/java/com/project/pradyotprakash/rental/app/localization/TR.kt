@@ -116,6 +116,7 @@ object TR {
     var update = Translation.getString("update")
     var confirmAddToWishlistProperty = Translation.getString("confirmAddToWishlistProperty")
     var confirmDeleteWishlistProperty = Translation.getString("confirmDeleteWishlistProperty")
+    var confirmDeleteProposalProperty = Translation.getString("confirmDeleteProposalProperty")
     var yourWatchlist = Translation.getString("yourWatchlist")
     var added = Translation.getString("added")
     var sendProposal = Translation.getString("sendProposal")

@@ -25,5 +25,5 @@ interface WishlistService {
     suspend fun deleteWishlist(
         @Query("user_id") userId: String,
         @Query("property_id") propertyId: String
-    ): Response<DefaultEntity<List<WishlistEntity>>>
+    ): Response<DefaultEntity<Nothing>>
 }

@@ -116,6 +116,7 @@ dependencies {
     implementation("androidx.compose.runtime:runtime-livedata:1.3.1")
     debugImplementation("androidx.compose.ui:ui-tooling:1.3.1")
     debugImplementation("androidx.compose.ui:ui-test-manifest:1.3.1")
+    implementation("com.google.accompanist:accompanist-testharness:0.28.0")
 
     // Dependency Injection
     implementation("com.google.dagger:hilt-android:2.44")

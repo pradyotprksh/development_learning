@@ -43,4 +43,12 @@ class ProposalRepository(
         depositProposal = depositProposal,
         confirmAgreements = confirmAgreements,
     ).parseResponse(crashlytics)
+
+    suspend fun deleteProposal(
+        userId: String,
+        propertyId: String,
+    ) = proposalService.deleteProposal(
+        userId = userId,
+        propertyId = propertyId,
+    ).parseResponse(crashlytics)
 }

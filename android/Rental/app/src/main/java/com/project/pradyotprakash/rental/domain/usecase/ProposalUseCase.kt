@@ -55,4 +55,18 @@ class ProposalUseCase @Inject constructor(
         )
         emit(RenterResponse.Idle)
     }
+
+    suspend fun deleteProposal(
+        userId: String,
+        propertyId: String,
+    ) = flow {
+        emit(RenterResponse.Loading)
+        emit(
+            proposalRepository.deleteProposal(
+                userId = userId,
+                propertyId = propertyId,
+            )
+        )
+        emit(RenterResponse.Idle)
+    }
 }

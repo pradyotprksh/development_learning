@@ -15,6 +15,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.google.accompanist.testharness.TestHarness
 import com.project.pradyotprakash.rental.app.localization.Translation
 import com.project.pradyotprakash.rental.app.pages.error.view.ErrorScreen
 import com.project.pradyotprakash.rental.app.pages.home.view.HomeScreen
@@ -66,147 +67,150 @@ class MainActivity : ComponentActivity() {
         setContent {
             navController = rememberNavController()
 
-            RentalTheme {
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    NavHost(navController = navController, startDestination = Routes.Splash.route) {
-                        composable(Routes.Splash.path()) { SplashView() }
-                        composable(Routes.Home.path()) { HomeScreen() }
-                        composable(Routes.Option.path()) { OptionsView() }
-                        composable(Routes.Welcome.path()) { WelcomeScreen() }
-                        composable(Routes.Wishlist.path()) { WishlistScreen() }
-                        // TODO: Use default value for the arguments
-                        composable(
-                            Routes.Search.path(),
-                            arguments = Routes.Search.arguments.map {
-                                navArgument(it) { type = NavType.StringType }
-                            }
-                        ) {
-                            val allowSearch = it.arguments?.getString(
-                                SearchArguments.allowSearch
-                            )?.toBoolean() ?: true
-                            val userType = UserType.values().find { type ->
-                                type.name == it.arguments?.getString(
-                                    SearchArguments.userType
+            // TODO: Set the values for TestHarness
+            TestHarness {
+                RentalTheme {
+                    Surface(
+                        modifier = Modifier.fillMaxSize(),
+                        color = MaterialTheme.colorScheme.background
+                    ) {
+                        NavHost(navController = navController, startDestination = Routes.Splash.route) {
+                            composable(Routes.Splash.path()) { SplashView() }
+                            composable(Routes.Home.path()) { HomeScreen() }
+                            composable(Routes.Option.path()) { OptionsView() }
+                            composable(Routes.Welcome.path()) { WelcomeScreen() }
+                            composable(Routes.Wishlist.path()) { WishlistScreen() }
+                            // TODO: Use default value for the arguments
+                            composable(
+                                Routes.Search.path(),
+                                arguments = Routes.Search.arguments.map {
+                                    navArgument(it) { type = NavType.StringType }
+                                }
+                            ) {
+                                val allowSearch = it.arguments?.getString(
+                                    SearchArguments.allowSearch
+                                )?.toBoolean() ?: true
+                                val userType = UserType.values().find { type ->
+                                    type.name == it.arguments?.getString(
+                                        SearchArguments.userType
+                                    )
+                                } ?: UserType.Unknown
+
+                                SearchView(
+                                    allowSearch = allowSearch,
+                                    userType = userType,
                                 )
-                            } ?: UserType.Unknown
-
-                            SearchView(
-                                allowSearch = allowSearch,
-                                userType = userType,
-                            )
-                        }
-                        // TODO: Use default value for the arguments
-                        composable(
-                            Routes.Property.path(),
-                            arguments = Routes.Property.arguments.map {
-                                navArgument(it) { type = NavType.StringType }
                             }
-                        ) {
-                            val propertyId = it.arguments?.getString(
-                                PropertyDetailsArguments.propertyId
-                            ) ?: ""
-
-                            PropertyScreen(
-                                propertyId = propertyId,
-                            )
-                        }
-                        composable(
-                            Routes.PropertyDetails.path(),
-                            arguments = Routes.PropertyDetails.arguments.map {
-                                navArgument(it) { type = NavType.StringType }
-                            }
-                        ) {
-                            val propertyId = it.arguments?.getString(
-                                PropertyDetailsArguments.propertyId
-                            )
-
-                            propertyId?.let {
-                                if (propertyId.isEmpty()) {
-                                    GoToErrorScreen()
-                                } else {
-                                    PropertyDetailsScreen(
-                                        propertyId,
-                                    )
+                            // TODO: Use default value for the arguments
+                            composable(
+                                Routes.Property.path(),
+                                arguments = Routes.Property.arguments.map {
+                                    navArgument(it) { type = NavType.StringType }
                                 }
-                            } ?: kotlin.run {
-                                GoToErrorScreen()
-                            }
-                        }
-                        composable(
-                            Routes.UserDetails.path(),
-                            arguments = Routes.UserDetails.arguments.map {
-                                navArgument(it) { type = NavType.StringType }
-                            }
-                        ) {
-                            val userId = it.arguments?.getString(
-                                UserDetailsArguments.userId
-                            )
-
-                            userId?.let {
-                                if (userId.isEmpty()) {
-                                    GoToErrorScreen()
-                                } else {
-                                    UserView(
-                                        userId = userId,
-                                    )
-                                }
-                            } ?: kotlin.run {
-                                GoToErrorScreen()
-                            }
-                        }
-                        composable(
-                            Routes.Error.path(),
-                            arguments = Routes.Error.arguments.map {
-                                navArgument(it) { type = NavType.StringType }
-                            }
-                        ) {
-                            GoToErrorScreen(
-                                title = it.arguments?.getString(
-                                    ErrorScreenArguments.title
-                                ) ?: "",
-                                subtitle = it.arguments?.getString(
-                                    ErrorScreenArguments.subtitle
-                                ) ?: "",
-                                description = it.arguments?.getString(
-                                    ErrorScreenArguments.description
+                            ) {
+                                val propertyId = it.arguments?.getString(
+                                    PropertyDetailsArguments.propertyId
                                 ) ?: ""
-                            )
-                        }
-                        composable(
-                            Routes.Information.path(),
-                            arguments = Routes.Information.arguments.map {
-                                navArgument(it) { type = NavType.StringType }
-                            }
-                        ) {
-                            val onlyPreview = it.arguments?.getString(
-                                InformationScreenArguments.onlyPreview
-                            )?.toBoolean()
-                            val allowBackOption = it.arguments?.getString(
-                                InformationScreenArguments.allowBackOption
-                            )?.toBoolean()
-                            val firstTimeAddingDetails = it.arguments?.getString(
-                                InformationScreenArguments.firstTimeAddingDetails
-                            )?.toBoolean()
 
-                            onlyPreview?.let {
-                                allowBackOption?.let {
-                                    firstTimeAddingDetails?.let {
-                                        InformationScreen(
-                                            onlyPreview = onlyPreview,
-                                            allowBackOption = allowBackOption,
-                                            firstTimeAddingDetails = firstTimeAddingDetails,
+                                PropertyScreen(
+                                    propertyId = propertyId,
+                                )
+                            }
+                            composable(
+                                Routes.PropertyDetails.path(),
+                                arguments = Routes.PropertyDetails.arguments.map {
+                                    navArgument(it) { type = NavType.StringType }
+                                }
+                            ) {
+                                val propertyId = it.arguments?.getString(
+                                    PropertyDetailsArguments.propertyId
+                                )
+
+                                propertyId?.let {
+                                    if (propertyId.isEmpty()) {
+                                        GoToErrorScreen()
+                                    } else {
+                                        PropertyDetailsScreen(
+                                            propertyId,
                                         )
+                                    }
+                                } ?: kotlin.run {
+                                    GoToErrorScreen()
+                                }
+                            }
+                            composable(
+                                Routes.UserDetails.path(),
+                                arguments = Routes.UserDetails.arguments.map {
+                                    navArgument(it) { type = NavType.StringType }
+                                }
+                            ) {
+                                val userId = it.arguments?.getString(
+                                    UserDetailsArguments.userId
+                                )
+
+                                userId?.let {
+                                    if (userId.isEmpty()) {
+                                        GoToErrorScreen()
+                                    } else {
+                                        UserView(
+                                            userId = userId,
+                                        )
+                                    }
+                                } ?: kotlin.run {
+                                    GoToErrorScreen()
+                                }
+                            }
+                            composable(
+                                Routes.Error.path(),
+                                arguments = Routes.Error.arguments.map {
+                                    navArgument(it) { type = NavType.StringType }
+                                }
+                            ) {
+                                GoToErrorScreen(
+                                    title = it.arguments?.getString(
+                                        ErrorScreenArguments.title
+                                    ) ?: "",
+                                    subtitle = it.arguments?.getString(
+                                        ErrorScreenArguments.subtitle
+                                    ) ?: "",
+                                    description = it.arguments?.getString(
+                                        ErrorScreenArguments.description
+                                    ) ?: ""
+                                )
+                            }
+                            composable(
+                                Routes.Information.path(),
+                                arguments = Routes.Information.arguments.map {
+                                    navArgument(it) { type = NavType.StringType }
+                                }
+                            ) {
+                                val onlyPreview = it.arguments?.getString(
+                                    InformationScreenArguments.onlyPreview
+                                )?.toBoolean()
+                                val allowBackOption = it.arguments?.getString(
+                                    InformationScreenArguments.allowBackOption
+                                )?.toBoolean()
+                                val firstTimeAddingDetails = it.arguments?.getString(
+                                    InformationScreenArguments.firstTimeAddingDetails
+                                )?.toBoolean()
+
+                                onlyPreview?.let {
+                                    allowBackOption?.let {
+                                        firstTimeAddingDetails?.let {
+                                            InformationScreen(
+                                                onlyPreview = onlyPreview,
+                                                allowBackOption = allowBackOption,
+                                                firstTimeAddingDetails = firstTimeAddingDetails,
+                                            )
+                                        } ?: kotlin.run {
+                                            GoToErrorScreen()
+                                        }
                                     } ?: kotlin.run {
                                         GoToErrorScreen()
                                     }
                                 } ?: kotlin.run {
                                     GoToErrorScreen()
                                 }
-                            } ?: kotlin.run {
-                                GoToErrorScreen()
                             }
                         }
                     }

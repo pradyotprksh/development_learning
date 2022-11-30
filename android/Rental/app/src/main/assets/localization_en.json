@@ -110,6 +110,7 @@
   "update": "Update",
   "confirmAddToWishlistProperty": "Do you want to add %s property to your wishlist?",
   "confirmDeleteWishlistProperty": "Do you want to delete %s property from your wishlist?",
+  "confirmDeleteProposalProperty": "Do you want to delete your proposal for %s property?",
   "yourWatchlist": "Your Watchlist",
   "added": "Added %s",
   "sendProposal": "Send proposal",

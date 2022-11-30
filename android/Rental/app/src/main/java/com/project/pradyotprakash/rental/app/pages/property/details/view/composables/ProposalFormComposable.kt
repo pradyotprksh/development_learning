@@ -1,7 +1,9 @@
 package com.project.pradyotprakash.rental.app.pages.property.details.view.composables
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -9,6 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -20,11 +23,11 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.project.pradyotprakash.rental.app.composables.CardSwitchComposable
-import com.project.pradyotprakash.rental.app.composables.HeaderComposable
 import com.project.pradyotprakash.rental.app.localization.TR
 import com.project.pradyotprakash.rental.app.pages.property.details.viewmodel.PropertyDetailsViewModel
 import com.project.pradyotprakash.rental.domain.modal.PropertyEntity
@@ -88,9 +91,31 @@ fun ProposalFormComposable(
 
             propertyEntity.proposal_details?.let {
                 stickyHeader {
-                    HeaderComposable(
-                        title = String.format(TR.proposalUpdatedOn, it.proposalUpdatedOnTimeAgo),
-                    )
+                    Row(
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier.fillMaxWidth().padding(
+                            horizontal = 10.dp,
+                        )
+                    ) {
+                        Text(
+                            text = String.format(TR.proposalUpdatedOn, it.proposalUpdatedOnTimeAgo)
+                        )
+                        IconButton(
+                            onClick = {
+                                propertyDetailsViewModel.confirmDeleteProposal(
+                                    propertyId = propertyEntity.property_id,
+                                    propertyName = propertyEntity.property_name,
+                                    closeAction = closeAction,
+                                )
+                            }
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.Delete,
+                                contentDescription = Icons.Default.Delete.name
+                            )
+                        }
+                    }
 
                     Spacer(modifier = Modifier.height(10.dp))
                 }

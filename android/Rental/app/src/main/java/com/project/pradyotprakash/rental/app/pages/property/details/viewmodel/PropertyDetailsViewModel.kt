@@ -216,4 +216,35 @@ class PropertyDetailsViewModel @Inject constructor(
             }
         }
     }
+
+    fun confirmDeleteProposal(propertyId: String, propertyName: String, closeAction: () -> Unit) {
+        _confirmationDialog.value = ConfirmationDialog(
+            text = String.format(TR.confirmDeleteProposalProperty, propertyName),
+            onConfirm = {
+                _confirmationDialog.value = ConfirmationDialog()
+                deletePropertyProposal(propertyId, closeAction)
+            },
+            onDismiss = {
+                _confirmationDialog.value = ConfirmationDialog()
+            },
+        )
+    }
+
+    private fun deletePropertyProposal(propertyId: String, closeAction: () -> Unit) {
+        viewModelScope.launch {
+            authenticationUseCase.getCurrentUserId()?.let { userId ->
+                proposalUseCase.deleteProposal(
+                    userId = userId,
+                    propertyId = propertyId,
+                ).collect {
+                    when (it) {
+                        is RenterResponse.Error -> updateErrorState(it.exception.message)
+                        is RenterResponse.Idle -> _loading.value = false
+                        is RenterResponse.Loading -> _loading.value = true
+                        is RenterResponse.Success -> closeAction()
+                    }
+                }
+            }
+        }
+    }
 }
