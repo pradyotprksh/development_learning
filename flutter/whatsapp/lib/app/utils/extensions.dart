@@ -5,7 +5,9 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 extension TR on BuildContext {
   AppLocalizations get translator => AppLocalizations.of(this)!;
 
-  ThemeData themeData() => Theme.of(this);
+  ThemeData get themeData => Theme.of(this);
+
+  NavigatorState get navigator => Navigator.of(this);
 }
 
 extension StringExtensions on String {

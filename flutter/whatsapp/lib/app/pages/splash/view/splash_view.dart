@@ -6,17 +6,22 @@ class SplashView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        backgroundColor: context.themeData().backgroundColor,
+        backgroundColor: context.themeData.scaffoldBackgroundColor,
         extendBody: true,
         extendBodyBehindAppBar: true,
         body: SafeArea(
           child: Padding(
             padding: ThemeEdgeInsets.top20Bottom20,
             child: Center(
-              child: Image.asset(
-                AssetsPath.appIcon,
-                height: 150,
-                width: 150,
+              child: InkWell(
+                onTap: () {
+                  context.navigator.popAndPushNamed(Routes.introRoute);
+                },
+                child: Image.asset(
+                  AssetsPath.appIcon,
+                  height: 150,
+                  width: 150,
+                ),
               ),
             ),
           ),

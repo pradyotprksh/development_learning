@@ -1,6 +1,16 @@
 {
   "applicationName": "WhatsApp",
-  "@applicationName": {
-    "description": "Name of the project"
-  }
+  "firstIntroTitle": "WhatsApp",
+  "firstIntroSubtitle": "where we connect",
+  "firstIntroDescription": "Let's meet the one who we want to and also the one who we don't know.",
+  "secondIntroTitle": "Status",
+  "secondIntroSubtitle": "show what you got",
+  "secondIntroDescription": "Show or share your day/night with your loved ones.",
+  "thirdIntroTitle": "Privacy",
+  "thirdIntroSubtitle": "which matters to everyone.",
+  "thirdIntroDescription": "Shhh... Is not needed because no one knows what is going on.",
+  "next": "Next",
+  "previous": "Previous",
+  "skip": "Skip",
+  "continueText": "Continue"
 }

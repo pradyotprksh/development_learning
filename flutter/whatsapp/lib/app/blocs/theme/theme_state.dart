@@ -6,7 +6,7 @@ import 'package:whatsapp/app/app.dart';
 class ThemeState extends Equatable {
   const ThemeState({
     this.currentThemeMode = ThemeMode.system,
-    this.currentLightFlexScheme = FlexScheme.material,
+    this.currentLightFlexScheme = FlexScheme.sakura,
     this.currentLightContrastFlexScheme = FlexScheme.materialHc,
     this.currentDarkFlexScheme = FlexScheme.material,
     this.currentDarkContrastFlexScheme = FlexScheme.materialHc,

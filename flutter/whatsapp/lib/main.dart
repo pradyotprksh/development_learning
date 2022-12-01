@@ -19,6 +19,12 @@ void main() async {
             ),
         ),
         BlocProvider(
+          create: (_) => AuthenticationBloc()
+            ..add(
+              const CheckForAuthenticationStatus(),
+            ),
+        ),
+        BlocProvider(
           create: (_) => LocalizationsBloc()
             ..add(
               const FetchCurrentLocalizationEvent(),
