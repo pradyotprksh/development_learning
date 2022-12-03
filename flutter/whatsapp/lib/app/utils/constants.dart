@@ -1,5 +1,5 @@
 abstract class Constants {
   static const applicationName = 'WhatsApp';
   static const defaultLanguage = 'en';
-  static const defaultFontFamily = 'Roboto';
+  static const defaultFontFamily = 'Caveat';
 }

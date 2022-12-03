@@ -100,7 +100,12 @@ class _IntroViewState extends State<IntroView> {
                       ),
                       const Spacer(),
                       ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          context.navigator.pushNamedAndRemoveUntil(
+                            Routes.personaliseRoute,
+                            (route) => false,
+                          );
+                        },
                         style: context.themeData.elevatedButtonTheme.style,
                         child: Text(
                           context.translator.continueText,

@@ -11,8 +11,6 @@ extension TR on BuildContext {
 }
 
 extension StringExtensions on String {
-  /// Convert the string to enum. And it the enum values will be taken from
-  /// [values].
   T? stringToEnum<T>(List<T> values) => EnumToString.fromString<T>(
         values,
         this,
