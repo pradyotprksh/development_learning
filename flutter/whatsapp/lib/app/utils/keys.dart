@@ -7,4 +7,5 @@ abstract class Keys {
   static const currentDarkFlexScheme = 'currentDarkFlexScheme';
   static const currentDarkContrastFlexScheme = 'currentDarkContrastFlexScheme';
   static const currentFontFamily = 'currentFontFamily';
+  static const currentEnableMaterial3 = 'currentEnableMaterial3';
 }

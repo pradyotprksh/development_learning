@@ -24,6 +24,7 @@ class ThemeBloc extends HydratedBloc<ThemeEvent, ThemeState>
       darkContrastFlexScheme:
           event.darkContrastFlexScheme?.stringToEnum(FlexScheme.values),
       fontFamily: event.fontFamily,
+      enableMaterial3: event.currentEnableMaterial3,
     );
     emit(newThemeState);
   }
@@ -65,10 +66,11 @@ class ThemeBloc extends HydratedBloc<ThemeEvent, ThemeState>
                 ) ??
                 FlexScheme.materialHc,
         currentFontFamily: json[Keys.currentFontFamily] as String,
+    currentEnableMaterial3: json[Keys.currentEnableMaterial3] as bool,
       );
 
   @override
-  Map<String, dynamic>? toJson(ThemeState state) => <String, String>{
+  Map<String, dynamic>? toJson(ThemeState state) => <String, dynamic>{
         Keys.currentThemeMode: state.currentThemeMode.name,
         Keys.currentLightFlexScheme: state.currentLightFlexScheme.name,
         Keys.currentLightContrastFlexScheme:
@@ -77,5 +79,6 @@ class ThemeBloc extends HydratedBloc<ThemeEvent, ThemeState>
         Keys.currentDarkContrastFlexScheme:
             state.currentDarkContrastFlexScheme.name,
         Keys.currentFontFamily: state.currentFontFamily,
+        Keys.currentEnableMaterial3: state.currentEnableMaterial3,
       };
 }

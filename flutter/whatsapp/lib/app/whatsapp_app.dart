@@ -18,33 +18,29 @@ class WhatsappApp extends StatelessWidget {
           title: Constants.applicationName,
           themeMode: themeState.currentThemeMode,
           debugShowCheckedModeBanner: !AppDetails.isReleaseMode,
-          theme: FlexThemeData.light(
-            scheme: themeState.currentLightFlexScheme,
-            fontFamily: themeState.currentFontFamily,
-            textTheme: GoogleFonts.getTextTheme(themeState.currentFontFamily),
-            useMaterial3: true,
-            useMaterial3ErrorColors: true,
+          theme: _getThemeData(
+            themeState.currentLightFlexScheme,
+            themeState.currentFontFamily,
+            themeState.currentEnableMaterial3,
+            false,
           ),
-          highContrastTheme: FlexThemeData.light(
-            scheme: themeState.currentLightContrastFlexScheme,
-            fontFamily: themeState.currentFontFamily,
-            textTheme: GoogleFonts.getTextTheme(themeState.currentFontFamily),
-            useMaterial3: true,
-            useMaterial3ErrorColors: true,
+          highContrastTheme: _getThemeData(
+            themeState.currentLightContrastFlexScheme,
+            themeState.currentFontFamily,
+            themeState.currentEnableMaterial3,
+            false,
           ),
-          darkTheme: FlexThemeData.dark(
-            scheme: themeState.currentDarkFlexScheme,
-            fontFamily: themeState.currentFontFamily,
-            textTheme: GoogleFonts.getTextTheme(themeState.currentFontFamily),
-            useMaterial3: true,
-            useMaterial3ErrorColors: true,
+          darkTheme: _getThemeData(
+            themeState.currentDarkFlexScheme,
+            themeState.currentFontFamily,
+            themeState.currentEnableMaterial3,
+            true,
           ),
-          highContrastDarkTheme: FlexThemeData.dark(
-            scheme: themeState.currentDarkContrastFlexScheme,
-            fontFamily: themeState.currentFontFamily,
-            textTheme: GoogleFonts.getTextTheme(themeState.currentFontFamily),
-            useMaterial3: true,
-            useMaterial3ErrorColors: true,
+          highContrastDarkTheme: _getThemeData(
+            themeState.currentDarkContrastFlexScheme,
+            themeState.currentFontFamily,
+            themeState.currentEnableMaterial3,
+            true,
           ),
           localizationsDelegates:
               LocalizationsDetails.getLocalizationDelegates(),
@@ -53,6 +49,33 @@ class WhatsappApp extends StatelessWidget {
           initialRoute: Routes.initialRoute,
           routes: Routes.routes,
         ),
+      ),
+    );
+  }
+
+  ThemeData? _getThemeData(
+    FlexScheme scheme,
+    String fontFamily,
+    bool useMaterial3,
+    bool isDark,
+  ) {
+    final theme = !isDark
+        ? FlexThemeData.light(
+            scheme: scheme,
+            fontFamily: fontFamily,
+            useMaterial3: useMaterial3,
+            useMaterial3ErrorColors: useMaterial3,
+          )
+        : FlexThemeData.dark(
+            scheme: scheme,
+            fontFamily: fontFamily,
+            useMaterial3: useMaterial3,
+            useMaterial3ErrorColors: useMaterial3,
+          );
+    return theme.copyWith(
+      textTheme: GoogleFonts.getTextTheme(
+        fontFamily,
+        theme.textTheme,
       ),
     );
   }

@@ -16,6 +16,7 @@ class ChangeThemeEvent extends ThemeEvent {
     this.darkFlexScheme,
     this.darkContrastFlexScheme,
     this.fontFamily,
+    this.currentEnableMaterial3,
   });
 
   final String? themeMode;
@@ -24,6 +25,7 @@ class ChangeThemeEvent extends ThemeEvent {
   final String? darkFlexScheme;
   final String? darkContrastFlexScheme;
   final String? fontFamily;
+  final bool? currentEnableMaterial3;
 
   @override
   List<Object?> get props => [
@@ -33,6 +35,7 @@ class ChangeThemeEvent extends ThemeEvent {
         darkFlexScheme,
         darkContrastFlexScheme,
         fontFamily,
+        currentEnableMaterial3,
       ];
 }
 

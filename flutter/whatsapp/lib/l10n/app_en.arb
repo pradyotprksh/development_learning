@@ -12,5 +12,19 @@
   "next": "Next",
   "previous": "Previous",
   "skip": "Skip",
-  "continueText": "Continue"
+  "continueText": "Continue",
+  "personaliseAppBarTitle": "Personalise",
+  "applyTheme": "Apply theme",
+  "themeMode": "Theme mode",
+  "themeModeSubtitle": "Select the theme based on your liking.",
+  "enableMaterialYou": "Enable material you",
+  "enableMaterialYouSubtitle": "Enable/Disable material you theming.",
+  "currentFont": "Current font",
+  "lightTheme": "Light theme",
+  "lightContrastTheme": "Light contrast theme",
+  "darkTheme": "Dark theme",
+  "darkContrastTheme": "Dark contrast theme",
+  "chooseThemeMode": "Choose theme mode",
+  "languageTitle": "Language",
+  "languageSubtitle": "Select the language you feel comfortable in."
 }

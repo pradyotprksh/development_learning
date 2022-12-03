@@ -11,6 +11,7 @@ class ThemeState extends Equatable {
     this.currentDarkFlexScheme = FlexScheme.material,
     this.currentDarkContrastFlexScheme = FlexScheme.materialHc,
     this.currentFontFamily = Constants.defaultFontFamily,
+    this.currentEnableMaterial3 = true,
   });
 
   ThemeState copyWith({
@@ -20,6 +21,7 @@ class ThemeState extends Equatable {
     FlexScheme? darkFlexScheme,
     FlexScheme? darkContrastFlexScheme,
     String? fontFamily,
+    bool? enableMaterial3,
   }) =>
       ThemeState(
         currentThemeMode: themeMode ?? currentThemeMode,
@@ -30,6 +32,7 @@ class ThemeState extends Equatable {
         currentDarkContrastFlexScheme:
             darkContrastFlexScheme ?? currentDarkContrastFlexScheme,
         currentFontFamily: fontFamily ?? currentFontFamily,
+        currentEnableMaterial3: enableMaterial3 ?? currentEnableMaterial3,
       );
 
   final ThemeMode currentThemeMode;
@@ -38,6 +41,7 @@ class ThemeState extends Equatable {
   final FlexScheme currentDarkFlexScheme;
   final FlexScheme currentDarkContrastFlexScheme;
   final String currentFontFamily;
+  final bool currentEnableMaterial3;
 
   @override
   List<Object?> get props => [
@@ -47,5 +51,6 @@ class ThemeState extends Equatable {
         currentDarkFlexScheme,
         currentDarkContrastFlexScheme,
         currentFontFamily,
+        currentEnableMaterial3,
       ];
 }
