@@ -8,6 +8,8 @@ extension TR on BuildContext {
   ThemeData get themeData => Theme.of(this);
 
   NavigatorState get navigator => Navigator.of(this);
+
+  bool get isPhoneInDarkMode => MediaQuery.of(this).platformBrightness != Brightness.light;
 }
 
 extension StringExtensions on String {

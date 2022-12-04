@@ -65,12 +65,14 @@ class WhatsappApp extends StatelessWidget {
             fontFamily: fontFamily,
             useMaterial3: useMaterial3,
             useMaterial3ErrorColors: useMaterial3,
+            appBarElevation: 5,
           )
         : FlexThemeData.dark(
             scheme: scheme,
             fontFamily: fontFamily,
             useMaterial3: useMaterial3,
             useMaterial3ErrorColors: useMaterial3,
+            appBarElevation: 5,
           );
     return theme.copyWith(
       textTheme: GoogleFonts.getTextTheme(

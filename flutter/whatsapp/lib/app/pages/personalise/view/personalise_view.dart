@@ -1,3 +1,4 @@
+import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:whatsapp/app/app.dart';
@@ -43,6 +44,27 @@ class PersonaliseView extends StatelessWidget {
                       );
                     },
                   ),
+                  Divider(
+                    color: context.themeData.dividerTheme.color,
+                  ),
+                  ListTile(
+                    title: Text(
+                      context.translator.colorTheme,
+                      style: context.themeData.textTheme.titleMedium,
+                    ),
+                    subtitle: Text(
+                      context.translator.selectColorTheme,
+                      style: context.themeData.textTheme.titleSmall,
+                    ),
+                  ),
+                  ColorSchemeSelectorWidget(
+                    currentThemeMode: themeState.currentThemeMode,
+                    currentLightFlexScheme: themeState.currentLightFlexScheme,
+                    currentDarkFlexScheme: themeState.currentDarkFlexScheme,
+                  ),
+                  Divider(
+                    color: context.themeData.dividerTheme.color,
+                  ),
                   SwitchListTile(
                     value: themeState.currentEnableMaterial3,
                     onChanged: (value) {
@@ -63,6 +85,9 @@ class PersonaliseView extends StatelessWidget {
                       style: context.themeData.textTheme.titleSmall,
                     ),
                   ),
+                  Divider(
+                    color: context.themeData.dividerTheme.color,
+                  ),
                   ListTile(
                     leading: Icon(
                       Icons.language,
@@ -82,6 +107,9 @@ class PersonaliseView extends StatelessWidget {
                         localizationState.currentLocale.languageCode,
                       );
                     },
+                  ),
+                  Divider(
+                    color: context.themeData.dividerTheme.color,
                   ),
                 ],
               ),

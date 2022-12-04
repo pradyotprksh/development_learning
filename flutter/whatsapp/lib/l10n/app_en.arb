@@ -26,5 +26,7 @@
   "darkContrastTheme": "Dark contrast theme",
   "chooseThemeMode": "Choose theme mode",
   "languageTitle": "Language",
-  "languageSubtitle": "Select the language you feel comfortable in."
+  "languageSubtitle": "Select the language you feel comfortable in.",
+  "colorTheme": "Color theme",
+  "selectColorTheme": "Select the color theme based on your preference."
 }

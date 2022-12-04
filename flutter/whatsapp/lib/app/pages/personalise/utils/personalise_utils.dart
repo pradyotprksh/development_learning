@@ -15,6 +15,72 @@ abstract class PersonaliseUtils {
     }
   }
 
+  static ThemeData getThemeData(
+    bool isPhoneInDarkMode,
+    ThemeMode themeMode,
+    FlexScheme flexScheme,
+  ) {
+    switch (themeMode) {
+      case ThemeMode.system:
+        if (isPhoneInDarkMode) {
+          return FlexThemeData.dark(scheme: flexScheme);
+        } else {
+          return FlexThemeData.light(scheme: flexScheme);
+        }
+      case ThemeMode.light:
+        return FlexThemeData.light(scheme: flexScheme);
+      case ThemeMode.dark:
+        return FlexThemeData.dark(scheme: flexScheme);
+    }
+  }
+
+  static ChangeThemeEvent getThemeChangeEvent(
+    bool isPhoneInDarkMode,
+    ThemeMode themeMode,
+    FlexScheme flexScheme,
+  ) {
+    switch (themeMode) {
+      case ThemeMode.system:
+        if (isPhoneInDarkMode) {
+          return ChangeThemeEvent(
+            darkFlexScheme: flexScheme.name,
+          );
+        } else {
+          return ChangeThemeEvent(
+            lightFlexScheme: flexScheme.name,
+          );
+        }
+      case ThemeMode.light:
+        return ChangeThemeEvent(
+          lightFlexScheme: flexScheme.name,
+        );
+      case ThemeMode.dark:
+        return ChangeThemeEvent(
+          darkFlexScheme: flexScheme.name,
+        );
+    }
+  }
+
+  static FlexScheme getCurrentSelectedFlexScheme(
+    bool isPhoneInDarkMode,
+    ThemeMode themeMode,
+    FlexScheme lightColorScheme,
+    FlexScheme darkColorScheme,
+  ) {
+    switch (themeMode) {
+      case ThemeMode.system:
+        if (isPhoneInDarkMode) {
+          return darkColorScheme;
+        } else {
+          return lightColorScheme;
+        }
+      case ThemeMode.light:
+        return lightColorScheme;
+      case ThemeMode.dark:
+        return darkColorScheme;
+    }
+  }
+
   static void showThemeModeModal(
     BuildContext buildContext,
     ThemeMode currentThemeMode,
