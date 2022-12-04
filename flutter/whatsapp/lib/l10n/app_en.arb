@@ -25,8 +25,13 @@
   "darkTheme": "Dark theme",
   "darkContrastTheme": "Dark contrast theme",
   "chooseThemeMode": "Choose theme mode",
+  "chooseLanguage": "Choose language",
+  "chooseFont": "Choose font",
   "languageTitle": "Language",
   "languageSubtitle": "Select the language you feel comfortable in.",
   "colorTheme": "Color theme",
-  "selectColorTheme": "Select the color theme based on your preference."
+  "selectColorTheme": "Select the color theme based on your preference.",
+  "font": "Font",
+  "selectFont": "Select the font as per your liking.",
+  "currentlySelected": "Currently selected"
 }

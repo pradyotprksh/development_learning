@@ -25,7 +25,8 @@ class PersonaliseView extends StatelessWidget {
                   ListTile(
                     leading: Icon(
                       PersonaliseUtils.getThemeIcon(
-                          themeState.currentThemeMode),
+                        themeState.currentThemeMode,
+                      ),
                       color: context.themeData.iconTheme.color,
                     ),
                     title: Text(
@@ -60,6 +61,29 @@ class PersonaliseView extends StatelessWidget {
                     currentThemeMode: themeState.currentThemeMode,
                     currentLightFlexScheme: themeState.currentLightFlexScheme,
                     currentDarkFlexScheme: themeState.currentDarkFlexScheme,
+                  ),
+                  Divider(
+                    color: context.themeData.dividerTheme.color,
+                  ),
+                  ListTile(
+                    leading: Icon(
+                      Icons.font_download,
+                      color: context.themeData.iconTheme.color,
+                    ),
+                    title: Text(
+                      context.translator.font,
+                      style: context.themeData.textTheme.titleMedium,
+                    ),
+                    subtitle: Text(
+                      context.translator.selectFont,
+                      style: context.themeData.textTheme.titleSmall,
+                    ),
+                    onTap: () {
+                      PersonaliseUtils.showFontFamilyModal(
+                        context,
+                        themeState.currentFontFamily,
+                      );
+                    },
                   ),
                   Divider(
                     color: context.themeData.dividerTheme.color,

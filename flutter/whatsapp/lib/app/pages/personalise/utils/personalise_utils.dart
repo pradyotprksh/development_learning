@@ -1,6 +1,7 @@
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:whatsapp/app/app.dart';
 
 abstract class PersonaliseUtils {
@@ -146,7 +147,7 @@ abstract class PersonaliseUtils {
                   buildContext.themeData.appBarTheme.backgroundColor,
               leading: const CloseButton(),
               title: Text(
-                buildContext.translator.chooseThemeMode,
+                buildContext.translator.chooseLanguage,
                 style: buildContext.themeData.appBarTheme.titleTextStyle,
               ),
               elevation: buildContext.themeData.appBarTheme.elevation,
@@ -178,6 +179,64 @@ abstract class PersonaliseUtils {
       ..clearHistory()
       ..add(
         ChangeLocalizationEvent(newLocale: language),
+      );
+  }
+
+  static void showFontFamilyModal(
+    BuildContext buildContext,
+    String currentFontFamily,
+  ) async {
+    final themeBloc = buildContext.read<ThemeBloc>();
+
+    final fontFamily = await showModalBottomSheet<String>(
+          context: buildContext,
+          builder: (_) => Scaffold(
+            backgroundColor:
+                buildContext.themeData.bottomSheetTheme.backgroundColor,
+            appBar: AppBar(
+              backgroundColor:
+                  buildContext.themeData.appBarTheme.backgroundColor,
+              leading: const CloseButton(),
+              title: Text(
+                buildContext.translator.chooseFont,
+                style: buildContext.themeData.appBarTheme.titleTextStyle,
+              ),
+              elevation: buildContext.themeData.appBarTheme.elevation,
+            ),
+            body: ListView.builder(
+              primary: false,
+              itemCount: GoogleFonts.asMap().length,
+              itemBuilder: (_, position) {
+                final fontFamily = GoogleFonts.asMap().keys.toList()[position];
+
+                return ListTile(
+                  title: Text(
+                    fontFamily,
+                    style:
+                        buildContext.themeData.textTheme.titleLarge?.copyWith(
+                      fontFamily: GoogleFonts.getFont(fontFamily).fontFamily,
+                    ),
+                  ),
+                  subtitle: currentFontFamily == fontFamily
+                      ? Text(
+                          buildContext.translator.currentlySelected,
+                          style: buildContext.themeData.textTheme.titleSmall,
+                        )
+                      : null,
+                  onTap: () {
+                    buildContext.navigator.pop(fontFamily);
+                  },
+                );
+              },
+            ),
+          ),
+        ) ??
+        currentFontFamily;
+
+    themeBloc
+      ..clearHistory()
+      ..add(
+        ChangeThemeEvent(fontFamily: fontFamily),
       );
   }
 }
