@@ -102,7 +102,7 @@ class _IntroViewState extends State<IntroView> {
                       ElevatedButton(
                         onPressed: () {
                           context.navigator.pushNamedAndRemoveUntil(
-                            Routes.personaliseRoute,
+                            Routes.authenticateRoute,
                             (route) => false,
                           );
                         },

@@ -4,6 +4,7 @@ import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
 import 'package:whatsapp/app/app.dart';
 import 'package:whatsapp/core/core.dart';
+import 'package:whatsapp/data/data.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,8 +20,9 @@ void main() async {
             ),
         ),
         BlocProvider(
-          create: (_) => AuthenticationBloc()
-            ..add(
+          create: (_) => AuthenticationBloc(
+            FirebaseAuthServiceImplementation(),
+          )..add(
               const CheckForAuthenticationStatus(),
             ),
         ),

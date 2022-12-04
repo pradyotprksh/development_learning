@@ -14,7 +14,15 @@ class SplashView extends StatelessWidget {
               // TODO: Handle this case.
               break;
             case AuthenticationStatus.authenticated:
-              // TODO: Handle this case.
+              Future<void>.delayed(
+                const Duration(seconds: 3),
+                () {
+                  context.navigator.pushNamedAndRemoveUntil(
+                    Routes.personaliseRoute,
+                    (route) => false,
+                  );
+                },
+              );
               break;
             case AuthenticationStatus.unauthenticated:
               Future<void>.delayed(
