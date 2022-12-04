@@ -66,7 +66,7 @@ class ThemeBloc extends HydratedBloc<ThemeEvent, ThemeState>
                 ) ??
                 FlexScheme.materialHc,
         currentFontFamily: json[Keys.currentFontFamily] as String,
-    currentEnableMaterial3: json[Keys.currentEnableMaterial3] as bool,
+        currentEnableMaterial3: json[Keys.currentEnableMaterial3] as bool,
       );
 
   @override

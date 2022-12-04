@@ -9,7 +9,8 @@ extension TR on BuildContext {
 
   NavigatorState get navigator => Navigator.of(this);
 
-  bool get isPhoneInDarkMode => MediaQuery.of(this).platformBrightness != Brightness.light;
+  bool get isPhoneInDarkMode =>
+      MediaQuery.of(this).platformBrightness != Brightness.light;
 }
 
 extension StringExtensions on String {
