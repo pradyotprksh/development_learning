@@ -33,5 +33,8 @@
   "selectColorTheme": "Select the color theme based on your preference.",
   "font": "Font",
   "selectFont": "Select the font as per your liking.",
-  "currentlySelected": "Currently selected"
+  "currentlySelected": "Currently selected",
+  "undo": "Undo",
+  "undoTheme": "Go back to the previous theme, if you don't like this one.",
+  "undoLocalization": "Go back to the previous language, if you don't want to use this one."
 }

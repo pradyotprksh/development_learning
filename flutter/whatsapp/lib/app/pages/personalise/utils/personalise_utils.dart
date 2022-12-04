@@ -5,6 +5,21 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:whatsapp/app/app.dart';
 
 abstract class PersonaliseUtils {
+  static void handleUndoSnackBar(
+    BuildContext context,
+    String content,
+    Function() onUndo,
+  ) {
+    context.replaceAndShowSnackBar(
+      content,
+      SnackBarAction(
+        label: context.translator.undo,
+        onPressed: onUndo,
+        textColor: context.themeData.snackBarTheme.actionTextColor,
+      ),
+    );
+  }
+
   static IconData getThemeIcon(ThemeMode currentThemeMode) {
     switch (currentThemeMode) {
       case ThemeMode.system:

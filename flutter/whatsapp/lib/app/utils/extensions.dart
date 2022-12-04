@@ -11,6 +11,24 @@ extension TR on BuildContext {
 
   bool get isPhoneInDarkMode =>
       MediaQuery.of(this).platformBrightness != Brightness.light;
+
+  void clearSnackBars() {
+    ScaffoldMessenger.of(this).clearSnackBars();
+  }
+
+  void replaceAndShowSnackBar(String content, SnackBarAction? action) {
+    clearSnackBars();
+    ScaffoldMessenger.of(this).showSnackBar(
+      SnackBar(
+        backgroundColor: themeData.snackBarTheme.backgroundColor,
+        content: Text(
+          content,
+          style: themeData.snackBarTheme.contentTextStyle,
+        ),
+        action: action,
+      ),
+    );
+  }
 }
 
 extension StringExtensions on String {
