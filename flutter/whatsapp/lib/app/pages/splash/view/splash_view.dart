@@ -18,7 +18,7 @@ class SplashView extends StatelessWidget {
                 const Duration(seconds: 3),
                 () {
                   context.navigator.pushNamedAndRemoveUntil(
-                    Routes.personaliseRoute,
+                    Routes.homeRoute,
                     (route) => false,
                   );
                 },

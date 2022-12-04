@@ -24,7 +24,7 @@ class AuthenticateView extends StatelessWidget {
                         ),
                       );
                   context.navigator.pushNamedAndRemoveUntil(
-                    Routes.personaliseRoute,
+                    Routes.homeRoute,
                     (route) => false,
                   );
                 },

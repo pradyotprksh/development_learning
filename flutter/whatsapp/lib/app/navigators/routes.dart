@@ -6,6 +6,7 @@ abstract class Routes {
   static const introRoute = '/intro';
   static const personaliseRoute = '/personalise';
   static const authenticateRoute = '/authenticate';
+  static const homeRoute = '/home';
 
   static const initialRoute = splashRoute;
 
@@ -14,5 +15,6 @@ abstract class Routes {
     introRoute: (context) => const IntroView(),
     personaliseRoute: (context) => const PersonaliseView(),
     authenticateRoute: (context) => const AuthenticateView(),
+    homeRoute: (context) => const HomeView(),
   };
 }
