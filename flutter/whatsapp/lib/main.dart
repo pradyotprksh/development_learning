@@ -5,6 +5,7 @@ import 'package:path_provider/path_provider.dart' as path_provider;
 import 'package:whatsapp/app/app.dart';
 import 'package:whatsapp/core/core.dart';
 import 'package:whatsapp/data/data.dart';
+import 'package:whatsapp/data/firebase/firebase_firestore_service_implementation.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,6 +25,13 @@ void main() async {
             FirebaseAuthServiceImplementation(),
           )..add(
               const CheckForAuthenticationStatus(),
+            ),
+        ),
+        BlocProvider(
+          create: (_) => UserBloc(
+            FirebaseFirestoreServiceImplementation(),
+          )..add(
+              const FetchUserDetails(),
             ),
         ),
         BlocProvider(

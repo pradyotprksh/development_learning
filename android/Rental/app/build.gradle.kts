@@ -108,14 +108,14 @@ dependencies {
     implementation("androidx.core:core-ktx:1.9.0")
 
     // Compose
-    implementation("androidx.compose.ui:ui:1.3.1")
+    implementation("androidx.compose.ui:ui:1.3.2")
     implementation("androidx.compose.material3:material3:1.0.1")
     implementation("androidx.compose.material:material:1.3.1")
     implementation("androidx.compose.material3:material3-window-size-class:1.0.1")
     implementation("androidx.navigation:navigation-compose:2.5.3")
-    implementation("androidx.compose.runtime:runtime-livedata:1.3.1")
-    debugImplementation("androidx.compose.ui:ui-tooling:1.3.1")
-    debugImplementation("androidx.compose.ui:ui-test-manifest:1.3.1")
+    implementation("androidx.compose.runtime:runtime-livedata:1.3.2")
+    debugImplementation("androidx.compose.ui:ui-tooling:1.3.2")
+    debugImplementation("androidx.compose.ui:ui-test-manifest:1.3.2")
     implementation("com.google.accompanist:accompanist-testharness:0.28.0")
 
     // Dependency Injection
@@ -143,14 +143,13 @@ dependencies {
     implementation("com.google.firebase:firebase-perf-ktx")
     implementation("com.google.firebase:firebase-storage-ktx")
     implementation("com.google.firebase:firebase-appcheck-playintegrity")
-    implementation("com.google.firebase:firebase-appcheck-safetynet:16.1.0")
     implementation("com.firebaseui:firebase-ui-auth:8.0.2")
 
     // Testing
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.4")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.0")
-    androidTestImplementation("androidx.compose.ui:ui-test-junit4:1.3.1")
+    androidTestImplementation("androidx.compose.ui:ui-test-junit4:1.3.2")
 
     // Chrome browser
     implementation("androidx.browser:browser:1.4.0")
