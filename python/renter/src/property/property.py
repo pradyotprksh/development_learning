@@ -149,6 +149,7 @@ class _Proposals(Resource):
         confirm_deposit = request.args.get(Keys.Proposals.confirm_deposit) == "true"
         deposit_proposal = request.args.get(Keys.Proposals.deposit_proposal, "")
         confirm_agreements = request.args.get(Keys.Proposals.confirm_agreements) == "true"
+        proposal_status = request.args.get(Keys.Proposals.proposal_status, None)
         created_on = old_proposal_details.get(Keys.Proposals.created_on)
         updated_on = get_current_timestamp()
 
@@ -158,6 +159,9 @@ class _Proposals(Resource):
                 code=409,
                 message=MESSAGES_LIST[Keys.Messages.need_agreement_conformation],
             )
+
+        if proposal_status == "":
+            proposal_status = None
 
         # Payload
         proposal_details = ProposalDetails(
@@ -171,6 +175,7 @@ class _Proposals(Resource):
             confirm_agreements=confirm_agreements,
             created_on=created_on,
             updated_on=updated_on,
+            proposal_status=proposal_status,
         )
 
         # update the proposal

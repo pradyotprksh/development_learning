@@ -14,6 +14,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.Button
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -26,6 +28,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
@@ -33,6 +36,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.project.pradyotprakash.rental.app.composables.CardSwitchComposable
 import com.project.pradyotprakash.rental.app.localization.TR
 import com.project.pradyotprakash.rental.app.pages.property.details.viewmodel.PropertyDetailsViewModel
+import com.project.pradyotprakash.rental.app.utils.ProposalStatus
 import com.project.pradyotprakash.rental.domain.modal.PropertyEntity
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
@@ -97,9 +101,11 @@ fun ProposalFormComposable(
                     Row(
                         horizontalArrangement = Arrangement.SpaceBetween,
                         verticalAlignment = Alignment.CenterVertically,
-                        modifier = Modifier.fillMaxWidth().padding(
-                            horizontal = 10.dp,
-                        )
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(
+                                horizontal = 10.dp,
+                            )
                     ) {
                         Text(
                             text = String.format(TR.proposalUpdatedOn, it.proposalUpdatedOnTimeAgo)
@@ -121,6 +127,31 @@ fun ProposalFormComposable(
                     }
 
                     Spacer(modifier = Modifier.height(10.dp))
+                }
+            }
+
+            propertyEntity.proposal_details?.proposalStatus?.let { status ->
+                if (status != ProposalStatus.None) {
+                    stickyHeader {
+                        Card(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(15.dp),
+                            colors = CardDefaults.cardColors(
+                                containerColor = if (status == ProposalStatus.Accept) Color.Green else Color.Red,
+                            )
+                        ) {
+                            Text(
+                                text = if (status == ProposalStatus.Accept) TR.proposalAccepted else TR.proposalRejected,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(all = 10.dp),
+                                color = Color.Black,
+                            )
+                        }
+
+                        Spacer(modifier = Modifier.height(10.dp))
+                    }
                 }
             }
 

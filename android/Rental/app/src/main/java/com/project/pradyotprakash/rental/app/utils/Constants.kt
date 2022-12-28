@@ -15,6 +15,12 @@ enum class UserType {
     Unknown,
 }
 
+enum class ProposalStatus {
+    Accept,
+    Reject,
+    None,
+}
+
 object InformationScreenArguments {
     const val userType = "userType"
     const val onlyPreview = "onlyPreview"

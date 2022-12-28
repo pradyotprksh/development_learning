@@ -180,6 +180,7 @@ class Keys:
         confirm_agreements = "confirm_agreements"
         created_on = "created_on"
         updated_on = "updated_on"
+        proposal_status = "proposal_status"
 
 
 # Dictionary of messages

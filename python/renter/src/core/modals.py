@@ -51,6 +51,7 @@ ProposalDetails = namedtuple(
         Keys.Proposals.confirm_agreements,
         Keys.Proposals.created_on,
         Keys.Proposals.updated_on,
+        Keys.Proposals.proposal_status,
     ]
 )
 

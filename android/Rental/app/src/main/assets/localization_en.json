@@ -121,5 +121,7 @@
   "proposalUpdatedOn": "Last proposal updated %s",
   "proposals": "Proposals",
   "accept": "Accept",
-  "reject": "Reject"
+  "reject": "Reject",
+  "proposalAccepted": "Your proposal was accepted by the owner. Please connect with the owner for further queries.",
+  "proposalRejected": "Your proposal was rejected by the owner. Please update your proposal for the next review."
 }
