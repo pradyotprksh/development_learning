@@ -15,6 +15,7 @@ data class ProposalEntity(
     val confirm_agreements: Boolean,
     val created_on: String,
     val updated_on: String,
+    val proposals_created_by_details: UserEntity? = null,
 ) {
     val proposalCreateOnTimeAgo: String
         get() {

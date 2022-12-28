@@ -70,6 +70,7 @@ fun UserView(
                 Row {
                     if (!loading.value) {
                         userDetails.value?.let { details ->
+                            // TODO: Fix the logic
                             if (details.userType == UserType.Renter) {
                                 FloatingActionButton(
                                     onClick = { userViewModel.goToWishlist() }

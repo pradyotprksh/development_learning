@@ -241,10 +241,26 @@ class PropertyDetailsViewModel @Inject constructor(
                         is RenterResponse.Error -> updateErrorState(it.exception.message)
                         is RenterResponse.Idle -> _loading.value = false
                         is RenterResponse.Loading -> _loading.value = true
-                        is RenterResponse.Success -> closeAction()
+                        is RenterResponse.Success -> {
+                            closeAction()
+                            resetProposalDetails()
+                        }
                     }
                 }
             }
+        }
+    }
+
+    private fun resetProposalDetails() {
+        _okayWithRent.value = true
+        _okayWithDeposit.value = true
+        _proposalRent.value = ""
+        _proposalDeposit.value = ""
+    }
+
+    fun goToUserDetails(userId: String) {
+        navigator.navigate {
+            it.navigate("${Routes.UserDetails.route}${userId}")
         }
     }
 }

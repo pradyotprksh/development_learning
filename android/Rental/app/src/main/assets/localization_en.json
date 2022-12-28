@@ -118,5 +118,8 @@
   "okayWithDeposit": "Are you okay with the yearly deposit of %s?",
   "pleaseEnterProposalRent": "Please enter the rent you want to propose.",
   "pleaseEnterProposalDeposit": "Please enter the deposit you want to propose.",
-  "proposalUpdatedOn": "Last proposal updated %s"
+  "proposalUpdatedOn": "Last proposal updated %s",
+  "proposals": "Proposals",
+  "accept": "Accept",
+  "reject": "Reject"
 }

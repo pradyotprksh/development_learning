@@ -22,8 +22,8 @@ import com.project.pradyotprakash.rental.domain.modal.UserEntity
 @Composable
 fun UserDetailsComposable(
     userDetails: UserEntity,
-    onClick: ((String) -> Unit)? = null,
     showOtherDetails: Boolean = false,
+    onClick: ((String) -> Unit)? = null,
 ) {
     Card(
         modifier = Modifier

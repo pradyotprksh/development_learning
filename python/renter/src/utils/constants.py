@@ -146,6 +146,8 @@ class Keys:
         distance = "distance"
         is_in_wishlist = "is_in_wishlist"
         proposal_details = "proposal_details"
+        proposals = "proposals"
+        proposals_created_by_details = "proposals_created_by_details"
 
     class Search:
         """A set of keys related to search section"""

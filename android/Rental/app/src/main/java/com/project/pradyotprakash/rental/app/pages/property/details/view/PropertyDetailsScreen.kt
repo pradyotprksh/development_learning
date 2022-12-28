@@ -22,12 +22,17 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -38,11 +43,13 @@ import com.project.pradyotprakash.rental.app.composables.NetworkImageComposable
 import com.project.pradyotprakash.rental.app.composables.PageStateComposable
 import com.project.pradyotprakash.rental.app.composables.UserDetailsComposable
 import com.project.pradyotprakash.rental.app.localization.TR
+import com.project.pradyotprakash.rental.app.pages.property.details.PropertyPageState
 import com.project.pradyotprakash.rental.app.pages.property.details.view.composables.MoneyDetailsComposable
 import com.project.pradyotprakash.rental.app.pages.property.details.view.composables.NoPropertyDetailsComposable
 import com.project.pradyotprakash.rental.app.pages.property.details.view.composables.OtherDetailsComposable
 import com.project.pradyotprakash.rental.app.pages.property.details.view.composables.PropertyDetailsComposable
 import com.project.pradyotprakash.rental.app.pages.property.details.view.composables.ProposalFormComposable
+import com.project.pradyotprakash.rental.app.pages.property.details.view.composables.ProposalsComposable
 import com.project.pradyotprakash.rental.app.pages.property.details.view.composables.RentDetailsComposable
 import com.project.pradyotprakash.rental.app.pages.property.details.viewmodel.PropertyDetailsViewModel
 import kotlinx.coroutines.launch
@@ -60,6 +67,7 @@ fun PropertyDetailsScreen(
         propertyDetailsViewModel.getPropertyDetails(propertyId)
     }
 
+    var pageState by remember { mutableStateOf<PropertyPageState>(PropertyPageState.Normal) }
     val loading = propertyDetailsViewModel.loading.observeAsState(false)
     val error = propertyDetailsViewModel.error.observeAsState("")
     val propertyDetails = propertyDetailsViewModel.propertyDetails.observeAsState(null)
@@ -75,11 +83,15 @@ fun PropertyDetailsScreen(
     )
     val scope = rememberCoroutineScope()
 
-    val openSendProposal: () -> Unit = {
+    val openSendProposal: (PropertyPageState) -> Unit = { state ->
+        pageState = state
         scope.launch { scaffoldState.conceal() }
     }
     val closeSheet = {
-        scope.launch { scaffoldState.reveal() }
+        scope.launch {
+            pageState = PropertyPageState.Normal
+            scaffoldState.reveal()
+        }
     }
 
     PageStateComposable(
@@ -112,6 +124,19 @@ fun PropertyDetailsScreen(
                             )
                         }
                     },
+                    actions = {
+                        propertyDetails.value?.proposals?.let {
+                            if (it.isNotEmpty()) {
+                                TextButton(
+                                    onClick = {
+                                        openSendProposal(PropertyPageState.Proposals)
+                                    },
+                                ) {
+                                    Text(TR.proposals)
+                                }
+                            }
+                        }
+                    }
                 )
             },
             backLayerContent = {
@@ -124,7 +149,7 @@ fun PropertyDetailsScreen(
                                         if (isPropertyOwner) {
                                             propertyDetailsViewModel.searchForRenter()
                                         } else {
-                                            openSendProposal()
+                                            openSendProposal(PropertyPageState.CreateProposal)
                                         }
                                     }
                                 ) {
@@ -256,10 +281,20 @@ fun PropertyDetailsScreen(
             },
             frontLayerContent = {
                 propertyDetails.value?.let {
-                    ProposalFormComposable(
-                        propertyEntity = it
-                    ) {
-                        closeSheet()
+                    when (pageState) {
+                        PropertyPageState.CreateProposal -> {
+                            ProposalFormComposable(
+                                propertyEntity = it
+                            ) {
+                                closeSheet()
+                            }
+                        }
+                        PropertyPageState.Proposals -> {
+                            ProposalsComposable(propertyEntity = it) {
+                                closeSheet()
+                            }
+                        }
+                        PropertyPageState.Normal -> {}
                     }
                 }
             }

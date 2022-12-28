@@ -125,5 +125,8 @@ object TR {
     var pleaseEnterProposalRent = Translation.getString("pleaseEnterProposalRent")
     var pleaseEnterProposalDeposit = Translation.getString("pleaseEnterProposalDeposit")
     var proposalUpdatedOn = Translation.getString("proposalUpdatedOn")
+    var proposals = Translation.getString("proposals")
+    var accept = Translation.getString("accept")
+    var reject = Translation.getString("reject")
     
 }

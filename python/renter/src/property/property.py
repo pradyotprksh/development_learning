@@ -301,6 +301,26 @@ class _Property(Resource):
                 return user
         return {}
 
+    def get_user_details(self, user_id, users_list):
+        return self.find_user_by_user_id(user_id, users_list)
+
+    def get_all_proposals(self, users_list):
+        proposals_cursor = get_documents(self.proposal_collection)
+        proposals = []
+        for proposals_doc in proposals_cursor:
+            proposal_user_id = proposals_doc.get(Keys.Proposals.user_id)
+            proposals_created_by_details = self.find_user_by_user_id(proposal_user_id, users_list)
+            proposals_doc[Keys.Property.proposals_created_by_details] = proposals_created_by_details
+            proposals.append(proposals_doc)
+        return proposals
+
+    def is_in_wish_list(self, header_user_id, doc_id):
+        return not (
+                get_document(
+                    self.wishlist_collection, Keys.Wishlist.wishlist_id, f"{header_user_id}-{doc_id}"
+                ) is None
+        )
+
     def __init__(self):
         # Get the user collection to be used by the user resource
         self.user_collection = get_collection(Keys.User.collection_name)
@@ -339,48 +359,52 @@ class _Property(Resource):
                 property_cursor = get_documents(self.property_collection)
                 property_list = []
                 for doc in property_cursor:
-                    user_id = doc.get(Keys.Property.property_created_by)
-                    user_details = self.find_user_by_user_id(user_id, users_list)
-                    doc[Keys.Property.property_created_by_details] = user_details
+                    property_created_by_user_id = doc.get(Keys.Property.property_created_by)
 
-                    # Is in wishlist
-                    doc_id = doc.get(Keys.Property.property_id)
-                    doc[Keys.Property.is_in_wishlist] = not (
-                            get_document(
-                                self.wishlist_collection, Keys.Wishlist.wishlist_id, f"{header_user_id}-{doc_id}"
-                            ) is None
+                    doc[Keys.Property.property_created_by_details] = self.get_user_details(
+                        property_created_by_user_id, users_list
                     )
 
-                    # Get proposal
                     doc_id = doc.get(Keys.Property.property_id)
+
+                    # Is in wishlist
+                    doc[Keys.Property.is_in_wishlist] = self.is_in_wish_list(header_user_id, doc_id)
+
+                    # Get proposal
                     proposal_details = get_document(self.proposal_collection, Keys.Proposals.proposal_id,
                                                     f"{header_user_id}-{doc_id}")
                     if not (proposal_details is None):
                         doc[Keys.Property.proposal_details] = proposal_details
+
+                    # Get all proposals
+                    if header_user_id == property_created_by_user_id:
+                        doc[Keys.Property.proposals] = self.get_all_proposals(users_list)
 
                     property_list.append(doc)
             # But property id is present
             else:
                 # Get all the properties from the collection
                 property_details = get_document(self.property_collection, Keys.Property.property_id, property_id)
-                user_id = property_details.get(Keys.Property.property_created_by)
-                user_details = self.find_user_by_user_id(user_id, users_list)
-                property_details[Keys.Property.property_created_by_details] = user_details
+                property_created_by_user_id = property_details.get(Keys.Property.property_created_by)
 
-                # Is in wishlist
-                doc_id = property_details.get(Keys.Property.property_id)
-                property_details[Keys.Property.is_in_wishlist] = not (
-                        get_document(
-                            self.wishlist_collection, Keys.Wishlist.wishlist_id, f"{header_user_id}-{doc_id}"
-                        ) is None
+                property_details[Keys.Property.property_created_by_details] = self.get_user_details(
+                    property_created_by_user_id, users_list
                 )
 
-                # Get proposal
                 doc_id = property_details.get(Keys.Property.property_id)
+
+                # Is in wishlist
+                property_details[Keys.Property.is_in_wishlist] = self.is_in_wish_list(header_user_id, doc_id)
+
+                # Get proposal
                 proposal_details = get_document(self.proposal_collection, Keys.Proposals.proposal_id,
                                                 f"{header_user_id}-{doc_id}")
                 if not (proposal_details is None):
                     property_details[Keys.Property.proposal_details] = proposal_details
+
+                # Get all proposals
+                if header_user_id == property_created_by_user_id:
+                    property_details[Keys.Property.proposals] = self.get_all_proposals(users_list)
 
                 property_list = [
                     property_details
@@ -401,48 +425,50 @@ class _Property(Resource):
                 property_cursor = get_documents(self.property_collection, Keys.Property.property_created_by, user_id)
                 property_list = []
                 for doc in property_cursor:
-                    user_id = doc.get(Keys.Property.property_created_by)
-                    user_details = self.find_user_by_user_id(user_id, users_list)
-                    doc[Keys.Property.property_created_by_details] = user_details
+                    property_created_by_user_id = doc.get(Keys.Property.property_created_by)
+
+                    doc[Keys.Property.property_created_by_details] = self.get_user_details(property_created_by_user_id,
+                                                                                           users_list)
+
+                    doc_id = doc.get(Keys.Property.property_id)
 
                     # Is in wishlist
-                    doc_id = doc.get(Keys.Property.property_id)
-                    doc[Keys.Property.is_in_wishlist] = not (
-                            get_document(
-                                self.wishlist_collection, Keys.Wishlist.wishlist_id, f"{header_user_id}-{doc_id}"
-                            ) is None
-                    )
+                    doc[Keys.Property.is_in_wishlist] = self.is_in_wish_list(header_user_id, doc_id)
 
                     # Get proposal
-                    doc_id = doc.get(Keys.Property.property_id)
                     proposal_details = get_document(self.proposal_collection, Keys.Proposals.proposal_id,
                                                     f"{header_user_id}-{doc_id}")
                     if not (proposal_details is None):
                         doc[Keys.Property.proposal_details] = proposal_details
+
+                    # Get all proposals
+                    if header_user_id == property_created_by_user_id:
+                        doc[Keys.Property.proposals] = self.get_all_proposals(users_list)
 
                     property_list.append(doc)
             # And property id is also present
             else:
                 # Get the property details for the give property id which belongs to the given user id
                 property_details = get_document(self.property_collection, Keys.Property.property_id, property_id)
-                user_id = property_details.get(Keys.Property.property_created_by)
-                user_details = self.find_user_by_user_id(user_id, users_list)
-                property_details[Keys.Property.property_created_by_details] = user_details
+                property_created_by_user_id = property_details.get(Keys.Property.property_created_by)
+
+                property_details[Keys.Property.property_created_by_details] = self.get_user_details(
+                    property_created_by_user_id, users_list)
+
+                doc_id = property_details.get(Keys.Property.property_id)
 
                 # Is in wishlist
-                doc_id = property_details.get(Keys.Property.property_id)
-                property_details[Keys.Property.is_in_wishlist] = not (
-                        get_document(
-                            self.wishlist_collection, Keys.Wishlist.wishlist_id, f"{header_user_id}-{doc_id}"
-                        ) is None
-                )
+                property_details[Keys.Property.is_in_wishlist] = self.is_in_wish_list(header_user_id, doc_id)
 
                 # Get proposal
-                doc_id = property_details.get(Keys.Property.property_id)
                 proposal_details = get_document(self.proposal_collection, Keys.Proposals.proposal_id,
                                                 f"{header_user_id}-{doc_id}")
                 if not (proposal_details is None):
                     property_details[Keys.Property.proposal_details] = proposal_details
+
+                # Get all proposals
+                if header_user_id == property_created_by_user_id:
+                    property_details[Keys.Property.proposals] = self.get_all_proposals(users_list)
 
                 property_list = [
                     property_details
