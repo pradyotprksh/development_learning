@@ -130,5 +130,7 @@ object TR {
     var reject = Translation.getString("reject")
     var proposalAccepted = Translation.getString("proposalAccepted")
     var proposalRejected = Translation.getString("proposalRejected")
+    var proposalAcceptedResult = Translation.getString("proposalAcceptedResult")
+    var proposalRejectedResult = Translation.getString("proposalRejectedResult")
     
 }

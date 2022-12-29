@@ -29,6 +29,7 @@ interface ProposalService {
         @Query("confirm_deposit") confirmDeposit: Boolean,
         @Query("deposit_proposal") depositProposal: String,
         @Query("confirm_agreements") confirmAgreements: Boolean,
+        @Query("proposal_status") status: String?,
     ): Response<DefaultEntity<ProposalEntity>>
 
     @DELETE("/renter/property/proposals")

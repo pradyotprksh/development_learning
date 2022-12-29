@@ -6,12 +6,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.project.pradyotprakash.rental.app.composables.ConfirmationDialog
 import com.project.pradyotprakash.rental.app.localization.TR
+import com.project.pradyotprakash.rental.app.utils.ProposalStatus
 import com.project.pradyotprakash.rental.app.utils.UserType
 import com.project.pradyotprakash.rental.core.navigation.Navigator
 import com.project.pradyotprakash.rental.core.navigation.Routes
 import com.project.pradyotprakash.rental.core.response.RenterResponse
 import com.project.pradyotprakash.rental.device.services.UserLocalServices
 import com.project.pradyotprakash.rental.domain.modal.PropertyEntity
+import com.project.pradyotprakash.rental.domain.modal.ProposalEntity
 import com.project.pradyotprakash.rental.domain.usecase.AuthenticationUseCase
 import com.project.pradyotprakash.rental.domain.usecase.PropertyUseCase
 import com.project.pradyotprakash.rental.domain.usecase.ProposalUseCase
@@ -204,6 +206,7 @@ class PropertyDetailsViewModel @Inject constructor(
                         rentProposal = _proposalRent.value ?: "",
                         depositProposal = _proposalDeposit.value ?: "",
                         confirmAgreements = true,
+                        status = null,
                     )
                 }.collect {
                     when (it) {
@@ -261,6 +264,28 @@ class PropertyDetailsViewModel @Inject constructor(
     fun goToUserDetails(userId: String) {
         navigator.navigate {
             it.navigate("${Routes.UserDetails.route}${userId}")
+        }
+    }
+
+    fun updateProposalStatus(proposal: ProposalEntity, status: ProposalStatus, closeAction: () -> Unit) {
+        viewModelScope.launch {
+            proposalUseCase.updateProposal(
+                userId = proposal.user_id,
+                propertyId = proposal.property_id,
+                confirmRent = proposal.confirm_rent,
+                confirmDeposit = proposal.confirm_deposit,
+                rentProposal = proposal.rent_proposal,
+                depositProposal = proposal.deposit_proposal,
+                confirmAgreements = proposal.confirm_agreements,
+                status = status.name,
+            ).collect {
+                when (it) {
+                    is RenterResponse.Error -> updateErrorState(it.exception.message)
+                    is RenterResponse.Idle -> _loading.value = false
+                    is RenterResponse.Loading -> _loading.value = true
+                    is RenterResponse.Success -> closeAction()
+                }
+            }
         }
     }
 }

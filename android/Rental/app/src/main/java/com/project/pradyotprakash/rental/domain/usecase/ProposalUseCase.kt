@@ -40,6 +40,7 @@ class ProposalUseCase @Inject constructor(
         confirmDeposit: Boolean,
         depositProposal: String,
         confirmAgreements: Boolean,
+        status: String?,
     ) = flow {
         emit(RenterResponse.Loading)
         emit(
@@ -51,6 +52,7 @@ class ProposalUseCase @Inject constructor(
                 confirmDeposit = confirmDeposit,
                 depositProposal = depositProposal,
                 confirmAgreements = confirmAgreements,
+                status = status,
             )
         )
         emit(RenterResponse.Idle)

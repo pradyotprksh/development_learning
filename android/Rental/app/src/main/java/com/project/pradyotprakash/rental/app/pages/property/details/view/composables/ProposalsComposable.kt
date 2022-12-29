@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -13,6 +14,7 @@ import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -22,11 +24,14 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.project.pradyotprakash.rental.app.composables.UserDetailsComposable
 import com.project.pradyotprakash.rental.app.localization.TR
 import com.project.pradyotprakash.rental.app.pages.property.details.viewmodel.PropertyDetailsViewModel
+import com.project.pradyotprakash.rental.app.utils.ProposalStatus
 import com.project.pradyotprakash.rental.domain.modal.PropertyEntity
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -77,9 +82,19 @@ fun ProposalsComposable(
                     Column(
                         modifier = Modifier.padding(all = 10.dp)
                     ) {
-                        Text(text = String.format(TR.createdOnColon, proposal.proposalCreateOnTimeAgo))
+                        Text(
+                            text = String.format(
+                                TR.createdOnColon,
+                                proposal.proposalCreateOnTimeAgo
+                            )
+                        )
                         Spacer(modifier = Modifier.height(5.dp))
-                        Text(text = String.format(TR.updatedOnColon, proposal.proposalUpdatedOnTimeAgo))
+                        Text(
+                            text = String.format(
+                                TR.updatedOnColon,
+                                proposal.proposalUpdatedOnTimeAgo
+                            )
+                        )
                         Spacer(modifier = Modifier.height(15.dp))
                         Row {
                             Text(TR.rent)
@@ -107,19 +122,48 @@ fun ProposalsComposable(
                                 Text(proposal.deposit_proposal)
                         }
                         Spacer(modifier = Modifier.height(10.dp))
-                        Row(
-                            horizontalArrangement = Arrangement.SpaceBetween
-                        ) {
-                            Button(
-                                onClick = {},
+                        if (proposal.proposalStatus == ProposalStatus.None) {
+                            Row(
+                                horizontalArrangement = Arrangement.SpaceBetween
                             ) {
-                                Text(TR.accept)
+                                Button(
+                                    onClick = {
+                                        propertyDetailsViewModel.updateProposalStatus(
+                                            proposal,
+                                            ProposalStatus.Accept,
+                                            closeAction
+                                        )
+                                    },
+                                ) {
+                                    Text(TR.accept)
+                                }
+                                Spacer(modifier = Modifier.weight(1f))
+                                Button(
+                                    onClick = {
+                                        propertyDetailsViewModel.updateProposalStatus(
+                                            proposal,
+                                            ProposalStatus.Reject,
+                                            closeAction
+                                        )
+                                    },
+                                ) {
+                                    Text(TR.reject)
+                                }
                             }
-                            Spacer(modifier = Modifier.weight(1f))
-                            Button(
-                                onClick = {},
+                        } else {
+                            Card(
+                                colors = CardDefaults.cardColors(
+                                    containerColor = if (proposal.proposalStatus == ProposalStatus.Accept) Color.Green else Color.Red,
+                                )
                             ) {
-                                Text(TR.reject)
+                                Text(
+                                    if (proposal.proposalStatus == ProposalStatus.Accept) TR.proposalAcceptedResult else TR.proposalRejectedResult,
+                                    modifier = Modifier
+                                        .padding(all = 10.dp)
+                                        .fillMaxWidth(),
+                                    textAlign = TextAlign.Center,
+                                    color = Color.Black,
+                                )
                             }
                         }
                     }

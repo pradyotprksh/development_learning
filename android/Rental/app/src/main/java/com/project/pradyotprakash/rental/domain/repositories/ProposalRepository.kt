@@ -34,6 +34,7 @@ class ProposalRepository(
         confirmDeposit: Boolean,
         depositProposal: String,
         confirmAgreements: Boolean,
+        status: String? = null,
     ) = proposalService.updateProposal(
         userId = userId,
         propertyId = propertyId,
@@ -42,6 +43,7 @@ class ProposalRepository(
         confirmDeposit = confirmDeposit,
         depositProposal = depositProposal,
         confirmAgreements = confirmAgreements,
+        status = status,
     ).parseResponse(crashlytics)
 
     suspend fun deleteProposal(
