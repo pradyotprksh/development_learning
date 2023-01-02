@@ -11,6 +11,7 @@ from validate_email import validate_email
 from geopy.distance import geodesic
 import calendar
 import time
+import datetime
 import json
 
 
@@ -34,6 +35,11 @@ def get_current_timestamp():
     """Returns the current timestamp"""
     current_gmt = time.gmtime()
     return calendar.timegm(current_gmt)
+
+
+def convert_date_to_timestamp(date):
+    """Returns the given date into timestamp format"""
+    return int(time.mktime(datetime.datetime.strptime(date, "%d/%m/%Y").timetuple()))
 
 
 def convert_string_to_json(value):

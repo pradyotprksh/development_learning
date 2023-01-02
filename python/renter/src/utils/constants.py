@@ -182,6 +182,27 @@ class Keys:
         updated_on = "updated_on"
         proposal_status = "proposal_status"
 
+    class Filter:
+        """A set of keys related to filter section"""
+        property_name = "property_name"
+        owner_name = "owner_name"
+        property_address = "property_address"
+        listed_by_owner = "listed_by_owner"
+        for_rental = "for_rental"
+        property_for = "property_for"
+        furnished_type = "furnished_type"
+        property_type = "property_type"
+        number_of_bathrooms = "number_of_bathrooms"
+        where_it_is = "where_it_is"
+        yearly_deposit_start = "yearly_deposit_start"
+        yearly_deposit_end = "yearly_deposit_end"
+        monthly_rent_start = "monthly_rent_start"
+        monthly_rent_end = "monthly_rent_start"
+        property_updated_on_start = "property_updated_on_start"
+        property_updated_on_end = "property_updated_on_end"
+        distance_start = "distance_start"
+        distance_end = "distance_end"
+
 
 # Dictionary of messages
 MESSAGES_LIST = {
