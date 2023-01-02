@@ -5,14 +5,31 @@ import 'package:whatsapp/core/core.dart';
 class UserBloc extends Bloc<UserEvent, UserState> {
   UserBloc(
     this._firebaseFirestoreService,
-  ) : super(FetchingUserDetails()) {
+    this._firebaseAuthService,
+  ) : super(const FetchingUserDetails()) {
     on<FetchUserDetails>(_fetchUserDetailsEvent);
   }
 
   final FirebaseFirestoreService _firebaseFirestoreService;
+  final FirebaseAuthService _firebaseAuthService;
 
-  void _fetchUserDetailsEvent(
+  Future<void> _fetchUserDetailsEvent(
     FetchUserDetails event,
     Emitter<UserState> emit,
-  ) {}
+  ) async {
+    emit(const FetchingUserDetails());
+    var userId = _firebaseAuthService.getUserId();
+    if (userId != null) {
+      await emit.forEach(
+        _firebaseFirestoreService.getUserDetails(userId).stream,
+        onData: (userDetails) {
+          if (userDetails != null) {
+            return UserDetailsAvailable(userDetails);
+          } else {
+            return const UserDataNotAvailable();
+          }
+        },
+      );
+    }
+  }
 }

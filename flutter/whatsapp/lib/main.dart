@@ -30,6 +30,7 @@ void main() async {
         BlocProvider(
           create: (_) => UserBloc(
             FirebaseFirestoreServiceImplementation(),
+            FirebaseAuthServiceImplementation(),
           )..add(
               const FetchUserDetails(),
             ),

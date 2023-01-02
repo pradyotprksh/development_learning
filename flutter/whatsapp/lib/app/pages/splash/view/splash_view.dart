@@ -6,37 +6,45 @@ class SplashView extends StatelessWidget {
   const SplashView({super.key});
 
   @override
-  Widget build(BuildContext context) =>
-      BlocListener<AuthenticationBloc, AuthenticationState>(
-        listener: (_, authState) {
-          switch (authState.authenticationState) {
-            case AuthenticationStatus.unknown:
-              // TODO: Handle this case.
-              break;
-            case AuthenticationStatus.authenticated:
-              Future<void>.delayed(
-                const Duration(seconds: 3),
-                () {
-                  context.navigator.pushNamedAndRemoveUntil(
-                    Routes.homeRoute,
-                    (route) => false,
+  Widget build(BuildContext context) => MultiBlocListener(
+        listeners: [
+          BlocListener<AuthenticationBloc, AuthenticationState>(
+            listener: (_, authState) {
+              switch (authState.authenticationState) {
+                case AuthenticationStatus.unknown:
+                case AuthenticationStatus.authenticated:
+                  context.read<UserBloc>().add(const FetchUserDetails());
+                  break;
+                case AuthenticationStatus.unauthenticated:
+                  Future<void>.delayed(
+                    const Duration(seconds: 3),
+                    () {
+                      context.navigator.pushNamedAndRemoveUntil(
+                        Routes.introRoute,
+                        (route) => false,
+                      );
+                    },
                   );
-                },
-              );
-              break;
-            case AuthenticationStatus.unauthenticated:
-              Future<void>.delayed(
-                const Duration(seconds: 3),
-                () {
-                  context.navigator.pushNamedAndRemoveUntil(
-                    Routes.introRoute,
-                    (route) => false,
-                  );
-                },
-              );
-              break;
-          }
-        },
+                  break;
+              }
+            },
+          ),
+          BlocListener<UserBloc, UserState>(
+            listener: (_, userState) {
+              if (userState is UserDetailsAvailable) {
+                context.navigator.pushNamedAndRemoveUntil(
+                  Routes.homeRoute,
+                  (route) => false,
+                );
+              } else if (userState is UserDataNotAvailable) {
+                context.navigator.pushNamedAndRemoveUntil(
+                  Routes.userDetails,
+                  (route) => false,
+                );
+              }
+            },
+          ),
+        ],
         child: Scaffold(
           backgroundColor: context.themeData.scaffoldBackgroundColor,
           extendBody: true,

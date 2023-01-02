@@ -3,3 +3,4 @@ export 'home/home.dart';
 export 'intro/intro.dart';
 export 'personalise/personalise.dart';
 export 'splash/splash.dart';
+export 'userDetails/userDetails.dart';
