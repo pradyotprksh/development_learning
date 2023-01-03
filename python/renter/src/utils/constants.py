@@ -197,7 +197,7 @@ class Keys:
         yearly_deposit_start = "yearly_deposit_start"
         yearly_deposit_end = "yearly_deposit_end"
         monthly_rent_start = "monthly_rent_start"
-        monthly_rent_end = "monthly_rent_start"
+        monthly_rent_end = "monthly_rent_end"
         property_updated_on_start = "property_updated_on_start"
         property_updated_on_end = "property_updated_on_end"
         distance_start = "distance_start"
