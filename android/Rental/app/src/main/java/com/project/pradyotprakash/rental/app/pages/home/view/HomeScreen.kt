@@ -136,7 +136,7 @@ fun HomeScreen(homeViewModel: HomeViewModel = hiltViewModel()) {
                             if (userDetails.userType == UserType.Owner) {
                                 homeViewModel.goToAddPropertyScreen()
                             } else {
-                                TODO()
+                                homeViewModel.goToFilterPropertyScreen()
                             }
                         }
                     ) {

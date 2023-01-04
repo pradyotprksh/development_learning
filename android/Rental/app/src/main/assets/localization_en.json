@@ -125,5 +125,7 @@
   "proposalAccepted": "Your proposal was accepted by the owner. Please connect with the owner for further queries.",
   "proposalRejected": "Your proposal was rejected by the owner. Please update your proposal for the next review.",
   "proposalAcceptedResult": "You have accepted the proposal.",
-  "proposalRejectedResult": "You have rejected the proposal."
+  "proposalRejectedResult": "You have rejected the proposal.",
+  "filter": "Filter",
+  "chooseFilters": "Choose filters"
 }

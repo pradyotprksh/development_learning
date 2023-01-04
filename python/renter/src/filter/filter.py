@@ -179,13 +179,14 @@ class _Filter(Resource):
                 lambda p:
                 number_of_bathrooms is not None and int(properties_list[0].get(Keys.Property.number_of_bathrooms)) <=
                 int(number_of_bathrooms) or
-                property_name is not None and p.get(Keys.Property.property_name).find(property_name) > -1 or
+                property_name is not None and p.get(Keys.Property.property_name).lower()
+                .find(property_name.lower()) > -1 or
                 owner_name is not None and (p.get(Keys.Property.property_created_by_details)
-                                            .get(Keys.User.first_name).find(owner_name) > -1 or
+                                            .get(Keys.User.first_name).lower().find(owner_name.lower()) > -1 or
                                             p.get(Keys.Property.property_created_by_details)
-                                            .get(Keys.User.last_name).find(owner_name) > -1) or
+                                            .get(Keys.User.last_name).lower().find(owner_name.lower()) > -1) or
                 property_address is not None and p.get(Keys.Property.address)
-                .get(Keys.Property.display_name).find(property_address) > -1 or
+                .get(Keys.Property.display_name).lower().find(property_address.lower()) > -1 or
                 listed_by_owner is not None and p.get(Keys.Property.is_rental_owner) == listed_by_owner or
                 for_rental is not None and p.get(Keys.Property.is_for_rental) == for_rental or
                 property_for is not None and p.get(Keys.Property.property_for) == property_for or

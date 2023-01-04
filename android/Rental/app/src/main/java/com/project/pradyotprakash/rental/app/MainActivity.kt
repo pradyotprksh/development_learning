@@ -18,6 +18,7 @@ import androidx.navigation.navArgument
 import com.google.accompanist.testharness.TestHarness
 import com.project.pradyotprakash.rental.app.localization.Translation
 import com.project.pradyotprakash.rental.app.pages.error.view.ErrorScreen
+import com.project.pradyotprakash.rental.app.pages.filter.view.FilterScreen
 import com.project.pradyotprakash.rental.app.pages.home.view.HomeScreen
 import com.project.pradyotprakash.rental.app.pages.information.view.InformationScreen
 import com.project.pradyotprakash.rental.app.pages.options.view.OptionsView
@@ -80,6 +81,7 @@ class MainActivity : ComponentActivity() {
                             composable(Routes.Option.path()) { OptionsView() }
                             composable(Routes.Welcome.path()) { WelcomeScreen() }
                             composable(Routes.Wishlist.path()) { WishlistScreen() }
+                            composable(Routes.Filters.path()) { FilterScreen() }
                             // TODO: Use default value for the arguments
                             composable(
                                 Routes.Search.path(),

@@ -227,4 +227,10 @@ class HomeViewModel @Inject constructor(
             it.navigate("${Routes.Search.route}${true}/${UserType.Unknown.name}")
         }
     }
+
+    fun goToFilterPropertyScreen() {
+        navigator.navigate {
+            it.navigate(Routes.Filters.route)
+        }
+    }
 }

@@ -56,6 +56,8 @@ class _Search(Resource):
                 message=DEFAULT_INVALID_REQUEST_PARAMS
             )
 
+        search_text = search_text.lower()
+
         is_valid_user_type = user_type in USER_TYPE
 
         # Get all property details
@@ -70,8 +72,8 @@ class _Search(Resource):
             users_list.append(doc)
 
         property_search_result = list(filter(
-            lambda p: p.get(Keys.Property.property_name).find(search_text) > -1
-                      or p.get(Keys.Property.address).get(Keys.Property.display_name).find(search_text) > -1
+            lambda p: p.get(Keys.Property.property_name).lower().find(search_text) > -1
+                      or p.get(Keys.Property.address).get(Keys.Property.display_name).lower().find(search_text) > -1
                       or p.get(Keys.Property.monthly_rent).find(search_text) > -1
                       or p.get(Keys.Property.yearly_deposit).find(search_text) > -1,
             property_list
@@ -79,13 +81,13 @@ class _Search(Resource):
 
         if not is_valid_user_type:
             user_search_result = list(filter(
-                lambda u: u.get(Keys.User.email_address).find(search_text) > -1
-                          or u.get(Keys.User.first_name).find(search_text) > -1
-                          or u.get(Keys.User.last_name).find(search_text) > -1
-                          or u.get(Keys.User.permanent_address).get(Keys.Property.display_name).find(search_text) > -1
+                lambda u: u.get(Keys.User.email_address).lower().find(search_text) > -1
+                          or u.get(Keys.User.first_name).lower().find(search_text) > -1
+                          or u.get(Keys.User.last_name).lower().find(search_text) > -1
+                          or u.get(Keys.User.permanent_address).get(Keys.Property.display_name).lower().find(search_text) > -1
                           or u.get(Keys.User.phone_number).find(search_text) > -1
-                          or u.get(Keys.User.profession).find(search_text) > -1
-                          or u.get(Keys.User.user_type).find(search_text) > -1,
+                          or u.get(Keys.User.profession).lower().find(search_text) > -1
+                          or u.get(Keys.User.user_type).lower().find(search_text) > -1,
                 users_list
             ))
         else:
