@@ -81,6 +81,7 @@ fun FilterScreen(
                     }
                 ) {
                     if (bottomSheetScaffoldState.bottomSheetState.isCollapsed) {
+                        filterViewModel.clearFilterSheetState()
                         Icon(
                             imageVector = Icons.Default.Menu,
                             contentDescription = Icons.Default.Menu.name
