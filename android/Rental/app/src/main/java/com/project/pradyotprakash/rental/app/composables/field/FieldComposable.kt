@@ -55,6 +55,7 @@ import kotlinx.coroutines.launch
 fun FieldComposable(
     fields: State<List<FieldStates>>,
     onValueChange: (Int, String) -> Unit = { _, _ -> },
+    showAppBar: Boolean = true,
     appBarText: @Composable () -> Unit = {},
     appBarNavigationIcon: ImageVector? = null,
     appBarNavigationIconAction: () -> Unit = {},
@@ -83,22 +84,24 @@ fun FieldComposable(
         frontLayerBackgroundColor = MaterialTheme.colorScheme.background,
         gesturesEnabled = false,
         appBar = {
-            TopAppBar(
-                title = appBarText,
-                navigationIcon = {
-                    appBarNavigationIcon?.let {
-                        IconButton(
-                            onClick = appBarNavigationIconAction
-                        ) {
-                            Icon(
-                                imageVector = appBarNavigationIcon,
-                                contentDescription = appBarNavigationIcon.name,
-                            )
+            if (showAppBar) {
+                TopAppBar(
+                    title = appBarText,
+                    navigationIcon = {
+                        appBarNavigationIcon?.let {
+                            IconButton(
+                                onClick = appBarNavigationIconAction
+                            ) {
+                                Icon(
+                                    imageVector = appBarNavigationIcon,
+                                    contentDescription = appBarNavigationIcon.name,
+                                )
+                            }
                         }
-                    }
-                },
-                colors = TopAppBarDefaults.smallTopAppBarColors()
-            )
+                    },
+                    colors = TopAppBarDefaults.smallTopAppBarColors()
+                )
+            }
         },
         backLayerContent = {
             Box {

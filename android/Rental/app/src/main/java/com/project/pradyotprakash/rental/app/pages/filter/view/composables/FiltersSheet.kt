@@ -26,6 +26,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.project.pradyotprakash.rental.app.composables.field.FieldComposable
 import com.project.pradyotprakash.rental.app.localization.TR
 import com.project.pradyotprakash.rental.app.pages.filter.utils.FilterOptions
 import com.project.pradyotprakash.rental.app.pages.filter.viewmodel.FilterViewModel
@@ -36,6 +37,7 @@ fun FiltersSheet(
     filterViewModel: FilterViewModel = hiltViewModel(),
 ) {
     val selectedOption = filterViewModel.optionSelected.observeAsState(FilterOptions.Text)
+    val basicFields = filterViewModel.basicFields.observeAsState(emptyList())
 
     val configuration = LocalConfiguration.current
     val bottomSheetHeight = (configuration.screenHeightDp * 0.65).dp
@@ -99,7 +101,21 @@ fun FiltersSheet(
                             bottom = padding.calculateBottomPadding(),
                             top = padding.calculateTopPadding(),
                         )
-                ) {}
+                ) {
+                    when (selectedOption.value) {
+                        FilterOptions.Text -> {}
+                        FilterOptions.Basic -> {
+                            FieldComposable(
+                                fields = basicFields,
+                                showAppBar = false,
+                                onValueChange = filterViewModel::updateBasicFieldState,
+                            )
+                        }
+                        FilterOptions.Money -> {}
+                        FilterOptions.Timeline -> {}
+                        FilterOptions.Location -> {}
+                    }
+                }
             }
         }
     }

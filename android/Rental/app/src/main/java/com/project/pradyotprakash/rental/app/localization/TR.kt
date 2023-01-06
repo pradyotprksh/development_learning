@@ -134,5 +134,6 @@ object TR {
     var proposalRejectedResult = Translation.getString("proposalRejectedResult")
     var filter = Translation.getString("filter")
     var chooseFilters = Translation.getString("chooseFilters")
+    var isListedByOwner = Translation.getString("isListedByOwner")
     
 }
