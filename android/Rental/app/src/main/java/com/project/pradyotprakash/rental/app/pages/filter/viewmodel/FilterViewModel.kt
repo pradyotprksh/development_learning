@@ -9,6 +9,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.project.pradyotprakash.rental.app.localization.TR
 import com.project.pradyotprakash.rental.app.pages.filter.utils.FilterOptions
+import com.project.pradyotprakash.rental.app.utils.DateTransformation
 import com.project.pradyotprakash.rental.core.models.ComposeType
 import com.project.pradyotprakash.rental.core.models.FieldId
 import com.project.pradyotprakash.rental.core.models.FieldStates
@@ -35,6 +36,15 @@ class FilterViewModel @Inject constructor(
     private val _textFields = MutableLiveData(emptyList<FieldStates>())
     val textFields: LiveData<List<FieldStates>>
         get() = _textFields
+    private val _moneyFields = MutableLiveData(emptyList<FieldStates>())
+    val moneyFields: LiveData<List<FieldStates>>
+        get() = _moneyFields
+    private val _timelineFields = MutableLiveData(emptyList<FieldStates>())
+    val timelineFields: LiveData<List<FieldStates>>
+        get() = _timelineFields
+    private val _locationFields = MutableLiveData(emptyList<FieldStates>())
+    val locationFields: LiveData<List<FieldStates>>
+        get() = _locationFields
 
     init {
         setupItems()
@@ -132,6 +142,7 @@ class FilterViewModel @Inject constructor(
                 ),
             ),
         )
+
         _textFields.value = listOf(
             FieldStates(
                 id = FieldId.PropertyName.id,
@@ -163,6 +174,121 @@ class FilterViewModel @Inject constructor(
                     capitalization = KeyboardCapitalization.Words,
                     autoCorrect = false,
                     keyboardType = KeyboardType.Text,
+                    imeAction = ImeAction.Done,
+                ),
+            ),
+        )
+
+        _moneyFields.value = listOf(
+            FieldStates(
+                id = FieldId.DepositRangeLabel.id,
+                composeType = ComposeType.Label,
+                label = TR.depositRange,
+            ),
+            FieldStates(
+                id = FieldId.DepositRangeStart.id,
+                composeType = ComposeType.OutlinedTextField,
+                label = TR.depositStart,
+                keyboardOptions = KeyboardOptions(
+                    autoCorrect = false,
+                    keyboardType = KeyboardType.Number,
+                    imeAction = ImeAction.Next,
+                ),
+            ),
+            FieldStates(
+                id = FieldId.DepositRangeEnd.id,
+                composeType = ComposeType.OutlinedTextField,
+                label = TR.depositEnd,
+                keyboardOptions = KeyboardOptions(
+                    autoCorrect = false,
+                    keyboardType = KeyboardType.Number,
+                    imeAction = ImeAction.Done,
+                ),
+            ),
+            FieldStates(
+                id = FieldId.Divider.id,
+                composeType = ComposeType.Divider,
+            ),
+            FieldStates(
+                id = FieldId.RentRangeLabel.id,
+                composeType = ComposeType.Label,
+                label = TR.rentRange,
+            ),
+            FieldStates(
+                id = FieldId.RentRangeStart.id,
+                composeType = ComposeType.OutlinedTextField,
+                label = TR.rentStart,
+                keyboardOptions = KeyboardOptions(
+                    autoCorrect = false,
+                    keyboardType = KeyboardType.Number,
+                    imeAction = ImeAction.Next,
+                ),
+            ),
+            FieldStates(
+                id = FieldId.RentRangeEnd.id,
+                composeType = ComposeType.OutlinedTextField,
+                label = TR.rentEnd,
+                keyboardOptions = KeyboardOptions(
+                    autoCorrect = false,
+                    keyboardType = KeyboardType.Number,
+                    imeAction = ImeAction.Done,
+                ),
+            ),
+        )
+
+        _timelineFields.value = listOf(
+            FieldStates(
+                id = FieldId.UpdatedOnLabel.id,
+                composeType = ComposeType.Label,
+                label = TR.updatedOnRange,
+            ),
+            FieldStates(
+                id = FieldId.UpdatedOnRangeStart.id,
+                composeType = ComposeType.OutlinedTextField,
+                label = TR.updatedOnRangeStart,
+                keyboardOptions = KeyboardOptions(
+                    autoCorrect = false,
+                    keyboardType = KeyboardType.Number,
+                    imeAction = ImeAction.Next,
+                ),
+                visualTransformation = DateTransformation(),
+            ),
+            FieldStates(
+                id = FieldId.UpdatedOnRangeEnd.id,
+                composeType = ComposeType.OutlinedTextField,
+                label = TR.updatedOnRangeEnd,
+                keyboardOptions = KeyboardOptions(
+                    autoCorrect = false,
+                    keyboardType = KeyboardType.Number,
+                    imeAction = ImeAction.Done,
+                ),
+                visualTransformation = DateTransformation(),
+            ),
+        )
+
+        _locationFields.value = listOf(
+            FieldStates(
+                id = FieldId.DistanceRangeLabel.id,
+                composeType = ComposeType.Label,
+                label = TR.distanceRange,
+            ),
+            FieldStates(
+                id = FieldId.DistanceRangeStart.id,
+                composeType = ComposeType.OutlinedTextField,
+                label = TR.distanceRangeStart,
+                keyboardOptions = KeyboardOptions(
+                    autoCorrect = false,
+                    keyboardType = KeyboardType.Number,
+                    imeAction = ImeAction.Next,
+                ),
+            ),
+            FieldStates(
+                id = FieldId.DistanceRangeEnd.id,
+                composeType = ComposeType.OutlinedTextField,
+                label = TR.distanceRangeEnd,
+                keyboardOptions = KeyboardOptions(
+                    autoCorrect = false,
+                    keyboardType = KeyboardType.Number,
                     imeAction = ImeAction.Done,
                 ),
             ),
@@ -205,9 +331,30 @@ class FilterViewModel @Inject constructor(
                     }
                 }
             }
-            FilterOptions.Money -> TODO()
-            FilterOptions.Timeline -> TODO()
-            FilterOptions.Location -> TODO()
+            FilterOptions.Money -> {
+                _moneyFields.value?.get(index)?.let { field ->
+                    field.value.value = value
+                    field.isSelected.value?.let {
+                        field.isSelected.value = !it
+                    }
+                }
+            }
+            FilterOptions.Timeline -> {
+                _timelineFields.value?.get(index)?.let { field ->
+                    field.value.value = value
+                    field.isSelected.value?.let {
+                        field.isSelected.value = !it
+                    }
+                }
+            }
+            FilterOptions.Location -> {
+                _locationFields.value?.get(index)?.let { field ->
+                    field.value.value = value
+                    field.isSelected.value?.let {
+                        field.isSelected.value = !it
+                    }
+                }
+            }
         }
     }
 }

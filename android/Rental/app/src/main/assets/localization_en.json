@@ -129,5 +129,17 @@
   "filter": "Filter",
   "chooseFilters": "Choose filters",
   "isListedByOwner": "Is listed by owner?",
-  "ownerName": "Owner name"
+  "ownerName": "Owner name",
+  "depositRange": "Select the yearly deposit range",
+  "depositStart": "Deposit starts from",
+  "depositEnd": "Deposit ends at",
+  "rentRange": "Select the monthly rent range",
+  "rentStart": "Rent starts from",
+  "rentEnd": "Rent ends at",
+  "updatedOnRange": "Select the range of date the property was updated on",
+  "updatedOnRangeStart": "Updated from (dd/mm/yyyy)",
+  "updatedOnRangeEnd": "Updated to (dd/mm/yyyy)",
+  "distanceRange": "Select the distance range",
+  "distanceRangeStart": "Distance from",
+  "distanceRangeEnd": "Distance to"
 }

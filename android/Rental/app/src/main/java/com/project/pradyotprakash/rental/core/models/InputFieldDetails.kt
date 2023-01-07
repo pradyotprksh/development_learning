@@ -44,7 +44,20 @@ enum class FieldId(val id: String) {
     UserType("user_type"),
     Owner("Owner"),
     Renter("Renter"),
-    OwnerName("OwnerName")
+    OwnerName("OwnerName"),
+    DepositRangeLabel("DepositRangeLabel"),
+    DepositRangeStart("DepositRangeStart"),
+    DepositRangeEnd("DepositRangeEnd"),
+    RentRangeLabel("RentRangeLabel"),
+    RentRangeStart("RentRangeStart"),
+    RentRangeEnd("RentRangeEnd"),
+    Divider("Divider"),
+    UpdatedOnLabel("UpdatedOnLabel"),
+    UpdatedOnRangeStart("UpdatedOnRangeStart"),
+    UpdatedOnRangeEnd("UpdatedOnRangeEnd"),
+    DistanceRangeLabel("DistanceRangeLabel"),
+    DistanceRangeStart("DistanceRangeStart"),
+    DistanceRangeEnd("DistanceRangeEnd"),
 }
 
 enum class InputType {
@@ -64,6 +77,8 @@ enum class ComposeType {
     SingleImagePicker,
     ImagePreview,
     LocationPicker,
+    Divider,
+    Label,
 }
 
 data class FieldStates(

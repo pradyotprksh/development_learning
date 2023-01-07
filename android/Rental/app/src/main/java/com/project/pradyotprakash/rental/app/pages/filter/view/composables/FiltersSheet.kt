@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -39,6 +40,9 @@ fun FiltersSheet(
     val selectedOption = filterViewModel.optionSelected.observeAsState(FilterOptions.Text)
     val basicFields = filterViewModel.basicFields.observeAsState(emptyList())
     val textFields = filterViewModel.textFields.observeAsState(emptyList())
+    val moneyFields = filterViewModel.moneyFields.observeAsState(emptyList())
+    val timelineFields = filterViewModel.timelineFields.observeAsState(emptyList())
+    val locationFields = filterViewModel.locationFields.observeAsState(emptyList())
 
     val configuration = LocalConfiguration.current
     val bottomSheetHeight = (configuration.screenHeightDp * 0.65).dp
@@ -53,6 +57,13 @@ fun FiltersSheet(
                 TopAppBar(
                     colors = TopAppBarDefaults.smallTopAppBarColors(),
                     title = { Text(text = TR.chooseFilters) },
+                    actions = {
+                        Button(
+                            onClick = {}
+                        ) {
+                            Text("Apply")
+                        }
+                    }
                 )
             },
         ) { padding ->
@@ -109,7 +120,11 @@ fun FiltersSheet(
                                 fields = textFields,
                                 showAppBar = false,
                                 onValueChange = { index, value ->
-                                    filterViewModel.updateBasicFieldState(index, value, FilterOptions.Text)
+                                    filterViewModel.updateBasicFieldState(
+                                        index,
+                                        value,
+                                        FilterOptions.Text
+                                    )
                                 },
                             )
                         }
@@ -118,13 +133,53 @@ fun FiltersSheet(
                                 fields = basicFields,
                                 showAppBar = false,
                                 onValueChange = { index, value ->
-                                    filterViewModel.updateBasicFieldState(index, value, FilterOptions.Basic)
+                                    filterViewModel.updateBasicFieldState(
+                                        index,
+                                        value,
+                                        FilterOptions.Basic
+                                    )
                                 },
                             )
                         }
-                        FilterOptions.Money -> {}
-                        FilterOptions.Timeline -> {}
-                        FilterOptions.Location -> {}
+                        FilterOptions.Money -> {
+                            FieldComposable(
+                                fields = moneyFields,
+                                showAppBar = false,
+                                onValueChange = { index, value ->
+                                    filterViewModel.updateBasicFieldState(
+                                        index,
+                                        value,
+                                        FilterOptions.Money
+                                    )
+                                },
+                            )
+                        }
+                        FilterOptions.Timeline -> {
+                            FieldComposable(
+                                fields = timelineFields,
+                                showAppBar = false,
+                                onValueChange = { index, value ->
+                                    filterViewModel.updateBasicFieldState(
+                                        index,
+                                        value,
+                                        FilterOptions.Timeline
+                                    )
+                                },
+                            )
+                        }
+                        FilterOptions.Location -> {
+                            FieldComposable(
+                                fields = locationFields,
+                                showAppBar = false,
+                                onValueChange = { index, value ->
+                                    filterViewModel.updateBasicFieldState(
+                                        index,
+                                        value,
+                                        FilterOptions.Location
+                                    )
+                                },
+                            )
+                        }
                     }
                 }
             }

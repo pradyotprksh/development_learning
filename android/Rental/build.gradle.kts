@@ -4,7 +4,7 @@ plugins {
     id("org.jetbrains.kotlin.android") version "1.7.0" apply false
 }
 
-val baseUrl by rootProject.extra { "http://192.168.105.203:5000/" }
+val baseUrl by rootProject.extra { "http://192.168.1.34:5000/" }
 
 buildscript {
     repositories {

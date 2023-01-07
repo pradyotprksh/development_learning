@@ -136,5 +136,17 @@ object TR {
     var chooseFilters = Translation.getString("chooseFilters")
     var isListedByOwner = Translation.getString("isListedByOwner")
     var ownerName = Translation.getString("ownerName")
+    var depositRange = Translation.getString("depositRange")
+    var depositStart = Translation.getString("depositStart")
+    var depositEnd = Translation.getString("depositEnd")
+    var rentRange = Translation.getString("rentRange")
+    var rentStart = Translation.getString("rentStart")
+    var rentEnd = Translation.getString("rentEnd")
+    var updatedOnRange = Translation.getString("updatedOnRange")
+    var updatedOnRangeStart = Translation.getString("updatedOnRangeStart")
+    var updatedOnRangeEnd = Translation.getString("updatedOnRangeEnd")
+    var distanceRange = Translation.getString("distanceRange")
+    var distanceRangeStart = Translation.getString("distanceRangeStart")
+    var distanceRangeEnd = Translation.getString("distanceRangeEnd")
     
 }
