@@ -270,7 +270,7 @@ class InformationViewModel @Inject constructor(
                         permanentAddress!!,
                         emailAddress!!,
                         userType!!,
-                        profilePicUrl!!,
+                        profilePicUrl,
                     )
                 }
             )
