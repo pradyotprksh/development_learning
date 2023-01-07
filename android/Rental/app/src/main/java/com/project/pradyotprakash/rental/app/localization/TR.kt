@@ -135,5 +135,6 @@ object TR {
     var filter = Translation.getString("filter")
     var chooseFilters = Translation.getString("chooseFilters")
     var isListedByOwner = Translation.getString("isListedByOwner")
+    var ownerName = Translation.getString("ownerName")
     
 }

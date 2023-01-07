@@ -38,6 +38,7 @@ fun FiltersSheet(
 ) {
     val selectedOption = filterViewModel.optionSelected.observeAsState(FilterOptions.Text)
     val basicFields = filterViewModel.basicFields.observeAsState(emptyList())
+    val textFields = filterViewModel.textFields.observeAsState(emptyList())
 
     val configuration = LocalConfiguration.current
     val bottomSheetHeight = (configuration.screenHeightDp * 0.65).dp
@@ -103,12 +104,22 @@ fun FiltersSheet(
                         )
                 ) {
                     when (selectedOption.value) {
-                        FilterOptions.Text -> {}
+                        FilterOptions.Text -> {
+                            FieldComposable(
+                                fields = textFields,
+                                showAppBar = false,
+                                onValueChange = { index, value ->
+                                    filterViewModel.updateBasicFieldState(index, value, FilterOptions.Text)
+                                },
+                            )
+                        }
                         FilterOptions.Basic -> {
                             FieldComposable(
                                 fields = basicFields,
                                 showAppBar = false,
-                                onValueChange = filterViewModel::updateBasicFieldState,
+                                onValueChange = { index, value ->
+                                    filterViewModel.updateBasicFieldState(index, value, FilterOptions.Basic)
+                                },
                             )
                         }
                         FilterOptions.Money -> {}

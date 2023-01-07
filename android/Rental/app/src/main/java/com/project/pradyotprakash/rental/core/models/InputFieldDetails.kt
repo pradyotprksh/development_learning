@@ -43,7 +43,8 @@ enum class FieldId(val id: String) {
     UserImagePicker("user_image_picker"),
     UserType("user_type"),
     Owner("Owner"),
-    Renter("Renter")
+    Renter("Renter"),
+    OwnerName("OwnerName")
 }
 
 enum class InputType {

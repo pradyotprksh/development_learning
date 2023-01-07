@@ -128,5 +128,6 @@
   "proposalRejectedResult": "You have rejected the proposal.",
   "filter": "Filter",
   "chooseFilters": "Choose filters",
-  "isListedByOwner": "Is listed by owner?"
+  "isListedByOwner": "Is listed by owner?",
+  "ownerName": "Owner name"
 }

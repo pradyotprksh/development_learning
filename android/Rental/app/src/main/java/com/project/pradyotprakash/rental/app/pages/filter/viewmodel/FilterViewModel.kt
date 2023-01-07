@@ -1,5 +1,9 @@
 package com.project.pradyotprakash.rental.app.pages.filter.viewmodel
 
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardCapitalization
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -28,6 +32,9 @@ class FilterViewModel @Inject constructor(
     private val _basicFields = MutableLiveData(emptyList<FieldStates>())
     val basicFields: LiveData<List<FieldStates>>
         get() = _basicFields
+    private val _textFields = MutableLiveData(emptyList<FieldStates>())
+    val textFields: LiveData<List<FieldStates>>
+        get() = _textFields
 
     init {
         setupItems()
@@ -125,6 +132,41 @@ class FilterViewModel @Inject constructor(
                 ),
             ),
         )
+        _textFields.value = listOf(
+            FieldStates(
+                id = FieldId.PropertyName.id,
+                composeType = ComposeType.OutlinedTextField,
+                label = TR.propertyName,
+                keyboardOptions = KeyboardOptions(
+                    capitalization = KeyboardCapitalization.Words,
+                    autoCorrect = false,
+                    keyboardType = KeyboardType.Text,
+                    imeAction = ImeAction.Next,
+                ),
+            ),
+            FieldStates(
+                id = FieldId.OwnerName.id,
+                composeType = ComposeType.OutlinedTextField,
+                label = TR.ownerName,
+                keyboardOptions = KeyboardOptions(
+                    capitalization = KeyboardCapitalization.Words,
+                    autoCorrect = false,
+                    keyboardType = KeyboardType.Text,
+                    imeAction = ImeAction.Next,
+                ),
+            ),
+            FieldStates(
+                id = FieldId.Address.id,
+                composeType = ComposeType.OutlinedTextField,
+                label = TR.address,
+                keyboardOptions = KeyboardOptions(
+                    capitalization = KeyboardCapitalization.Words,
+                    autoCorrect = false,
+                    keyboardType = KeyboardType.Text,
+                    imeAction = ImeAction.Done,
+                ),
+            ),
+        )
     }
 
     /**
@@ -145,12 +187,27 @@ class FilterViewModel @Inject constructor(
         _optionSelected.value = FilterOptions.values().first()
     }
 
-    fun updateBasicFieldState(index: Int, value: String = "") {
-        _basicFields.value?.get(index)?.let { field ->
-            field.value.value = value
-            field.isSelected.value?.let {
-                field.isSelected.value = !it
+    fun updateBasicFieldState(index: Int, value: String = "", option: FilterOptions) {
+        when (option) {
+            FilterOptions.Text -> {
+                _textFields.value?.get(index)?.let { field ->
+                    field.value.value = value
+                    field.isSelected.value?.let {
+                        field.isSelected.value = !it
+                    }
+                }
             }
+            FilterOptions.Basic -> {
+                _basicFields.value?.get(index)?.let { field ->
+                    field.value.value = value
+                    field.isSelected.value?.let {
+                        field.isSelected.value = !it
+                    }
+                }
+            }
+            FilterOptions.Money -> TODO()
+            FilterOptions.Timeline -> TODO()
+            FilterOptions.Location -> TODO()
         }
     }
 }
