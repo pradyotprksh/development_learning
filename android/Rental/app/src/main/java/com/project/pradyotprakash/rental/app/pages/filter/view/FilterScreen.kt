@@ -2,6 +2,7 @@ package com.project.pradyotprakash.rental.app.pages.filter.view
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.BottomSheetScaffold
 import androidx.compose.material.BottomSheetState
 import androidx.compose.material.BottomSheetValue
@@ -26,6 +27,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.project.pradyotprakash.rental.app.composables.PageStateComposable
+import com.project.pradyotprakash.rental.app.composables.PropertyDetailsComposable
 import com.project.pradyotprakash.rental.app.localization.TR
 import com.project.pradyotprakash.rental.app.pages.filter.view.composables.FiltersSheet
 import com.project.pradyotprakash.rental.app.pages.filter.viewmodel.FilterViewModel
@@ -38,11 +40,21 @@ fun FilterScreen(
 ) {
     val loading = filterViewModel.loading.observeAsState(false)
     val error = filterViewModel.error.observeAsState("")
+    val properties = filterViewModel.properties.observeAsState(emptyList())
 
     val bottomSheetScaffoldState = rememberBottomSheetScaffoldState(
         bottomSheetState = BottomSheetState(BottomSheetValue.Collapsed)
     )
     val coroutineScope = rememberCoroutineScope()
+    val filterSheetState = {
+        coroutineScope.launch {
+            if (bottomSheetScaffoldState.bottomSheetState.isCollapsed) {
+                bottomSheetScaffoldState.bottomSheetState.expand()
+            } else {
+                bottomSheetScaffoldState.bottomSheetState.collapse()
+            }
+        }
+    }
 
     PageStateComposable(
         isLoading = loading.value,
@@ -66,18 +78,17 @@ fun FilterScreen(
                 )
             },
             sheetContent = {
-                FiltersSheet()
+                FiltersSheet(
+                    closeAction = {
+                        filterSheetState()
+                        filterViewModel.setFilters()
+                    }
+                )
             },
             floatingActionButton = {
                 FloatingActionButton(
                     onClick = {
-                        coroutineScope.launch {
-                            if (bottomSheetScaffoldState.bottomSheetState.isCollapsed) {
-                                bottomSheetScaffoldState.bottomSheetState.expand()
-                            } else {
-                                bottomSheetScaffoldState.bottomSheetState.collapse()
-                            }
-                        }
+                        filterSheetState()
                     }
                 ) {
                     if (bottomSheetScaffoldState.bottomSheetState.isCollapsed) {
@@ -103,7 +114,11 @@ fun FilterScreen(
                         top = padding.calculateTopPadding(),
                     )
                 ) {
-
+                    items(properties.value) { property ->
+                        PropertyDetailsComposable(property = property) {
+                            filterViewModel.navigateToPropertyDetails(it)
+                        }
+                    }
                 }
             }
         }

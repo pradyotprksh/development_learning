@@ -4,6 +4,7 @@ import com.project.pradyotprakash.rental.core.services.CrashlyticsService
 import com.project.pradyotprakash.rental.core.services.FirebaseAuthenticationService
 import com.project.pradyotprakash.rental.data.services.AuthenticationService
 import com.project.pradyotprakash.rental.data.services.BasicService
+import com.project.pradyotprakash.rental.data.services.FilterService
 import com.project.pradyotprakash.rental.data.services.LocationService
 import com.project.pradyotprakash.rental.data.services.PropertyService
 import com.project.pradyotprakash.rental.data.services.ProposalService
@@ -11,6 +12,7 @@ import com.project.pradyotprakash.rental.data.services.SearchService
 import com.project.pradyotprakash.rental.data.services.WishlistService
 import com.project.pradyotprakash.rental.domain.repositories.AuthenticationRepository
 import com.project.pradyotprakash.rental.domain.repositories.BasicRepository
+import com.project.pradyotprakash.rental.domain.repositories.FilterRepository
 import com.project.pradyotprakash.rental.domain.repositories.PropertyRepository
 import com.project.pradyotprakash.rental.domain.repositories.ProposalRepository
 import com.project.pradyotprakash.rental.domain.repositories.SearchRepository
@@ -74,4 +76,11 @@ object Repositories {
         locationService: LocationService,
         crashlyticsService: CrashlyticsService
     ) = SearchRepository(searchService, locationService, crashlyticsService)
+
+    @Singleton
+    @Provides
+    fun providesFilterRepository(
+        filterService: FilterService,
+        crashlyticsService: CrashlyticsService
+    ) = FilterRepository(filterService, crashlyticsService)
 }

@@ -148,5 +148,7 @@ object TR {
     var distanceRange = Translation.getString("distanceRange")
     var distanceRangeStart = Translation.getString("distanceRangeStart")
     var distanceRangeEnd = Translation.getString("distanceRangeEnd")
+    var apply = Translation.getString("apply")
+    var clear = Translation.getString("clear")
     
 }

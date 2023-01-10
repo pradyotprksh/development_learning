@@ -177,7 +177,7 @@ class _Filter(Resource):
         filtered_properties_list = list(
             filter(
                 lambda p:
-                number_of_bathrooms is not None and int(properties_list[0].get(Keys.Property.number_of_bathrooms)) <=
+                number_of_bathrooms is not None and int(p.get(Keys.Property.number_of_bathrooms)) <=
                 int(number_of_bathrooms) or
                 property_name is not None and p.get(Keys.Property.property_name).lower()
                 .find(property_name.lower()) > -1 or
@@ -197,6 +197,7 @@ class _Filter(Resource):
                 monthly_rent_range is not None and int(p.get(Keys.Property.monthly_rent)) in monthly_rent_range or
                 property_updated_on_range is not None and int(
                     p.get(Keys.Property.property_updated_on)) in property_updated_on_range or
+                distance_range is not None and
                 p.get(Keys.Property.distance) is not None and p.get(Keys.Property.distance) in distance_range,
                 properties_list
             )

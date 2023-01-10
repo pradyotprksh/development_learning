@@ -141,5 +141,7 @@
   "updatedOnRangeEnd": "Updated to (dd/mm/yyyy)",
   "distanceRange": "Select the distance range",
   "distanceRangeStart": "Distance from",
-  "distanceRangeEnd": "Distance to"
+  "distanceRangeEnd": "Distance to",
+  "apply": "Apply",
+  "clear": "Clear"
 }

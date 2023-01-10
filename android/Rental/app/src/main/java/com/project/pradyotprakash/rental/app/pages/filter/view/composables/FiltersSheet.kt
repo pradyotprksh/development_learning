@@ -36,6 +36,7 @@ import com.project.pradyotprakash.rental.app.pages.filter.viewmodel.FilterViewMo
 @Composable
 fun FiltersSheet(
     filterViewModel: FilterViewModel = hiltViewModel(),
+    closeAction: () -> Unit = {},
 ) {
     val selectedOption = filterViewModel.optionSelected.observeAsState(FilterOptions.Text)
     val basicFields = filterViewModel.basicFields.observeAsState(emptyList())
@@ -59,9 +60,16 @@ fun FiltersSheet(
                     title = { Text(text = TR.chooseFilters) },
                     actions = {
                         Button(
-                            onClick = {}
+                            onClick = {
+                                filterViewModel.clearFilters()
+                            }
                         ) {
-                            Text("Apply")
+                            Text(TR.clear)
+                        }
+                        Button(
+                            onClick = closeAction
+                        ) {
+                            Text(TR.apply)
                         }
                     }
                 )

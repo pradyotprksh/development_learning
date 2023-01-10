@@ -7,6 +7,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.project.pradyotprakash.rental.app.localization.TR
 import com.project.pradyotprakash.rental.app.pages.filter.utils.FilterOptions
 import com.project.pradyotprakash.rental.app.utils.DateTransformation
@@ -14,12 +15,20 @@ import com.project.pradyotprakash.rental.core.models.ComposeType
 import com.project.pradyotprakash.rental.core.models.FieldId
 import com.project.pradyotprakash.rental.core.models.FieldStates
 import com.project.pradyotprakash.rental.core.navigation.Navigator
+import com.project.pradyotprakash.rental.core.navigation.Routes
+import com.project.pradyotprakash.rental.core.response.RenterResponse
+import com.project.pradyotprakash.rental.device.services.UserLocalServices
+import com.project.pradyotprakash.rental.domain.modal.PropertyEntity
+import com.project.pradyotprakash.rental.domain.usecase.FilterUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class FilterViewModel @Inject constructor(
     private val navigator: Navigator,
+    private val localServices: UserLocalServices,
+    private val filterUseCase: FilterUseCase,
 ) : ViewModel() {
     private val _loading = MutableLiveData(false)
     val loading: LiveData<Boolean>
@@ -45,13 +54,79 @@ class FilterViewModel @Inject constructor(
     private val _locationFields = MutableLiveData(emptyList<FieldStates>())
     val locationFields: LiveData<List<FieldStates>>
         get() = _locationFields
+    private val _properties = MutableLiveData<List<PropertyEntity>>()
+    val properties: LiveData<List<PropertyEntity>>
+        get() = _properties
+
+    private val savedLatitude: String
+        get() = localServices.currentLocation.first
+    private val savedLongitude: String
+        get() = localServices.currentLocation.second
 
     init {
         setupItems()
     }
 
     private fun setupItems() {
+        _textFields.value = listOf(
+            FieldStates(
+                id = FieldId.PropertyName.id,
+                composeType = ComposeType.OutlinedTextField,
+                label = TR.propertyName,
+                keyboardOptions = KeyboardOptions(
+                    capitalization = KeyboardCapitalization.Words,
+                    autoCorrect = false,
+                    keyboardType = KeyboardType.Text,
+                    imeAction = ImeAction.Next,
+                ),
+            ),
+            FieldStates(
+                id = FieldId.OwnerName.id,
+                composeType = ComposeType.OutlinedTextField,
+                label = TR.ownerName,
+                keyboardOptions = KeyboardOptions(
+                    capitalization = KeyboardCapitalization.Words,
+                    autoCorrect = false,
+                    keyboardType = KeyboardType.Text,
+                    imeAction = ImeAction.Next,
+                ),
+            ),
+            FieldStates(
+                id = FieldId.Address.id,
+                composeType = ComposeType.OutlinedTextField,
+                label = TR.address,
+                keyboardOptions = KeyboardOptions(
+                    capitalization = KeyboardCapitalization.Words,
+                    autoCorrect = false,
+                    keyboardType = KeyboardType.Text,
+                    imeAction = ImeAction.Done,
+                ),
+            ),
+            FieldStates(
+                id = FieldId.PropertyType.id,
+                label = TR.typeOfProperty,
+                keyboardOptions = KeyboardOptions(
+                    capitalization = KeyboardCapitalization.Characters,
+                    autoCorrect = false,
+                    keyboardType = KeyboardType.Text,
+                    imeAction = ImeAction.Next,
+                ),
+                composeType = ComposeType.OutlinedTextField,
+            ),
+        )
+
         _basicFields.value = listOf(
+            FieldStates(
+                id = FieldId.BathroomNumber.id,
+                label = TR.numberOfBathrooms,
+                keyboardOptions = KeyboardOptions(
+                    capitalization = KeyboardCapitalization.None,
+                    autoCorrect = false,
+                    keyboardType = KeyboardType.Number,
+                    imeAction = ImeAction.Done,
+                ),
+                composeType = ComposeType.OutlinedTextField,
+            ),
             FieldStates(
                 id = FieldId.WhereItIs.id,
                 composeType = ComposeType.RadioGroup,
@@ -139,42 +214,6 @@ class FilterViewModel @Inject constructor(
                         label = TR.none,
                         composeType = ComposeType.RadioButton,
                     ),
-                ),
-            ),
-        )
-
-        _textFields.value = listOf(
-            FieldStates(
-                id = FieldId.PropertyName.id,
-                composeType = ComposeType.OutlinedTextField,
-                label = TR.propertyName,
-                keyboardOptions = KeyboardOptions(
-                    capitalization = KeyboardCapitalization.Words,
-                    autoCorrect = false,
-                    keyboardType = KeyboardType.Text,
-                    imeAction = ImeAction.Next,
-                ),
-            ),
-            FieldStates(
-                id = FieldId.OwnerName.id,
-                composeType = ComposeType.OutlinedTextField,
-                label = TR.ownerName,
-                keyboardOptions = KeyboardOptions(
-                    capitalization = KeyboardCapitalization.Words,
-                    autoCorrect = false,
-                    keyboardType = KeyboardType.Text,
-                    imeAction = ImeAction.Next,
-                ),
-            ),
-            FieldStates(
-                id = FieldId.Address.id,
-                composeType = ComposeType.OutlinedTextField,
-                label = TR.address,
-                keyboardOptions = KeyboardOptions(
-                    capitalization = KeyboardCapitalization.Words,
-                    autoCorrect = false,
-                    keyboardType = KeyboardType.Text,
-                    imeAction = ImeAction.Done,
                 ),
             ),
         )
@@ -309,9 +348,7 @@ class FilterViewModel @Inject constructor(
         _optionSelected.value = selectedOption
     }
 
-    fun clearFilterSheetState() {
-        _optionSelected.value = FilterOptions.values().first()
-    }
+    fun clearFilterSheetState() {}
 
     fun updateBasicFieldState(index: Int, value: String = "", option: FilterOptions) {
         when (option) {
@@ -355,6 +392,123 @@ class FilterViewModel @Inject constructor(
                     }
                 }
             }
+        }
+    }
+
+    fun setFilters() {
+        val fields = (_basicFields.value ?: emptyList()) + (_textFields.value
+            ?: emptyList()) + (_moneyFields.value ?: emptyList()) + (_timelineFields.value
+            ?: emptyList()) + (_locationFields.value ?: emptyList())
+
+        val propertyName = fields.find { it.id == FieldId.PropertyName.id }?.value?.value?.ifBlank { null }
+        val ownerName = fields.find { it.id == FieldId.OwnerName.id }?.value?.value?.ifBlank { null }
+        val address = fields.find { it.id == FieldId.Address.id }?.value?.value?.ifBlank { null }
+        val propertyType = fields.find { it.id == FieldId.PropertyType.id }?.value?.value?.ifBlank { null }
+
+        val whereIsIt = fields.find { it.id == FieldId.WhereItIs.id }?.value?.value?.ifBlank { null }
+        val listedByOwner = fields.find { it.id == FieldId.IsRentalOwner.id }?.value?.value?.ifBlank { null }
+        val isForRental = fields.find { it.id == FieldId.IsForRental.id }?.isSelected?.value
+        val kindOfRenter = fields.find { it.id == FieldId.PropertyFor.id }?.value?.value?.ifBlank { null }
+        val furnishedType = fields.find { it.id == FieldId.FurnishedType.id }?.value?.value?.ifBlank { null }
+        val numberOfBathrooms = fields.find { it.id == FieldId.BathroomNumber.id }?.value?.value?.ifBlank { null }
+
+        val depositStart = fields.find { it.id == FieldId.DepositRangeStart.id }?.value?.value?.ifBlank { null }
+        val depositEnd = fields.find { it.id == FieldId.DepositRangeEnd.id }?.value?.value?.ifBlank { null }
+        val rentStart = fields.find { it.id == FieldId.RentRangeStart.id }?.value?.value?.ifBlank { null }
+        val rentEnd = fields.find { it.id == FieldId.RentRangeEnd.id }?.value?.value?.ifBlank { null }
+
+        val updatedOnStart = fields.find { it.id == FieldId.UpdatedOnRangeStart.id }?.value?.value?.ifBlank { null }
+        val updatedOnEnd = fields.find { it.id == FieldId.UpdatedOnRangeEnd.id }?.value?.value?.ifBlank { null }
+
+        val distanceStart = fields.find { it.id == FieldId.DistanceRangeStart.id }?.value?.value?.ifBlank { null }
+        val distanceEnd = fields.find { it.id == FieldId.DistanceRangeEnd.id }?.value?.value?.ifBlank { null }
+
+        callFilterService(
+            propertyName,
+            ownerName,
+            address,
+            whereIsIt,
+            propertyType,
+            listedByOwner,
+            isForRental?.toString(),
+            kindOfRenter,
+            furnishedType,
+            depositStart,
+            depositEnd,
+            rentStart,
+            rentEnd,
+            updatedOnStart,
+            updatedOnEnd,
+            distanceStart,
+            distanceEnd,
+            savedLatitude,
+            savedLongitude,
+            numberOfBathrooms,
+        )
+    }
+
+    private fun callFilterService(
+        propertyName: String?,
+        ownerName: String?,
+        address: String?,
+        whereIsIt: String?,
+        propertyType: String?,
+        listedByOwner: String?,
+        forRental: String?,
+        kindOfRenter: String?,
+        furnishedType: String?,
+        depositStart: String?,
+        depositEnd: String?,
+        rentStart: String?,
+        rentEnd: String?,
+        updatedOnStart: String?,
+        updatedOnEnd: String?,
+        distanceStart: String?,
+        distanceEnd: String?,
+        savedLatitude: String,
+        savedLongitude: String,
+        numberOfBathrooms: String?,
+    ) {
+        viewModelScope.launch {
+            filterUseCase.performFilterQuery(
+                property_name = propertyName,
+                owner_name = ownerName,
+                property_address = address,
+                listed_by_owner = listedByOwner,
+                for_rental = forRental,
+                property_for = kindOfRenter,
+                furnished_type = furnishedType,
+                property_type = propertyType,
+                where_it_is = whereIsIt,
+                number_of_bathrooms = numberOfBathrooms,
+                yearly_deposit_start = depositStart,
+                yearly_deposit_end = depositEnd,
+                monthly_rent_start = rentStart,
+                monthly_rent_end = rentEnd,
+                property_updated_on_start = updatedOnStart,
+                property_updated_on_end = updatedOnEnd,
+                distance_start = distanceStart,
+                distance_end = distanceEnd,
+                user_latitude = savedLatitude,
+                user_longitude = savedLongitude,
+            ).collect {
+                when (it) {
+                    is RenterResponse.Error -> updateErrorState(it.exception.message)
+                    RenterResponse.Idle -> _loading.value = false
+                    RenterResponse.Loading -> _loading.value = true
+                    is RenterResponse.Success -> _properties.value = it.data.data ?: emptyList()
+                }
+            }
+        }
+    }
+
+    fun clearFilters() {
+        setupItems()
+    }
+
+    fun navigateToPropertyDetails(propertyId: String) {
+        navigator.navigate {
+            it.navigate("${Routes.PropertyDetails.route}${propertyId}")
         }
     }
 }
