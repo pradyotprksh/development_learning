@@ -10,46 +10,26 @@ class AuthenticateView extends StatelessWidget {
   Widget build(BuildContext context) => Scaffold(
         backgroundColor: context.themeData.scaffoldBackgroundColor,
         body: SafeArea(
-          child: BlocConsumer<UserBloc, UserState>(
-            listener: (_, userState) {
-              if (userState is UserDetailsAvailable) {
-                context.navigator.pushNamedAndRemoveUntil(
-                  Routes.homeRoute,
-                  (route) => false,
-                );
-              } else if (userState is UserDataNotAvailable) {
-                context.navigator.pushNamedAndRemoveUntil(
-                  Routes.userDetails,
-                  (route) => false,
-                );
-              }
-            },
-            builder: (_, userState) => Stack(
-              children: [
-                if (userState is FetchingUserDetails)
-                  const Center(
-                    child: CircularProgressIndicator(),
-                  ),
-                SignInScreen(
-                  providers: [
-                    PhoneAuthProvider(),
-                    EmailAuthProvider(),
-                  ],
-                  actions: [
-                    AuthStateChangeAction<SignedIn>(
-                      (context, state) {
-                        context.read<AuthenticationBloc>().add(
-                              UserAuthenticatedEvent(
-                                firebaseUserDetails: state.user,
-                              ),
-                            );
-                        context.read<UserBloc>().add(const FetchUserDetails());
-                      },
-                    ),
-                  ],
-                ),
-              ],
-            ),
+          child: SignInScreen(
+            providers: [
+              PhoneAuthProvider(),
+              EmailAuthProvider(),
+            ],
+            actions: [
+              AuthStateChangeAction<SignedIn>(
+                (context, state) {
+                  context.read<AuthenticationBloc>().add(
+                        UserAuthenticatedEvent(
+                          firebaseUserDetails: state.user,
+                        ),
+                      );
+                  context.navigator.pushNamedAndRemoveUntil(
+                    Routes.homeRoute,
+                    (route) => false,
+                  );
+                },
+              ),
+            ],
           ),
         ),
       );

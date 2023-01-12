@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:whatsapp/app/app.dart';
+import 'package:whatsapp/data/data.dart';
 
 abstract class Routes {
   static const splashRoute = '/splash';
@@ -17,6 +19,13 @@ abstract class Routes {
     personaliseRoute: (context) => const PersonaliseView(),
     authenticateRoute: (context) => const AuthenticateView(),
     homeRoute: (context) => const HomeView(),
-    userDetails: (context) => const UserDetailsView(),
+    userDetails: (context) => BlocProvider(
+          create: (_) => UserDetailsBloc(
+            FirebaseAuthServiceImplementation(),
+          )..add(
+              const FetchFirebaseUserDetails(),
+            ),
+          child: UserDetailsView(),
+        ),
   };
 }

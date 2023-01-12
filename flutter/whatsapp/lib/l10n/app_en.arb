@@ -36,5 +36,11 @@
   "currentlySelected": "Currently selected",
   "undo": "Undo",
   "undoTheme": "Go back to the previous theme, if you don't like this one.",
-  "undoLocalization": "Go back to the previous language, if you don't want to use this one."
+  "undoLocalization": "Go back to the previous language, if you don't want to use this one.",
+  "profilePicture": "Profile Picture",
+  "save": "Save",
+  "userName": "Username",
+  "emailAddress": "Email Address",
+  "userNameInvalid": "Username length should be greater than 4",
+  "invalidEmailAddress": "Please enter a valid email address"
 }
