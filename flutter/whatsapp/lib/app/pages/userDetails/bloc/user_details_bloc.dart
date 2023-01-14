@@ -6,6 +6,7 @@ class UserDetailsBloc extends Bloc<UserDetailsEvent, UserDetailsState> {
   UserDetailsBloc(this._firebaseAuthService) : super(const UserDetailsState()) {
     on<FetchFirebaseUserDetails>(_fetchUserDetailsFromFirebase);
     on<UserDetailsFormEvent>(_userDetailsFormEvent);
+    on<UploadProfileImage>(_uploadProfileImage);
   }
 
   final FirebaseAuthService _firebaseAuthService;
@@ -16,8 +17,10 @@ class UserDetailsBloc extends Bloc<UserDetailsEvent, UserDetailsState> {
   ) {
     final userDetails = _firebaseAuthService.getUserDetails();
     if (userDetails != null) {
-      final isEmailAddressAvailable = userDetails.email != '';
-      final isPhoneNumberAvailable = userDetails.phoneNumber != '';
+      final isEmailAddressAvailable =
+          userDetails.email != null && userDetails.email != '';
+      final isPhoneNumberAvailable =
+          userDetails.phoneNumber != null && userDetails.phoneNumber != '';
 
       emit(
         UserDetailsState(
@@ -34,5 +37,15 @@ class UserDetailsBloc extends Bloc<UserDetailsEvent, UserDetailsState> {
   void _userDetailsFormEvent(
     UserDetailsFormEvent event,
     Emitter<UserDetailsState> emit,
-  ) {}
+  ) {
+    UtilsLogger.debugLog(event.toString());
+  }
+
+  void _uploadProfileImage(
+    UploadProfileImage event,
+    Emitter<UserDetailsState> emit,
+  ) {
+    final userId = _firebaseAuthService.getUserId();
+    if (userId != null) {}
+  }
 }

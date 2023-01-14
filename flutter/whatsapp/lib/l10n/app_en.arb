@@ -42,5 +42,6 @@
   "userName": "Username",
   "emailAddress": "Email Address",
   "userNameInvalid": "Username length should be greater than 4",
-  "invalidEmailAddress": "Please enter a valid email address"
+  "invalidEmailAddress": "Please enter a valid email address",
+  "imagePickerTitle": "Select image picker"
 }

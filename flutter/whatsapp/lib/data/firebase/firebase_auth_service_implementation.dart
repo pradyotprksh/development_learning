@@ -2,10 +2,15 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:whatsapp/core/core.dart';
 
 class FirebaseAuthServiceImplementation extends FirebaseAuthService {
-  final _auth = FirebaseAuth.instance;
+  factory FirebaseAuthServiceImplementation() => _instance;
+
+  FirebaseAuthServiceImplementation._privateConstructor();
+
+  static final FirebaseAuthServiceImplementation _instance =
+      FirebaseAuthServiceImplementation._privateConstructor();
 
   @override
-  User? getUserDetails() => _auth.currentUser;
+  User? getUserDetails() => auth.currentUser;
 
   @override
   String? getUserId() => getUserDetails()?.uid;

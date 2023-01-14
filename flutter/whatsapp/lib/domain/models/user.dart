@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:whatsapp/core/core.dart';
 
 class UserDetails {
   UserDetails({
@@ -13,6 +14,7 @@ class UserDetails {
     DocumentSnapshot<Map<String, dynamic>> snapshot,
     SnapshotOptions? options,
   ) {
+    UtilsLogger.debugLog(options.toString());
     final data = snapshot.data();
     return UserDetails(
       name: data?['name'] as String?,

@@ -29,7 +29,7 @@ class PersonaliseView extends StatelessWidget {
               PersonaliseUtils.handleUndoSnackBar(
                 context,
                 context.translator.undoLocalization,
-                    () {
+                () {
                   context.read<LocalizationsBloc>().undo();
                 },
               );

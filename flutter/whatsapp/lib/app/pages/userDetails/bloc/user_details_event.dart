@@ -29,3 +29,14 @@ class UserDetailsFormEvent extends UserDetailsEvent {
         phoneNumber,
       ];
 }
+
+class UploadProfileImage extends UserDetailsEvent {
+  const UploadProfileImage({
+    required this.imagePath,
+  });
+
+  final String imagePath;
+
+  @override
+  List<Object?> get props => [imagePath];
+}

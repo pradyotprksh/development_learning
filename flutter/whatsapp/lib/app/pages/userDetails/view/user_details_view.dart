@@ -30,29 +30,50 @@ class UserDetailsView extends StatelessWidget {
     }
   }
 
-  void _submit(bool validatePhoneNumber) {
+  void _submit(
+    bool getTextFieldEmailAddress,
+    bool getTextFieldPhoneNumber,
+    UserDetailsState currentState,
+    BuildContext context,
+  ) {
     var isFormValid = _formKey.currentState?.validate() == true;
-    var isPhoneNumberValid =
-        _phoneInputKey.currentState?.formKey.currentState?.validate() == true ||
-            validatePhoneNumber;
+    var isPhoneNumberValid = !getTextFieldPhoneNumber ||
+        _phoneInputKey.currentState?.formKey.currentState?.validate() == true;
 
-    if (isFormValid && isPhoneNumberValid) {}
+    if (isFormValid && isPhoneNumberValid) {
+      final userName = _userNameController.text;
+      final emailAddress = getTextFieldEmailAddress
+          ? _emailAddressController.text
+          : currentState.emailAddress;
+      final phoneNumber = getTextFieldPhoneNumber
+          ? _phoneInputKey.currentState?.phoneNumber
+          : currentState.phoneNumber;
+
+      context.read<UserDetailsBloc>().add(
+            UserDetailsFormEvent(
+              userName: userName,
+              emailAddress: emailAddress,
+              phoneNumber: phoneNumber,
+            ),
+          );
+    }
   }
 
   final _formKey = GlobalKey<FormState>();
   final _phoneInputKey = GlobalKey<PhoneInputState>();
+  final _userNameController = TextEditingController();
+  final _emailAddressController = TextEditingController();
 
   @override
   Widget build(BuildContext context) =>
       BlocBuilder<UserDetailsBloc, UserDetailsState>(
-          builder: (_, userState) =>
-              Scaffold(
+          builder: (_, userState) => Scaffold(
                 backgroundColor: context.themeData.scaffoldBackgroundColor,
                 extendBody: true,
                 extendBodyBehindAppBar: true,
                 appBar: AppBar(
                   backgroundColor:
-                  context.themeData.appBarTheme.backgroundColor,
+                      context.themeData.appBarTheme.backgroundColor,
                   elevation: context.themeData.appBarTheme.elevation,
                 ),
                 body: SafeArea(
@@ -64,13 +85,19 @@ class UserDetailsView extends StatelessWidget {
                         ListView(
                           padding: ThemeEdgeInsets.all15,
                           children: [
-                            GestureDetector(
-                              onTap: () {},
+                            ImagePickerWidget(
+                              image: (path) {
+                                context.read<UserDetailsBloc>().add(
+                                      UploadProfileImage(
+                                        imagePath: path,
+                                      ),
+                                    );
+                              },
                               child: CircleAvatar(
                                 radius: 80,
                                 backgroundColor: context.themeData.primaryColor,
                                 backgroundImage:
-                                const AssetImage(AssetsPath.defaultAvatar),
+                                    const AssetImage(AssetsPath.defaultAvatar),
                               ),
                             ),
                             ThemeSizedBox.height10,
@@ -84,11 +111,12 @@ class UserDetailsView extends StatelessWidget {
                               decoration: InputDecoration(
                                 label: Text(context.translator.userName),
                               ),
-                              validator: (userName) =>
-                                  _userNameValidator(
-                                    userName,
-                                    context.translator.userNameInvalid,
-                                  ),
+                              validator: (userName) => _userNameValidator(
+                                userName,
+                                context.translator.userNameInvalid,
+                              ),
+                              keyboardType: TextInputType.text,
+                              controller: _userNameController,
                             ),
                             if (!userState.isEmailAddressAvailable)
                               ThemeSizedBox.height10,
@@ -97,11 +125,12 @@ class UserDetailsView extends StatelessWidget {
                                 decoration: InputDecoration(
                                   label: Text(context.translator.emailAddress),
                                 ),
-                                validator: (emailAddress) =>
-                                    _emailValidator(
-                                      emailAddress,
-                                      context.translator.invalidEmailAddress,
-                                    ),
+                                validator: (emailAddress) => _emailValidator(
+                                  emailAddress,
+                                  context.translator.invalidEmailAddress,
+                                ),
+                                keyboardType: TextInputType.emailAddress,
+                                controller: _emailAddressController,
                               ),
                             if (!userState.isPhoneNumberAvailable)
                               ThemeSizedBox.height10,
@@ -112,7 +141,12 @@ class UserDetailsView extends StatelessWidget {
                             ThemeSizedBox.height20,
                             ElevatedButton(
                               onPressed: () {
-                                _submit(!userState.isPhoneNumberAvailable);
+                                _submit(
+                                  !userState.isEmailAddressAvailable,
+                                  !userState.isPhoneNumberAvailable,
+                                  userState,
+                                  context,
+                                );
                               },
                               child: Text(context.translator.save),
                             ),

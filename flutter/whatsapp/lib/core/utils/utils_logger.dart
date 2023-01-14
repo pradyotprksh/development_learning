@@ -1,7 +1,7 @@
 import 'package:logger/logger.dart';
 
 abstract class UtilsLogger {
-  static void debugLog(String message) {
+  static void debugLog(dynamic message) {
     Logger().log(Level.debug, message);
   }
 }

@@ -4,6 +4,13 @@ import 'package:whatsapp/core/core.dart';
 import 'package:whatsapp/domain/models/user.dart';
 
 class FirebaseFirestoreServiceImplementation extends FirebaseFirestoreService {
+  factory FirebaseFirestoreServiceImplementation() => _instance;
+
+  FirebaseFirestoreServiceImplementation._privateConstructor();
+
+  static final FirebaseFirestoreServiceImplementation _instance =
+      FirebaseFirestoreServiceImplementation._privateConstructor();
+
   @override
   StreamController<UserDetails?> getUserDetails(String userId) {
     var userDetails = StreamController<UserDetails?>();
