@@ -17,12 +17,14 @@ class UserDetailsFormEvent extends UserDetailsEvent {
     this.emailAddress,
     this.phoneNumber,
     this.profilePic,
+    this.pin,
   });
 
   final String? userName;
   final String? emailAddress;
   final String? phoneNumber;
   final String? profilePic;
+  final String? pin;
 
   @override
   List<Object?> get props => [
@@ -30,6 +32,7 @@ class UserDetailsFormEvent extends UserDetailsEvent {
         emailAddress,
         phoneNumber,
         profilePic,
+        pin,
       ];
 }
 

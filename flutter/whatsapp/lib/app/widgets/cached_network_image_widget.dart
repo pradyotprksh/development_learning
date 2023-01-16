@@ -38,8 +38,8 @@ class CachedNetworkImageWidget extends StatelessWidget {
           if (imageUrl.isEmpty) placeholder,
           if (showProgressIndicator)
             SizedBox(
-              height: height * 2,
-              width: width * 2,
+              height: height,
+              width: width,
               child: const CircularProgressIndicator(),
             ),
         ],

@@ -71,6 +71,8 @@ dependencies:
 
   path_provider: ^2.0.11
 
+  pin_code_fields: ^7.4.0
+
   replay_bloc: ^0.2.2
 
 dev_dependencies:
