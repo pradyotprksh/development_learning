@@ -1,8 +1,6 @@
 import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:encrypt/encrypt.dart';
-import 'package:whatsapp/core/core.dart';
 
 abstract class UserDetailsKey {
   static const pin = 'pin';
@@ -18,6 +16,7 @@ abstract class UserDetailsKey {
   static const version = 'version';
   static const buildNumber = 'buildNumber';
   static const userDeviceDetails = 'userDeviceDetails';
+  static const profileImage = 'profileImage';
 }
 
 class UserDeviceDetails {
@@ -58,6 +57,7 @@ class UserDetails {
     this.name,
     this.emailId,
     this.phoneNumber,
+    this.profileImage,
     required this.userId,
     required this.pin,
     this.allDetailsAvailable = false,
@@ -69,29 +69,20 @@ class UserDetails {
     SnapshotOptions? _,
   ) {
     final data = snapshot.data();
-    final documentId = snapshot.id;
 
-    final pin = data?[UserDetailsKey.pin] as String? ?? IV.fromLength(8).base64;
-    final userDetails = data?[documentId] as String? ?? '';
     final deviceDetails =
         data?[UserDetailsKey.userDeviceDetails] as Map<String, dynamic>? ??
             <String, dynamic>{};
 
-    final decryptedData = jsonDecode(
-      EncryptorService.decryptData(
-        userDetails,
-        '$pin$pin$pin$pin',
-      ),
-    ) as Map<String, dynamic>?;
-
     return UserDetails(
-      name: decryptedData?[UserDetailsKey.name] as String?,
-      emailId: decryptedData?[UserDetailsKey.emailId] as String?,
-      phoneNumber: decryptedData?[UserDetailsKey.phoneNumber] as String?,
-      userId: decryptedData?[UserDetailsKey.userId] as String,
-      pin: pin,
+      name: data?[UserDetailsKey.name] as String?,
+      emailId: data?[UserDetailsKey.emailId] as String?,
+      phoneNumber: data?[UserDetailsKey.phoneNumber] as String?,
+      profileImage: data?[UserDetailsKey.profileImage] as String?,
+      userId: data?[UserDetailsKey.userId] as String,
+      pin: data?[UserDetailsKey.pin] as String,
       allDetailsAvailable:
-          decryptedData?[UserDetailsKey.allDetailsAvailable] as bool? ?? false,
+          data?[UserDetailsKey.allDetailsAvailable] as bool? ?? false,
       userDeviceDetails: UserDeviceDetails.fromMap(
         jsonDecode(jsonEncode(deviceDetails)) as Map<String, dynamic>?,
       ),
@@ -101,30 +92,21 @@ class UserDetails {
   final String? name;
   final String? emailId;
   final String? phoneNumber;
+  final String? profileImage;
   final String userId;
   final String pin;
   final bool allDetailsAvailable;
   final UserDeviceDetails? userDeviceDetails;
 
-  Map<String, dynamic> toFirestore() {
-    final encryptedData = EncryptorService.encryptData(
-      jsonEncode(
-        <String, dynamic>{
-          if (name != null) UserDetailsKey.name: name,
-          if (emailId != null) UserDetailsKey.emailId: emailId,
-          if (phoneNumber != null) UserDetailsKey.phoneNumber: phoneNumber,
-          UserDetailsKey.userId: userId,
-          UserDetailsKey.allDetailsAvailable: allDetailsAvailable,
-        },
-      ),
-      '$pin$pin$pin$pin',
-    );
-
-    return <String, dynamic>{
-      userId: encryptedData,
-      UserDetailsKey.pin: pin,
-      if (userDeviceDetails != null)
-        UserDetailsKey.userDeviceDetails: userDeviceDetails!.toMap(),
-    };
-  }
+  Map<String, dynamic> toFirestore() => <String, dynamic>{
+        if (name != null) UserDetailsKey.name: name,
+        if (emailId != null) UserDetailsKey.emailId: emailId,
+        if (phoneNumber != null) UserDetailsKey.phoneNumber: phoneNumber,
+        if (profileImage != null) UserDetailsKey.profileImage: profileImage,
+        UserDetailsKey.userId: userId,
+        UserDetailsKey.allDetailsAvailable: allDetailsAvailable,
+        UserDetailsKey.pin: pin,
+        if (userDeviceDetails != null)
+          UserDetailsKey.userDeviceDetails: userDeviceDetails!.toMap(),
+      };
 }

@@ -47,5 +47,8 @@
   "setPin": "Set your eight digit pin",
   "invalidPin": "Pin should be of length 8",
   "pinTitle": "Set your personal eight digit pin which will be used to validate your information.",
-  "pinNote": "Since this will be used in many ways from our end as well. Please don't forgot it. If by any chance you are not able to remember the pin the only option is to delete the account and start fresh. We are trying to make this process less painful, meanwhile please be helpful"
+  "pinNote": "Since this will be used in many ways from our end as well. Please don't forgot it. If by any chance you are not able to remember the pin the only option is to delete the account and start fresh. We are trying to make this process less painful, meanwhile please be helpful",
+  "chats": "Chats",
+  "status": "Status",
+  "calls": "Calls"
 }

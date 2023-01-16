@@ -63,6 +63,7 @@ class UserDetailsBloc extends Bloc<UserDetailsEvent, UserDetailsState> {
             name: event.userName,
             emailId: event.emailAddress,
             phoneNumber: event.phoneNumber,
+            profileImage: event.profilePic,
             pin: event.pin!,
             userId: userId,
             allDetailsAvailable: true,
