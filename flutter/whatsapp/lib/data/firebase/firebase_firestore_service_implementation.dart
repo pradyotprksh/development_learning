@@ -15,7 +15,7 @@ class FirebaseFirestoreServiceImplementation extends FirebaseFirestoreService {
   StreamController<UserDetails?> getUserDetails(String userId) {
     var userDetails = StreamController<UserDetails?>();
     final userRef = firestore
-        .collection(Constants.userCollection)
+        .collection(CoreConstants.userCollection)
         .doc(userId)
         .withConverter(
           fromFirestore: UserDetails.fromFirestore,

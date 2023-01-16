@@ -1,6 +1,7 @@
 import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:whatsapp/app/app.dart';
 
 class UserDetailsView extends StatelessWidget {
@@ -54,6 +55,7 @@ class UserDetailsView extends StatelessWidget {
               userName: userName,
               emailAddress: emailAddress,
               phoneNumber: phoneNumber,
+              profilePic: currentState.profilePicImage,
             ),
           );
     }
@@ -93,11 +95,26 @@ class UserDetailsView extends StatelessWidget {
                                       ),
                                     );
                               },
-                              child: CircleAvatar(
-                                radius: 80,
-                                backgroundColor: context.themeData.primaryColor,
-                                backgroundImage:
-                                    const AssetImage(AssetsPath.defaultAvatar),
+                              cropStyle: CropStyle.circle,
+                              aspectRatioPresets: const [
+                                CropAspectRatioPreset.square,
+                              ],
+                              child: CachedNetworkImageWidget(
+                                imageUrl: userState.profilePicImage,
+                                placeholder: CircleAvatar(
+                                  radius: 80,
+                                  backgroundColor:
+                                      context.themeData.primaryColor,
+                                  backgroundImage: const AssetImage(
+                                    AssetsPath.defaultAvatar,
+                                  ),
+                                ),
+                                height: 160,
+                                width: 160,
+                                showProgressIndicator:
+                                    userState.imageUploadStatus ==
+                                        ImageUploadStatus.uploading,
+                                clipToCircle: true,
                               ),
                             ),
                             ThemeSizedBox.height10,

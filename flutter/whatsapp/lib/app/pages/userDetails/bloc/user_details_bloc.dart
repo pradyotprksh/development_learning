@@ -3,13 +3,17 @@ import 'package:whatsapp/app/app.dart';
 import 'package:whatsapp/core/core.dart';
 
 class UserDetailsBloc extends Bloc<UserDetailsEvent, UserDetailsState> {
-  UserDetailsBloc(this._firebaseAuthService) : super(const UserDetailsState()) {
+  UserDetailsBloc(
+    this._firebaseAuthService,
+    this._firebaseStorageService,
+  ) : super(const UserDetailsState()) {
     on<FetchFirebaseUserDetails>(_fetchUserDetailsFromFirebase);
     on<UserDetailsFormEvent>(_userDetailsFormEvent);
     on<UploadProfileImage>(_uploadProfileImage);
   }
 
   final FirebaseAuthService _firebaseAuthService;
+  final FirebaseStorageService _firebaseStorageService;
 
   void _fetchUserDetailsFromFirebase(
     FetchFirebaseUserDetails event,
@@ -44,8 +48,39 @@ class UserDetailsBloc extends Bloc<UserDetailsEvent, UserDetailsState> {
   void _uploadProfileImage(
     UploadProfileImage event,
     Emitter<UserDetailsState> emit,
-  ) {
+  ) async {
     final userId = _firebaseAuthService.getUserId();
-    if (userId != null) {}
+    if (userId != null) {
+      emit(
+        state.copyWith(
+          imageUploadStatus: ImageUploadStatus.uploading,
+        ),
+      );
+
+      try {
+        final imageUrl = await _firebaseStorageService.uploadImage(
+          event.imagePath,
+          CoreConstants.userProfileImage.replaceAll(
+            CoreConstants.userIdPlaceholder,
+            userId,
+          ),
+        );
+
+        emit(
+          state.copyWith(
+            imageUploadStatus: ImageUploadStatus.uploaded,
+            profilePicImage: imageUrl,
+          ),
+        );
+      } on Exception catch (e) {
+        UtilsLogger.debugLog(e);
+
+        emit(
+          state.copyWith(
+            imageUploadStatus: ImageUploadStatus.error,
+          ),
+        );
+      }
+    }
   }
 }

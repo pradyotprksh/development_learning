@@ -18,6 +18,27 @@ class UserDetailsState extends Equatable {
     this.imageUploadStatus = ImageUploadStatus.none,
   });
 
+  UserDetailsState copyWith({
+    String? username,
+    String? emailAddress,
+    String? phoneNumber,
+    String? profilePicImage,
+    bool? isPhoneNumberAvailable,
+    bool? isEmailAddressAvailable,
+    ImageUploadStatus? imageUploadStatus,
+  }) =>
+      UserDetailsState(
+        username: username ?? this.username,
+        emailAddress: emailAddress ?? this.emailAddress,
+        phoneNumber: phoneNumber ?? this.phoneNumber,
+        profilePicImage: profilePicImage ?? this.profilePicImage,
+        isPhoneNumberAvailable:
+            isPhoneNumberAvailable ?? this.isPhoneNumberAvailable,
+        isEmailAddressAvailable:
+            isEmailAddressAvailable ?? this.isEmailAddressAvailable,
+        imageUploadStatus: imageUploadStatus ?? this.imageUploadStatus,
+      );
+
   final String username;
   final String emailAddress;
   final String phoneNumber;
