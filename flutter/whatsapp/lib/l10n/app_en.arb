@@ -44,8 +44,8 @@
   "userNameInvalid": "Username length should be greater than 4",
   "invalidEmailAddress": "Please enter a valid email address",
   "imagePickerTitle": "Select image picker",
-  "setSixDigitPin": "Set your six digit pin",
-  "invalidPin": "Pin should be of length 6",
-  "pinTitle": "Set your personal six digit pin which will be used to validate your information.",
+  "setPin": "Set your eight digit pin",
+  "invalidPin": "Pin should be of length 8",
+  "pinTitle": "Set your personal eight digit pin which will be used to validate your information.",
   "pinNote": "Since this will be used in many ways from our end as well. Please don't forgot it. If by any chance you are not able to remember the pin the only option is to delete the account and start fresh. We are trying to make this process less painful, meanwhile please be helpful"
 }

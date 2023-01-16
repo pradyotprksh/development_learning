@@ -21,7 +21,7 @@ class UserDetailsView extends StatelessWidget {
 
   String? _pinValidator(String? pin, String errorMessage) {
     if (pin != null) {
-      if (pin.length != 6) {
+      if (pin.length != 8) {
         return errorMessage;
       } else {
         return null;
@@ -85,7 +85,15 @@ class UserDetailsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) =>
-      BlocBuilder<UserDetailsBloc, UserDetailsState>(
+      BlocConsumer<UserDetailsBloc, UserDetailsState>(
+        listener: (_, userState) {
+          if (userState.pageState == PageState.success) {
+            context.navigator.pushNamedAndRemoveUntil(
+              Routes.homeRoute,
+              (route) => false,
+            );
+          }
+        },
         builder: (_, userState) => Scaffold(
           backgroundColor: context.themeData.scaffoldBackgroundColor,
           extendBody: true,
@@ -99,6 +107,7 @@ class UserDetailsView extends StatelessWidget {
               key: _formKey,
               onWillPop: () async => false,
               child: Stack(
+                alignment: Alignment.center,
                 children: [
                   ListView(
                     padding: ThemeEdgeInsets.all15,
@@ -180,7 +189,7 @@ class UserDetailsView extends StatelessWidget {
                       TextFormField(
                         decoration: InputDecoration(
                           label: Text(
-                            context.translator.setSixDigitPin,
+                            context.translator.setPin,
                           ),
                         ),
                         validator: (pin) => _pinValidator(
@@ -200,18 +209,22 @@ class UserDetailsView extends StatelessWidget {
                       const Divider(),
                       ThemeSizedBox.height20,
                       ElevatedButton(
-                        onPressed: () {
-                          _submit(
-                            !userState.isEmailAddressAvailable,
-                            !userState.isPhoneNumberAvailable,
-                            userState,
-                            context,
-                          );
-                        },
+                        onPressed: (userState.pageState == PageState.loading)
+                            ? null
+                            : () {
+                                _submit(
+                                  !userState.isEmailAddressAvailable,
+                                  !userState.isPhoneNumberAvailable,
+                                  userState,
+                                  context,
+                                );
+                              },
                         child: Text(context.translator.save),
                       ),
                     ],
                   ),
+                  if (userState.pageState == PageState.loading)
+                    const CircularProgressIndicatorWidget(),
                 ],
               ),
             ),

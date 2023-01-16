@@ -23,6 +23,8 @@ dependencies:
 
   email_validator: ^2.1.17
 
+  encrypt: ^5.0.1
+
   enum_to_string: ^2.0.1
 
   equatable: ^2.0.5
@@ -68,6 +70,10 @@ dependencies:
   liquid_swipe: ^3.0.0
 
   logger: ^1.1.0
+
+  network_info_plus: ^3.0.1
+
+  package_info_plus: ^3.0.2
 
   path_provider: ^2.0.11
 

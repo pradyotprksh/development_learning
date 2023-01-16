@@ -7,6 +7,13 @@ enum ImageUploadStatus {
   none,
 }
 
+enum PageState {
+  loading,
+  error,
+  idle,
+  success,
+}
+
 class UserDetailsState extends Equatable {
   const UserDetailsState({
     this.username = '',
@@ -16,6 +23,7 @@ class UserDetailsState extends Equatable {
     this.isPhoneNumberAvailable = true,
     this.isEmailAddressAvailable = true,
     this.imageUploadStatus = ImageUploadStatus.none,
+    this.pageState = PageState.idle,
   });
 
   UserDetailsState copyWith({
@@ -26,6 +34,7 @@ class UserDetailsState extends Equatable {
     bool? isPhoneNumberAvailable,
     bool? isEmailAddressAvailable,
     ImageUploadStatus? imageUploadStatus,
+    PageState? pageState,
   }) =>
       UserDetailsState(
         username: username ?? this.username,
@@ -37,6 +46,7 @@ class UserDetailsState extends Equatable {
         isEmailAddressAvailable:
             isEmailAddressAvailable ?? this.isEmailAddressAvailable,
         imageUploadStatus: imageUploadStatus ?? this.imageUploadStatus,
+        pageState: pageState ?? this.pageState,
       );
 
   final String username;
@@ -46,6 +56,7 @@ class UserDetailsState extends Equatable {
   final bool isPhoneNumberAvailable;
   final bool isEmailAddressAvailable;
   final ImageUploadStatus imageUploadStatus;
+  final PageState pageState;
 
   @override
   List<Object?> get props => [
@@ -56,5 +67,6 @@ class UserDetailsState extends Equatable {
         isPhoneNumberAvailable,
         isEmailAddressAvailable,
         imageUploadStatus,
+        pageState,
       ];
 }

@@ -7,4 +7,6 @@ abstract class FirebaseFirestoreService {
   final firestore = FirebaseFirestore.instance;
 
   StreamController<UserDetails?> getUserDetails(String userId);
+
+  Future<void> setUserDetails(String userId, UserDetails userDetails);
 }

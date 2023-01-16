@@ -23,7 +23,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       await emit.forEach(
         _firebaseFirestoreService.getUserDetails(userId).stream,
         onData: (userDetails) {
-          if (userDetails != null) {
+          if (userDetails != null && userDetails.allDetailsAvailable) {
             return UserDetailsAvailable(userDetails);
           } else {
             return const UserDataNotAvailable();

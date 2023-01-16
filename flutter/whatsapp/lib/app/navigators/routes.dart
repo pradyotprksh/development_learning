@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:whatsapp/app/app.dart';
 import 'package:whatsapp/data/data.dart';
-import 'package:whatsapp/data/firebase/firebase_storage_service_implementation.dart';
+import 'package:whatsapp/device/device.dart';
 
 abstract class Routes {
   static const splashRoute = '/splash';
@@ -24,6 +24,8 @@ abstract class Routes {
           create: (_) => UserDetailsBloc(
             FirebaseAuthServiceImplementation(),
             FirebaseStorageServiceImplementation(),
+            FirebaseFirestoreServiceImplementation(),
+            DeviceDetailsImplementation(),
           )..add(
               const FetchFirebaseUserDetails(),
             ),

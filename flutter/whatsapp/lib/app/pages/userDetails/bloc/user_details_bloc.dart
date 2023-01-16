@@ -1,11 +1,14 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:whatsapp/app/app.dart';
 import 'package:whatsapp/core/core.dart';
+import 'package:whatsapp/domain/domain.dart';
 
 class UserDetailsBloc extends Bloc<UserDetailsEvent, UserDetailsState> {
   UserDetailsBloc(
     this._firebaseAuthService,
     this._firebaseStorageService,
+    this._firebaseFirestoreService,
+    this._deviceDetails,
   ) : super(const UserDetailsState()) {
     on<FetchFirebaseUserDetails>(_fetchUserDetailsFromFirebase);
     on<UserDetailsFormEvent>(_userDetailsFormEvent);
@@ -14,6 +17,8 @@ class UserDetailsBloc extends Bloc<UserDetailsEvent, UserDetailsState> {
 
   final FirebaseAuthService _firebaseAuthService;
   final FirebaseStorageService _firebaseStorageService;
+  final FirebaseFirestoreService _firebaseFirestoreService;
+  final DeviceDetails _deviceDetails;
 
   void _fetchUserDetailsFromFirebase(
     FetchFirebaseUserDetails event,
@@ -41,8 +46,45 @@ class UserDetailsBloc extends Bloc<UserDetailsEvent, UserDetailsState> {
   void _userDetailsFormEvent(
     UserDetailsFormEvent event,
     Emitter<UserDetailsState> emit,
-  ) {
-    UtilsLogger.debugLog(event.toString());
+  ) async {
+    final userId = _firebaseAuthService.getUserId();
+    if (userId != null && event.pin != null) {
+      emit(
+        state.copyWith(
+          pageState: PageState.loading,
+        ),
+      );
+
+      try {
+        final deviceDetails = await _deviceDetails.getDeviceDetails();
+        await _firebaseFirestoreService.setUserDetails(
+          userId,
+          UserDetails(
+            name: event.userName,
+            emailId: event.emailAddress,
+            phoneNumber: event.phoneNumber,
+            pin: event.pin!,
+            userId: userId,
+            allDetailsAvailable: true,
+            userDeviceDetails: deviceDetails,
+          ),
+        );
+
+        emit(
+          state.copyWith(
+            pageState: PageState.success,
+          ),
+        );
+      } on Exception catch (e) {
+        UtilsLogger.debugLog(e);
+
+        emit(
+          state.copyWith(
+            pageState: PageState.error,
+          ),
+        );
+      }
+    }
   }
 
   void _uploadProfileImage(

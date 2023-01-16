@@ -5,7 +5,6 @@ import 'package:path_provider/path_provider.dart' as path_provider;
 import 'package:whatsapp/app/app.dart';
 import 'package:whatsapp/core/core.dart';
 import 'package:whatsapp/data/data.dart';
-import 'package:whatsapp/data/firebase/firebase_firestore_service_implementation.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
