@@ -115,12 +115,8 @@ class SelectContactView extends StatelessWidget {
                   if (selectContactState.permissionStatus ==
                           PermissionStatus.granted &&
                       selectContactState.existingAccount.isNotEmpty)
-                    Padding(
-                      padding: ThemeEdgeInsets.all15,
-                      child: Text(
-                        '${context.translator.contactsOnWhatsApp} ${context.translator.applicationName}',
-                        style: context.themeData.textTheme.caption,
-                      ),
+                    ExistingAccountsWidget(
+                      selectContactState.existingAccount,
                     ),
                   if (selectContactState.permissionStatus ==
                           PermissionStatus.granted &&
