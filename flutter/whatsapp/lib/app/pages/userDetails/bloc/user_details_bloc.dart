@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:whatsapp/app/app.dart';
 import 'package:whatsapp/core/core.dart';
+import 'package:whatsapp/device/device.dart';
 import 'package:whatsapp/domain/domain.dart';
 
 class UserDetailsBloc extends Bloc<UserDetailsEvent, UserDetailsState> {
@@ -68,6 +69,8 @@ class UserDetailsBloc extends Bloc<UserDetailsEvent, UserDetailsState> {
             userId: userId,
             allDetailsAvailable: true,
             userDeviceDetails: deviceDetails,
+            createdOnTimeStamp: UtilsMethods.getCurrentTimeStamp(),
+            updatedOnTimeStamp: UtilsMethods.getCurrentTimeStamp(),
           ),
         );
 

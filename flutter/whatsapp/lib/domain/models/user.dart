@@ -14,9 +14,11 @@ abstract class UserDetailsKey {
   static const appName = 'appName';
   static const packageName = 'packageName';
   static const version = 'version';
+  static const createdOnTimeStamp = 'createdOnTimeStamp';
   static const buildNumber = 'buildNumber';
   static const userDeviceDetails = 'userDeviceDetails';
   static const profileImage = 'profileImage';
+  static const updatedOnTimeStamp = 'updatedOnTimeStamp';
 }
 
 class UserDeviceDetails {
@@ -62,6 +64,8 @@ class UserDetails {
     required this.pin,
     this.allDetailsAvailable = false,
     this.userDeviceDetails,
+    this.createdOnTimeStamp,
+    this.updatedOnTimeStamp,
   });
 
   factory UserDetails.fromFirestore(
@@ -81,6 +85,8 @@ class UserDetails {
       profileImage: data?[UserDetailsKey.profileImage] as String?,
       userId: data?[UserDetailsKey.userId] as String,
       pin: data?[UserDetailsKey.pin] as String,
+      createdOnTimeStamp: data?[UserDetailsKey.createdOnTimeStamp] as int? ?? 0,
+      updatedOnTimeStamp: data?[UserDetailsKey.updatedOnTimeStamp] as int? ?? 0,
       allDetailsAvailable:
           data?[UserDetailsKey.allDetailsAvailable] as bool? ?? false,
       userDeviceDetails: UserDeviceDetails.fromMap(
@@ -96,6 +102,8 @@ class UserDetails {
   final String userId;
   final String pin;
   final bool allDetailsAvailable;
+  final int? createdOnTimeStamp;
+  final int? updatedOnTimeStamp;
   final UserDeviceDetails? userDeviceDetails;
 
   Map<String, dynamic> toFirestore() => <String, dynamic>{
@@ -103,6 +111,10 @@ class UserDetails {
         if (emailId != null) UserDetailsKey.emailId: emailId,
         if (phoneNumber != null) UserDetailsKey.phoneNumber: phoneNumber,
         if (profileImage != null) UserDetailsKey.profileImage: profileImage,
+        if (createdOnTimeStamp != null)
+          UserDetailsKey.createdOnTimeStamp: createdOnTimeStamp,
+        if (updatedOnTimeStamp != null)
+          UserDetailsKey.updatedOnTimeStamp: updatedOnTimeStamp,
         UserDetailsKey.userId: userId,
         UserDetailsKey.allDetailsAvailable: allDetailsAvailable,
         UserDetailsKey.pin: pin,

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:whatsapp/app/app.dart';
+import 'package:whatsapp/app/pages/home/view/subPages/sub_pages.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -25,50 +27,64 @@ class _HomeViewState extends State<HomeView>
   }
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-        backgroundColor: context.themeData.scaffoldBackgroundColor,
-        appBar: AppBar(
-          title: Text(
-            context.translator.applicationName,
-          ),
-          actions: [
-            IconButton(
-              onPressed: () {},
-              icon: const Icon(
-                Icons.camera,
-              ),
+  Widget build(BuildContext context) => BlocListener<UserBloc, UserState>(
+        listener: (_, userState) {
+          if (userState is UserDataNotAvailable) {
+            context.navigator.pushNamedAndRemoveUntil(
+              Routes.userDetails,
+              (route) => false,
+            );
+          }
+        },
+        child: Scaffold(
+          backgroundColor: context.themeData.scaffoldBackgroundColor,
+          appBar: AppBar(
+            title: Text(
+              context.translator.applicationName,
             ),
-            IconButton(
-              onPressed: () {},
-              icon: const Icon(
-                Icons.search,
+            actions: [
+              IconButton(
+                onPressed: () {},
+                icon: const Icon(
+                  Icons.camera,
+                ),
               ),
-            ),
-            IconButton(
-              onPressed: () {},
-              icon: const Icon(
-                Icons.more_vert,
+              IconButton(
+                onPressed: () {},
+                icon: const Icon(
+                  Icons.search,
+                ),
               ),
-            ),
-          ],
-          bottom: TabBar(
-            controller: _tabController,
-            tabs: [
-              Tab(
-                text: context.translator.chats,
-              ),
-              Tab(
-                text: context.translator.status,
-              ),
-              Tab(
-                text: context.translator.calls,
+              IconButton(
+                onPressed: () {},
+                icon: const Icon(
+                  Icons.more_vert,
+                ),
               ),
             ],
+            bottom: TabBar(
+              controller: _tabController,
+              tabs: [
+                Tab(
+                  text: context.translator.chats,
+                ),
+                Tab(
+                  text: context.translator.status,
+                ),
+                Tab(
+                  text: context.translator.calls,
+                ),
+              ],
+            ),
           ),
-        ),
-        body: TabBarView(
-          controller: _tabController,
-          children: const [],
+          body: TabBarView(
+            controller: _tabController,
+            children: const [
+              ChatsView(),
+              StatusView(),
+              CallsView(),
+            ],
+          ),
         ),
       );
 }
