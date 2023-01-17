@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:whatsapp/app/app.dart';
 
 class ChatsView extends StatelessWidget {
   const ChatsView({super.key});
@@ -6,7 +7,9 @@ class ChatsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Scaffold(
         floatingActionButton: FloatingActionButton(
-          onPressed: () {},
+          onPressed: () {
+            context.navigator.pushNamed(Routes.selectContact);
+          },
           child: const Icon(Icons.chat),
         ),
       );

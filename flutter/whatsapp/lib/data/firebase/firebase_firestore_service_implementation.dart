@@ -12,10 +12,15 @@ class FirebaseFirestoreServiceImplementation extends FirebaseFirestoreService {
   static final FirebaseFirestoreServiceImplementation _instance =
       FirebaseFirestoreServiceImplementation._privateConstructor();
 
+  CollectionReference<Map<String, dynamic>> _getCollectionReference(
+    String collectionPath,
+  ) =>
+      firestore.collection(collectionPath);
+
   DocumentReference<UserDetails> _getUserFirestoreReferenceWithReference(
-          String userId) =>
-      firestore
-          .collection(CoreConstants.userCollection)
+    String userId,
+  ) =>
+      _getCollectionReference(CoreConstants.userCollection)
           .doc(userId)
           .withConverter(
             fromFirestore: UserDetails.fromFirestore,
@@ -39,5 +44,49 @@ class FirebaseFirestoreServiceImplementation extends FirebaseFirestoreService {
   Future<void> setUserDetails(String userId, UserDetails userDetails) async {
     final userRef = _getUserFirestoreReferenceWithReference(userId);
     await userRef.set(userDetails);
+  }
+
+  @override
+  Future<UserDetails?> getUserAccountByEmailAddress(String emailAddress) async {
+    try {
+      final usersCollection =
+          await _getCollectionReference(CoreConstants.userCollection)
+              .where(
+                UserDetailsKey.emailId,
+                isEqualTo: emailAddress.replaceAll(' ', ''),
+              )
+              .withConverter(
+                fromFirestore: UserDetails.fromFirestore,
+                toFirestore: (UserDetails userDetails, _) =>
+                    userDetails.toFirestore(),
+              )
+              .limit(1)
+              .get();
+      return usersCollection.docs.first.data();
+    } catch (e) {
+      return null;
+    }
+  }
+
+  @override
+  Future<UserDetails?> getUserAccountByPhoneNumber(String phoneNumber) async {
+    try {
+      final usersCollection =
+          await _getCollectionReference(CoreConstants.userCollection)
+              .where(
+                UserDetailsKey.phoneNumber,
+                isEqualTo: phoneNumber.replaceAll(' ', ''),
+              )
+              .withConverter(
+                fromFirestore: UserDetails.fromFirestore,
+                toFirestore: (UserDetails userDetails, _) =>
+                    userDetails.toFirestore(),
+              )
+              .limit(1)
+              .get();
+      return usersCollection.docs.first.data();
+    } catch (e) {
+      return null;
+    }
   }
 }

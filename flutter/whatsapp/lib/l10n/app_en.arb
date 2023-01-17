@@ -50,5 +50,11 @@
   "pinNote": "Since this will be used in many ways from our end as well. Please don't forgot it. If by any chance you are not able to remember the pin the only option is to delete the account and start fresh. We are trying to make this process less painful, meanwhile please be helpful",
   "chats": "Chats",
   "status": "Status",
-  "calls": "Calls"
+  "calls": "Calls",
+  "selectContact": "Select contact",
+  "newGroup": "New group",
+  "newContact": "New contact",
+  "contactsOnWhatsApp": "Contacts on ",
+  "inviteOnWhatsApp": "Invite on ",
+  "needContactPermission": " will be needing the contact permission to get your contacts and show you who and all are available and whom you can send an invitation to. Please click here to give us the required permissions"
 }
