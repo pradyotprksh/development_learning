@@ -85,6 +85,8 @@ dependencies:
 
   replay_bloc: ^0.2.2
 
+  url_launcher: ^6.1.7
+
 dev_dependencies:
   bloc_test: ^9.1.0
 

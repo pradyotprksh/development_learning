@@ -74,6 +74,7 @@ class SelectContactView extends StatelessWidget {
             alignment: Alignment.center,
             children: [
               ListView(
+                padding: ThemeEdgeInsets.bottom20,
                 children: [
                   ListTile(
                     onTap: () {},
@@ -86,7 +87,9 @@ class SelectContactView extends StatelessWidget {
                     ),
                   ),
                   ListTile(
-                    onTap: () {},
+                    onTap: () async {
+                      await ContactsService.openContactForm();
+                    },
                     contentPadding: ThemeEdgeInsets.lest15Right15,
                     leading: const Icon(
                       Icons.person_add,
@@ -122,12 +125,8 @@ class SelectContactView extends StatelessWidget {
                   if (selectContactState.permissionStatus ==
                           PermissionStatus.granted &&
                       selectContactState.nonExistingAccount.isNotEmpty)
-                    Padding(
-                      padding: ThemeEdgeInsets.all15,
-                      child: Text(
-                        '${context.translator.inviteOnWhatsApp} ${context.translator.applicationName}',
-                        style: context.themeData.textTheme.caption,
-                      ),
+                    NonExistingAccountsWidget(
+                      selectContactState.nonExistingAccount,
                     ),
                 ],
               ),

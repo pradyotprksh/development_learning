@@ -69,8 +69,8 @@ class UserDetailsBloc extends Bloc<UserDetailsEvent, UserDetailsState> {
             userId: userId,
             allDetailsAvailable: true,
             userDeviceDetails: deviceDetails,
-            createdOnTimeStamp: UtilsMethods.getCurrentTimeStamp(),
-            updatedOnTimeStamp: UtilsMethods.getCurrentTimeStamp(),
+            createdOnTimeStamp: DeviceUtilsMethods.getCurrentTimeStamp(),
+            updatedOnTimeStamp: DeviceUtilsMethods.getCurrentTimeStamp(),
           ),
         );
 
