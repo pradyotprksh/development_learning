@@ -22,17 +22,16 @@ void main() async {
         BlocProvider(
           create: (_) => AuthenticationBloc(
             FirebaseAuthServiceImplementation(),
+            FirebaseRemoteConfigServiceImplementation(),
           )..add(
-              const CheckForAuthenticationStatus(),
+              const CheckForRemoteConfigs(),
             ),
         ),
         BlocProvider(
           create: (_) => UserBloc(
             FirebaseFirestoreServiceImplementation(),
             FirebaseAuthServiceImplementation(),
-          )..add(
-              const FetchUserDetails(),
-            ),
+          ),
         ),
         BlocProvider(
           create: (_) => LocalizationsBloc()
@@ -61,6 +60,7 @@ Future _initialSetups() async {
   await FirebaseUtils.initiation();
   await FirebaseUtils.appCheckInitiation();
   await FirebaseUtils.crashlyticsInitiation();
+  await FirebaseUtils.remoteConfigInitiation();
 
   await blocSetup();
 }

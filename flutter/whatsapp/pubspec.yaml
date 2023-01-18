@@ -45,6 +45,8 @@ dependencies:
 
   firebase_performance: ^0.9.0+10
 
+  firebase_remote_config: ^3.0.9
+
   firebase_storage: ^11.0.10
 
   firebase_ui_auth: ^1.1.8

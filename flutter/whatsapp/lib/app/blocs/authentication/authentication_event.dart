@@ -8,6 +8,10 @@ abstract class AuthenticationEvent extends Equatable {
   List<Object?> get props => [];
 }
 
+class CheckForRemoteConfigs extends AuthenticationEvent {
+  const CheckForRemoteConfigs();
+}
+
 class CheckForAuthenticationStatus extends AuthenticationEvent {
   const CheckForAuthenticationStatus();
 }

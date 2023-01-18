@@ -6,12 +6,15 @@ class AuthenticationBloc
     extends Bloc<AuthenticationEvent, AuthenticationState> {
   AuthenticationBloc(
     this._firebaseAuthService,
+    this._firebaseRemoteConfigService,
   ) : super(const AuthenticationState()) {
+    on<CheckForRemoteConfigs>(_checkForRemoteConfigs);
     on<CheckForAuthenticationStatus>(_checkForAuthenticationStatus);
     on<UserAuthenticatedEvent>(_userAuthenticatedEvent);
   }
 
   final FirebaseAuthService _firebaseAuthService;
+  final FirebaseRemoteConfigService _firebaseRemoteConfigService;
 
   void _checkForAuthenticationStatus(
     CheckForAuthenticationStatus event,
@@ -43,5 +46,20 @@ class AuthenticationBloc
         firebaseUserDetails: event.firebaseUserDetails,
       ),
     );
+  }
+
+  void _checkForRemoteConfigs(
+    CheckForRemoteConfigs event,
+    Emitter<AuthenticationState> emit,
+  ) {
+    if (_firebaseRemoteConfigService.isApplicationDown()) {
+      emit(
+        state.copyWith(
+          authenticationState: AuthenticationStatus.applicationDown,
+        ),
+      );
+    } else {
+      add(const CheckForAuthenticationStatus());
+    }
   }
 }

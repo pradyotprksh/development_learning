@@ -1,6 +1,12 @@
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:whatsapp/app/app.dart';
+
+enum AuthenticationStatus {
+  unknown,
+  authenticated,
+  unauthenticated,
+  applicationDown,
+}
 
 class AuthenticationState extends Equatable {
   const AuthenticationState({
@@ -10,6 +16,15 @@ class AuthenticationState extends Equatable {
 
   final AuthenticationStatus authenticationState;
   final User? firebaseUserDetails;
+
+  AuthenticationState copyWith({
+    AuthenticationStatus? authenticationState,
+    User? firebaseUserDetails,
+  }) =>
+      AuthenticationState(
+        authenticationState: authenticationState ?? this.authenticationState,
+        firebaseUserDetails: firebaseUserDetails ?? this.firebaseUserDetails,
+      );
 
   @override
   List<Object?> get props => [

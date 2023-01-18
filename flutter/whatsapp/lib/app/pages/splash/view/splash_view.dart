@@ -11,7 +11,6 @@ class SplashView extends StatelessWidget {
           BlocListener<AuthenticationBloc, AuthenticationState>(
             listener: (_, authState) {
               switch (authState.authenticationState) {
-                case AuthenticationStatus.unknown:
                 case AuthenticationStatus.authenticated:
                   context.read<UserBloc>().add(const FetchUserDetails());
                   break;
@@ -25,6 +24,9 @@ class SplashView extends StatelessWidget {
                       );
                     },
                   );
+                  break;
+                case AuthenticationStatus.applicationDown:
+                case AuthenticationStatus.unknown:
                   break;
               }
             },
@@ -50,14 +52,32 @@ class SplashView extends StatelessWidget {
           extendBody: true,
           extendBodyBehindAppBar: true,
           body: SafeArea(
-            child: Padding(
-              padding: ThemeEdgeInsets.top20Bottom20,
-              child: Center(
-                child: Image.asset(
-                  AssetsPath.appIcon,
-                  height: 150,
-                  width: 150,
-                ),
+            child: BlocBuilder<AuthenticationBloc, AuthenticationState>(
+              builder: (_, authenticationState) => Column(
+                children: [
+                  const Spacer(),
+                  Padding(
+                    padding: ThemeEdgeInsets.top20Bottom20,
+                    child: Center(
+                      child: Image.asset(
+                        AssetsPath.appIcon,
+                        height: 150,
+                        width: 150,
+                      ),
+                    ),
+                  ),
+                  const Spacer(),
+                  if (authenticationState.authenticationState ==
+                      AuthenticationStatus.applicationDown)
+                    Card(
+                      child: Padding(
+                        padding: ThemeEdgeInsets.all15,
+                        child: Text(
+                          context.translator.systemDownMessage,
+                        ),
+                      ),
+                    ),
+                ],
               ),
             ),
           ),

@@ -16,6 +16,4 @@ abstract class AppDetails {
       DeviceOrientation.portraitDown,
     ]);
   }
-
-  static const bool enableEncryption = true;
 }
