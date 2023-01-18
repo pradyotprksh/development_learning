@@ -17,5 +17,5 @@ abstract class AppDetails {
     ]);
   }
 
-  static const bool enableEncryption = false;
+  static const bool enableEncryption = true;
 }

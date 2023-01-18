@@ -1,28 +1,43 @@
 import 'package:encrypt/encrypt.dart';
+import 'package:memory_cache/memory_cache.dart';
 import 'package:whatsapp/app/app.dart';
+import 'package:whatsapp/core/core.dart';
+import 'package:whatsapp/domain/domain.dart';
 
 abstract class EncryptorService {
   const EncryptorService();
 
-  static String encryptData(String data, String key) {
-    if (AppDetails.enableEncryption) {
-      final utf8Key = Key.fromUtf8(key);
-      final iv = IV.fromLength(16);
-      final encryptor = Encrypter(AES(utf8Key));
-      final encrypted = encryptor.encrypt(data.toString(), iv: iv);
-      return encrypted.base64;
+  static String encryptData(dynamic data) {
+    final key = MemoryCache.instance.read<String?>(UserDetailsKey.pin);
+    if (AppDetails.enableEncryption && key != null && data != null) {
+      try {
+        final utf8Key = Key.fromUtf8(key);
+        final iv = IV.fromLength(16);
+        final encryptor = Encrypter(AES(utf8Key));
+        final encrypted = encryptor.encrypt(data.toString(), iv: iv);
+        return encrypted.base64;
+      } catch (e) {
+        UtilsLogger.debugLog(e);
+        return data.toString();
+      }
     } else {
-      return data;
+      return data.toString();
     }
   }
 
-  static String decryptData(String data, String key) {
-    if (AppDetails.enableEncryption) {
-      final utf8Key = Key.fromUtf8(key);
-      final iv = IV.fromLength(16);
-      final decryptor = Encrypter(AES(utf8Key));
-      final decrypted = decryptor.decrypt64(data.toString(), iv: iv);
-      return decrypted;
+  static T decryptData<T>(T data) {
+    final key = MemoryCache.instance.read<String?>(UserDetailsKey.pin);
+    if (AppDetails.enableEncryption && key != null) {
+      try {
+        final utf8Key = Key.fromUtf8(key);
+        final iv = IV.fromLength(16);
+        final decryptor = Encrypter(AES(utf8Key));
+        final decrypted = decryptor.decrypt64(data.toString(), iv: iv);
+        return decrypted as T;
+      } catch (e) {
+        UtilsLogger.debugLog(e);
+        return data;
+      }
     } else {
       return data;
     }

@@ -1,6 +1,5 @@
-import 'dart:convert';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:whatsapp/core/core.dart';
 import 'package:whatsapp/domain/domain.dart';
 
 class StatusDetails {
@@ -25,15 +24,14 @@ class StatusDetails {
             <String, dynamic>{};
 
     return StatusDetails(
-      status: data?[StatusKey.status] as String,
+      status: EncryptorService.encryptData(data?[StatusKey.status] as String),
       fontFamily: data?[StatusKey.fontFamily] as String,
       color: data?[StatusKey.color] as int,
-      statusImageUrl: data?[StatusKey.statusImageUrl] as String?,
+      statusImageUrl: EncryptorService.encryptData(
+          data?[StatusKey.statusImageUrl] as String?),
       userId: data?[UserDetailsKey.userId] as String,
       createdOnTimeStamp: data?[UserDetailsKey.createdOnTimeStamp] as int? ?? 0,
-      userDeviceDetails: UserDeviceDetails.fromMap(
-        jsonDecode(jsonEncode(deviceDetails)) as Map<String, dynamic>?,
-      ),
+      userDeviceDetails: UserDeviceDetails.fromMap(deviceDetails),
     );
   }
 
@@ -46,10 +44,12 @@ class StatusDetails {
   final UserDeviceDetails? userDeviceDetails;
 
   Map<String, dynamic> toFirestore() => <String, dynamic>{
-        StatusKey.status: status,
+        StatusKey.status: EncryptorService.encryptData(status),
         StatusKey.fontFamily: fontFamily,
         StatusKey.color: color,
-        if (statusImageUrl != null) StatusKey.statusImageUrl: statusImageUrl,
+        if (statusImageUrl != null)
+          StatusKey.statusImageUrl:
+              EncryptorService.encryptData(statusImageUrl),
         if (createdOnTimeStamp != null)
           UserDetailsKey.createdOnTimeStamp: createdOnTimeStamp,
         UserDetailsKey.userId: userId,

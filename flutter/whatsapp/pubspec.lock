@@ -756,6 +756,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.1.5"
+  memory_cache:
+    dependency: "direct main"
+    description:
+      name: memory_cache
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.1.0"
   meta:
     dependency: transitive
     description:
