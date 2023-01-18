@@ -11,13 +11,17 @@ class StatusView extends StatelessWidget {
           direction: Axis.vertical,
           children: [
             FloatingActionButton(
-              onPressed: () {},
+              onPressed: () {
+                context.navigator.pushNamed(Routes.addStatus);
+              },
               mini: true,
+              heroTag: Icons.edit.toString(),
               child: const Icon(Icons.edit),
             ),
             ThemeSizedBox.height10,
             FloatingActionButton(
               onPressed: () {},
+              heroTag: Icons.camera.toString(),
               child: const Icon(Icons.camera),
             ),
           ],

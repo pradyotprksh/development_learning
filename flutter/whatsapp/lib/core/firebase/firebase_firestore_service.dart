@@ -10,6 +10,8 @@ abstract class FirebaseFirestoreService {
 
   Future<void> setUserDetails(String userId, UserDetails userDetails);
 
+  Future<void> setStatus(StatusDetails statusDetails);
+
   Future<UserDetails?> getUserAccountByPhoneNumber(String phoneNumber);
 
   Future<UserDetails?> getUserAccountByEmailAddress(String emailAddress);

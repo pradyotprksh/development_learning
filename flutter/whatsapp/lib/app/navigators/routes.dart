@@ -12,6 +12,7 @@ abstract class Routes {
   static const homeRoute = '/home';
   static const userDetails = '/user-details';
   static const selectContact = '/select-contact';
+  static const addStatus = '/add-status';
 
   static const initialRoute = splashRoute;
 
@@ -21,6 +22,15 @@ abstract class Routes {
     personaliseRoute: (context) => const PersonaliseView(),
     authenticateRoute: (context) => const AuthenticateView(),
     homeRoute: (context) => const HomeView(),
+    addStatus: (context) => BlocProvider(
+          create: (_) => AddStatusBloc(
+            context.read<ThemeBloc>().state.currentFontFamily,
+            FirebaseAuthServiceImplementation(),
+            FirebaseFirestoreServiceImplementation(),
+            DeviceDetailsImplementation(),
+          ),
+          child: AddStatusView(),
+        ),
     selectContact: (context) => BlocProvider(
           create: (_) => SelectContactBloc(
             FirebaseFirestoreServiceImplementation(),

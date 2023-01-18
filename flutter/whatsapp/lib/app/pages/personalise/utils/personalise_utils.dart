@@ -203,50 +203,7 @@ abstract class PersonaliseUtils {
   ) async {
     final themeBloc = buildContext.read<ThemeBloc>();
 
-    final fontFamily = await showModalBottomSheet<String>(
-          context: buildContext,
-          builder: (_) => Scaffold(
-            backgroundColor:
-                buildContext.themeData.bottomSheetTheme.backgroundColor,
-            appBar: AppBar(
-              backgroundColor:
-                  buildContext.themeData.appBarTheme.backgroundColor,
-              leading: const CloseButton(),
-              title: Text(
-                buildContext.translator.chooseFont,
-                style: buildContext.themeData.appBarTheme.titleTextStyle,
-              ),
-              elevation: buildContext.themeData.appBarTheme.elevation,
-            ),
-            body: ListView.builder(
-              primary: false,
-              itemCount: GoogleFonts.asMap().length,
-              itemBuilder: (_, position) {
-                final fontFamily = GoogleFonts.asMap().keys.toList()[position];
-
-                return ListTile(
-                  title: Text(
-                    fontFamily,
-                    style:
-                        buildContext.themeData.textTheme.titleLarge?.copyWith(
-                      fontFamily: GoogleFonts.getFont(fontFamily).fontFamily,
-                    ),
-                  ),
-                  subtitle: currentFontFamily == fontFamily
-                      ? Text(
-                          buildContext.translator.currentlySelected,
-                          style: buildContext.themeData.textTheme.titleSmall,
-                        )
-                      : null,
-                  onTap: () {
-                    buildContext.navigator.pop(fontFamily);
-                  },
-                );
-              },
-            ),
-          ),
-        ) ??
-        currentFontFamily;
+    final fontFamily = await getFont(buildContext, currentFontFamily);
 
     themeBloc
       ..clearHistory()
@@ -254,4 +211,51 @@ abstract class PersonaliseUtils {
         ChangeThemeEvent(fontFamily: fontFamily),
       );
   }
+
+  static Future<String> getFont(
+    BuildContext buildContext,
+    String currentFontFamily,
+  ) async =>
+      await showModalBottomSheet<String>(
+        context: buildContext,
+        builder: (_) => Scaffold(
+          backgroundColor:
+              buildContext.themeData.bottomSheetTheme.backgroundColor,
+          appBar: AppBar(
+            backgroundColor: buildContext.themeData.appBarTheme.backgroundColor,
+            leading: const CloseButton(),
+            title: Text(
+              buildContext.translator.chooseFont,
+              style: buildContext.themeData.appBarTheme.titleTextStyle,
+            ),
+            elevation: buildContext.themeData.appBarTheme.elevation,
+          ),
+          body: ListView.builder(
+            primary: false,
+            itemCount: GoogleFonts.asMap().length,
+            itemBuilder: (_, position) {
+              final fontFamily = GoogleFonts.asMap().keys.toList()[position];
+
+              return ListTile(
+                title: Text(
+                  fontFamily,
+                  style: buildContext.themeData.textTheme.titleLarge?.copyWith(
+                    fontFamily: GoogleFonts.getFont(fontFamily).fontFamily,
+                  ),
+                ),
+                subtitle: currentFontFamily == fontFamily
+                    ? Text(
+                        buildContext.translator.currentlySelected,
+                        style: buildContext.themeData.textTheme.titleSmall,
+                      )
+                    : null,
+                onTap: () {
+                  buildContext.navigator.pop(fontFamily);
+                },
+              );
+            },
+          ),
+        ),
+      ) ??
+      currentFontFamily;
 }

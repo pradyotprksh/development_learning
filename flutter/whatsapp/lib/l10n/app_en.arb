@@ -58,5 +58,7 @@
   "inviteOnWhatsApp": "Invite on ",
   "needContactPermission": " will be needing the contact permission to get your contacts and show you who and all are available and whom you can send an invitation to. Please click here to give us the required permissions",
   "myStatus": "My status",
-  "tapToAddStatus": "Tap to add status update"
+  "tapToAddStatus": "Tap to add status update",
+  "typeAStatus": "Type a status",
+  "statusErrorMessage": "Status can't be empty"
 }

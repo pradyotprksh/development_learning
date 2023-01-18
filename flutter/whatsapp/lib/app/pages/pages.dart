@@ -1,3 +1,4 @@
+export 'addStatus/add_status.dart';
 export 'authenticate/authenticate.dart';
 export 'home/home.dart';
 export 'intro/intro.dart';

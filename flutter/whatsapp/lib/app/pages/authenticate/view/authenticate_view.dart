@@ -23,6 +23,7 @@ class AuthenticateView extends StatelessWidget {
                           firebaseUserDetails: state.user,
                         ),
                       );
+                  context.read<UserBloc>().add(const FetchUserDetails());
                   context.navigator.pushNamedAndRemoveUntil(
                     Routes.homeRoute,
                     (route) => false,

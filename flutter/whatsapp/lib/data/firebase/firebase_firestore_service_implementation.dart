@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:whatsapp/core/core.dart';
-import 'package:whatsapp/domain/models/user.dart';
+import 'package:whatsapp/domain/domain.dart';
 
 class FirebaseFirestoreServiceImplementation extends FirebaseFirestoreService {
   factory FirebaseFirestoreServiceImplementation() => _instance;
@@ -88,5 +88,17 @@ class FirebaseFirestoreServiceImplementation extends FirebaseFirestoreService {
     } catch (e) {
       return null;
     }
+  }
+
+  @override
+  Future<void> setStatus(StatusDetails statusDetails) async {
+    await firestore
+        .collection(CoreConstants.statusCollection)
+        .withConverter(
+          fromFirestore: StatusDetails.fromFirestore,
+          toFirestore: (StatusDetails statusDetails, _) =>
+              statusDetails.toFirestore(),
+        )
+        .add(statusDetails);
   }
 }
