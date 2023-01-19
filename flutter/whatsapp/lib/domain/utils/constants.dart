@@ -22,4 +22,5 @@ abstract class StatusKey {
   static const fontFamily = 'fontFamily';
   static const color = 'color';
   static const statusImageUrl = 'statusImageUrl';
+  static const statusId = 'statusId';
 }

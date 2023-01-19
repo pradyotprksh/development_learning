@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:whatsapp/app/app.dart';
+import 'package:whatsapp/domain/domain.dart';
 
 class StatusView extends StatelessWidget {
   const StatusView({super.key});
@@ -28,7 +29,7 @@ class StatusView extends StatelessWidget {
         ),
         body: BlocBuilder<UserBloc, UserState>(
           builder: (_, userState) => BlocBuilder<StatusBloc, StatusState>(
-            builder: (_, statusState) => ListView(
+            builder: (_, statusState) => Column(
               children: [
                 ListTile(
                   onTap: () {},
@@ -63,6 +64,35 @@ class StatusView extends StatelessWidget {
                   ),
                 ),
                 const Divider(),
+                ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: statusState.otherStatus.length,
+                  itemBuilder: (_, index) {
+                    final userDetails =
+                        statusState.otherStatus[index].userDetails;
+                    final statusDetails =
+                        statusState.otherStatus[index].statusDetails;
+
+                    return StreamBuilder<UserDetails?>(
+                      stream: userDetails,
+                      builder: (_, snapshot) {
+                        final userDetails = snapshot.data;
+                        if (userDetails != null) {
+                          return ListTile(
+                            title: Text(
+                              userDetails.name ?? '',
+                            ),
+                            subtitle: Text(
+                              '${statusDetails.length}',
+                            ),
+                          );
+                        } else {
+                          return ThemeSizedBox.shrink;
+                        }
+                      },
+                    );
+                  },
+                ),
               ],
             ),
           ),

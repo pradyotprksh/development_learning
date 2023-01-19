@@ -11,6 +11,7 @@ class StatusDetails {
     this.statusImageUrl,
     this.userDeviceDetails,
     this.createdOnTimeStamp,
+    this.statusId = '',
   });
 
   factory StatusDetails.fromFirestore(
@@ -32,6 +33,7 @@ class StatusDetails {
       userId: data?[UserDetailsKey.userId] as String,
       createdOnTimeStamp: data?[UserDetailsKey.createdOnTimeStamp] as int? ?? 0,
       userDeviceDetails: UserDeviceDetails.fromMap(deviceDetails),
+      statusId: snapshot.id,
     );
   }
 
@@ -42,6 +44,7 @@ class StatusDetails {
   final String? statusImageUrl;
   final int? createdOnTimeStamp;
   final UserDeviceDetails? userDeviceDetails;
+  final String statusId;
 
   Map<String, dynamic> toFirestore() => <String, dynamic>{
         StatusKey.status: EncryptorService.encryptData(status),

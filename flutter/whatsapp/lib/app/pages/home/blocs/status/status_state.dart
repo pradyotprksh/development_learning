@@ -7,8 +7,17 @@ class StatusState extends Equatable {
     this.currentUserStatus = const [],
   });
 
-  final List<StatusDetails> otherStatus;
-  final List<StatusDetails> currentUserStatus;
+  StatusState copyWith({
+    List<UserWithSingleStatusDetails>? otherStatus,
+    List<UserWithSingleStatusDetails>? currentUserStatus,
+  }) =>
+      StatusState(
+        otherStatus: otherStatus ?? this.otherStatus,
+        currentUserStatus: otherStatus ?? this.currentUserStatus,
+      );
+
+  final List<UserWithSingleStatusDetails> otherStatus;
+  final List<UserWithSingleStatusDetails> currentUserStatus;
 
   @override
   List<Object?> get props => [

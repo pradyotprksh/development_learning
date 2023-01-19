@@ -24,8 +24,10 @@ abstract class Routes {
     homeRoute: (context) => MultiBlocProvider(
           providers: [
             BlocProvider(
-              create: (_) => StatusBloc()
-                ..add(
+              create: (_) => StatusBloc(
+                FirebaseFirestoreServiceImplementation(),
+                FirebaseAuthServiceImplementation(),
+              )..add(
                   const FetchStatus(),
                 ),
             ),

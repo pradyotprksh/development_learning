@@ -65,4 +65,57 @@ class FirebaseFirestoreServiceImplementation extends FirebaseFirestoreService {
   Future<void> setStatus(StatusDetails statusDetails) async {
     await getStatusCollectionReference().add(statusDetails);
   }
+
+  @override
+  StreamController<List<UserWithSingleStatusDetails>?> getStatus() {
+    var status = StreamController<List<UserWithSingleStatusDetails>?>();
+    getStatusCollectionReference()
+        .orderBy(
+          UserDetailsKey.createdOnTimeStamp,
+          descending: true,
+        )
+        .snapshots()
+        .listen(
+      (event) {
+        var statusWithUserDetails = <UserWithSingleStatusDetails>[];
+        for (var element in event.docs) {
+          final statusDetails = element.data();
+          final userId = statusDetails.userId;
+
+          final isUserPresent = statusWithUserDetails.where(
+            (element) => element.userId == userId,
+          );
+          late Stream<UserDetails?> userDetails;
+          if (isUserPresent.isNotEmpty) {
+            final isStatusPresent = isUserPresent.first.statusDetails.where(
+              (element) => element.statusId == statusDetails.statusId,
+            );
+            if (isStatusPresent.isNotEmpty) {
+              continue;
+            }
+            userDetails = isUserPresent.first.userDetails;
+          } else {
+            userDetails = getUserDetails(userId).stream;
+          }
+
+          final allStatus = event.docs
+              .where(
+                (element) => element.data().userId == userId,
+              )
+              .map((e) => e.data())
+              .toList();
+
+          statusWithUserDetails.add(
+            UserWithSingleStatusDetails(
+              userId,
+              allStatus,
+              userDetails,
+            ),
+          );
+        }
+        status.add(statusWithUserDetails);
+      },
+    );
+    return status;
+  }
 }

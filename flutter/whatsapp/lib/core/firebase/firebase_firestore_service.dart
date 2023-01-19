@@ -9,6 +9,8 @@ abstract class FirebaseFirestoreService {
 
   StreamController<UserDetails?> getUserDetails(String userId);
 
+  StreamController<List<UserWithSingleStatusDetails>?> getStatus();
+
   Future<void> setUserDetails(String userId, UserDetails userDetails);
 
   Future<void> setStatus(StatusDetails statusDetails);
