@@ -85,13 +85,22 @@ class _StatusViewState extends State<StatusView>
                     stream: userDetails.stream,
                     builder: (_, snapshot) {
                       final userDetails = snapshot.data;
-                      if (userDetails != null) {
+                      if (userDetails != null && statusDetails.isNotEmpty) {
                         return ListTile(
+                          onTap: () {},
+                          leading: StatusProfileImageWidget(
+                            profileImage: userDetails.profileImage ?? '',
+                            totalStatusCount: statusDetails.length,
+                            readStatusCount: statusDetails.length,
+                          ),
                           title: Text(
                             userDetails.name ?? '',
                           ),
                           subtitle: Text(
-                            '${statusDetails.length}',
+                            AppUtilsMethods.timeAgo(
+                              statusDetails.first.createdOnTimeStamp,
+                              context,
+                            ),
                           ),
                         );
                       } else {

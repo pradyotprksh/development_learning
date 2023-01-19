@@ -14,41 +14,48 @@ class WhatsappApp extends StatelessWidget {
     return BlocBuilder<ThemeBloc, ThemeState>(
       builder: (_, themeState) =>
           BlocBuilder<LocalizationsBloc, LocalizationsState>(
-        builder: (_, localizationsState) => MaterialApp(
-          title: Constants.applicationName,
-          themeMode: themeState.currentThemeMode,
-          debugShowCheckedModeBanner: !AppDetails.isReleaseMode,
-          theme: _getThemeData(
-            themeState.currentLightFlexScheme,
-            themeState.currentFontFamily,
-            themeState.currentEnableMaterial3,
-            false,
-          ),
-          highContrastTheme: _getThemeData(
-            themeState.currentLightContrastFlexScheme,
-            themeState.currentFontFamily,
-            themeState.currentEnableMaterial3,
-            false,
-          ),
-          darkTheme: _getThemeData(
-            themeState.currentDarkFlexScheme,
-            themeState.currentFontFamily,
-            themeState.currentEnableMaterial3,
-            true,
-          ),
-          highContrastDarkTheme: _getThemeData(
-            themeState.currentDarkContrastFlexScheme,
-            themeState.currentFontFamily,
-            themeState.currentEnableMaterial3,
-            true,
-          ),
-          localizationsDelegates:
-              LocalizationsDetails.getLocalizationDelegates(),
-          supportedLocales: LocalizationsDetails.getSupportedLocales(),
-          locale: localizationsState.currentLocale,
-          initialRoute: Routes.initialRoute,
-          routes: Routes.routes,
-        ),
+        builder: (_, localizationsState) {
+          AppUtilsMethods.setTimeAgoLocalMessage(
+            localizationsState.currentLocale.languageCode,
+            TimeAgoCustomMessage(context),
+          );
+
+          return MaterialApp(
+            title: Constants.applicationName,
+            themeMode: themeState.currentThemeMode,
+            debugShowCheckedModeBanner: !AppDetails.isReleaseMode,
+            theme: _getThemeData(
+              themeState.currentLightFlexScheme,
+              themeState.currentFontFamily,
+              themeState.currentEnableMaterial3,
+              false,
+            ),
+            highContrastTheme: _getThemeData(
+              themeState.currentLightContrastFlexScheme,
+              themeState.currentFontFamily,
+              themeState.currentEnableMaterial3,
+              false,
+            ),
+            darkTheme: _getThemeData(
+              themeState.currentDarkFlexScheme,
+              themeState.currentFontFamily,
+              themeState.currentEnableMaterial3,
+              true,
+            ),
+            highContrastDarkTheme: _getThemeData(
+              themeState.currentDarkContrastFlexScheme,
+              themeState.currentFontFamily,
+              themeState.currentEnableMaterial3,
+              true,
+            ),
+            localizationsDelegates:
+                LocalizationsDetails.getLocalizationDelegates(),
+            supportedLocales: LocalizationsDetails.getSupportedLocales(),
+            locale: localizationsState.currentLocale,
+            initialRoute: Routes.initialRoute,
+            routes: Routes.routes,
+          );
+        },
       ),
     );
   }
