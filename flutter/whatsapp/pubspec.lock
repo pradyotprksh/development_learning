@@ -99,6 +99,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.2"
+  camerawesome:
+    dependency: "direct main"
+    description:
+      name: camerawesome
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.1.0"
   characters:
     dependency: transitive
     description:
@@ -1063,7 +1070,7 @@ packages:
       name: rxdart
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.27.6"
+    version: "0.27.7"
   shelf:
     dependency: transitive
     description:
