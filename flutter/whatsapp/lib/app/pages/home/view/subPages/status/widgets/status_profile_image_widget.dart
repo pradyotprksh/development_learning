@@ -24,23 +24,25 @@ class StatusProfileImageWidget extends StatelessWidget {
             CachedNetworkImageWidget(
               imageUrl: profileImage,
               placeholder: CircleAvatar(
-                radius: 15,
+                radius: 20,
                 backgroundColor: context.themeData.primaryColor,
                 backgroundImage: const AssetImage(
                   AssetsPath.defaultAvatar,
                 ),
               ),
-              height: 30,
-              width: 30,
+              height: 40,
+              width: 40,
               clipToCircle: true,
             ),
-            CircularStepProgressIndicator(
-              totalSteps: totalStatusCount,
-              currentStep: readStatusCount,
-              roundedCap: (_, isSelected) => isSelected,
-              stepSize: 1,
-              customColor: (color) => context.themeData.primaryColor,
-            ),
+            if (totalStatusCount > 0)
+              CircularStepProgressIndicator(
+                totalSteps: totalStatusCount,
+                currentStep: readStatusCount,
+                roundedCap: (_, isSelected) => isSelected,
+                stepSize: 2,
+                selectedColor: context.themeData.primaryColor,
+                unselectedColor: context.themeData.disabledColor,
+              ),
           ],
         ),
       );

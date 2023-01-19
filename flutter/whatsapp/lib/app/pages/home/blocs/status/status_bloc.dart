@@ -22,11 +22,9 @@ class StatusBloc extends Bloc<StatusEvent, StatusState> {
       _firebaseFirestoreService.getStatus().stream,
       onData: (status) {
         if (status != null && userId != null) {
-          var currentUserStatus = status
-              .where(
-                (element) => element.userId == userId,
-              )
-              .toList();
+          var currentUserStatus = status.firstWhere(
+            (element) => element.userId == userId,
+          );
           var otherStatus = status
               .where(
                 (element) => element.userId != userId,

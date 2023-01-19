@@ -4,20 +4,20 @@ import 'package:whatsapp/domain/domain.dart';
 class StatusState extends Equatable {
   const StatusState({
     this.otherStatus = const [],
-    this.currentUserStatus = const [],
+    this.currentUserStatus,
   });
 
   StatusState copyWith({
     List<UserWithSingleStatusDetails>? otherStatus,
-    List<UserWithSingleStatusDetails>? currentUserStatus,
+    UserWithSingleStatusDetails? currentUserStatus,
   }) =>
       StatusState(
         otherStatus: otherStatus ?? this.otherStatus,
-        currentUserStatus: otherStatus ?? this.currentUserStatus,
+        currentUserStatus: currentUserStatus ?? this.currentUserStatus,
       );
 
   final List<UserWithSingleStatusDetails> otherStatus;
-  final List<UserWithSingleStatusDetails> currentUserStatus;
+  final UserWithSingleStatusDetails? currentUserStatus;
 
   @override
   List<Object?> get props => [

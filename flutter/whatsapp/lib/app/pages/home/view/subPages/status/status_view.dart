@@ -44,24 +44,22 @@ class _StatusViewState extends State<StatusView>
                 leading: Stack(
                   alignment: Alignment.bottomRight,
                   children: [
-                    CachedNetworkImageWidget(
-                      imageUrl: userState.userDetails?.profileImage ?? '',
-                      placeholder: CircleAvatar(
-                        radius: 20,
-                        backgroundColor: context.themeData.primaryColor,
-                        backgroundImage: const AssetImage(
-                          AssetsPath.defaultAvatar,
-                        ),
-                      ),
-                      height: 40,
-                      width: 40,
-                      clipToCircle: true,
+                    StatusProfileImageWidget(
+                      profileImage: userState.userDetails?.profileImage ?? '',
+                      totalStatusCount:
+                          statusState.currentUserStatus?.statusDetails.length ??
+                              0,
+                      readStatusCount:
+                          statusState.currentUserStatus?.statusDetails.length ??
+                              0,
                     ),
-                    Icon(
-                      Icons.add_circle,
-                      size: 15,
-                      color: context.themeData.primaryColor,
-                    )
+                    if (statusState.currentUserStatus?.statusDetails.isEmpty ==
+                        true)
+                      Icon(
+                        Icons.add_circle,
+                        size: 15,
+                        color: context.themeData.primaryColor,
+                      )
                   ],
                 ),
                 title: Text(
