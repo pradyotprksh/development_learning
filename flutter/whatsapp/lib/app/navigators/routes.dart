@@ -21,7 +21,17 @@ abstract class Routes {
     introRoute: (context) => const IntroView(),
     personaliseRoute: (context) => const PersonaliseView(),
     authenticateRoute: (context) => const AuthenticateView(),
-    homeRoute: (context) => const HomeView(),
+    homeRoute: (context) => MultiBlocProvider(
+          providers: [
+            BlocProvider(
+              create: (_) => StatusBloc()
+                ..add(
+                  const FetchStatus(),
+                ),
+            ),
+          ],
+          child: const HomeView(),
+        ),
     addStatus: (context) => BlocProvider(
           create: (_) => AddStatusBloc(
             context.read<ThemeBloc>().state.currentFontFamily,
