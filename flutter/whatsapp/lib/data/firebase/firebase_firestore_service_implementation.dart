@@ -85,7 +85,7 @@ class FirebaseFirestoreServiceImplementation extends FirebaseFirestoreService {
           final isUserPresent = statusWithUserDetails.where(
             (element) => element.userId == userId,
           );
-          late Stream<UserDetails?> userDetails;
+          late StreamController<UserDetails?> userDetails;
           if (isUserPresent.isNotEmpty) {
             final isStatusPresent = isUserPresent.first.statusDetails.where(
               (element) => element.statusId == statusDetails.statusId,
@@ -95,7 +95,7 @@ class FirebaseFirestoreServiceImplementation extends FirebaseFirestoreService {
             }
             userDetails = isUserPresent.first.userDetails;
           } else {
-            userDetails = getUserDetails(userId).stream;
+            userDetails = getUserDetails(userId);
           }
 
           final allStatus = event.docs
