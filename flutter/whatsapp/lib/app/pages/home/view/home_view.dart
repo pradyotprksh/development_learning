@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:whatsapp/app/app.dart';
-import 'package:whatsapp/app/pages/home/view/subPages/sub_pages.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
