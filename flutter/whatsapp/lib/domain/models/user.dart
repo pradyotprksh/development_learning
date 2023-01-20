@@ -9,6 +9,7 @@ class UserDetails {
     this.emailId,
     this.phoneNumber,
     this.profileImage,
+    this.firestoreFilePath,
     required this.userId,
     required this.pin,
     this.allDetailsAvailable = false,
@@ -38,6 +39,8 @@ class UserDetails {
           data?[UserDetailsKey.phoneNumber] as String?),
       profileImage: EncryptorService.decryptData(
           data?[UserDetailsKey.profileImage] as String?),
+      firestoreFilePath: EncryptorService.decryptData(
+          data?[StatusKey.firestoreFilePath] as String?),
       userId: data?[UserDetailsKey.userId] as String,
       pin: pin,
       createdOnTimeStamp: data?[UserDetailsKey.createdOnTimeStamp] as int? ?? 0,
@@ -52,6 +55,7 @@ class UserDetails {
   final String? emailId;
   final String? phoneNumber;
   final String? profileImage;
+  final String? firestoreFilePath;
   final String userId;
   final String pin;
   final bool allDetailsAvailable;
@@ -69,6 +73,9 @@ class UserDetails {
         if (profileImage != null)
           UserDetailsKey.profileImage:
               EncryptorService.encryptData(profileImage),
+        if (firestoreFilePath != null)
+          StatusKey.firestoreFilePath:
+              EncryptorService.encryptData(firestoreFilePath),
         if (createdOnTimeStamp != null)
           UserDetailsKey.createdOnTimeStamp: createdOnTimeStamp,
         if (updatedOnTimeStamp != null)

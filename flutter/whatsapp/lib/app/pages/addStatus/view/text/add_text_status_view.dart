@@ -4,8 +4,8 @@ import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:whatsapp/app/app.dart';
 
-class AddStatusView extends StatelessWidget {
-  AddStatusView({super.key});
+class AddTextStatusView extends StatelessWidget {
+  AddTextStatusView({super.key});
 
   void _submitStatus(BuildContext context) {
     if (_formKey.currentState?.validate() == true) {
@@ -82,56 +82,48 @@ class AddStatusView extends StatelessWidget {
               ),
             ],
           ),
-          body: Column(
-            mainAxisSize: MainAxisSize.max,
+          body: Stack(
+            alignment: Alignment.center,
             children: [
-              const Spacer(),
-              Padding(
-                padding: ThemeEdgeInsets.all20,
-                child: Form(
-                  key: _formKey,
-                  child: TextFormField(
-                    controller: _statusController,
-                    decoration: InputDecoration(
-                      hintText: context.translator.typeAStatus,
-                      hintStyle: GoogleFonts.getFont(
-                        addStatusState.currentFontFamily,
-                      ),
-                    ),
-                    validator: (value) => _validateStatus(
-                      value,
-                      context.translator.statusErrorMessage,
-                    ),
-                    maxLength: 700,
-                    maxLines: 10,
-                    autofocus: true,
-                    style: GoogleFonts.getFont(
-                      addStatusState.currentFontFamily,
-                    ),
-                  ),
-                ),
-              ),
-              const Spacer(),
-              Container(
-                color: Colors.black12,
-                child: Padding(
-                  padding: ThemeEdgeInsets.all10,
-                  child: Row(
-                    children: [
-                      const Spacer(),
-                      FloatingActionButton(
-                        onPressed: () {
-                          _submitStatus(context);
-                        },
-                        mini: true,
-                        child: const Icon(
-                          Icons.send,
+              Column(
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  const Spacer(),
+                  Padding(
+                    padding: ThemeEdgeInsets.all20,
+                    child: Form(
+                      key: _formKey,
+                      child: TextFormField(
+                        controller: _statusController,
+                        decoration: InputDecoration(
+                          hintText: context.translator.typeAStatus,
+                          hintStyle: GoogleFonts.getFont(
+                            addStatusState.currentFontFamily,
+                          ),
+                        ),
+                        validator: (value) => _validateStatus(
+                          value,
+                          context.translator.statusErrorMessage,
+                        ),
+                        maxLength: 700,
+                        maxLines: 10,
+                        autofocus: true,
+                        style: GoogleFonts.getFont(
+                          addStatusState.currentFontFamily,
                         ),
                       ),
-                    ],
+                    ),
                   ),
-                ),
+                  const Spacer(),
+                  UploadStatusWidget(
+                    onPressed: () {
+                      _submitStatus(context);
+                    },
+                  ),
+                ],
               ),
+              if (addStatusState.pageState == PageState.loading)
+                const CircularProgressIndicatorWidget(),
             ],
           ),
         ),

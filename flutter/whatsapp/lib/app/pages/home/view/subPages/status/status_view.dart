@@ -21,7 +21,7 @@ class _StatusViewState extends State<StatusView>
         children: [
           FloatingActionButton(
             onPressed: () {
-              context.navigator.pushNamed(Routes.addStatus);
+              context.navigator.pushNamed(Routes.addStatusText);
             },
             mini: true,
             heroTag: Icons.edit.toString(),
@@ -29,7 +29,9 @@ class _StatusViewState extends State<StatusView>
           ),
           ThemeSizedBox.height10,
           FloatingActionButton(
-            onPressed: () {},
+            onPressed: () {
+              context.navigator.pushNamed(Routes.addStatusCamera);
+            },
             heroTag: Icons.camera.toString(),
             child: const Icon(Icons.camera),
           ),

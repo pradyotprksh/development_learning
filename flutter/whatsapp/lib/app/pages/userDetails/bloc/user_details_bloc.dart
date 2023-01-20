@@ -65,6 +65,7 @@ class UserDetailsBloc extends Bloc<UserDetailsEvent, UserDetailsState> {
             emailId: event.emailAddress,
             phoneNumber: event.phoneNumber,
             profileImage: event.profilePic,
+            firestoreFilePath: state.firestorePath,
             pin: event.pin!,
             userId: userId,
             allDetailsAvailable: true,
@@ -104,18 +105,20 @@ class UserDetailsBloc extends Bloc<UserDetailsEvent, UserDetailsState> {
       );
 
       try {
-        final imageUrl = await _firebaseStorageService.uploadImage(
+        final firestorePath = CoreConstants.userProfileImage.replaceAll(
+          CoreConstants.userIdPlaceholder,
+          userId,
+        );
+        final imageUrl = await _firebaseStorageService.uploadFile(
           event.imagePath,
-          CoreConstants.userProfileImage.replaceAll(
-            CoreConstants.userIdPlaceholder,
-            userId,
-          ),
+          firestorePath,
         );
 
         emit(
           state.copyWith(
             imageUploadStatus: ImageUploadStatus.uploaded,
             profilePicImage: imageUrl,
+            firestorePath: firestorePath,
           ),
         );
       } on Exception catch (e) {

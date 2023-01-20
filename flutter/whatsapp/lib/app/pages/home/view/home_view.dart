@@ -44,7 +44,9 @@ class _HomeViewState extends State<HomeView>
             ),
             actions: [
               IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  context.navigator.pushNamed(Routes.addStatusCamera);
+                },
                 icon: const Icon(
                   Icons.camera,
                 ),

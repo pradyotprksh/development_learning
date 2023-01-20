@@ -8,7 +8,8 @@ class StatusDetails {
     required this.fontFamily,
     required this.color,
     required this.userId,
-    this.statusImageUrl,
+    this.filePathUrl,
+    this.firestoreFilePath,
     this.userDeviceDetails,
     this.createdOnTimeStamp,
     this.statusId = '',
@@ -28,8 +29,10 @@ class StatusDetails {
       status: EncryptorService.encryptData(data?[StatusKey.status] as String),
       fontFamily: data?[StatusKey.fontFamily] as String,
       color: data?[StatusKey.color] as int,
-      statusImageUrl: EncryptorService.encryptData(
-          data?[StatusKey.statusImageUrl] as String?),
+      filePathUrl:
+          EncryptorService.encryptData(data?[StatusKey.filePathUrl] as String?),
+      firestoreFilePath: EncryptorService.encryptData(
+          data?[StatusKey.firestoreFilePath] as String?),
       userId: data?[UserDetailsKey.userId] as String,
       createdOnTimeStamp: data?[UserDetailsKey.createdOnTimeStamp] as int? ?? 0,
       userDeviceDetails: UserDeviceDetails.fromMap(deviceDetails),
@@ -41,7 +44,8 @@ class StatusDetails {
   final String fontFamily;
   final int color;
   final String userId;
-  final String? statusImageUrl;
+  final String? filePathUrl;
+  final String? firestoreFilePath;
   final int? createdOnTimeStamp;
   final UserDeviceDetails? userDeviceDetails;
   final String statusId;
@@ -50,9 +54,11 @@ class StatusDetails {
         StatusKey.status: EncryptorService.encryptData(status),
         StatusKey.fontFamily: fontFamily,
         StatusKey.color: color,
-        if (statusImageUrl != null)
-          StatusKey.statusImageUrl:
-              EncryptorService.encryptData(statusImageUrl),
+        if (filePathUrl != null)
+          StatusKey.filePathUrl: EncryptorService.encryptData(filePathUrl),
+        if (firestoreFilePath != null)
+          StatusKey.firestoreFilePath:
+              EncryptorService.encryptData(firestoreFilePath),
         if (createdOnTimeStamp != null)
           UserDetailsKey.createdOnTimeStamp: createdOnTimeStamp,
         UserDetailsKey.userId: userId,

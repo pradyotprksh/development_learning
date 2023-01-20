@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:whatsapp/app/app.dart';
 
 abstract class AddStatusEvent extends Equatable {
   const AddStatusEvent();
@@ -36,4 +37,13 @@ class UploadStatus extends AddStatusEvent {
 
   @override
   List<Object?> get props => [statusValue];
+}
+
+class ImageVideoSelect extends AddStatusEvent {
+  const ImageVideoSelect(this.fileDetails);
+
+  final FileDetails fileDetails;
+
+  @override
+  List<Object?> get props => [fileDetails];
 }

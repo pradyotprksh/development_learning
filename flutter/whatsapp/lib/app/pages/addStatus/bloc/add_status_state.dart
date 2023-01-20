@@ -10,27 +10,32 @@ class AddStatusState extends Equatable {
     this.chosenColor = AddStatusConstants.defaultColor,
     this.currentFontFamily = Constants.defaultFontFamily,
     this.pageState = PageState.idle,
+    this.fileDetails,
   });
 
   AddStatusState copyWith({
     int? chosenColor,
     String? currentFontFamily,
     PageState? pageState,
+    FileDetails? fileDetails,
   }) =>
       AddStatusState(
         chosenColor: chosenColor ?? this.chosenColor,
         currentFontFamily: currentFontFamily ?? this.currentFontFamily,
         pageState: pageState ?? this.pageState,
+        fileDetails: fileDetails ?? this.fileDetails,
       );
 
   final int chosenColor;
   final String currentFontFamily;
   final PageState pageState;
+  final FileDetails? fileDetails;
 
   @override
   List<Object?> get props => [
         chosenColor,
         currentFontFamily,
         pageState,
+        fileDetails,
       ];
 }

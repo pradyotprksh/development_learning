@@ -10,15 +10,18 @@ class AddStatusBloc extends Bloc<AddStatusEvent, AddStatusState> {
     this._firebaseAuthService,
     this._firebaseFirestoreService,
     this._deviceDetails,
+    this._firebaseStorageService,
   ) : super(AddStatusState(currentFontFamily: currentFont)) {
     on<UpdateBackgroundColor>(_backgroundColorChangeEvent);
     on<UpdateFontFamily>(_fontChangeEvent);
     on<UploadStatus>(_uploadStatusEvent);
+    on<ImageVideoSelect>(_imageVideoSelectedEvent);
   }
 
   final FirebaseAuthService _firebaseAuthService;
   final FirebaseFirestoreService _firebaseFirestoreService;
   final DeviceDetails _deviceDetails;
+  final FirebaseStorageService _firebaseStorageService;
 
   void _backgroundColorChangeEvent(
     UpdateBackgroundColor event,
@@ -34,6 +37,13 @@ class AddStatusBloc extends Bloc<AddStatusEvent, AddStatusState> {
     emit(state.copyWith(currentFontFamily: event.newFont));
   }
 
+  void _imageVideoSelectedEvent(
+    ImageVideoSelect event,
+    Emitter<AddStatusState> emit,
+  ) {
+    emit(state.copyWith(fileDetails: event.fileDetails));
+  }
+
   void _uploadStatusEvent(
     UploadStatus event,
     Emitter<AddStatusState> emit,
@@ -42,10 +52,25 @@ class AddStatusBloc extends Bloc<AddStatusEvent, AddStatusState> {
     final color = state.chosenColor;
     final fontFamily = state.currentFontFamily;
     final deviceDetails = await _deviceDetails.getDeviceDetails();
+    String? filePathUrl;
+    String? firestorePath;
+    final fileDetails = state.fileDetails;
 
     final userId = _firebaseAuthService.getUserId();
     if (userId != null) {
       emit(state.copyWith(pageState: PageState.loading));
+
+      if (fileDetails != null) {
+        final path = fileDetails.croppedImagePath;
+        firestorePath = CoreConstants.userStatusImage().replaceAll(
+          CoreConstants.userIdPlaceholder,
+          userId,
+        );
+        filePathUrl = await _firebaseStorageService.uploadFile(
+          path,
+          firestorePath,
+        );
+      }
 
       try {
         await _firebaseFirestoreService.setStatus(
@@ -56,13 +81,14 @@ class AddStatusBloc extends Bloc<AddStatusEvent, AddStatusState> {
             userId: userId,
             userDeviceDetails: deviceDetails,
             createdOnTimeStamp: DeviceUtilsMethods.getCurrentTimeStamp(),
+            filePathUrl: filePathUrl,
+            firestoreFilePath: firestorePath,
           ),
         );
 
         emit(state.copyWith(pageState: PageState.success));
       } catch (e) {
         UtilsLogger.debugLog(e);
-
         emit(state.copyWith(pageState: PageState.error));
       }
     }

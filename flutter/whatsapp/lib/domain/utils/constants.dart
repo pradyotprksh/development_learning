@@ -21,6 +21,7 @@ abstract class StatusKey {
   static const status = 'status';
   static const fontFamily = 'fontFamily';
   static const color = 'color';
-  static const statusImageUrl = 'statusImageUrl';
+  static const filePathUrl = 'filePathUrl';
+  static const firestoreFilePath = 'firestoreFilePath';
   static const statusId = 'statusId';
 }

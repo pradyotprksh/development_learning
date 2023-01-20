@@ -1,3 +1,5 @@
+import 'package:whatsapp/device/device.dart';
+
 abstract class CoreConstants {
   static const userCollection = 'users';
   static const statusCollection = 'status';
@@ -6,4 +8,6 @@ abstract class CoreConstants {
   static const isApplicationDown = 'isApplicationDown';
   static const userProfileImage =
       '$userCollection/profileImages/$userIdPlaceholder';
+  static String userStatusImage() =>
+      '$userCollection/status/$userIdPlaceholder-${DeviceUtilsMethods.getCurrentTimeStamp()}';
 }

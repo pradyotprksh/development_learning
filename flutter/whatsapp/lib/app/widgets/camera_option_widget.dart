@@ -5,8 +5,37 @@ import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:whatsapp/app/app.dart';
 
+class FileDetails {
+  FileDetails({
+    required this.path,
+    required this.croppedImagePath,
+    required this.isImage,
+    required this.isVideo,
+  });
+
+  FileDetails copyWith(
+    String croppedImagePath,
+  ) =>
+      FileDetails(
+        path: path,
+        croppedImagePath: croppedImagePath,
+        isImage: isImage,
+        isVideo: isVideo,
+      );
+
+  final String path;
+  final String croppedImagePath;
+  final bool isImage;
+  final bool isVideo;
+}
+
 class CameraOptionWidget extends StatelessWidget {
-  const CameraOptionWidget({super.key});
+  const CameraOptionWidget({
+    super.key,
+    required this.onMediaSelected,
+  });
+
+  final void Function(FileDetails) onMediaSelected;
 
   Future<String> _path(CaptureMode captureMode) async {
     final extDir = await getTemporaryDirectory();
@@ -28,7 +57,14 @@ class CameraOptionWidget extends StatelessWidget {
         flashMode: FlashMode.auto,
         aspectRatio: CameraAspectRatios.ratio_16_9,
         onMediaTap: (mediaCapture) {
-          context.navigator.pop(mediaCapture);
+          onMediaSelected(
+            FileDetails(
+              path: mediaCapture.filePath,
+              croppedImagePath: mediaCapture.filePath,
+              isImage: mediaCapture.isPicture,
+              isVideo: mediaCapture.isVideo,
+            ),
+          );
         },
         progressIndicator: const Center(
           child: CircularProgressIndicatorWidget(),

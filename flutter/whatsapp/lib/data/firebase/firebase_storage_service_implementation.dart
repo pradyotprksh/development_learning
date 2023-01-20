@@ -11,7 +11,7 @@ class FirebaseStorageServiceImplementation extends FirebaseStorageService {
       FirebaseStorageServiceImplementation._privateConstructor();
 
   @override
-  Future<String> uploadImage(String path, String referenceName) async {
+  Future<String> uploadFile(String path, String referenceName) async {
     final storageReference = storage.ref().child(referenceName);
     await storageReference.putFile(File(path));
     return await storageReference.getDownloadURL();

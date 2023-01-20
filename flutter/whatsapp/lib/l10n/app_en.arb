@@ -70,5 +70,6 @@
   "now": "now",
   "months": "months",
   "minutes": "minutes",
-  "ago": "ago"
+  "ago": "ago",
+  "addCaptionForStatus": "Add caption for your status"
 }
