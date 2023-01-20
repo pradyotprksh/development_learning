@@ -41,7 +41,7 @@ dependencies:
 
   firebase_core: ^2.4.1
 
-  firebase_crashlytics: ^3.0.10
+  firebase_crashlytics: ^3.0.11
 
   firebase_dynamic_links: ^5.0.11
 
@@ -51,7 +51,7 @@ dependencies:
 
   firebase_storage: ^11.0.10
 
-  firebase_ui_auth: ^1.1.8
+  firebase_ui_auth: ^1.1.9
 
   flex_color_scheme: ^6.1.2
 
