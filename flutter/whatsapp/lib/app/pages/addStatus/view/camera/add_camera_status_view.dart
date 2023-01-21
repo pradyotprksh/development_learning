@@ -117,12 +117,13 @@ class AddCameraStatusView extends StatelessWidget {
                             Icons.text_fields,
                           ),
                         ),
-                      IconButton(
-                        onPressed: () {},
-                        icon: const Icon(
-                          Icons.edit,
+                      if (isPicture)
+                        IconButton(
+                          onPressed: () {},
+                          icon: const Icon(
+                            Icons.edit,
+                          ),
                         ),
-                      ),
                     ]
                   : null,
             ),
@@ -149,7 +150,9 @@ class AddCameraStatusView extends StatelessWidget {
                                 ),
                                 fit: BoxFit.contain,
                               )
-                            : Container(),
+                            : filePath != null
+                                ? VideoWidget(path: filePath)
+                                : ThemeSizedBox.shrink,
                       ),
                       Align(
                         alignment: Alignment.bottomCenter,

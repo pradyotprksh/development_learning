@@ -99,6 +99,8 @@ dependencies:
 
   url_launcher: ^6.1.7
 
+  video_player: ^2.5.1
+
 dev_dependencies:
   bloc_test: ^9.1.0
 
