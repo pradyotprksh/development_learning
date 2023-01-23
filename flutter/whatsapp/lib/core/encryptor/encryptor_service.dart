@@ -1,7 +1,6 @@
 import 'package:encrypt/encrypt.dart';
 import 'package:memory_cache/memory_cache.dart';
 import 'package:whatsapp/core/core.dart';
-import 'package:whatsapp/data/data.dart';
 import 'package:whatsapp/domain/domain.dart';
 
 abstract class EncryptorService {
@@ -9,7 +8,7 @@ abstract class EncryptorService {
 
   static String encryptData(dynamic data) {
     final key = MemoryCache.instance.read<String?>(UserDetailsKey.pin);
-    if (FirebaseRemoteConfigServiceImplementation().isEncryptionEnabled() &&
+    if (FirebaseRemoteConfigService.isEncryptionEnabled() &&
         key != null &&
         data != null) {
       try {
@@ -29,8 +28,7 @@ abstract class EncryptorService {
 
   static T decryptData<T>(T data) {
     final key = MemoryCache.instance.read<String?>(UserDetailsKey.pin);
-    if (FirebaseRemoteConfigServiceImplementation().isEncryptionEnabled() &&
-        key != null) {
+    if (FirebaseRemoteConfigService.isEncryptionEnabled() && key != null) {
       try {
         final utf8Key = Key.fromUtf8(key);
         final iv = IV.fromLength(16);

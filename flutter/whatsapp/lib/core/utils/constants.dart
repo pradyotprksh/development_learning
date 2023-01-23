@@ -5,6 +5,7 @@ abstract class CoreConstants {
   static const statusCollection = 'status';
   static const userIdPlaceholder = '{userId}';
   static const enableEncryption = 'enableEncryption';
+  static const imageCompressionValue = 'imageCompressionValue';
   static const isApplicationDown = 'isApplicationDown';
   static const userProfileImage =
       '$userCollection/profileImages/$userIdPlaceholder';

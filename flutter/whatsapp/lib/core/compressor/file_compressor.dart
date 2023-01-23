@@ -11,7 +11,7 @@ abstract class FileCompressor {
       var result = await FlutterImageCompress.compressAndGetFile(
         rawFilePath,
         await DeviceUtilsMethods.getTempDirectoryPath(),
-        quality: 60,
+        quality: FirebaseRemoteConfigService.imageCompressionValue(),
       );
 
       return result?.path;

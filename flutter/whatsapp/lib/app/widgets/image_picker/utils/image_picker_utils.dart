@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:whatsapp/app/app.dart';
+import 'package:whatsapp/core/core.dart';
 
 abstract class ImagePickerUtils {
   static Future<ImageSource?> selectPickerType(
@@ -60,7 +61,7 @@ abstract class ImagePickerUtils {
           ],
       cropStyle: cropStyle ?? CropStyle.rectangle,
       uiSettings: platformSettings,
-      compressQuality: 60,
+      compressQuality: FirebaseRemoteConfigService.imageCompressionValue(),
     );
     return croppedImage?.path;
   }
