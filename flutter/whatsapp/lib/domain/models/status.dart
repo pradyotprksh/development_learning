@@ -12,6 +12,7 @@ class StatusDetails {
     this.firestoreFilePath,
     this.userDeviceDetails,
     this.createdOnTimeStamp,
+    this.isFileImage,
     this.statusId = '',
   });
 
@@ -37,6 +38,7 @@ class StatusDetails {
       createdOnTimeStamp: data?[UserDetailsKey.createdOnTimeStamp] as int? ?? 0,
       userDeviceDetails: UserDeviceDetails.fromMap(deviceDetails),
       statusId: snapshot.id,
+      isFileImage: data?[StatusKey.isFileImage] as bool?,
     );
   }
 
@@ -49,6 +51,7 @@ class StatusDetails {
   final int? createdOnTimeStamp;
   final UserDeviceDetails? userDeviceDetails;
   final String statusId;
+  final bool? isFileImage;
 
   Map<String, dynamic> toFirestore() => <String, dynamic>{
         StatusKey.status: EncryptorService.encryptData(status),
@@ -64,5 +67,6 @@ class StatusDetails {
         UserDetailsKey.userId: userId,
         if (userDeviceDetails != null)
           UserDetailsKey.userDeviceDetails: userDeviceDetails!.toMap(),
+        if (isFileImage != null) StatusKey.isFileImage: isFileImage,
       };
 }

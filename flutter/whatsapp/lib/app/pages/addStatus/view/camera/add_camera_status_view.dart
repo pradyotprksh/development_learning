@@ -30,7 +30,7 @@ class AddCameraStatusView extends StatelessWidget {
         builder: (_, addStatusState) {
           final fileDetails = addStatusState.fileDetails;
           final filePath = fileDetails?.path;
-          final croppedImagePath = fileDetails?.croppedImagePath;
+          final croppedImagePath = fileDetails?.editedFilePath;
           final isPicture = fileDetails?.isImage == true;
 
           return Scaffold(
@@ -68,9 +68,12 @@ class AddCameraStatusView extends StatelessWidget {
                             final statusBloc = context.read<AddStatusBloc>();
                             final currentFiledDetails =
                                 statusBloc.state.fileDetails;
-                            final croppedPath = await ImageCropper().cropImage(
-                              sourcePath: filePath,
-                              uiSettings: [
+                            final croppedPath =
+                                await ImagePickerUtils.getCroppedImage(
+                              filePath,
+                              null,
+                              null,
+                              [
                                 AndroidUiSettings(
                                   toolbarTitle: Constants.applicationName,
                                   toolbarColor: context
@@ -93,8 +96,9 @@ class AddCameraStatusView extends StatelessWidget {
                                 currentFiledDetails != null) {
                               statusBloc.add(
                                 ImageVideoSelect(
-                                  currentFiledDetails
-                                      .copyWith(croppedPath.path),
+                                  currentFiledDetails.copyWith(
+                                    croppedPath,
+                                  ),
                                 ),
                               );
                             }

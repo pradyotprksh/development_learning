@@ -61,15 +61,22 @@ class AddStatusBloc extends Bloc<AddStatusEvent, AddStatusState> {
       emit(state.copyWith(pageState: PageState.loading));
 
       if (fileDetails != null) {
-        final path = fileDetails.croppedImagePath;
-        firestorePath = CoreConstants.userStatusImage().replaceAll(
-          CoreConstants.userIdPlaceholder,
-          userId,
-        );
-        filePathUrl = await _firebaseStorageService.uploadFile(
-          path,
-          firestorePath,
-        );
+        String? path = fileDetails.editedFilePath;
+        if (path == fileDetails.path) {
+          path = fileDetails.isImage
+              ? await FileCompressor.getCompressedImagePath(path)
+              : await FileCompressor.getCompressedVideoPath(path);
+        }
+        if (path != null) {
+          firestorePath = CoreConstants.userStatusImage().replaceAll(
+            CoreConstants.userIdPlaceholder,
+            userId,
+          );
+          filePathUrl = await _firebaseStorageService.uploadFile(
+            path,
+            firestorePath,
+          );
+        }
       }
 
       try {
@@ -83,12 +90,13 @@ class AddStatusBloc extends Bloc<AddStatusEvent, AddStatusState> {
             createdOnTimeStamp: DeviceUtilsMethods.getCurrentTimeStamp(),
             filePathUrl: filePathUrl,
             firestoreFilePath: firestorePath,
+            isFileImage: fileDetails?.isImage,
           ),
         );
 
         emit(state.copyWith(pageState: PageState.success));
       } catch (e) {
-        UtilsLogger.debugLog(e);
+        FirebaseUtils.recordFlutterError(e);
         emit(state.copyWith(pageState: PageState.error));
       }
     }

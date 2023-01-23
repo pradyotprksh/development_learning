@@ -19,7 +19,7 @@ abstract class EncryptorService {
         final encrypted = encryptor.encrypt(data.toString(), iv: iv);
         return encrypted.base64;
       } catch (e) {
-        UtilsLogger.debugLog(e);
+        FirebaseUtils.recordFlutterError(e);
         return data.toString();
       }
     } else {
@@ -38,7 +38,7 @@ abstract class EncryptorService {
         final decrypted = decryptor.decrypt64(data.toString(), iv: iv);
         return decrypted as T;
       } catch (e) {
-        UtilsLogger.debugLog(e);
+        FirebaseUtils.recordFlutterError(e);
         return data;
       }
     } else {

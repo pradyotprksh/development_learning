@@ -24,4 +24,5 @@ abstract class StatusKey {
   static const filePathUrl = 'filePathUrl';
   static const firestoreFilePath = 'firestoreFilePath';
   static const statusId = 'statusId';
+  static const isFileImage = 'isFileImage';
 }

@@ -8,7 +8,7 @@ import 'package:whatsapp/app/app.dart';
 class FileDetails {
   FileDetails({
     required this.path,
-    required this.croppedImagePath,
+    required this.editedFilePath,
     required this.isImage,
     required this.isVideo,
   });
@@ -18,13 +18,13 @@ class FileDetails {
   ) =>
       FileDetails(
         path: path,
-        croppedImagePath: croppedImagePath,
+        editedFilePath: croppedImagePath,
         isImage: isImage,
         isVideo: isVideo,
       );
 
   final String path;
-  final String croppedImagePath;
+  final String editedFilePath;
   final bool isImage;
   final bool isVideo;
 }
@@ -60,7 +60,7 @@ class CameraOptionWidget extends StatelessWidget {
           onMediaSelected(
             FileDetails(
               path: mediaCapture.filePath,
-              croppedImagePath: mediaCapture.filePath,
+              editedFilePath: mediaCapture.filePath,
               isImage: mediaCapture.isPicture,
               isVideo: mediaCapture.isVideo,
             ),

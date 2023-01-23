@@ -28,11 +28,11 @@ class ImagePickerWidget extends StatelessWidget {
             if (file != null) {
               // Crop the picked image
               final filePath = file.path;
-              final croppedImage = await ImageCropper().cropImage(
-                sourcePath: filePath,
-                aspectRatioPresets: aspectRatioPresets,
-                cropStyle: cropStyle,
-                uiSettings: [
+              final croppedImage = await ImagePickerUtils.getCroppedImage(
+                filePath,
+                aspectRatioPresets,
+                cropStyle,
+                [
                   AndroidUiSettings(
                     toolbarTitle: Constants.applicationName,
                     toolbarColor: context.themeData.appBarTheme.backgroundColor,
@@ -49,7 +49,7 @@ class ImagePickerWidget extends StatelessWidget {
                 ],
               );
               if (croppedImage != null) {
-                image(croppedImage.path);
+                image(croppedImage);
               }
             }
           }

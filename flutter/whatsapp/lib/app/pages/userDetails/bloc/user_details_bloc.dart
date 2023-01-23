@@ -80,9 +80,8 @@ class UserDetailsBloc extends Bloc<UserDetailsEvent, UserDetailsState> {
             pageState: PageState.success,
           ),
         );
-      } on Exception catch (e) {
-        UtilsLogger.debugLog(e);
-
+      } catch (e) {
+        FirebaseUtils.recordFlutterError(e);
         emit(
           state.copyWith(
             pageState: PageState.error,
@@ -121,9 +120,8 @@ class UserDetailsBloc extends Bloc<UserDetailsEvent, UserDetailsState> {
             firestorePath: firestorePath,
           ),
         );
-      } on Exception catch (e) {
-        UtilsLogger.debugLog(e);
-
+      } catch (e) {
+        FirebaseUtils.recordFlutterError(e);
         emit(
           state.copyWith(
             imageUploadStatus: ImageUploadStatus.error,

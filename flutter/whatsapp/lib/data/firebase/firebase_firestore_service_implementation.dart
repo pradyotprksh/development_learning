@@ -41,6 +41,7 @@ class FirebaseFirestoreServiceImplementation extends FirebaseFirestoreService {
           .get();
       return usersCollection.docs.first.data();
     } catch (e) {
+      FirebaseUtils.recordFlutterError(e);
       return null;
     }
   }
@@ -57,6 +58,7 @@ class FirebaseFirestoreServiceImplementation extends FirebaseFirestoreService {
           .get();
       return usersCollection.docs.first.data();
     } catch (e) {
+      FirebaseUtils.recordFlutterError(e);
       return null;
     }
   }
