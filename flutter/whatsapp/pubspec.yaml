@@ -13,6 +13,8 @@ dependencies:
 
   cached_network_image: ^3.2.3
 
+  cache_video_player: ^0.0.4
+
   camerawesome: ^1.1.0
 
   cloud_firestore: ^4.3.1
@@ -106,8 +108,6 @@ dependencies:
   url_launcher: ^6.1.8
 
   video_compress: ^3.1.2
-
-  video_player: ^2.5.1
 
 dev_dependencies:
   bloc_test: ^9.1.0

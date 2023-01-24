@@ -1,7 +1,7 @@
 import 'dart:io';
 
+import 'package:cache_video_player/player/video_player.dart';
 import 'package:flutter/material.dart';
-import 'package:video_player/video_player.dart';
 import 'package:whatsapp/app/app.dart';
 
 class VideoWidget extends StatefulWidget {
@@ -47,7 +47,9 @@ class _VideoWidgetState extends State<VideoWidget> {
   @override
   Widget build(BuildContext context) {
     if (widget.play && widget.showWidget) {
-      _controller.play();
+      _controller
+        ..play()
+        ..setLooping(true);
     } else {
       _controller.pause();
     }
