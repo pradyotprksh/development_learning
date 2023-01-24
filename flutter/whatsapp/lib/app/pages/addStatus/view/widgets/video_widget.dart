@@ -8,9 +8,11 @@ class VideoWidget extends StatefulWidget {
   const VideoWidget({
     super.key,
     required this.path,
+    this.isNetwork = false,
   });
 
   final String path;
+  final bool isNetwork;
 
   @override
   State<VideoWidget> createState() => _VideoWidgetState();
@@ -22,10 +24,16 @@ class _VideoWidgetState extends State<VideoWidget> {
   @override
   void initState() {
     super.initState();
-    _controller = VideoPlayerController.file(File(widget.path))
+    _controller = widget.isNetwork
+        ? VideoPlayerController.network(widget.path)
+        : VideoPlayerController.file(File(widget.path))
       ..initialize().then(
         (_) {
-          setState(() {});
+          setState(() {
+            if (widget.isNetwork) {
+              _controller.play();
+            }
+          });
         },
       );
   }
@@ -41,18 +49,19 @@ class _VideoWidgetState extends State<VideoWidget> {
                 _controller,
               ),
             ),
-            IconButton(
-              onPressed: () {
-                setState(() {
-                  _controller.value.isPlaying
-                      ? _controller.pause()
-                      : _controller.play();
-                });
-              },
-              icon: Icon(
-                _controller.value.isPlaying ? Icons.pause : Icons.play_arrow,
+            if (!widget.isNetwork)
+              IconButton(
+                onPressed: () {
+                  setState(() {
+                    _controller.value.isPlaying
+                        ? _controller.pause()
+                        : _controller.play();
+                  });
+                },
+                icon: Icon(
+                  _controller.value.isPlaying ? Icons.pause : Icons.play_arrow,
+                ),
               ),
-            ),
           ],
         )
       : const Center(child: CircularProgressIndicatorWidget());

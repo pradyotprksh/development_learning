@@ -27,12 +27,12 @@ class StatusDetails {
             <String, dynamic>{};
 
     return StatusDetails(
-      status: EncryptorService.encryptData(data?[StatusKey.status] as String),
+      status: EncryptorService.decryptData(data?[StatusKey.status] as String),
       fontFamily: data?[StatusKey.fontFamily] as String,
       color: data?[StatusKey.color] as int,
       filePathUrl:
-          EncryptorService.encryptData(data?[StatusKey.filePathUrl] as String?),
-      firestoreFilePath: EncryptorService.encryptData(
+          EncryptorService.decryptData(data?[StatusKey.filePathUrl] as String?),
+      firestoreFilePath: EncryptorService.decryptData(
           data?[StatusKey.firestoreFilePath] as String?),
       userId: data?[UserDetailsKey.userId] as String,
       createdOnTimeStamp: data?[UserDetailsKey.createdOnTimeStamp] as int? ?? 0,
