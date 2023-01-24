@@ -42,7 +42,16 @@ class _StatusViewState extends State<StatusView>
           builder: (_, statusState) => Column(
             children: [
               ListTile(
-                onTap: () {},
+                onTap: () {
+                  if (statusState.currentUserStatus != null) {
+                    _openStatusSheet(
+                      context,
+                      statusState.currentUserStatus!,
+                    );
+                  } else {
+                    context.navigator.pushNamed(Routes.addStatusCamera);
+                  }
+                },
                 leading: Stack(
                   alignment: Alignment.bottomRight,
                   children: [
@@ -87,7 +96,12 @@ class _StatusViewState extends State<StatusView>
                       final userDetails = snapshot.data;
                       if (userDetails != null && statusDetails.isNotEmpty) {
                         return ListTile(
-                          onTap: () {},
+                          onTap: () {
+                            _openStatusSheet(
+                              context,
+                              statusState.otherStatus[index],
+                            );
+                          },
                           leading: StatusProfileImageWidget(
                             profileImage: userDetails.profileImage ?? '',
                             totalStatusCount: statusDetails.length,
@@ -119,4 +133,17 @@ class _StatusViewState extends State<StatusView>
 
   @override
   bool get wantKeepAlive => true;
+
+  void _openStatusSheet(
+    BuildContext context,
+    UserWithSingleStatusDetails userWithSingleStatusDetails,
+  ) {
+    showModalBottomSheet<void>(
+      context: context,
+      isScrollControlled: true,
+      builder: (_) => StatusDetailsWidget(
+        statusDetails: userWithSingleStatusDetails,
+      ),
+    );
+  }
 }

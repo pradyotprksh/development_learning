@@ -7,6 +7,7 @@ abstract class ThemeEdgeInsets {
   static const left16 = EdgeInsets.only(left: 16);
   static const bottom20 = EdgeInsets.only(bottom: 20);
   static const all20 = EdgeInsets.all(20);
+  static const all40 = EdgeInsets.all(40);
   static const all10 = EdgeInsets.all(10);
   static const zero = EdgeInsets.zero;
   static const all15 = EdgeInsets.all(15);

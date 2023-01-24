@@ -41,7 +41,7 @@ abstract class FirebaseUtils {
   }
 
   static void recordFlutterError(Object exception) {
-    UtilsLogger.debugLog(exception);
+    UtilsLogger.errorLog(exception);
     FirebaseCrashlytics.instance.recordFlutterError(
       FlutterErrorDetails(
         exception: exception,

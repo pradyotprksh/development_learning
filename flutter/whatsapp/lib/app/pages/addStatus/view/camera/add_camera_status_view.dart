@@ -37,6 +37,9 @@ class AddCameraStatusView extends StatelessWidget {
             backgroundColor: context.themeData.scaffoldBackgroundColor,
             appBar: AppBar(
               leading: const CloseButton(),
+              elevation: filePath == null
+                  ? 0
+                  : context.themeData.appBarTheme.elevation,
               backgroundColor: filePath == null
                   ? Colors.transparent
                   : context.themeData.appBarTheme.backgroundColor,

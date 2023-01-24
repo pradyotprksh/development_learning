@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:whatsapp/app/app.dart';
 import 'package:whatsapp/core/core.dart';
@@ -25,7 +26,7 @@ class StatusBloc extends Bloc<StatusEvent, StatusState> {
           if (status.isEmpty) {
             return const StatusState();
           } else {
-            var currentUserStatus = status.firstWhere(
+            var currentUserStatus = status.firstWhereOrNull(
               (element) => element.userId == userId,
             );
             var otherStatus = status

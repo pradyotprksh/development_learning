@@ -8,35 +8,44 @@ class TimeAgoCustomMessage extends LookupMessages {
   final BuildContext _context;
 
   @override
-  String aDay(int hours) => '$hours ${_context.translator.day}';
+  String aDay(int hours) =>
+      '$hours ${_context.translator.day} ${_context.translator.ago}';
 
   @override
-  String aboutAMinute(int minutes) => '$minutes ${_context.translator.minutes}';
+  String aboutAMinute(int minutes) =>
+      '$minutes ${_context.translator.minutes} ${_context.translator.ago}';
 
   @override
-  String aboutAMonth(int days) => '$days ${_context.translator.days}';
+  String aboutAMonth(int days) =>
+      '$days ${_context.translator.days} ${_context.translator.ago}';
 
   @override
-  String aboutAYear(int year) => '$year ${_context.translator.year}';
+  String aboutAYear(int year) =>
+      '$year ${_context.translator.year} ${_context.translator.ago}';
 
   @override
-  String aboutAnHour(int minutes) => '$minutes ${_context.translator.minutes}';
+  String aboutAnHour(int minutes) =>
+      '$minutes ${_context.translator.minutes} ${_context.translator.ago}';
 
   @override
-  String days(int days) => '$days ${_context.translator.days}';
+  String days(int days) =>
+      '$days ${_context.translator.days} ${_context.translator.ago}';
 
   @override
-  String hours(int hours) => '$hours ${_context.translator.hours}';
+  String hours(int hours) =>
+      '$hours ${_context.translator.hours} ${_context.translator.ago}';
 
   @override
   String lessThanOneMinute(int seconds) =>
       '$seconds ${_context.translator.now}';
 
   @override
-  String minutes(int minutes) => '$minutes ${_context.translator.minutes}';
+  String minutes(int minutes) =>
+      '$minutes ${_context.translator.minutes} ${_context.translator.ago}';
 
   @override
-  String months(int months) => '$months ${_context.translator.months}';
+  String months(int months) =>
+      '$months ${_context.translator.months} ${_context.translator.ago}';
 
   @override
   String prefixAgo() => '';
@@ -45,7 +54,7 @@ class TimeAgoCustomMessage extends LookupMessages {
   String prefixFromNow() => '';
 
   @override
-  String suffixAgo() => _context.translator.ago;
+  String suffixAgo() => '';
 
   @override
   String suffixFromNow() => '';
