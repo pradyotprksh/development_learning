@@ -1,15 +1,16 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:get/get_rx/get_rx.dart';
 import 'package:whatsapp/core/core.dart';
 import 'package:whatsapp/domain/domain.dart';
 
 abstract class FirebaseFirestoreService {
   final firestore = FirebaseFirestore.instance;
 
-  StreamController<UserDetails?> getUserDetails(String userId);
+  Rx<UserDetails?> getUserDetails(String userId);
 
-  StreamController<List<UserWithSingleStatusDetails>?> getStatus();
+  Rx<List<UserWithSingleStatusDetails>?> getStatus();
 
   Future<void> setUserDetails(String userId, UserDetails userDetails);
 

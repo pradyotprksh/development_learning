@@ -69,6 +69,8 @@ dependencies:
   flutter_localizations:
     sdk: flutter
 
+  get: ^4.6.5
+
   get_ip_address: ^0.0.5
 
   google_fonts: ^3.0.1

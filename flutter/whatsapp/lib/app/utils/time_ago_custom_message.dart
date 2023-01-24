@@ -36,8 +36,7 @@ class TimeAgoCustomMessage extends LookupMessages {
       '$hours ${_context.translator.hours} ${_context.translator.ago}';
 
   @override
-  String lessThanOneMinute(int seconds) =>
-      '$seconds ${_context.translator.now}';
+  String lessThanOneMinute(int seconds) => _context.translator.now;
 
   @override
   String minutes(int minutes) =>

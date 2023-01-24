@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:get/get_rx/get_rx.dart';
 import 'package:whatsapp/core/core.dart';
 import 'package:whatsapp/domain/domain.dart';
 
@@ -12,12 +13,12 @@ class FirebaseFirestoreServiceImplementation extends FirebaseFirestoreService {
       FirebaseFirestoreServiceImplementation._privateConstructor();
 
   @override
-  StreamController<UserDetails?> getUserDetails(String userId) {
-    var userDetails = StreamController<UserDetails?>();
+  Rx<UserDetails?> getUserDetails(String userId) {
+    var userDetails = Rx<UserDetails?>(null);
     final userRef = getUserCollectionReference().doc(userId);
     userRef.snapshots().listen(
       (event) {
-        userDetails.add(event.data());
+        userDetails.value = event.data();
       },
     );
     return userDetails;
@@ -69,8 +70,8 @@ class FirebaseFirestoreServiceImplementation extends FirebaseFirestoreService {
   }
 
   @override
-  StreamController<List<UserWithSingleStatusDetails>?> getStatus() {
-    var status = StreamController<List<UserWithSingleStatusDetails>?>();
+  Rx<List<UserWithSingleStatusDetails>?> getStatus() {
+    var status = Rx<List<UserWithSingleStatusDetails>?>(List.empty());
     getStatusCollectionReference()
         .orderBy(
           UserDetailsKey.createdOnTimeStamp,
@@ -87,7 +88,7 @@ class FirebaseFirestoreServiceImplementation extends FirebaseFirestoreService {
           final isUserPresent = statusWithUserDetails.where(
             (element) => element.userId == userId,
           );
-          late StreamController<UserDetails?> userDetails;
+          var userDetails = Rx<UserDetails?>(null);
           if (isUserPresent.isNotEmpty) {
             final isStatusPresent = isUserPresent.first.statusDetails.where(
               (element) => element.statusId == statusDetails.statusId,
@@ -115,7 +116,7 @@ class FirebaseFirestoreServiceImplementation extends FirebaseFirestoreService {
             ),
           );
         }
-        status.add(statusWithUserDetails);
+        status.value = statusWithUserDetails;
       },
     );
     return status;

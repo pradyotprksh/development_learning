@@ -1,5 +1,4 @@
-import 'dart:async';
-
+import 'package:get/get_rx/get_rx.dart';
 import 'package:whatsapp/domain/domain.dart';
 
 class UserWithSingleStatusDetails {
@@ -11,5 +10,5 @@ class UserWithSingleStatusDetails {
 
   final String userId;
   final List<StatusDetails> statusDetails;
-  final StreamController<UserDetails?> userDetails;
+  final Rx<UserDetails?> userDetails;
 }
