@@ -142,50 +142,57 @@ class _StatusDetailsWidgetState extends State<StatusDetailsWidget> {
               ],
             ),
             Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 ThemeSizedBox.height30,
-                IconButton(
-                  onPressed: () {
-                    context.navigator.pop();
-                  },
-                  icon: const Icon(
-                    Icons.arrow_back,
-                  ),
-                ),
-                Obx(
-                  () {
-                    final userDetails = widget.statusDetails.userDetails.value;
-                    if (userDetails != null) {
-                      return ListTile(
-                        leading: CachedNetworkImageWidget(
-                          imageUrl: userDetails.profileImage ?? '',
-                          placeholder: CircleAvatar(
-                            radius: 20,
-                            backgroundColor: context.themeData.primaryColor,
-                            backgroundImage: const AssetImage(
-                              AssetsPath.defaultAvatar,
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    IconButton(
+                      onPressed: () {
+                        context.navigator.pop();
+                      },
+                      icon: const Icon(
+                        Icons.arrow_back,
+                      ),
+                    ),
+                    Obx(
+                      () {
+                        final userDetails =
+                            widget.statusDetails.userDetails.value;
+                        if (userDetails != null) {
+                          return Flexible(
+                            child: ListTile(
+                              leading: CachedNetworkImageWidget(
+                                imageUrl: userDetails.profileImage ?? '',
+                                placeholder: CircleAvatar(
+                                  radius: 20,
+                                  backgroundColor:
+                                      context.themeData.primaryColor,
+                                  backgroundImage: const AssetImage(
+                                    AssetsPath.defaultAvatar,
+                                  ),
+                                ),
+                                height: 40,
+                                width: 40,
+                                clipToCircle: true,
+                              ),
+                              title: Text(
+                                userDetails.name ?? '',
+                              ),
+                              subtitle: Text(
+                                AppUtilsMethods.timeAgo(
+                                  currentStatus.createdOnTimeStamp,
+                                  context,
+                                ),
+                              ),
                             ),
-                          ),
-                          height: 40,
-                          width: 40,
-                          clipToCircle: true,
-                        ),
-                        title: Text(
-                          userDetails.name ?? '',
-                        ),
-                        subtitle: Text(
-                          AppUtilsMethods.timeAgo(
-                            currentStatus.createdOnTimeStamp,
-                            context,
-                          ),
-                        ),
-                      );
-                    } else {
-                      return ThemeSizedBox.shrink;
-                    }
-                  },
+                          );
+                        } else {
+                          return ThemeSizedBox.shrink;
+                        }
+                      },
+                    ),
+                  ],
                 ),
               ],
             ),
