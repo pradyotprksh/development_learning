@@ -9,10 +9,14 @@ class VideoWidget extends StatefulWidget {
     super.key,
     required this.path,
     this.isNetwork = false,
+    this.play = false,
+    this.showWidget = true,
   });
 
   final String path;
   final bool isNetwork;
+  final bool play;
+  final bool showWidget;
 
   @override
   State<VideoWidget> createState() => _VideoWidgetState();
@@ -22,6 +26,12 @@ class _VideoWidgetState extends State<VideoWidget> {
   late VideoPlayerController _controller;
 
   @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
   void initState() {
     super.initState();
     _controller = widget.isNetwork
@@ -29,40 +39,48 @@ class _VideoWidgetState extends State<VideoWidget> {
         : VideoPlayerController.file(File(widget.path))
       ..initialize().then(
         (_) {
-          setState(() {
-            if (widget.isNetwork) {
-              _controller.play();
-            }
-          });
+          setState(() {});
         },
       );
   }
 
   @override
-  Widget build(BuildContext context) => _controller.value.isInitialized
-      ? Stack(
-          alignment: Alignment.center,
-          children: [
-            AspectRatio(
-              aspectRatio: _controller.value.aspectRatio,
-              child: VideoPlayer(
-                _controller,
-              ),
-            ),
-            if (!widget.isNetwork)
-              IconButton(
-                onPressed: () {
-                  setState(() {
-                    _controller.value.isPlaying
-                        ? _controller.pause()
-                        : _controller.play();
-                  });
-                },
-                icon: Icon(
-                  _controller.value.isPlaying ? Icons.pause : Icons.play_arrow,
+  Widget build(BuildContext context) {
+    if (widget.play && widget.showWidget) {
+      _controller.play();
+    } else {
+      _controller.pause();
+    }
+
+    return _controller.value.isInitialized && widget.showWidget
+        ? Stack(
+            alignment: Alignment.center,
+            children: [
+              AspectRatio(
+                aspectRatio: _controller.value.aspectRatio,
+                child: VideoPlayer(
+                  _controller,
                 ),
               ),
-          ],
-        )
-      : const Center(child: CircularProgressIndicatorWidget());
+              if (!widget.isNetwork)
+                IconButton(
+                  onPressed: () {
+                    setState(() {
+                      _controller.value.isPlaying
+                          ? _controller.pause()
+                          : _controller.play();
+                    });
+                  },
+                  icon: Icon(
+                    _controller.value.isPlaying
+                        ? Icons.pause
+                        : Icons.play_arrow,
+                  ),
+                ),
+            ],
+          )
+        : widget.showWidget
+            ? const Center(child: CircularProgressIndicatorWidget())
+            : ThemeSizedBox.shrink;
+  }
 }

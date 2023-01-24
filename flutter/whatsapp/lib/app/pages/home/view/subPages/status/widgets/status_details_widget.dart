@@ -75,18 +75,19 @@ class _StatusDetailsWidgetState extends State<StatusDetailsWidget> {
                   width: double.infinity,
                   height: double.infinity,
                 ),
-            if (currentStatus.filePathUrl != null)
-              if (currentStatus.isFileImage == false)
-                Column(
-                  children: [
-                    const Spacer(),
-                    VideoWidget(
-                      path: currentStatus.filePathUrl ?? '',
-                      isNetwork: true,
-                    ),
-                    const Spacer(),
-                  ],
+            Column(
+              children: [
+                const Spacer(),
+                VideoWidget(
+                  path: currentStatus.filePathUrl ?? '',
+                  isNetwork: true,
+                  play: currentStatus.isFileImage == false,
+                  showWidget: currentStatus.filePathUrl != null &&
+                      currentStatus.isFileImage == false,
                 ),
+                const Spacer(),
+              ],
+            ),
             if (currentStatus.filePathUrl != null)
               if (currentStatus.status.isNotEmpty)
                 Align(
@@ -105,6 +106,7 @@ class _StatusDetailsWidgetState extends State<StatusDetailsWidget> {
                   ),
                 ),
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 GestureDetector(
                   onTap: () {
@@ -117,7 +119,7 @@ class _StatusDetailsWidgetState extends State<StatusDetailsWidget> {
                   },
                   child: Container(
                     height: double.infinity,
-                    width: context.mediaQuery.size.width / 2,
+                    width: context.mediaQuery.size.width / 3,
                     color: Colors.transparent,
                   ),
                 ),
@@ -132,7 +134,7 @@ class _StatusDetailsWidgetState extends State<StatusDetailsWidget> {
                     }
                   },
                   child: Container(
-                    width: context.mediaQuery.size.width / 2,
+                    width: context.mediaQuery.size.width / 3,
                     height: double.infinity,
                     color: Colors.transparent,
                   ),
