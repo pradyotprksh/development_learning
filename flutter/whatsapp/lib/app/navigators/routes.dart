@@ -28,6 +28,7 @@ abstract class Routes {
               create: (_) => StatusBloc(
                 FirebaseFirestoreServiceImplementation(),
                 FirebaseAuthServiceImplementation(),
+                DeviceDetailsImplementation(),
               )..add(
                   const FetchStatus(),
                 ),

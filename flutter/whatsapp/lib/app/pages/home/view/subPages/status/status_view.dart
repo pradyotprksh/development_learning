@@ -53,15 +53,21 @@ class StatusView extends StatelessWidget {
                           profileImage:
                               userState.userDetails?.value?.profileImage ?? '',
                           totalStatusCount: statusState
-                                  .currentUserStatus?.statusDetails.length ??
+                                  .currentUserStatus
+                                  ?.statusWithSeenDetails
+                                  .statusDetails
+                                  .length ??
                               0,
                           readStatusCount: statusState
-                                  .currentUserStatus?.statusDetails.length ??
+                                  .currentUserStatus
+                                  ?.statusWithSeenDetails
+                                  .statusDetails
+                                  .length ??
                               0,
                         ),
                       ),
-                      if (statusState
-                              .currentUserStatus?.statusDetails.isEmpty ==
+                      if (statusState.currentUserStatus?.statusWithSeenDetails
+                              .statusDetails.isEmpty ==
                           true)
                         Icon(
                           Icons.add_circle,
@@ -84,8 +90,8 @@ class StatusView extends StatelessWidget {
                   itemBuilder: (_, index) {
                     final userDetails =
                         statusState.otherStatus[index].userDetails;
-                    final statusDetails =
-                        statusState.otherStatus[index].statusDetails;
+                    final statusDetails = statusState
+                        .otherStatus[index].statusWithSeenDetails.statusDetails;
 
                     return Obx(
                       () {
@@ -136,6 +142,15 @@ class StatusView extends StatelessWidget {
       isScrollControlled: true,
       builder: (_) => StatusDetailsWidget(
         statusDetails: userWithSingleStatusDetails,
+        isSeen: (statusId) {
+          context.read<StatusBloc>().add(
+                MarkStatusAsSeen(
+                  statusId,
+                  userWithSingleStatusDetails
+                      .statusWithSeenDetails.statusSeenBy,
+                ),
+              );
+        },
       ),
     );
   }

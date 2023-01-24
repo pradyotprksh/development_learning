@@ -16,6 +16,11 @@ abstract class FirebaseFirestoreService {
 
   Future<void> setStatus(StatusDetails statusDetails);
 
+  Future<void> setStatusSeen(
+    String statusId,
+    StatusSeenDetails statusSeenDetails,
+  );
+
   Future<UserDetails?> getUserAccountByPhoneNumber(String phoneNumber);
 
   Future<UserDetails?> getUserAccountByEmailAddress(String emailAddress);
@@ -42,5 +47,18 @@ abstract class FirebaseFirestoreService {
         CoreConstants.statusCollection,
         StatusDetails.fromFirestore,
         (StatusDetails statusDetails, _) => statusDetails.toFirestore(),
+      );
+
+  CollectionReference<StatusSeenDetails> getStatusSeenCollectionReference(
+    String statusId,
+  ) =>
+      _getCollectionReference<StatusSeenDetails>(
+        CoreConstants.statusSeenCollection.replaceAll(
+          CoreConstants.statusIdPlaceholder,
+          statusId,
+        ),
+        StatusSeenDetails.fromFirestore,
+        (StatusSeenDetails statusSeenDetails, _) =>
+            statusSeenDetails.toFirestore(),
       );
 }

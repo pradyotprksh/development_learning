@@ -8,12 +8,14 @@ import 'package:whatsapp/domain/domain.dart';
 class StatusDetailsWidget extends StatefulWidget {
   const StatusDetailsWidget({
     required this.statusDetails,
+    required this.isSeen,
     this.currentStatusNumber = 0,
     super.key,
   });
 
   final UserWithSingleStatusDetails statusDetails;
   final int currentStatusNumber;
+  final void Function(String) isSeen;
 
   @override
   State<StatusDetailsWidget> createState() => _StatusDetailsWidgetState();
@@ -27,7 +29,9 @@ class _StatusDetailsWidgetState extends State<StatusDetailsWidget> {
   void initState() {
     super.initState();
     currentStatusIndex = widget.currentStatusNumber;
-    currentStatus = widget.statusDetails.statusDetails[currentStatusIndex];
+    currentStatus = widget
+        .statusDetails.statusWithSeenDetails.statusDetails[currentStatusIndex];
+    widget.isSeen(currentStatus.statusId);
   }
 
   @override
@@ -113,7 +117,10 @@ class _StatusDetailsWidgetState extends State<StatusDetailsWidget> {
                     if (currentStatusIndex != 0) {
                       setState(() {
                         currentStatus = widget
-                            .statusDetails.statusDetails[--currentStatusIndex];
+                            .statusDetails
+                            .statusWithSeenDetails
+                            .statusDetails[--currentStatusIndex];
+                        widget.isSeen(currentStatus.statusId);
                       });
                     }
                   },
@@ -126,10 +133,15 @@ class _StatusDetailsWidgetState extends State<StatusDetailsWidget> {
                 GestureDetector(
                   onTap: () {
                     if (currentStatusIndex <
-                        widget.statusDetails.statusDetails.length - 1) {
+                        widget.statusDetails.statusWithSeenDetails.statusDetails
+                                .length -
+                            1) {
                       setState(() {
                         currentStatus = widget
-                            .statusDetails.statusDetails[++currentStatusIndex];
+                            .statusDetails
+                            .statusWithSeenDetails
+                            .statusDetails[++currentStatusIndex];
+                        widget.isSeen(currentStatus.statusId);
                       });
                     }
                   },

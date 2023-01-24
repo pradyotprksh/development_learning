@@ -2,17 +2,46 @@ import 'package:collection/collection.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:whatsapp/app/app.dart';
 import 'package:whatsapp/core/core.dart';
+import 'package:whatsapp/device/device.dart';
+import 'package:whatsapp/domain/domain.dart';
 
 class StatusBloc extends Bloc<StatusEvent, StatusState> {
   StatusBloc(
     this._firebaseFirestoreService,
     this._firebaseAuthService,
+    this._deviceDetails,
   ) : super(const StatusState()) {
     on<FetchStatus>(_fetchStatusEvent);
+    on<MarkStatusAsSeen>(_markStatusAsSeen);
   }
 
   final FirebaseFirestoreService _firebaseFirestoreService;
   final FirebaseAuthService _firebaseAuthService;
+  final DeviceDetails _deviceDetails;
+
+  void _markStatusAsSeen(
+    MarkStatusAsSeen event,
+    Emitter<StatusState> emit,
+  ) async {
+    final userId = _firebaseAuthService.getUserId();
+    if (userId != null) {
+      final isAlreadySeen = event.statusSeenBy.firstWhereOrNull(
+            (element) => element.userId == userId,
+          ) !=
+          null;
+      if (!isAlreadySeen) {
+        await _firebaseFirestoreService.setStatusSeen(
+          event.statusId,
+          StatusSeenDetails(
+            userId: userId,
+            statusId: event.statusId,
+            userDeviceDetails: await _deviceDetails.getDeviceDetails(),
+            seenOnTimeStamp: DeviceUtilsMethods.getCurrentTimeStamp(),
+          ),
+        );
+      }
+    }
+  }
 
   void _fetchStatusEvent(
     FetchStatus event,
