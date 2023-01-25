@@ -71,5 +71,12 @@
   "months": "months",
   "minutes": "minutes",
   "ago": "ago",
-  "addCaptionForStatus": "Add caption for your status"
+  "addCaptionForStatus": "Add caption for your status",
+  "newBroadcast": "New broadcast",
+  "linkedDevices": "Linked devices",
+  "starredMessages": "Starred messages",
+  "payments": "Payments",
+  "statusPrivacy": "Status privacy",
+  "clearCallLog": "Clear call log",
+  "settings": "Settings"
 }

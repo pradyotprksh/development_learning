@@ -25,6 +25,28 @@ class _HomeViewState extends State<HomeView>
     super.dispose();
   }
 
+  void _openPageBasedOnSelection(BuildContext context, MenuItems value) {
+    switch (value) {
+      case MenuItems.newGroup:
+        break;
+      case MenuItems.newBroadcast:
+        break;
+      case MenuItems.linkedDevices:
+        break;
+      case MenuItems.starredMessages:
+        break;
+      case MenuItems.payments:
+        break;
+      case MenuItems.statusPrivacy:
+        break;
+      case MenuItems.clearCallLog:
+        break;
+      case MenuItems.settings:
+        context.navigator.pushNamed(Routes.settings);
+        break;
+    }
+  }
+
   @override
   Widget build(BuildContext context) => BlocListener<UserBloc, UserState>(
         listener: (_, userState) {
@@ -56,8 +78,61 @@ class _HomeViewState extends State<HomeView>
                   Icons.search,
                 ),
               ),
-              IconButton(
-                onPressed: () {},
+              PopupMenuButton<MenuItems>(
+                onSelected: (item) {
+                  _openPageBasedOnSelection(context, item);
+                },
+                color: context.themeData.popupMenuTheme.color,
+                itemBuilder: (_) => [
+                  PopupMenuItem(
+                    value: MenuItems.newGroup,
+                    child: Text(
+                      context.translator.newGroup,
+                    ),
+                  ),
+                  PopupMenuItem(
+                    value: MenuItems.newBroadcast,
+                    child: Text(
+                      context.translator.newBroadcast,
+                    ),
+                  ),
+                  PopupMenuItem(
+                    value: MenuItems.linkedDevices,
+                    child: Text(
+                      context.translator.linkedDevices,
+                    ),
+                  ),
+                  PopupMenuItem(
+                    value: MenuItems.starredMessages,
+                    child: Text(
+                      context.translator.starredMessages,
+                    ),
+                  ),
+                  PopupMenuItem(
+                    value: MenuItems.payments,
+                    child: Text(
+                      context.translator.payments,
+                    ),
+                  ),
+                  PopupMenuItem(
+                    value: MenuItems.statusPrivacy,
+                    child: Text(
+                      context.translator.statusPrivacy,
+                    ),
+                  ),
+                  PopupMenuItem(
+                    value: MenuItems.clearCallLog,
+                    child: Text(
+                      context.translator.clearCallLog,
+                    ),
+                  ),
+                  PopupMenuItem(
+                    value: MenuItems.settings,
+                    child: Text(
+                      context.translator.settings,
+                    ),
+                  ),
+                ],
                 icon: const Icon(
                   Icons.more_vert,
                 ),

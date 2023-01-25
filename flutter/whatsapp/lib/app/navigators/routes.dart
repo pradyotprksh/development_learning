@@ -14,6 +14,7 @@ abstract class Routes {
   static const selectContact = '/select-contact';
   static const addStatusText = '/add-status-text';
   static const addStatusCamera = '/add-status-camera';
+  static const settings = '/settings';
 
   static const initialRoute = splashRoute;
 
@@ -22,6 +23,7 @@ abstract class Routes {
     introRoute: (context) => const IntroView(),
     personaliseRoute: (context) => const PersonaliseView(),
     authenticateRoute: (context) => const AuthenticateView(),
+    settings: (context) => const SettingsView(),
     homeRoute: (context) => MultiBlocProvider(
           providers: [
             BlocProvider(
