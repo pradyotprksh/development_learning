@@ -10,5 +10,5 @@ class UserWithSingleStatusDetails {
 
   final String userId;
   final Rx<UserDetails?> userDetails;
-  final StatusWithSeenDetails statusWithSeenDetails;
+  final List<StatusWithSeenDetails> statusWithSeenDetails;
 }

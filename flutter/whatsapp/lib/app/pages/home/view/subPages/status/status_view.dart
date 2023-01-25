@@ -52,22 +52,16 @@ class StatusView extends StatelessWidget {
                         () => StatusProfileImageWidget(
                           profileImage:
                               userState.userDetails?.value?.profileImage ?? '',
-                          totalStatusCount: statusState
-                                  .currentUserStatus
-                                  ?.statusWithSeenDetails
-                                  .statusDetails
-                                  .length ??
+                          totalStatusCount: statusState.currentUserStatus
+                                  ?.statusWithSeenDetails.length ??
                               0,
-                          readStatusCount: statusState
-                                  .currentUserStatus
-                                  ?.statusWithSeenDetails
-                                  .statusDetails
-                                  .length ??
+                          readStatusCount: statusState.currentUserStatus
+                                  ?.statusWithSeenDetails.length ??
                               0,
                         ),
                       ),
                       if (statusState.currentUserStatus?.statusWithSeenDetails
-                              .statusDetails.isEmpty ==
+                              .isEmpty ==
                           true)
                         Icon(
                           Icons.add_circle,
@@ -90,8 +84,8 @@ class StatusView extends StatelessWidget {
                   itemBuilder: (_, index) {
                     final userDetails =
                         statusState.otherStatus[index].userDetails;
-                    final statusDetails = statusState
-                        .otherStatus[index].statusWithSeenDetails.statusDetails;
+                    final statusDetails =
+                        statusState.otherStatus[index].statusWithSeenDetails;
 
                     return Obx(
                       () {
@@ -115,7 +109,8 @@ class StatusView extends StatelessWidget {
                             ),
                             subtitle: Text(
                               AppUtilsMethods.timeAgo(
-                                statusDetails.first.createdOnTimeStamp,
+                                statusDetails
+                                    .first.statusDetails.createdOnTimeStamp,
                                 context,
                               ),
                             ),
@@ -142,12 +137,11 @@ class StatusView extends StatelessWidget {
       isScrollControlled: true,
       builder: (_) => StatusDetailsWidget(
         statusDetails: userWithSingleStatusDetails,
-        isSeen: (statusId) {
+        isSeen: (statusId, seenBy) {
           context.read<StatusBloc>().add(
                 MarkStatusAsSeen(
                   statusId,
-                  userWithSingleStatusDetails
-                      .statusWithSeenDetails.statusSeenBy,
+                  seenBy,
                 ),
               );
         },

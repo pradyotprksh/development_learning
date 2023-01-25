@@ -10,7 +10,7 @@ abstract class FirebaseFirestoreService {
 
   Rx<UserDetails?> getUserDetails(String userId);
 
-  Rx<List<UserWithSingleStatusDetails>?> getStatus();
+  Rx<List<UserWithSingleStatusDetails>?> getStatus(String currentUserId);
 
   Future<void> setUserDetails(String userId, UserDetails userDetails);
 

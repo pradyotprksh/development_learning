@@ -5,8 +5,10 @@ class StatusWithSeenDetails {
   StatusWithSeenDetails(
     this.statusDetails,
     this.statusSeenBy,
+    this.isSeenByCurrentUser,
   );
 
-  final List<StatusDetails> statusDetails;
+  final StatusDetails statusDetails;
+  final RxBool isSeenByCurrentUser;
   final RxList<StatusSeenDetails> statusSeenBy;
 }

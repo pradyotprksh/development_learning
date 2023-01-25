@@ -70,7 +70,7 @@ class FirebaseFirestoreServiceImplementation extends FirebaseFirestoreService {
   }
 
   @override
-  Rx<List<UserWithSingleStatusDetails>?> getStatus() {
+  Rx<List<UserWithSingleStatusDetails>?> getStatus(String currentUserId) {
     var status = Rx<List<UserWithSingleStatusDetails>?>(List.empty());
     getStatusCollectionReference()
         .orderBy(
@@ -91,8 +91,9 @@ class FirebaseFirestoreServiceImplementation extends FirebaseFirestoreService {
           var userDetails = Rx<UserDetails?>(null);
           if (isUserPresent.isNotEmpty) {
             final isStatusPresent =
-                isUserPresent.first.statusWithSeenDetails.statusDetails.where(
-              (element) => element.statusId == statusDetails.statusId,
+                isUserPresent.first.statusWithSeenDetails.where(
+              (element) =>
+                  element.statusDetails.statusId == statusDetails.statusId,
             );
             if (isStatusPresent.isNotEmpty) {
               continue;
@@ -104,33 +105,36 @@ class FirebaseFirestoreServiceImplementation extends FirebaseFirestoreService {
 
           final allStatus = event.docs
               .where(
-                (element) => element.data().userId == userId,
-              )
-              .map((e) => e.data())
-              .toList();
-
-          var statusSeen = RxList<StatusSeenDetails>();
-
-          getStatusSeenCollectionReference(statusDetails.statusId)
-              .orderBy(StatusKey.seenOnTimeStamp, descending: true)
-              .snapshots()
-              .listen(
-            (event) {
-              statusSeen.value = event.docs
-                  .map(
-                    (e) => e.data(),
-                  )
-                  .toList();
+            (element) => element.data().userId == userId,
+          )
+              .map(
+            (e) {
+              var statusSeen = RxList<StatusSeenDetails>();
+              var isSeen = RxBool(false);
+              getStatusSeenCollectionReference(statusDetails.statusId)
+                  .orderBy(StatusKey.seenOnTimeStamp, descending: true)
+                  .snapshots()
+                  .listen(
+                (event) {
+                  statusSeen.addAll(
+                    event.docs.map(
+                      (e) {
+                        final data = e.data();
+                        isSeen.value = data.userId == currentUserId;
+                        return data;
+                      },
+                    ),
+                  );
+                },
+              );
+              return StatusWithSeenDetails(e.data(), statusSeen, isSeen);
             },
-          );
+          ).toList();
 
           statusWithUserDetails.add(
             UserWithSingleStatusDetails(
               userId,
-              StatusWithSeenDetails(
-                allStatus,
-                statusSeen,
-              ),
+              allStatus,
               userDetails,
             ),
           );
@@ -146,8 +150,13 @@ class FirebaseFirestoreServiceImplementation extends FirebaseFirestoreService {
     String statusId,
     StatusSeenDetails statusSeenDetails,
   ) async {
-    await getStatusSeenCollectionReference(statusId)
+    final isAlreadyAvailable = await getStatusSeenCollectionReference(statusId)
         .doc(statusSeenDetails.userId)
-        .set(statusSeenDetails);
+        .get();
+    if (!isAlreadyAvailable.exists) {
+      await getStatusSeenCollectionReference(statusId)
+          .doc(statusSeenDetails.userId)
+          .set(statusSeenDetails);
+    }
   }
 }

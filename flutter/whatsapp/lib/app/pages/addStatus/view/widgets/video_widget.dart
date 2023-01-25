@@ -13,7 +13,7 @@ class VideoWidget extends StatefulWidget {
     this.showWidget = true,
   });
 
-  final String path;
+  final String? path;
   final bool isNetwork;
   final bool play;
   final bool showWidget;
@@ -23,58 +23,61 @@ class VideoWidget extends StatefulWidget {
 }
 
 class _VideoWidgetState extends State<VideoWidget> {
-  late VideoPlayerController _controller;
+  VideoPlayerController? _controller;
 
   @override
   void dispose() {
-    _controller.dispose();
+    _controller?.dispose();
     super.dispose();
   }
 
   @override
   void initState() {
     super.initState();
-    _controller = widget.isNetwork
-        ? VideoPlayerController.network(widget.path)
-        : VideoPlayerController.file(File(widget.path))
-      ..initialize().then(
-        (_) {
-          setState(() {});
-        },
-      );
+    if (widget.path != null && widget.path!.isNotEmpty) {
+      _controller = widget.isNetwork
+          ? VideoPlayerController.network(widget.path!)
+          : VideoPlayerController.file(File(widget.path!))
+        ..initialize().then(
+          (_) {
+            setState(() {});
+          },
+        );
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     if (widget.play && widget.showWidget) {
-      _controller
-        ..play()
-        ..setLooping(true);
+      _controller?.play();
+      _controller?.setLooping(true);
     } else {
-      _controller.pause();
+      _controller?.pause();
     }
 
-    return _controller.value.isInitialized && widget.showWidget
+    return _controller != null &&
+            _controller!.value.isInitialized &&
+            widget.showWidget
         ? Stack(
             alignment: Alignment.center,
             children: [
               AspectRatio(
-                aspectRatio: _controller.value.aspectRatio,
+                aspectRatio: _controller!.value.aspectRatio,
                 child: VideoPlayer(
-                  _controller,
+                  _controller!,
                 ),
               ),
               if (!widget.isNetwork)
                 IconButton(
                   onPressed: () {
                     setState(() {
-                      _controller.value.isPlaying
-                          ? _controller.pause()
-                          : _controller.play();
+                      _controller!.value.isPlaying
+                          ? _controller!.pause()
+                          : _controller!.play();
                     });
                   },
                   icon: Icon(
-                    _controller.value.isPlaying
+                    _controller!.value.isPlaying
                         ? Icons.pause
                         : Icons.play_arrow,
                   ),

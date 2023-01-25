@@ -25,21 +25,15 @@ class StatusBloc extends Bloc<StatusEvent, StatusState> {
   ) async {
     final userId = _firebaseAuthService.getUserId();
     if (userId != null) {
-      final isAlreadySeen = event.statusSeenBy.firstWhereOrNull(
-            (element) => element.userId == userId,
-          ) !=
-          null;
-      if (!isAlreadySeen) {
-        await _firebaseFirestoreService.setStatusSeen(
-          event.statusId,
-          StatusSeenDetails(
-            userId: userId,
-            statusId: event.statusId,
-            userDeviceDetails: await _deviceDetails.getDeviceDetails(),
-            seenOnTimeStamp: DeviceUtilsMethods.getCurrentTimeStamp(),
-          ),
-        );
-      }
+      await _firebaseFirestoreService.setStatusSeen(
+        event.statusId,
+        StatusSeenDetails(
+          userId: userId,
+          statusId: event.statusId,
+          userDeviceDetails: await _deviceDetails.getDeviceDetails(),
+          seenOnTimeStamp: DeviceUtilsMethods.getCurrentTimeStamp(),
+        ),
+      );
     }
   }
 
@@ -48,29 +42,31 @@ class StatusBloc extends Bloc<StatusEvent, StatusState> {
     Emitter<StatusState> emit,
   ) async {
     final userId = _firebaseAuthService.getUserId();
-    await emit.forEach(
-      _firebaseFirestoreService.getStatus().stream,
-      onData: (status) {
-        if (status != null && userId != null) {
-          if (status.isEmpty) {
-            return const StatusState();
-          } else {
-            var currentUserStatus = status.firstWhereOrNull(
-              (element) => element.userId == userId,
-            );
-            var otherStatus = status
-                .where(
-                  (element) => element.userId != userId,
-                )
-                .toList();
-            return state.copyWith(
-              otherStatus: otherStatus,
-              currentUserStatus: currentUserStatus,
-            );
+    if (userId != null) {
+      await emit.forEach(
+        _firebaseFirestoreService.getStatus(userId).stream,
+        onData: (status) {
+          if (status != null) {
+            if (status.isEmpty) {
+              return const StatusState();
+            } else {
+              var currentUserStatus = status.firstWhereOrNull(
+                (element) => element.userId == userId,
+              );
+              var otherStatus = status
+                  .where(
+                    (element) => element.userId != userId,
+                  )
+                  .toList();
+              return state.copyWith(
+                otherStatus: otherStatus,
+                currentUserStatus: currentUserStatus,
+              );
+            }
           }
-        }
-        return state;
-      },
-    );
+          return state;
+        },
+      );
+    }
   }
 }

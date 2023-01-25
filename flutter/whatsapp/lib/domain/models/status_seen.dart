@@ -1,8 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:equatable/equatable.dart';
 import 'package:whatsapp/domain/domain.dart';
 
-class StatusSeenDetails {
-  StatusSeenDetails({
+class StatusSeenDetails extends Equatable {
+  const StatusSeenDetails({
     this.userDeviceDetails,
     required this.userId,
     required this.statusId,
@@ -39,4 +40,11 @@ class StatusSeenDetails {
         if (userDeviceDetails != null)
           UserDetailsKey.userDeviceDetails: userDeviceDetails!.toMap(),
       };
+
+  @override
+  List<Object?> get props => [
+        userId,
+        statusId,
+        seenOnTimeStamp,
+      ];
 }
