@@ -104,30 +104,23 @@ class FirebaseFirestoreServiceImplementation extends FirebaseFirestoreService {
           }
 
           final allStatus = event.docs
-              .where(
-            (element) => element.data().userId == userId,
-          )
+              .where((element) => element.data().userId == userId)
               .map(
-            (e) {
+            (status) {
               var statusSeen = RxList<StatusSeenDetails>();
-              var isSeen = RxBool(false);
               getStatusSeenCollectionReference(statusDetails.statusId)
                   .orderBy(StatusKey.seenOnTimeStamp, descending: true)
                   .snapshots()
                   .listen(
                 (event) {
-                  statusSeen.addAll(
-                    event.docs.map(
-                      (e) {
-                        final data = e.data();
-                        isSeen.value = data.userId == currentUserId;
-                        return data;
-                      },
-                    ),
-                  );
+                  statusSeen.value = event.docs
+                      .map(
+                        (e) => e.data(),
+                      )
+                      .toList();
                 },
               );
-              return StatusWithSeenDetails(e.data(), statusSeen, isSeen);
+              return StatusWithSeenDetails(status.data(), statusSeen);
             },
           ).toList();
 
