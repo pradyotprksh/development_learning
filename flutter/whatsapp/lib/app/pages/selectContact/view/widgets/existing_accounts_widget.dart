@@ -28,7 +28,14 @@ class ExistingAccountsWidget extends StatelessWidget {
             final userDetail = existingAccount[index - 1];
 
             return ListTile(
-              onTap: () {},
+              onTap: () {
+                context.navigator.pushNamed(
+                  Routes.messages,
+                  arguments: <String, String>{
+                    Keys.userId: userDetail.userId,
+                  },
+                );
+              },
               leading: CachedNetworkImageWidget(
                 imageUrl: userDetail.profileImage ?? '',
                 placeholder: CircleAvatar(
