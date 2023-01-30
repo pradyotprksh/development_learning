@@ -22,7 +22,7 @@ class NonExistingAccountsWidget extends StatelessWidget {
               padding: ThemeEdgeInsets.all15,
               child: Text(
                 '${context.translator.inviteOnWhatsApp} ${context.translator.applicationName}',
-                style: context.themeData.textTheme.caption,
+                style: context.themeData.textTheme.bodySmall,
               ),
             );
           } else {
@@ -71,7 +71,7 @@ class NonExistingAccountsWidget extends StatelessWidget {
                             phoneNumber ??
                             emailAddress ??
                             '',
-                        style: context.themeData.textTheme.headline6,
+                        style: context.themeData.textTheme.titleLarge,
                       ),
                     ),
                     title: Text(

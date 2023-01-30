@@ -50,7 +50,7 @@ class SelectContactView extends StatelessWidget {
         }
 
         return Scaffold(
-          backgroundColor: context.themeData.backgroundColor,
+          backgroundColor: context.themeData.scaffoldBackgroundColor,
           appBar: AppBar(
             title: Text(
               context.translator.selectContact,

@@ -185,7 +185,7 @@ class AddCameraStatusView extends StatelessWidget {
                                         context.translator.addCaptionForStatus,
                                   ),
                                   cursorColor:
-                                      context.themeData.backgroundColor,
+                                      context.themeData.colorScheme.background,
                                 ),
                               ),
                             ),

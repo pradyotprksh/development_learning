@@ -21,6 +21,10 @@ class ImagePickerWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) => GestureDetector(
         onTap: () async {
+          final webSettings = WebUiSettings(
+            context: context,
+          );
+          final themeData = context.themeData;
           final source = await ImagePickerUtils.selectPickerType(context);
           if (source != null) {
             // Pick file
@@ -35,17 +39,15 @@ class ImagePickerWidget extends StatelessWidget {
                 [
                   AndroidUiSettings(
                     toolbarTitle: Constants.applicationName,
-                    toolbarColor: context.themeData.appBarTheme.backgroundColor,
-                    toolbarWidgetColor: context.themeData.iconTheme.color,
+                    toolbarColor: themeData.appBarTheme.backgroundColor,
+                    toolbarWidgetColor: themeData.iconTheme.color,
                     initAspectRatio: CropAspectRatioPreset.original,
                     lockAspectRatio: false,
                   ),
                   IOSUiSettings(
                     title: Constants.applicationName,
                   ),
-                  WebUiSettings(
-                    context: context,
-                  ),
+                  webSettings,
                 ],
               );
               if (croppedImage != null) {

@@ -203,7 +203,7 @@ class UserDetailsView extends StatelessWidget {
                       Text(
                         context.translator.pinNote,
                         textAlign: TextAlign.center,
-                        style: context.themeData.textTheme.caption,
+                        style: context.themeData.textTheme.bodySmall,
                       ),
                       ThemeSizedBox.height10,
                       const Divider(),

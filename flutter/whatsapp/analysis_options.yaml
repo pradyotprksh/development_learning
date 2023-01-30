@@ -62,7 +62,6 @@ linter:
     empty_statements: true
     hash_and_equals: true
     implementation_imports: true
-    invariant_booleans: true
     iterable_contains_unrelated_type: true
     library_names: true
     library_prefixes: true

@@ -21,7 +21,7 @@ class ExistingAccountsWidget extends StatelessWidget {
               padding: ThemeEdgeInsets.all15,
               child: Text(
                 '${context.translator.contactsOnWhatsApp} ${context.translator.applicationName}',
-                style: context.themeData.textTheme.caption,
+                style: context.themeData.textTheme.bodySmall,
               ),
             );
           } else {

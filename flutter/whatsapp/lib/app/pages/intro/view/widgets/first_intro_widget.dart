@@ -31,7 +31,7 @@ class FirstIntroWidget extends StatelessWidget {
             ThemeSizedBox.height10,
             Text(
               subtitle,
-              style: context.themeData.textTheme.subtitle1,
+              style: context.themeData.textTheme.titleMedium,
             ),
             const Spacer(),
             Text(
