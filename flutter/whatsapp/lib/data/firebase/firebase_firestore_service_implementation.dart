@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:whatsapp/core/core.dart';
 import 'package:whatsapp/domain/domain.dart';
 
@@ -87,7 +88,6 @@ class FirebaseFirestoreServiceImplementation extends FirebaseFirestoreService {
           final isUserPresent = statusWithUserDetails.where(
             (element) => element.userId == userId,
           );
-          late StreamController<UserDetails?> userDetails;
           if (isUserPresent.isNotEmpty) {
             final isStatusPresent = isUserPresent.first.statusDetails.where(
               (element) => element.statusId == statusDetails.statusId,
@@ -95,9 +95,6 @@ class FirebaseFirestoreServiceImplementation extends FirebaseFirestoreService {
             if (isStatusPresent.isNotEmpty) {
               continue;
             }
-            userDetails = isUserPresent.first.userDetails;
-          } else {
-            userDetails = getUserDetails(userId);
           }
 
           final allStatus = event.docs
@@ -111,7 +108,7 @@ class FirebaseFirestoreServiceImplementation extends FirebaseFirestoreService {
             UserWithSingleStatusDetails(
               userId,
               allStatus,
-              userDetails,
+              getUserCollectionReference().doc(userId).snapshots(),
             ),
           );
         }
@@ -135,4 +132,8 @@ class FirebaseFirestoreServiceImplementation extends FirebaseFirestoreService {
           .set(statusSeenDetails);
     }
   }
+
+  @override
+  DocumentReference<UserDetails> getUserDocumentReference(String userId) =>
+      getUserCollectionReference().doc(userId);
 }

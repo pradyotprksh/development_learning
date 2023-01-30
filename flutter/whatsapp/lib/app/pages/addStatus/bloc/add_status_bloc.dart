@@ -91,6 +91,9 @@ class AddStatusBloc extends Bloc<AddStatusEvent, AddStatusState> {
             filePathUrl: filePathUrl,
             firestoreFilePath: firestorePath,
             isFileImage: fileDetails?.isImage,
+            userReference: _firebaseFirestoreService.getUserDocumentReference(
+              userId,
+            ),
           ),
         );
 

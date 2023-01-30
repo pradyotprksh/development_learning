@@ -13,6 +13,7 @@ abstract class UserDetailsKey {
   static const createdOnTimeStamp = 'createdOnTimeStamp';
   static const buildNumber = 'buildNumber';
   static const userDeviceDetails = 'userDeviceDetails';
+  static const userReference = 'userReference';
   static const profileImage = 'profileImage';
   static const updatedOnTimeStamp = 'updatedOnTimeStamp';
 }

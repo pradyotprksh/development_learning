@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:whatsapp/app/app.dart';
@@ -91,10 +92,10 @@ class _StatusViewState extends State<StatusView>
                   final statusDetails =
                       statusState.otherStatus[index].statusDetails;
 
-                  return StreamBuilder<UserDetails?>(
-                    stream: userDetails.stream,
+                  return StreamBuilder<DocumentSnapshot<UserDetails>>(
+                    stream: userDetails,
                     builder: (_, snapshot) {
-                      final userDetails = snapshot.data;
+                      final userDetails = snapshot.data?.data();
                       if (userDetails != null && statusDetails.isNotEmpty) {
                         return ListTile(
                           onTap: () {

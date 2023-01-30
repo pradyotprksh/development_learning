@@ -9,6 +9,7 @@ class StatusDetails {
     required this.color,
     required this.userId,
     this.filePathUrl,
+    this.userReference,
     this.firestoreFilePath,
     this.userDeviceDetails,
     this.createdOnTimeStamp,
@@ -36,6 +37,7 @@ class StatusDetails {
           data?[StatusKey.firestoreFilePath] as String?),
       userId: data?[UserDetailsKey.userId] as String,
       createdOnTimeStamp: data?[UserDetailsKey.createdOnTimeStamp] as int? ?? 0,
+      userReference: data?[UserDetailsKey.userReference] as DocumentReference?,
       userDeviceDetails: UserDeviceDetails.fromMap(deviceDetails),
       statusId: snapshot.id,
       isFileImage: data?[StatusKey.isFileImage] as bool?,
@@ -52,6 +54,7 @@ class StatusDetails {
   final UserDeviceDetails? userDeviceDetails;
   final String statusId;
   final bool? isFileImage;
+  final DocumentReference? userReference;
 
   Map<String, dynamic> toFirestore() => <String, dynamic>{
         StatusKey.status: EncryptorService.encryptData(status),
@@ -64,6 +67,7 @@ class StatusDetails {
               EncryptorService.encryptData(firestoreFilePath),
         if (createdOnTimeStamp != null)
           UserDetailsKey.createdOnTimeStamp: createdOnTimeStamp,
+        if (userReference != null) UserDetailsKey.userReference: userReference,
         UserDetailsKey.userId: userId,
         if (userDeviceDetails != null)
           UserDetailsKey.userDeviceDetails: userDeviceDetails!.toMap(),
