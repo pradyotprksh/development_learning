@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:whatsapp/app/utils/utils.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:whatsapp/app/app.dart';
 
 class SettingsView extends StatelessWidget {
   const SettingsView({super.key});
@@ -8,9 +9,112 @@ class SettingsView extends StatelessWidget {
   Widget build(BuildContext context) => Scaffold(
         backgroundColor: context.themeData.scaffoldBackgroundColor,
         appBar: AppBar(
-          title: Text(
-            context.translator.settings,
-          ),
+          actions: [
+            IconButton(
+              onPressed: () {},
+              icon: const Icon(
+                Icons.qr_code,
+              ),
+            ),
+            IconButton(
+              onPressed: () {},
+              icon: const Icon(
+                Icons.search,
+              ),
+            ),
+          ],
+        ),
+        body: ListView(
+          children: [
+            BlocBuilder<UserBloc, UserState>(
+              builder: (_, userState) => ListTile(
+                onTap: () {},
+                contentPadding: ThemeEdgeInsets.all15,
+                leading: CachedNetworkImageWidget(
+                  imageUrl: userState.userDetails?.profileImage ?? '',
+                  placeholder: CircleAvatar(
+                    radius: 25,
+                    backgroundColor: context.themeData.primaryColor,
+                    backgroundImage: const AssetImage(
+                      AssetsPath.defaultAvatar,
+                    ),
+                  ),
+                  height: 50,
+                  width: 50,
+                  clipToCircle: true,
+                ),
+                title: Text(
+                  userState.userDetails?.name ?? '',
+                ),
+              ),
+            ),
+            const Divider(),
+            ListTile(
+              onTap: () {},
+              leading: Icon(
+                Icons.notifications,
+                color: context.themeData.iconTheme.color,
+              ),
+              title: Text(
+                context.translator.notificationsAndSounds,
+              ),
+            ),
+            ListTile(
+              onTap: () {},
+              leading: Icon(
+                Icons.security,
+                color: context.themeData.iconTheme.color,
+              ),
+              title: Text(
+                context.translator.privacyAndSecurity,
+              ),
+            ),
+            ListTile(
+              onTap: () {},
+              leading: Icon(
+                Icons.pie_chart,
+                color: context.themeData.iconTheme.color,
+              ),
+              title: Text(
+                context.translator.dataAndStorage,
+              ),
+            ),
+            ListTile(
+              onTap: () {
+                context.navigator.pushNamed(Routes.personaliseRoute);
+              },
+              leading: Icon(
+                Icons.chat,
+                color: context.themeData.iconTheme.color,
+              ),
+              title: Text(
+                context.translator.chatSettings,
+              ),
+            ),
+            ListTile(
+              onTap: () {},
+              leading: Icon(
+                Icons.devices,
+                color: context.themeData.iconTheme.color,
+              ),
+              title: Text(
+                context.translator.devices,
+              ),
+            ),
+            ListTile(
+              onTap: () {
+                context.navigator.pushNamed(Routes.personaliseRoute);
+              },
+              leading: Icon(
+                Icons.language,
+                color: context.themeData.iconTheme.color,
+              ),
+              title: Text(
+                context.translator.language,
+              ),
+            ),
+            const Divider(),
+          ],
         ),
       );
 }

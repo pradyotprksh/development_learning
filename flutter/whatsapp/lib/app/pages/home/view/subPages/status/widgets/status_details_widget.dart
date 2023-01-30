@@ -7,12 +7,14 @@ import 'package:whatsapp/domain/domain.dart';
 class StatusDetailsWidget extends StatefulWidget {
   const StatusDetailsWidget({
     required this.statusDetails,
+    this.userDetails,
     required this.isSeen,
     this.currentStatusNumber = 0,
     super.key,
   });
 
   final UserWithSingleStatusDetails statusDetails;
+  final UserDetails? userDetails;
   final int currentStatusNumber;
   final void Function(String) isSeen;
 
@@ -159,6 +161,27 @@ class _StatusDetailsWidgetState extends State<StatusDetailsWidget> {
                     },
                     icon: const Icon(
                       Icons.arrow_back,
+                    ),
+                  ),
+                  Flexible(
+                    child: ListTile(
+                      contentPadding: ThemeEdgeInsets.zero,
+                      leading: CachedNetworkImageWidget(
+                        imageUrl: widget.userDetails?.profileImage ?? '',
+                        placeholder: CircleAvatar(
+                          radius: 20,
+                          backgroundColor: context.themeData.primaryColor,
+                          backgroundImage: const AssetImage(
+                            AssetsPath.defaultAvatar,
+                          ),
+                        ),
+                        height: 40,
+                        width: 40,
+                        clipToCircle: true,
+                      ),
+                      title: Text(
+                        widget.userDetails?.name ?? '',
+                      ),
                     ),
                   ),
                 ],

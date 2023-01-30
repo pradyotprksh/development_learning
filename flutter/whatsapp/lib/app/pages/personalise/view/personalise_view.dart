@@ -139,10 +139,10 @@ class PersonaliseView extends StatelessWidget {
                         context.translator.enableMaterialYouSubtitle,
                         style: context.themeData.textTheme.titleSmall,
                       ),
-                    ),*/
+                    ),
                     Divider(
                       color: context.themeData.dividerTheme.color,
-                    ),
+                    ),*/
                     ListTile(
                       leading: Icon(
                         Icons.language,
