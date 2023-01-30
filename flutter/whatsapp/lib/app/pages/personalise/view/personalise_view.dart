@@ -118,6 +118,8 @@ class PersonaliseView extends StatelessWidget {
                     Divider(
                       color: context.themeData.dividerTheme.color,
                     ),
+                    /*
+                    Enable material 3 by default now
                     SwitchListTile(
                       value: themeState.currentEnableMaterial3,
                       onChanged: (value) {
@@ -137,7 +139,7 @@ class PersonaliseView extends StatelessWidget {
                         context.translator.enableMaterialYouSubtitle,
                         style: context.themeData.textTheme.titleSmall,
                       ),
-                    ),
+                    ),*/
                     Divider(
                       color: context.themeData.dividerTheme.color,
                     ),
