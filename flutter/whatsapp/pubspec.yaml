@@ -11,9 +11,9 @@ environment:
 dependencies:
   auto_size_text: ^3.0.0
 
-  cached_network_image: ^3.2.3
-
   cache_video_player: ^0.0.4
+
+  cached_network_image: ^3.2.3
 
   camerawesome: ^1.1.0
 
@@ -70,8 +70,6 @@ dependencies:
 
   flutter_localizations:
     sdk: flutter
-
-  get: ^4.6.5
 
   get_ip_address: ^0.0.5
 

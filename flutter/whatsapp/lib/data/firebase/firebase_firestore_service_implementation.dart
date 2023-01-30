@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:get/get_rx/get_rx.dart';
 import 'package:whatsapp/core/core.dart';
 import 'package:whatsapp/domain/domain.dart';
 
@@ -13,12 +12,12 @@ class FirebaseFirestoreServiceImplementation extends FirebaseFirestoreService {
       FirebaseFirestoreServiceImplementation._privateConstructor();
 
   @override
-  Rx<UserDetails?> getUserDetails(String userId) {
-    var userDetails = Rx<UserDetails?>(null);
+  StreamController<UserDetails?> getUserDetails(String userId) {
+    var userDetails = StreamController<UserDetails?>();
     final userRef = getUserCollectionReference().doc(userId);
     userRef.snapshots().listen(
       (event) {
-        userDetails.value = event.data();
+        userDetails.add(event.data());
       },
     );
     return userDetails;
@@ -70,8 +69,8 @@ class FirebaseFirestoreServiceImplementation extends FirebaseFirestoreService {
   }
 
   @override
-  Rx<List<UserWithSingleStatusDetails>?> getStatus(String currentUserId) {
-    var status = Rx<List<UserWithSingleStatusDetails>?>(List.empty());
+  StreamController<List<UserWithSingleStatusDetails>?> getStatus() {
+    var status = StreamController<List<UserWithSingleStatusDetails>?>();
     getStatusCollectionReference()
         .orderBy(
           UserDetailsKey.createdOnTimeStamp,
@@ -88,12 +87,10 @@ class FirebaseFirestoreServiceImplementation extends FirebaseFirestoreService {
           final isUserPresent = statusWithUserDetails.where(
             (element) => element.userId == userId,
           );
-          var userDetails = Rx<UserDetails?>(null);
+          late StreamController<UserDetails?> userDetails;
           if (isUserPresent.isNotEmpty) {
-            final isStatusPresent =
-                isUserPresent.first.statusWithSeenDetails.where(
-              (element) =>
-                  element.statusDetails.statusId == statusDetails.statusId,
+            final isStatusPresent = isUserPresent.first.statusDetails.where(
+              (element) => element.statusId == statusDetails.statusId,
             );
             if (isStatusPresent.isNotEmpty) {
               continue;
@@ -104,25 +101,11 @@ class FirebaseFirestoreServiceImplementation extends FirebaseFirestoreService {
           }
 
           final allStatus = event.docs
-              .where((element) => element.data().userId == userId)
-              .map(
-            (status) {
-              var statusSeen = RxList<StatusSeenDetails>();
-              getStatusSeenCollectionReference(statusDetails.statusId)
-                  .orderBy(StatusKey.seenOnTimeStamp, descending: true)
-                  .snapshots()
-                  .listen(
-                (event) {
-                  statusSeen.value = event.docs
-                      .map(
-                        (e) => e.data(),
-                      )
-                      .toList();
-                },
-              );
-              return StatusWithSeenDetails(status.data(), statusSeen);
-            },
-          ).toList();
+              .where(
+                (element) => element.data().userId == userId,
+              )
+              .map((e) => e.data())
+              .toList();
 
           statusWithUserDetails.add(
             UserWithSingleStatusDetails(
@@ -132,7 +115,7 @@ class FirebaseFirestoreServiceImplementation extends FirebaseFirestoreService {
             ),
           );
         }
-        status.value = statusWithUserDetails;
+        status.add(statusWithUserDetails);
       },
     );
     return status;

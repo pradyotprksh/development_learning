@@ -1,14 +1,15 @@
-import 'package:get/get_rx/get_rx.dart';
+import 'dart:async';
+
 import 'package:whatsapp/domain/domain.dart';
 
 class UserWithSingleStatusDetails {
   UserWithSingleStatusDetails(
     this.userId,
-    this.statusWithSeenDetails,
+    this.statusDetails,
     this.userDetails,
   );
 
   final String userId;
-  final Rx<UserDetails?> userDetails;
-  final List<StatusWithSeenDetails> statusWithSeenDetails;
+  final List<StatusDetails> statusDetails;
+  final StreamController<UserDetails?> userDetails;
 }

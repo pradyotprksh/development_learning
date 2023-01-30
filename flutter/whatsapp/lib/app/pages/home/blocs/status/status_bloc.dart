@@ -44,7 +44,7 @@ class StatusBloc extends Bloc<StatusEvent, StatusState> {
     final userId = _firebaseAuthService.getUserId();
     if (userId != null) {
       await emit.forEach(
-        _firebaseFirestoreService.getStatus(userId).stream,
+        _firebaseFirestoreService.getStatus().stream,
         onData: (status) {
           if (status != null) {
             if (status.isEmpty) {

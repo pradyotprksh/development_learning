@@ -20,10 +20,15 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     emit(const FetchingUserDetails());
     var userId = _firebaseAuthService.getUserId();
     if (userId != null) {
-      emit(
-        UserDetailsAvailable(
-          _firebaseFirestoreService.getUserDetails(userId),
-        ),
+      await emit.forEach(
+        _firebaseFirestoreService.getUserDetails(userId).stream,
+        onData: (userDetails) {
+          if (userDetails != null && userDetails.allDetailsAvailable) {
+            return UserDetailsAvailable(userDetails);
+          } else {
+            return const UserDataNotAvailable();
+          }
+        },
       );
     }
   }

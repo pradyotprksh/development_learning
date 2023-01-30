@@ -18,7 +18,7 @@ import firebase_remote_config
 import firebase_storage
 import network_info_plus
 import package_info_plus
-import path_provider_macos
+import path_provider_foundation
 import sqflite
 import url_launcher_macos
 import video_compress

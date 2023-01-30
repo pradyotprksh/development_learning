@@ -1,7 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get_rx/get_rx.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:whatsapp/app/app.dart';
 import 'package:whatsapp/domain/domain.dart';
@@ -16,7 +14,7 @@ class StatusDetailsWidget extends StatefulWidget {
 
   final UserWithSingleStatusDetails statusDetails;
   final int currentStatusNumber;
-  final void Function(String, RxList<StatusSeenDetails>) isSeen;
+  final void Function(String) isSeen;
 
   @override
   State<StatusDetailsWidget> createState() => _StatusDetailsWidgetState();
@@ -30,17 +28,12 @@ class _StatusDetailsWidgetState extends State<StatusDetailsWidget> {
   void initState() {
     super.initState();
     currentStatusIndex = widget.currentStatusNumber;
-    currentStatus = widget
-        .statusDetails.statusWithSeenDetails[currentStatusIndex].statusDetails;
+    currentStatus = widget.statusDetails.statusDetails[currentStatusIndex];
   }
 
   @override
   Widget build(BuildContext context) {
-    widget.isSeen(
-      currentStatus.statusId,
-      widget
-          .statusDetails.statusWithSeenDetails[currentStatusIndex].statusSeenBy,
-    );
+    widget.isSeen(currentStatus.statusId);
 
     return Scaffold(
       extendBodyBehindAppBar: true,
@@ -124,9 +117,8 @@ class _StatusDetailsWidgetState extends State<StatusDetailsWidget> {
                   if (currentStatusIndex != 0) {
                     setState(
                       () {
-                        final currentStatusDetails = widget.statusDetails
-                            .statusWithSeenDetails[--currentStatusIndex];
-                        currentStatus = currentStatusDetails.statusDetails;
+                        currentStatus = widget
+                            .statusDetails.statusDetails[--currentStatusIndex];
                       },
                     );
                   }
@@ -140,11 +132,10 @@ class _StatusDetailsWidgetState extends State<StatusDetailsWidget> {
               GestureDetector(
                 onTap: () {
                   if (currentStatusIndex <
-                      widget.statusDetails.statusWithSeenDetails.length - 1) {
+                      widget.statusDetails.statusDetails.length - 1) {
                     setState(() {
-                      final currentStatusDetails = widget.statusDetails
-                          .statusWithSeenDetails[++currentStatusIndex];
-                      currentStatus = currentStatusDetails.statusDetails;
+                      currentStatus = widget
+                          .statusDetails.statusDetails[++currentStatusIndex];
                     });
                   }
                 },
@@ -169,42 +160,6 @@ class _StatusDetailsWidgetState extends State<StatusDetailsWidget> {
                     icon: const Icon(
                       Icons.arrow_back,
                     ),
-                  ),
-                  Obx(
-                    () {
-                      final userDetails =
-                          widget.statusDetails.userDetails.value;
-                      if (userDetails != null) {
-                        return Flexible(
-                          child: ListTile(
-                            leading: CachedNetworkImageWidget(
-                              imageUrl: userDetails.profileImage ?? '',
-                              placeholder: CircleAvatar(
-                                radius: 20,
-                                backgroundColor: context.themeData.primaryColor,
-                                backgroundImage: const AssetImage(
-                                  AssetsPath.defaultAvatar,
-                                ),
-                              ),
-                              height: 40,
-                              width: 40,
-                              clipToCircle: true,
-                            ),
-                            title: Text(
-                              userDetails.name ?? '',
-                            ),
-                            subtitle: Text(
-                              AppUtilsMethods.timeAgo(
-                                currentStatus.createdOnTimeStamp,
-                                context,
-                              ),
-                            ),
-                          ),
-                        );
-                      } else {
-                        return ThemeSizedBox.shrink;
-                      }
-                    },
                   ),
                 ],
               ),

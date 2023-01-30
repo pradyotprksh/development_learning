@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:get/get_rx/get_rx.dart';
 import 'package:whatsapp/domain/domain.dart';
 
 abstract class UserState extends Equatable {
@@ -7,7 +6,7 @@ abstract class UserState extends Equatable {
     this.userDetails,
   );
 
-  final Rx<UserDetails?>? userDetails;
+  final UserDetails? userDetails;
 
   @override
   List<Object?> get props => [userDetails];
@@ -22,5 +21,5 @@ class UserDataNotAvailable extends UserState {
 }
 
 class UserDetailsAvailable extends UserState {
-  const UserDetailsAvailable(Rx<UserDetails?> super.userDetails);
+  const UserDetailsAvailable(super.userDetails);
 }

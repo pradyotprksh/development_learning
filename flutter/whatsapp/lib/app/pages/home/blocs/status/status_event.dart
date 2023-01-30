@@ -1,6 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:get/get_rx/get_rx.dart';
-import 'package:whatsapp/domain/domain.dart';
 
 abstract class StatusEvent extends Equatable {
   const StatusEvent();
@@ -14,8 +12,7 @@ class FetchStatus extends StatusEvent {
 }
 
 class MarkStatusAsSeen extends StatusEvent {
-  const MarkStatusAsSeen(this.statusId, this.statusSeenBy);
+  const MarkStatusAsSeen(this.statusId);
 
   final String statusId;
-  final RxList<StatusSeenDetails> statusSeenBy;
 }
