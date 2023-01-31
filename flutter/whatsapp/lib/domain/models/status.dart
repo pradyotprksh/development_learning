@@ -24,23 +24,26 @@ class StatusDetails {
     final data = snapshot.data();
 
     final deviceDetails =
-        data?[UserDetailsKey.userDeviceDetails] as Map<String, dynamic>? ??
+        data?[FirestoreItemKey.userDeviceDetails] as Map<String, dynamic>? ??
             <String, dynamic>{};
 
     return StatusDetails(
-      status: EncryptorService.decryptData(data?[StatusKey.status] as String),
-      fontFamily: data?[StatusKey.fontFamily] as String,
-      color: data?[StatusKey.color] as int,
-      filePathUrl:
-          EncryptorService.decryptData(data?[StatusKey.filePathUrl] as String?),
+      status: EncryptorService.decryptData(
+          data?[FirestoreItemKey.status] as String),
+      fontFamily: data?[FirestoreItemKey.fontFamily] as String,
+      color: data?[FirestoreItemKey.color] as int,
+      filePathUrl: EncryptorService.decryptData(
+          data?[FirestoreItemKey.filePathUrl] as String?),
       firestoreFilePath: EncryptorService.decryptData(
-          data?[StatusKey.firestoreFilePath] as String?),
-      userId: data?[UserDetailsKey.userId] as String,
-      createdOnTimeStamp: data?[UserDetailsKey.createdOnTimeStamp] as int? ?? 0,
-      userReference: data?[UserDetailsKey.userReference] as DocumentReference?,
+          data?[FirestoreItemKey.firestoreFilePath] as String?),
+      userId: data?[FirestoreItemKey.userId] as String,
+      createdOnTimeStamp:
+          data?[FirestoreItemKey.createdOnTimeStamp] as int? ?? 0,
+      userReference:
+          data?[FirestoreItemKey.userReference] as DocumentReference?,
       userDeviceDetails: UserDeviceDetails.fromMap(deviceDetails),
       statusId: snapshot.id,
-      isFileImage: data?[StatusKey.isFileImage] as bool?,
+      isFileImage: data?[FirestoreItemKey.isFileImage] as bool?,
     );
   }
 
@@ -57,20 +60,22 @@ class StatusDetails {
   final DocumentReference? userReference;
 
   Map<String, dynamic> toFirestore() => <String, dynamic>{
-        StatusKey.status: EncryptorService.encryptData(status),
-        StatusKey.fontFamily: fontFamily,
-        StatusKey.color: color,
+        FirestoreItemKey.status: EncryptorService.encryptData(status),
+        FirestoreItemKey.fontFamily: fontFamily,
+        FirestoreItemKey.color: color,
         if (filePathUrl != null)
-          StatusKey.filePathUrl: EncryptorService.encryptData(filePathUrl),
+          FirestoreItemKey.filePathUrl:
+              EncryptorService.encryptData(filePathUrl),
         if (firestoreFilePath != null)
-          StatusKey.firestoreFilePath:
+          FirestoreItemKey.firestoreFilePath:
               EncryptorService.encryptData(firestoreFilePath),
         if (createdOnTimeStamp != null)
-          UserDetailsKey.createdOnTimeStamp: createdOnTimeStamp,
-        if (userReference != null) UserDetailsKey.userReference: userReference,
-        UserDetailsKey.userId: userId,
+          FirestoreItemKey.createdOnTimeStamp: createdOnTimeStamp,
+        if (userReference != null)
+          FirestoreItemKey.userReference: userReference,
+        FirestoreItemKey.userId: userId,
         if (userDeviceDetails != null)
-          UserDetailsKey.userDeviceDetails: userDeviceDetails!.toMap(),
-        if (isFileImage != null) StatusKey.isFileImage: isFileImage,
+          FirestoreItemKey.userDeviceDetails: userDeviceDetails!.toMap(),
+        if (isFileImage != null) FirestoreItemKey.isFileImage: isFileImage,
       };
 }

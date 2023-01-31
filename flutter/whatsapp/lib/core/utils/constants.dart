@@ -2,6 +2,7 @@ import 'package:whatsapp/device/device.dart';
 
 abstract class CoreConstants {
   static const userCollection = 'users';
+  static const directMessageCollection = 'direct-messages';
   static const statusCollection = 'status';
   static const statusSeenCollection = 'status/$statusIdPlaceholder/seen-by';
   static const userIdPlaceholder = '{userId}';

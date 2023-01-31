@@ -1,4 +1,4 @@
-abstract class UserDetailsKey {
+abstract class FirestoreItemKey {
   static const pin = 'pin';
   static const name = 'name';
   static const emailId = 'emailId';
@@ -16,9 +16,6 @@ abstract class UserDetailsKey {
   static const userReference = 'userReference';
   static const profileImage = 'profileImage';
   static const updatedOnTimeStamp = 'updatedOnTimeStamp';
-}
-
-abstract class StatusKey {
   static const status = 'status';
   static const fontFamily = 'fontFamily';
   static const color = 'color';
@@ -27,4 +24,14 @@ abstract class StatusKey {
   static const statusId = 'statusId';
   static const isFileImage = 'isFileImage';
   static const seenOnTimeStamp = 'seenOnTimeStamp';
+  static const message = 'message';
+  static const sentByUserId = 'sentByUserId';
+  static const sentToUserId = 'sentToUserId';
+  static const sentOnTimeStamp = 'sentOnTimeStamp';
+  static const sentByUserDeviceDetails = 'sentByUserDeviceDetails';
+  static const users = 'users';
+  static const createdByUserId = 'createdByUserId';
+  static const lastMessage = 'lastMessage';
+  static const sentToUserReference = 'sentToUserReference';
+  static const createdByUserDeviceDetails = 'createdByUserDeviceDetails';
 }

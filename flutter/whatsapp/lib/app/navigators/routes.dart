@@ -28,6 +28,8 @@ abstract class Routes {
     messages: (context) => BlocProvider(
           create: (_) => MessageBloc(
             FirebaseFirestoreServiceImplementation(),
+            FirebaseAuthServiceImplementation(),
+            DeviceDetailsImplementation(),
           ),
           child: const MessageView(),
         ),

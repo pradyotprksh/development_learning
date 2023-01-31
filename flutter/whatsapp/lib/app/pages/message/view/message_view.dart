@@ -109,6 +109,43 @@ class MessageView extends StatelessWidget {
           ),
         ],
       ),
+      body: Stack(
+        children: [
+          ListView(),
+          Container(
+            alignment: Alignment.bottomCenter,
+            padding: ThemeEdgeInsets.all10,
+            child: BlocBuilder<MessageBloc, MessageState>(
+              buildWhen: (previousState, currentState) =>
+                  previousState.directMessageDetails !=
+                      currentState.directMessageDetails ||
+                  previousState.pageState != currentState.pageState,
+              builder: (_, messageState) {
+                if (messageState.pageState == PageState.loading) {
+                  return const LinearProgressIndicatorWidget();
+                }
+
+                final messageDetails = messageState.directMessageDetails;
+
+                if (messageDetails != null) {
+                  return TextFormField();
+                } else {
+                  return ElevatedButton(
+                    onPressed: () {
+                      context.read<MessageBloc>().add(
+                            const CreateDirectMessage(),
+                          );
+                    },
+                    child: Text(
+                      context.translator.startConversation,
+                    ),
+                  );
+                }
+              },
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

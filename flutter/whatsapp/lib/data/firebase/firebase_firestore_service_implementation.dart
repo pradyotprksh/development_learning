@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:collection/collection.dart';
 import 'package:whatsapp/core/core.dart';
 import 'package:whatsapp/domain/domain.dart';
 
@@ -35,7 +36,7 @@ class FirebaseFirestoreServiceImplementation extends FirebaseFirestoreService {
     try {
       final usersCollection = await getUserCollectionReference()
           .where(
-            UserDetailsKey.emailId,
+            FirestoreItemKey.emailId,
             isEqualTo: emailAddress.replaceAll(' ', ''),
           )
           .limit(1)
@@ -52,7 +53,7 @@ class FirebaseFirestoreServiceImplementation extends FirebaseFirestoreService {
     try {
       final usersCollection = await getUserCollectionReference()
           .where(
-            UserDetailsKey.phoneNumber,
+            FirestoreItemKey.phoneNumber,
             isEqualTo: phoneNumber.replaceAll(' ', ''),
           )
           .limit(1)
@@ -74,7 +75,7 @@ class FirebaseFirestoreServiceImplementation extends FirebaseFirestoreService {
     var status = StreamController<List<UserWithSingleStatusDetails>?>();
     getStatusCollectionReference()
         .orderBy(
-          UserDetailsKey.createdOnTimeStamp,
+          FirestoreItemKey.createdOnTimeStamp,
           descending: true,
         )
         .snapshots()
@@ -136,4 +137,42 @@ class FirebaseFirestoreServiceImplementation extends FirebaseFirestoreService {
   @override
   DocumentReference<UserDetails> getUserDocumentReference(String userId) =>
       getUserCollectionReference().doc(userId);
+
+  @override
+  StreamController<DirectMessageDetails?> getMessageDetails(
+    String currentUserId,
+    String selectedUserId,
+  ) {
+    final directMessageDetails = StreamController<DirectMessageDetails?>();
+    getDirectMessageCollectionReference()
+        .where(
+          FirestoreItemKey.users,
+          arrayContains: currentUserId,
+        )
+        .snapshots()
+        .listen(
+      (event) {
+        var found = false;
+        for (var element in event.docs) {
+          final users = element.data().users;
+          if (users.contains(currentUserId) && users.contains(selectedUserId)) {
+            directMessageDetails.add(event.docs.firstOrNull?.data());
+            found = true;
+            break;
+          }
+        }
+        if (!found) {
+          directMessageDetails.add(null);
+        }
+      },
+    );
+    return directMessageDetails;
+  }
+
+  @override
+  Future<void> createDirectMessage(
+    DirectMessageDetails directMessageDetails,
+  ) async {
+    await getDirectMessageCollectionReference().add(directMessageDetails);
+  }
 }

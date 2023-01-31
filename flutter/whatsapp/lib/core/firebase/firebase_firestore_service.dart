@@ -7,6 +7,11 @@ import 'package:whatsapp/domain/domain.dart';
 abstract class FirebaseFirestoreService {
   final firestore = FirebaseFirestore.instance;
 
+  StreamController<DirectMessageDetails?> getMessageDetails(
+    String currentUserId,
+    String selectedUserId,
+  );
+
   StreamController<UserDetails?> getUserDetails(String userId);
 
   StreamController<List<UserWithSingleStatusDetails>?> getStatus();
@@ -16,6 +21,8 @@ abstract class FirebaseFirestoreService {
   Future<void> setUserDetails(String userId, UserDetails userDetails);
 
   Future<void> setStatus(StatusDetails statusDetails);
+
+  Future<void> createDirectMessage(DirectMessageDetails directMessageDetails);
 
   Future<void> setStatusSeen(
     String statusId,
@@ -34,6 +41,14 @@ abstract class FirebaseFirestoreService {
       firestore.collection(collectionPath).withConverter(
             fromFirestore: fromFirestore,
             toFirestore: toFirestore,
+          );
+
+  CollectionReference<DirectMessageDetails>
+      getDirectMessageCollectionReference() => _getCollectionReference(
+            CoreConstants.directMessageCollection,
+            DirectMessageDetails.fromFirestore,
+            (DirectMessageDetails directMessageDetails, _) =>
+                directMessageDetails.toFirestore(),
           );
 
   CollectionReference<UserDetails> getUserCollectionReference() =>

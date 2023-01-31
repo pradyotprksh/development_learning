@@ -12,8 +12,8 @@ class UserDeviceDetails {
 
   factory UserDeviceDetails.fromMap(Map<String, dynamic>? json) =>
       UserDeviceDetails(
-        version: json?[UserDetailsKey.version] as String?,
-        buildNumber: json?[UserDetailsKey.buildNumber] as String?,
+        version: json?[FirestoreItemKey.version] as String?,
+        buildNumber: json?[FirestoreItemKey.buildNumber] as String?,
       );
 
   final Map<String, dynamic>? deviceInfo;
@@ -24,11 +24,11 @@ class UserDeviceDetails {
   final String? buildNumber;
 
   Map<String, dynamic> toMap() => <String, dynamic>{
-        if (deviceInfo != null) UserDetailsKey.deviceInfo: deviceInfo,
-        if (ipAddress != null) UserDetailsKey.ipAddress: ipAddress,
-        if (appName != null) UserDetailsKey.appName: appName,
-        if (packageName != null) UserDetailsKey.packageName: packageName,
-        if (version != null) UserDetailsKey.version: version,
-        if (buildNumber != null) UserDetailsKey.buildNumber: buildNumber,
+        if (deviceInfo != null) FirestoreItemKey.deviceInfo: deviceInfo,
+        if (ipAddress != null) FirestoreItemKey.ipAddress: ipAddress,
+        if (appName != null) FirestoreItemKey.appName: appName,
+        if (packageName != null) FirestoreItemKey.packageName: packageName,
+        if (version != null) FirestoreItemKey.version: version,
+        if (buildNumber != null) FirestoreItemKey.buildNumber: buildNumber,
       };
 }

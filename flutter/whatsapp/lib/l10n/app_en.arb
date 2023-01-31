@@ -91,5 +91,6 @@
   "muteNotifications": "Mute notifications",
   "disappearingMessages": "Disappearing messages",
   "wallpaper": "Wallpaper",
-  "more": "More"
+  "more": "More",
+  "startConversation": "Start conversation"
 }

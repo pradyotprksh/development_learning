@@ -13,3 +13,15 @@ class FetchSelectedUserDetails extends MessageEvent {
 
   final String userId;
 }
+
+class GetMessageDetails extends MessageEvent {
+  const GetMessageDetails();
+}
+
+class GetMessages extends MessageEvent {
+  const GetMessages();
+}
+
+class CreateDirectMessage extends MessageEvent {
+  const CreateDirectMessage();
+}
