@@ -10,12 +10,14 @@ class StatusDetailsWidget extends StatefulWidget {
     this.userDetails,
     required this.isSeen,
     this.currentStatusNumber = 0,
+    this.isCurrentUser = false,
     super.key,
   });
 
   final UserWithSingleStatusDetails statusDetails;
   final UserDetails? userDetails;
   final int currentStatusNumber;
+  final bool isCurrentUser;
   final void Function(String) isSeen;
 
   @override
@@ -166,18 +168,13 @@ class _StatusDetailsWidgetState extends State<StatusDetailsWidget> {
                   Flexible(
                     child: ListTile(
                       contentPadding: ThemeEdgeInsets.zero,
-                      leading: CachedNetworkImageWidget(
-                        imageUrl: widget.userDetails?.profileImage ?? '',
-                        placeholder: CircleAvatar(
-                          radius: 20,
-                          backgroundColor: context.themeData.primaryColor,
-                          backgroundImage: const AssetImage(
-                            AssetsPath.defaultAvatar,
-                          ),
-                        ),
-                        height: 40,
-                        width: 40,
-                        clipToCircle: true,
+                      leading: UserImageWidget(
+                        profileImage: widget.userDetails?.profileImage ?? '',
+                        userId: widget.userDetails?.userId ?? '',
+                        extraAction: () {
+                          context.navigator.pop();
+                        },
+                        enableAction: !widget.isCurrentUser,
                       ),
                       title: Text(
                         widget.userDetails?.name ?? '',

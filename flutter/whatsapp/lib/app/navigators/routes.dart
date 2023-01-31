@@ -25,7 +25,12 @@ abstract class Routes {
     personaliseRoute: (context) => const PersonaliseView(),
     authenticateRoute: (context) => const AuthenticateView(),
     settings: (context) => const SettingsView(),
-    messages: (context) => const MessageView(),
+    messages: (context) => BlocProvider(
+          create: (_) => MessageBloc(
+            FirebaseFirestoreServiceImplementation(),
+          ),
+          child: const MessageView(),
+        ),
     homeRoute: (context) => MultiBlocProvider(
           providers: [
             BlocProvider(

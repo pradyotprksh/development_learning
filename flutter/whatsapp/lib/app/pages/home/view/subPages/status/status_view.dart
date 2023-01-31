@@ -49,6 +49,7 @@ class _StatusViewState extends State<StatusView>
                       context,
                       statusState.currentUserStatus!,
                       userState.userDetails,
+                      true,
                     );
                   } else {
                     context.navigator.pushNamed(Routes.addStatusCamera);
@@ -103,6 +104,7 @@ class _StatusViewState extends State<StatusView>
                               context,
                               statusState.otherStatus[index],
                               userDetails,
+                              false,
                             );
                           },
                           leading: StatusProfileImageWidget(
@@ -138,6 +140,7 @@ class _StatusViewState extends State<StatusView>
     BuildContext context,
     UserWithSingleStatusDetails userWithSingleStatusDetails,
     UserDetails? userDetails,
+    bool isCurrentUser,
   ) {
     showModalBottomSheet<void>(
       context: context,
@@ -145,6 +148,7 @@ class _StatusViewState extends State<StatusView>
       builder: (_) => StatusDetailsWidget(
         statusDetails: userWithSingleStatusDetails,
         userDetails: userDetails,
+        isCurrentUser: isCurrentUser,
         isSeen: (statusId) {
           context.read<StatusBloc>().add(
                 MarkStatusAsSeen(

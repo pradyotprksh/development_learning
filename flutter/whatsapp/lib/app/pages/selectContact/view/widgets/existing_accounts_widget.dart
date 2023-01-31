@@ -36,18 +36,10 @@ class ExistingAccountsWidget extends StatelessWidget {
                   },
                 );
               },
-              leading: CachedNetworkImageWidget(
-                imageUrl: userDetail.profileImage ?? '',
-                placeholder: CircleAvatar(
-                  radius: 20,
-                  backgroundColor: context.themeData.primaryColor,
-                  backgroundImage: const AssetImage(
-                    AssetsPath.defaultAvatar,
-                  ),
-                ),
-                height: 40,
-                width: 40,
-                clipToCircle: true,
+              leading: UserImageWidget(
+                profileImage: userDetail.profileImage ?? '',
+                userId: userDetail.userId,
+                enableAction: false,
               ),
               title: Text(
                 userDetail.name ?? '',
