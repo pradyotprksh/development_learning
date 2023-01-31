@@ -4,12 +4,13 @@ import 'package:whatsapp/core/core.dart';
 import 'package:whatsapp/device/device.dart';
 import 'package:whatsapp/domain/domain.dart';
 
-class MessageBloc extends ReplayBloc<MessageEvent, MessageState> {
-  MessageBloc(
+class DirectMessageBloc
+    extends ReplayBloc<DirectMessageEvent, DirectMessageState> {
+  DirectMessageBloc(
     this._firebaseFirestoreService,
     this._firebaseAuthService,
     this._deviceDetails,
-  ) : super(const MessageState()) {
+  ) : super(const DirectMessageState()) {
     on<FetchSelectedUserDetails>(_fetchUserDetails);
     on<GetMessages>(_fetchUserMessages);
     on<GetMessageDetails>(_fetchMessageDetails);
@@ -22,7 +23,7 @@ class MessageBloc extends ReplayBloc<MessageEvent, MessageState> {
 
   void _fetchUserDetails(
     FetchSelectedUserDetails event,
-    Emitter<MessageState> emit,
+    Emitter<DirectMessageState> emit,
   ) async {
     if (event.userId.isNotEmpty) {
       await emit.forEach(
@@ -39,12 +40,12 @@ class MessageBloc extends ReplayBloc<MessageEvent, MessageState> {
 
   void _fetchUserMessages(
     GetMessages event,
-    Emitter<MessageState> emit,
+    Emitter<DirectMessageState> emit,
   ) {}
 
   void _createDirectMessage(
     CreateDirectMessage event,
-    Emitter<MessageState> emit,
+    Emitter<DirectMessageState> emit,
   ) async {
     final currentUserId = _firebaseAuthService.getUserId();
     final selectedUserId = state.userDetails?.userId;
@@ -75,7 +76,7 @@ class MessageBloc extends ReplayBloc<MessageEvent, MessageState> {
 
   void _fetchMessageDetails(
     GetMessageDetails event,
-    Emitter<MessageState> emit,
+    Emitter<DirectMessageState> emit,
   ) async {
     final currentUserId = _firebaseAuthService.getUserId();
     final selectedUserId = state.userDetails?.userId;
@@ -90,7 +91,7 @@ class MessageBloc extends ReplayBloc<MessageEvent, MessageState> {
           emit(state.copyWith(pageState: PageState.success));
           if (directMessageDetails == null &&
               state.directMessageDetails != null) {
-            return MessageState(
+            return DirectMessageState(
               directMessageDetails: null,
               userDetails: state.userDetails,
               pageState: state.pageState,

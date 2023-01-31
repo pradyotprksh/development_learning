@@ -1,8 +1,8 @@
 export 'addStatus/add_status.dart';
 export 'authenticate/authenticate.dart';
+export 'directMessage/direct_message.dart';
 export 'home/home.dart';
 export 'intro/intro.dart';
-export 'message/message.dart';
 export 'personalise/personalise.dart';
 export 'selectContact/select_contact.dart';
 export 'settings/settings.dart';

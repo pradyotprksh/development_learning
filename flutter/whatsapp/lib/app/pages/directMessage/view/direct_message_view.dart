@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:whatsapp/app/app.dart';
 
-class MessageView extends StatelessWidget {
-  const MessageView({super.key});
+class DirectMessageView extends StatelessWidget {
+  const DirectMessageView({super.key});
 
   @override
   Widget build(BuildContext context) {
     final arguments = context.routeSettings?.arguments as Map<String, String>;
-    context.read<MessageBloc>().add(
+    context.read<DirectMessageBloc>().add(
           FetchSelectedUserDetails(
             arguments[Keys.userId] ?? '',
           ),
@@ -17,7 +17,7 @@ class MessageView extends StatelessWidget {
     return Scaffold(
       backgroundColor: context.themeData.scaffoldBackgroundColor,
       appBar: AppBar(
-        title: BlocBuilder<MessageBloc, MessageState>(
+        title: BlocBuilder<DirectMessageBloc, DirectMessageState>(
           buildWhen: (previousState, currentState) =>
               previousState.userDetails != currentState.userDetails,
           builder: (_, messageState) => Row(
@@ -115,7 +115,7 @@ class MessageView extends StatelessWidget {
           Container(
             alignment: Alignment.bottomCenter,
             padding: ThemeEdgeInsets.all10,
-            child: BlocBuilder<MessageBloc, MessageState>(
+            child: BlocBuilder<DirectMessageBloc, DirectMessageState>(
               buildWhen: (previousState, currentState) =>
                   previousState.directMessageDetails !=
                       currentState.directMessageDetails ||
@@ -132,7 +132,7 @@ class MessageView extends StatelessWidget {
                 } else {
                   return ElevatedButton(
                     onPressed: () {
-                      context.read<MessageBloc>().add(
+                      context.read<DirectMessageBloc>().add(
                             const CreateDirectMessage(),
                           );
                     },
