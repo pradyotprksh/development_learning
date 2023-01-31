@@ -27,6 +27,7 @@ abstract class FirestoreItemKey {
   static const message = 'message';
   static const sentByUserId = 'sentByUserId';
   static const sentToUserId = 'sentToUserId';
+  static const isSystemMessage = 'isSystemMessage';
   static const sentOnTimeStamp = 'sentOnTimeStamp';
   static const sentByUserDeviceDetails = 'sentByUserDeviceDetails';
   static const users = 'users';

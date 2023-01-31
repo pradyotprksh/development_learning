@@ -3,10 +3,13 @@ import 'package:whatsapp/device/device.dart';
 abstract class CoreConstants {
   static const userCollection = 'users';
   static const directMessageCollection = 'direct-messages';
+  static const messagesCollection =
+      'direct-messages/$messageIdPlaceholder/messages';
   static const statusCollection = 'status';
   static const statusSeenCollection = 'status/$statusIdPlaceholder/seen-by';
   static const userIdPlaceholder = '{userId}';
   static const statusIdPlaceholder = '{statusId}';
+  static const messageIdPlaceholder = '{message}';
   static const enableEncryption = 'enableEncryption';
   static const imageCompressionValue = 'imageCompressionValue';
   static const isApplicationDown = 'isApplicationDown';

@@ -92,5 +92,6 @@
   "disappearingMessages": "Disappearing messages",
   "wallpaper": "Wallpaper",
   "more": "More",
-  "startConversation": "Start conversation"
+  "startConversation": "Start conversation",
+  "conversationCreated": "Conversation created. You can now chat with each other securely."
 }

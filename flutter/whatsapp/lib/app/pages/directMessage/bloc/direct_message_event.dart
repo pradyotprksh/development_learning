@@ -23,5 +23,7 @@ class GetMessages extends DirectMessageEvent {
 }
 
 class CreateDirectMessage extends DirectMessageEvent {
-  const CreateDirectMessage();
+  const CreateDirectMessage(this.firstMessage);
+
+  final String firstMessage;
 }

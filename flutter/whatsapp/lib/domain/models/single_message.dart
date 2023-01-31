@@ -14,6 +14,7 @@ class SingleMessageDetails {
     this.sentOnTimeStamp,
     this.isFileImage,
     this.messageId = '',
+    this.isSystemMessage = false,
   });
 
   factory SingleMessageDetails.fromFirestore(
@@ -41,6 +42,7 @@ class SingleMessageDetails {
       sentByUserDeviceDetails: UserDeviceDetails.fromMap(deviceDetails),
       messageId: snapshot.id,
       isFileImage: data?[FirestoreItemKey.isFileImage] as bool?,
+      isSystemMessage: data?[FirestoreItemKey.isSystemMessage] as bool,
     );
   }
 
@@ -54,11 +56,13 @@ class SingleMessageDetails {
   final String messageId;
   final bool? isFileImage;
   final DocumentReference? sentToUserReference;
+  final bool isSystemMessage;
 
   Map<String, dynamic> toFirestore() => <String, dynamic>{
         FirestoreItemKey.message: EncryptorService.encryptData(message),
         FirestoreItemKey.sentByUserId: sentByUserId,
         FirestoreItemKey.sentToUserId: sentToUserId,
+        FirestoreItemKey.isSystemMessage: isSystemMessage,
         if (filePathUrl != null)
           FirestoreItemKey.filePathUrl:
               EncryptorService.encryptData(filePathUrl),

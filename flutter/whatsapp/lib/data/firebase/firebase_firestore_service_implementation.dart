@@ -175,4 +175,13 @@ class FirebaseFirestoreServiceImplementation extends FirebaseFirestoreService {
   ) async {
     await getDirectMessageCollectionReference().add(directMessageDetails);
   }
+
+  @override
+  Future<void> sendMessage(
+    SingleMessageDetails singleMessageDetails,
+    String directMessageId,
+  ) async {
+    await getMessageCollectionReference(directMessageId)
+        .add(singleMessageDetails);
+  }
 }

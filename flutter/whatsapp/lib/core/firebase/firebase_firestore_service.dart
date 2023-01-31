@@ -24,6 +24,11 @@ abstract class FirebaseFirestoreService {
 
   Future<void> createDirectMessage(DirectMessageDetails directMessageDetails);
 
+  Future<void> sendMessage(
+    SingleMessageDetails singleMessageDetails,
+    String directMessageId,
+  );
+
   Future<void> setStatusSeen(
     String statusId,
     StatusSeenDetails statusSeenDetails,
@@ -50,6 +55,17 @@ abstract class FirebaseFirestoreService {
             (DirectMessageDetails directMessageDetails, _) =>
                 directMessageDetails.toFirestore(),
           );
+
+  CollectionReference<SingleMessageDetails> getMessageCollectionReference(
+    String messageId,
+  ) =>
+      _getCollectionReference(
+        CoreConstants.messagesCollection
+            .replaceAll(CoreConstants.messageIdPlaceholder, messageId),
+        SingleMessageDetails.fromFirestore,
+        (SingleMessageDetails singleMessageDetails, _) =>
+            singleMessageDetails.toFirestore(),
+      );
 
   CollectionReference<UserDetails> getUserCollectionReference() =>
       _getCollectionReference<UserDetails>(

@@ -133,7 +133,9 @@ class DirectMessageView extends StatelessWidget {
                   return ElevatedButton(
                     onPressed: () {
                       context.read<DirectMessageBloc>().add(
-                            const CreateDirectMessage(),
+                            CreateDirectMessage(
+                              context.translator.conversationCreated,
+                            ),
                           );
                     },
                     child: Text(
