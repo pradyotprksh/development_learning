@@ -25,23 +25,23 @@ class _HomeViewState extends State<HomeView>
     super.dispose();
   }
 
-  void _openPageBasedOnSelection(BuildContext context, MenuItems value) {
+  void _openPageBasedOnSelection(BuildContext context, HomeMenuItems value) {
     switch (value) {
-      case MenuItems.newGroup:
+      case HomeMenuItems.newGroup:
         break;
-      case MenuItems.newBroadcast:
+      case HomeMenuItems.newBroadcast:
         break;
-      case MenuItems.linkedDevices:
+      case HomeMenuItems.linkedDevices:
         break;
-      case MenuItems.starredMessages:
+      case HomeMenuItems.starredMessages:
         break;
-      case MenuItems.payments:
+      case HomeMenuItems.payments:
         break;
-      case MenuItems.statusPrivacy:
+      case HomeMenuItems.statusPrivacy:
         break;
-      case MenuItems.clearCallLog:
+      case HomeMenuItems.clearCallLog:
         break;
-      case MenuItems.settings:
+      case HomeMenuItems.settings:
         context.navigator.pushNamed(Routes.settings);
         break;
     }
@@ -78,56 +78,56 @@ class _HomeViewState extends State<HomeView>
                   Icons.search,
                 ),
               ),
-              PopupMenuButton<MenuItems>(
+              PopupMenuButton<HomeMenuItems>(
                 onSelected: (item) {
                   _openPageBasedOnSelection(context, item);
                 },
                 color: context.themeData.popupMenuTheme.color,
                 itemBuilder: (_) => [
                   PopupMenuItem(
-                    value: MenuItems.newGroup,
+                    value: HomeMenuItems.newGroup,
                     child: Text(
                       context.translator.newGroup,
                     ),
                   ),
                   PopupMenuItem(
-                    value: MenuItems.newBroadcast,
+                    value: HomeMenuItems.newBroadcast,
                     child: Text(
                       context.translator.newBroadcast,
                     ),
                   ),
                   PopupMenuItem(
-                    value: MenuItems.linkedDevices,
+                    value: HomeMenuItems.linkedDevices,
                     child: Text(
                       context.translator.linkedDevices,
                     ),
                   ),
                   PopupMenuItem(
-                    value: MenuItems.starredMessages,
+                    value: HomeMenuItems.starredMessages,
                     child: Text(
                       context.translator.starredMessages,
                     ),
                   ),
                   PopupMenuItem(
-                    value: MenuItems.payments,
+                    value: HomeMenuItems.payments,
                     child: Text(
                       context.translator.payments,
                     ),
                   ),
                   PopupMenuItem(
-                    value: MenuItems.statusPrivacy,
+                    value: HomeMenuItems.statusPrivacy,
                     child: Text(
                       context.translator.statusPrivacy,
                     ),
                   ),
                   PopupMenuItem(
-                    value: MenuItems.clearCallLog,
+                    value: HomeMenuItems.clearCallLog,
                     child: Text(
                       context.translator.clearCallLog,
                     ),
                   ),
                   PopupMenuItem(
-                    value: MenuItems.settings,
+                    value: HomeMenuItems.settings,
                     child: Text(
                       context.translator.settings,
                     ),

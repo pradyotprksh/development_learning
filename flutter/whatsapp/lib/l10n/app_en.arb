@@ -84,5 +84,12 @@
   "dataAndStorage": "Data and storage",
   "chatSettings": "Chat settings",
   "devices": "Devices",
-  "language": "Language"
+  "language": "Language",
+  "viewContact": "View contact",
+  "mediaLinksDocs": "Media, links and docs",
+  "search": "Search",
+  "muteNotifications": "Mute notifications",
+  "disappearingMessages": "Disappearing messages",
+  "wallpaper": "Wallpaper",
+  "more": "More"
 }

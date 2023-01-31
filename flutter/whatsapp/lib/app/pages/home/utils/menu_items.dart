@@ -1,4 +1,4 @@
-enum MenuItems {
+enum HomeMenuItems {
   newGroup,
   newBroadcast,
   linkedDevices,
@@ -7,4 +7,14 @@ enum MenuItems {
   statusPrivacy,
   clearCallLog,
   settings,
+}
+
+enum MessageMenuItems {
+  viewContact,
+  mediaLinksDocs,
+  search,
+  muteNotifications,
+  disappearingMessages,
+  wallpaper,
+  more,
 }
