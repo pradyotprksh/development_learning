@@ -19,6 +19,7 @@ abstract class Routes {
   static const messages = '/messages';
   static const profile = '/profile';
   static const emailVerification = '/email-verification';
+  static const qrCode = '/qr-code';
 
   static const initialRoute = splashRoute;
 
@@ -28,6 +29,7 @@ abstract class Routes {
     personaliseRoute: (context) => const PersonaliseView(),
     authenticateRoute: (context) => const AuthenticateView(),
     settings: (context) => const SettingsView(),
+    qrCode: (context) => const QrCodeView(),
     profile: (context) => BlocProvider(
           create: (_) => ProfileBloc(
             FirebaseFirestoreServiceImplementation(),

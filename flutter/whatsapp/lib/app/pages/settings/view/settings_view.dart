@@ -11,7 +11,9 @@ class SettingsView extends StatelessWidget {
         appBar: AppBar(
           actions: [
             IconButton(
-              onPressed: () {},
+              onPressed: () {
+                context.navigator.pushNamed(Routes.qrCode);
+              },
               icon: const Icon(
                 Icons.qr_code,
               ),

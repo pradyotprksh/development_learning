@@ -15,7 +15,7 @@ dependencies:
 
   cached_network_image: ^3.2.3
 
-  camerawesome: ^1.1.0
+  camerawesome: ^1.2.0
 
   cloud_firestore: ^4.3.1
 
@@ -73,7 +73,7 @@ dependencies:
 
   get_ip_address: ^0.0.5
 
-  google_fonts: ^3.0.1
+  google_fonts: ^4.0.1
 
   hydrated_bloc: ^9.0.0
 
@@ -85,17 +85,19 @@ dependencies:
 
   logger: ^1.1.0
 
-  memory_cache: ^1.1.0
+  memory_cache: ^1.2.0
 
   network_info_plus: ^3.0.1
 
   package_info_plus: ^3.0.2
 
-  path_provider: ^2.0.11
+  path_provider: ^2.0.12
 
   permission_handler: ^10.2.0
 
   pin_code_fields: ^7.4.0
+
+  qr_flutter: ^4.0.0
 
   replay_bloc: ^0.2.2
 

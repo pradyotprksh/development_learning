@@ -5,6 +5,7 @@ export 'home/home.dart';
 export 'intro/intro.dart';
 export 'personalise/personalise.dart';
 export 'profile/profile.dart';
+export 'qrCode/qr_code.dart';
 export 'selectContact/select_contact.dart';
 export 'settings/settings.dart';
 export 'splash/splash.dart';
