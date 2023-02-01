@@ -16,7 +16,11 @@ class ProfileView extends StatelessWidget {
             children: [
               ThemeSizedBox.height20,
               ImagePickerWidget(
-                image: (path) {},
+                image: (path) {
+                  context.read<UserBloc>().add(
+                        UpdateUserProfileImage(path),
+                      );
+                },
                 cropStyle: CropStyle.circle,
                 aspectRatioPresets: const [
                   CropAspectRatioPreset.square,
@@ -38,6 +42,8 @@ class ProfileView extends StatelessWidget {
                         height: 150,
                         width: 150,
                         clipToCircle: true,
+                        showProgressIndicator: userState.imageUploadStatus ==
+                            ImageUploadStatus.uploading,
                       ),
                       Container(
                         padding: ThemeEdgeInsets.all10,
