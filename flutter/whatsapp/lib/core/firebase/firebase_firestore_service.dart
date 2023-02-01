@@ -20,6 +20,8 @@ abstract class FirebaseFirestoreService {
 
   Future<void> setUserLogInHistory(LoginHistoryDetails loginHistoryDetails);
 
+  Future<void> updateUserDetails(String userId, Map<String, Object> values);
+
   Future<void> setUserDetails(String userId, UserDetails userDetails);
 
   Future<void> setStatus(StatusDetails statusDetails);

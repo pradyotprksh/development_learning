@@ -191,4 +191,11 @@ class FirebaseFirestoreServiceImplementation extends FirebaseFirestoreService {
     await getLoginHistoryCollectionReference(loginHistoryDetails.userId)
         .add(loginHistoryDetails);
   }
+
+  @override
+  Future<void> updateUserDetails(
+      String userId, Map<String, Object> values) async {
+    final userRef = getUserCollectionReference().doc(userId);
+    await userRef.update(values);
+  }
 }

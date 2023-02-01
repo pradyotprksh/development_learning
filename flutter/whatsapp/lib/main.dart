@@ -22,6 +22,7 @@ void main() async {
         BlocProvider(
           create: (_) => AuthenticationBloc(
             FirebaseAuthServiceImplementation(),
+            FirebaseFirestoreServiceImplementation(),
           )..add(
               const CheckForRemoteConfigs(),
             ),
