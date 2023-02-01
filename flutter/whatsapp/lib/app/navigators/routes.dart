@@ -28,15 +28,27 @@ abstract class Routes {
     personaliseRoute: (context) => const PersonaliseView(),
     authenticateRoute: (context) => const AuthenticateView(),
     settings: (context) => const SettingsView(),
-    profile: (context) => const ProfileView(),
+    profile: (context) => BlocProvider(
+          create: (_) => ProfileBloc(
+            FirebaseFirestoreServiceImplementation(),
+            FirebaseAuthServiceImplementation(),
+            FirebaseStorageServiceImplementation(),
+            DeviceDetailsImplementation(),
+          ),
+          child: ProfileView(),
+        ),
     emailVerification: (context) => EmailVerificationScreen(
           actions: [
-            EmailVerifiedAction(() {
-              context.navigator.pop();
-            }),
-            AuthCancelledAction((context) {
-              context.navigator.pop();
-            }),
+            EmailVerifiedAction(
+              () {
+                context.navigator.pop();
+              },
+            ),
+            AuthCancelledAction(
+              (context) {
+                context.navigator.pop();
+              },
+            ),
           ],
         ),
     messages: (context) => BlocProvider(

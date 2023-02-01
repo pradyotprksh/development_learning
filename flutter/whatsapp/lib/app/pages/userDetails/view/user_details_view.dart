@@ -7,18 +7,6 @@ import 'package:whatsapp/app/app.dart';
 class UserDetailsView extends StatelessWidget {
   UserDetailsView({super.key});
 
-  String? _userNameValidator(String? userName, String errorMessage) {
-    if (userName != null) {
-      if (userName.length < 5) {
-        return errorMessage;
-      } else {
-        return null;
-      }
-    } else {
-      return null;
-    }
-  }
-
   String? _pinValidator(String? pin, String errorMessage) {
     if (pin != null) {
       if (pin.length != 8) {
@@ -151,7 +139,8 @@ class UserDetailsView extends StatelessWidget {
                         decoration: InputDecoration(
                           label: Text(context.translator.userName),
                         ),
-                        validator: (userName) => _userNameValidator(
+                        validator: (userName) =>
+                            AppUtilsMethods.userNameValidator(
                           userName,
                           context.translator.userNameInvalid,
                         ),

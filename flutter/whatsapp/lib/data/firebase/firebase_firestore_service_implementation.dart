@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:collection/collection.dart';
 import 'package:whatsapp/core/core.dart';
+import 'package:whatsapp/device/device.dart';
 import 'package:whatsapp/domain/domain.dart';
 
 class FirebaseFirestoreServiceImplementation extends FirebaseFirestoreService {
@@ -188,8 +189,15 @@ class FirebaseFirestoreServiceImplementation extends FirebaseFirestoreService {
   @override
   Future<void> setUserLogInHistory(
       LoginHistoryDetails loginHistoryDetails) async {
-    await getLoginHistoryCollectionReference(loginHistoryDetails.userId)
-        .add(loginHistoryDetails);
+    final isAvailable =
+        await getLoginHistoryCollectionReference(loginHistoryDetails.userId)
+            .doc(DeviceUtilsMethods.getCurrentDateWithCurrentHour())
+            .get();
+    if (!isAvailable.exists) {
+      await getLoginHistoryCollectionReference(loginHistoryDetails.userId)
+          .doc(DeviceUtilsMethods.getCurrentDateWithCurrentHour())
+          .set(loginHistoryDetails);
+    }
   }
 
   @override

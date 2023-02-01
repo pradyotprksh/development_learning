@@ -8,6 +8,7 @@ class AuthenticationBloc
   AuthenticationBloc(
     this._firebaseAuthService,
     this._firebaseFirestoreService,
+    this._deviceDetails,
   ) : super(const AuthenticationState()) {
     on<CheckForRemoteConfigs>(_checkForRemoteConfigs);
     on<CheckForAuthenticationStatus>(_checkForAuthenticationStatus);
@@ -16,6 +17,7 @@ class AuthenticationBloc
 
   final FirebaseAuthService _firebaseAuthService;
   final FirebaseFirestoreService _firebaseFirestoreService;
+  final DeviceDetails _deviceDetails;
 
   void _checkForAuthenticationStatus(
     CheckForAuthenticationStatus event,
@@ -31,6 +33,7 @@ class AuthenticationBloc
               .first;
 
           if (firestoreUserDetails != null) {
+            final deviceDetails = await _deviceDetails.getDeviceDetails();
             await _firebaseFirestoreService.updateUserDetails(
               firebaseUserDetails.uid,
               {
@@ -39,6 +42,7 @@ class AuthenticationBloc
                         firestoreUserDetails.phoneNumber,
                 FirestoreItemKey.isEmailVerified:
                     firebaseUserDetails.emailVerified,
+                FirestoreItemKey.userDeviceDetails: deviceDetails.toMap(),
               },
             );
           }

@@ -23,17 +23,15 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     UpdateLoginHistory event,
     Emitter<HomeState> emit,
   ) async {
-    if (!AppDetails.isDebugMode) {
-      final userId = _firebaseAuthService.getUserId();
-      if (userId != null) {
-        await _firebaseFirestoreService.setUserLogInHistory(
-          LoginHistoryDetails(
-            userId: userId,
-            userDeviceDetails: await _deviceDetails.getDeviceDetails(),
-            createdOnTimeStamp: DeviceUtilsMethods.getCurrentTimeStamp(),
-          ),
-        );
-      }
+    final userId = _firebaseAuthService.getUserId();
+    if (userId != null) {
+      await _firebaseFirestoreService.setUserLogInHistory(
+        LoginHistoryDetails(
+          userId: userId,
+          userDeviceDetails: await _deviceDetails.getDeviceDetails(),
+          createdOnTimeStamp: DeviceUtilsMethods.getCurrentTimeStamp(),
+        ),
+      );
     }
   }
 }
