@@ -43,16 +43,15 @@ class AuthenticationBloc
             );
           }
         }
-
-        emit(
-          AuthenticationState(
-            authenticationState: AuthenticationStatus.authenticated,
-            firebaseUserDetails: _firebaseAuthService.getUserDetails(),
-          ),
-        );
       } catch (e) {
         FirebaseUtils.recordFlutterError(e);
       }
+      emit(
+        AuthenticationState(
+          authenticationState: AuthenticationStatus.authenticated,
+          firebaseUserDetails: _firebaseAuthService.getUserDetails(),
+        ),
+      );
     } else {
       emit(
         const AuthenticationState(

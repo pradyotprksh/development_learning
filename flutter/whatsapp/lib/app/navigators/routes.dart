@@ -1,3 +1,4 @@
+import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:whatsapp/app/app.dart';
@@ -17,6 +18,7 @@ abstract class Routes {
   static const settings = '/settings';
   static const messages = '/messages';
   static const profile = '/profile';
+  static const emailVerification = '/email-verification';
 
   static const initialRoute = splashRoute;
 
@@ -27,6 +29,16 @@ abstract class Routes {
     authenticateRoute: (context) => const AuthenticateView(),
     settings: (context) => const SettingsView(),
     profile: (context) => const ProfileView(),
+    emailVerification: (context) => EmailVerificationScreen(
+          actions: [
+            EmailVerifiedAction(() {
+              context.navigator.pop();
+            }),
+            AuthCancelledAction((context) {
+              context.navigator.pop();
+            }),
+          ],
+        ),
     messages: (context) => BlocProvider(
           create: (_) => DirectMessageBloc(
             FirebaseFirestoreServiceImplementation(),

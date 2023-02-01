@@ -93,5 +93,8 @@
   "wallpaper": "Wallpaper",
   "more": "More",
   "startConversation": "Start conversation",
-  "conversationCreated": "Conversation created. You can now chat with each other securely."
+  "conversationCreated": "Conversation created. You can now chat with each other securely.",
+  "phoneNumber": "Phone number",
+  "verificationNeeded": "Verification needed",
+  "verificationNote": "Please wait for sometime after the verification. We will be updating your details in a while. You can use the application without any concern."
 }
