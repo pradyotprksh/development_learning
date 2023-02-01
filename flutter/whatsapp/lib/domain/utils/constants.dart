@@ -35,4 +35,6 @@ abstract class FirestoreItemKey {
   static const lastMessage = 'lastMessage';
   static const sentToUserReference = 'sentToUserReference';
   static const createdByUserDeviceDetails = 'createdByUserDeviceDetails';
+  static const isPhoneNumberVerified = 'isPhoneNumberVerified';
+  static const isEmailVerified = 'isEmailVerified';
 }

@@ -49,7 +49,8 @@ class UserDetailsBloc extends Bloc<UserDetailsEvent, UserDetailsState> {
     Emitter<UserDetailsState> emit,
   ) async {
     final userId = _firebaseAuthService.getUserId();
-    if (userId != null && event.pin != null) {
+    final firebaseUserDetails = _firebaseAuthService.getUserDetails();
+    if (userId != null && event.pin != null && firebaseUserDetails != null) {
       emit(
         state.copyWith(
           pageState: PageState.loading,
@@ -72,8 +73,13 @@ class UserDetailsBloc extends Bloc<UserDetailsEvent, UserDetailsState> {
             userDeviceDetails: deviceDetails,
             createdOnTimeStamp: DeviceUtilsMethods.getCurrentTimeStamp(),
             updatedOnTimeStamp: DeviceUtilsMethods.getCurrentTimeStamp(),
+            isEmailVerified: firebaseUserDetails.emailVerified,
+            isPhoneNumberVerified: firebaseUserDetails.phoneNumber != null,
           ),
         );
+        if (firebaseUserDetails.email == null && event.emailAddress != null) {
+          await firebaseUserDetails.updateEmail(event.emailAddress!);
+        }
 
         emit(
           state.copyWith(
