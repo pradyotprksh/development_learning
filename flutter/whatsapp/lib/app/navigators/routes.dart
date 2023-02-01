@@ -16,6 +16,7 @@ abstract class Routes {
   static const addStatusCamera = '/add-status-camera';
   static const settings = '/settings';
   static const messages = '/messages';
+  static const profile = '/profile';
 
   static const initialRoute = splashRoute;
 
@@ -25,6 +26,7 @@ abstract class Routes {
     personaliseRoute: (context) => const PersonaliseView(),
     authenticateRoute: (context) => const AuthenticateView(),
     settings: (context) => const SettingsView(),
+    profile: (context) => const ProfileView(),
     messages: (context) => BlocProvider(
           create: (_) => DirectMessageBloc(
             FirebaseFirestoreServiceImplementation(),

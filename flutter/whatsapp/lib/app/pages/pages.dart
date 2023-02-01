@@ -4,6 +4,7 @@ export 'directMessage/direct_message.dart';
 export 'home/home.dart';
 export 'intro/intro.dart';
 export 'personalise/personalise.dart';
+export 'profile/profile.dart';
 export 'selectContact/select_contact.dart';
 export 'settings/settings.dart';
 export 'splash/splash.dart';

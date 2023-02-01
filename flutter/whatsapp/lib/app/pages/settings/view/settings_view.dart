@@ -28,7 +28,17 @@ class SettingsView extends StatelessWidget {
           children: [
             BlocBuilder<UserBloc, UserState>(
               builder: (_, userState) => ListTile(
-                onTap: () {},
+                onTap: () {
+                  final userId = userState.userDetails?.userId;
+                  if (userId != null) {
+                    context.navigator.pushNamed(
+                      Routes.profile,
+                      arguments: {
+                        Keys.userId: userId,
+                      },
+                    );
+                  }
+                },
                 contentPadding: ThemeEdgeInsets.all15,
                 leading: CachedNetworkImageWidget(
                   imageUrl: userState.userDetails?.profileImage ?? '',

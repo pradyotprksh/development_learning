@@ -4,8 +4,6 @@ import 'package:flutter/services.dart';
 abstract class AppDetails {
   static const bool isDebugMode = foundation.kDebugMode;
 
-  static const bool useMockResponses = true;
-
   static const bool isProfileMode = foundation.kProfileMode;
 
   static const bool isReleaseMode = foundation.kReleaseMode;
