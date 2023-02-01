@@ -57,109 +57,111 @@ class _HomeViewState extends State<HomeView>
             );
           }
         },
-        child: Scaffold(
-          backgroundColor: context.themeData.scaffoldBackgroundColor,
-          appBar: AppBar(
-            title: Text(
-              context.translator.applicationName,
-            ),
-            actions: [
-              IconButton(
-                onPressed: () {
-                  context.navigator.pushNamed(Routes.addStatusCamera);
-                },
-                icon: const Icon(
-                  Icons.camera,
-                ),
+        child: BlocBuilder<HomeBloc, HomeState>(
+          builder: (_, homeState) => Scaffold(
+            backgroundColor: context.themeData.scaffoldBackgroundColor,
+            appBar: AppBar(
+              title: Text(
+                context.translator.applicationName,
               ),
-              IconButton(
-                onPressed: () {},
-                icon: const Icon(
-                  Icons.search,
+              actions: [
+                IconButton(
+                  onPressed: () {
+                    context.navigator.pushNamed(Routes.addStatusCamera);
+                  },
+                  icon: const Icon(
+                    Icons.camera,
+                  ),
                 ),
-              ),
-              PopupMenuButton<HomeMenuItems>(
-                onSelected: (item) {
-                  _openPageBasedOnSelection(context, item);
-                },
-                color: context.themeData.popupMenuTheme.color,
-                itemBuilder: (_) => [
-                  PopupMenuItem(
-                    value: HomeMenuItems.newGroup,
-                    child: Text(
-                      context.translator.newGroup,
-                    ),
+                IconButton(
+                  onPressed: () {},
+                  icon: const Icon(
+                    Icons.search,
                   ),
-                  PopupMenuItem(
-                    value: HomeMenuItems.newBroadcast,
-                    child: Text(
-                      context.translator.newBroadcast,
-                    ),
-                  ),
-                  PopupMenuItem(
-                    value: HomeMenuItems.linkedDevices,
-                    child: Text(
-                      context.translator.linkedDevices,
-                    ),
-                  ),
-                  PopupMenuItem(
-                    value: HomeMenuItems.starredMessages,
-                    child: Text(
-                      context.translator.starredMessages,
-                    ),
-                  ),
-                  PopupMenuItem(
-                    value: HomeMenuItems.payments,
-                    child: Text(
-                      context.translator.payments,
-                    ),
-                  ),
-                  PopupMenuItem(
-                    value: HomeMenuItems.statusPrivacy,
-                    child: Text(
-                      context.translator.statusPrivacy,
-                    ),
-                  ),
-                  PopupMenuItem(
-                    value: HomeMenuItems.clearCallLog,
-                    child: Text(
-                      context.translator.clearCallLog,
-                    ),
-                  ),
-                  PopupMenuItem(
-                    value: HomeMenuItems.settings,
-                    child: Text(
-                      context.translator.settings,
-                    ),
-                  ),
-                ],
-                icon: const Icon(
-                  Icons.more_vert,
                 ),
-              ),
-            ],
-            bottom: TabBar(
-              controller: _tabController,
-              tabs: [
-                Tab(
-                  text: context.translator.chats,
-                ),
-                Tab(
-                  text: context.translator.status,
-                ),
-                Tab(
-                  text: context.translator.calls,
+                PopupMenuButton<HomeMenuItems>(
+                  onSelected: (item) {
+                    _openPageBasedOnSelection(context, item);
+                  },
+                  color: context.themeData.popupMenuTheme.color,
+                  itemBuilder: (_) => [
+                    PopupMenuItem(
+                      value: HomeMenuItems.newGroup,
+                      child: Text(
+                        context.translator.newGroup,
+                      ),
+                    ),
+                    PopupMenuItem(
+                      value: HomeMenuItems.newBroadcast,
+                      child: Text(
+                        context.translator.newBroadcast,
+                      ),
+                    ),
+                    PopupMenuItem(
+                      value: HomeMenuItems.linkedDevices,
+                      child: Text(
+                        context.translator.linkedDevices,
+                      ),
+                    ),
+                    PopupMenuItem(
+                      value: HomeMenuItems.starredMessages,
+                      child: Text(
+                        context.translator.starredMessages,
+                      ),
+                    ),
+                    PopupMenuItem(
+                      value: HomeMenuItems.payments,
+                      child: Text(
+                        context.translator.payments,
+                      ),
+                    ),
+                    PopupMenuItem(
+                      value: HomeMenuItems.statusPrivacy,
+                      child: Text(
+                        context.translator.statusPrivacy,
+                      ),
+                    ),
+                    PopupMenuItem(
+                      value: HomeMenuItems.clearCallLog,
+                      child: Text(
+                        context.translator.clearCallLog,
+                      ),
+                    ),
+                    PopupMenuItem(
+                      value: HomeMenuItems.settings,
+                      child: Text(
+                        context.translator.settings,
+                      ),
+                    ),
+                  ],
+                  icon: const Icon(
+                    Icons.more_vert,
+                  ),
                 ),
               ],
+              bottom: TabBar(
+                controller: _tabController,
+                tabs: [
+                  Tab(
+                    text: context.translator.chats,
+                  ),
+                  Tab(
+                    text: context.translator.status,
+                  ),
+                  Tab(
+                    text: context.translator.calls,
+                  ),
+                ],
+              ),
             ),
-          ),
-          body: TabBarView(
-            controller: _tabController,
-            children: const [
-              ChatsView(),
-              StatusView(),
-              CallsView(),
-            ],
+            body: TabBarView(
+              controller: _tabController,
+              children: const [
+                ChatsView(),
+                StatusView(),
+                CallsView(),
+              ],
+            ),
           ),
         ),
       );

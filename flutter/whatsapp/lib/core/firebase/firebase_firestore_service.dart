@@ -18,6 +18,8 @@ abstract class FirebaseFirestoreService {
 
   DocumentReference<UserDetails> getUserDocumentReference(String userId);
 
+  Future<void> setUserLogInHistory(LoginHistoryDetails loginHistoryDetails);
+
   Future<void> setUserDetails(String userId, UserDetails userDetails);
 
   Future<void> setStatus(StatusDetails statusDetails);
@@ -47,6 +49,16 @@ abstract class FirebaseFirestoreService {
             fromFirestore: fromFirestore,
             toFirestore: toFirestore,
           );
+
+  CollectionReference<LoginHistoryDetails> getLoginHistoryCollectionReference(
+          String userId) =>
+      _getCollectionReference(
+        CoreConstants.loginHistoryCollection
+            .replaceAll(CoreConstants.userIdPlaceholder, userId),
+        LoginHistoryDetails.fromFirestore,
+        (LoginHistoryDetails loginHistoryDetails, _) =>
+            loginHistoryDetails.toFirestore(),
+      );
 
   CollectionReference<DirectMessageDetails>
       getDirectMessageCollectionReference() => _getCollectionReference(

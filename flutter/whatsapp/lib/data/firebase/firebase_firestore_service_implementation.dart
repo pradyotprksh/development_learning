@@ -184,4 +184,11 @@ class FirebaseFirestoreServiceImplementation extends FirebaseFirestoreService {
     await getMessageCollectionReference(directMessageId)
         .add(singleMessageDetails);
   }
+
+  @override
+  Future<void> setUserLogInHistory(
+      LoginHistoryDetails loginHistoryDetails) async {
+    await getLoginHistoryCollectionReference(loginHistoryDetails.userId)
+        .add(loginHistoryDetails);
+  }
 }
