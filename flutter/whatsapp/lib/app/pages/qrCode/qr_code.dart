@@ -1,1 +1,2 @@
-export 'view/qr_code_view.dart';
+export 'view/generator/qr_code_generator_view.dart';
+export 'view/scanner/qr_code_scanner_view.dart';

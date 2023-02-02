@@ -20,6 +20,7 @@ abstract class Routes {
   static const profile = '/profile';
   static const emailVerification = '/email-verification';
   static const qrCode = '/qr-code';
+  static const qrCodeScanner = '/qr-code-scanner';
 
   static const initialRoute = splashRoute;
 
@@ -29,7 +30,8 @@ abstract class Routes {
     personaliseRoute: (context) => const PersonaliseView(),
     authenticateRoute: (context) => const AuthenticateView(),
     settings: (context) => const SettingsView(),
-    qrCode: (context) => const QrCodeView(),
+    qrCode: (context) => const QrCodeGeneratorView(),
+    qrCodeScanner: (context) => const QrCodeScannerView(),
     profile: (context) => BlocProvider(
           create: (_) => ProfileBloc(
             FirebaseFirestoreServiceImplementation(),
