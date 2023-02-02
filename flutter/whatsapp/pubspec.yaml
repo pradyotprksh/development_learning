@@ -97,6 +97,8 @@ dependencies:
 
   pin_code_fields: ^7.4.0
 
+  qr_code_scanner: ^1.0.1
+
   qr_flutter: ^4.0.0
 
   replay_bloc: ^0.2.2

@@ -9,4 +9,5 @@ abstract class Keys {
   static const currentFontFamily = 'currentFontFamily';
   static const currentEnableMaterial3 = 'currentEnableMaterial3';
   static const userId = 'userId';
+  static const qrCodeData = 'qrCodeData';
 }

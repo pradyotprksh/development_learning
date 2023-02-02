@@ -12,7 +12,14 @@ class SettingsView extends StatelessWidget {
           actions: [
             IconButton(
               onPressed: () {
-                context.navigator.pushNamed(Routes.qrCode);
+                context.navigator.pushNamed(
+                  Routes.qrCode,
+                  arguments: <String, String>{
+                    Keys.qrCodeData: AppUtilsMethods.getUserQrCode(
+                      context.read<UserBloc>().state.userDetails?.userId ?? '',
+                    ),
+                  },
+                );
               },
               icon: const Icon(
                 Icons.qr_code,

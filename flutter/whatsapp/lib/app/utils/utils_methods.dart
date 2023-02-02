@@ -13,6 +13,8 @@ abstract class AppUtilsMethods {
   static String smsUrl(String phoneNumber, String body) =>
       'sms:$phoneNumber?body=$body';
 
+  static String getUserQrCode(String userId) => 'user/$userId';
+
   static String timeAgo(int? timeStamp, BuildContext context) {
     if (timeStamp != null) {
       setTimeAgoLocalMessage(
