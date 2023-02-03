@@ -105,6 +105,8 @@ dependencies:
 
   step_progress_indicator: ^1.0.2
 
+  stop_watch_timer: ^2.0.0
+
   timeago: ^3.3.0
 
   url_launcher: ^6.1.8

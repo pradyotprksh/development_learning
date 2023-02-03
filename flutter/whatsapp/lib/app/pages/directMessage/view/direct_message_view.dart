@@ -51,7 +51,12 @@ class DirectMessageView extends StatelessWidget {
             ),
           ),
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              context.navigator.pushNamed(
+                Routes.phoneCall,
+                arguments: context.read<DirectMessageBloc>().state.userDetails,
+              );
+            },
             icon: const Icon(
               Icons.call,
             ),

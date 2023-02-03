@@ -4,6 +4,7 @@ export 'directMessage/direct_message.dart';
 export 'home/home.dart';
 export 'intro/intro.dart';
 export 'personalise/personalise.dart';
+export 'phoneCall/phone_call.dart';
 export 'profile/profile.dart';
 export 'qrCode/qr_code.dart';
 export 'selectContact/select_contact.dart';
