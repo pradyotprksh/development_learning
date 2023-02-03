@@ -1,9 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:equatable/equatable.dart';
 import 'package:whatsapp/core/core.dart';
 import 'package:whatsapp/domain/domain.dart';
 
-class DirectMessageDetails {
-  DirectMessageDetails({
+class DirectMessageDetails extends Equatable {
+  const DirectMessageDetails({
     required this.users,
     required this.createdByUserId,
     this.lastMessage,
@@ -67,4 +68,16 @@ class DirectMessageDetails {
           FirestoreItemKey.createdByUserDeviceDetails:
               createdByUserDeviceDetails!.toMap(),
       };
+
+  @override
+  List<Object?> get props => [
+        users,
+        createdOnTimeStamp,
+        createdByUserId,
+        createdByUserDeviceDetails,
+        lastMessage,
+        lastMessageOnTimeStamp,
+        lastMessageByUserId,
+        messageId,
+      ];
 }

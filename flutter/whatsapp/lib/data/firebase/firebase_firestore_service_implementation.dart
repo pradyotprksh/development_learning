@@ -229,7 +229,6 @@ class FirebaseFirestoreServiceImplementation extends FirebaseFirestoreService {
           final otherUserId = details.users.firstWhereOrNull(
             (element) => element != currentUserId,
           );
-
           if (otherUserId != null) {
             messagesDetails.add(
               MessagesListUserDetails(
