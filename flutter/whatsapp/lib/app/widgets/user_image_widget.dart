@@ -33,6 +33,7 @@ class UserImageWidget extends StatelessWidget {
               }
             : null,
         child: CachedNetworkImageWidget(
+          tag: userId,
           imageUrl: profileImage,
           placeholder: CircleAvatar(
             radius: size / 2,

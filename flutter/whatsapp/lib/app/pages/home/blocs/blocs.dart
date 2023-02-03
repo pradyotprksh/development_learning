@@ -1,3 +1,6 @@
+export 'chat/chat_bloc.dart';
+export 'chat/chat_event.dart';
+export 'chat/chat_state.dart';
 export 'home/home_bloc.dart';
 export 'home/home_event.dart';
 export 'home/home_state.dart';

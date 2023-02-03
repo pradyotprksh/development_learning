@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:whatsapp/app/app.dart';
@@ -17,6 +16,7 @@ class _StatusViewState extends State<StatusView>
   Widget build(BuildContext context) {
     super.build(context);
     return Scaffold(
+      backgroundColor: context.themeData.scaffoldBackgroundColor,
       floatingActionButton: Wrap(
         direction: Axis.vertical,
         children: [
@@ -93,10 +93,10 @@ class _StatusViewState extends State<StatusView>
                   final statusDetails =
                       statusState.otherStatus[index].statusDetails;
 
-                  return StreamBuilder<DocumentSnapshot<UserDetails>>(
-                    stream: userDetails,
+                  return StreamBuilder<UserDetails?>(
+                    stream: userDetails.stream,
                     builder: (_, snapshot) {
-                      final userDetails = snapshot.data?.data();
+                      final userDetails = snapshot.data;
                       if (userDetails != null && statusDetails.isNotEmpty) {
                         return ListTile(
                           onTap: () {

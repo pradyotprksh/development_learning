@@ -75,6 +75,14 @@ abstract class Routes {
                 ),
             ),
             BlocProvider(
+              create: (_) => ChatBloc(
+                FirebaseFirestoreServiceImplementation(),
+                FirebaseAuthServiceImplementation(),
+              )..add(
+                  const GetMessagesList(),
+                ),
+            ),
+            BlocProvider(
               create: (_) => StatusBloc(
                 FirebaseFirestoreServiceImplementation(),
                 FirebaseAuthServiceImplementation(),

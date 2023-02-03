@@ -110,7 +110,7 @@ class FirebaseFirestoreServiceImplementation extends FirebaseFirestoreService {
             UserWithSingleStatusDetails(
               userId,
               allStatus,
-              getUserCollectionReference().doc(userId).snapshots(),
+              getUserDetails(userId),
             ),
           );
         }
@@ -205,5 +205,43 @@ class FirebaseFirestoreServiceImplementation extends FirebaseFirestoreService {
       String userId, Map<String, Object> values) async {
     final userRef = getUserCollectionReference().doc(userId);
     await userRef.update(values);
+  }
+
+  @override
+  StreamController<List<MessagesListUserDetails>?>
+      getDirectMessagesForCurrentUser(
+    String currentUserId,
+  ) {
+    final messageListUserDetails =
+        StreamController<List<MessagesListUserDetails>?>();
+
+    getDirectMessageCollectionReference()
+        .where(
+          FirestoreItemKey.users,
+          arrayContains: currentUserId,
+        )
+        .snapshots()
+        .listen(
+      (event) {
+        var messagesDetails = <MessagesListUserDetails>[];
+        for (var doc in event.docs) {
+          final details = doc.data();
+          final otherUserId = details.users.firstWhereOrNull(
+            (element) => element != currentUserId,
+          );
+
+          if (otherUserId != null) {
+            messagesDetails.add(
+              MessagesListUserDetails(
+                doc.data(),
+                getUserDetails(otherUserId),
+              ),
+            );
+          }
+        }
+        messageListUserDetails.add(messagesDetails);
+      },
+    );
+    return messageListUserDetails;
   }
 }

@@ -16,6 +16,11 @@ abstract class FirebaseFirestoreService {
 
   StreamController<List<UserWithSingleStatusDetails>?> getStatus();
 
+  StreamController<List<MessagesListUserDetails>?>
+      getDirectMessagesForCurrentUser(
+    String currentUserId,
+  );
+
   DocumentReference<UserDetails> getUserDocumentReference(String userId);
 
   Future<void> setUserLogInHistory(LoginHistoryDetails loginHistoryDetails);
