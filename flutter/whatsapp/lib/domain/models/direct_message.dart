@@ -10,6 +10,8 @@ class DirectMessageDetails {
     this.messageId = '',
     this.createdOnTimeStamp,
     this.createdByUserDeviceDetails,
+    this.lastMessageOnTimeStamp,
+    this.lastMessageByUserId,
   });
 
   factory DirectMessageDetails.fromFirestore(
@@ -27,6 +29,10 @@ class DirectMessageDetails {
           .map((dynamic e) => e.toString())
           .toList(),
       createdByUserId: data?[FirestoreItemKey.createdByUserId] as String,
+      lastMessageOnTimeStamp:
+          data?[FirestoreItemKey.lastMessageOnTimeStamp] as int?,
+      lastMessageByUserId:
+          data?[FirestoreItemKey.lastMessageByUserId] as String?,
       createdOnTimeStamp:
           data?[FirestoreItemKey.createdOnTimeStamp] as int? ?? 0,
       createdByUserDeviceDetails: UserDeviceDetails.fromMap(deviceDetails),
@@ -41,6 +47,8 @@ class DirectMessageDetails {
   final int? createdOnTimeStamp;
   final UserDeviceDetails? createdByUserDeviceDetails;
   final String? lastMessage;
+  final int? lastMessageOnTimeStamp;
+  final String? lastMessageByUserId;
   final String messageId;
 
   Map<String, dynamic> toFirestore() => <String, dynamic>{
@@ -51,6 +59,10 @@ class DirectMessageDetails {
         FirestoreItemKey.createdByUserId: createdByUserId,
         if (createdOnTimeStamp != null)
           FirestoreItemKey.createdOnTimeStamp: createdOnTimeStamp,
+        if (lastMessageOnTimeStamp != null)
+          FirestoreItemKey.lastMessageOnTimeStamp: lastMessageOnTimeStamp,
+        if (lastMessageByUserId != null)
+          FirestoreItemKey.lastMessageByUserId: lastMessageByUserId,
         if (createdByUserDeviceDetails != null)
           FirestoreItemKey.createdByUserDeviceDetails:
               createdByUserDeviceDetails!.toMap(),

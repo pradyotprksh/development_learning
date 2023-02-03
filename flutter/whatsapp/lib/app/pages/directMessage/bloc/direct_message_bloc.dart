@@ -64,6 +64,8 @@ class DirectMessageBloc
             createdOnTimeStamp: DeviceUtilsMethods.getCurrentTimeStamp(),
             createdByUserDeviceDetails: await _deviceDetails.getDeviceDetails(),
             lastMessage: event.firstMessage,
+            lastMessageOnTimeStamp: DeviceUtilsMethods.getCurrentTimeStamp(),
+            lastMessageByUserId: currentUserId,
           ),
         );
 
