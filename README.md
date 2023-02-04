@@ -15,6 +15,7 @@ README will be only updated when the project/learning is completed. So make sure
 [<img src="https://img.shields.io/badge/Flutter-02569B?style=for-the-badge&logo=flutter&logoColor=white" />](https://github.com/pradyotprksh/development_learning/tree/main/flutter) [![Flutter Projects](https://github.com/pradyotprksh/development_learning/actions/workflows/flutter_code_checker.yml/badge.svg)](https://github.com/pradyotprksh/development_learning/actions/workflows/flutter_code_checker.yml)
   - [snake_ladders](https://github.com/pradyotprksh/development_learning/tree/main/flutter/snake_ladders)
   - [clean_architecture_example](https://github.com/pradyotprksh/development_learning/tree/main/flutter/clean_architecture_example)
+  - [WhatsApp](https://github.com/pradyotprksh/development_learning/tree/main/flutter/whatsapp)
 
 [<img src="https://img.shields.io/badge/iOS-E34C26?style=for-the-badge&logo=ios&logoColor=white" />](https://github.com/pradyotprksh/development_learning/tree/main/ios)
   - [Angela Udemy iOS Course](https://github.com/pradyotprksh/development_learning/tree/main/ios/angela_udemy) 
