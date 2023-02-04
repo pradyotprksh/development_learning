@@ -58,6 +58,9 @@ README will be only updated when the project/learning is completed. So make sure
   - [PyBlog 🐍](https://github.com/pradyotprksh/development_learning/tree/main/python/pyblog)
     - For more details go to this [link](https://pradyotprksh4.medium.com/pyblog-python-firebase-448233b9baa2)
   - [Rental](https://github.com/pradyotprksh/development_learning/tree/main/python/renter)
+  
+[<img src="https://img.shields.io/badge/Unity-FFD43B?style=for-the-badge&logo=unity&logoColor=grey" />](https://github.com/pradyotprksh/development_learning/tree/main/unity)
+  - [100th Life](https://github.com/pradyotprksh/development_learning/tree/main/unity/100th%20Life)
 
 ---
 
