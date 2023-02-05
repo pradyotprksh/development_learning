@@ -4,26 +4,26 @@ import 'package:whatsapp/domain/domain.dart';
 
 class ChatState extends Equatable {
   const ChatState({
-    this.messageListWithUserDetails = const [],
+    this.directMessageListWithUserDetails = const [],
     this.pageState = PageState.idle,
   });
 
   ChatState copyWith({
     PageState? pageState,
-    List<MessagesListUserDetails>? messageListWithUserDetails,
+    List<DirectMessagesListUserDetails>? directMessageListWithUserDetails,
   }) =>
       ChatState(
         pageState: pageState ?? this.pageState,
-        messageListWithUserDetails:
-            messageListWithUserDetails ?? this.messageListWithUserDetails,
+        directMessageListWithUserDetails: directMessageListWithUserDetails ??
+            this.directMessageListWithUserDetails,
       );
 
-  final List<MessagesListUserDetails> messageListWithUserDetails;
+  final List<DirectMessagesListUserDetails> directMessageListWithUserDetails;
   final PageState pageState;
 
   @override
   List<Object?> get props => [
         pageState,
-        messageListWithUserDetails,
+        directMessageListWithUserDetails,
       ];
 }

@@ -24,7 +24,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
             .getDirectMessagesForCurrentUser(userId)
             .stream,
         onData: (messages) => state.copyWith(
-          messageListWithUserDetails: messages ?? [],
+          directMessageListWithUserDetails: messages ?? [],
         ),
       );
     }

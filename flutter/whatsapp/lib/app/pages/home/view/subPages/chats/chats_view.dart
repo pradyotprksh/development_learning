@@ -25,9 +25,9 @@ class _ChatsViewState extends State<ChatsView>
       ),
       body: BlocBuilder<ChatBloc, ChatState>(
         builder: (_, chatState) => ListView.builder(
-          itemCount: chatState.messageListWithUserDetails.length,
+          itemCount: chatState.directMessageListWithUserDetails.length,
           itemBuilder: (_, index) {
-            final details = chatState.messageListWithUserDetails[index];
+            final details = chatState.directMessageListWithUserDetails[index];
 
             return StreamBuilder<UserDetails?>(
               stream: details.otherUserDetails.stream,

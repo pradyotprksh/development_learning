@@ -3,8 +3,8 @@ import 'dart:async';
 import 'package:equatable/equatable.dart';
 import 'package:whatsapp/domain/domain.dart';
 
-class MessagesListUserDetails extends Equatable {
-  const MessagesListUserDetails(
+class DirectMessagesListUserDetails extends Equatable {
+  const DirectMessagesListUserDetails(
       this.directMessageDetails, this.otherUserDetails);
 
   final DirectMessageDetails directMessageDetails;

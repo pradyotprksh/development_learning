@@ -208,12 +208,12 @@ class FirebaseFirestoreServiceImplementation extends FirebaseFirestoreService {
   }
 
   @override
-  StreamController<List<MessagesListUserDetails>?>
+  StreamController<List<DirectMessagesListUserDetails>?>
       getDirectMessagesForCurrentUser(
     String currentUserId,
   ) {
     final messageListUserDetails =
-        StreamController<List<MessagesListUserDetails>?>();
+        StreamController<List<DirectMessagesListUserDetails>?>();
 
     getDirectMessageCollectionReference()
         .where(
@@ -223,7 +223,7 @@ class FirebaseFirestoreServiceImplementation extends FirebaseFirestoreService {
         .snapshots()
         .listen(
       (event) {
-        var messagesDetails = <MessagesListUserDetails>[];
+        var messagesDetails = <DirectMessagesListUserDetails>[];
         for (var doc in event.docs) {
           final details = doc.data();
           final otherUserId = details.users.firstWhereOrNull(
@@ -231,7 +231,7 @@ class FirebaseFirestoreServiceImplementation extends FirebaseFirestoreService {
           );
           if (otherUserId != null) {
             messagesDetails.add(
-              MessagesListUserDetails(
+              DirectMessagesListUserDetails(
                 doc.data(),
                 getUserDetails(otherUserId),
               ),
