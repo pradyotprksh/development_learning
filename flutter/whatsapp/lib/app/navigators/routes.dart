@@ -22,6 +22,7 @@ abstract class Routes {
   static const qrCode = '/qr-code';
   static const qrCodeScanner = '/qr-code-scanner';
   static const phoneCall = '/phone-call';
+  static const newGroup = '/new-group';
 
   static const initialRoute = splashRoute;
 
@@ -33,6 +34,7 @@ abstract class Routes {
     settings: (context) => const SettingsView(),
     qrCode: (context) => const QrCodeGeneratorView(),
     qrCodeScanner: (context) => const QrCodeScannerView(),
+    newGroup: (context) => const NewGroupView(),
     phoneCall: (context) => BlocProvider(
           create: (_) => PhoneCallBloc(
             FirebaseFirestoreServiceImplementation(),

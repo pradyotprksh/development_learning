@@ -77,7 +77,9 @@ class SelectContactView extends StatelessWidget {
                 padding: ThemeEdgeInsets.bottom20,
                 children: [
                   ListTile(
-                    onTap: () {},
+                    onTap: () {
+                      context.navigator.pushNamed(Routes.newGroup);
+                    },
                     contentPadding: ThemeEdgeInsets.lest15Right15,
                     leading: const Icon(
                       Icons.group,
