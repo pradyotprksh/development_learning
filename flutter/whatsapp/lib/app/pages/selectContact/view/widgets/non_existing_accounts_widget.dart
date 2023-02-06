@@ -21,7 +21,7 @@ class NonExistingAccountsWidget extends StatelessWidget {
             return Padding(
               padding: ThemeEdgeInsets.all15,
               child: Text(
-                '${context.translator.inviteOnWhatsApp} ${context.translator.applicationName}',
+                '${context.translator.inviteOnWhatsApp}${context.translator.applicationName}',
                 style: context.themeData.textTheme.bodySmall,
               ),
             );

@@ -25,6 +25,11 @@ abstract class FirebaseFirestoreService {
 
   Future<void> setUserLogInHistory(LoginHistoryDetails loginHistoryDetails);
 
+  Future<void> setContactAvailableDetails(
+    String userId,
+    ContactsAvailableDetails contactsAvailableDetails,
+  );
+
   Future<void> updateUserDetails(String userId, Map<String, Object> values);
 
   Future<void> setUserDetails(String userId, UserDetails userDetails);
@@ -55,6 +60,16 @@ abstract class FirebaseFirestoreService {
       firestore.collection(collectionPath).withConverter(
             fromFirestore: fromFirestore,
             toFirestore: toFirestore,
+          );
+
+  CollectionReference<ContactsAvailableDetails>
+      getContactDetailsCollectionReference(String userId) =>
+          _getCollectionReference(
+            CoreConstants.contactsAvailableCollection
+                .replaceAll(CoreConstants.userIdPlaceholder, userId),
+            ContactsAvailableDetails.fromFirestore,
+            (ContactsAvailableDetails loginHistoryDetails, _) =>
+                loginHistoryDetails.toFirestore(),
           );
 
   CollectionReference<LoginHistoryDetails> getLoginHistoryCollectionReference(

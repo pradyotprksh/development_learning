@@ -2,11 +2,14 @@ import 'package:contacts_service/contacts_service.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:whatsapp/app/app.dart';
 import 'package:whatsapp/core/core.dart';
+import 'package:whatsapp/device/device.dart';
 import 'package:whatsapp/domain/domain.dart';
 
 class SelectContactBloc extends Bloc<SelectContactEvent, SelectContactState> {
   SelectContactBloc(
     this._firebaseFirestoreService,
+    this._firebaseAuthService,
+    this._deviceDetails,
   ) : super(const SelectContactState()) {
     on<ContactPermissionStatus>(_contactPermissionStatusEvent);
     on<LocalContactsDetails>(_gotLocalContactsEvent);
@@ -14,6 +17,8 @@ class SelectContactBloc extends Bloc<SelectContactEvent, SelectContactState> {
   }
 
   final FirebaseFirestoreService _firebaseFirestoreService;
+  final FirebaseAuthService _firebaseAuthService;
+  final DeviceDetails _deviceDetails;
 
   void _contactPermissionStatusEvent(
     ContactPermissionStatus event,
@@ -54,6 +59,17 @@ class SelectContactBloc extends Bloc<SelectContactEvent, SelectContactState> {
       }
 
       if (userDetails != null) {
+        final userId = _firebaseAuthService.getUserId();
+        if (userId != null) {
+          await _firebaseFirestoreService.setContactAvailableDetails(
+            userId,
+            ContactsAvailableDetails(
+              userId: userDetails.userId,
+              detailsFetchedOn: DeviceUtilsMethods.getCurrentTimeStamp(),
+              userDeviceDetails: await _deviceDetails.getDeviceDetails(),
+            ),
+          );
+        }
         existingAccount.add(userDetails);
       } else {
         nonExistingAccount.add(contact);

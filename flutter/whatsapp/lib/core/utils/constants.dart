@@ -5,6 +5,8 @@ abstract class CoreConstants {
   static const directMessageCollection = 'direct-messages';
   static const loginHistoryCollection =
       'users/$userIdPlaceholder/login-history';
+  static const contactsAvailableCollection =
+      'users/$userIdPlaceholder/contacts-available';
   static const messagesCollection =
       'direct-messages/$messageIdPlaceholder/messages';
   static const statusCollection = 'status';

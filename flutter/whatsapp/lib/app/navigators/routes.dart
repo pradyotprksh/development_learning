@@ -128,6 +128,8 @@ abstract class Routes {
     selectContact: (context) => BlocProvider(
           create: (_) => SelectContactBloc(
             FirebaseFirestoreServiceImplementation(),
+            FirebaseAuthServiceImplementation(),
+            DeviceDetailsImplementation(),
           ),
           child: const SelectContactView(),
         ),

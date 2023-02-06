@@ -243,4 +243,20 @@ class FirebaseFirestoreServiceImplementation extends FirebaseFirestoreService {
     );
     return messageListUserDetails;
   }
+
+  @override
+  Future<void> setContactAvailableDetails(
+    String userId,
+    ContactsAvailableDetails contactsAvailableDetails,
+  ) async {
+    final updatedDetails = contactsAvailableDetails.updateDocumentReference(
+      getUserCollectionReference().doc(contactsAvailableDetails.userId),
+    );
+
+    await getContactDetailsCollectionReference(userId)
+        .doc(contactsAvailableDetails.userId)
+        .set(
+          updatedDetails,
+        );
+  }
 }
