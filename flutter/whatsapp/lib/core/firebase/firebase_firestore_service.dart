@@ -30,6 +30,25 @@ abstract class FirebaseFirestoreService {
     ContactsAvailableDetails contactsAvailableDetails,
   );
 
+  Future<bool> isContactsAvailableListPresent(String userId);
+
+  Future<bool> isContactsNotAvailableListPresent(String userId);
+
+  Future<void> setContactNotAvailableDetails(
+    String userId,
+    ContactsNotAvailableDetails contactsNotAvailableDetails,
+  );
+
+  StreamController<List<UserContactsAvailableDetails>?>
+      getUserContactsAvailable(
+    String userId,
+  );
+
+  StreamController<List<ContactsNotAvailableDetails>?>
+      getUserContactsNotAvailable(
+    String userId,
+  );
+
   Future<void> updateUserDetails(String userId, Map<String, Object> values);
 
   Future<void> setUserDetails(String userId, UserDetails userDetails);
@@ -63,12 +82,22 @@ abstract class FirebaseFirestoreService {
           );
 
   CollectionReference<ContactsAvailableDetails>
-      getContactDetailsCollectionReference(String userId) =>
+      getContactAvailableDetailsCollectionReference(String userId) =>
           _getCollectionReference(
             CoreConstants.contactsAvailableCollection
                 .replaceAll(CoreConstants.userIdPlaceholder, userId),
             ContactsAvailableDetails.fromFirestore,
             (ContactsAvailableDetails loginHistoryDetails, _) =>
+                loginHistoryDetails.toFirestore(),
+          );
+
+  CollectionReference<ContactsNotAvailableDetails>
+      getContactNotAvailableDetailsCollectionReference(String userId) =>
+          _getCollectionReference(
+            CoreConstants.contactsNotAvailableCollection
+                .replaceAll(CoreConstants.userIdPlaceholder, userId),
+            ContactsNotAvailableDetails.fromFirestore,
+            (ContactsNotAvailableDetails loginHistoryDetails, _) =>
                 loginHistoryDetails.toFirestore(),
           );
 

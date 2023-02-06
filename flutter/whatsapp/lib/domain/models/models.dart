@@ -1,4 +1,5 @@
 export 'contacts_available.dart';
+export 'contacts_not_available.dart';
 export 'direct_message.dart';
 export 'direct_messages_list_user.dart';
 export 'login_history.dart';
@@ -7,4 +8,5 @@ export 'status.dart';
 export 'status_seen.dart';
 export 'status_user.dart';
 export 'user.dart';
+export 'user_contacts_available.dart';
 export 'user_device.dart';

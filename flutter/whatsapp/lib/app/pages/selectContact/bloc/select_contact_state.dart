@@ -1,4 +1,3 @@
-import 'package:contacts_service/contacts_service.dart';
 import 'package:equatable/equatable.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:whatsapp/app/app.dart';
@@ -7,7 +6,6 @@ import 'package:whatsapp/domain/domain.dart';
 class SelectContactState extends Equatable {
   const SelectContactState({
     this.permissionStatus,
-    this.localContacts = const [],
     this.existingAccount = const [],
     this.nonExistingAccount = const [],
     this.pageState = PageState.idle,
@@ -16,15 +14,13 @@ class SelectContactState extends Equatable {
 
   SelectContactState copyWith({
     PermissionStatus? permissionStatus,
-    List<Contact>? localContacts,
-    List<UserDetails>? existingAccount,
-    List<Contact>? nonExistingAccount,
+    List<UserContactsAvailableDetails>? existingAccount,
+    List<ContactsNotAvailableDetails>? nonExistingAccount,
     PageState? pageState,
     bool? checkForContacts,
   }) =>
       SelectContactState(
         permissionStatus: permissionStatus ?? this.permissionStatus,
-        localContacts: localContacts ?? this.localContacts,
         pageState: pageState ?? this.pageState,
         existingAccount: existingAccount ?? this.existingAccount,
         nonExistingAccount: nonExistingAccount ?? this.nonExistingAccount,
@@ -32,16 +28,14 @@ class SelectContactState extends Equatable {
       );
 
   final PermissionStatus? permissionStatus;
-  final List<Contact> localContacts;
   final PageState pageState;
-  final List<UserDetails> existingAccount;
-  final List<Contact> nonExistingAccount;
+  final List<UserContactsAvailableDetails> existingAccount;
+  final List<ContactsNotAvailableDetails> nonExistingAccount;
   final bool checkForContacts;
 
   @override
   List<Object?> get props => [
         permissionStatus,
-        localContacts,
         pageState,
         existingAccount,
         nonExistingAccount,

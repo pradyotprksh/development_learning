@@ -38,3 +38,11 @@ class UpdatePageStateEvent extends SelectContactEvent {
   @override
   List<Object?> get props => [pageState];
 }
+
+class GetAvailableContacts extends SelectContactEvent {
+  const GetAvailableContacts();
+}
+
+class GetNotAvailableContacts extends SelectContactEvent {
+  const GetNotAvailableContacts();
+}

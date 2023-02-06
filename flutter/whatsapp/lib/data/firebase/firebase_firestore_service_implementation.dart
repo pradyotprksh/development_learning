@@ -253,10 +253,80 @@ class FirebaseFirestoreServiceImplementation extends FirebaseFirestoreService {
       getUserCollectionReference().doc(contactsAvailableDetails.userId),
     );
 
-    await getContactDetailsCollectionReference(userId)
+    await getContactAvailableDetailsCollectionReference(userId)
         .doc(contactsAvailableDetails.userId)
         .set(
           updatedDetails,
         );
+  }
+
+  @override
+  StreamController<List<UserContactsAvailableDetails>?>
+      getUserContactsAvailable(
+    String userId,
+  ) {
+    final userContactsAvailableDetails =
+        StreamController<List<UserContactsAvailableDetails>?>();
+    getContactAvailableDetailsCollectionReference(userId).snapshots().listen(
+      (event) {
+        var contacts = <UserContactsAvailableDetails>[];
+        for (var doc in event.docs) {
+          contacts.add(
+            UserContactsAvailableDetails(
+              getUserDetails(doc.data().userId),
+              doc.data(),
+            ),
+          );
+        }
+        userContactsAvailableDetails.add(contacts);
+      },
+    );
+    return userContactsAvailableDetails;
+  }
+
+  @override
+  StreamController<List<ContactsNotAvailableDetails>?>
+      getUserContactsNotAvailable(
+    String userId,
+  ) {
+    final userContactsNotAvailableDetails =
+        StreamController<List<ContactsNotAvailableDetails>?>();
+    getContactNotAvailableDetailsCollectionReference(userId).snapshots().listen(
+      (event) {
+        final data = event.docs.map((e) => e.data()).toList();
+        userContactsNotAvailableDetails.add(
+          data,
+        );
+      },
+    );
+    return userContactsNotAvailableDetails;
+  }
+
+  @override
+  Future<void> setContactNotAvailableDetails(
+    String userId,
+    ContactsNotAvailableDetails contactsNotAvailableDetails,
+  ) async {
+    if (contactsNotAvailableDetails.shouldAdd()) {
+      await getContactNotAvailableDetailsCollectionReference(userId)
+          .doc(
+            contactsNotAvailableDetails.getDocId(),
+          )
+          .set(contactsNotAvailableDetails);
+    }
+  }
+
+  @override
+  Future<bool> isContactsAvailableListPresent(String userId) async {
+    final details =
+        await getContactAvailableDetailsCollectionReference(userId).get();
+    return details.size > 0;
+  }
+
+  @override
+  Future<bool> isContactsNotAvailableListPresent(String userId) async {
+    final details =
+        await getContactNotAvailableDetailsCollectionReference(userId).get();
+    return details.size > 0;
   }
 }

@@ -40,4 +40,5 @@ abstract class FirestoreItemKey {
   static const isPhoneNumberVerified = 'isPhoneNumberVerified';
   static const isEmailVerified = 'isEmailVerified';
   static const detailsFetchedOn = 'detailsFetchedOn';
+  static const displayName = 'displayName';
 }

@@ -1,4 +1,3 @@
-import 'package:contacts_service/contacts_service.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:whatsapp/app/app.dart';
 import 'package:whatsapp/core/core.dart';
@@ -14,6 +13,8 @@ class SelectContactBloc extends Bloc<SelectContactEvent, SelectContactState> {
     on<ContactPermissionStatus>(_contactPermissionStatusEvent);
     on<LocalContactsDetails>(_gotLocalContactsEvent);
     on<UpdatePageStateEvent>(_updatePageStateEvent);
+    on<GetAvailableContacts>(_getAvailableContacts);
+    on<GetNotAvailableContacts>(_getNotAvailableContacts);
   }
 
   final FirebaseFirestoreService _firebaseFirestoreService;
@@ -29,62 +30,117 @@ class SelectContactBloc extends Bloc<SelectContactEvent, SelectContactState> {
     );
   }
 
+  void _getAvailableContacts(
+    GetAvailableContacts event,
+    Emitter<SelectContactState> emit,
+  ) async {
+    final userId = _firebaseAuthService.getUserId();
+    if (userId != null) {
+      await emit.forEach(
+        _firebaseFirestoreService.getUserContactsAvailable(userId).stream,
+        onData: (event) => state.copyWith(
+          existingAccount: event,
+        ),
+      );
+    }
+  }
+
+  void _getNotAvailableContacts(
+    GetNotAvailableContacts event,
+    Emitter<SelectContactState> emit,
+  ) async {
+    final userId = _firebaseAuthService.getUserId();
+    if (userId != null) {
+      await emit.forEach(
+        _firebaseFirestoreService.getUserContactsNotAvailable(userId).stream,
+        onData: (event) => state.copyWith(
+          nonExistingAccount: event,
+        ),
+      );
+    }
+  }
+
   void _gotLocalContactsEvent(
     LocalContactsDetails event,
     Emitter<SelectContactState> emit,
   ) async {
-    var existingAccount = <UserDetails>[];
-    var nonExistingAccount = <Contact>[];
-    for (final contact in event.localContacts) {
-      final emailAddresses = contact.emails ?? [];
-      final phoneNumbers = contact.phones ?? [];
-      UserDetails? userDetails;
-      for (final phoneNumber in phoneNumbers) {
-        if (phoneNumber.value != null) {
-          userDetails =
-              await _firebaseFirestoreService.getUserAccountByPhoneNumber(
-            phoneNumber.value!,
-          );
-        }
-      }
-      if (userDetails == null) {
-        for (final emailAddress in emailAddresses) {
-          if (emailAddress.value != null) {
-            userDetails =
-                await _firebaseFirestoreService.getUserAccountByEmailAddress(
-              emailAddress.value!,
+    final userId = _firebaseAuthService.getUserId();
+
+    if (userId != null) {
+      final isDetailsAlreadyPresent = await _firebaseFirestoreService
+              .isContactsAvailableListPresent(userId) &&
+          await _firebaseFirestoreService
+              .isContactsNotAvailableListPresent(userId);
+      if (!isDetailsAlreadyPresent) {
+        for (final contact in event.localContacts) {
+          final emailAddresses = contact.emails ?? [];
+          final phoneNumbers = contact.phones ?? [];
+          UserDetails? userDetails;
+          for (final phoneNumber in phoneNumbers) {
+            if (phoneNumber.value != null) {
+              userDetails =
+                  await _firebaseFirestoreService.getUserAccountByPhoneNumber(
+                phoneNumber.value!,
+              );
+            }
+          }
+          if (userDetails == null) {
+            for (final emailAddress in emailAddresses) {
+              if (emailAddress.value != null) {
+                userDetails = await _firebaseFirestoreService
+                    .getUserAccountByEmailAddress(
+                  emailAddress.value!,
+                );
+              }
+            }
+          }
+
+          if (userDetails != null) {
+            await _firebaseFirestoreService.setContactAvailableDetails(
+              userId,
+              ContactsAvailableDetails(
+                userId: userDetails.userId,
+                detailsFetchedOn: DeviceUtilsMethods.getCurrentTimeStamp(),
+                userDeviceDetails: await _deviceDetails.getDeviceDetails(),
+              ),
+            );
+          } else {
+            await _firebaseFirestoreService.setContactNotAvailableDetails(
+              userId,
+              ContactsNotAvailableDetails(
+                displayName: contact.displayName,
+                phoneNumber:
+                    (contact.phones?.isEmpty == true ? null : contact.phones)
+                        ?.first
+                        .value,
+                emailId:
+                    (contact.emails?.isEmpty == true ? null : contact.emails)
+                        ?.first
+                        .value,
+                detailsFetchedOn: DeviceUtilsMethods.getCurrentTimeStamp(),
+                userDeviceDetails: await _deviceDetails.getDeviceDetails(),
+              ),
             );
           }
         }
       }
 
-      if (userDetails != null) {
-        final userId = _firebaseAuthService.getUserId();
-        if (userId != null) {
-          await _firebaseFirestoreService.setContactAvailableDetails(
-            userId,
-            ContactsAvailableDetails(
-              userId: userDetails.userId,
-              detailsFetchedOn: DeviceUtilsMethods.getCurrentTimeStamp(),
-              userDeviceDetails: await _deviceDetails.getDeviceDetails(),
-            ),
-          );
-        }
-        existingAccount.add(userDetails);
-      } else {
-        nonExistingAccount.add(contact);
-      }
+      emit(
+        state.copyWith(
+          pageState: PageState.success,
+          checkForContacts: false,
+        ),
+      );
+    } else {
+      emit(
+        state.copyWith(
+          pageState: PageState.error,
+          checkForContacts: false,
+        ),
+      );
     }
-
-    emit(
-      state.copyWith(
-        existingAccount: existingAccount,
-        nonExistingAccount: nonExistingAccount,
-        pageState: PageState.success,
-        localContacts: event.localContacts,
-        checkForContacts: false,
-      ),
-    );
+    add(const GetAvailableContacts());
+    add(const GetNotAvailableContacts());
   }
 
   void _updatePageStateEvent(

@@ -1,7 +1,7 @@
-import 'package:contacts_service/contacts_service.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:whatsapp/app/app.dart';
+import 'package:whatsapp/domain/domain.dart';
 
 class NonExistingAccountsWidget extends StatelessWidget {
   const NonExistingAccountsWidget(
@@ -9,7 +9,7 @@ class NonExistingAccountsWidget extends StatelessWidget {
     super.key,
   });
 
-  final List<Contact> nonExistingAccount;
+  final List<ContactsNotAvailableDetails> nonExistingAccount;
 
   @override
   Widget build(BuildContext context) => ListView.builder(
@@ -29,14 +29,8 @@ class NonExistingAccountsWidget extends StatelessWidget {
             final contact = nonExistingAccount[index - 1];
 
             final displayName = contact.displayName;
-            final phoneNumber =
-                (contact.phones?.isEmpty == true ? null : contact.phones)
-                    ?.first
-                    .value;
-            final emailAddress =
-                (contact.emails?.isEmpty == true ? null : contact.emails)
-                    ?.first
-                    .value;
+            final phoneNumber = contact.phoneNumber;
+            final emailAddress = contact.emailId;
 
             return displayName != null ||
                     phoneNumber != null ||
