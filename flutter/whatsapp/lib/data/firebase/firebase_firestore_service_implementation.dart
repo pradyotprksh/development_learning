@@ -268,12 +268,14 @@ class FirebaseFirestoreServiceImplementation extends FirebaseFirestoreService {
     final userContactsAvailableDetails =
         StreamController<List<UserContactsAvailableDetails>?>();
     getContactAvailableDetailsCollectionReference(userId).snapshots().listen(
-      (event) {
+      (event) async {
         var contacts = <UserContactsAvailableDetails>[];
         for (var doc in event.docs) {
+          final userDetails =
+              await getUserCollectionReference().doc(doc.data().userId).get();
           contacts.add(
             UserContactsAvailableDetails(
-              getUserDetails(doc.data().userId),
+              userDetails.data(),
               doc.data(),
             ),
           );

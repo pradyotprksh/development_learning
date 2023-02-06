@@ -25,38 +25,32 @@ class ExistingAccountsWidget extends StatelessWidget {
               ),
             );
           } else {
-            final userDetail = existingAccount[index - 1];
+            final userDetail = existingAccount[index - 1].userDetails;
 
-            return StreamBuilder<UserDetails?>(
-              stream: userDetail.userDetails.stream,
-              builder: (_, snapshot) {
-                final userDetail = snapshot.data;
-                if (userDetail != null) {
-                  return ListTile(
-                    onTap: () {
-                      context.navigator.pushNamed(
-                        Routes.messages,
-                        arguments: <String, String>{
-                          Keys.userId: userDetail.userId,
-                        },
-                      );
+            if (userDetail != null) {
+              return ListTile(
+                onTap: () {
+                  context.navigator.pushNamed(
+                    Routes.messages,
+                    arguments: <String, String>{
+                      Keys.userId: userDetail.userId,
                     },
-                    leading: UserImageWidget(
-                      profileImage: userDetail.profileImage ?? '',
-                      userId: userDetail.userId,
-                      enableAction: false,
-                    ),
-                    title: Text(
-                      userDetail.name ?? '',
-                    ),
-                    subtitle: Text(
-                        '${userDetail.phoneNumber} | ${userDetail.emailId}'),
                   );
-                } else {
-                  return ThemeSizedBox.shrink;
-                }
-              },
-            );
+                },
+                leading: UserImageWidget(
+                  profileImage: userDetail.profileImage ?? '',
+                  userId: userDetail.userId,
+                  enableAction: false,
+                ),
+                title: Text(
+                  userDetail.name ?? '',
+                ),
+                subtitle:
+                    Text('${userDetail.phoneNumber} | ${userDetail.emailId}'),
+              );
+            } else {
+              return ThemeSizedBox.shrink;
+            }
           }
         },
       );
