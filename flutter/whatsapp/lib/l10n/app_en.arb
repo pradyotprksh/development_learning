@@ -99,5 +99,6 @@
   "verificationNeeded": "Verification needed",
   "verificationNote": "Please wait for sometime after the verification. We will be updating your details in a while. You can use the application without any concern.",
   "created": "Created ",
-  "ringing": "Ringing..."
+  "ringing": "Ringing...",
+  "selected": " selected"
 }

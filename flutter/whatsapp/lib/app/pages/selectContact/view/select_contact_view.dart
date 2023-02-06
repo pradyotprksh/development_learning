@@ -80,7 +80,7 @@ class SelectContactView extends StatelessWidget {
                     onTap: () {
                       context.navigator.pushNamed(Routes.newGroup);
                     },
-                    contentPadding: ThemeEdgeInsets.lest15Right15,
+                    contentPadding: ThemeEdgeInsets.left15Right15,
                     leading: const Icon(
                       Icons.group,
                     ),
@@ -92,7 +92,7 @@ class SelectContactView extends StatelessWidget {
                     onTap: () async {
                       await ContactsService.openContactForm();
                     },
-                    contentPadding: ThemeEdgeInsets.lest15Right15,
+                    contentPadding: ThemeEdgeInsets.left15Right15,
                     leading: const Icon(
                       Icons.person_add,
                     ),

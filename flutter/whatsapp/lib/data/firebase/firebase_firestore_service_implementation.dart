@@ -277,6 +277,7 @@ class FirebaseFirestoreServiceImplementation extends FirebaseFirestoreService {
             UserContactsAvailableDetails(
               userDetails.data(),
               doc.data(),
+              false,
             ),
           );
         }

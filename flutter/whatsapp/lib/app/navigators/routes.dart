@@ -34,7 +34,14 @@ abstract class Routes {
     settings: (context) => const SettingsView(),
     qrCode: (context) => const QrCodeGeneratorView(),
     qrCodeScanner: (context) => const QrCodeScannerView(),
-    newGroup: (context) => const NewGroupView(),
+    newGroup: (context) => BlocProvider(
+          create: (_) => NewGroupBloc(
+            FirebaseFirestoreServiceImplementation(),
+            FirebaseAuthServiceImplementation(),
+            DeviceDetailsImplementation(),
+          )..add(const FetchAccounts()),
+          child: const NewGroupView(),
+        ),
     phoneCall: (context) => BlocProvider(
           create: (_) => PhoneCallBloc(
             FirebaseFirestoreServiceImplementation(),

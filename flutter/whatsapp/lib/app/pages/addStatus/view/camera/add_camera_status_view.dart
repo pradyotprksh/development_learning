@@ -167,7 +167,7 @@ class AddCameraStatusView extends StatelessWidget {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             Padding(
-                              padding: ThemeEdgeInsets.lest15Right15,
+                              padding: ThemeEdgeInsets.left15Right15,
                               child: Form(
                                 key: _formKey,
                                 child: TextFormField(
