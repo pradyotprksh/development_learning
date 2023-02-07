@@ -97,8 +97,12 @@ abstract class Routes {
               create: (_) => ChatBloc(
                 FirebaseFirestoreServiceImplementation(),
                 FirebaseAuthServiceImplementation(),
-              )..add(
-                  const GetMessagesList(),
+              )
+                ..add(
+                  const GetDirectMessagesList(),
+                )
+                ..add(
+                  const GetGroupMessagesList(),
                 ),
             ),
             BlocProvider(

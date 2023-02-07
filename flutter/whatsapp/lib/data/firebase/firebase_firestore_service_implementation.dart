@@ -208,8 +208,7 @@ class FirebaseFirestoreServiceImplementation extends FirebaseFirestoreService {
   }
 
   @override
-  StreamController<List<DirectMessagesListUserDetails>?>
-      getDirectMessagesForCurrentUser(
+  StreamController<List<DirectMessagesListUserDetails>?> getDirectMessagesFor(
     String currentUserId,
   ) {
     final messageListUserDetails =
@@ -354,5 +353,27 @@ class FirebaseFirestoreServiceImplementation extends FirebaseFirestoreService {
         await getStatusCollectionReference().doc(status.id).delete();
       }
     }
+  }
+
+  @override
+  StreamController<List<GroupMessageDetails>?> getGroupMessagesFor(
+    String currentUserId,
+  ) {
+    final groupMessageListUserDetails =
+        StreamController<List<GroupMessageDetails>?>();
+
+    getGroupMessageCollectionReference()
+        .where(
+          FirestoreItemKey.users,
+          arrayContains: currentUserId,
+        )
+        .snapshots()
+        .listen(
+      (event) {
+        groupMessageListUserDetails
+            .add(event.docs.map((e) => e.data()).toList());
+      },
+    );
+    return groupMessageListUserDetails;
   }
 }

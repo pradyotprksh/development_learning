@@ -16,8 +16,11 @@ abstract class FirebaseFirestoreService {
 
   StreamController<List<UserWithSingleStatusDetails>?> getStatus();
 
-  StreamController<List<DirectMessagesListUserDetails>?>
-      getDirectMessagesForCurrentUser(
+  StreamController<List<DirectMessagesListUserDetails>?> getDirectMessagesFor(
+    String currentUserId,
+  );
+
+  StreamController<List<GroupMessageDetails>?> getGroupMessagesFor(
     String currentUserId,
   );
 

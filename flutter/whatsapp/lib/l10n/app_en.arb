@@ -104,5 +104,7 @@
   "enterGroupDetails": "Group details",
   "groupName": "Group name",
   "participants": " participants",
-  "groupNameInvalid": "Group name length should be greater than 4"
+  "groupNameInvalid": "Group name length should be greater than 4",
+  "personalChats": "Personal chats",
+  "groups": "Groups"
 }

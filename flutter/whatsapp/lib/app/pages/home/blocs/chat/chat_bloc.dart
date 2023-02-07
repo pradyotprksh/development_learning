@@ -7,24 +7,38 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
     this._firebaseFirestoreService,
     this._firebaseAuthService,
   ) : super(const ChatState()) {
-    on<GetMessagesList>(_getCurrentUserMessages);
+    on<GetDirectMessagesList>(_getDirectMessages);
+    on<GetGroupMessagesList>(_getGroupMessages);
   }
 
   final FirebaseFirestoreService _firebaseFirestoreService;
   final FirebaseAuthService _firebaseAuthService;
 
-  void _getCurrentUserMessages(
-    GetMessagesList event,
+  void _getDirectMessages(
+    GetDirectMessagesList event,
     Emitter<ChatState> emit,
   ) async {
     final userId = _firebaseAuthService.getUserId();
     if (userId != null) {
       await emit.forEach(
-        _firebaseFirestoreService
-            .getDirectMessagesForCurrentUser(userId)
-            .stream,
+        _firebaseFirestoreService.getDirectMessagesFor(userId).stream,
         onData: (messages) => state.copyWith(
           directMessageListWithUserDetails: messages ?? [],
+        ),
+      );
+    }
+  }
+
+  void _getGroupMessages(
+    GetGroupMessagesList event,
+    Emitter<ChatState> emit,
+  ) async {
+    final userId = _firebaseAuthService.getUserId();
+    if (userId != null) {
+      await emit.forEach(
+        _firebaseFirestoreService.getGroupMessagesFor(userId).stream,
+        onData: (messages) => state.copyWith(
+          groupMessages: messages ?? [],
         ),
       );
     }
