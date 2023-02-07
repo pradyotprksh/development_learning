@@ -115,6 +115,7 @@ class NewGroupBloc extends Bloc<NewGroupEvent, NewGroupState> {
 
       await _firebaseFirestoreService.createGroupMessage(
         GroupMessageDetails(
+          name: event.groupName,
           users: [
             userId,
             ...state.selectedUserDetails.map((e) => e.userId).toList(),

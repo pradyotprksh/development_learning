@@ -63,7 +63,9 @@ class NewGroupView extends StatelessWidget {
                     }
                   },
                   child: newGroupState.pageState == PageState.loading
-                      ? const CircularProgressIndicator()
+                      ? const CircularProgressIndicator(
+                          color: Colors.white,
+                        )
                       : const Icon(
                           Icons.arrow_right_alt,
                         ),

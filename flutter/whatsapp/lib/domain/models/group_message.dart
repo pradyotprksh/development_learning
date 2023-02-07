@@ -6,6 +6,7 @@ import 'package:whatsapp/domain/domain.dart';
 class GroupMessageDetails extends Equatable {
   const GroupMessageDetails({
     required this.users,
+    required this.name,
     required this.createdByUserId,
     this.lastMessage,
     this.groupId = '',
@@ -32,6 +33,7 @@ class GroupMessageDetails extends Equatable {
           .map((dynamic e) => e.toString())
           .toList(),
       createdByUserId: data?[FirestoreItemKey.createdByUserId] as String,
+      name: data?[FirestoreItemKey.name] as String,
       lastMessageOnTimeStamp:
           data?[FirestoreItemKey.lastMessageOnTimeStamp] as int?,
       lastMessageByUserId:
@@ -57,9 +59,11 @@ class GroupMessageDetails extends Equatable {
   final String groupId;
   final String? profileImage;
   final String? firestoreFilePath;
+  final String name;
 
   Map<String, dynamic> toFirestore() => <String, dynamic>{
         FirestoreItemKey.users: users,
+        FirestoreItemKey.name: name,
         if (lastMessage != null)
           FirestoreItemKey.lastMessage:
               EncryptorService.encryptData(lastMessage),
@@ -81,6 +85,7 @@ class GroupMessageDetails extends Equatable {
   @override
   List<Object?> get props => [
         users,
+        name,
         createdOnTimeStamp,
         createdByUserId,
         createdByUserDeviceDetails,
