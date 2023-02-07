@@ -21,9 +21,7 @@ class UserImageWidget extends StatelessWidget {
   Widget build(BuildContext context) => InkWell(
         onTap: userId.isNotEmpty && enableAction
             ? () {
-                if (extraAction != null) {
-                  extraAction!();
-                }
+                extraAction?.call();
                 context.navigator.pushNamed(
                   Routes.messages,
                   arguments: <String, String>{

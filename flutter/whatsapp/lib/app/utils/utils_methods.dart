@@ -40,9 +40,13 @@ abstract class AppUtilsMethods {
     );
   }
 
-  static String? userNameValidator(String? userName, String errorMessage) {
+  static String? lengthShouldBeGraterThan(
+    String? userName,
+    int length,
+    String errorMessage,
+  ) {
     if (userName != null) {
-      if (userName.length < 5) {
+      if (userName.length < length) {
         return errorMessage;
       } else {
         return null;

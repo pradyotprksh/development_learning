@@ -140,8 +140,9 @@ class UserDetailsView extends StatelessWidget {
                           label: Text(context.translator.userName),
                         ),
                         validator: (userName) =>
-                            AppUtilsMethods.userNameValidator(
+                            AppUtilsMethods.lengthShouldBeGraterThan(
                           userName,
+                          5,
                           context.translator.userNameInvalid,
                         ),
                         keyboardType: TextInputType.text,

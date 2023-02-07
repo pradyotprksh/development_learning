@@ -106,17 +106,15 @@ abstract class PersonaliseUtils {
     final themeMode = await showModalBottomSheet<ThemeMode>(
           context: buildContext,
           builder: (_) => Scaffold(
-            backgroundColor:
-                buildContext.themeData.bottomSheetTheme.backgroundColor,
+            backgroundColor: Colors.transparent,
             appBar: AppBar(
-              backgroundColor:
-                  buildContext.themeData.appBarTheme.backgroundColor,
+              backgroundColor: Colors.transparent,
               leading: const CloseButton(),
               title: Text(
                 buildContext.translator.chooseThemeMode,
                 style: buildContext.themeData.appBarTheme.titleTextStyle,
               ),
-              elevation: buildContext.themeData.appBarTheme.elevation,
+              elevation: 0,
             ),
             body: ListView(
               children: [
@@ -155,17 +153,15 @@ abstract class PersonaliseUtils {
     final language = await showModalBottomSheet<String>(
           context: buildContext,
           builder: (_) => Scaffold(
-            backgroundColor:
-                buildContext.themeData.bottomSheetTheme.backgroundColor,
+            backgroundColor: Colors.transparent,
             appBar: AppBar(
-              backgroundColor:
-                  buildContext.themeData.appBarTheme.backgroundColor,
+              backgroundColor: Colors.transparent,
               leading: const CloseButton(),
               title: Text(
                 buildContext.translator.chooseLanguage,
                 style: buildContext.themeData.appBarTheme.titleTextStyle,
               ),
-              elevation: buildContext.themeData.appBarTheme.elevation,
+              elevation: 0,
             ),
             body: ListView(
               children: [
@@ -219,16 +215,15 @@ abstract class PersonaliseUtils {
       await showModalBottomSheet<String>(
         context: buildContext,
         builder: (_) => Scaffold(
-          backgroundColor:
-              buildContext.themeData.bottomSheetTheme.backgroundColor,
+          backgroundColor: Colors.transparent,
           appBar: AppBar(
-            backgroundColor: buildContext.themeData.appBarTheme.backgroundColor,
+            backgroundColor: Colors.transparent,
             leading: const CloseButton(),
             title: Text(
               buildContext.translator.chooseFont,
               style: buildContext.themeData.appBarTheme.titleTextStyle,
             ),
-            elevation: buildContext.themeData.appBarTheme.elevation,
+            elevation: 0,
           ),
           body: ListView.builder(
             primary: false,

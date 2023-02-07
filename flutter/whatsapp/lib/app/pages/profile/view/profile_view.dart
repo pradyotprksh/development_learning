@@ -117,8 +117,9 @@ class ProfileView extends StatelessWidget {
                                   _submit(context);
                                 },
                                 validator: (userName) =>
-                                    AppUtilsMethods.userNameValidator(
+                                    AppUtilsMethods.lengthShouldBeGraterThan(
                                   userName,
+                                  5,
                                   context.translator.userNameInvalid,
                                 ),
                               ),

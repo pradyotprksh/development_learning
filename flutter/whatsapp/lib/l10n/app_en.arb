@@ -100,5 +100,9 @@
   "verificationNote": "Please wait for sometime after the verification. We will be updating your details in a while. You can use the application without any concern.",
   "created": "Created ",
   "ringing": "Ringing...",
-  "selected": " selected"
+  "selected": " selected",
+  "enterGroupDetails": "Group details",
+  "groupName": "Group name",
+  "participants": " participants",
+  "groupNameInvalid": "Group name length should be greater than 4"
 }

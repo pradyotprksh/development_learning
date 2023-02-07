@@ -12,15 +12,15 @@ abstract class ImagePickerUtils {
     final option = await showModalBottomSheet<ImageSource>(
       context: context,
       builder: (_) => Scaffold(
-        backgroundColor: context.themeData.bottomSheetTheme.backgroundColor,
+        backgroundColor: Colors.transparent,
         appBar: AppBar(
-          backgroundColor: context.themeData.appBarTheme.backgroundColor,
+          backgroundColor: Colors.transparent,
           leading: const CloseButton(),
           title: Text(
             context.translator.imagePickerTitle,
             style: context.themeData.appBarTheme.titleTextStyle,
           ),
-          elevation: context.themeData.appBarTheme.elevation,
+          elevation: 0,
         ),
         body: ListView(
           children: [

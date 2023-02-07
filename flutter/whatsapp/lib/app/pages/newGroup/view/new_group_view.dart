@@ -35,7 +35,16 @@ class NewGroupView extends StatelessWidget {
           builder: (_, newGroupState) {
             if (newGroupState.selectedUserDetails.isNotEmpty) {
               return FloatingActionButton(
-                onPressed: () {},
+                onPressed: () {
+                  showModalBottomSheet<void>(
+                    context: context,
+                    isScrollControlled: true,
+                    builder: (_) => CreateGroupWidget(
+                      users: newGroupState.selectedUserDetails,
+                      onSubmit: (groupName, groupImagePath) {},
+                    ),
+                  );
+                },
                 child: const Icon(
                   Icons.arrow_right_alt,
                 ),
@@ -50,44 +59,13 @@ class NewGroupView extends StatelessWidget {
               if (newGroupState.selectedUserDetails.isNotEmpty)
                 ThemeSizedBox.height10,
               if (newGroupState.selectedUserDetails.isNotEmpty)
-                SizedBox(
-                  height: 45,
-                  child: ListView.builder(
-                    shrinkWrap: true,
-                    scrollDirection: Axis.horizontal,
-                    itemCount: newGroupState.selectedUserDetails.length,
-                    padding: ThemeEdgeInsets.left15,
-                    itemBuilder: (_, index) {
-                      final userDetail =
-                          newGroupState.selectedUserDetails[index];
-
-                      return Row(
-                        children: [
-                          Chip(
-                            avatar: UserImageWidget(
-                              profileImage: userDetail.profileImage ?? '',
-                              userId: userDetail.userId,
-                              enableAction: false,
-                            ),
-                            label: Text(
-                              userDetail.name ?? '',
-                            ),
-                            deleteIcon: Icon(
-                              Icons.close,
-                              color: context.themeData.iconTheme.color,
-                              size: 15,
-                            ),
-                            onDeleted: () {
-                              context.read<NewGroupBloc>().add(
-                                    ToggleUserSelection(userDetail.userId),
-                                  );
-                            },
-                          ),
-                          ThemeSizedBox.width15,
-                        ],
-                      );
-                    },
-                  ),
+                SelectedUsersWidget(
+                  selectedUserDetails: newGroupState.selectedUserDetails,
+                  onDelete: (userDetails) {
+                    context.read<NewGroupBloc>().add(
+                          ToggleUserSelection(userDetails.userId),
+                        );
+                  },
                 ),
               if (newGroupState.selectedUserDetails.isNotEmpty) const Divider(),
               ListView.builder(
