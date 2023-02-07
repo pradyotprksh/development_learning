@@ -232,7 +232,9 @@ class FirebaseFirestoreServiceImplementation extends FirebaseFirestoreService {
             messagesDetails.add(
               DirectMessagesListUserDetails(
                 doc.data(),
-                getUserDetails(otherUserId),
+                getUserCollectionReference().doc(otherUserId).snapshots().map(
+                      (event) => event.data(),
+                    ),
               ),
             );
           }

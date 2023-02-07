@@ -27,12 +27,13 @@ class _ChatsViewState extends State<ChatsView>
         builder: (_, chatState) => ListView(
           padding: ThemeEdgeInsets.zero,
           children: [
-            Padding(
-              padding: ThemeEdgeInsets.all15,
-              child: Text(
-                context.translator.personalChats,
+            if (chatState.groupMessages.isNotEmpty)
+              Padding(
+                padding: ThemeEdgeInsets.all15,
+                child: Text(
+                  context.translator.personalChats,
+                ),
               ),
-            ),
             ListView.builder(
               primary: false,
               shrinkWrap: true,
@@ -42,7 +43,7 @@ class _ChatsViewState extends State<ChatsView>
                     chatState.directMessageListWithUserDetails[index];
 
                 return StreamBuilder<UserDetails?>(
-                  stream: details.otherUserDetails.stream,
+                  stream: details.otherUserDetails,
                   builder: (_, userDetails) => ListTile(
                     onTap: () {
                       final otherUserId = userDetails.data?.userId;
@@ -80,12 +81,13 @@ class _ChatsViewState extends State<ChatsView>
                 );
               },
             ),
-            Padding(
-              padding: ThemeEdgeInsets.all15,
-              child: Text(
-                context.translator.groups,
+            if (chatState.groupMessages.isNotEmpty)
+              Padding(
+                padding: ThemeEdgeInsets.all15,
+                child: Text(
+                  context.translator.groups,
+                ),
               ),
-            ),
             ListView.builder(
               primary: false,
               shrinkWrap: true,

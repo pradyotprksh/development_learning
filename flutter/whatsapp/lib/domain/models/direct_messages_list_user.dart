@@ -8,7 +8,7 @@ class DirectMessagesListUserDetails extends Equatable {
       this.directMessageDetails, this.otherUserDetails);
 
   final DirectMessageDetails directMessageDetails;
-  final StreamController<UserDetails?> otherUserDetails;
+  final Stream<UserDetails?> otherUserDetails;
 
   @override
   List<Object?> get props => [directMessageDetails, otherUserDetails];
