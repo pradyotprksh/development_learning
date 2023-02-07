@@ -94,7 +94,7 @@ class _StatusViewState extends State<StatusView>
                       statusState.otherStatus[index].statusDetails;
 
                   return StreamBuilder<UserDetails?>(
-                    stream: userDetails.stream,
+                    stream: userDetails,
                     builder: (_, snapshot) {
                       final userDetails = snapshot.data;
                       if (userDetails != null && statusDetails.isNotEmpty) {

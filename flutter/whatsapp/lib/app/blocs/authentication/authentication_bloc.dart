@@ -29,7 +29,6 @@ class AuthenticationBloc
         if (firebaseUserDetails != null) {
           final firestoreUserDetails = await _firebaseFirestoreService
               .getUserDetails(firebaseUserDetails.uid)
-              .stream
               .first;
 
           if (firestoreUserDetails != null) {

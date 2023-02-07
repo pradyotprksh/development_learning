@@ -24,7 +24,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     if (userId != null) {
       await _firebaseFirestoreService.deleteStatusOnTimeCompletion(userId);
       await emit.forEach(
-        _firebaseFirestoreService.getUserDetails(userId).stream,
+        _firebaseFirestoreService.getUserDetails(userId),
         onData: (userDetails) {
           if (userDetails != null && userDetails.allDetailsAvailable) {
             return UserDetailsAvailable(userDetails);

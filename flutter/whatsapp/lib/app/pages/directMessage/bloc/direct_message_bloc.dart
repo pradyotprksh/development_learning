@@ -27,7 +27,7 @@ class DirectMessageBloc
   ) async {
     if (event.userId.isNotEmpty) {
       await emit.forEach(
-        _firebaseFirestoreService.getUserDetails(event.userId).stream,
+        _firebaseFirestoreService.getUserDetails(event.userId),
         onData: (userDetails) {
           if (state.directMessageDetails == null) {
             add(const GetMessageDetails());
@@ -87,9 +87,8 @@ class DirectMessageBloc
     if (currentUserId != null && selectedUserId != null) {
       emit(state.copyWith(pageState: PageState.loading));
       await emit.forEach(
-        _firebaseFirestoreService
-            .getMessageDetails(currentUserId, selectedUserId)
-            .stream,
+        _firebaseFirestoreService.getMessageDetails(
+            currentUserId, selectedUserId),
         onData: (directMessageDetails) {
           emit(state.copyWith(pageState: PageState.success));
           if (directMessageDetails == null &&

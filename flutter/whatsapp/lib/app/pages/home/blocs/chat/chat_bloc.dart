@@ -21,7 +21,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
     final userId = _firebaseAuthService.getUserId();
     if (userId != null) {
       await emit.forEach(
-        _firebaseFirestoreService.getDirectMessagesFor(userId).stream,
+        _firebaseFirestoreService.getDirectMessagesFor(userId),
         onData: (messages) => state.copyWith(
           directMessageListWithUserDetails: messages ?? [],
         ),
@@ -36,7 +36,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
     final userId = _firebaseAuthService.getUserId();
     if (userId != null) {
       await emit.forEach(
-        _firebaseFirestoreService.getGroupMessagesFor(userId).stream,
+        _firebaseFirestoreService.getGroupMessagesFor(userId),
         onData: (messages) => state.copyWith(
           groupMessages: messages ?? [],
         ),

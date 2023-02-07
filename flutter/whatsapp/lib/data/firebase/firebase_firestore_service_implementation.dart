@@ -15,16 +15,10 @@ class FirebaseFirestoreServiceImplementation extends FirebaseFirestoreService {
       FirebaseFirestoreServiceImplementation._privateConstructor();
 
   @override
-  StreamController<UserDetails?> getUserDetails(String userId) {
-    var userDetails = StreamController<UserDetails?>();
-    final userRef = getUserCollectionReference().doc(userId);
-    userRef.snapshots().listen(
-      (event) {
-        userDetails.add(event.data());
-      },
-    );
-    return userDetails;
-  }
+  Stream<UserDetails?> getUserDetails(String userId) =>
+      getUserCollectionReference().doc(userId).snapshots().map(
+            (event) => event.data(),
+          );
 
   @override
   Future<void> setUserDetails(String userId, UserDetails userDetails) async {
@@ -72,53 +66,53 @@ class FirebaseFirestoreServiceImplementation extends FirebaseFirestoreService {
   }
 
   @override
-  StreamController<List<UserWithSingleStatusDetails>?> getStatus() {
-    var status = StreamController<List<UserWithSingleStatusDetails>?>();
-    getStatusCollectionReference()
-        .orderBy(
-          FirestoreItemKey.createdOnTimeStamp,
-          descending: true,
-        )
-        .snapshots()
-        .listen(
-      (event) {
-        var statusWithUserDetails = <UserWithSingleStatusDetails>[];
-        for (var element in event.docs) {
-          final statusDetails = element.data();
-          final userId = statusDetails.userId;
+  Stream<List<UserWithSingleStatusDetails>?> getStatus() =>
+      getStatusCollectionReference()
+          .orderBy(
+            FirestoreItemKey.createdOnTimeStamp,
+            descending: true,
+          )
+          .snapshots()
+          .map(
+        (event) {
+          var statusWithUserDetails = <UserWithSingleStatusDetails>[];
+          for (var element in event.docs) {
+            final statusDetails = element.data();
+            final userId = statusDetails.userId;
 
-          final isUserPresent = statusWithUserDetails.where(
-            (element) => element.userId == userId,
-          );
-          if (isUserPresent.isNotEmpty) {
-            final isStatusPresent = isUserPresent.first.statusDetails.where(
-              (element) => element.statusId == statusDetails.statusId,
+            final isUserPresent = statusWithUserDetails.where(
+              (element) => element.userId == userId,
             );
-            if (isStatusPresent.isNotEmpty) {
-              continue;
+            if (isUserPresent.isNotEmpty) {
+              final isStatusPresent = isUserPresent.first.statusDetails.where(
+                (element) => element.statusId == statusDetails.statusId,
+              );
+              if (isStatusPresent.isNotEmpty) {
+                continue;
+              }
             }
+
+            final allStatus = event.docs
+                .where(
+                  (element) => element.data().userId == userId,
+                )
+                .map((e) => e.data())
+                .toList();
+
+            statusWithUserDetails.add(
+              UserWithSingleStatusDetails(
+                userId,
+                allStatus,
+                getUserCollectionReference()
+                    .doc(userId)
+                    .snapshots()
+                    .map((event) => event.data()),
+              ),
+            );
           }
-
-          final allStatus = event.docs
-              .where(
-                (element) => element.data().userId == userId,
-              )
-              .map((e) => e.data())
-              .toList();
-
-          statusWithUserDetails.add(
-            UserWithSingleStatusDetails(
-              userId,
-              allStatus,
-              getUserDetails(userId),
-            ),
-          );
-        }
-        status.add(statusWithUserDetails);
-      },
-    );
-    return status;
-  }
+          return statusWithUserDetails;
+        },
+      );
 
   @override
   Future<void> setStatusSeen(
@@ -140,35 +134,35 @@ class FirebaseFirestoreServiceImplementation extends FirebaseFirestoreService {
       getUserCollectionReference().doc(userId);
 
   @override
-  StreamController<DirectMessageDetails?> getMessageDetails(
+  Stream<DirectMessageDetails?> getMessageDetails(
     String currentUserId,
     String selectedUserId,
-  ) {
-    final directMessageDetails = StreamController<DirectMessageDetails?>();
-    getDirectMessageCollectionReference()
-        .where(
-          FirestoreItemKey.users,
-          arrayContains: currentUserId,
-        )
-        .snapshots()
-        .listen(
-      (event) {
-        var found = false;
-        for (var element in event.docs) {
-          final users = element.data().users;
-          if (users.contains(currentUserId) && users.contains(selectedUserId)) {
-            directMessageDetails.add(event.docs.firstOrNull?.data());
-            found = true;
-            break;
+  ) =>
+      getDirectMessageCollectionReference()
+          .where(
+            FirestoreItemKey.users,
+            arrayContains: currentUserId,
+          )
+          .snapshots()
+          .map(
+        (event) {
+          DirectMessageDetails? directMessageDetails;
+          var found = false;
+          for (var element in event.docs) {
+            final users = element.data().users;
+            if (users.contains(currentUserId) &&
+                users.contains(selectedUserId)) {
+              directMessageDetails = event.docs.firstOrNull?.data();
+              found = true;
+              break;
+            }
           }
-        }
-        if (!found) {
-          directMessageDetails.add(null);
-        }
-      },
-    );
-    return directMessageDetails;
-  }
+          if (!found) {
+            directMessageDetails = null;
+          }
+          return directMessageDetails;
+        },
+      );
 
   @override
   Future<void> createDirectMessage(
@@ -208,42 +202,37 @@ class FirebaseFirestoreServiceImplementation extends FirebaseFirestoreService {
   }
 
   @override
-  StreamController<List<DirectMessagesListUserDetails>?> getDirectMessagesFor(
+  Stream<List<DirectMessagesListUserDetails>?> getDirectMessagesFor(
     String currentUserId,
-  ) {
-    final messageListUserDetails =
-        StreamController<List<DirectMessagesListUserDetails>?>();
-
-    getDirectMessageCollectionReference()
-        .where(
-          FirestoreItemKey.users,
-          arrayContains: currentUserId,
-        )
-        .snapshots()
-        .listen(
-      (event) {
-        var messagesDetails = <DirectMessagesListUserDetails>[];
-        for (var doc in event.docs) {
-          final details = doc.data();
-          final otherUserId = details.users.firstWhereOrNull(
-            (element) => element != currentUserId,
-          );
-          if (otherUserId != null) {
-            messagesDetails.add(
-              DirectMessagesListUserDetails(
-                doc.data(),
-                getUserCollectionReference().doc(otherUserId).snapshots().map(
-                      (event) => event.data(),
-                    ),
-              ),
+  ) =>
+      getDirectMessageCollectionReference()
+          .where(
+            FirestoreItemKey.users,
+            arrayContains: currentUserId,
+          )
+          .snapshots()
+          .map(
+        (event) {
+          var messagesDetails = <DirectMessagesListUserDetails>[];
+          for (var doc in event.docs) {
+            final details = doc.data();
+            final otherUserId = details.users.firstWhereOrNull(
+              (element) => element != currentUserId,
             );
+            if (otherUserId != null) {
+              messagesDetails.add(
+                DirectMessagesListUserDetails(
+                  doc.data(),
+                  getUserCollectionReference().doc(otherUserId).snapshots().map(
+                        (event) => event.data(),
+                      ),
+                ),
+              );
+            }
           }
-        }
-        messageListUserDetails.add(messagesDetails);
-      },
-    );
-    return messageListUserDetails;
-  }
+          return messagesDetails;
+        },
+      );
 
   @override
   Future<void> setContactAvailableDetails(
@@ -289,22 +278,12 @@ class FirebaseFirestoreServiceImplementation extends FirebaseFirestoreService {
   }
 
   @override
-  StreamController<List<ContactsNotAvailableDetails>?>
-      getUserContactsNotAvailable(
+  Stream<List<ContactsNotAvailableDetails>?> getUserContactsNotAvailable(
     String userId,
-  ) {
-    final userContactsNotAvailableDetails =
-        StreamController<List<ContactsNotAvailableDetails>?>();
-    getContactNotAvailableDetailsCollectionReference(userId).snapshots().listen(
-      (event) {
-        final data = event.docs.map((e) => e.data()).toList();
-        userContactsNotAvailableDetails.add(
-          data,
-        );
-      },
-    );
-    return userContactsNotAvailableDetails;
-  }
+  ) =>
+      getContactNotAvailableDetailsCollectionReference(userId).snapshots().map(
+            (event) => event.docs.map((e) => e.data()).toList(),
+          );
 
   @override
   Future<void> setContactNotAvailableDetails(
@@ -358,24 +337,16 @@ class FirebaseFirestoreServiceImplementation extends FirebaseFirestoreService {
   }
 
   @override
-  StreamController<List<GroupMessageDetails>?> getGroupMessagesFor(
+  Stream<List<GroupMessageDetails>?> getGroupMessagesFor(
     String currentUserId,
-  ) {
-    final groupMessageListUserDetails =
-        StreamController<List<GroupMessageDetails>?>();
-
-    getGroupMessageCollectionReference()
-        .where(
-          FirestoreItemKey.users,
-          arrayContains: currentUserId,
-        )
-        .snapshots()
-        .listen(
-      (event) {
-        groupMessageListUserDetails
-            .add(event.docs.map((e) => e.data()).toList());
-      },
-    );
-    return groupMessageListUserDetails;
-  }
+  ) =>
+      getGroupMessageCollectionReference()
+          .where(
+            FirestoreItemKey.users,
+            arrayContains: currentUserId,
+          )
+          .snapshots()
+          .map(
+            (event) => event.docs.map((e) => e.data()).toList(),
+          );
 }

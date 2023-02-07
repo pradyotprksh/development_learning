@@ -52,7 +52,7 @@ class SelectContactBloc extends Bloc<SelectContactEvent, SelectContactState> {
     final userId = _firebaseAuthService.getUserId();
     if (userId != null) {
       await emit.forEach(
-        _firebaseFirestoreService.getUserContactsNotAvailable(userId).stream,
+        _firebaseFirestoreService.getUserContactsNotAvailable(userId),
         onData: (event) => state.copyWith(
           nonExistingAccount: event,
         ),

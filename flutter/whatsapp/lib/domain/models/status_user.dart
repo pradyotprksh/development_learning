@@ -11,5 +11,5 @@ class UserWithSingleStatusDetails {
 
   final String userId;
   final List<StatusDetails> statusDetails;
-  final StreamController<UserDetails?> userDetails;
+  final Stream<UserDetails?> userDetails;
 }

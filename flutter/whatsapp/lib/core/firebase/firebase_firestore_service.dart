@@ -7,20 +7,20 @@ import 'package:whatsapp/domain/domain.dart';
 abstract class FirebaseFirestoreService {
   final firestore = FirebaseFirestore.instance;
 
-  StreamController<DirectMessageDetails?> getMessageDetails(
+  Stream<DirectMessageDetails?> getMessageDetails(
     String currentUserId,
     String selectedUserId,
   );
 
-  StreamController<UserDetails?> getUserDetails(String userId);
+  Stream<UserDetails?> getUserDetails(String userId);
 
-  StreamController<List<UserWithSingleStatusDetails>?> getStatus();
+  Stream<List<UserWithSingleStatusDetails>?> getStatus();
 
-  StreamController<List<DirectMessagesListUserDetails>?> getDirectMessagesFor(
+  Stream<List<DirectMessagesListUserDetails>?> getDirectMessagesFor(
     String currentUserId,
   );
 
-  StreamController<List<GroupMessageDetails>?> getGroupMessagesFor(
+  Stream<List<GroupMessageDetails>?> getGroupMessagesFor(
     String currentUserId,
   );
 
@@ -49,8 +49,7 @@ abstract class FirebaseFirestoreService {
     String userId,
   );
 
-  StreamController<List<ContactsNotAvailableDetails>?>
-      getUserContactsNotAvailable(
+  Stream<List<ContactsNotAvailableDetails>?> getUserContactsNotAvailable(
     String userId,
   );
 

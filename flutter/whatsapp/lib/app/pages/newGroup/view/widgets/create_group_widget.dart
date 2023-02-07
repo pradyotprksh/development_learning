@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:whatsapp/app/app.dart';
-import 'package:whatsapp/domain/models/user.dart';
+import 'package:whatsapp/domain/domain.dart';
 
 class CreateGroupWidget extends StatefulWidget {
   const CreateGroupWidget({
