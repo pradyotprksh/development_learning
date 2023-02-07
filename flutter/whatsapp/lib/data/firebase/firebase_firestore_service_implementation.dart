@@ -332,4 +332,10 @@ class FirebaseFirestoreServiceImplementation extends FirebaseFirestoreService {
         await getContactNotAvailableDetailsCollectionReference(userId).get();
     return details.size > 0;
   }
+
+  @override
+  Future<void> createGroupMessage(
+      GroupMessageDetails groupMessageDetails) async {
+    await getGroupMessageCollectionReference().add(groupMessageDetails);
+  }
 }

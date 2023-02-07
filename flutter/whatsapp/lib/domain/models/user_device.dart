@@ -31,4 +31,12 @@ class UserDeviceDetails {
         if (version != null) FirestoreItemKey.version: version,
         if (buildNumber != null) FirestoreItemKey.buildNumber: buildNumber,
       };
+
+  Map<String, String> toStringMap() => <String, String>{
+        if (ipAddress != null) FirestoreItemKey.ipAddress: ipAddress!,
+        if (appName != null) FirestoreItemKey.appName: appName!,
+        if (packageName != null) FirestoreItemKey.packageName: packageName!,
+        if (version != null) FirestoreItemKey.version: version!,
+        if (buildNumber != null) FirestoreItemKey.buildNumber: buildNumber!,
+      };
 }

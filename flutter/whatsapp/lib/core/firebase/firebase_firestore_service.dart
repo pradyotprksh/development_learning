@@ -57,6 +57,8 @@ abstract class FirebaseFirestoreService {
 
   Future<void> createDirectMessage(DirectMessageDetails directMessageDetails);
 
+  Future<void> createGroupMessage(GroupMessageDetails groupMessageDetails);
+
   Future<void> sendMessage(
     SingleMessageDetails singleMessageDetails,
     String directMessageId,
@@ -117,6 +119,14 @@ abstract class FirebaseFirestoreService {
             DirectMessageDetails.fromFirestore,
             (DirectMessageDetails directMessageDetails, _) =>
                 directMessageDetails.toFirestore(),
+          );
+
+  CollectionReference<GroupMessageDetails>
+      getGroupMessageCollectionReference() => _getCollectionReference(
+            CoreConstants.groupMessageCollection,
+            GroupMessageDetails.fromFirestore,
+            (GroupMessageDetails groupMessageDetails, _) =>
+                groupMessageDetails.toFirestore(),
           );
 
   CollectionReference<SingleMessageDetails> getMessageCollectionReference(

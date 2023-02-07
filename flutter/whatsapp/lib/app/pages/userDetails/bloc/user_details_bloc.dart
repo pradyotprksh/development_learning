@@ -114,9 +114,14 @@ class UserDetailsBloc extends Bloc<UserDetailsEvent, UserDetailsState> {
           CoreConstants.userIdPlaceholder,
           userId,
         );
+        final deviceDetails = await _deviceDetails.getDeviceDetails();
         final imageUrl = await _firebaseStorageService.uploadFile(
           event.imagePath,
           firestorePath,
+          {
+            FirestoreItemKey.userId: userId,
+            ...deviceDetails.toStringMap(),
+          },
         );
 
         emit(

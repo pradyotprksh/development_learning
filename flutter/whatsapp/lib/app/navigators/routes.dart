@@ -38,6 +38,7 @@ abstract class Routes {
           create: (_) => NewGroupBloc(
             FirebaseFirestoreServiceImplementation(),
             FirebaseAuthServiceImplementation(),
+            FirebaseStorageServiceImplementation(),
             DeviceDetailsImplementation(),
           )..add(const FetchAccounts()),
           child: const NewGroupView(),

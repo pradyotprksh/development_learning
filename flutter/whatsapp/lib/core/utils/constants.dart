@@ -3,6 +3,7 @@ import 'package:whatsapp/device/device.dart';
 abstract class CoreConstants {
   static const userCollection = 'users';
   static const directMessageCollection = 'direct-messages';
+  static const groupMessageCollection = 'group-messages';
   static const loginHistoryCollection =
       'users/$userIdPlaceholder/login-history';
   static const contactsAvailableCollection =
@@ -23,4 +24,6 @@ abstract class CoreConstants {
       '$userCollection/profileImages/$userIdPlaceholder';
   static String userStatusImage() =>
       '$userCollection/status/$userIdPlaceholder-${DeviceUtilsMethods.getCurrentTimeStamp()}';
+  static String groupProfileImage() =>
+      'groups/profileImages/$userIdPlaceholder-${DeviceUtilsMethods.getCurrentTimeStamp()}';
 }

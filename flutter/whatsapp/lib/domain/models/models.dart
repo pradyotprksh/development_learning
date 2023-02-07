@@ -2,6 +2,7 @@ export 'contacts_available.dart';
 export 'contacts_not_available.dart';
 export 'direct_message.dart';
 export 'direct_messages_list_user.dart';
+export 'group_message.dart';
 export 'login_history.dart';
 export 'single_message.dart';
 export 'status.dart';

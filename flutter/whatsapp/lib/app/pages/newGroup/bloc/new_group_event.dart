@@ -16,3 +16,15 @@ class ToggleUserSelection extends NewGroupEvent {
 
   final String userId;
 }
+
+class CreateGroupEvent extends NewGroupEvent {
+  const CreateGroupEvent(
+    this.groupName,
+    this.groupImagePath,
+    this.firstMessage,
+  );
+
+  final String groupName;
+  final String groupImagePath;
+  final String firstMessage;
+}

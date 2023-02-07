@@ -75,6 +75,10 @@ class AddStatusBloc extends Bloc<AddStatusEvent, AddStatusState> {
           filePathUrl = await _firebaseStorageService.uploadFile(
             path,
             firestorePath,
+            {
+              FirestoreItemKey.userId: userId,
+              ...deviceDetails.toStringMap(),
+            },
           );
         }
       }

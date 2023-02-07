@@ -64,11 +64,15 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
           CoreConstants.userIdPlaceholder,
           userId,
         );
+        final deviceDetails = await _deviceDetails.getDeviceDetails();
         final imageUrl = await _firebaseStorageService.uploadFile(
           event.path,
           firestorePath,
+          {
+            FirestoreItemKey.userId: userId,
+            ...deviceDetails.toStringMap(),
+          },
         );
-        final deviceDetails = await _deviceDetails.getDeviceDetails();
         await _firebaseFirestoreService.updateUserDetails(
           userId,
           {
