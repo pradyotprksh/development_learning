@@ -28,6 +28,7 @@ class _HomeViewState extends State<HomeView>
   void _openPageBasedOnSelection(BuildContext context, HomeMenuItems value) {
     switch (value) {
       case HomeMenuItems.newGroup:
+        context.navigator.pushNamed(Routes.newGroup);
         break;
       case HomeMenuItems.newBroadcast:
         break;
