@@ -10,4 +10,7 @@ abstract class FirebaseRemoteConfigService {
 
   static int imageCompressionValue() =>
       FirebaseRemoteConfig.instance.getInt(CoreConstants.imageCompressionValue);
+
+  static int statusDeleteTimeValue() =>
+      FirebaseRemoteConfig.instance.getInt(CoreConstants.statusDeleteTimeValue);
 }

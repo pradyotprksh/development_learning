@@ -39,6 +39,8 @@ abstract class FirebaseFirestoreService {
     ContactsNotAvailableDetails contactsNotAvailableDetails,
   );
 
+  Future<void> deleteStatusOnTimeCompletion(String userId);
+
   StreamController<List<UserContactsAvailableDetails>?>
       getUserContactsAvailable(
     String userId,

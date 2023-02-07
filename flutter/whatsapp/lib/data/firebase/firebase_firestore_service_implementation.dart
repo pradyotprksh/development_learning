@@ -338,4 +338,21 @@ class FirebaseFirestoreServiceImplementation extends FirebaseFirestoreService {
       GroupMessageDetails groupMessageDetails) async {
     await getGroupMessageCollectionReference().add(groupMessageDetails);
   }
+
+  @override
+  Future<void> deleteStatusOnTimeCompletion(String userId) async {
+    final allCurrentUserStatus = await getStatusCollectionReference()
+        .where(
+          FirestoreItemKey.userId,
+          isEqualTo: userId,
+        )
+        .get();
+    for (var status in allCurrentUserStatus.docs) {
+      final statusTime = status.data().createdOnTimeStamp;
+      if (DeviceUtilsMethods.getTimeDifference(statusTime) >=
+          FirebaseRemoteConfigService.statusDeleteTimeValue()) {
+        await getStatusCollectionReference().doc(status.id).delete();
+      }
+    }
+  }
 }

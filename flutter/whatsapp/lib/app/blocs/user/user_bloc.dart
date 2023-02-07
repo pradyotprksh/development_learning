@@ -22,6 +22,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     emit(const FetchingUserDetails());
     var userId = _firebaseAuthService.getUserId();
     if (userId != null) {
+      await _firebaseFirestoreService.deleteStatusOnTimeCompletion(userId);
       await emit.forEach(
         _firebaseFirestoreService.getUserDetails(userId).stream,
         onData: (userDetails) {

@@ -19,6 +19,7 @@ abstract class CoreConstants {
   static const messageIdPlaceholder = '{message}';
   static const enableEncryption = 'enableEncryption';
   static const imageCompressionValue = 'imageCompressionValue';
+  static const statusDeleteTimeValue = 'statusDeleteTimeValue';
   static const isApplicationDown = 'isApplicationDown';
   static const userProfileImage =
       '$userCollection/profileImages/$userIdPlaceholder';
