@@ -64,8 +64,9 @@ class ProfileView extends StatelessWidget {
                             placeholder: CircleAvatar(
                               radius: 25,
                               backgroundColor: context.themeData.primaryColor,
-                              backgroundImage: const AssetImage(
-                                AssetsPath.defaultAvatar,
+                              child: const Icon(
+                                Icons.group,
+                                color: Colors.white,
                               ),
                             ),
                             height: 150,

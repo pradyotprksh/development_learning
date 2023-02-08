@@ -66,6 +66,7 @@ class _StatusViewState extends State<StatusView>
                       readStatusCount:
                           statusState.currentUserStatus?.statusDetails.length ??
                               0,
+                      userId: statusState.currentUserStatus?.userId ?? '',
                     ),
                     if (statusState.currentUserStatus?.statusDetails.isEmpty ==
                         true)
@@ -111,6 +112,7 @@ class _StatusViewState extends State<StatusView>
                             profileImage: userDetails.profileImage ?? '',
                             totalStatusCount: statusDetails.length,
                             readStatusCount: statusDetails.length,
+                            userId: userDetails.userId,
                           ),
                           title: Text(
                             userDetails.name ?? '',

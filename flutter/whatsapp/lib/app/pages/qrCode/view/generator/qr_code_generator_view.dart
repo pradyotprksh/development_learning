@@ -10,7 +10,6 @@ class QrCodeGeneratorView extends StatelessWidget {
     final arguments = context.routeSettings?.arguments as Map<String, String>;
     final qrData = arguments[Keys.qrCodeData] ?? '';
     final imageUrl = arguments[Keys.imageUrl] ?? '';
-    final placeholderPath = arguments[Keys.placeHolderPath] ?? '';
 
     return Scaffold(
       backgroundColor: context.themeData.scaffoldBackgroundColor,
@@ -50,8 +49,9 @@ class QrCodeGeneratorView extends StatelessWidget {
                   placeholder: CircleAvatar(
                     radius: 30,
                     backgroundColor: context.themeData.primaryColor,
-                    backgroundImage: AssetImage(
-                      placeholderPath,
+                    child: const Icon(
+                      Icons.qr_code,
+                      color: Colors.white,
                     ),
                   ),
                   height: 60,

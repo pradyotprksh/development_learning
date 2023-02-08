@@ -8,11 +8,13 @@ class StatusProfileImageWidget extends StatelessWidget {
     required this.profileImage,
     required this.totalStatusCount,
     required this.readStatusCount,
+    required this.userId,
   });
 
   final String profileImage;
   final int totalStatusCount;
   final int readStatusCount;
+  final String userId;
 
   @override
   Widget build(BuildContext context) => SizedBox(
@@ -21,18 +23,10 @@ class StatusProfileImageWidget extends StatelessWidget {
         child: Stack(
           alignment: Alignment.center,
           children: [
-            CachedNetworkImageWidget(
-              imageUrl: profileImage,
-              placeholder: CircleAvatar(
-                radius: 20,
-                backgroundColor: context.themeData.primaryColor,
-                backgroundImage: const AssetImage(
-                  AssetsPath.defaultAvatar,
-                ),
-              ),
-              height: 40,
-              width: 40,
-              clipToCircle: true,
+            UserImageWidget(
+              profileImage: profileImage,
+              userId: userId,
+              size: 40,
             ),
             if (totalStatusCount > 0)
               CircularStepProgressIndicator(

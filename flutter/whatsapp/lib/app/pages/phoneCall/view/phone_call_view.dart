@@ -19,7 +19,7 @@ class _PhoneCallViewState extends State<PhoneCallView> {
   @override
   void dispose() async {
     super.dispose();
-    await _stopWatchTimer.dispose(); // Need to call dispose function.
+    await _stopWatchTimer.dispose();
   }
 
   @override

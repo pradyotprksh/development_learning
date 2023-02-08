@@ -20,7 +20,6 @@ class SettingsView extends StatelessWidget {
                       userDetails?.userId ?? '',
                     ),
                     Keys.imageUrl: userDetails?.profileImage ?? '',
-                    Keys.placeHolderPath: AssetsPath.defaultAvatar,
                   },
                 );
               },
@@ -57,8 +56,9 @@ class SettingsView extends StatelessWidget {
                   placeholder: CircleAvatar(
                     radius: 25,
                     backgroundColor: context.themeData.primaryColor,
-                    backgroundImage: const AssetImage(
-                      AssetsPath.defaultAvatar,
+                    child: const Icon(
+                      Icons.group,
+                      color: Colors.white,
                     ),
                   ),
                   height: 50,

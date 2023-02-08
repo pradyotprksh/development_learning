@@ -110,8 +110,9 @@ class _ChatsViewState extends State<ChatsView>
                     placeholder: CircleAvatar(
                       radius: 20,
                       backgroundColor: context.themeData.primaryColor,
-                      backgroundImage: const AssetImage(
-                        AssetsPath.defaultGroupAvatar,
+                      child: const Icon(
+                        Icons.group,
+                        color: Colors.white,
                       ),
                     ),
                     height: 40,

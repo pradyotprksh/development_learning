@@ -117,8 +117,9 @@ class UserDetailsView extends StatelessWidget {
                           placeholder: CircleAvatar(
                             radius: 80,
                             backgroundColor: context.themeData.primaryColor,
-                            backgroundImage: const AssetImage(
-                              AssetsPath.defaultAvatar,
+                            child: const Icon(
+                              Icons.group,
+                              color: Colors.white,
                             ),
                           ),
                           height: 160,

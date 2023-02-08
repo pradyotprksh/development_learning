@@ -89,8 +89,9 @@ class _CreateGroupWidgetState extends State<CreateGroupWidget> {
                                   radius: 30,
                                   backgroundColor:
                                       context.themeData.primaryColor,
-                                  backgroundImage: const AssetImage(
-                                    AssetsPath.defaultAvatar,
+                                  child: const Icon(
+                                    Icons.group,
+                                    color: Colors.white,
                                   ),
                                 ),
                           height: 60,

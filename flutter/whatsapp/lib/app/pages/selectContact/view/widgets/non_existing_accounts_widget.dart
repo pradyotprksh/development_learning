@@ -65,7 +65,9 @@ class NonExistingAccountsWidget extends StatelessWidget {
                             phoneNumber ??
                             emailAddress ??
                             '',
-                        style: context.themeData.textTheme.titleLarge,
+                        style: context.themeData.textTheme.titleLarge?.copyWith(
+                          color: Colors.white,
+                        ),
                       ),
                     ),
                     title: Text(
