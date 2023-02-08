@@ -15,6 +15,12 @@ void main() async {
     MultiBlocProvider(
       providers: [
         BlocProvider(
+          create: (_) => UtilitiesBloc()
+            ..add(
+              const InitiateConnectivityCheck(),
+            ),
+        ),
+        BlocProvider(
           create: (_) => ThemeBloc()
             ..add(
               const FetchCurrentThemeEvent(),

@@ -49,15 +49,51 @@ class _HomeViewState extends State<HomeView>
   }
 
   @override
-  Widget build(BuildContext context) => BlocListener<UserBloc, UserState>(
-        listener: (_, userState) {
-          if (userState is UserDataNotAvailable) {
-            context.navigator.pushNamedAndRemoveUntil(
-              Routes.userDetails,
-              (route) => false,
-            );
-          }
-        },
+  Widget build(BuildContext context) => MultiBlocListener(
+        listeners: [
+          BlocListener<UserBloc, UserState>(
+            listener: (_, userState) {
+              if (userState is UserDataNotAvailable) {
+                context.navigator.pushNamedAndRemoveUntil(
+                  Routes.userDetails,
+                  (route) => false,
+                );
+              }
+            },
+          ),
+          BlocListener<UtilitiesBloc, UtilitiesState>(
+            listener: (_, utilitiesState) {
+              if (!utilitiesState.isNetworkAvailable()) {
+                showModalBottomSheet<void>(
+                  isDismissible: false,
+                  isScrollControlled: false,
+                  context: context,
+                  builder: (_) => Scaffold(
+                    backgroundColor: Colors.transparent,
+                    body: Column(
+                      children: [
+                        const Spacer(),
+                        Icon(
+                          Icons.error,
+                          color: context.themeData.colorScheme.error,
+                          size: 40,
+                        ),
+                        Padding(
+                          padding: ThemeEdgeInsets.all15,
+                          child: Text(
+                            context.translator.noInternet,
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                        const Spacer(),
+                      ],
+                    ),
+                  ),
+                );
+              }
+            },
+          ),
+        ],
         child: BlocBuilder<HomeBloc, HomeState>(
           builder: (_, homeState) => Scaffold(
             backgroundColor: context.themeData.scaffoldBackgroundColor,
