@@ -15,6 +15,8 @@ abstract class AppUtilsMethods {
 
   static String getUserQrCode(String userId) => 'user/$userId';
 
+  static String getGroupQrCode(String groupId) => 'group/$groupId';
+
   static String timeAgo(int? timeStamp, BuildContext context) {
     if (timeStamp != null) {
       setTimeAgoLocalMessage(

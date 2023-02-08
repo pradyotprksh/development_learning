@@ -61,48 +61,48 @@ class DirectMessageView extends StatelessWidget {
               Icons.call,
             ),
           ),
-          PopupMenuButton<MessageMenuItems>(
+          PopupMenuButton<DirectMessageMenuItems>(
             onSelected: (item) {},
             color: context.themeData.popupMenuTheme.color,
             itemBuilder: (_) => [
               PopupMenuItem(
-                value: MessageMenuItems.viewContact,
+                value: DirectMessageMenuItems.viewContact,
                 child: Text(
                   context.translator.viewContact,
                 ),
               ),
               PopupMenuItem(
-                value: MessageMenuItems.mediaLinksDocs,
+                value: DirectMessageMenuItems.mediaLinksDocs,
                 child: Text(
                   context.translator.mediaLinksDocs,
                 ),
               ),
               PopupMenuItem(
-                value: MessageMenuItems.search,
+                value: DirectMessageMenuItems.search,
                 child: Text(
                   context.translator.search,
                 ),
               ),
               PopupMenuItem(
-                value: MessageMenuItems.muteNotifications,
+                value: DirectMessageMenuItems.muteNotifications,
                 child: Text(
                   context.translator.muteNotifications,
                 ),
               ),
               PopupMenuItem(
-                value: MessageMenuItems.disappearingMessages,
+                value: DirectMessageMenuItems.disappearingMessages,
                 child: Text(
                   context.translator.disappearingMessages,
                 ),
               ),
               PopupMenuItem(
-                value: MessageMenuItems.wallpaper,
+                value: DirectMessageMenuItems.wallpaper,
                 child: Text(
                   context.translator.wallpaper,
                 ),
               ),
               PopupMenuItem(
-                value: MessageMenuItems.more,
+                value: DirectMessageMenuItems.more,
                 child: Text(
                   context.translator.more,
                 ),

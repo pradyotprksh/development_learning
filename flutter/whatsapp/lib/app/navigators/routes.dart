@@ -17,6 +17,7 @@ abstract class Routes {
   static const addStatusCamera = '/add-status-camera';
   static const settings = '/settings';
   static const messages = '/messages';
+  static const groupMessages = '/group-messages';
   static const profile = '/profile';
   static const emailVerification = '/email-verification';
   static const qrCode = '/qr-code';
@@ -34,6 +35,7 @@ abstract class Routes {
     settings: (context) => const SettingsView(),
     qrCode: (context) => const QrCodeGeneratorView(),
     qrCodeScanner: (context) => const QrCodeScannerView(),
+    groupMessages: (context) => const GroupMessageView(),
     newGroup: (context) => BlocProvider(
           create: (_) => NewGroupBloc(
             FirebaseFirestoreServiceImplementation(),

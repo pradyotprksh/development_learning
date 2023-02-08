@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:whatsapp/app/app.dart';
 
@@ -8,9 +7,10 @@ class QrCodeGeneratorView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final qrData = (context.routeSettings?.arguments
-            as Map<String, String>)[Keys.qrCodeData] ??
-        '';
+    final arguments = context.routeSettings?.arguments as Map<String, String>;
+    final qrData = arguments[Keys.qrCodeData] ?? '';
+    final imageUrl = arguments[Keys.imageUrl] ?? '';
+    final placeholderPath = arguments[Keys.placeHolderPath] ?? '';
 
     return Scaffold(
       backgroundColor: context.themeData.scaffoldBackgroundColor,
@@ -45,20 +45,18 @@ class QrCodeGeneratorView extends StatelessWidget {
                     ),
                   ),
                 ),
-                BlocBuilder<UserBloc, UserState>(
-                  builder: (_, userState) => CachedNetworkImageWidget(
-                    imageUrl: userState.userDetails?.profileImage ?? '',
-                    placeholder: CircleAvatar(
-                      radius: 30,
-                      backgroundColor: context.themeData.primaryColor,
-                      backgroundImage: const AssetImage(
-                        AssetsPath.defaultAvatar,
-                      ),
+                CachedNetworkImageWidget(
+                  imageUrl: imageUrl,
+                  placeholder: CircleAvatar(
+                    radius: 30,
+                    backgroundColor: context.themeData.primaryColor,
+                    backgroundImage: AssetImage(
+                      placeholderPath,
                     ),
-                    height: 60,
-                    width: 60,
-                    clipToCircle: true,
                   ),
+                  height: 60,
+                  width: 60,
+                  clipToCircle: true,
                 ),
               ],
             ),

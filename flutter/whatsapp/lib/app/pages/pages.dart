@@ -1,6 +1,7 @@
 export 'addStatus/add_status.dart';
 export 'authenticate/authenticate.dart';
 export 'directMessage/direct_message.dart';
+export 'groupMessage/group_message.dart';
 export 'home/home.dart';
 export 'intro/intro.dart';
 export 'newGroup/new_group.dart';

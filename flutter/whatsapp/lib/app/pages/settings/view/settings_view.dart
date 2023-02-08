@@ -12,12 +12,15 @@ class SettingsView extends StatelessWidget {
           actions: [
             IconButton(
               onPressed: () {
+                final userDetails = context.read<UserBloc>().state.userDetails;
                 context.navigator.pushNamed(
                   Routes.qrCode,
                   arguments: <String, String>{
                     Keys.qrCodeData: AppUtilsMethods.getUserQrCode(
-                      context.read<UserBloc>().state.userDetails?.userId ?? '',
+                      userDetails?.userId ?? '',
                     ),
+                    Keys.imageUrl: userDetails?.profileImage ?? '',
+                    Keys.placeHolderPath: AssetsPath.defaultAvatar,
                   },
                 );
               },

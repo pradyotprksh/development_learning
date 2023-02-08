@@ -9,9 +9,19 @@ enum HomeMenuItems {
   settings,
 }
 
-enum MessageMenuItems {
+enum DirectMessageMenuItems {
   viewContact,
   mediaLinksDocs,
+  search,
+  muteNotifications,
+  disappearingMessages,
+  wallpaper,
+  more,
+}
+
+enum GroupMessageMenuItems {
+  groupInfo,
+  groupMedia,
   search,
   muteNotifications,
   disappearingMessages,

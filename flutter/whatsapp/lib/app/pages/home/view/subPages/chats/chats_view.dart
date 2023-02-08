@@ -96,7 +96,15 @@ class _ChatsViewState extends State<ChatsView>
                 final details = chatState.groupMessages[index];
 
                 return ListTile(
-                  onTap: () {},
+                  onTap: () {
+                    final groupId = details.groupId;
+                    context.navigator.pushNamed(
+                      Routes.groupMessages,
+                      arguments: <String, String>{
+                        Keys.groupId: groupId,
+                      },
+                    );
+                  },
                   leading: CachedNetworkImageWidget(
                     imageUrl: details.profileImage ?? '',
                     placeholder: CircleAvatar(
