@@ -3,7 +3,7 @@ import 'package:equatable/equatable.dart';
 
 class UtilitiesState extends Equatable {
   const UtilitiesState({
-    this.connectivityResult = ConnectivityResult.none,
+    this.connectivityResult = ConnectivityResult.wifi,
   });
 
   UtilitiesState copyWith({

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:whatsapp/app/app.dart';
 
 class GroupMessageView extends StatelessWidget {
@@ -7,9 +8,46 @@ class GroupMessageView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final arguments = context.routeSettings?.arguments as Map<String, String>;
+    final groupId = arguments[Keys.groupId] as String;
+    context.read<GroupMessageBloc>().add(
+          FetchGroupDetails(groupId),
+        );
+
     return Scaffold(
       backgroundColor: context.themeData.scaffoldBackgroundColor,
       appBar: AppBar(
+        title: BlocBuilder<GroupMessageBloc, GroupMessageState>(
+          builder: (_, groupMessageState) => Row(
+            children: [
+              CachedNetworkImageWidget(
+                imageUrl:
+                    groupMessageState.groupMessageDetails?.profileImage ?? '',
+                placeholder: CircleAvatar(
+                  radius: 20,
+                  backgroundColor: context.themeData.primaryColor,
+                  backgroundImage: const AssetImage(
+                    AssetsPath.defaultGroupAvatar,
+                  ),
+                ),
+                height: 40,
+                width: 40,
+                clipToCircle: true,
+              ),
+              ThemeSizedBox.width15,
+              Flexible(
+                child: ListTile(
+                  onTap: () {},
+                  contentPadding: ThemeEdgeInsets.zero,
+                  title: Text(
+                    groupMessageState.groupMessageDetails?.name ?? '',
+                    style: context.themeData.textTheme.titleMedium,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
         actions: [
           IconButton(
             onPressed: () {},

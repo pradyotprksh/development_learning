@@ -349,4 +349,12 @@ class FirebaseFirestoreServiceImplementation extends FirebaseFirestoreService {
           .map(
             (event) => event.docs.map((e) => e.data()).toList(),
           );
+
+  @override
+  Stream<GroupMessageDetails?> getGroupMessageDetails(
+    String selectedGroupId,
+  ) =>
+      getGroupMessageCollectionReference().doc(selectedGroupId).snapshots().map(
+            (event) => event.data(),
+          );
 }

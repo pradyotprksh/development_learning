@@ -35,7 +35,12 @@ abstract class Routes {
     settings: (context) => const SettingsView(),
     qrCode: (context) => const QrCodeGeneratorView(),
     qrCodeScanner: (context) => const QrCodeScannerView(),
-    groupMessages: (context) => const GroupMessageView(),
+    groupMessages: (context) => BlocProvider(
+          create: (_) => GroupMessageBloc(
+            FirebaseFirestoreServiceImplementation(),
+          ),
+          child: const GroupMessageView(),
+        ),
     newGroup: (context) => BlocProvider(
           create: (_) => NewGroupBloc(
             FirebaseFirestoreServiceImplementation(),
@@ -46,11 +51,7 @@ abstract class Routes {
           child: const NewGroupView(),
         ),
     phoneCall: (context) => BlocProvider(
-          create: (_) => PhoneCallBloc(
-            FirebaseFirestoreServiceImplementation(),
-            FirebaseAuthServiceImplementation(),
-            DeviceDetailsImplementation(),
-          ),
+          create: (_) => PhoneCallBloc(),
           child: const PhoneCallView(),
         ),
     profile: (context) => BlocProvider(
