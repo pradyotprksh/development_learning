@@ -103,7 +103,7 @@ class _ChatsViewState extends State<ChatsView>
                       radius: 20,
                       backgroundColor: context.themeData.primaryColor,
                       backgroundImage: const AssetImage(
-                        AssetsPath.defaultAvatar,
+                        AssetsPath.defaultGroupAvatar,
                       ),
                     ),
                     height: 40,
