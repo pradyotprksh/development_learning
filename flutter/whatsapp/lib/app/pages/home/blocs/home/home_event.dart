@@ -10,3 +10,7 @@ abstract class HomeEvent extends Equatable {
 class UpdateLoginHistory extends HomeEvent {
   const UpdateLoginHistory();
 }
+
+class DeleteCallLogs extends HomeEvent {
+  const DeleteCallLogs();
+}

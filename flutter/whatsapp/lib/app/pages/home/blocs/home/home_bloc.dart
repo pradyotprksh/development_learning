@@ -13,6 +13,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           const HomeState(),
         ) {
     on<UpdateLoginHistory>(_updateLoginHistory);
+    on<DeleteCallLogs>(_deleteCallLogs);
   }
 
   final FirebaseFirestoreService _firebaseFirestoreService;
@@ -34,6 +35,16 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           ),
         );
       }
+    }
+  }
+
+  void _deleteCallLogs(
+    DeleteCallLogs event,
+    Emitter<HomeState> emit,
+  ) {
+    final userId = _firebaseAuthService.getUserId();
+    if (userId != null) {
+      _firebaseFirestoreService.clearCallLogs(userId);
     }
   }
 }

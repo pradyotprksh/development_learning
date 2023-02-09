@@ -87,6 +87,8 @@ abstract class FirebaseFirestoreService {
 
   Future<UserDetails?> getUserAccountByEmailAddress(String emailAddress);
 
+  Future<void> clearCallLogs(String userId);
+
   CollectionReference<R> _getCollectionReference<R>(
     String collectionPath,
     FromFirestore<R> fromFirestore,

@@ -41,6 +41,7 @@ class _HomeViewState extends State<HomeView>
       case HomeMenuItems.statusPrivacy:
         break;
       case HomeMenuItems.clearCallLog:
+        context.read<HomeBloc>().add(const DeleteCallLogs());
         break;
       case HomeMenuItems.settings:
         context.navigator.pushNamed(Routes.settings);
