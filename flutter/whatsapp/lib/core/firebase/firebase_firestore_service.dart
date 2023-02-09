@@ -12,13 +12,15 @@ abstract class FirebaseFirestoreService {
     String selectedUserId,
   );
 
-  Stream<GroupMessageDetails?> getGroupMessageDetails(
+  Stream<UsersGroupMessageDetails?> getGroupMessageWithUsersDetails(
     String selectedGroupId,
   );
 
   Stream<UserDetails?> getUserDetails(String userId);
 
   Stream<List<UserWithSingleStatusDetails>?> getStatus();
+
+  Stream<List<UserDetails>> getUsersDetails(List<String> userIds);
 
   Stream<List<DirectMessagesListUserDetails>?> getDirectMessagesFor(
     String currentUserId,

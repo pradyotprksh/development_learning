@@ -20,27 +20,20 @@ class DirectMessageView extends StatelessWidget {
         title: BlocBuilder<DirectMessageBloc, DirectMessageState>(
           buildWhen: (previousState, currentState) =>
               previousState.userDetails != currentState.userDetails,
-          builder: (_, messageState) => Row(
-            children: [
-              UserImageWidget(
-                profileImage: messageState.userDetails?.profileImage ?? '',
-                userId: messageState.userDetails?.userId ?? '',
-                enableAction: false,
-                size: 30,
-              ),
-              ThemeSizedBox.width15,
-              Flexible(
-                child: ListTile(
-                  onTap: () {},
-                  contentPadding: ThemeEdgeInsets.zero,
-                  title: Text(
-                    messageState.userDetails?.name ?? '',
-                    style: context.themeData.textTheme.titleMedium,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ),
-              ),
-            ],
+          builder: (_, messageState) => ListTile(
+            onTap: () {},
+            contentPadding: ThemeEdgeInsets.zero,
+            leading: UserImageWidget(
+              profileImage: messageState.userDetails?.profileImage ?? '',
+              userId: messageState.userDetails?.userId ?? '',
+              enableAction: false,
+              size: 30,
+            ),
+            title: Text(
+              messageState.userDetails?.name ?? '',
+              style: context.themeData.textTheme.titleMedium,
+              overflow: TextOverflow.ellipsis,
+            ),
           ),
         ),
         actions: [
@@ -54,7 +47,9 @@ class DirectMessageView extends StatelessWidget {
             onPressed: () {
               context.navigator.pushNamed(
                 Routes.phoneCall,
-                arguments: context.read<DirectMessageBloc>().state.userDetails,
+                arguments: [
+                  context.read<DirectMessageBloc>().state.userDetails,
+                ],
               );
             },
             icon: const Icon(

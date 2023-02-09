@@ -182,7 +182,8 @@ class FirebaseFirestoreServiceImplementation extends FirebaseFirestoreService {
 
   @override
   Future<void> setUserLogInHistory(
-      LoginHistoryDetails loginHistoryDetails) async {
+    LoginHistoryDetails loginHistoryDetails,
+  ) async {
     final isAvailable =
         await getLoginHistoryCollectionReference(loginHistoryDetails.userId)
             .doc(DeviceUtilsMethods.getCurrentDateWithCurrentHour())
@@ -351,10 +352,28 @@ class FirebaseFirestoreServiceImplementation extends FirebaseFirestoreService {
           );
 
   @override
-  Stream<GroupMessageDetails?> getGroupMessageDetails(
+  Stream<UsersGroupMessageDetails?> getGroupMessageWithUsersDetails(
     String selectedGroupId,
   ) =>
-      getGroupMessageCollectionReference().doc(selectedGroupId).snapshots().map(
-            (event) => event.data(),
+      getGroupMessageCollectionReference()
+          .doc(selectedGroupId)
+          .snapshots()
+          .map((event) {
+        final groupDetails = event.data();
+        final userIds = groupDetails?.users ?? [];
+
+        return UsersGroupMessageDetails(
+          getUsersDetails(userIds),
+          event.data(),
+        );
+      });
+
+  @override
+  Stream<List<UserDetails>> getUsersDetails(List<String> userIds) =>
+      getUserCollectionReference()
+          .where(FirestoreItemKey.userId, whereIn: userIds)
+          .snapshots()
+          .map(
+            (event) => event.docs.map((e) => e.data()).toList(),
           );
 }

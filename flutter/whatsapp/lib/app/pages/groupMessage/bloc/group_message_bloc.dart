@@ -16,7 +16,7 @@ class GroupMessageBloc extends Bloc<GroupMessageEvent, GroupMessageState> {
     Emitter<GroupMessageState> emit,
   ) async {
     await emit.forEach(
-      _firebaseFirestoreService.getGroupMessageDetails(event.groupId),
+      _firebaseFirestoreService.getGroupMessageWithUsersDetails(event.groupId),
       onData: (details) => state.copyWith(
         groupMessageDetails: details,
       ),

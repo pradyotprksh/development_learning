@@ -17,36 +17,32 @@ class GroupMessageView extends StatelessWidget {
       backgroundColor: context.themeData.scaffoldBackgroundColor,
       appBar: AppBar(
         title: BlocBuilder<GroupMessageBloc, GroupMessageState>(
-          builder: (_, groupMessageState) => Row(
-            children: [
-              CachedNetworkImageWidget(
-                imageUrl:
-                    groupMessageState.groupMessageDetails?.profileImage ?? '',
-                placeholder: CircleAvatar(
-                  radius: 20,
-                  backgroundColor: context.themeData.primaryColor,
-                  child: const Icon(
-                    Icons.group,
-                    color: Colors.white,
-                  ),
-                ),
-                height: 40,
-                width: 40,
-                clipToCircle: true,
-              ),
-              ThemeSizedBox.width15,
-              Flexible(
-                child: ListTile(
-                  onTap: () {},
-                  contentPadding: ThemeEdgeInsets.zero,
-                  title: Text(
-                    groupMessageState.groupMessageDetails?.name ?? '',
-                    style: context.themeData.textTheme.titleMedium,
-                    overflow: TextOverflow.ellipsis,
-                  ),
+          builder: (_, groupMessageState) => ListTile(
+            onTap: () {},
+            contentPadding: ThemeEdgeInsets.zero,
+            leading: CachedNetworkImageWidget(
+              imageUrl: groupMessageState
+                      .groupMessageDetails?.groupMessageDetails?.profileImage ??
+                  '',
+              placeholder: CircleAvatar(
+                radius: 20,
+                backgroundColor: context.themeData.primaryColor,
+                child: const Icon(
+                  Icons.group,
+                  color: Colors.white,
                 ),
               ),
-            ],
+              height: 40,
+              width: 40,
+              clipToCircle: true,
+            ),
+            title: Text(
+              groupMessageState
+                      .groupMessageDetails?.groupMessageDetails?.name ??
+                  '',
+              style: context.themeData.textTheme.titleMedium,
+              overflow: TextOverflow.ellipsis,
+            ),
           ),
         ),
         actions: [
@@ -57,7 +53,22 @@ class GroupMessageView extends StatelessWidget {
             ),
           ),
           IconButton(
-            onPressed: () {},
+            onPressed: () async {
+              final navigator = context.navigator;
+              final currentUserId =
+                  context.read<UserBloc>().state.userDetails?.userId;
+              final users = await context
+                  .read<GroupMessageBloc>()
+                  .state
+                  .groupMessageDetails
+                  ?.usersDetails
+                  .first;
+              users?.removeWhere((element) => element.userId == currentUserId);
+              await navigator.pushNamed(
+                Routes.phoneCall,
+                arguments: users,
+              );
+            },
             icon: const Icon(
               Icons.call,
             ),

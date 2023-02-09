@@ -7,13 +7,13 @@ class GroupMessageState extends Equatable {
   });
 
   GroupMessageState copyWith({
-    GroupMessageDetails? groupMessageDetails,
+    UsersGroupMessageDetails? groupMessageDetails,
   }) =>
       GroupMessageState(
         groupMessageDetails: groupMessageDetails ?? this.groupMessageDetails,
       );
 
-  final GroupMessageDetails? groupMessageDetails;
+  final UsersGroupMessageDetails? groupMessageDetails;
 
   @override
   List<Object?> get props => [

@@ -24,9 +24,10 @@ class _PhoneCallViewState extends State<PhoneCallView> {
 
   @override
   Widget build(BuildContext context) {
-    final userDetails = context.routeSettings?.arguments as UserDetails?;
+    final userDetails =
+        context.routeSettings?.arguments as List<UserDetails?>? ?? [];
     context.read<PhoneCallBloc>().add(
-          CallStartedEvent(userDetails?.userId ?? ''),
+          CallStartedEvent(userDetails),
         );
 
     return Scaffold(
@@ -60,69 +61,88 @@ class _PhoneCallViewState extends State<PhoneCallView> {
           },
         ),
       ),
-      body: Column(
-        mainAxisSize: MainAxisSize.max,
+      body: Stack(
         children: [
-          const Spacer(),
-          Center(
-            child: UserImageWidget(
-              profileImage: userDetails?.profileImage ?? '',
-              userId: userDetails?.userId ?? '',
-              enableAction: false,
-              size: context.mediaQuery.size.width * 0.80,
+          if (userDetails.length == 1)
+            Center(
+              child: UserImageWidget(
+                profileImage: userDetails[0]?.profileImage ?? '',
+                userId: userDetails[0]?.userId ?? '',
+                enableAction: false,
+                size: context.mediaQuery.size.width * 0.80,
+              ),
             ),
-          ),
-          const Spacer(),
-          Card(
-            child: Padding(
-              padding: ThemeEdgeInsets.all10,
-              child: BlocBuilder<PhoneCallBloc, PhoneCallState>(
-                builder: (_, phoneCallState) => Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    IconButton(
-                      onPressed: () {
-                        context.read<PhoneCallBloc>().add(
-                              const ToggleSpeakerEvent(),
-                            );
-                      },
-                      icon: Icon(
-                        phoneCallState.speakerState == SpeakerState.notOnSpeaker
-                            ? Icons.volume_up
-                            : Icons.volume_off,
-                        size: 40,
+          if (userDetails.length > 1)
+            GridView.builder(
+              padding: ThemeEdgeInsets.leftTopRight15Bottom150,
+              itemCount: userDetails.length,
+              gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                maxCrossAxisExtent: 200,
+                crossAxisSpacing: 15,
+                mainAxisSpacing: 15,
+              ),
+              shrinkWrap: true,
+              itemBuilder: (_, index) => UserImageWidget(
+                profileImage: userDetails[index]?.profileImage ?? '',
+                userId: userDetails[index]?.userId ?? '',
+                enableAction: false,
+                size: context.mediaQuery.size.width * 0.80,
+              ),
+            ),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Card(
+              child: Padding(
+                padding: ThemeEdgeInsets.all10,
+                child: BlocBuilder<PhoneCallBloc, PhoneCallState>(
+                  builder: (_, phoneCallState) => Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      IconButton(
+                        onPressed: () {
+                          context.read<PhoneCallBloc>().add(
+                                const ToggleSpeakerEvent(),
+                              );
+                        },
+                        icon: Icon(
+                          phoneCallState.speakerState ==
+                                  SpeakerState.notOnSpeaker
+                              ? Icons.volume_up
+                              : Icons.volume_off,
+                          size: 40,
+                        ),
+                        padding: ThemeEdgeInsets.all15,
                       ),
-                      padding: ThemeEdgeInsets.all15,
-                    ),
-                    IconButton(
-                      onPressed: () {
-                        context.read<PhoneCallBloc>().add(
-                              const ToggleMuteEvent(),
-                            );
-                      },
-                      icon: Icon(
-                        phoneCallState.muteState == MuteState.mute
-                            ? Icons.mic_off
-                            : Icons.mic,
-                        size: 40,
+                      IconButton(
+                        onPressed: () {
+                          context.read<PhoneCallBloc>().add(
+                                const ToggleMuteEvent(),
+                              );
+                        },
+                        icon: Icon(
+                          phoneCallState.muteState == MuteState.mute
+                              ? Icons.mic_off
+                              : Icons.mic,
+                          size: 40,
+                        ),
+                        padding: ThemeEdgeInsets.all15,
                       ),
-                      padding: ThemeEdgeInsets.all15,
-                    ),
-                    IconButton(
-                      onPressed: () {
-                        context.read<PhoneCallBloc>().add(
-                              CallEndedEvent(userDetails?.userId ?? ''),
-                            );
-                        context.navigator.pop();
-                      },
-                      color: Colors.red,
-                      icon: const Icon(
-                        Icons.call_end,
-                        size: 40,
+                      IconButton(
+                        onPressed: () {
+                          context.read<PhoneCallBloc>().add(
+                                const CallEndedEvent(),
+                              );
+                          context.navigator.pop();
+                        },
+                        color: Colors.red,
+                        icon: const Icon(
+                          Icons.call_end,
+                          size: 40,
+                        ),
+                        padding: ThemeEdgeInsets.all15,
                       ),
-                      padding: ThemeEdgeInsets.all15,
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),

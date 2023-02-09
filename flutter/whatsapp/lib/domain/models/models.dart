@@ -11,3 +11,4 @@ export 'status_user.dart';
 export 'user.dart';
 export 'user_contacts_available.dart';
 export 'user_device.dart';
+export 'users_group_message.dart';
