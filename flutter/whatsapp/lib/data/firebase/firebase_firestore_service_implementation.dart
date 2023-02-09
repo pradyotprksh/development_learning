@@ -379,13 +379,14 @@ class FirebaseFirestoreServiceImplementation extends FirebaseFirestoreService {
 
   @override
   Future<void> createCall(CallDetails callDetails) async {
-    await getCallDetailsCollectionReference().add(callDetails);
+    for (var userId in callDetails.usersId) {
+      await getCallDetailsCollectionReference(userId).add(callDetails);
+    }
   }
 
   @override
   Stream<List<UserGroupCallDetails>> getCurrentUserCalls(String userId) =>
-      getCallDetailsCollectionReference()
-          .where(FirestoreItemKey.usersId, arrayContains: userId)
+      getCallDetailsCollectionReference(userId)
           .orderBy(FirestoreItemKey.createdOnTimeStamp, descending: true)
           .snapshots()
           .map(

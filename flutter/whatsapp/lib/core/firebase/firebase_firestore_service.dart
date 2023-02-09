@@ -107,9 +107,11 @@ abstract class FirebaseFirestoreService {
                 loginHistoryDetails.toFirestore(),
           );
 
-  CollectionReference<CallDetails> getCallDetailsCollectionReference() =>
+  CollectionReference<CallDetails> getCallDetailsCollectionReference(
+          String userId) =>
       _getCollectionReference(
-        CoreConstants.callsCollection,
+        CoreConstants.callsCollection
+            .replaceAll(CoreConstants.userIdPlaceholder, userId),
         CallDetails.fromFirestore,
         (CallDetails loginHistoryDetails, _) =>
             loginHistoryDetails.toFirestore(),
