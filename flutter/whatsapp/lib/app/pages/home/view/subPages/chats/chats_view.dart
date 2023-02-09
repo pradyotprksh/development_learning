@@ -21,6 +21,7 @@ class _ChatsViewState extends State<ChatsView>
         onPressed: () {
           context.navigator.pushNamed(Routes.selectContact);
         },
+        heroTag: Icons.chat.toString(),
         child: const Icon(Icons.chat),
       ),
       body: BlocBuilder<ChatBloc, ChatState>(
@@ -107,19 +108,11 @@ class _ChatsViewState extends State<ChatsView>
                       },
                     );
                   },
-                  leading: CachedNetworkImageWidget(
-                    imageUrl: details.profileImage ?? '',
-                    placeholder: CircleAvatar(
-                      radius: 20,
-                      backgroundColor: context.themeData.primaryColor,
-                      child: const Icon(
-                        Icons.group,
-                        color: Colors.white,
-                      ),
-                    ),
-                    height: 40,
-                    width: 40,
-                    clipToCircle: true,
+                  leading: GroupImageWidget(
+                    profileImage: details.profileImage ?? '',
+                    groupId: details.groupId,
+                    enableAction: false,
+                    size: 40,
                   ),
                   title: Text(
                     details.name,
@@ -141,6 +134,7 @@ class _ChatsViewState extends State<ChatsView>
                 );
               },
             ),
+            ThemeSizedBox.height80,
           ],
         ),
       ),

@@ -381,4 +381,38 @@ class FirebaseFirestoreServiceImplementation extends FirebaseFirestoreService {
   Future<void> createCall(CallDetails callDetails) async {
     await getCallDetailsCollectionReference().add(callDetails);
   }
+
+  @override
+  Stream<List<UserGroupCallDetails>> getCurrentUserCalls(String userId) =>
+      getCallDetailsCollectionReference()
+          .where(FirestoreItemKey.usersId, arrayContains: userId)
+          .orderBy(FirestoreItemKey.createdOnTimeStamp, descending: true)
+          .snapshots()
+          .map(
+            (event) => event.docs.map(
+              (e) {
+                final callDetails = e.data();
+                Stream<UsersGroupMessageDetails?>? groupMessageDetails;
+                Stream<List<UserDetails>?>? userDetails;
+
+                if (callDetails.isGroupCall) {
+                  final groupId = callDetails.groupId;
+                  if (groupId != null) {
+                    groupMessageDetails =
+                        getGroupMessageWithUsersDetails(groupId);
+                  }
+                } else {
+                  userDetails = getUsersDetails(
+                    callDetails.usersId,
+                  );
+                }
+
+                return UserGroupCallDetails(
+                  callDetails,
+                  groupMessageDetails,
+                  userDetails,
+                );
+              },
+            ).toList(),
+          );
 }

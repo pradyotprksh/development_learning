@@ -41,7 +41,7 @@ class _PhoneCallViewState extends State<PhoneCallView> {
         elevation: 0,
         title: BlocBuilder<PhoneCallBloc, PhoneCallState>(
           builder: (_, phoneState) {
-            if (phoneState.callState == CallState.ongoing) {
+            if (phoneState.callState == CurrentCallState.ongoing) {
               _stopWatchTimer.onStartTimer();
 
               return StreamBuilder<int>(

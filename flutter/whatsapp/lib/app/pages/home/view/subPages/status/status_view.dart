@@ -131,6 +131,7 @@ class _StatusViewState extends State<StatusView>
                   );
                 },
               ),
+              ThemeSizedBox.height80,
             ],
           ),
         ),

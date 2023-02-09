@@ -62,6 +62,7 @@ class NewGroupView extends StatelessWidget {
                       );
                     }
                   },
+                  heroTag: Icons.arrow_right_alt.toString(),
                   child: newGroupState.pageState == PageState.loading
                       ? const CircularProgressIndicator(
                           color: Colors.white,

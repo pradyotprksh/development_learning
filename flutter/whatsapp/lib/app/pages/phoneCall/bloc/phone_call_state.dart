@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-enum CallState {
+enum CurrentCallState {
   idle,
   ringing,
   ongoing,
@@ -21,14 +21,14 @@ enum MuteState {
 
 class PhoneCallState extends Equatable {
   const PhoneCallState({
-    this.callState = CallState.idle,
+    this.callState = CurrentCallState.idle,
     this.speakerState = SpeakerState.notOnSpeaker,
     this.muteState = MuteState.unMute,
     this.documentIds = const [],
   });
 
   PhoneCallState copyWith({
-    CallState? callState,
+    CurrentCallState? callState,
     SpeakerState? speakerState,
     MuteState? muteState,
     List<String>? documentIds,
@@ -40,7 +40,7 @@ class PhoneCallState extends Equatable {
         documentIds: documentIds ?? this.documentIds,
       );
 
-  final CallState callState;
+  final CurrentCallState callState;
   final SpeakerState speakerState;
   final MuteState muteState;
   final List<String> documentIds;

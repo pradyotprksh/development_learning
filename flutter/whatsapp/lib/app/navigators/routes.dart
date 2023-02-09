@@ -121,6 +121,14 @@ abstract class Routes {
                   const FetchStatus(),
                 ),
             ),
+            BlocProvider(
+              create: (_) => CallBloc(
+                FirebaseFirestoreServiceImplementation(),
+                FirebaseAuthServiceImplementation(),
+              )..add(
+                  const FetchCurrentUserCalls(),
+                ),
+            ),
           ],
           child: const HomeView(),
         ),

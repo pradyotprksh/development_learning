@@ -24,7 +24,7 @@ class PhoneCallBloc extends Bloc<PhoneCallEvent, PhoneCallState> {
     CallStartedEvent event,
     Emitter<PhoneCallState> emit,
   ) async {
-    emit(state.copyWith(callState: CallState.ongoing));
+    emit(state.copyWith(callState: CurrentCallState.ongoing));
     final currentUserId = _firebaseAuthService.getUserId();
     final otherUsersId =
         event.callDetailsArguments.userDetails.map((e) => e?.userId).toList();
@@ -56,7 +56,7 @@ class PhoneCallBloc extends Bloc<PhoneCallEvent, PhoneCallState> {
     CallEndedEvent event,
     Emitter<PhoneCallState> emit,
   ) {
-    emit(state.copyWith(callState: CallState.idle));
+    emit(state.copyWith(callState: CurrentCallState.idle));
   }
 
   void _callSpeakerEvent(

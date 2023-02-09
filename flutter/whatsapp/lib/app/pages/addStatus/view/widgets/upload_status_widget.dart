@@ -20,6 +20,7 @@ class UploadStatusWidget extends StatelessWidget {
               FloatingActionButton(
                 onPressed: onPressed,
                 mini: true,
+                heroTag: Icons.send.toString(),
                 child: const Icon(
                   Icons.send,
                 ),

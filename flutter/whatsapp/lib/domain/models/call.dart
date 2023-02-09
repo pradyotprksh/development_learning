@@ -1,8 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:equatable/equatable.dart';
 import 'package:whatsapp/domain/domain.dart';
 
-class CallDetails {
-  CallDetails({
+class CallDetails extends Equatable {
+  const CallDetails({
     required this.startedByUserId,
     required this.usersId,
     required this.isPhoneCall,
@@ -26,7 +27,9 @@ class CallDetails {
 
     return CallDetails(
       startedByUserId: data?[FirestoreItemKey.startedByUserId] as String,
-      usersId: data?[FirestoreItemKey.usersId] as List<String>,
+      usersId: (data?[FirestoreItemKey.usersId] as List<dynamic>)
+          .map((dynamic e) => e.toString())
+          .toList(),
       isPhoneCall: data?[FirestoreItemKey.isPhoneCall] as bool,
       isGroupCall: data?[FirestoreItemKey.isGroupCall] as bool,
       isVideoCall: data?[FirestoreItemKey.isVideoCall] as bool,
@@ -60,4 +63,17 @@ class CallDetails {
           FirestoreItemKey.startedByUserDeviceDetails:
               startedByUserDeviceDetails!.toMap(),
       };
+
+  @override
+  List<Object?> get props => [
+        startedByUserId,
+        usersId,
+        isPhoneCall,
+        isVideoCall,
+        isGroupCall,
+        createdOnTimeStamp,
+        groupId,
+        startedByUserDeviceDetails,
+        callId,
+      ];
 }

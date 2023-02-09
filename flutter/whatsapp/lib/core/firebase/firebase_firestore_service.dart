@@ -39,6 +39,8 @@ abstract class FirebaseFirestoreService {
     ContactsAvailableDetails contactsAvailableDetails,
   );
 
+  Stream<List<UserGroupCallDetails>> getCurrentUserCalls(String userId);
+
   Future<void> createCall(CallDetails callDetails);
 
   Future<bool> isContactsAvailableListPresent(String userId);

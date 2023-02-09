@@ -49,6 +49,7 @@ class _CreateGroupWidgetState extends State<CreateGroupWidget> {
             onPressed: () {
               _submitForm(context);
             },
+            heroTag: Icons.check.toString(),
             child: const Icon(
               Icons.check,
             ),
