@@ -64,6 +64,8 @@ class _ChatsViewState extends State<ChatsView>
                     ),
                     title: Text(
                       userDetails.data?.name ?? '',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                     ),
                     subtitle: Text(
                       details.directMessageDetails.lastMessage ?? '',
@@ -121,6 +123,8 @@ class _ChatsViewState extends State<ChatsView>
                   ),
                   title: Text(
                     details.name,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                   ),
                   subtitle: Text(
                     details.lastMessage ?? '',
@@ -132,7 +136,7 @@ class _ChatsViewState extends State<ChatsView>
                       details.lastMessageOnTimeStamp,
                       context,
                     ),
-                    style: context.themeData.textTheme.labelSmall,
+                    style: context.themeData.textTheme.bodySmall,
                   ),
                 );
               },
