@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
 import 'package:whatsapp/app/app.dart';
-import 'package:whatsapp/domain/domain.dart';
 
 class PhoneCallView extends StatefulWidget {
   const PhoneCallView({
@@ -24,11 +23,15 @@ class _PhoneCallViewState extends State<PhoneCallView> {
 
   @override
   Widget build(BuildContext context) {
-    final userDetails =
-        context.routeSettings?.arguments as List<UserDetails?>? ?? [];
-    context.read<PhoneCallBloc>().add(
-          CallStartedEvent(userDetails),
-        );
+    final callDetails =
+        context.routeSettings?.arguments as CallDetailsArguments?;
+    if (callDetails != null) {
+      context.read<PhoneCallBloc>().add(
+            CallStartedEvent(callDetails),
+          );
+    } else {
+      context.navigator.pop();
+    }
 
     return Scaffold(
       backgroundColor: context.themeData.scaffoldBackgroundColor,
@@ -63,19 +66,19 @@ class _PhoneCallViewState extends State<PhoneCallView> {
       ),
       body: Stack(
         children: [
-          if (userDetails.length == 1)
+          if (callDetails?.userDetails.length == 1)
             Center(
               child: UserImageWidget(
-                profileImage: userDetails[0]?.profileImage ?? '',
-                userId: userDetails[0]?.userId ?? '',
+                profileImage: callDetails?.userDetails[0]?.profileImage ?? '',
+                userId: callDetails?.userDetails[0]?.userId ?? '',
                 enableAction: false,
                 size: context.mediaQuery.size.width * 0.80,
               ),
             ),
-          if (userDetails.length > 1)
+          if ((callDetails?.userDetails.length ?? 0) > 1)
             GridView.builder(
               padding: ThemeEdgeInsets.leftTopRight15Bottom150,
-              itemCount: userDetails.length,
+              itemCount: callDetails?.userDetails.length,
               gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
                 maxCrossAxisExtent: 200,
                 crossAxisSpacing: 15,
@@ -83,8 +86,9 @@ class _PhoneCallViewState extends State<PhoneCallView> {
               ),
               shrinkWrap: true,
               itemBuilder: (_, index) => UserImageWidget(
-                profileImage: userDetails[index]?.profileImage ?? '',
-                userId: userDetails[index]?.userId ?? '',
+                profileImage:
+                    callDetails?.userDetails[index]?.profileImage ?? '',
+                userId: callDetails?.userDetails[index]?.userId ?? '',
                 enableAction: false,
                 size: context.mediaQuery.size.width * 0.80,
               ),

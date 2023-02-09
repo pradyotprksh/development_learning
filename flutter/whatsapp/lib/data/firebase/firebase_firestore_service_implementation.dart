@@ -376,4 +376,9 @@ class FirebaseFirestoreServiceImplementation extends FirebaseFirestoreService {
           .map(
             (event) => event.docs.map((e) => e.data()).toList(),
           );
+
+  @override
+  Future<void> createCall(CallDetails callDetails) async {
+    await getCallDetailsCollectionReference().add(callDetails);
+  }
 }

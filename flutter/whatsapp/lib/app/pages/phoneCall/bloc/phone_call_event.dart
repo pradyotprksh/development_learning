@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:whatsapp/domain/domain.dart';
+import 'package:whatsapp/app/app.dart';
 
 abstract class PhoneCallEvent extends Equatable {
   const PhoneCallEvent();
@@ -9,9 +9,9 @@ abstract class PhoneCallEvent extends Equatable {
 }
 
 class CallStartedEvent extends PhoneCallEvent {
-  const CallStartedEvent(this.userDetails);
+  const CallStartedEvent(this.callDetailsArguments);
 
-  final List<UserDetails?> userDetails;
+  final CallDetailsArguments callDetailsArguments;
 }
 
 class CallEndedEvent extends PhoneCallEvent {

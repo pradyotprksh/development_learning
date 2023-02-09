@@ -55,6 +55,12 @@ class GroupMessageView extends StatelessWidget {
           IconButton(
             onPressed: () async {
               final navigator = context.navigator;
+              final groupId = context
+                  .read<GroupMessageBloc>()
+                  .state
+                  .groupMessageDetails
+                  ?.groupMessageDetails
+                  ?.groupId;
               final currentUserId =
                   context.read<UserBloc>().state.userDetails?.userId;
               final users = await context
@@ -64,10 +70,18 @@ class GroupMessageView extends StatelessWidget {
                   ?.usersDetails
                   .first;
               users?.removeWhere((element) => element.userId == currentUserId);
-              await navigator.pushNamed(
-                Routes.phoneCall,
-                arguments: users,
-              );
+              if (users != null) {
+                await navigator.pushNamed(
+                  Routes.phoneCall,
+                  arguments: CallDetailsArguments(
+                    userDetails: users,
+                    isPhoneCall: true,
+                    isVideoCall: false,
+                    isGroupCall: true,
+                    groupId: groupId,
+                  ),
+                );
+              }
             },
             icon: const Icon(
               Icons.call,

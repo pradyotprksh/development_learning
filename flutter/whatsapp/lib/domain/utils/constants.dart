@@ -11,6 +11,7 @@ abstract class FirestoreItemKey {
   static const packageName = 'packageName';
   static const version = 'version';
   static const createdOnTimeStamp = 'createdOnTimeStamp';
+  static const groupId = 'groupId';
   static const buildNumber = 'buildNumber';
   static const userDeviceDetails = 'userDeviceDetails';
   static const userReference = 'userReference';
@@ -41,4 +42,10 @@ abstract class FirestoreItemKey {
   static const isEmailVerified = 'isEmailVerified';
   static const detailsFetchedOn = 'detailsFetchedOn';
   static const displayName = 'displayName';
+  static const startedByUserId = 'startedByUserId';
+  static const usersId = 'usersId';
+  static const isPhoneCall = 'isPhoneCall';
+  static const isGroupCall = 'isGroupCall';
+  static const isVideoCall = 'isVideoCall';
+  static const startedByUserDeviceDetails = 'startedByUserDeviceDetails';
 }

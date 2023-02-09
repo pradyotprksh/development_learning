@@ -39,6 +39,8 @@ abstract class FirebaseFirestoreService {
     ContactsAvailableDetails contactsAvailableDetails,
   );
 
+  Future<void> createCall(CallDetails callDetails);
+
   Future<bool> isContactsAvailableListPresent(String userId);
 
   Future<bool> isContactsNotAvailableListPresent(String userId);
@@ -102,6 +104,14 @@ abstract class FirebaseFirestoreService {
             (ContactsAvailableDetails loginHistoryDetails, _) =>
                 loginHistoryDetails.toFirestore(),
           );
+
+  CollectionReference<CallDetails> getCallDetailsCollectionReference() =>
+      _getCollectionReference(
+        CoreConstants.callsCollection,
+        CallDetails.fromFirestore,
+        (CallDetails loginHistoryDetails, _) =>
+            loginHistoryDetails.toFirestore(),
+      );
 
   CollectionReference<ContactsNotAvailableDetails>
       getContactNotAvailableDetailsCollectionReference(String userId) =>

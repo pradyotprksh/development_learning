@@ -47,9 +47,14 @@ class DirectMessageView extends StatelessWidget {
             onPressed: () {
               context.navigator.pushNamed(
                 Routes.phoneCall,
-                arguments: [
-                  context.read<DirectMessageBloc>().state.userDetails,
-                ],
+                arguments: CallDetailsArguments(
+                  userDetails: [
+                    context.read<DirectMessageBloc>().state.userDetails,
+                  ],
+                  isPhoneCall: true,
+                  isVideoCall: false,
+                  isGroupCall: false,
+                ),
               );
             },
             icon: const Icon(
