@@ -71,4 +71,6 @@ Future _initialSetups() async {
   await FirebaseUtils.remoteConfigInitiation();
 
   await blocSetup();
+
+  await DeviceCameras.getCameras();
 }

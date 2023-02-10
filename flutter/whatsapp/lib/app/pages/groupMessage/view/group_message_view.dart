@@ -47,41 +47,16 @@ class GroupMessageView extends StatelessWidget {
         ),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () async {
+              await _makeVideoOrPhoneCall(context, false);
+            },
             icon: const Icon(
               Icons.video_call,
             ),
           ),
           IconButton(
             onPressed: () async {
-              final navigator = context.navigator;
-              final groupId = context
-                  .read<GroupMessageBloc>()
-                  .state
-                  .groupMessageDetails
-                  ?.groupMessageDetails
-                  ?.groupId;
-              final currentUserId =
-                  context.read<UserBloc>().state.userDetails?.userId;
-              final users = await context
-                  .read<GroupMessageBloc>()
-                  .state
-                  .groupMessageDetails
-                  ?.usersDetails
-                  .first;
-              users?.removeWhere((element) => element.userId == currentUserId);
-              if (users != null) {
-                await navigator.pushNamed(
-                  Routes.phoneCall,
-                  arguments: CallDetailsArguments(
-                    userDetails: users,
-                    isPhoneCall: true,
-                    isVideoCall: false,
-                    isGroupCall: true,
-                    groupId: groupId,
-                  ),
-                );
-              }
+              await _makeVideoOrPhoneCall(context, true);
             },
             icon: const Icon(
               Icons.call,
@@ -151,5 +126,36 @@ class GroupMessageView extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  Future<void> _makeVideoOrPhoneCall(
+      BuildContext context, bool isPhoneCall) async {
+    final navigator = context.navigator;
+    final groupId = context
+        .read<GroupMessageBloc>()
+        .state
+        .groupMessageDetails
+        ?.groupMessageDetails
+        ?.groupId;
+    final currentUserId = context.read<UserBloc>().state.userDetails?.userId;
+    final users = await context
+        .read<GroupMessageBloc>()
+        .state
+        .groupMessageDetails
+        ?.usersDetails
+        .first;
+    users?.removeWhere((element) => element.userId == currentUserId);
+    if (users != null) {
+      await navigator.pushNamed(
+        Routes.call,
+        arguments: CallDetailsArguments(
+          userDetails: users,
+          isPhoneCall: isPhoneCall,
+          isVideoCall: !isPhoneCall,
+          isGroupCall: true,
+          groupId: groupId,
+        ),
+      );
+    }
   }
 }

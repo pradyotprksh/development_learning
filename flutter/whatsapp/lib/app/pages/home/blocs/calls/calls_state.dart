@@ -2,17 +2,17 @@ import 'package:equatable/equatable.dart';
 import 'package:whatsapp/app/app.dart';
 import 'package:whatsapp/domain/domain.dart';
 
-class CallState extends Equatable {
-  const CallState({
+class CallsState extends Equatable {
+  const CallsState({
     this.pageState = PageState.idle,
     this.userGroupCallDetails = const [],
   });
 
-  CallState copyWith({
+  CallsState copyWith({
     PageState? pageState,
     List<UserGroupCallDetails>? userGroupCallDetails,
   }) =>
-      CallState(
+      CallsState(
         pageState: pageState ?? this.pageState,
         userGroupCallDetails: userGroupCallDetails ?? this.userGroupCallDetails,
       );

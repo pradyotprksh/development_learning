@@ -4,12 +4,12 @@ import 'package:whatsapp/core/core.dart';
 import 'package:whatsapp/device/device.dart';
 import 'package:whatsapp/domain/domain.dart';
 
-class PhoneCallBloc extends Bloc<PhoneCallEvent, PhoneCallState> {
-  PhoneCallBloc(
+class CallBloc extends Bloc<CallEvent, CallState> {
+  CallBloc(
     this._firebaseFirestoreService,
     this._firebaseAuthService,
     this._deviceDetails,
-  ) : super(const PhoneCallState()) {
+  ) : super(const CallState()) {
     on<CallStartedEvent>(_callStartedEvent);
     on<CallEndedEvent>(_callEndedEvent);
     on<ToggleSpeakerEvent>(_callSpeakerEvent);
@@ -22,7 +22,7 @@ class PhoneCallBloc extends Bloc<PhoneCallEvent, PhoneCallState> {
 
   void _callStartedEvent(
     CallStartedEvent event,
-    Emitter<PhoneCallState> emit,
+    Emitter<CallState> emit,
   ) async {
     emit(state.copyWith(callState: CurrentCallState.ongoing));
     final currentUserId = _firebaseAuthService.getUserId();
@@ -54,14 +54,14 @@ class PhoneCallBloc extends Bloc<PhoneCallEvent, PhoneCallState> {
 
   void _callEndedEvent(
     CallEndedEvent event,
-    Emitter<PhoneCallState> emit,
+    Emitter<CallState> emit,
   ) {
     emit(state.copyWith(callState: CurrentCallState.idle));
   }
 
   void _callSpeakerEvent(
     ToggleSpeakerEvent event,
-    Emitter<PhoneCallState> emit,
+    Emitter<CallState> emit,
   ) {
     emit(
       state.copyWith(
@@ -74,7 +74,7 @@ class PhoneCallBloc extends Bloc<PhoneCallEvent, PhoneCallState> {
 
   void _callMuteEvent(
     ToggleMuteEvent event,
-    Emitter<PhoneCallState> emit,
+    Emitter<CallState> emit,
   ) {
     emit(
       state.copyWith(

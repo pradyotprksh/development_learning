@@ -97,6 +97,46 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.2"
+  camera:
+    dependency: "direct main"
+    description:
+      name: camera
+      sha256: e7ac55af24a890d20276821eb3c95857074d03b7de6f9892b99a205ee30bd179
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.10.3"
+  camera_android:
+    dependency: transitive
+    description:
+      name: camera_android
+      sha256: e491c836147f60dd8a54cf3895fd2960e13b21b78a9d15b563a1b6c70894f142
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.10.4"
+  camera_avfoundation:
+    dependency: transitive
+    description:
+      name: camera_avfoundation
+      sha256: "6a68c20593d4cd58974d555f74a48b244f9db28cc9156de57781122d11b8754b"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.9.11"
+  camera_platform_interface:
+    dependency: transitive
+    description:
+      name: camera_platform_interface
+      sha256: b632be28e61d00a233f67d98ea90fd7041956f27a1c65500188ee459be60e15f
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.4.0"
+  camera_web:
+    dependency: transitive
+    description:
+      name: camera_web
+      sha256: "496de93c5d462738ce991dbfe91fb19026f115ed36406700a20a380fb0018299"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.3.1+1"
   camerawesome:
     dependency: "direct main"
     description:
@@ -1218,6 +1258,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.1"
+  stream_transform:
+    dependency: transitive
+    description:
+      name: stream_transform
+      sha256: "14a00e794c7c11aa145a170587321aedce29769c08d7f58b1d141da75e3b1c6f"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.1.0"
   string_scanner:
     dependency: transitive
     description:

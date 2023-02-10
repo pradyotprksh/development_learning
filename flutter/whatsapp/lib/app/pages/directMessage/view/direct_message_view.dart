@@ -38,24 +38,16 @@ class DirectMessageView extends StatelessWidget {
         ),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              _makeVideoOrPhoneCall(context, false);
+            },
             icon: const Icon(
               Icons.video_call,
             ),
           ),
           IconButton(
             onPressed: () {
-              context.navigator.pushNamed(
-                Routes.phoneCall,
-                arguments: CallDetailsArguments(
-                  userDetails: [
-                    context.read<DirectMessageBloc>().state.userDetails,
-                  ],
-                  isPhoneCall: true,
-                  isVideoCall: false,
-                  isGroupCall: false,
-                ),
-              );
+              _makeVideoOrPhoneCall(context, true);
             },
             icon: const Icon(
               Icons.call,
@@ -152,6 +144,23 @@ class DirectMessageView extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  void _makeVideoOrPhoneCall(
+    BuildContext context,
+    bool isPhoneCall,
+  ) {
+    context.navigator.pushNamed(
+      Routes.call,
+      arguments: CallDetailsArguments(
+        userDetails: [
+          context.read<DirectMessageBloc>().state.userDetails,
+        ],
+        isPhoneCall: isPhoneCall,
+        isVideoCall: !isPhoneCall,
+        isGroupCall: false,
       ),
     );
   }

@@ -2,11 +2,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:whatsapp/app/app.dart';
 import 'package:whatsapp/core/core.dart';
 
-class CallBloc extends Bloc<CallEvent, CallState> {
-  CallBloc(
+class CallsBloc extends Bloc<CallsEvent, CallsState> {
+  CallsBloc(
     this._firebaseFirestoreService,
     this._firebaseAuthService,
-  ) : super(const CallState()) {
+  ) : super(const CallsState()) {
     on<FetchCurrentUserCalls>(_fetchCurrentUserCalls);
   }
 
@@ -15,7 +15,7 @@ class CallBloc extends Bloc<CallEvent, CallState> {
 
   void _fetchCurrentUserCalls(
     FetchCurrentUserCalls event,
-    Emitter<CallState> emit,
+    Emitter<CallsState> emit,
   ) async {
     final userId = _firebaseAuthService.getUserId();
     if (userId != null) {

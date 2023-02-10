@@ -1,12 +1,12 @@
 import 'package:equatable/equatable.dart';
 
-abstract class CallEvent extends Equatable {
-  const CallEvent();
+abstract class CallsEvent extends Equatable {
+  const CallsEvent();
 
   @override
   List<Object?> get props => [];
 }
 
-class FetchCurrentUserCalls extends CallEvent {
+class FetchCurrentUserCalls extends CallsEvent {
   const FetchCurrentUserCalls();
 }

@@ -21,7 +21,7 @@ class _CallsViewState extends State<CallsView>
         heroTag: Icons.add_call.toString(),
         child: const Icon(Icons.add_call),
       ),
-      body: BlocBuilder<CallBloc, CallState>(
+      body: BlocBuilder<CallsBloc, CallsState>(
         builder: (_, callState) => ListView(
           children: [
             Padding(
@@ -80,7 +80,7 @@ class _CallsViewState extends State<CallsView>
                                     users.removeWhere((element) =>
                                         element.userId == currentUserId);
                                     await navigator.pushNamed(
-                                      Routes.phoneCall,
+                                      Routes.call,
                                       arguments: CallDetailsArguments(
                                         userDetails: users,
                                         isPhoneCall: callDetails.isPhoneCall,
@@ -130,7 +130,7 @@ class _CallsViewState extends State<CallsView>
                               trailing: IconButton(
                                 onPressed: () {
                                   context.navigator.pushNamed(
-                                    Routes.phoneCall,
+                                    Routes.call,
                                     arguments: CallDetailsArguments(
                                       userDetails: [
                                         otherUserDetails,

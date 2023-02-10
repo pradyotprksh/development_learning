@@ -1,27 +1,27 @@
 import 'package:equatable/equatable.dart';
 import 'package:whatsapp/app/app.dart';
 
-abstract class PhoneCallEvent extends Equatable {
-  const PhoneCallEvent();
+abstract class CallEvent extends Equatable {
+  const CallEvent();
 
   @override
   List<Object?> get props => [];
 }
 
-class CallStartedEvent extends PhoneCallEvent {
+class CallStartedEvent extends CallEvent {
   const CallStartedEvent(this.callDetailsArguments);
 
   final CallDetailsArguments callDetailsArguments;
 }
 
-class CallEndedEvent extends PhoneCallEvent {
+class CallEndedEvent extends CallEvent {
   const CallEndedEvent();
 }
 
-class ToggleSpeakerEvent extends PhoneCallEvent {
+class ToggleSpeakerEvent extends CallEvent {
   const ToggleSpeakerEvent();
 }
 
-class ToggleMuteEvent extends PhoneCallEvent {
+class ToggleMuteEvent extends CallEvent {
   const ToggleMuteEvent();
 }

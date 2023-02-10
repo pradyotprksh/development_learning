@@ -22,7 +22,7 @@ abstract class Routes {
   static const emailVerification = '/email-verification';
   static const qrCode = '/qr-code';
   static const qrCodeScanner = '/qr-code-scanner';
-  static const phoneCall = '/phone-call';
+  static const call = '/call';
   static const newGroup = '/new-group';
 
   static const initialRoute = splashRoute;
@@ -50,13 +50,13 @@ abstract class Routes {
           )..add(const FetchAccounts()),
           child: const NewGroupView(),
         ),
-    phoneCall: (context) => BlocProvider(
-          create: (_) => PhoneCallBloc(
+    call: (context) => BlocProvider(
+          create: (_) => CallBloc(
             FirebaseFirestoreServiceImplementation(),
             FirebaseAuthServiceImplementation(),
             DeviceDetailsImplementation(),
           ),
-          child: const PhoneCallView(),
+          child: const CallView(),
         ),
     profile: (context) => BlocProvider(
           create: (_) => ProfileBloc(
@@ -122,7 +122,7 @@ abstract class Routes {
                 ),
             ),
             BlocProvider(
-              create: (_) => CallBloc(
+              create: (_) => CallsBloc(
                 FirebaseFirestoreServiceImplementation(),
                 FirebaseAuthServiceImplementation(),
               )..add(

@@ -19,21 +19,21 @@ enum MuteState {
   unMute,
 }
 
-class PhoneCallState extends Equatable {
-  const PhoneCallState({
+class CallState extends Equatable {
+  const CallState({
     this.callState = CurrentCallState.idle,
     this.speakerState = SpeakerState.notOnSpeaker,
     this.muteState = MuteState.unMute,
     this.documentIds = const [],
   });
 
-  PhoneCallState copyWith({
+  CallState copyWith({
     CurrentCallState? callState,
     SpeakerState? speakerState,
     MuteState? muteState,
     List<String>? documentIds,
   }) =>
-      PhoneCallState(
+      CallState(
         callState: callState ?? this.callState,
         speakerState: speakerState ?? this.speakerState,
         muteState: muteState ?? this.muteState,
