@@ -24,12 +24,13 @@ class _CallsViewState extends State<CallsView>
       body: BlocBuilder<CallsBloc, CallsState>(
         builder: (_, callState) => ListView(
           children: [
-            Padding(
-              padding: ThemeEdgeInsets.all15,
-              child: Text(
-                context.translator.recent,
+            if (callState.userGroupCallDetails.isNotEmpty)
+              Padding(
+                padding: ThemeEdgeInsets.all15,
+                child: Text(
+                  context.translator.recent,
+                ),
               ),
-            ),
             ListView.builder(
               itemCount: callState.userGroupCallDetails.length,
               primary: false,

@@ -419,9 +419,11 @@ class FirebaseFirestoreServiceImplementation extends FirebaseFirestoreService {
 
   @override
   Future<void> clearCallLogs(String userId) async {
+    final batch = firestore.batch();
     final callLogs = await getCallDetailsCollectionReference(userId).get();
     for (var call in callLogs.docs) {
-      await call.reference.delete();
+      batch.delete(call.reference);
     }
+    await batch.commit();
   }
 }
