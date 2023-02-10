@@ -68,6 +68,8 @@ dependencies:
 
   flutter_colorpicker: ^1.0.3
 
+  flutter_fgbg: ^0.2.2
+
   flutter_image_compress: ^1.1.3
 
   flutter_localizations:

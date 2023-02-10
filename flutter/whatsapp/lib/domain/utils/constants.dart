@@ -48,4 +48,5 @@ abstract class FirestoreItemKey {
   static const isGroupCall = 'isGroupCall';
   static const isVideoCall = 'isVideoCall';
   static const startedByUserDeviceDetails = 'startedByUserDeviceDetails';
+  static const isOnline = 'isOnline';
 }

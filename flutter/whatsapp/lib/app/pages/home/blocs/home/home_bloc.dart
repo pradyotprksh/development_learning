@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_fgbg/flutter_fgbg.dart';
 import 'package:whatsapp/app/app.dart';
 import 'package:whatsapp/core/core.dart';
 import 'package:whatsapp/device/device.dart';
@@ -14,6 +15,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         ) {
     on<UpdateLoginHistory>(_updateLoginHistory);
     on<DeleteCallLogs>(_deleteCallLogs);
+    on<ApplicationBackgroundCheck>(_startApplicationBackgroundCheck);
   }
 
   final FirebaseFirestoreService _firebaseFirestoreService;
@@ -27,6 +29,12 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     if (!AppDetails.isDebugMode) {
       final userId = _firebaseAuthService.getUserId();
       if (userId != null) {
+        await _firebaseFirestoreService.updateUserDetails(
+          userId,
+          {
+            FirestoreItemKey.isOnline: true,
+          },
+        );
         await _firebaseFirestoreService.setUserLogInHistory(
           LoginHistoryDetails(
             userId: userId,
@@ -45,6 +53,36 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     final userId = _firebaseAuthService.getUserId();
     if (userId != null) {
       _firebaseFirestoreService.clearCallLogs(userId);
+    }
+  }
+
+  void _startApplicationBackgroundCheck(
+    ApplicationBackgroundCheck event,
+    Emitter<HomeState> emit,
+  ) async {
+    final userId = _firebaseAuthService.getUserId();
+    if (userId != null) {
+      await emit.forEach(
+        FGBGEvents.stream,
+        onData: (data) {
+          if (data == FGBGType.background) {
+            _firebaseFirestoreService.updateUserDetails(
+              userId,
+              {
+                FirestoreItemKey.isOnline: false,
+              },
+            );
+          } else {
+            _firebaseFirestoreService.updateUserDetails(
+              userId,
+              {
+                FirestoreItemKey.isOnline: true,
+              },
+            );
+          }
+          return state;
+        },
+      );
     }
   }
 }

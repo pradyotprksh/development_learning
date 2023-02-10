@@ -96,7 +96,11 @@ abstract class Routes {
                 FirebaseFirestoreServiceImplementation(),
                 FirebaseAuthServiceImplementation(),
                 DeviceDetailsImplementation(),
-              )..add(
+              )
+                ..add(
+                  const ApplicationBackgroundCheck(),
+                )
+                ..add(
                   const UpdateLoginHistory(),
                 ),
             ),

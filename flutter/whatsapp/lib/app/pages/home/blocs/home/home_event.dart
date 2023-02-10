@@ -14,3 +14,7 @@ class UpdateLoginHistory extends HomeEvent {
 class DeleteCallLogs extends HomeEvent {
   const DeleteCallLogs();
 }
+
+class ApplicationBackgroundCheck extends HomeEvent {
+  const ApplicationBackgroundCheck();
+}

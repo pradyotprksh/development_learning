@@ -18,6 +18,7 @@ class UserDetails {
     this.updatedOnTimeStamp,
     this.isEmailVerified = false,
     this.isPhoneNumberVerified = false,
+    this.isOnline = true,
   });
 
   factory UserDetails.fromFirestore(
@@ -56,6 +57,7 @@ class UserDetails {
           data?[FirestoreItemKey.isEmailVerified] as bool? ?? false,
       isPhoneNumberVerified:
           data?[FirestoreItemKey.isPhoneNumberVerified] as bool? ?? false,
+      isOnline: data?[FirestoreItemKey.isOnline] as bool? ?? false,
       userDeviceDetails: UserDeviceDetails.fromMap(deviceDetails),
     );
   }
@@ -73,6 +75,7 @@ class UserDetails {
   final UserDeviceDetails? userDeviceDetails;
   final bool isEmailVerified;
   final bool isPhoneNumberVerified;
+  final bool isOnline;
 
   Map<String, dynamic> toFirestore() => <String, dynamic>{
         if (name != null)
@@ -96,6 +99,7 @@ class UserDetails {
         FirestoreItemKey.allDetailsAvailable: allDetailsAvailable,
         FirestoreItemKey.isEmailVerified: isEmailVerified,
         FirestoreItemKey.isPhoneNumberVerified: isPhoneNumberVerified,
+        FirestoreItemKey.isOnline: isOnline,
         FirestoreItemKey.pin: pin,
         if (userDeviceDetails != null)
           FirestoreItemKey.userDeviceDetails: userDeviceDetails!.toMap(),
