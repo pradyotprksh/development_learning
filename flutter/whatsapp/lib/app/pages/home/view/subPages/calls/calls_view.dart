@@ -42,18 +42,66 @@ class _CallsViewState extends State<CallsView>
                 final currentUserId =
                     context.read<UserBloc>().state.userDetails?.userId;
 
-                final leading = callDetails.isGroupCall
+                final widget = callDetails.isGroupCall
                     ? StreamBuilder<UsersGroupMessageDetails?>(
                         stream: userGroupCallDetail.groupMessageDetails,
-                        builder: (_, snapshot) => GroupImageWidget(
-                          profileImage: snapshot
-                                  .data?.groupMessageDetails?.profileImage ??
-                              '',
-                          groupId:
-                              snapshot.data?.groupMessageDetails?.groupId ?? '',
-                          size: 40,
-                        ),
-                      )
+                        builder: (_, snapshot) {
+                          final groupWithUsers = snapshot.data;
+                          final groupDetails =
+                              groupWithUsers?.groupMessageDetails;
+                          if (groupDetails != null) {
+                            return ListTile(
+                              onTap: () {},
+                              leading: GroupImageWidget(
+                                profileImage: groupDetails.profileImage ?? '',
+                                groupId: groupDetails.groupId,
+                                size: 40,
+                              ),
+                              title: Text(
+                                groupDetails.name,
+                              ),
+                              subtitle: Text(
+                                AppUtilsMethods.timeAgo(
+                                  callDetails.createdOnTimeStamp,
+                                  context,
+                                ),
+                              ),
+                              trailing: IconButton(
+                                onPressed: () async {
+                                  if (groupWithUsers != null) {
+                                    final navigator = context.navigator;
+                                    final currentUserId = context
+                                        .read<UserBloc>()
+                                        .state
+                                        .userDetails
+                                        ?.userId;
+                                    final users =
+                                        await groupWithUsers.usersDetails.first;
+                                    users.removeWhere((element) =>
+                                        element.userId == currentUserId);
+                                    await navigator.pushNamed(
+                                      Routes.phoneCall,
+                                      arguments: CallDetailsArguments(
+                                        userDetails: users,
+                                        isPhoneCall: callDetails.isPhoneCall,
+                                        isVideoCall: callDetails.isVideoCall,
+                                        isGroupCall: true,
+                                      ),
+                                    );
+                                  }
+                                },
+                                icon: Icon(
+                                  callDetails.isVideoCall
+                                      ? Icons.videocam
+                                      : Icons.call,
+                                  color: context.themeData.iconTheme.color,
+                                ),
+                              ),
+                            );
+                          } else {
+                            return ThemeSizedBox.shrink;
+                          }
+                        })
                     : StreamBuilder<List<UserDetails?>?>(
                         stream: userGroupCallDetail.userDetails,
                         builder: (_, snapshot) {
@@ -62,10 +110,44 @@ class _CallsViewState extends State<CallsView>
                           );
 
                           if (otherUserDetails != null) {
-                            return UserImageWidget(
-                              profileImage: otherUserDetails.profileImage ?? '',
-                              userId: otherUserDetails.userId,
-                              size: 40,
+                            return ListTile(
+                              onTap: () {},
+                              leading: UserImageWidget(
+                                profileImage:
+                                    otherUserDetails.profileImage ?? '',
+                                userId: otherUserDetails.userId,
+                                size: 40,
+                              ),
+                              title: Text(
+                                otherUserDetails.name ?? '',
+                              ),
+                              subtitle: Text(
+                                AppUtilsMethods.timeAgo(
+                                  callDetails.createdOnTimeStamp,
+                                  context,
+                                ),
+                              ),
+                              trailing: IconButton(
+                                onPressed: () {
+                                  context.navigator.pushNamed(
+                                    Routes.phoneCall,
+                                    arguments: CallDetailsArguments(
+                                      userDetails: [
+                                        otherUserDetails,
+                                      ],
+                                      isPhoneCall: callDetails.isPhoneCall,
+                                      isVideoCall: callDetails.isVideoCall,
+                                      isGroupCall: false,
+                                    ),
+                                  );
+                                },
+                                icon: Icon(
+                                  callDetails.isVideoCall
+                                      ? Icons.videocam
+                                      : Icons.call,
+                                  color: context.themeData.iconTheme.color,
+                                ),
+                              ),
                             );
                           } else {
                             return ThemeSizedBox.shrink;
@@ -73,79 +155,7 @@ class _CallsViewState extends State<CallsView>
                         },
                       );
 
-                final title = callDetails.isGroupCall
-                    ? StreamBuilder<UsersGroupMessageDetails?>(
-                        stream: userGroupCallDetail.groupMessageDetails,
-                        builder: (_, snapshot) => Text(
-                          snapshot.data?.groupMessageDetails?.name ?? '',
-                        ),
-                      )
-                    : StreamBuilder<List<UserDetails?>?>(
-                        stream: userGroupCallDetail.userDetails,
-                        builder: (_, snapshot) {
-                          final otherUserDetails = snapshot.data?.firstWhere(
-                            (element) => element?.userId != currentUserId,
-                          );
-
-                          if (otherUserDetails != null) {
-                            return Text(
-                              otherUserDetails.name ?? '',
-                            );
-                          } else {
-                            return ThemeSizedBox.shrink;
-                          }
-                        },
-                      );
-
-                return ListTile(
-                  onTap: () {},
-                  leading: leading,
-                  title: title,
-                  subtitle: Text(
-                    AppUtilsMethods.timeAgo(
-                      callDetails.createdOnTimeStamp,
-                      context,
-                    ),
-                  ),
-                  trailing: IconButton(
-                    onPressed: () async {
-                      final navigator = context.navigator;
-                      var users = <UserDetails>[];
-                      if (callDetails.isGroupCall) {
-                        final groupDetails = await userGroupCallDetail
-                            .groupMessageDetails?.first;
-                        if (groupDetails != null) {
-                          users = await groupDetails.usersDetails.first
-                            ..removeWhere(
-                                (element) => element.userId == currentUserId);
-                        }
-                      } else {
-                        final userDetails =
-                            await userGroupCallDetail.userDetails?.first;
-                        if (userDetails != null) {
-                          users = [
-                            userDetails.firstWhere(
-                              (element) => element.userId != currentUserId,
-                            )
-                          ];
-                        }
-                      }
-                      await navigator.pushNamed(
-                        Routes.phoneCall,
-                        arguments: CallDetailsArguments(
-                          userDetails: users,
-                          isPhoneCall: callDetails.isPhoneCall,
-                          isVideoCall: callDetails.isVideoCall,
-                          isGroupCall: callDetails.isGroupCall,
-                        ),
-                      );
-                    },
-                    icon: Icon(
-                      callDetails.isVideoCall ? Icons.videocam : Icons.call,
-                      color: context.themeData.iconTheme.color,
-                    ),
-                  ),
-                );
+                return widget;
               },
             ),
             ThemeSizedBox.height80,

@@ -112,21 +112,11 @@ class UserDetailsView extends StatelessWidget {
                         aspectRatioPresets: const [
                           CropAspectRatioPreset.square,
                         ],
-                        child: CachedNetworkImageWidget(
-                          imageUrl: userState.profilePicImage,
-                          placeholder: CircleAvatar(
-                            radius: 80,
-                            backgroundColor: context.themeData.primaryColor,
-                            child: const Icon(
-                              Icons.group,
-                              color: Colors.white,
-                            ),
-                          ),
-                          height: 160,
-                          width: 160,
-                          showProgressIndicator: userState.imageUploadStatus ==
-                              ImageUploadStatus.uploading,
-                          clipToCircle: true,
+                        child: UserImageWidget(
+                          profileImage: userState.profilePicImage,
+                          userId: '',
+                          enableAction: false,
+                          size: 160,
                         ),
                       ),
                       ThemeSizedBox.height10,

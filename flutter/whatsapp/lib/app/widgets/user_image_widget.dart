@@ -36,9 +36,10 @@ class UserImageWidget extends StatelessWidget {
           placeholder: CircleAvatar(
             radius: size / 2,
             backgroundColor: context.themeData.primaryColor,
-            child: const Icon(
+            child: Icon(
               Icons.person,
               color: Colors.white,
+              size: size / 2,
             ),
           ),
           height: size,
