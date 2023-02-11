@@ -71,9 +71,17 @@ mixin FirestoreUserImplementation implements FirebaseFirestoreService {
 
   @override
   Future<void> updateUserDetails(
-      String userId, Map<String, Object> values) async {
+    String userId,
+    Map<String, Object> values,
+  ) async {
     final userRef = getUserCollectionReference().doc(userId);
-    await userRef.update(values);
+    await userRef.update(
+      {
+        ...values,
+        FirestoreItemKey.updatedOnTimeStamp:
+            DeviceUtilsMethods.getCurrentTimeStamp(),
+      },
+    );
   }
 
   @override

@@ -80,12 +80,14 @@ mixin FirebaseStatusImplementation implements FirebaseFirestoreService {
           isEqualTo: userId,
         )
         .get();
+    final batch = firestore.batch();
     for (var status in allCurrentUserStatus.docs) {
       final statusTime = status.data().createdOnTimeStamp;
       if (DeviceUtilsMethods.getTimeDifference(statusTime) >=
           FirebaseRemoteConfigService.statusDeleteTimeValue()) {
-        await getStatusCollectionReference().doc(status.id).delete();
+        batch.delete(status.reference);
       }
     }
+    await batch.commit();
   }
 }

@@ -4,9 +4,11 @@ import 'package:whatsapp/domain/domain.dart';
 mixin FirebaseCallsService implements FirebaseFirestoreService {
   @override
   Future<void> createCall(CallDetails callDetails) async {
+    final batch = firestore.batch();
     for (var userId in callDetails.usersId) {
-      await getCallDetailsCollectionReference(userId).add(callDetails);
+      batch.set(getCallDetailsCollectionReference(userId).doc(), callDetails);
     }
+    await batch.commit();
   }
 
   @override
