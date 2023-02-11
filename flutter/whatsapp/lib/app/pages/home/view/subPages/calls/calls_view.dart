@@ -61,11 +61,25 @@ class _CallsViewState extends State<CallsView>
                               title: Text(
                                 groupDetails.name,
                               ),
-                              subtitle: Text(
-                                AppUtilsMethods.timeAgo(
-                                  callDetails.createdOnTimeStamp,
-                                  context,
-                                ),
+                              subtitle: Row(
+                                children: [
+                                  Icon(
+                                    callDetails.startedByUserId == currentUserId
+                                        ? Icons.call_made
+                                        : Icons.call_received,
+                                    color: Colors.green,
+                                    size: 15,
+                                  ),
+                                  ThemeSizedBox.width10,
+                                  Flexible(
+                                    child: Text(
+                                      AppUtilsMethods.timeAgo(
+                                        callDetails.createdOnTimeStamp,
+                                        context,
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
                               trailing: IconButton(
                                 onPressed: () async {
@@ -122,11 +136,25 @@ class _CallsViewState extends State<CallsView>
                               title: Text(
                                 otherUserDetails.name ?? '',
                               ),
-                              subtitle: Text(
-                                AppUtilsMethods.timeAgo(
-                                  callDetails.createdOnTimeStamp,
-                                  context,
-                                ),
+                              subtitle: Row(
+                                children: [
+                                  Icon(
+                                    callDetails.startedByUserId == currentUserId
+                                        ? Icons.call_made
+                                        : Icons.call_received,
+                                    color: Colors.green,
+                                    size: 15,
+                                  ),
+                                  ThemeSizedBox.width10,
+                                  Flexible(
+                                    child: Text(
+                                      AppUtilsMethods.timeAgo(
+                                        callDetails.createdOnTimeStamp,
+                                        context,
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
                               trailing: IconButton(
                                 onPressed: () {
