@@ -45,7 +45,7 @@ class _VideoCallViewState extends State<VideoCallView> {
                 ),
               ),
           if (controller.value.isInitialized)
-            if ((widget.callDetails.userDetails.length ?? 0) > 1)
+            if (widget.callDetails.userDetails.length > 1)
               GridView.builder(
                 padding: ThemeEdgeInsets.leftTopRight15Bottom150,
                 itemCount: widget.callDetails.userDetails.length,

@@ -22,7 +22,7 @@ class PhoneCallView extends StatelessWidget {
                 size: context.mediaQuery.size.width * 0.80,
               ),
             ),
-          if ((callDetails.userDetails.length ?? 0) > 1)
+          if (callDetails.userDetails.length > 1)
             GridView.builder(
               padding: ThemeEdgeInsets.leftTopRight15Bottom150,
               itemCount: callDetails.userDetails.length,

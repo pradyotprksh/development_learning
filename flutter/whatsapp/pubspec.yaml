@@ -19,17 +19,17 @@ dependencies:
 
   camerawesome: ^1.2.1
 
-  cloud_firestore: ^4.3.1
+  cloud_firestore: ^4.3.2
 
   collection: ^1.17.0
 
-  connectivity_plus: ^3.0.2
+  connectivity_plus: ^3.0.3
 
   contacts_service: ^0.6.3
 
   cupertino_icons: ^1.0.5
 
-  device_info_plus: ^8.0.0
+  device_info_plus: ^8.1.0
 
   email_validator: ^2.1.17
 
@@ -39,25 +39,25 @@ dependencies:
 
   equatable: ^2.0.5
 
-  firebase_analytics: ^10.1.0
+  firebase_analytics: ^10.1.1
 
-  firebase_app_check: ^0.1.1+8
+  firebase_app_check: ^0.1.1+9
 
-  firebase_auth: ^4.2.5
+  firebase_auth: ^4.2.6
 
-  firebase_core: ^2.4.1
+  firebase_core: ^2.5.0
 
-  firebase_crashlytics: ^3.0.11
+  firebase_crashlytics: ^3.0.12
 
-  firebase_dynamic_links: ^5.0.11
+  firebase_dynamic_links: ^5.0.12
 
-  firebase_performance: ^0.9.0+10
+  firebase_performance: ^0.9.0+11
 
-  firebase_remote_config: ^3.0.9
+  firebase_remote_config: ^3.0.10
 
-  firebase_storage: ^11.0.10
+  firebase_storage: ^11.0.11
 
-  firebase_ui_auth: ^1.1.9
+  firebase_ui_auth: ^1.1.10
 
   flex_color_scheme: ^6.1.2
 
@@ -91,9 +91,9 @@ dependencies:
 
   memory_cache: ^1.2.0
 
-  network_info_plus: ^3.0.1
+  network_info_plus: ^3.0.2
 
-  package_info_plus: ^3.0.2
+  package_info_plus: ^3.0.3
 
   path_provider: ^2.0.12
 
