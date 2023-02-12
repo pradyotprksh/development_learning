@@ -13,7 +13,7 @@ class SinglyLinkedListNode {
 
 void singlyLinkedList() {
   print("* Singly Linked List *");
-  final singlyLinkedList = SingleLinkedList();
+  final singlyLinkedList = SinglyLinkedList();
   singlyLinkedList.insert(0, 29);
   singlyLinkedList.unShift(1);
   singlyLinkedList.remove(2);
@@ -88,7 +88,7 @@ void singlyLinkedList() {
   print("* End Singly Linked List *");
 }
 
-class SingleLinkedList {
+class SinglyLinkedList {
   SinglyLinkedListNode? head;
 
   void push(int data) {
@@ -204,7 +204,7 @@ class SingleLinkedList {
     }
     if (temp != null) {
       final oldData = temp.data;
-      temp = SinglyLinkedListNode(data: newData);
+      temp = SinglyLinkedListNode(data: newData, next: temp.next);
       print("Found $oldData at position $pos and updated to $newData. $head");
     } else {
       print("No element at position $pos");
