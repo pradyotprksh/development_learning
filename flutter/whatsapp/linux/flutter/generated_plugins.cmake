@@ -4,6 +4,7 @@
 
 list(APPEND FLUTTER_PLUGIN_LIST
   desktop_webview_auth
+  emoji_picker_flutter
   url_launcher_linux
 )
 

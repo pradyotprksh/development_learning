@@ -27,6 +27,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
         _firebaseFirestoreService.getUserDetails(userId),
         onData: (userDetails) {
           if (userDetails != null && userDetails.allDetailsAvailable) {
+            _firebaseAuthService.updateUserDetails(userDetails);
             return UserDetailsAvailable(userDetails);
           } else {
             return const UserDataNotAvailable();

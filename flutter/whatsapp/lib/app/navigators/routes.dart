@@ -24,6 +24,7 @@ abstract class Routes {
   static const qrCodeScanner = '/qr-code-scanner';
   static const call = '/call';
   static const newGroup = '/new-group';
+  static const firebaseProfile = '/firebase-profile';
 
   static const initialRoute = splashRoute;
 
@@ -35,6 +36,22 @@ abstract class Routes {
     settings: (context) => const SettingsView(),
     qrCode: (context) => const QrCodeGeneratorView(),
     qrCodeScanner: (context) => const QrCodeScannerView(),
+    firebaseProfile: (context) => ProfileScreen(
+          actions: [
+            SignedOutAction(
+              (context) {
+                context.read<AuthenticationBloc>().add(
+                      const UnAuthenticateUserEvent(),
+                    );
+              },
+            ),
+            AuthStateChangeAction(
+              (context, state) {},
+            ),
+          ],
+          showMFATile: true,
+          appBar: AppBar(),
+        ),
     groupMessages: (context) => BlocProvider(
           create: (_) => GroupMessageBloc(
             FirebaseFirestoreServiceImplementation(),

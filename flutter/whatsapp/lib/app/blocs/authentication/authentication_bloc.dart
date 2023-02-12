@@ -13,6 +13,7 @@ class AuthenticationBloc
     on<CheckForRemoteConfigs>(_checkForRemoteConfigs);
     on<CheckForAuthenticationStatus>(_checkForAuthenticationStatus);
     on<UserAuthenticatedEvent>(_userAuthenticatedEvent);
+    on<UnAuthenticateUserEvent>(_unAuthenticateUserEvent);
   }
 
   final FirebaseAuthService _firebaseAuthService;
@@ -33,6 +34,14 @@ class AuthenticationBloc
 
           if (firestoreUserDetails != null) {
             final deviceDetails = await _deviceDetails.getDeviceDetails();
+
+            final firebaseEmailId = firebaseUserDetails.email;
+            final firebasePhoneNumber = firebaseUserDetails.phoneNumber;
+            final firebaseName = firebaseUserDetails.displayName;
+            final firestoreEmailId = firestoreUserDetails.emailId;
+            final firestorePhoneNumber = firestoreUserDetails.phoneNumber;
+            final firestoreName = firestoreUserDetails.name;
+
             await _firebaseFirestoreService.updateUserDetails(
               firebaseUserDetails.uid,
               {
@@ -42,6 +51,14 @@ class AuthenticationBloc
                 FirestoreItemKey.isEmailVerified:
                     firebaseUserDetails.emailVerified,
                 FirestoreItemKey.userDeviceDetails: deviceDetails.toMap(),
+                if (firebaseEmailId != null &&
+                    firebaseEmailId != firestoreEmailId)
+                  FirestoreItemKey.emailId: firebaseEmailId,
+                if (firebasePhoneNumber != null &&
+                    firebasePhoneNumber != firestorePhoneNumber)
+                  FirestoreItemKey.phoneNumber: firebasePhoneNumber,
+                if (firebaseName != null && firebaseName != firestoreName)
+                  FirestoreItemKey.name: firebaseName,
               },
             );
           }
@@ -89,5 +106,16 @@ class AuthenticationBloc
     } else {
       add(const CheckForAuthenticationStatus());
     }
+  }
+
+  void _unAuthenticateUserEvent(
+    UnAuthenticateUserEvent event,
+    Emitter<AuthenticationState> emit,
+  ) {
+    emit(
+      state.copyWith(
+        authenticationState: AuthenticationStatus.unauthenticated,
+      ),
+    );
   }
 }

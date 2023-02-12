@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:whatsapp/domain/domain.dart';
 
 abstract class FirebaseAuthService {
   final auth = FirebaseAuth.instance;
@@ -8,4 +9,6 @@ abstract class FirebaseAuthService {
   String? getUserId();
 
   bool isUserLoggedIn();
+
+  void updateUserDetails(UserDetails userDetails);
 }

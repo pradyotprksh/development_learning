@@ -194,12 +194,15 @@ class ProfileView extends StatelessWidget {
                     ),
                   ),
                 const Divider(),
-                ListTile(
-                  title: Text(
-                    '${context.translator.created} ${AppUtilsMethods.timeAgo(
-                      userState.userDetails?.createdOnTimeStamp,
-                      context,
-                    )}',
+                Padding(
+                  padding: ThemeEdgeInsets.all15,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      context.navigator.pushNamed(Routes.firebaseProfile);
+                    },
+                    child: Text(
+                      context.translator.moreOptions,
+                    ),
                   ),
                 ),
               ],

@@ -52,6 +52,17 @@ class _HomeViewState extends State<HomeView>
   @override
   Widget build(BuildContext context) => MultiBlocListener(
         listeners: [
+          BlocListener<AuthenticationBloc, AuthenticationState>(
+            listener: (_, authenticationState) {
+              if (authenticationState.authenticationState ==
+                  AuthenticationStatus.unauthenticated) {
+                context.navigator.pushNamedAndRemoveUntil(
+                  Routes.authenticateRoute,
+                  (route) => false,
+                );
+              }
+            },
+          ),
           BlocListener<UserBloc, UserState>(
             listener: (_, userState) {
               if (userState is UserDataNotAvailable) {

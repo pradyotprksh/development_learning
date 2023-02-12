@@ -110,5 +110,6 @@
   "noInternet": "We are not able to connect with you. Please see your network connectivity. If all okay then please try to restart the application.",
   "groupInfo": "Group info",
   "groupMedia": "Group media",
-  "recent": "Recent"
+  "recent": "Recent",
+  "moreOptions": "More options"
 }

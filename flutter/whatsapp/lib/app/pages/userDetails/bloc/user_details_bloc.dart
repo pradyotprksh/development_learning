@@ -77,9 +77,6 @@ class UserDetailsBloc extends Bloc<UserDetailsEvent, UserDetailsState> {
             isPhoneNumberVerified: firebaseUserDetails.phoneNumber != null,
           ),
         );
-        if (firebaseUserDetails.email == null && event.emailAddress != null) {
-          await firebaseUserDetails.updateEmail(event.emailAddress!);
-        }
 
         emit(
           state.copyWith(

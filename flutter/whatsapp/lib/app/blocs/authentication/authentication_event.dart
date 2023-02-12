@@ -26,3 +26,7 @@ class UserAuthenticatedEvent extends AuthenticationEvent {
   @override
   List<Object?> get props => [firebaseUserDetails];
 }
+
+class UnAuthenticateUserEvent extends AuthenticationEvent {
+  const UnAuthenticateUserEvent();
+}
