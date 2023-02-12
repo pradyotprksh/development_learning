@@ -28,7 +28,9 @@ class SelectedUsersWidget extends StatelessWidget {
                 Chip(
                   avatar: UserImageWidget(
                     profileImage: userDetail.profileImage ?? '',
+                    currentMood: null,
                     userId: userDetail.userId,
+                    isOnline: null,
                     enableAction: false,
                   ),
                   label: Text(

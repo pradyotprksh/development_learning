@@ -6,16 +6,20 @@ class UserImageWidget extends StatelessWidget {
     super.key,
     required this.profileImage,
     required this.userId,
+    required this.currentMood,
+    required this.isOnline,
     this.enableAction = true,
     this.size = 40,
     this.extraAction,
   });
 
   final String profileImage;
+  final String? currentMood;
   final String userId;
   final double size;
   final bool enableAction;
   final void Function()? extraAction;
+  final bool? isOnline;
 
   @override
   Widget build(BuildContext context) => InkWell(
@@ -30,21 +34,47 @@ class UserImageWidget extends StatelessWidget {
                 );
               }
             : null,
-        child: CachedNetworkImageWidget(
-          tag: userId,
-          imageUrl: profileImage,
-          placeholder: CircleAvatar(
-            radius: size / 2,
-            backgroundColor: context.themeData.primaryColor,
-            child: Icon(
-              Icons.person,
-              color: Colors.white,
-              size: size / 2,
+        child: Stack(
+          alignment: Alignment.bottomRight,
+          children: [
+            CachedNetworkImageWidget(
+              tag: userId,
+              imageUrl: profileImage,
+              placeholder: CircleAvatar(
+                radius: size / 2,
+                backgroundColor: context.themeData.primaryColor,
+                child: Icon(
+                  Icons.person,
+                  color: Colors.white,
+                  size: size / 2,
+                ),
+              ),
+              height: size,
+              width: size,
+              clipToCircle: true,
             ),
-          ),
-          height: size,
-          width: size,
-          clipToCircle: true,
+            if (isOnline != null)
+              Container(
+                height: size / 2.5,
+                width: size / 2.5,
+                decoration: BoxDecoration(
+                  color: isOnline ?? false ? Colors.green : Colors.grey,
+                  borderRadius: BorderRadius.circular(
+                    50,
+                  ),
+                ),
+                alignment: Alignment.center,
+                child: currentMood != null
+                    ? Text(
+                        currentMood ?? '',
+                        textAlign: TextAlign.center,
+                        style: context.themeData.textTheme.labelSmall?.copyWith(
+                          fontSize: 8,
+                        ),
+                      )
+                    : ThemeSizedBox.shrink,
+              ),
+          ],
         ),
       );
 }

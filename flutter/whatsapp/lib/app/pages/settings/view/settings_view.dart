@@ -51,19 +51,13 @@ class SettingsView extends StatelessWidget {
                   }
                 },
                 contentPadding: ThemeEdgeInsets.all15,
-                leading: CachedNetworkImageWidget(
-                  imageUrl: userState.userDetails?.profileImage ?? '',
-                  placeholder: CircleAvatar(
-                    radius: 25,
-                    backgroundColor: context.themeData.primaryColor,
-                    child: const Icon(
-                      Icons.group,
-                      color: Colors.white,
-                    ),
-                  ),
-                  height: 50,
-                  width: 50,
-                  clipToCircle: true,
+                leading: UserImageWidget(
+                  profileImage: userState.userDetails?.profileImage ?? '',
+                  userId: userState.userDetails?.userId ?? '',
+                  currentMood: userState.userDetails?.currentMood,
+                  isOnline: userState.userDetails?.isOnline,
+                  size: 50,
+                  enableAction: false,
                 ),
                 title: Text(
                   userState.userDetails?.name ?? '',

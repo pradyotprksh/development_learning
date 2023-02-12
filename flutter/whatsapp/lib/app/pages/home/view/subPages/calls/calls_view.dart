@@ -131,6 +131,8 @@ class _CallsViewState extends State<CallsView>
                                 profileImage:
                                     otherUserDetails.profileImage ?? '',
                                 userId: otherUserDetails.userId,
+                                currentMood: otherUserDetails.currentMood,
+                                isOnline: otherUserDetails.isOnline,
                                 size: 40,
                               ),
                               title: Text(

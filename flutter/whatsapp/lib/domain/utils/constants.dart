@@ -17,6 +17,7 @@ abstract class FirestoreItemKey {
   static const userReference = 'userReference';
   static const profileImage = 'profileImage';
   static const updatedOnTimeStamp = 'updatedOnTimeStamp';
+  static const currentMood = 'currentMood';
   static const status = 'status';
   static const fontFamily = 'fontFamily';
   static const color = 'color';

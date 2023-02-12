@@ -112,6 +112,12 @@ class NewGroupView extends StatelessWidget {
                             UserImageWidget(
                               profileImage: userDetail.profileImage ?? '',
                               userId: userDetail.userId,
+                              currentMood: accountDetails.isSelected
+                                  ? null
+                                  : userDetail.currentMood,
+                              isOnline: accountDetails.isSelected
+                                  ? null
+                                  : userDetail.isOnline,
                               enableAction: false,
                             ),
                             if (accountDetails.isSelected)

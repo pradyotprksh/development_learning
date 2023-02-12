@@ -29,10 +29,12 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     if (!AppDetails.isDebugMode) {
       final userId = _firebaseAuthService.getUserId();
       if (userId != null) {
+        final deviceDetails = await _deviceDetails.getDeviceDetails();
         await _firebaseFirestoreService.updateUserDetails(
           userId,
           {
             FirestoreItemKey.isOnline: true,
+            FirestoreItemKey.userDeviceDetails: deviceDetails.toMap(),
           },
         );
         await _firebaseFirestoreService.setUserLogInHistory(

@@ -26,6 +26,8 @@ class DirectMessageView extends StatelessWidget {
             leading: UserImageWidget(
               profileImage: messageState.userDetails?.profileImage ?? '',
               userId: messageState.userDetails?.userId ?? '',
+              currentMood: messageState.userDetails?.currentMood,
+              isOnline: messageState.userDetails?.isOnline,
               enableAction: false,
               size: 30,
             ),

@@ -58,23 +58,13 @@ class ProfileView extends StatelessWidget {
                       alignment: Alignment.bottomRight,
                       children: [
                         BlocBuilder<ProfileBloc, ProfileState>(
-                          builder: (_, profileState) =>
-                              CachedNetworkImageWidget(
-                            imageUrl: userState.userDetails?.profileImage ?? '',
-                            placeholder: CircleAvatar(
-                              radius: 25,
-                              backgroundColor: context.themeData.primaryColor,
-                              child: const Icon(
-                                Icons.group,
-                                color: Colors.white,
-                              ),
-                            ),
-                            height: 150,
-                            width: 150,
-                            clipToCircle: true,
-                            showProgressIndicator:
-                                profileState.imageUploadStatus ==
-                                    ImageUploadStatus.uploading,
+                          builder: (_, profileState) => UserImageWidget(
+                            profileImage:
+                                userState.userDetails?.profileImage ?? '',
+                            userId: userState.userDetails?.userId ?? '',
+                            isOnline: null,
+                            currentMood: null,
+                            size: 150,
                           ),
                         ),
                         Container(
@@ -143,6 +133,27 @@ class ProfileView extends StatelessWidget {
                         ],
                       );
                     },
+                  ),
+                ),
+                ListTile(
+                  onTap: () async {
+                    final profileBloc = context.read<ProfileBloc>();
+                    final emoji =
+                        await ShowEmojiBottomSheet.showEmojiBottomSheet(
+                      context,
+                      false,
+                    );
+                    if (emoji != null) {
+                      profileBloc.add(
+                        UpdateCurrentMood(emoji.emoji ?? ''),
+                      );
+                    }
+                  },
+                  title: Text(
+                    context.translator.howAreYouFeelingToday,
+                  ),
+                  subtitle: Text(
+                    userState.userDetails?.currentMood ?? '',
                   ),
                 ),
                 ListTile(

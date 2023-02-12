@@ -60,6 +60,8 @@ class _StatusViewState extends State<StatusView>
                   children: [
                     StatusProfileImageWidget(
                       profileImage: userState.userDetails?.profileImage ?? '',
+                      currentMode: userState.userDetails?.currentMood,
+                      isOnline: userState.userDetails?.isOnline,
                       totalStatusCount:
                           statusState.currentUserStatus?.statusDetails.length ??
                               0,
@@ -113,6 +115,8 @@ class _StatusViewState extends State<StatusView>
                             totalStatusCount: statusDetails.length,
                             readStatusCount: statusDetails.length,
                             userId: userDetails.userId,
+                            currentMode: userDetails.currentMood,
+                            isOnline: userDetails.isOnline,
                           ),
                           title: Text(
                             userDetails.name ?? '',

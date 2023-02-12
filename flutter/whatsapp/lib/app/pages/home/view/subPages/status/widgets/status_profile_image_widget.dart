@@ -9,12 +9,16 @@ class StatusProfileImageWidget extends StatelessWidget {
     required this.totalStatusCount,
     required this.readStatusCount,
     required this.userId,
+    required this.currentMode,
+    required this.isOnline,
   });
 
   final String profileImage;
   final int totalStatusCount;
   final int readStatusCount;
   final String userId;
+  final String? currentMode;
+  final bool? isOnline;
 
   @override
   Widget build(BuildContext context) => SizedBox(
@@ -26,7 +30,9 @@ class StatusProfileImageWidget extends StatelessWidget {
             UserImageWidget(
               profileImage: profileImage,
               userId: userId,
+              currentMood: currentMode,
               size: 40,
+              isOnline: isOnline,
             ),
             if (totalStatusCount > 0)
               CircularStepProgressIndicator(

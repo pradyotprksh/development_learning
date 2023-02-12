@@ -40,6 +40,8 @@ class ExistingAccountsWidget extends StatelessWidget {
                 leading: UserImageWidget(
                   profileImage: userDetail.profileImage ?? '',
                   userId: userDetail.userId,
+                  currentMood: userDetail.currentMood,
+                  isOnline: userDetail.isOnline,
                   enableAction: false,
                 ),
                 title: Text(

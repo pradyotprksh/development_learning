@@ -28,3 +28,9 @@ class UpdateUserName extends ProfileEvent {
 class EnableDisableUserNameForm extends ProfileEvent {
   const EnableDisableUserNameForm();
 }
+
+class UpdateCurrentMood extends ProfileEvent {
+  const UpdateCurrentMood(this.mood);
+
+  final String mood;
+}

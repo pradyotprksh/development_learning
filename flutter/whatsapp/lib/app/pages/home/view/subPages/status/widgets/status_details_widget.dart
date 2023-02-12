@@ -171,6 +171,8 @@ class _StatusDetailsWidgetState extends State<StatusDetailsWidget> {
                       leading: UserImageWidget(
                         profileImage: widget.userDetails?.profileImage ?? '',
                         userId: widget.userDetails?.userId ?? '',
+                        currentMood: widget.userDetails?.currentMood,
+                        isOnline: widget.userDetails?.isOnline,
                         extraAction: () {
                           context.navigator.pop();
                         },

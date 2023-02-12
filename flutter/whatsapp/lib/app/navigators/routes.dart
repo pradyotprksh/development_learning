@@ -49,7 +49,6 @@ abstract class Routes {
               (context, state) {},
             ),
           ],
-          showMFATile: true,
           appBar: AppBar(),
         ),
     groupMessages: (context) => BlocProvider(

@@ -114,6 +114,8 @@ class UserDetailsView extends StatelessWidget {
                         ],
                         child: UserImageWidget(
                           profileImage: userState.profilePicImage,
+                          currentMood: null,
+                          isOnline: false,
                           userId: '',
                           enableAction: false,
                           size: 160,

@@ -60,6 +60,8 @@ class _ChatsViewState extends State<ChatsView>
                     leading: UserImageWidget(
                       profileImage: userDetails.data?.profileImage ?? '',
                       userId: userDetails.data?.userId ?? '',
+                      currentMood: userDetails.data?.currentMood,
+                      isOnline: userDetails.data?.isOnline,
                       enableAction: false,
                       size: 40,
                     ),
