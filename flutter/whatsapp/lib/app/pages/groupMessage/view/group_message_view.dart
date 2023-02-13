@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:whatsapp/app/app.dart';
@@ -120,12 +121,23 @@ class GroupMessageView extends StatelessWidget {
           BlocBuilder<GroupMessageBloc, GroupMessageState>(
             builder: (_, groupMessageState) => Flexible(
               child: ListView.builder(
-                  reverse: true,
-                  padding: ThemeEdgeInsets.zero,
-                  itemCount: groupMessageState.messages.length,
-                  itemBuilder: (_, index) => MessageWidget(
-                        message: groupMessageState.messages[index],
-                      )),
+                reverse: true,
+                padding: ThemeEdgeInsets.zero,
+                itemCount: groupMessageState.messages.length,
+                itemBuilder: (_, index) {
+                  final users = groupMessageState.usersDetails;
+                  final userDetails = users.firstWhereOrNull(
+                    (element) =>
+                        element.userId ==
+                        groupMessageState.messages[index].sentByUserId,
+                  );
+
+                  return MessageWidget(
+                    message: groupMessageState.messages[index],
+                    userDetails: userDetails,
+                  );
+                },
+              ),
             ),
           ),
           Padding(

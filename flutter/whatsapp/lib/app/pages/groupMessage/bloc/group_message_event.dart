@@ -35,3 +35,7 @@ class AddGroupMessage extends GroupMessageEvent {
 
   final String message;
 }
+
+class UpdateUsersDetails extends GroupMessageEvent {
+  const UpdateUsersDetails();
+}

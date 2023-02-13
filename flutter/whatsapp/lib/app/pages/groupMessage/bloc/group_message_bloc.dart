@@ -14,6 +14,7 @@ class GroupMessageBloc extends Bloc<GroupMessageEvent, GroupMessageState> {
     on<ToggleGroupEmojisOption>(_showEmojisOption);
     on<GetGroupAllMessages>(_getAllMessages);
     on<AddGroupMessage>(_addANewMessage);
+    on<UpdateUsersDetails>(_updateUsersDetails);
   }
 
   final FirebaseFirestoreService _firebaseFirestoreService;
@@ -31,6 +32,21 @@ class GroupMessageBloc extends Bloc<GroupMessageEvent, GroupMessageState> {
     );
   }
 
+  void _updateUsersDetails(
+    UpdateUsersDetails event,
+    Emitter<GroupMessageState> emit,
+  ) async {
+    final users = state.groupMessageDetails?.usersDetails;
+    if (users != null) {
+      await emit.forEach(
+        users,
+        onData: (usersDetails) => state.copyWith(
+          usersDetails: usersDetails,
+        ),
+      );
+    }
+  }
+
   void _fetchGroupDetails(
     FetchGroupDetails event,
     Emitter<GroupMessageState> emit,
@@ -40,6 +56,7 @@ class GroupMessageBloc extends Bloc<GroupMessageEvent, GroupMessageState> {
       onData: (details) {
         if (details?.groupMessageDetails?.groupId != null) {
           add(GetGroupAllMessages(details?.groupMessageDetails?.groupId ?? ''));
+          add(const UpdateUsersDetails());
         }
         return state.copyWith(
           groupMessageDetails: details,
