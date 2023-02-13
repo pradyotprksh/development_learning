@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:whatsapp/app/app.dart';
-import 'package:whatsapp/core/core.dart';
 
 class DirectMessageView extends StatefulWidget {
   const DirectMessageView({super.key});
@@ -124,6 +123,7 @@ class _DirectMessageViewState extends State<DirectMessageView> {
                 itemCount: directMessageState.messages.length,
                 itemBuilder: (_, index) => MessageWidget(
                   message: directMessageState.messages[index],
+                  userDetails: directMessageState.userDetails,
                 ),
               ),
             ),
@@ -155,7 +155,11 @@ class _DirectMessageViewState extends State<DirectMessageView> {
                             );
                       },
                       onMessageSubmitted: (message) {
-                        UtilsLogger.debugLog(message);
+                        if (message.trim().isNotEmpty) {
+                          context.read<DirectMessageBloc>().add(
+                                AddMessage(message),
+                              );
+                        }
                       },
                       closeEmojiOption: () {
                         context.read<DirectMessageBloc>().add(

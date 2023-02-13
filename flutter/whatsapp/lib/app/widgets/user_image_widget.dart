@@ -22,16 +22,18 @@ class UserImageWidget extends StatelessWidget {
   final bool? isOnline;
 
   @override
-  Widget build(BuildContext context) => InkWell(
-        onTap: userId.isNotEmpty && enableAction
+  Widget build(BuildContext context) => GestureDetector(
+        onTap: userId.isNotEmpty
             ? () {
                 extraAction?.call();
-                context.navigator.pushNamed(
-                  Routes.messages,
-                  arguments: <String, String>{
-                    Keys.userId: userId,
-                  },
-                );
+                if (enableAction) {
+                  context.navigator.pushNamed(
+                    Routes.messages,
+                    arguments: <String, String>{
+                      Keys.userId: userId,
+                    },
+                  );
+                }
               }
             : null,
         child: Stack(

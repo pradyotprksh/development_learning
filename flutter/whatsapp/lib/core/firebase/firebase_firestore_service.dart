@@ -73,6 +73,9 @@ abstract class FirebaseFirestoreService {
 
   Future<String> createDirectMessage(DirectMessageDetails directMessageDetails);
 
+  Future<void> updateDirectMessage(
+      String messageId, Map<String, Object> values);
+
   Future<void> createGroupMessage(GroupMessageDetails groupMessageDetails);
 
   Future<void> sendMessage(

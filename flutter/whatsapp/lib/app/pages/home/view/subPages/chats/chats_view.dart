@@ -28,7 +28,7 @@ class _ChatsViewState extends State<ChatsView>
         builder: (_, chatState) => ListView(
           padding: ThemeEdgeInsets.zero,
           children: [
-            if (chatState.groupMessages.isNotEmpty)
+            if (chatState.directMessageListWithUserDetails.isNotEmpty)
               Padding(
                 padding: ThemeEdgeInsets.all15,
                 child: Text(

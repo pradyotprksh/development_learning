@@ -17,6 +17,7 @@ class DirectMessageBloc
     on<CreateDirectMessage>(_createDirectMessage);
     on<ToggleEmojisOption>(_showEmojisOption);
     on<GetAllMessages>(_getAllMessages);
+    on<AddMessage>(_addANewMessage);
   }
 
   final FirebaseFirestoreService _firebaseFirestoreService;
@@ -145,6 +146,38 @@ class DirectMessageBloc
       await emit.forEach(
         _firebaseFirestoreService.getDirectMessages(event.messageId),
         onData: (messages) => state.copyWith(messages: messages),
+      );
+    }
+  }
+
+  void _addANewMessage(
+    AddMessage event,
+    Emitter<DirectMessageState> emit,
+  ) async {
+    final currentUserId = _firebaseAuthService.getUserId();
+    final directMessageId = state.directMessageDetails?.messageId;
+    final otherUserId = state.userDetails?.userId;
+    if (currentUserId != null && directMessageId != null) {
+      final deviceTimeStamp = DeviceUtilsMethods.getCurrentTimeStamp();
+      await _firebaseFirestoreService.sendMessage(
+        SingleMessageDetails(
+          message: event.message,
+          sentByUserId: currentUserId,
+          sentByUserDeviceDetails: await _deviceDetails.getDeviceDetails(),
+          sentOnTimeStamp: deviceTimeStamp,
+          isSystemMessage: false,
+          sentToUserId: otherUserId,
+        ),
+        directMessageId,
+      );
+      await _firebaseFirestoreService.updateDirectMessage(
+        directMessageId,
+        {
+          FirestoreItemKey.lastMessage:
+              EncryptorService.encryptData(event.message),
+          FirestoreItemKey.lastMessageOnTimeStamp: deviceTimeStamp,
+          FirestoreItemKey.lastMessageByUserId: currentUserId,
+        },
       );
     }
   }

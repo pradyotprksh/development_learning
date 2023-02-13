@@ -145,7 +145,7 @@ class ProfileView extends StatelessWidget {
                     );
                     if (emoji != null) {
                       profileBloc.add(
-                        UpdateCurrentMood(emoji.emoji ?? ''),
+                        UpdateCurrentMood(emoji.emoji),
                       );
                     }
                   },

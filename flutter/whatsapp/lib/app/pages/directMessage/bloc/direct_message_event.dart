@@ -41,3 +41,9 @@ class GetAllMessages extends DirectMessageEvent {
 
   final String messageId;
 }
+
+class AddMessage extends DirectMessageEvent {
+  AddMessage(this.message);
+
+  final String message;
+}
