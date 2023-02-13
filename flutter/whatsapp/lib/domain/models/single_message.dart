@@ -1,12 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:equatable/equatable.dart';
 import 'package:whatsapp/core/core.dart';
 import 'package:whatsapp/domain/domain.dart';
 
-class SingleMessageDetails {
-  SingleMessageDetails({
+class SingleMessageDetails extends Equatable {
+  const SingleMessageDetails({
     required this.message,
     required this.sentByUserId,
-    required this.sentToUserId,
+    this.sentToUserId,
     this.filePathUrl,
     this.sentToUserReference,
     this.firestoreFilePath,
@@ -31,7 +32,7 @@ class SingleMessageDetails {
       message: EncryptorService.decryptData(
           data?[FirestoreItemKey.message] as String),
       sentByUserId: data?[FirestoreItemKey.sentByUserId] as String,
-      sentToUserId: data?[FirestoreItemKey.sentToUserId] as String,
+      sentToUserId: data?[FirestoreItemKey.sentToUserId] as String?,
       filePathUrl: EncryptorService.decryptData(
           data?[FirestoreItemKey.filePathUrl] as String?),
       firestoreFilePath: EncryptorService.decryptData(
@@ -48,7 +49,7 @@ class SingleMessageDetails {
 
   final String message;
   final String sentByUserId;
-  final String sentToUserId;
+  final String? sentToUserId;
   final String? filePathUrl;
   final String? firestoreFilePath;
   final int? sentOnTimeStamp;
@@ -61,7 +62,7 @@ class SingleMessageDetails {
   Map<String, dynamic> toFirestore() => <String, dynamic>{
         FirestoreItemKey.message: EncryptorService.encryptData(message),
         FirestoreItemKey.sentByUserId: sentByUserId,
-        FirestoreItemKey.sentToUserId: sentToUserId,
+        if (sentToUserId != null) FirestoreItemKey.sentToUserId: sentToUserId,
         FirestoreItemKey.isSystemMessage: isSystemMessage,
         if (filePathUrl != null)
           FirestoreItemKey.filePathUrl:
@@ -72,8 +73,25 @@ class SingleMessageDetails {
         if (sentOnTimeStamp != null)
           FirestoreItemKey.sentOnTimeStamp: sentOnTimeStamp,
         if (sentByUserDeviceDetails != null)
-          FirestoreItemKey.sentByUserDeviceDetails: sentByUserDeviceDetails,
+          FirestoreItemKey.sentByUserDeviceDetails:
+              sentByUserDeviceDetails!.toMap(),
         if (isFileImage != null) FirestoreItemKey.isFileImage: isFileImage,
-        FirestoreItemKey.sentToUserReference: sentToUserReference,
+        if (sentToUserReference != null)
+          FirestoreItemKey.sentToUserReference: sentToUserReference,
       };
+
+  @override
+  List<Object?> get props => [
+        message,
+        sentByUserId,
+        sentToUserId,
+        filePathUrl,
+        firestoreFilePath,
+        sentOnTimeStamp,
+        sentByUserDeviceDetails,
+        messageId,
+        isFileImage,
+        sentToUserReference,
+        isSystemMessage,
+      ];
 }

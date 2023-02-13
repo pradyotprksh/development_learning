@@ -114,9 +114,20 @@ class _DirectMessageViewState extends State<DirectMessageView> {
           ),
         ],
       ),
-      body: Stack(
+      body: Column(
         children: [
-          ListView(),
+          BlocBuilder<DirectMessageBloc, DirectMessageState>(
+            builder: (_, directMessageState) => Flexible(
+              child: ListView.builder(
+                reverse: true,
+                padding: ThemeEdgeInsets.zero,
+                itemCount: directMessageState.messages.length,
+                itemBuilder: (_, index) => MessageWidget(
+                  message: directMessageState.messages[index],
+                ),
+              ),
+            ),
+          ),
           Container(
             alignment: Alignment.bottomCenter,
             padding: ThemeEdgeInsets.all10,

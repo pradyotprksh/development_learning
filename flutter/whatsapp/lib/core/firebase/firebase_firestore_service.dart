@@ -30,6 +30,8 @@ abstract class FirebaseFirestoreService {
     String currentUserId,
   );
 
+  Stream<List<SingleMessageDetails>> getDirectMessages(String directMessageId);
+
   DocumentReference<UserDetails> getUserDocumentReference(String userId);
 
   Future<void> setUserLogInHistory(LoginHistoryDetails loginHistoryDetails);
@@ -69,7 +71,7 @@ abstract class FirebaseFirestoreService {
 
   Future<void> setStatus(StatusDetails statusDetails);
 
-  Future<void> createDirectMessage(DirectMessageDetails directMessageDetails);
+  Future<String> createDirectMessage(DirectMessageDetails directMessageDetails);
 
   Future<void> createGroupMessage(GroupMessageDetails groupMessageDetails);
 

@@ -8,6 +8,7 @@ class DirectMessageState extends Equatable {
     this.directMessageDetails,
     this.pageState = PageState.idle,
     this.isEmojiOptionVisible = false,
+    this.messages = const [],
   });
 
   DirectMessageState copyWith({
@@ -15,18 +16,21 @@ class DirectMessageState extends Equatable {
     PageState? pageState,
     DirectMessageDetails? directMessageDetails,
     bool? isEmojiOptionVisible,
+    List<SingleMessageDetails>? messages,
   }) =>
       DirectMessageState(
         userDetails: userDetails ?? this.userDetails,
         pageState: pageState ?? this.pageState,
         directMessageDetails: directMessageDetails ?? this.directMessageDetails,
         isEmojiOptionVisible: isEmojiOptionVisible ?? this.isEmojiOptionVisible,
+        messages: messages ?? this.messages,
       );
 
   final UserDetails? userDetails;
   final DirectMessageDetails? directMessageDetails;
   final PageState pageState;
   final bool isEmojiOptionVisible;
+  final List<SingleMessageDetails> messages;
 
   @override
   List<Object?> get props => [
@@ -34,5 +38,6 @@ class DirectMessageState extends Equatable {
         pageState,
         directMessageDetails,
         isEmojiOptionVisible,
+        messages,
       ];
 }

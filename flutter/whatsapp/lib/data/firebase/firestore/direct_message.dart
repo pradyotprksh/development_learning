@@ -35,10 +35,12 @@ mixin FirebaseDirectMessageService implements FirebaseFirestoreService {
       );
 
   @override
-  Future<void> createDirectMessage(
+  Future<String> createDirectMessage(
     DirectMessageDetails directMessageDetails,
   ) async {
-    await getDirectMessageCollectionReference().add(directMessageDetails);
+    final directMessage =
+        await getDirectMessageCollectionReference().add(directMessageDetails);
+    return directMessage.id;
   }
 
   @override
@@ -49,6 +51,13 @@ mixin FirebaseDirectMessageService implements FirebaseFirestoreService {
     await getMessageCollectionReference(directMessageId)
         .add(singleMessageDetails);
   }
+
+  @override
+  Stream<List<SingleMessageDetails>> getDirectMessages(
+          String directMessageId) =>
+      getMessageCollectionReference(directMessageId).snapshots().map(
+            (event) => event.docs.map((e) => e.data()).toList(),
+          );
 
   @override
   Stream<List<DirectMessagesListUserDetails>?> getDirectMessagesFor(

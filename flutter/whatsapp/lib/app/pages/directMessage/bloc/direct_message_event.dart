@@ -35,3 +35,9 @@ class ToggleEmojisOption extends DirectMessageEvent {
 
   final bool? shouldShow;
 }
+
+class GetAllMessages extends DirectMessageEvent {
+  const GetAllMessages(this.messageId);
+
+  final String messageId;
+}

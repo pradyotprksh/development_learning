@@ -1,10 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:equatable/equatable.dart';
 import 'package:memory_cache/memory_cache.dart';
 import 'package:whatsapp/core/core.dart';
 import 'package:whatsapp/domain/domain.dart';
 
-class UserDetails {
-  UserDetails({
+class UserDetails extends Equatable {
+  const UserDetails({
     this.name,
     this.emailId,
     this.phoneNumber,
@@ -108,4 +109,23 @@ class UserDetails {
         if (userDeviceDetails != null)
           FirestoreItemKey.userDeviceDetails: userDeviceDetails!.toMap(),
       };
+
+  @override
+  List<Object?> get props => [
+        name,
+        emailId,
+        phoneNumber,
+        profileImage,
+        firestoreFilePath,
+        userId,
+        pin,
+        allDetailsAvailable,
+        createdOnTimeStamp,
+        updatedOnTimeStamp,
+        userDeviceDetails,
+        isEmailVerified,
+        isPhoneNumberVerified,
+        isOnline,
+        currentMood,
+      ];
 }

@@ -16,6 +16,7 @@ class DirectMessageBloc
     on<GetMessageDetails>(_fetchMessageDetails);
     on<CreateDirectMessage>(_createDirectMessage);
     on<ToggleEmojisOption>(_showEmojisOption);
+    on<GetAllMessages>(_getAllMessages);
   }
 
   final FirebaseFirestoreService _firebaseFirestoreService;
@@ -55,19 +56,32 @@ class DirectMessageBloc
       try {
         emit(state.copyWith(pageState: PageState.loading));
 
-        await _firebaseFirestoreService.createDirectMessage(
+        final deviceTimeStamp = DeviceUtilsMethods.getCurrentTimeStamp();
+
+        final directMessageId =
+            await _firebaseFirestoreService.createDirectMessage(
           DirectMessageDetails(
             users: [
               currentUserId,
               selectedUserId,
             ],
             createdByUserId: currentUserId,
-            createdOnTimeStamp: DeviceUtilsMethods.getCurrentTimeStamp(),
+            createdOnTimeStamp: deviceTimeStamp,
             createdByUserDeviceDetails: await _deviceDetails.getDeviceDetails(),
             lastMessage: event.firstMessage,
             lastMessageOnTimeStamp: DeviceUtilsMethods.getCurrentTimeStamp(),
             lastMessageByUserId: currentUserId,
           ),
+        );
+        await _firebaseFirestoreService.sendMessage(
+          SingleMessageDetails(
+            message: event.firstMessage,
+            sentByUserId: currentUserId,
+            sentByUserDeviceDetails: await _deviceDetails.getDeviceDetails(),
+            sentOnTimeStamp: deviceTimeStamp,
+            isSystemMessage: true,
+          ),
+          directMessageId,
         );
 
         emit(state.copyWith(pageState: PageState.success));
@@ -89,7 +103,9 @@ class DirectMessageBloc
       emit(state.copyWith(pageState: PageState.loading));
       await emit.forEach(
         _firebaseFirestoreService.getMessageDetails(
-            currentUserId, selectedUserId),
+          currentUserId,
+          selectedUserId,
+        ),
         onData: (directMessageDetails) {
           emit(state.copyWith(pageState: PageState.success));
           if (directMessageDetails == null &&
@@ -100,6 +116,7 @@ class DirectMessageBloc
               pageState: state.pageState,
             );
           } else {
+            add(GetAllMessages(directMessageDetails?.messageId ?? ''));
             return state.copyWith(
               directMessageDetails: directMessageDetails,
             );
@@ -118,5 +135,17 @@ class DirectMessageBloc
         isEmojiOptionVisible: event.shouldShow ?? !state.isEmojiOptionVisible,
       ),
     );
+  }
+
+  void _getAllMessages(
+    GetAllMessages event,
+    Emitter<DirectMessageState> emit,
+  ) async {
+    if (event.messageId.isNotEmpty) {
+      await emit.forEach(
+        _firebaseFirestoreService.getDirectMessages(event.messageId),
+        onData: (messages) => state.copyWith(messages: messages),
+      );
+    }
   }
 }
