@@ -6,15 +6,18 @@ abstract class CoreConstants {
   static const groupMessageCollection = 'group-messages';
   static const callsCollection = 'users/$userIdPlaceholder/calls';
   static const loginHistoryCollection =
-      'users/$userIdPlaceholder/login-history';
+      '$userCollection/$userIdPlaceholder/login-history';
   static const contactsAvailableCollection =
-      'users/$userIdPlaceholder/contacts-available';
+      '$userCollection/$userIdPlaceholder/contacts-available';
   static const contactsNotAvailableCollection =
-      'users/$userIdPlaceholder/contacts-not-available';
-  static const messagesCollection =
-      'direct-messages/$messageIdPlaceholder/messages';
+      '$userCollection/$userIdPlaceholder/contacts-not-available';
+  static const directMessagesCollection =
+      '$directMessageCollection/$messageIdPlaceholder/messages';
+  static const groupMessagesCollection =
+      '$groupMessageCollection/$messageIdPlaceholder/messages';
   static const statusCollection = 'status';
-  static const statusSeenCollection = 'status/$statusIdPlaceholder/seen-by';
+  static const statusSeenCollection =
+      '$statusCollection/$statusIdPlaceholder/seen-by';
   static const userIdPlaceholder = '{userId}';
   static const statusIdPlaceholder = '{statusId}';
   static const messageIdPlaceholder = '{message}';

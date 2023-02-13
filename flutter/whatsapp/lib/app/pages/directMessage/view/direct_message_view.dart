@@ -128,8 +128,7 @@ class _DirectMessageViewState extends State<DirectMessageView> {
               ),
             ),
           ),
-          Container(
-            alignment: Alignment.bottomCenter,
+          Padding(
             padding: ThemeEdgeInsets.all10,
             child: BlocBuilder<DirectMessageBloc, DirectMessageState>(
               buildWhen: (previousState, currentState) =>

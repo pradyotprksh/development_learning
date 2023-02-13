@@ -113,7 +113,8 @@ class NewGroupBloc extends Bloc<NewGroupEvent, NewGroupState> {
         FirebaseUtils.recordFlutterError(e);
       }
 
-      await _firebaseFirestoreService.createGroupMessage(
+      final currentTimeStamp = DeviceUtilsMethods.getCurrentTimeStamp();
+      final groupId = await _firebaseFirestoreService.createGroupMessage(
         GroupMessageDetails(
           name: event.groupName,
           users: [
@@ -121,14 +122,24 @@ class NewGroupBloc extends Bloc<NewGroupEvent, NewGroupState> {
             ...state.selectedUserDetails.map((e) => e.userId).toList(),
           ],
           createdByUserId: userId,
-          createdOnTimeStamp: DeviceUtilsMethods.getCurrentTimeStamp(),
+          createdOnTimeStamp: currentTimeStamp,
           createdByUserDeviceDetails: deviceDetails,
           lastMessage: event.firstMessage,
-          lastMessageOnTimeStamp: DeviceUtilsMethods.getCurrentTimeStamp(),
+          lastMessageOnTimeStamp: currentTimeStamp,
           lastMessageByUserId: userId,
           profileImage: imageUrl,
           firestoreFilePath: firestorePath,
         ),
+      );
+      await _firebaseFirestoreService.sendGroupMessage(
+        SingleMessageDetails(
+          message: event.firstMessage,
+          sentByUserId: userId,
+          sentByUserDeviceDetails: await _deviceDetails.getDeviceDetails(),
+          sentOnTimeStamp: currentTimeStamp,
+          isSystemMessage: true,
+        ),
+        groupId,
       );
 
       emit(

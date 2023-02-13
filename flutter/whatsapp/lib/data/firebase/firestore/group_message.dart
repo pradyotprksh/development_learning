@@ -3,9 +3,11 @@ import 'package:whatsapp/domain/domain.dart';
 
 mixin FirebaseGroupMessageService implements FirebaseFirestoreService {
   @override
-  Future<void> createGroupMessage(
+  Future<String> createGroupMessage(
       GroupMessageDetails groupMessageDetails) async {
-    await getGroupMessageCollectionReference().add(groupMessageDetails);
+    final group =
+        await getGroupMessageCollectionReference().add(groupMessageDetails);
+    return group.id;
   }
 
   @override
@@ -37,4 +39,30 @@ mixin FirebaseGroupMessageService implements FirebaseFirestoreService {
           );
         },
       );
+
+  @override
+  Future<void> sendGroupMessage(
+    SingleMessageDetails singleMessageDetails,
+    String groupMessageId,
+  ) async {
+    await getGroupMessagesCollectionReference(groupMessageId)
+        .add(singleMessageDetails);
+  }
+
+  @override
+  Stream<List<SingleMessageDetails>> getGroupMessages(String groupMessageId) =>
+      getGroupMessagesCollectionReference(groupMessageId)
+          .orderBy(FirestoreItemKey.sentOnTimeStamp, descending: true)
+          .snapshots()
+          .map(
+            (event) => event.docs.map((e) => e.data()).toList(),
+          );
+
+  @override
+  Future<void> updateGroupMessage(
+    String messageId,
+    Map<String, Object> values,
+  ) async {
+    await getGroupMessageCollectionReference().doc(messageId).update(values);
+  }
 }

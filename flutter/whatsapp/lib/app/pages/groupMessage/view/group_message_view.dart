@@ -115,13 +115,47 @@ class GroupMessageView extends StatelessWidget {
           ),
         ],
       ),
-      body: Stack(
+      body: Column(
         children: [
-          ListView(),
-          Container(
-            alignment: Alignment.bottomCenter,
+          BlocBuilder<GroupMessageBloc, GroupMessageState>(
+            builder: (_, groupMessageState) => Flexible(
+              child: ListView.builder(
+                  reverse: true,
+                  padding: ThemeEdgeInsets.zero,
+                  itemCount: groupMessageState.messages.length,
+                  itemBuilder: (_, index) => MessageWidget(
+                        message: groupMessageState.messages[index],
+                      )),
+            ),
+          ),
+          Padding(
             padding: ThemeEdgeInsets.all10,
-            child: TextFormField(),
+            child: BlocBuilder<GroupMessageBloc, GroupMessageState>(
+              builder: (_, groupMessageState) => MessageFieldWithEmojiWidget(
+                onEmojiButtonPressed: () {
+                  context.read<GroupMessageBloc>().add(
+                        const ToggleGroupEmojisOption(
+                          shouldShow: true,
+                        ),
+                      );
+                },
+                onMessageSubmitted: (message) {
+                  if (message.trim().isNotEmpty) {
+                    context.read<GroupMessageBloc>().add(
+                          AddGroupMessage(message),
+                        );
+                  }
+                },
+                closeEmojiOption: () {
+                  context.read<GroupMessageBloc>().add(
+                        const ToggleGroupEmojisOption(
+                          shouldShow: false,
+                        ),
+                      );
+                },
+                isEmojiOptionVisible: groupMessageState.isEmojiOptionVisible,
+              ),
+            ),
           ),
         ],
       ),

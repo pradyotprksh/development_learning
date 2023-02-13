@@ -1,15 +1,37 @@
 import 'package:equatable/equatable.dart';
 
 abstract class GroupMessageEvent extends Equatable {
+  const GroupMessageEvent();
+
   @override
   List<Object?> get props => [];
 }
 
 class FetchGroupDetails extends GroupMessageEvent {
-  FetchGroupDetails(this.groupId);
+  const FetchGroupDetails(this.groupId);
 
   final String groupId;
 
   @override
   List<Object?> get props => [groupId];
+}
+
+class ToggleGroupEmojisOption extends GroupMessageEvent {
+  const ToggleGroupEmojisOption({
+    this.shouldShow,
+  });
+
+  final bool? shouldShow;
+}
+
+class GetGroupAllMessages extends GroupMessageEvent {
+  const GetGroupAllMessages(this.messageId);
+
+  final String messageId;
+}
+
+class AddGroupMessage extends GroupMessageEvent {
+  const AddGroupMessage(this.message);
+
+  final String message;
 }

@@ -32,6 +32,8 @@ abstract class FirebaseFirestoreService {
 
   Stream<List<SingleMessageDetails>> getDirectMessages(String directMessageId);
 
+  Stream<List<SingleMessageDetails>> getGroupMessages(String groupMessageId);
+
   DocumentReference<UserDetails> getUserDocumentReference(String userId);
 
   Future<void> setUserLogInHistory(LoginHistoryDetails loginHistoryDetails);
@@ -74,13 +76,25 @@ abstract class FirebaseFirestoreService {
   Future<String> createDirectMessage(DirectMessageDetails directMessageDetails);
 
   Future<void> updateDirectMessage(
-      String messageId, Map<String, Object> values);
+    String messageId,
+    Map<String, Object> values,
+  );
 
-  Future<void> createGroupMessage(GroupMessageDetails groupMessageDetails);
+  Future<void> updateGroupMessage(
+    String messageId,
+    Map<String, Object> values,
+  );
 
-  Future<void> sendMessage(
+  Future<String> createGroupMessage(GroupMessageDetails groupMessageDetails);
+
+  Future<void> sendDirectMessage(
     SingleMessageDetails singleMessageDetails,
     String directMessageId,
+  );
+
+  Future<void> sendGroupMessage(
+    SingleMessageDetails singleMessageDetails,
+    String groupMessageId,
   );
 
   Future<void> setStatusSeen(
@@ -160,11 +174,23 @@ abstract class FirebaseFirestoreService {
                 groupMessageDetails.toFirestore(),
           );
 
-  CollectionReference<SingleMessageDetails> getMessageCollectionReference(
+  CollectionReference<SingleMessageDetails>
+      getDirectMessagesCollectionReference(
+    String messageId,
+  ) =>
+          _getCollectionReference(
+            CoreConstants.directMessagesCollection
+                .replaceAll(CoreConstants.messageIdPlaceholder, messageId),
+            SingleMessageDetails.fromFirestore,
+            (SingleMessageDetails singleMessageDetails, _) =>
+                singleMessageDetails.toFirestore(),
+          );
+
+  CollectionReference<SingleMessageDetails> getGroupMessagesCollectionReference(
     String messageId,
   ) =>
       _getCollectionReference(
-        CoreConstants.messagesCollection
+        CoreConstants.groupMessagesCollection
             .replaceAll(CoreConstants.messageIdPlaceholder, messageId),
         SingleMessageDetails.fromFirestore,
         (SingleMessageDetails singleMessageDetails, _) =>

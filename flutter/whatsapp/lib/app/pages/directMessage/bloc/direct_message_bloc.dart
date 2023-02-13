@@ -12,7 +12,6 @@ class DirectMessageBloc
     this._deviceDetails,
   ) : super(const DirectMessageState()) {
     on<FetchSelectedUserDetails>(_fetchUserDetails);
-    on<GetMessages>(_fetchUserMessages);
     on<GetMessageDetails>(_fetchMessageDetails);
     on<CreateDirectMessage>(_createDirectMessage);
     on<ToggleEmojisOption>(_showEmojisOption);
@@ -40,11 +39,6 @@ class DirectMessageBloc
       );
     }
   }
-
-  void _fetchUserMessages(
-    GetMessages event,
-    Emitter<DirectMessageState> emit,
-  ) {}
 
   void _createDirectMessage(
     CreateDirectMessage event,
@@ -74,7 +68,7 @@ class DirectMessageBloc
             lastMessageByUserId: currentUserId,
           ),
         );
-        await _firebaseFirestoreService.sendMessage(
+        await _firebaseFirestoreService.sendDirectMessage(
           SingleMessageDetails(
             message: event.firstMessage,
             sentByUserId: currentUserId,
@@ -159,7 +153,7 @@ class DirectMessageBloc
     final otherUserId = state.userDetails?.userId;
     if (currentUserId != null && directMessageId != null) {
       final deviceTimeStamp = DeviceUtilsMethods.getCurrentTimeStamp();
-      await _firebaseFirestoreService.sendMessage(
+      await _firebaseFirestoreService.sendDirectMessage(
         SingleMessageDetails(
           message: event.message,
           sentByUserId: currentUserId,

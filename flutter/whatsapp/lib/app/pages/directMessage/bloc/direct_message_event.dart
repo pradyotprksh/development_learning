@@ -43,7 +43,7 @@ class GetAllMessages extends DirectMessageEvent {
 }
 
 class AddMessage extends DirectMessageEvent {
-  AddMessage(this.message);
+  const AddMessage(this.message);
 
   final String message;
 }
