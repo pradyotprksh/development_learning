@@ -112,13 +112,18 @@ class UserDetailsView extends StatelessWidget {
                         aspectRatioPresets: const [
                           CropAspectRatioPreset.square,
                         ],
-                        child: UserImageWidget(
-                          profileImage: userState.profilePicImage,
-                          currentMood: null,
-                          isOnline: false,
-                          userId: '',
-                          enableAction: false,
-                          size: 160,
+                        child: Center(
+                          child: UserImageWidget(
+                            profileImage: userState.profilePicImage,
+                            currentMood: null,
+                            isOnline: null,
+                            userId: '',
+                            enableAction: false,
+                            size: 160,
+                            showProgressIndicator:
+                                userState.imageUploadStatus ==
+                                    ImageUploadStatus.uploading,
+                          ),
                         ),
                       ),
                       ThemeSizedBox.height10,

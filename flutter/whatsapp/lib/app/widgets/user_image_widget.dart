@@ -9,6 +9,7 @@ class UserImageWidget extends StatelessWidget {
     required this.currentMood,
     required this.isOnline,
     this.enableAction = true,
+    this.showProgressIndicator = false,
     this.size = 40,
     this.extraAction,
   });
@@ -20,6 +21,7 @@ class UserImageWidget extends StatelessWidget {
   final bool enableAction;
   final void Function()? extraAction;
   final bool? isOnline;
+  final bool showProgressIndicator;
 
   @override
   Widget build(BuildContext context) => GestureDetector(
@@ -42,6 +44,7 @@ class UserImageWidget extends StatelessWidget {
             CachedNetworkImageWidget(
               tag: userId,
               imageUrl: profileImage,
+              showProgressIndicator: showProgressIndicator,
               placeholder: CircleAvatar(
                 radius: size / 2,
                 backgroundColor: context.themeData.primaryColor,
