@@ -2,7 +2,7 @@ import 'package:collection/collection.dart';
 import 'package:whatsapp/core/core.dart';
 import 'package:whatsapp/domain/domain.dart';
 
-mixin FirebaseDirectMessageService implements FirebaseFirestoreService {
+mixin FirestoreDirectMessageService implements FirebaseFirestoreService {
   @override
   Stream<DirectMessageDetails?> getMessageDetails(
     String currentUserId,

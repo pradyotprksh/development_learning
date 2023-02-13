@@ -14,6 +14,8 @@ extension BuildContextExtenion on BuildContext {
 
   RouteSettings? get routeSettings => ModalRoute.of(this)?.settings;
 
+  ModalRoute? get modalRoute => ModalRoute.of(this);
+
   bool get isPhoneInDarkMode =>
       MediaQuery.of(this).platformBrightness != Brightness.light;
 

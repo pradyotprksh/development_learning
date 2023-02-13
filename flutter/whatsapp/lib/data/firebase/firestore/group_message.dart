@@ -1,7 +1,7 @@
 import 'package:whatsapp/core/core.dart';
 import 'package:whatsapp/domain/domain.dart';
 
-mixin FirebaseGroupMessageService implements FirebaseFirestoreService {
+mixin FirestoreGroupMessageService implements FirebaseFirestoreService {
   @override
   Future<String> createGroupMessage(
       GroupMessageDetails groupMessageDetails) async {

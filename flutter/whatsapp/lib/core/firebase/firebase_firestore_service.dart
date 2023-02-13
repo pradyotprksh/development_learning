@@ -22,6 +22,8 @@ abstract class FirebaseFirestoreService {
 
   Stream<List<UserDetails>> getUsersDetails(List<String> userIds);
 
+  Future<void> createScreenshot(ScreenshotDetails screenshotDetails);
+
   Stream<List<DirectMessagesListUserDetails>?> getDirectMessagesFor(
     String currentUserId,
   );
@@ -173,6 +175,18 @@ abstract class FirebaseFirestoreService {
             (GroupMessageDetails groupMessageDetails, _) =>
                 groupMessageDetails.toFirestore(),
           );
+
+  CollectionReference<ScreenshotDetails> getScreenshotCollectionReference(
+          String userId) =>
+      _getCollectionReference(
+        CoreConstants.screenshotCollection.replaceAll(
+          CoreConstants.userIdPlaceholder,
+          userId,
+        ),
+        ScreenshotDetails.fromFirestore,
+        (ScreenshotDetails groupMessageDetails, _) =>
+            groupMessageDetails.toFirestore(),
+      );
 
   CollectionReference<SingleMessageDetails>
       getDirectMessagesCollectionReference(

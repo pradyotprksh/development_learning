@@ -15,8 +15,11 @@ void main() async {
     MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (_) => UtilitiesBloc()
-            ..add(
+          create: (_) => UtilitiesBloc(
+            FirebaseAuthServiceImplementation(),
+            FirebaseFirestoreServiceImplementation(),
+            DeviceDetailsImplementation(),
+          )..add(
               const InitiateConnectivityCheck(),
             ),
         ),

@@ -1,7 +1,7 @@
 import 'package:whatsapp/core/core.dart';
 import 'package:whatsapp/domain/domain.dart';
 
-mixin FirebaseCallsService implements FirebaseFirestoreService {
+mixin FirestoreCallsService implements FirebaseFirestoreService {
   @override
   Future<void> createCall(CallDetails callDetails) async {
     final batch = firestore.batch();

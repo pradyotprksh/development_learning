@@ -4,11 +4,12 @@ import 'package:whatsapp/data/data.dart';
 class FirebaseFirestoreServiceImplementation extends FirebaseFirestoreService
     with
         FirestoreUserImplementation,
-        FirebaseStatusImplementation,
-        FirebaseDirectMessageService,
-        FirebaseContactsService,
-        FirebaseGroupMessageService,
-        FirebaseCallsService {
+        FirestoreStatusImplementation,
+        FirestoreDirectMessageService,
+        FirestoreContactsService,
+        FirestoreGroupMessageService,
+        FirestoreCallsService,
+        FirestoreSecurityDetailsService {
   factory FirebaseFirestoreServiceImplementation() => _instance;
 
   FirebaseFirestoreServiceImplementation._privateConstructor();

@@ -10,3 +10,10 @@ abstract class UtilitiesEvent extends Equatable {
 class InitiateConnectivityCheck extends UtilitiesEvent {
   const InitiateConnectivityCheck();
 }
+
+class ScreenshotTaken extends UtilitiesEvent {
+  const ScreenshotTaken(this.name, this.arguments);
+
+  final String? name;
+  final Object? arguments;
+}

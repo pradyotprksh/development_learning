@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:whatsapp/core/core.dart';
 import 'package:whatsapp/domain/domain.dart';
 
-mixin FirebaseContactsService implements FirebaseFirestoreService {
+mixin FirestoreContactsService implements FirebaseFirestoreService {
   @override
   Future<void> setContactAvailableDetails(
     String userId,

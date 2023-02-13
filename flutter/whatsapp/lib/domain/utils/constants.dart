@@ -14,6 +14,8 @@ abstract class FirestoreItemKey {
   static const groupId = 'groupId';
   static const buildNumber = 'buildNumber';
   static const userDeviceDetails = 'userDeviceDetails';
+  static const route = 'route';
+  static const arguments = 'arguments';
   static const userReference = 'userReference';
   static const profileImage = 'profileImage';
   static const updatedOnTimeStamp = 'updatedOnTimeStamp';

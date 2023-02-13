@@ -2,7 +2,7 @@ import 'package:whatsapp/core/core.dart';
 import 'package:whatsapp/device/device.dart';
 import 'package:whatsapp/domain/domain.dart';
 
-mixin FirebaseStatusImplementation implements FirebaseFirestoreService {
+mixin FirestoreStatusImplementation implements FirebaseFirestoreService {
   @override
   Future<void> setStatus(StatusDetails statusDetails) async {
     await getStatusCollectionReference().add(statusDetails);
