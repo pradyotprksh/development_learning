@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:whatsapp/app/app.dart';
+import 'package:whatsapp/core/core.dart';
 
-class DirectMessageView extends StatelessWidget {
+class DirectMessageView extends StatefulWidget {
   const DirectMessageView({super.key});
 
+  @override
+  State<DirectMessageView> createState() => _DirectMessageViewState();
+}
+
+class _DirectMessageViewState extends State<DirectMessageView> {
   @override
   Widget build(BuildContext context) {
     final arguments = context.routeSettings?.arguments as Map<String, String>;
@@ -127,7 +133,30 @@ class DirectMessageView extends StatelessWidget {
                 final messageDetails = messageState.directMessageDetails;
 
                 if (messageDetails != null) {
-                  return TextFormField();
+                  return BlocBuilder<DirectMessageBloc, DirectMessageState>(
+                    builder: (_, directMessageState) =>
+                        MessageFieldWithEmojiWidget(
+                      onEmojiButtonPressed: () {
+                        context.read<DirectMessageBloc>().add(
+                              const ToggleEmojisOption(
+                                shouldShow: true,
+                              ),
+                            );
+                      },
+                      onMessageSubmitted: (message) {
+                        UtilsLogger.debugLog(message);
+                      },
+                      closeEmojiOption: () {
+                        context.read<DirectMessageBloc>().add(
+                              const ToggleEmojisOption(
+                                shouldShow: false,
+                              ),
+                            );
+                      },
+                      isEmojiOptionVisible:
+                          directMessageState.isEmojiOptionVisible,
+                    ),
+                  );
                 } else {
                   return ElevatedButton(
                     onPressed: () {

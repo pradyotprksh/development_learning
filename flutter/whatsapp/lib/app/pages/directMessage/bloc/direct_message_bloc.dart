@@ -15,6 +15,7 @@ class DirectMessageBloc
     on<GetMessages>(_fetchUserMessages);
     on<GetMessageDetails>(_fetchMessageDetails);
     on<CreateDirectMessage>(_createDirectMessage);
+    on<ToggleEmojisOption>(_showEmojisOption);
   }
 
   final FirebaseFirestoreService _firebaseFirestoreService;
@@ -106,5 +107,16 @@ class DirectMessageBloc
         },
       );
     }
+  }
+
+  void _showEmojisOption(
+    ToggleEmojisOption event,
+    Emitter<DirectMessageState> emit,
+  ) {
+    emit(
+      state.copyWith(
+        isEmojiOptionVisible: event.shouldShow ?? !state.isEmojiOptionVisible,
+      ),
+    );
   }
 }

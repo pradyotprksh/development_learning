@@ -27,3 +27,11 @@ class CreateDirectMessage extends DirectMessageEvent {
 
   final String firstMessage;
 }
+
+class ToggleEmojisOption extends DirectMessageEvent {
+  const ToggleEmojisOption({
+    this.shouldShow,
+  });
+
+  final bool? shouldShow;
+}
