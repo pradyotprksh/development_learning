@@ -183,8 +183,7 @@ class MessageWidget extends StatelessWidget {
                       UserImageWidget(
                         profileImage: userDetails?.profileImage ?? '',
                         userId: userDetails?.userId ?? '',
-                        currentMood: userDetails?.currentMood,
-                        isOnline: null,
+                        isOnline: userDetails?.isOnline,
                         size: 25,
                       ),
                     if (message.sentByUserId != currentUserId)
