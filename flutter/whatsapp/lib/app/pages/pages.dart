@@ -7,6 +7,7 @@ export 'home/home.dart';
 export 'intro/intro.dart';
 export 'newGroup/new_group.dart';
 export 'personalise/personalise.dart';
+export 'pinConfirmation/pin_confirmation.dart';
 export 'profile/profile.dart';
 export 'qrCode/qr_code.dart';
 export 'selectContact/select_contact.dart';

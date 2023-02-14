@@ -18,3 +18,9 @@ class DeleteCallLogs extends HomeEvent {
 class ApplicationBackgroundCheck extends HomeEvent {
   const ApplicationBackgroundCheck();
 }
+
+class AskForPinConfirmation extends HomeEvent {
+  const AskForPinConfirmation(this.lastPinConfirmationTimeStamp);
+
+  final int? lastPinConfirmationTimeStamp;
+}

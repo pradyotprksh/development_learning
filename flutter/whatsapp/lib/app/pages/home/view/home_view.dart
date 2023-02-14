@@ -52,6 +52,13 @@ class _HomeViewState extends State<HomeView>
   @override
   Widget build(BuildContext context) => MultiBlocListener(
         listeners: [
+          BlocListener<HomeBloc, HomeState>(
+            listener: (_, homeState) {
+              if (homeState.askForPinConfirmation) {
+                context.navigator.pushNamed(Routes.pinConfirmation);
+              }
+            },
+          ),
           BlocListener<AuthenticationBloc, AuthenticationState>(
             listener: (_, authenticationState) {
               if (authenticationState.authenticationState ==
@@ -71,7 +78,6 @@ class _HomeViewState extends State<HomeView>
                   (route) => false,
                 );
               }
-              if (userState is AskForPinConfirmation) {}
             },
           ),
           BlocListener<UtilitiesBloc, UtilitiesState>(
@@ -108,6 +114,7 @@ class _HomeViewState extends State<HomeView>
           ),
         ],
         child: BlocBuilder<HomeBloc, HomeState>(
+          buildWhen: (previousState, currentState) => false,
           builder: (_, homeState) => Scaffold(
             backgroundColor: context.themeData.scaffoldBackgroundColor,
             appBar: AppBar(

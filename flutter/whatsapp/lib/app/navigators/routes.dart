@@ -25,6 +25,7 @@ abstract class Routes {
   static const call = '/call';
   static const newGroup = '/new-group';
   static const firebaseProfile = '/firebase-profile';
+  static const pinConfirmation = '/pin-confirmation';
 
   static const initialRoute = splashRoute;
 
@@ -36,6 +37,7 @@ abstract class Routes {
     settings: (context) => const SettingsView(),
     qrCode: (context) => const QrCodeGeneratorView(),
     qrCodeScanner: (context) => const QrCodeScannerView(),
+    pinConfirmation: (context) => const PinConfirmationView(),
     firebaseProfile: (context) => ProfileScreen(
           actions: [
             SignedOutAction(
@@ -120,6 +122,15 @@ abstract class Routes {
                 )
                 ..add(
                   const UpdateLoginHistory(),
+                )
+                ..add(
+                  AskForPinConfirmation(
+                    context
+                        .read<UserBloc>()
+                        .state
+                        .userDetails
+                        ?.lastPinConfirmationTimeStamp,
+                  ),
                 ),
             ),
             BlocProvider(

@@ -26,10 +26,3 @@ class UserDetailsAvailable extends UserState {
           userDetails: userDetails,
         );
 }
-
-class AskForPinConfirmation extends UserState {
-  const AskForPinConfirmation(UserDetails userDetails)
-      : super(
-          userDetails: userDetails,
-        );
-}
