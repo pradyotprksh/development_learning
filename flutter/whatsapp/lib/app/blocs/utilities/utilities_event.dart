@@ -17,3 +17,19 @@ class ScreenshotTaken extends UtilitiesEvent {
   final String? name;
   final Object? arguments;
 }
+
+class MessageCopyForwardEvent extends UtilitiesEvent {
+  const MessageCopyForwardEvent(
+    this.messageId,
+    this.directMessageId,
+    this.groupId,
+    this.isCopied,
+    this.isForwarded,
+  );
+
+  final String messageId;
+  final String? directMessageId;
+  final String? groupId;
+  final bool isCopied;
+  final bool isForwarded;
+}

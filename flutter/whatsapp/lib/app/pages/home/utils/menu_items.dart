@@ -35,3 +35,11 @@ enum SelectContactMenuItems {
   refresh,
   help,
 }
+
+enum MessageMenuItem {
+  reply,
+  copy,
+  forward,
+  pin,
+  delete,
+}

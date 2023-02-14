@@ -7,4 +7,13 @@ mixin FirestoreSecurityDetailsService implements FirebaseFirestoreService {
     await getScreenshotCollectionReference(screenshotDetails.userId)
         .add(screenshotDetails);
   }
+
+  @override
+  Future<void> createMessageCopyForwarded(
+    MessageCopyForwardDetails messageCopyForwardDetails,
+  ) async {
+    await getMessageCopyForwardCollectionReference(
+            messageCopyForwardDetails.userId)
+        .add(messageCopyForwardDetails);
+  }
 }

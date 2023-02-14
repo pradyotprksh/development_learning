@@ -19,6 +19,8 @@ dependencies:
 
   camerawesome: ^1.2.1
 
+  clipboard: ^0.1.3
+
   cloud_firestore: ^4.3.2
 
   collection: ^1.17.0

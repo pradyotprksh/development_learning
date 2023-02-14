@@ -4,6 +4,7 @@ abstract class FirestoreItemKey {
   static const emailId = 'emailId';
   static const phoneNumber = 'phoneNumber';
   static const userId = 'userId';
+  static const messageId = 'messageId';
   static const allDetailsAvailable = 'allDetailsAvailable';
   static const deviceInfo = 'deviceInfo';
   static const ipAddress = 'ipAddress';
@@ -52,4 +53,6 @@ abstract class FirestoreItemKey {
   static const isVideoCall = 'isVideoCall';
   static const startedByUserDeviceDetails = 'startedByUserDeviceDetails';
   static const isOnline = 'isOnline';
+  static const isCopied = 'isCopied';
+  static const isForwardOptionSelected = 'isForwardOptionSelected';
 }

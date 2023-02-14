@@ -5,6 +5,7 @@ export 'direct_message.dart';
 export 'direct_messages_list_user.dart';
 export 'group_message.dart';
 export 'login_history.dart';
+export 'message_copy_forward.dart';
 export 'screenshot.dart';
 export 'single_message.dart';
 export 'status.dart';

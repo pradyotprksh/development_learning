@@ -50,7 +50,6 @@ class _MessageFieldWithEmojiWidgetState
       mainAxisSize: MainAxisSize.min,
       children: [
         TextFormField(
-          autofocus: true,
           focusNode: _messageFocusNode,
           controller: _messageTextEditingController,
           decoration: InputDecoration(

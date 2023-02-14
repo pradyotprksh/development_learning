@@ -124,6 +124,9 @@ class _DirectMessageViewState extends State<DirectMessageView> {
                 itemBuilder: (_, index) => MessageWidget(
                   message: directMessageState.messages[index],
                   userDetails: directMessageState.userDetails,
+                  messageForwardSelected: (details) {},
+                  directMessageId:
+                      directMessageState.directMessageDetails?.messageId,
                 ),
               ),
             ),

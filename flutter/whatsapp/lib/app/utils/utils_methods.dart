@@ -1,3 +1,4 @@
+import 'package:clipboard/clipboard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:timeago/timeago.dart' as timeago;
@@ -56,5 +57,17 @@ abstract class AppUtilsMethods {
     } else {
       return null;
     }
+  }
+
+  static void copyTextWithSnackBar(BuildContext context, String message) {
+    FlutterClipboard.copy(message).then(
+      (value) => context.replaceAndShowSnackBar(
+        context.translator.messageCopiedToClipboard.replaceAll(
+          '%s',
+          '"$message"',
+        ),
+        null,
+      ),
+    );
   }
 }

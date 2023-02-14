@@ -158,6 +158,9 @@ class GroupMessageView extends StatelessWidget {
                   return MessageWidget(
                     message: groupMessageState.messages[index],
                     userDetails: userDetails,
+                    messageForwardSelected: (details) {},
+                    groupId: groupMessageState
+                        .groupMessageDetails?.groupMessageDetails?.groupId,
                   );
                 },
               ),

@@ -116,5 +116,11 @@
   "inviteAFriend": "Invite a friend",
   "contacts": "Contacts",
   "refresh": "Refresh",
-  "help": "Help"
+  "help": "Help",
+  "reply": "Reply",
+  "copy": "Copy",
+  "forward": "Forward",
+  "pin": "Pin",
+  "delete": "Delete",
+  "messageCopiedToClipboard": "%s is saved in your clipboard."
 }
