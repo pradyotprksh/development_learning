@@ -17,6 +17,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     on<DeleteCallLogs>(_deleteCallLogs);
     on<ApplicationBackgroundCheck>(_startApplicationBackgroundCheck);
     on<AskForPinConfirmation>(_askForPinConfirmation);
+    on<PinVerified>(_onPinVerified);
   }
 
   final FirebaseFirestoreService _firebaseFirestoreService;
@@ -100,5 +101,21 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
             FirebaseRemoteConfigService.pinConfirmationTimeValue(),
       ),
     );
+  }
+
+  void _onPinVerified(
+    PinVerified event,
+    Emitter<HomeState> emit,
+  ) async {
+    final userId = _firebaseAuthService.getUserId();
+    if (userId != null) {
+      await _firebaseFirestoreService.updateUserDetails(
+        userId,
+        {
+          FirestoreItemKey.lastPinConfirmationTimeStamp:
+              DeviceUtilsMethods.getCurrentTimeStamp(),
+        },
+      );
+    }
   }
 }

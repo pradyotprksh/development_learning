@@ -103,7 +103,7 @@ dependencies:
 
   permission_handler: ^10.2.0
 
-  pin_code_fields: ^7.4.0
+  pinput: ^2.2.23
 
   qr_code_scanner: ^1.0.1
 

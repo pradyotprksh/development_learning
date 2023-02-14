@@ -192,7 +192,7 @@ class ProfileView extends StatelessWidget {
                         )
                       : PhoneVerificationButton(
                           label: context.translator.verificationNeeded,
-                          action: AuthAction.link,
+                          action: AuthAction.none,
                         ),
                 ),
                 if (userState.userDetails?.isEmailVerified != true ||

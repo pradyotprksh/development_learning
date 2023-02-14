@@ -122,5 +122,10 @@
   "forward": "Forward",
   "pin": "Pin",
   "delete": "Delete",
-  "messageCopiedToClipboard": "%s is saved in your clipboard."
+  "messageCopiedToClipboard": "%s is saved in your clipboard.",
+  "pinConfirmationTitle": "Pin Confirmation",
+  "pinConfirmationLabel": "Hope you remember the 8 digit pin.",
+  "pinConfirmationNote": "If you don't remember the pin",
+  "pinWrong": "Pin is wrong",
+  "verifyPhoneNumber": "Verify your phone number"
 }

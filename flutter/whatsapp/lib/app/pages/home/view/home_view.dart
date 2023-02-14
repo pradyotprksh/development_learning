@@ -53,9 +53,14 @@ class _HomeViewState extends State<HomeView>
   Widget build(BuildContext context) => MultiBlocListener(
         listeners: [
           BlocListener<HomeBloc, HomeState>(
-            listener: (_, homeState) {
+            listener: (_, homeState) async {
               if (homeState.askForPinConfirmation) {
-                context.navigator.pushNamed(Routes.pinConfirmation);
+                final homeBloc = context.read<HomeBloc>();
+                final isVerified = await context.navigator
+                    .pushNamed(Routes.pinConfirmation) as bool;
+                if (isVerified) {
+                  homeBloc.add(const PinVerified());
+                }
               }
             },
           ),

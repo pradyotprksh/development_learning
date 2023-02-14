@@ -24,3 +24,7 @@ class AskForPinConfirmation extends HomeEvent {
 
   final int? lastPinConfirmationTimeStamp;
 }
+
+class PinVerified extends HomeEvent {
+  const PinVerified();
+}
