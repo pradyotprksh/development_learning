@@ -28,3 +28,10 @@ enum GroupMessageMenuItems {
   wallpaper,
   more,
 }
+
+enum SelectContactMenuItems {
+  inviteAFriend,
+  contacts,
+  refresh,
+  help,
+}

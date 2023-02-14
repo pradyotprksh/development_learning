@@ -2,6 +2,7 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:whatsapp/app/app.dart';
+import 'package:whatsapp/domain/domain.dart';
 
 class GroupMessageView extends StatelessWidget {
   const GroupMessageView({super.key});
@@ -47,20 +48,42 @@ class GroupMessageView extends StatelessWidget {
           ),
         ),
         actions: [
-          IconButton(
-            onPressed: () async {
-              await _makeVideoOrPhoneCall(context, false);
-            },
-            icon: const Icon(
-              Icons.video_call,
+          BlocBuilder<GroupMessageBloc, GroupMessageState>(
+            builder: (_, groupMessageState) => StreamBuilder(
+              stream: groupMessageState.groupMessageDetails?.usersDetails,
+              builder: (_, snapshot) {
+                if (snapshot.hasData) {
+                  return IconButton(
+                    onPressed: () {
+                      _makeVideoOrPhoneCall(context, false, snapshot.data);
+                    },
+                    icon: const Icon(
+                      Icons.video_call,
+                    ),
+                  );
+                } else {
+                  return ThemeSizedBox.shrink;
+                }
+              },
             ),
           ),
-          IconButton(
-            onPressed: () async {
-              await _makeVideoOrPhoneCall(context, true);
-            },
-            icon: const Icon(
-              Icons.call,
+          BlocBuilder<GroupMessageBloc, GroupMessageState>(
+            builder: (_, groupMessageState) => StreamBuilder(
+              stream: groupMessageState.groupMessageDetails?.usersDetails,
+              builder: (_, snapshot) {
+                if (snapshot.hasData) {
+                  return IconButton(
+                    onPressed: () {
+                      _makeVideoOrPhoneCall(context, true, snapshot.data);
+                    },
+                    icon: const Icon(
+                      Icons.call,
+                    ),
+                  );
+                } else {
+                  return ThemeSizedBox.shrink;
+                }
+              },
             ),
           ),
           PopupMenuButton<GroupMessageMenuItems>(
@@ -174,8 +197,11 @@ class GroupMessageView extends StatelessWidget {
     );
   }
 
-  Future<void> _makeVideoOrPhoneCall(
-      BuildContext context, bool isPhoneCall) async {
+  void _makeVideoOrPhoneCall(
+    BuildContext context,
+    bool isPhoneCall,
+    List<UserDetails>? users,
+  ) {
     final navigator = context.navigator;
     final groupId = context
         .read<GroupMessageBloc>()
@@ -184,15 +210,9 @@ class GroupMessageView extends StatelessWidget {
         ?.groupMessageDetails
         ?.groupId;
     final currentUserId = context.read<UserBloc>().state.userDetails?.userId;
-    final users = await context
-        .read<GroupMessageBloc>()
-        .state
-        .groupMessageDetails
-        ?.usersDetails
-        .first;
     users?.removeWhere((element) => element.userId == currentUserId);
     if (users != null) {
-      await navigator.pushNamed(
+      navigator.pushNamed(
         Routes.call,
         arguments: CallDetailsArguments(
           userDetails: users,

@@ -112,5 +112,9 @@
   "groupMedia": "Group media",
   "recent": "Recent",
   "moreOptions": "More options",
-  "howAreYouFeelingToday": "How are you feeling today?"
+  "howAreYouFeelingToday": "How are you feeling today?",
+  "inviteAFriend": "Invite a friend",
+  "contacts": "Contacts",
+  "refresh": "Refresh",
+  "help": "Help"
 }

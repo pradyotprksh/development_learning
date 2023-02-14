@@ -7,6 +7,24 @@ import 'package:whatsapp/app/app.dart';
 class SelectContactView extends StatelessWidget {
   const SelectContactView({super.key});
 
+  void _openPageBasedOnSelection(
+    BuildContext context,
+    SelectContactMenuItems item,
+  ) async {
+    switch (item) {
+      case SelectContactMenuItems.inviteAFriend:
+        break;
+      case SelectContactMenuItems.contacts:
+        await ContactsService.openDeviceContactPicker();
+        break;
+      case SelectContactMenuItems.refresh:
+        _fetchContactDetails(context, true);
+        break;
+      case SelectContactMenuItems.help:
+        break;
+    }
+  }
+
   void _checkForContactPermission(BuildContext context) async {
     final selectContactBloc = context.read<SelectContactBloc>();
     final status = await Permission.contacts.status;
@@ -23,7 +41,7 @@ class SelectContactView extends StatelessWidget {
     );
   }
 
-  void _fetchContactDetails(BuildContext context) async {
+  void _fetchContactDetails(BuildContext context, bool isRefresh) async {
     final selectContactBloc = context.read<SelectContactBloc>();
     if (selectContactBloc.state.permissionStatus == PermissionStatus.granted) {
       selectContactBloc.add(
@@ -32,9 +50,17 @@ class SelectContactView extends StatelessWidget {
         ),
       );
       var contacts = await ContactsService.getContacts();
-      selectContactBloc.add(
-        LocalContactsDetails(contacts),
-      );
+      if (isRefresh) {
+        selectContactBloc.add(
+          RefreshContacts(contacts),
+        );
+      } else {
+        selectContactBloc.add(
+          LocalContactsDetails(contacts),
+        );
+      }
+    } else {
+      _checkForContactPermission(context);
     }
   }
 
@@ -44,9 +70,8 @@ class SelectContactView extends StatelessWidget {
 
     return BlocBuilder<SelectContactBloc, SelectContactState>(
       builder: (_, selectContactState) {
-        if (selectContactState.checkForContacts &&
-            selectContactState.permissionStatus == PermissionStatus.granted) {
-          _fetchContactDetails(context);
+        if (selectContactState.checkForContacts) {
+          _fetchContactDetails(context, false);
         }
 
         return Scaffold(
@@ -62,11 +87,37 @@ class SelectContactView extends StatelessWidget {
                   Icons.search,
                 ),
               ),
-              IconButton(
-                onPressed: () {},
-                icon: const Icon(
-                  Icons.more_vert,
-                ),
+              PopupMenuButton<SelectContactMenuItems>(
+                onSelected: (item) {
+                  _openPageBasedOnSelection(context, item);
+                },
+                color: context.themeData.popupMenuTheme.color,
+                itemBuilder: (_) => [
+                  PopupMenuItem(
+                    value: SelectContactMenuItems.inviteAFriend,
+                    child: Text(
+                      context.translator.inviteAFriend,
+                    ),
+                  ),
+                  PopupMenuItem(
+                    value: SelectContactMenuItems.contacts,
+                    child: Text(
+                      context.translator.contacts,
+                    ),
+                  ),
+                  PopupMenuItem(
+                    value: SelectContactMenuItems.refresh,
+                    child: Text(
+                      context.translator.refresh,
+                    ),
+                  ),
+                  PopupMenuItem(
+                    value: SelectContactMenuItems.help,
+                    child: Text(
+                      context.translator.help,
+                    ),
+                  ),
+                ],
               ),
             ],
           ),

@@ -46,3 +46,12 @@ class GetAvailableContacts extends SelectContactEvent {
 class GetNotAvailableContacts extends SelectContactEvent {
   const GetNotAvailableContacts();
 }
+
+class RefreshContacts extends SelectContactEvent {
+  const RefreshContacts(this.localContacts);
+
+  final List<Contact> localContacts;
+
+  @override
+  List<Object?> get props => [localContacts];
+}

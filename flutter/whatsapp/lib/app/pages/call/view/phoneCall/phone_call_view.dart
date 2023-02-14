@@ -18,8 +18,6 @@ class PhoneCallView extends StatelessWidget {
               child: UserImageWidget(
                 profileImage: callDetails.userDetails[0]?.profileImage ?? '',
                 userId: callDetails.userDetails[0]?.userId ?? '',
-                currentMood: callDetails.userDetails[0]?.currentMood,
-                isOnline: callDetails.userDetails[0]?.isOnline,
                 enableAction: false,
                 size: context.mediaQuery.size.width * 0.80,
               ),
@@ -38,8 +36,6 @@ class PhoneCallView extends StatelessWidget {
                 profileImage:
                     callDetails.userDetails[index]?.profileImage ?? '',
                 userId: callDetails.userDetails[index]?.userId ?? '',
-                isOnline: callDetails.userDetails[index]?.isOnline,
-                currentMood: callDetails.userDetails[index]?.currentMood,
                 enableAction: false,
                 size: context.mediaQuery.size.width * 0.80,
               ),

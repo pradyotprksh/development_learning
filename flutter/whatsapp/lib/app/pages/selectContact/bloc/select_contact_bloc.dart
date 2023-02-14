@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:contacts_service/contacts_service.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:whatsapp/app/app.dart';
 import 'package:whatsapp/core/core.dart';
@@ -15,6 +18,7 @@ class SelectContactBloc extends Bloc<SelectContactEvent, SelectContactState> {
     on<UpdatePageStateEvent>(_updatePageStateEvent);
     on<GetAvailableContacts>(_getAvailableContacts);
     on<GetNotAvailableContacts>(_getNotAvailableContacts);
+    on<RefreshContacts>(_refreshContacts);
   }
 
   final FirebaseFirestoreService _firebaseFirestoreService;
@@ -72,57 +76,7 @@ class SelectContactBloc extends Bloc<SelectContactEvent, SelectContactState> {
           await _firebaseFirestoreService
               .isContactsNotAvailableListPresent(userId);
       if (!isDetailsAlreadyPresent) {
-        for (final contact in event.localContacts) {
-          final emailAddresses = contact.emails ?? [];
-          final phoneNumbers = contact.phones ?? [];
-          UserDetails? userDetails;
-          for (final phoneNumber in phoneNumbers) {
-            if (phoneNumber.value != null) {
-              userDetails =
-                  await _firebaseFirestoreService.getUserAccountByPhoneNumber(
-                phoneNumber.value!,
-              );
-            }
-          }
-          if (userDetails == null) {
-            for (final emailAddress in emailAddresses) {
-              if (emailAddress.value != null) {
-                userDetails = await _firebaseFirestoreService
-                    .getUserAccountByEmailAddress(
-                  emailAddress.value!,
-                );
-              }
-            }
-          }
-
-          if (userDetails != null) {
-            await _firebaseFirestoreService.setContactAvailableDetails(
-              userId,
-              ContactsAvailableDetails(
-                userId: userDetails.userId,
-                detailsFetchedOn: DeviceUtilsMethods.getCurrentTimeStamp(),
-                userDeviceDetails: await _deviceDetails.getDeviceDetails(),
-              ),
-            );
-          } else {
-            await _firebaseFirestoreService.setContactNotAvailableDetails(
-              userId,
-              ContactsNotAvailableDetails(
-                displayName: contact.displayName,
-                phoneNumber:
-                    (contact.phones?.isEmpty == true ? null : contact.phones)
-                        ?.first
-                        .value,
-                emailId:
-                    (contact.emails?.isEmpty == true ? null : contact.emails)
-                        ?.first
-                        .value,
-                detailsFetchedOn: DeviceUtilsMethods.getCurrentTimeStamp(),
-                userDeviceDetails: await _deviceDetails.getDeviceDetails(),
-              ),
-            );
-          }
-        }
+        await _refreshContactsOnServer(event.localContacts, userId);
       }
 
       emit(
@@ -152,5 +106,82 @@ class SelectContactBloc extends Bloc<SelectContactEvent, SelectContactState> {
         pageState: event.pageState,
       ),
     );
+  }
+
+  Future<void> _refreshContactsOnServer(
+    List<Contact> localContacts,
+    String currentUserId,
+  ) async {
+    for (final contact in localContacts) {
+      final emailAddresses = contact.emails ?? [];
+      final phoneNumbers = contact.phones ?? [];
+      UserDetails? userDetails;
+      for (final phoneNumber in phoneNumbers) {
+        if (phoneNumber.value != null) {
+          userDetails =
+              await _firebaseFirestoreService.getUserAccountByPhoneNumber(
+            phoneNumber.value!,
+          );
+        }
+      }
+      if (userDetails == null) {
+        for (final emailAddress in emailAddresses) {
+          if (emailAddress.value != null) {
+            userDetails =
+                await _firebaseFirestoreService.getUserAccountByEmailAddress(
+              emailAddress.value!,
+            );
+          }
+        }
+      }
+
+      if (userDetails != null) {
+        if (userDetails.userId != currentUserId) {
+          await _firebaseFirestoreService.setContactAvailableDetails(
+            currentUserId,
+            ContactsAvailableDetails(
+              userId: userDetails.userId,
+              detailsFetchedOn: DeviceUtilsMethods.getCurrentTimeStamp(),
+              userDeviceDetails: await _deviceDetails.getDeviceDetails(),
+            ),
+          );
+        }
+      } else {
+        await _firebaseFirestoreService.setContactNotAvailableDetails(
+          currentUserId,
+          ContactsNotAvailableDetails(
+            displayName: contact.displayName,
+            phoneNumber:
+                (contact.phones?.isEmpty == true ? null : contact.phones)
+                    ?.first
+                    .value,
+            emailId: (contact.emails?.isEmpty == true ? null : contact.emails)
+                ?.first
+                .value,
+            detailsFetchedOn: DeviceUtilsMethods.getCurrentTimeStamp(),
+            userDeviceDetails: await _deviceDetails.getDeviceDetails(),
+          ),
+        );
+      }
+    }
+  }
+
+  void _refreshContacts(
+    RefreshContacts event,
+    Emitter<SelectContactState> emit,
+  ) async {
+    final userId = _firebaseAuthService.getUserId();
+    if (userId != null) {
+      try {
+        await _refreshContactsOnServer(event.localContacts, userId);
+        emit(
+          state.copyWith(
+            pageState: PageState.success,
+          ),
+        );
+      } catch (e) {
+        FirebaseUtils.recordFlutterError(e);
+      }
+    }
   }
 }
