@@ -73,6 +73,8 @@ class UserDetailsBloc extends Bloc<UserDetailsEvent, UserDetailsState> {
             userDeviceDetails: deviceDetails,
             createdOnTimeStamp: DeviceUtilsMethods.getCurrentTimeStamp(),
             updatedOnTimeStamp: DeviceUtilsMethods.getCurrentTimeStamp(),
+            lastPinConfirmationTimeStamp:
+                DeviceUtilsMethods.getCurrentTimeStamp(),
             isEmailVerified: firebaseUserDetails.emailVerified,
             isPhoneNumberVerified: firebaseUserDetails.phoneNumber != null,
           ),

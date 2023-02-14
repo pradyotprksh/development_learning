@@ -29,6 +29,7 @@ abstract class CoreConstants {
   static const enableEncryption = 'enableEncryption';
   static const imageCompressionValue = 'imageCompressionValue';
   static const statusDeleteTimeValue = 'statusDeleteTimeValue';
+  static const pinConfirmationTimeValue = 'pinConfirmationTimeValue';
   static const isApplicationDown = 'isApplicationDown';
   static const userProfileImage =
       '$userCollection/profileImages/$userIdPlaceholder';

@@ -71,6 +71,7 @@ class _HomeViewState extends State<HomeView>
                   (route) => false,
                 );
               }
+              if (userState is AskForPinConfirmation) {}
             },
           ),
           BlocListener<UtilitiesBloc, UtilitiesState>(

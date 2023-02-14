@@ -33,7 +33,8 @@ class SplashView extends StatelessWidget {
           ),
           BlocListener<UserBloc, UserState>(
             listener: (_, userState) {
-              if (userState is UserDetailsAvailable) {
+              if (userState is UserDetailsAvailable ||
+                  userState is AskForPinConfirmation) {
                 context.navigator.pushNamedAndRemoveUntil(
                   Routes.homeRoute,
                   (route) => false,

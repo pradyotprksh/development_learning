@@ -13,4 +13,7 @@ abstract class FirebaseRemoteConfigService {
 
   static int statusDeleteTimeValue() =>
       FirebaseRemoteConfig.instance.getInt(CoreConstants.statusDeleteTimeValue);
+
+  static int pinConfirmationTimeValue() => FirebaseRemoteConfig.instance
+      .getInt(CoreConstants.pinConfirmationTimeValue);
 }

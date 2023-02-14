@@ -11,13 +11,23 @@ abstract class DeviceUtilsMethods {
     return '$tempDirectory-${DeviceUtilsMethods.getCurrentTimeStamp()}';
   }
 
-  static int getTimeDifference(int? timestamp) {
+  static int getTimeDifferenceInHrs(int? timestamp) {
     if (timestamp != null) {
-      final currentDate = DateTime.now();
-      final valueDate = DateTime.fromMicrosecondsSinceEpoch(timestamp);
-      final difference = currentDate.difference(valueDate);
-      return difference.inHours;
+      return _getTimeDifference(timestamp).inHours;
     }
     return getCurrentTimeStamp();
+  }
+
+  static int getTimeDifferenceInDays(int? timestamp) {
+    if (timestamp != null) {
+      return _getTimeDifference(timestamp).inDays;
+    }
+    return getCurrentTimeStamp();
+  }
+
+  static Duration _getTimeDifference(int timestamp) {
+    final currentDate = DateTime.now();
+    final valueDate = DateTime.fromMicrosecondsSinceEpoch(timestamp);
+    return currentDate.difference(valueDate);
   }
 }

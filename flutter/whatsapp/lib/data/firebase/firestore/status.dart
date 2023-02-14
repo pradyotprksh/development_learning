@@ -83,7 +83,7 @@ mixin FirestoreStatusImplementation implements FirebaseFirestoreService {
     final batch = firestore.batch();
     for (var status in allCurrentUserStatus.docs) {
       final statusTime = status.data().createdOnTimeStamp;
-      if (DeviceUtilsMethods.getTimeDifference(statusTime) >=
+      if (DeviceUtilsMethods.getTimeDifferenceInHrs(statusTime) >=
           FirebaseRemoteConfigService.statusDeleteTimeValue()) {
         batch.delete(status.reference);
       }

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:whatsapp/app/app.dart';
 import 'package:whatsapp/core/core.dart';
+import 'package:whatsapp/device/device.dart';
 
 class UserBloc extends Bloc<UserEvent, UserState> {
   UserBloc(
@@ -28,7 +29,13 @@ class UserBloc extends Bloc<UserEvent, UserState> {
         onData: (userDetails) {
           if (userDetails != null && userDetails.allDetailsAvailable) {
             _firebaseAuthService.updateUserDetails(userDetails);
-            return UserDetailsAvailable(userDetails);
+            if (DeviceUtilsMethods.getTimeDifferenceInDays(
+                    userDetails.lastPinConfirmationTimeStamp) >
+                FirebaseRemoteConfigService.pinConfirmationTimeValue()) {
+              return AskForPinConfirmation(userDetails);
+            } else {
+              return UserDetailsAvailable(userDetails);
+            }
           } else {
             return const UserDataNotAvailable();
           }
