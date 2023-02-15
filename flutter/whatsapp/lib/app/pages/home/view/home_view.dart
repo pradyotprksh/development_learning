@@ -35,6 +35,7 @@ class _HomeViewState extends State<HomeView>
       case HomeMenuItems.linkedDevices:
         break;
       case HomeMenuItems.savedMessages:
+        context.navigator.pushNamed(Routes.savedMessages);
         break;
       case HomeMenuItems.payments:
         break;

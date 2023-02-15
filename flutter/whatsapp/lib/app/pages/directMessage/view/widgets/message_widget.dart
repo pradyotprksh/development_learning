@@ -68,7 +68,9 @@ class MessageWidget extends StatelessWidget {
           context.translator.messageSaved,
           SnackBarAction(
             label: context.translator.check,
-            onPressed: () {},
+            onPressed: () {
+              context.navigator.pushNamed(Routes.savedMessages);
+            },
             textColor: context.themeData.snackBarTheme.actionTextColor,
           ),
         );
@@ -223,8 +225,10 @@ class MessageWidget extends StatelessWidget {
                     if (message.sentByUserId != currentUserId)
                       ThemeSizedBox.width5,
                     if (message.sentByUserId == currentUserId) const Spacer(),
-                    Flexible(
-                      fit: FlexFit.loose,
+                    ConstrainedBox(
+                      constraints: BoxConstraints(
+                        maxWidth: context.mediaQuery.size.width * 0.8,
+                      ),
                       child: Container(
                         decoration: BoxDecoration(
                           color: message.sentByUserId == currentUserId

@@ -26,6 +26,7 @@ abstract class Routes {
   static const newGroup = '/new-group';
   static const firebaseProfile = '/firebase-profile';
   static const pinConfirmation = '/pin-confirmation';
+  static const savedMessages = '/saved-messages';
 
   static const initialRoute = splashRoute;
 
@@ -38,6 +39,7 @@ abstract class Routes {
     qrCode: (context) => const QrCodeGeneratorView(),
     qrCodeScanner: (context) => const QrCodeScannerView(),
     pinConfirmation: (context) => const PinConfirmationView(),
+    savedMessages: (context) => const SavedMessagesView(),
     firebaseProfile: (context) => ProfileScreen(
           actions: [
             SignedOutAction(
