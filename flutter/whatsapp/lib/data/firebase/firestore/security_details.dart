@@ -9,11 +9,11 @@ mixin FirestoreSecurityDetailsService implements FirebaseFirestoreService {
   }
 
   @override
-  Future<void> createMessageCopyForwarded(
-    MessageCopyForwardDetails messageCopyForwardDetails,
+  Future<void> createMessageCopyForwardedSaved(
+    MessageCopyForwardSavedDetails messageCopyForwardDetails,
   ) async {
-    await getMessageCopyForwardCollectionReference(
-            messageCopyForwardDetails.userId)
+    await getMessageCopyForwardSavedCollectionReference(
+            messageCopyForwardDetails)
         .add(messageCopyForwardDetails);
   }
 }

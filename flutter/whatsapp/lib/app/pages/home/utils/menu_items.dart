@@ -2,7 +2,7 @@ enum HomeMenuItems {
   newGroup,
   newBroadcast,
   linkedDevices,
-  starredMessages,
+  savedMessages,
   payments,
   statusPrivacy,
   clearCallLog,
@@ -41,5 +41,6 @@ enum MessageMenuItem {
   copy,
   forward,
   pin,
+  saveMessage,
   delete,
 }

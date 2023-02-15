@@ -34,7 +34,7 @@ class _HomeViewState extends State<HomeView>
         break;
       case HomeMenuItems.linkedDevices:
         break;
-      case HomeMenuItems.starredMessages:
+      case HomeMenuItems.savedMessages:
         break;
       case HomeMenuItems.payments:
         break;
@@ -173,9 +173,9 @@ class _HomeViewState extends State<HomeView>
                       ),
                     ),
                     PopupMenuItem(
-                      value: HomeMenuItems.starredMessages,
+                      value: HomeMenuItems.savedMessages,
                       child: Text(
-                        context.translator.starredMessages,
+                        context.translator.savedMessages,
                       ),
                     ),
                     PopupMenuItem(

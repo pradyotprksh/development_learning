@@ -7,8 +7,13 @@ abstract class CoreConstants {
   static const securityDetailsCollection = 'security-details';
   static const screenshotCollection =
       '$securityDetailsCollection/$userIdPlaceholder/screenshots';
-  static const messageCopyForwardedCollection =
-      '$securityDetailsCollection/$userIdPlaceholder/message-copy-forward';
+  static const messageCopyForwardedSavedCollection =
+      '$securityDetailsCollection/$userIdPlaceholder/$messageCopyForwardedSavedEndpointPlaceholder';
+  static const messageCopyForwardedSavedEndpointPlaceholder =
+      'messageCopyForwardedSaved';
+  static const messageCopied = 'message-copied';
+  static const messageForwarded = 'message-forwarded';
+  static const messageSaved = 'message-saved';
   static const callsCollection = 'users/$userIdPlaceholder/calls';
   static const loginHistoryCollection =
       '$userCollection/$userIdPlaceholder/login-history';

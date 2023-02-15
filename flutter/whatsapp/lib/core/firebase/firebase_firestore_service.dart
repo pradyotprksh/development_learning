@@ -24,8 +24,8 @@ abstract class FirebaseFirestoreService {
 
   Future<void> createScreenshot(ScreenshotDetails screenshotDetails);
 
-  Future<void> createMessageCopyForwarded(
-    MessageCopyForwardDetails messageCopyForwardDetails,
+  Future<void> createMessageCopyForwardedSaved(
+    MessageCopyForwardSavedDetails messageCopyForwardDetails,
   );
 
   Stream<List<DirectMessagesListUserDetails>?> getDirectMessagesFor(
@@ -192,17 +192,30 @@ abstract class FirebaseFirestoreService {
             groupMessageDetails.toFirestore(),
       );
 
-  CollectionReference<MessageCopyForwardDetails>
-      getMessageCopyForwardCollectionReference(String userId) =>
-          _getCollectionReference(
-            CoreConstants.messageCopyForwardedCollection.replaceAll(
-              CoreConstants.userIdPlaceholder,
-              userId,
-            ),
-            MessageCopyForwardDetails.fromFirestore,
-            (MessageCopyForwardDetails groupMessageDetails, _) =>
-                groupMessageDetails.toFirestore(),
-          );
+  CollectionReference<MessageCopyForwardSavedDetails>
+      getMessageCopyForwardSavedCollectionReference(
+    MessageCopyForwardSavedDetails details,
+  ) {
+    final collectionName =
+        CoreConstants.messageCopyForwardedSavedCollection.replaceAll(
+      CoreConstants.messageCopyForwardedSavedEndpointPlaceholder,
+      details.isSaved
+          ? CoreConstants.messageSaved
+          : details.isCopied
+              ? CoreConstants.messageCopied
+              : CoreConstants.messageForwarded,
+    );
+
+    return _getCollectionReference(
+      collectionName.replaceAll(
+        CoreConstants.userIdPlaceholder,
+        details.userId,
+      ),
+      MessageCopyForwardSavedDetails.fromFirestore,
+      (MessageCopyForwardSavedDetails groupMessageDetails, _) =>
+          groupMessageDetails.toFirestore(),
+    );
+  }
 
   CollectionReference<SingleMessageDetails>
       getDirectMessagesCollectionReference(

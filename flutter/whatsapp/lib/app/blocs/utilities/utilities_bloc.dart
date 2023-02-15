@@ -65,17 +65,18 @@ class UtilitiesBloc extends Bloc<UtilitiesEvent, UtilitiesState> {
             '${CoreConstants.groupMessageCollection}/${event.groupId}/$messageId';
       }
 
-      final messageCopyForwardDetails = MessageCopyForwardDetails(
+      final messageCopyForwardDetails = MessageCopyForwardSavedDetails(
         userId: userId,
         messageId: messageId,
         isCopied: event.isCopied,
         isForwardOptionSelected: event.isForwarded,
+        isSaved: event.isSaved,
         userDeviceDetails: await _deviceDetails.getDeviceDetails(),
         createdOnTimeStamp: DeviceUtilsMethods.getCurrentTimeStamp(),
       );
 
       await _firebaseFirestoreService
-          .createMessageCopyForwarded(messageCopyForwardDetails);
+          .createMessageCopyForwardedSaved(messageCopyForwardDetails);
     }
   }
 }

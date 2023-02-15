@@ -19,17 +19,19 @@ class ScreenshotTaken extends UtilitiesEvent {
 }
 
 class MessageCopyForwardEvent extends UtilitiesEvent {
-  const MessageCopyForwardEvent(
-    this.messageId,
+  const MessageCopyForwardEvent({
+    required this.messageId,
     this.directMessageId,
     this.groupId,
-    this.isCopied,
-    this.isForwarded,
-  );
+    this.isCopied = false,
+    this.isForwarded = false,
+    this.isSaved = false,
+  });
 
   final String messageId;
   final String? directMessageId;
   final String? groupId;
   final bool isCopied;
   final bool isForwarded;
+  final bool isSaved;
 }

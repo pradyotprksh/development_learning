@@ -55,5 +55,6 @@ abstract class FirestoreItemKey {
   static const startedByUserDeviceDetails = 'startedByUserDeviceDetails';
   static const isOnline = 'isOnline';
   static const isCopied = 'isCopied';
+  static const isSaved = 'isSaved';
   static const isForwardOptionSelected = 'isForwardOptionSelected';
 }

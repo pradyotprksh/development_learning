@@ -74,7 +74,7 @@
   "addCaptionForStatus": "Add caption for your status",
   "newBroadcast": "New broadcast",
   "linkedDevices": "Linked devices",
-  "starredMessages": "Starred messages",
+  "savedMessages": "Saved messages",
   "payments": "Payments",
   "statusPrivacy": "Status privacy",
   "clearCallLog": "Clear call log",
@@ -127,5 +127,6 @@
   "pinConfirmationLabel": "Hope you remember the 8 digit pin.",
   "pinConfirmationNote": "If you don't remember the pin",
   "pinWrong": "Pin is wrong",
-  "verifyPhoneNumber": "Verify your phone number"
+  "verifyPhoneNumber": "Verify your phone number",
+  "saveMessage": "Save message"
 }

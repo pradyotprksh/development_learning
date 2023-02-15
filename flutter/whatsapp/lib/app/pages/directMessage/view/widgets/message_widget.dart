@@ -8,6 +8,7 @@ class MessageWidget extends StatelessWidget {
     super.key,
     required this.message,
     required this.messageForwardSelected,
+    required this.messageSavedSelected,
     this.userDetails,
     this.directMessageId,
     this.groupId,
@@ -18,6 +19,7 @@ class MessageWidget extends StatelessWidget {
   final String? directMessageId;
   final String? groupId;
   final Function(SingleMessageDetails) messageForwardSelected;
+  final Function(SingleMessageDetails) messageSavedSelected;
 
   void _itemSelectedFromMenu(
     BuildContext context,
@@ -29,11 +31,10 @@ class MessageWidget extends StatelessWidget {
       case MessageMenuItem.copy:
         context.read<UtilitiesBloc>().add(
               MessageCopyForwardEvent(
-                message.messageId,
-                directMessageId,
-                groupId,
-                true,
-                false,
+                messageId: message.messageId,
+                directMessageId: directMessageId,
+                groupId: groupId,
+                isCopied: true,
               ),
             );
         AppUtilsMethods.copyTextWithSnackBar(context, message.message);
@@ -41,11 +42,10 @@ class MessageWidget extends StatelessWidget {
       case MessageMenuItem.forward:
         context.read<UtilitiesBloc>().add(
               MessageCopyForwardEvent(
-                message.messageId,
-                directMessageId,
-                groupId,
-                false,
-                true,
+                messageId: message.messageId,
+                directMessageId: directMessageId,
+                groupId: groupId,
+                isForwarded: true,
               ),
             );
         messageForwardSelected(message);
@@ -53,6 +53,17 @@ class MessageWidget extends StatelessWidget {
       case MessageMenuItem.pin:
         break;
       case MessageMenuItem.delete:
+        break;
+      case MessageMenuItem.saveMessage:
+        context.read<UtilitiesBloc>().add(
+              MessageCopyForwardEvent(
+                messageId: message.messageId,
+                directMessageId: directMessageId,
+                groupId: groupId,
+                isSaved: true,
+              ),
+            );
+        messageSavedSelected(message);
         break;
     }
   }
@@ -147,6 +158,21 @@ class MessageWidget extends StatelessWidget {
                   ThemeSizedBox.width5,
                   Text(
                     context.translator.pin,
+                  ),
+                ],
+              ),
+            ),
+            PopupMenuItem(
+              value: MessageMenuItem.saveMessage,
+              child: Row(
+                children: [
+                  const Icon(
+                    Icons.save,
+                    size: 15,
+                  ),
+                  ThemeSizedBox.width5,
+                  Text(
+                    context.translator.saveMessage,
                   ),
                 ],
               ),
