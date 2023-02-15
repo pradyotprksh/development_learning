@@ -83,6 +83,13 @@ class _HomeViewState extends State<HomeView>
                   (route) => false,
                 );
               }
+              if (userState is UserDetailsAvailable) {
+                context.read<HomeBloc>().add(
+                      AskForPinConfirmation(
+                        userState.userDetails?.lastPinConfirmationTimeStamp,
+                      ),
+                    );
+              }
             },
           ),
           BlocListener<UtilitiesBloc, UtilitiesState>(

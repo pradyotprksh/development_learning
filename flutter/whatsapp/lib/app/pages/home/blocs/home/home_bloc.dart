@@ -94,13 +94,15 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     AskForPinConfirmation event,
     Emitter<HomeState> emit,
   ) {
-    emit(
-      state.copyWith(
-        askForPinConfirmation: DeviceUtilsMethods.getTimeDifferenceInDays(
-                event.lastPinConfirmationTimeStamp) >
-            FirebaseRemoteConfigService.pinConfirmationTimeValue(),
-      ),
-    );
+    if (event.lastPinConfirmationTimeStamp != null) {
+      emit(
+        state.copyWith(
+          askForPinConfirmation: DeviceUtilsMethods.getTimeDifferenceInDays(
+                  event.lastPinConfirmationTimeStamp) >
+              FirebaseRemoteConfigService.pinConfirmationTimeValue(),
+        ),
+      );
+    }
   }
 
   void _onPinVerified(
