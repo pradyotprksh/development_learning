@@ -16,7 +16,7 @@ class ScreenshotDetails {
   ) {
     final data = snapshot.data();
 
-    final deviceDetails = data?[FirestoreItemKey.createdByUserDeviceDetails]
+    final deviceDetails = data?[FirestoreItemKey.userDeviceDetails]
             as Map<String, dynamic>? ??
         <String, dynamic>{};
 

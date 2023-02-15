@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:whatsapp/app/app.dart';
 import 'package:whatsapp/core/core.dart';
@@ -15,6 +17,7 @@ class GroupMessageBloc extends Bloc<GroupMessageEvent, GroupMessageState> {
     on<GetGroupAllMessages>(_getAllMessages);
     on<AddGroupMessage>(_addANewMessage);
     on<UpdateUsersDetails>(_updateUsersDetails);
+    on<SaveGroupMessageEvent>(_saveMessage);
   }
 
   final FirebaseFirestoreService _firebaseFirestoreService;
@@ -103,6 +106,36 @@ class GroupMessageBloc extends Bloc<GroupMessageEvent, GroupMessageState> {
           FirestoreItemKey.lastMessageOnTimeStamp: deviceTimeStamp,
           FirestoreItemKey.lastMessageByUserId: currentUserId,
         },
+      );
+    }
+  }
+
+  void _saveMessage(
+    SaveGroupMessageEvent event,
+    Emitter<GroupMessageState> emit,
+  ) async {
+    final userId = _firebaseAuthService.getUserId();
+    if (userId != null) {
+      var messageId = event.messageId;
+      if (event.directMessageId != null) {
+        messageId =
+            '${CoreConstants.directMessageCollection}/${event.directMessageId}/$messageId';
+      } else if (event.groupId != null) {
+        messageId =
+            '${CoreConstants.groupMessageCollection}/${event.groupId}/$messageId';
+      }
+
+      unawaited(
+        _firebaseFirestoreService.saveMessage(
+          userId,
+          event.messageId,
+          SavedMessageDetails(
+            messageSentByUserId: event.sentByUserId,
+            messageId: messageId,
+            savedOnTimeStamp: DeviceUtilsMethods.getCurrentTimeStamp(),
+            userDeviceDetails: await _deviceDetails.getDeviceDetails(),
+          ),
+        ),
       );
     }
   }

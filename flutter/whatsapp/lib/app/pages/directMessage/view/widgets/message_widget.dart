@@ -64,6 +64,14 @@ class MessageWidget extends StatelessWidget {
               ),
             );
         messageSavedSelected(message);
+        context.replaceAndShowSnackBar(
+          context.translator.messageSaved,
+          SnackBarAction(
+            label: context.translator.check,
+            onPressed: () {},
+            textColor: context.themeData.snackBarTheme.actionTextColor,
+          ),
+        );
         break;
     }
   }

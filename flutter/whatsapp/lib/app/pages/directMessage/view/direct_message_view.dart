@@ -125,7 +125,16 @@ class _DirectMessageViewState extends State<DirectMessageView> {
                   message: directMessageState.messages[index],
                   userDetails: directMessageState.userDetails,
                   messageForwardSelected: (details) {},
-                  messageSavedSelected: (details) {},
+                  messageSavedSelected: (details) {
+                    context.read<DirectMessageBloc>().add(
+                          SaveDirectMessageEvent(
+                            messageId: details.messageId,
+                            sentByUserId: details.sentByUserId,
+                            directMessageId: directMessageState
+                                .directMessageDetails?.messageId,
+                          ),
+                        );
+                  },
                   directMessageId:
                       directMessageState.directMessageDetails?.messageId,
                 ),

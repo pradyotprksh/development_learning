@@ -39,3 +39,17 @@ class AddGroupMessage extends GroupMessageEvent {
 class UpdateUsersDetails extends GroupMessageEvent {
   const UpdateUsersDetails();
 }
+
+class SaveGroupMessageEvent extends GroupMessageEvent {
+  const SaveGroupMessageEvent({
+    required this.messageId,
+    required this.sentByUserId,
+    this.directMessageId,
+    this.groupId,
+  });
+
+  final String messageId;
+  final String sentByUserId;
+  final String? directMessageId;
+  final String? groupId;
+}

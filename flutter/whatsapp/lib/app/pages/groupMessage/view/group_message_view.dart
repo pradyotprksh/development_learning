@@ -159,7 +159,18 @@ class GroupMessageView extends StatelessWidget {
                     message: groupMessageState.messages[index],
                     userDetails: userDetails,
                     messageForwardSelected: (details) {},
-                    messageSavedSelected: (details) {},
+                    messageSavedSelected: (details) {
+                      context.read<GroupMessageBloc>().add(
+                            SaveGroupMessageEvent(
+                              messageId: details.messageId,
+                              sentByUserId: details.sentByUserId,
+                              directMessageId: groupMessageState
+                                  .groupMessageDetails
+                                  ?.groupMessageDetails
+                                  ?.groupId,
+                            ),
+                          );
+                    },
                     groupId: groupMessageState
                         .groupMessageDetails?.groupMessageDetails?.groupId,
                   );

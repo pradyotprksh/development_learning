@@ -47,3 +47,17 @@ class AddMessage extends DirectMessageEvent {
 
   final String message;
 }
+
+class SaveDirectMessageEvent extends DirectMessageEvent {
+  const SaveDirectMessageEvent({
+    required this.messageId,
+    required this.sentByUserId,
+    this.directMessageId,
+    this.groupId,
+  });
+
+  final String messageId;
+  final String sentByUserId;
+  final String? directMessageId;
+  final String? groupId;
+}

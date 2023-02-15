@@ -19,6 +19,8 @@ abstract class CoreConstants {
       '$userCollection/$userIdPlaceholder/login-history';
   static const contactsAvailableCollection =
       '$userCollection/$userIdPlaceholder/contacts-available';
+  static const savedMessagesCollection =
+      '$userCollection/$userIdPlaceholder/saved-messages';
   static const contactsNotAvailableCollection =
       '$userCollection/$userIdPlaceholder/contacts-not-available';
   static const directMessagesCollection =

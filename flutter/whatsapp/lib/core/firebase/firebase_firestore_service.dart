@@ -114,6 +114,12 @@ abstract class FirebaseFirestoreService {
 
   Future<void> clearCallLogs(String userId);
 
+  Future<void> saveMessage(
+    String userId,
+    String messageId,
+    SavedMessageDetails savedMessageDetails,
+  );
+
   CollectionReference<R> _getCollectionReference<R>(
     String collectionPath,
     FromFirestore<R> fromFirestore,
@@ -133,6 +139,16 @@ abstract class FirebaseFirestoreService {
             (ContactsAvailableDetails loginHistoryDetails, _) =>
                 loginHistoryDetails.toFirestore(),
           );
+
+  CollectionReference<SavedMessageDetails> getSavedMessagesCollectionReference(
+          String userId) =>
+      _getCollectionReference(
+        CoreConstants.savedMessagesCollection
+            .replaceAll(CoreConstants.userIdPlaceholder, userId),
+        SavedMessageDetails.fromFirestore,
+        (SavedMessageDetails loginHistoryDetails, _) =>
+            loginHistoryDetails.toFirestore(),
+      );
 
   CollectionReference<CallDetails> getCallDetailsCollectionReference(
           String userId) =>

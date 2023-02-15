@@ -128,5 +128,7 @@
   "pinConfirmationNote": "If you don't remember the pin",
   "pinWrong": "Pin is wrong",
   "verifyPhoneNumber": "Verify your phone number",
-  "saveMessage": "Save message"
+  "saveMessage": "Save message",
+  "messageSaved": "Message saved",
+  "check": "Check"
 }
