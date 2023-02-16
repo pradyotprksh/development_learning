@@ -130,5 +130,6 @@
   "verifyPhoneNumber": "Verify your phone number",
   "saveMessage": "Save message",
   "messageSaved": "Message saved",
-  "check": "Check"
+  "check": "Check",
+  "saved": "Saved "
 }

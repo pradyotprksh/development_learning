@@ -164,10 +164,8 @@ class GroupMessageView extends StatelessWidget {
                             SaveGroupMessageEvent(
                               messageId: details.messageId,
                               sentByUserId: details.sentByUserId,
-                              directMessageId: groupMessageState
-                                  .groupMessageDetails
-                                  ?.groupMessageDetails
-                                  ?.groupId,
+                              groupId: groupMessageState.groupMessageDetails
+                                  ?.groupMessageDetails?.groupId,
                             ),
                           );
                     },

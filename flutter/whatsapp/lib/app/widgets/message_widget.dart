@@ -9,6 +9,7 @@ class MessageWidget extends StatelessWidget {
     required this.message,
     required this.messageForwardSelected,
     required this.messageSavedSelected,
+    this.showOtherDetailsAndOption = true,
     this.userDetails,
     this.directMessageId,
     this.groupId,
@@ -20,6 +21,7 @@ class MessageWidget extends StatelessWidget {
   final String? groupId;
   final Function(SingleMessageDetails) messageForwardSelected;
   final Function(SingleMessageDetails) messageSavedSelected;
+  final bool showOtherDetailsAndOption;
 
   void _itemSelectedFromMenu(
     BuildContext context,
@@ -100,6 +102,7 @@ class MessageWidget extends StatelessWidget {
         ),
         child: PopupMenuButton<MessageMenuItem>(
           position: PopupMenuPosition.under,
+          enabled: showOtherDetailsAndOption,
           offset: Offset(
             isCurrentUserMessage ? context.mediaQuery.size.width : 0,
             0,
@@ -208,23 +211,29 @@ class MessageWidget extends StatelessWidget {
             children: [
               ThemeSizedBox.height10,
               Padding(
-                padding: ThemeEdgeInsets.left15Right15,
+                padding: showOtherDetailsAndOption
+                    ? ThemeEdgeInsets.left15Right15
+                    : ThemeEdgeInsets.zero,
                 child: Row(
                   mainAxisAlignment: message.sentByUserId == currentUserId
                       ? MainAxisAlignment.end
                       : MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    if (message.sentByUserId != currentUserId)
+                    if (message.sentByUserId != currentUserId &&
+                        showOtherDetailsAndOption)
                       UserImageWidget(
                         profileImage: userDetails?.profileImage ?? '',
                         userId: userDetails?.userId ?? '',
                         isOnline: userDetails?.isOnline,
                         size: 25,
                       ),
-                    if (message.sentByUserId != currentUserId)
+                    if (message.sentByUserId != currentUserId &&
+                        showOtherDetailsAndOption)
                       ThemeSizedBox.width5,
-                    if (message.sentByUserId == currentUserId) const Spacer(),
+                    if (message.sentByUserId == currentUserId &&
+                        showOtherDetailsAndOption)
+                      const Spacer(),
                     ConstrainedBox(
                       constraints: BoxConstraints(
                         maxWidth: context.mediaQuery.size.width * 0.8,

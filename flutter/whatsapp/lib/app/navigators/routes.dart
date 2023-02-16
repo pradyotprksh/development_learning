@@ -39,7 +39,15 @@ abstract class Routes {
     qrCode: (context) => const QrCodeGeneratorView(),
     qrCodeScanner: (context) => const QrCodeScannerView(),
     pinConfirmation: (context) => const PinConfirmationView(),
-    savedMessages: (context) => const SavedMessagesView(),
+    savedMessages: (context) => BlocProvider(
+          create: (_) => SavedMessagesBloc(
+            FirebaseFirestoreServiceImplementation(),
+            FirebaseAuthServiceImplementation(),
+          )..add(
+              const FetchSavedMessages(),
+            ),
+          child: const SavedMessagesView(),
+        ),
     firebaseProfile: (context) => ProfileScreen(
           actions: [
             SignedOutAction(

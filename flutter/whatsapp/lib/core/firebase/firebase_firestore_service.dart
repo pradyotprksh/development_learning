@@ -7,6 +7,8 @@ import 'package:whatsapp/domain/domain.dart';
 abstract class FirebaseFirestoreService {
   final firestore = FirebaseFirestore.instance;
 
+  Stream<List<MessageUserSavedDetails?>> getSavedMessages(String userId);
+
   Stream<DirectMessageDetails?> getMessageDetails(
     String currentUserId,
     String selectedUserId,

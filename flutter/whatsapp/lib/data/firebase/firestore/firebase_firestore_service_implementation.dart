@@ -9,7 +9,8 @@ class FirebaseFirestoreServiceImplementation extends FirebaseFirestoreService
         FirestoreContactsService,
         FirestoreGroupMessageService,
         FirestoreCallsService,
-        FirestoreSecurityDetailsService {
+        FirestoreSecurityDetailsService,
+        FirestoreSavedMessagesService {
   factory FirebaseFirestoreServiceImplementation() => _instance;
 
   FirebaseFirestoreServiceImplementation._privateConstructor();

@@ -92,15 +92,4 @@ mixin FirestoreUserImplementation implements FirebaseFirestoreService {
           .map(
             (event) => event.docs.map((e) => e.data()).toList(),
           );
-
-  @override
-  Future<void> saveMessage(
-    String userId,
-    String messageId,
-    SavedMessageDetails savedMessageDetails,
-  ) async {
-    await getSavedMessagesCollectionReference(userId).doc(messageId).set(
-          savedMessageDetails,
-        );
-  }
 }

@@ -23,6 +23,7 @@ abstract class ThemeEdgeInsets {
   static const all10 = EdgeInsets.all(10);
   static const zero = EdgeInsets.zero;
   static const all15 = EdgeInsets.all(15);
+  static const topLeftRight15 = EdgeInsets.only(top: 15, left: 15, right: 15);
   static const leftTopRight15Bottom150 = EdgeInsets.fromLTRB(
     15,
     15,
