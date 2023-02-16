@@ -10,3 +10,7 @@ abstract class SavedMessagesEvent extends Equatable {
 class FetchSavedMessages extends SavedMessagesEvent {
   const FetchSavedMessages();
 }
+
+class ClearSavedMessages extends SavedMessagesEvent {
+  const ClearSavedMessages();
+}

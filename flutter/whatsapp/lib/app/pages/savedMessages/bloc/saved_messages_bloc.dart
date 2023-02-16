@@ -8,6 +8,7 @@ class SavedMessagesBloc extends Bloc<SavedMessagesEvent, SavedMessagesState> {
     this._firebaseAuthService,
   ) : super(const SavedMessagesState()) {
     on<FetchSavedMessages>(_getSavedMessages);
+    on<ClearSavedMessages>(_clearSavedMessages);
   }
 
   final FirebaseFirestoreService _firebaseFirestoreService;
@@ -25,6 +26,21 @@ class SavedMessagesBloc extends Bloc<SavedMessagesEvent, SavedMessagesState> {
           messages: details,
         ),
       );
+    }
+  }
+
+  void _clearSavedMessages(
+    ClearSavedMessages event,
+    Emitter<SavedMessagesState> emit,
+  ) async {
+    try {
+      emit(state.copyWith(pageState: PageState.loading));
+      final userId = _firebaseAuthService.getUserId();
+      if (userId != null) {
+        await _firebaseFirestoreService.deleteAllSavedMessages(userId);
+      }
+    } finally {
+      emit(state.copyWith(pageState: PageState.idle));
     }
   }
 }

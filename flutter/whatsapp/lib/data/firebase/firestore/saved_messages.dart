@@ -58,4 +58,14 @@ mixin FirestoreSavedMessagesService implements FirebaseFirestoreService {
               },
             ).toList(),
           );
+
+  @override
+  Future<void> deleteAllSavedMessages(String userId) async {
+    final batch = firestore.batch();
+    final callLogs = await getSavedMessagesCollectionReference(userId).get();
+    for (var call in callLogs.docs) {
+      batch.delete(call.reference);
+    }
+    await batch.commit();
+  }
 }

@@ -44,3 +44,7 @@ enum MessageMenuItem {
   saveMessage,
   delete,
 }
+
+enum SavedMessagesMenuItem {
+  clear,
+}

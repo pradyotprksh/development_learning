@@ -131,5 +131,6 @@
   "saveMessage": "Save message",
   "messageSaved": "Message saved",
   "check": "Check",
-  "saved": "Saved "
+  "saved": "Saved ",
+  "clear": "Clear"
 }
