@@ -11,6 +11,7 @@ export 'pinConfirmation/pin_confirmation.dart';
 export 'profile/profile.dart';
 export 'qrCode/qr_code.dart';
 export 'savedMessages/saved_messages.dart';
+export 'search/search.dart';
 export 'selectContact/select_contact.dart';
 export 'settings/settings.dart';
 export 'splash/splash.dart';

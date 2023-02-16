@@ -27,6 +27,7 @@ abstract class Routes {
   static const firebaseProfile = '/firebase-profile';
   static const pinConfirmation = '/pin-confirmation';
   static const savedMessages = '/saved-messages';
+  static const search = '/search';
 
   static const initialRoute = splashRoute;
 
@@ -39,6 +40,7 @@ abstract class Routes {
     qrCode: (context) => const QrCodeGeneratorView(),
     qrCodeScanner: (context) => const QrCodeScannerView(),
     pinConfirmation: (context) => const PinConfirmationView(),
+    search: (context) => const SearchView(),
     savedMessages: (context) => BlocProvider(
           create: (_) => SavedMessagesBloc(
             FirebaseFirestoreServiceImplementation(),

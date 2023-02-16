@@ -28,7 +28,9 @@ class SettingsView extends StatelessWidget {
               ),
             ),
             IconButton(
-              onPressed: () {},
+              onPressed: () {
+                context.navigator.pushNamed(Routes.search);
+              },
               icon: const Icon(
                 Icons.search,
               ),
