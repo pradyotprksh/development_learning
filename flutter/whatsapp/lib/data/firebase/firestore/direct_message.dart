@@ -22,7 +22,11 @@ mixin FirestoreDirectMessageService implements FirebaseFirestoreService {
             final users = element.data().users;
             if (users.contains(currentUserId) &&
                 users.contains(selectedUserId)) {
-              directMessageDetails = event.docs.firstOrNull?.data();
+              directMessageDetails = event.docs
+                  .firstWhereOrNull((element) =>
+                      element.data().users.contains(currentUserId) &&
+                      element.data().users.contains(selectedUserId))
+                  ?.data();
               found = true;
               break;
             }
