@@ -18,7 +18,7 @@ class _VideoCallViewState extends State<VideoCallView> {
   @override
   void initState() {
     controller =
-        CameraController(DeviceCameras.getCamera(), ResolutionPreset.max);
+        CameraController(DeviceCameras.getFrontCamera(), ResolutionPreset.max);
     controller.initialize().then((_) {
       setState(() {});
     });

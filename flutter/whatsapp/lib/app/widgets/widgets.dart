@@ -4,6 +4,5 @@ export 'circular_progress_indicator_widget.dart';
 export 'group_image_widget.dart';
 export 'image_picker/image_picker.dart';
 export 'linear_progress_indicator_widget.dart';
-export 'message_widget.dart';
 export 'show_emoji_bottom_sheet.dart';
 export 'user_image_widget.dart';

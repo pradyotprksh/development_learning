@@ -158,12 +158,10 @@ class _DirectMessageViewState extends State<DirectMessageView> {
                 if (messageDetails != null) {
                   return BlocBuilder<DirectMessageBloc, DirectMessageState>(
                     builder: (_, directMessageState) =>
-                        MessageFieldWithEmojiWidget(
+                        MessageFieldWithEmojiAttachmentsWidget(
                       onEmojiButtonPressed: () {
                         context.read<DirectMessageBloc>().add(
-                              const ToggleEmojisOption(
-                                shouldShow: true,
-                              ),
+                              const ToggleEmojisOption(),
                             );
                       },
                       onMessageSubmitted: (message) {

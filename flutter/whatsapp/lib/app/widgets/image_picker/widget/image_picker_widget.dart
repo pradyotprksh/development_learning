@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:whatsapp/app/app.dart';
 
 class ImagePickerWidget extends StatelessWidget {
-  ImagePickerWidget({
+  const ImagePickerWidget({
     super.key,
     required this.child,
     required this.image,
@@ -12,7 +11,6 @@ class ImagePickerWidget extends StatelessWidget {
     required this.cropStyle,
   });
 
-  final ImagePicker _picker = ImagePicker();
   final Widget child;
   final void Function(String) image;
   final List<CropAspectRatioPreset> aspectRatioPresets;
@@ -28,7 +26,7 @@ class ImagePickerWidget extends StatelessWidget {
           final source = await ImagePickerUtils.selectPickerType(context);
           if (source != null) {
             // Pick file
-            final file = await _picker.pickImage(source: source);
+            final file = await ImagePickerUtils.getImageBasedOnSource(source);
             if (file != null) {
               // Crop the picked image
               final filePath = file.path;

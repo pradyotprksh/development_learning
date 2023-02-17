@@ -1,9 +1,10 @@
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:whatsapp/app/app.dart';
+import 'package:whatsapp/core/core.dart';
 
-class MessageFieldWithEmojiWidget extends StatefulWidget {
-  const MessageFieldWithEmojiWidget({
+class MessageFieldWithEmojiAttachmentsWidget extends StatefulWidget {
+  const MessageFieldWithEmojiAttachmentsWidget({
     super.key,
     required this.onEmojiButtonPressed,
     required this.onMessageSubmitted,
@@ -17,12 +18,12 @@ class MessageFieldWithEmojiWidget extends StatefulWidget {
   final bool isEmojiOptionVisible;
 
   @override
-  State<MessageFieldWithEmojiWidget> createState() =>
-      _MessageFieldWithEmojiWidgetState();
+  State<MessageFieldWithEmojiAttachmentsWidget> createState() =>
+      _MessageFieldWithEmojiAttachmentsWidgetState();
 }
 
-class _MessageFieldWithEmojiWidgetState
-    extends State<MessageFieldWithEmojiWidget> {
+class _MessageFieldWithEmojiAttachmentsWidgetState
+    extends State<MessageFieldWithEmojiAttachmentsWidget> {
   final _messageTextEditingController = TextEditingController();
   final _messageFocusNode = FocusNode();
 
@@ -59,6 +60,18 @@ class _MessageFieldWithEmojiWidgetState
               },
               icon: const Icon(
                 Icons.emoji_emotions,
+              ),
+            ),
+            suffixIcon: IconButton(
+              onPressed: () async {
+                final file =
+                    await MessageUtilsMethods.showAttachmentOptionsBottomSheet(
+                  context,
+                );
+                UtilsLogger.errorLog(file?.filePath);
+              },
+              icon: const Icon(
+                Icons.attachment,
               ),
             ),
           ),

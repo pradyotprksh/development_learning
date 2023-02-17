@@ -7,10 +7,12 @@ abstract class DeviceCameras {
     cameras = await availableCameras();
   }
 
-  static CameraDescription getCamera() {
+  static CameraDescription getFrontCamera() {
     if (cameras.length > 1) {
       return cameras[1];
     }
     return cameras[0];
   }
+
+  static CameraDescription getBackCamera() => cameras[0];
 }

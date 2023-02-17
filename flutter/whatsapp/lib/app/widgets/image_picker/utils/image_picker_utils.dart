@@ -6,6 +6,8 @@ import 'package:whatsapp/app/app.dart';
 import 'package:whatsapp/core/core.dart';
 
 abstract class ImagePickerUtils {
+  static final ImagePicker _picker = ImagePicker();
+
   static Future<ImageSource?> selectPickerType(
     BuildContext context,
   ) async {
@@ -42,6 +44,9 @@ abstract class ImagePickerUtils {
 
     return option;
   }
+
+  static Future<XFile?> getImageBasedOnSource(ImageSource imageSource) async =>
+      await _picker.pickImage(source: imageSource);
 
   static Future<String?> getCroppedImage(
     String filePath,

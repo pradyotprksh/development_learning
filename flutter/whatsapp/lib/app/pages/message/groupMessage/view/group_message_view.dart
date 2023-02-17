@@ -179,12 +179,11 @@ class GroupMessageView extends StatelessWidget {
           Padding(
             padding: ThemeEdgeInsets.all10,
             child: BlocBuilder<GroupMessageBloc, GroupMessageState>(
-              builder: (_, groupMessageState) => MessageFieldWithEmojiWidget(
+              builder: (_, groupMessageState) =>
+                  MessageFieldWithEmojiAttachmentsWidget(
                 onEmojiButtonPressed: () {
                   context.read<GroupMessageBloc>().add(
-                        const ToggleGroupEmojisOption(
-                          shouldShow: true,
-                        ),
+                        const ToggleGroupEmojisOption(),
                       );
                 },
                 onMessageSubmitted: (message) {
