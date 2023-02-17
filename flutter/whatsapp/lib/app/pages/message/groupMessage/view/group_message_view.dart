@@ -201,6 +201,7 @@ class GroupMessageView extends StatelessWidget {
                       );
                 },
                 isEmojiOptionVisible: groupMessageState.isEmojiOptionVisible,
+                onAttachmentSelected: (details) {},
               ),
             ),
           ),

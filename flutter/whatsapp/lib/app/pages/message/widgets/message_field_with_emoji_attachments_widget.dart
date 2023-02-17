@@ -1,7 +1,6 @@
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:whatsapp/app/app.dart';
-import 'package:whatsapp/core/core.dart';
 
 class MessageFieldWithEmojiAttachmentsWidget extends StatefulWidget {
   const MessageFieldWithEmojiAttachmentsWidget({
@@ -9,13 +8,17 @@ class MessageFieldWithEmojiAttachmentsWidget extends StatefulWidget {
     required this.onEmojiButtonPressed,
     required this.onMessageSubmitted,
     required this.closeEmojiOption,
+    required this.onAttachmentSelected,
     this.isEmojiOptionVisible = false,
+    this.attachments = const [],
   });
 
   final Function onEmojiButtonPressed;
   final Function closeEmojiOption;
   final Function(String) onMessageSubmitted;
   final bool isEmojiOptionVisible;
+  final Function(List<FileInformation>) onAttachmentSelected;
+  final List<FileInformation> attachments;
 
   @override
   State<MessageFieldWithEmojiAttachmentsWidget> createState() =>
@@ -68,7 +71,9 @@ class _MessageFieldWithEmojiAttachmentsWidgetState
                     await MessageUtilsMethods.showAttachmentOptionsBottomSheet(
                   context,
                 );
-                UtilsLogger.errorLog(file?.filePath);
+                if (file != null) {
+                  widget.onAttachmentSelected(file);
+                }
               },
               icon: const Icon(
                 Icons.attachment,
@@ -82,6 +87,8 @@ class _MessageFieldWithEmojiAttachmentsWidgetState
           },
           textInputAction: TextInputAction.send,
         ),
+        if (widget.attachments.isNotEmpty)
+          AttachmentsPreviewWidget(attachments: widget.attachments),
         if (widget.isEmojiOptionVisible)
           SizedBox(
             height: context.mediaQuery.size.height * 0.4,

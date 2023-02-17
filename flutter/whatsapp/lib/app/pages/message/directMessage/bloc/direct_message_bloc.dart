@@ -20,6 +20,7 @@ class DirectMessageBloc
     on<GetAllMessages>(_getAllMessages);
     on<AddMessage>(_addANewMessage);
     on<SaveDirectMessageEvent>(_saveMessage);
+    on<DirectMessageAttachmentSelectedEvent>(_attachmentSelected);
   }
 
   final FirebaseFirestoreService _firebaseFirestoreService;
@@ -207,5 +208,20 @@ class DirectMessageBloc
         ),
       );
     }
+  }
+
+  void _attachmentSelected(
+    DirectMessageAttachmentSelectedEvent event,
+    Emitter<DirectMessageState> emit,
+  ) {
+    final attachments = {
+      ...event.fileInformation,
+      ...state.attachments,
+    };
+    emit(
+      state.copyWith(
+        attachments: attachments.toList(),
+      ),
+    );
   }
 }

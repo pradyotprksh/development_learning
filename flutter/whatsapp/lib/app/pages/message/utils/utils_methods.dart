@@ -5,10 +5,10 @@ import 'package:image_picker/image_picker.dart';
 import 'package:whatsapp/app/app.dart';
 
 abstract class MessageUtilsMethods {
-  static Future<FileInformation?> showAttachmentOptionsBottomSheet(
+  static Future<List<FileInformation>?> showAttachmentOptionsBottomSheet(
     BuildContext context,
   ) async =>
-      await showModalBottomSheet<FileInformation>(
+      await showModalBottomSheet<List<FileInformation>>(
         context: context,
         builder: (_) => const AttachmentOptionsWidget(),
       );
@@ -29,7 +29,9 @@ abstract class MessageUtilsMethods {
   }
 
   static Future<FilePickerResult?> pickFileFromStorage() async =>
-      await FilePicker.platform.pickFiles();
+      await FilePicker.platform.pickFiles(
+        allowMultiple: true,
+      );
 
   static Future<String?> startGalleryFilePicker(BuildContext context) async {
     final webSettings = WebUiSettings(

@@ -180,6 +180,14 @@ class _DirectMessageViewState extends State<DirectMessageView> {
                       },
                       isEmojiOptionVisible:
                           directMessageState.isEmojiOptionVisible,
+                      onAttachmentSelected: (details) {
+                        context.read<DirectMessageBloc>().add(
+                              DirectMessageAttachmentSelectedEvent(
+                                details,
+                              ),
+                            );
+                      },
+                      attachments: directMessageState.attachments,
                     ),
                   );
                 } else {

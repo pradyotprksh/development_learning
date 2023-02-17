@@ -52,12 +52,14 @@ class _AttachmentOptionsWidgetState extends State<AttachmentOptionsWidget> {
                     await MessageUtilsMethods.startCameraFilePicker(context);
                 if (path != null) {
                   navigator.pop(
-                    FileInformation(
-                      filePath: path,
-                      isFromFileSystem: false,
-                      isFromCamera: true,
-                      isFromGallery: false,
-                    ),
+                    [
+                      FileInformation(
+                        filePath: path,
+                        isFromFileSystem: false,
+                        isFromCamera: true,
+                        isFromGallery: false,
+                      ),
+                    ],
                   );
                 }
               },
@@ -83,12 +85,14 @@ class _AttachmentOptionsWidgetState extends State<AttachmentOptionsWidget> {
                     await MessageUtilsMethods.startGalleryFilePicker(context);
                 if (path != null) {
                   navigator.pop(
-                    FileInformation(
-                      filePath: path,
-                      isFromFileSystem: false,
-                      isFromCamera: true,
-                      isFromGallery: false,
-                    ),
+                    [
+                      FileInformation(
+                        filePath: path,
+                        isFromFileSystem: false,
+                        isFromCamera: true,
+                        isFromGallery: false,
+                      ),
+                    ],
                   );
                 }
               },
@@ -113,20 +117,23 @@ class _AttachmentOptionsWidgetState extends State<AttachmentOptionsWidget> {
                 final navigator = context.navigator;
                 final details = await MessageUtilsMethods.pickFileFromStorage();
                 if (details != null) {
-                  final fileDetails = details.files.first;
-                  final path = fileDetails.path;
-                  if (path != null) {
-                    navigator.pop(
-                      FileInformation(
-                        filePath: path,
-                        isFromFileSystem: true,
-                        isFromCamera: false,
-                        isFromGallery: false,
-                        fileSize: fileDetails.size,
-                        fileType: fileDetails.extension,
-                      ),
-                    );
-                  }
+                  final files = details.files
+                      .map(
+                        (e) => FileInformation(
+                          filePath: e.path ?? '',
+                          isFromFileSystem: true,
+                          isFromCamera: false,
+                          isFromGallery: false,
+                          fileSize: e.size,
+                          fileType: e.extension,
+                          fileName: e.name,
+                        ),
+                      )
+                      .toList()
+                    ..removeWhere((element) => element.filePath.isEmpty);
+                  navigator.pop(
+                    files,
+                  );
                 }
               },
               child: Container(
