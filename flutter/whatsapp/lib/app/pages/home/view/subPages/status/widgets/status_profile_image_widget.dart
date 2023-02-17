@@ -33,6 +33,7 @@ class StatusProfileImageWidget extends StatelessWidget {
               currentMood: currentMode,
               size: 40,
               isOnline: isOnline,
+              enableAction: false,
             ),
             if (totalStatusCount > 0)
               CircularStepProgressIndicator(

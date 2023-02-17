@@ -31,6 +31,7 @@ abstract class FirestoreItemKey {
   static const firestoreFilePath = 'firestoreFilePath';
   static const statusId = 'statusId';
   static const isFileImage = 'isFileImage';
+  static const messageDetails = 'messageDetails';
   static const seenOnTimeStamp = 'seenOnTimeStamp';
   static const message = 'message';
   static const sentByUserId = 'sentByUserId';

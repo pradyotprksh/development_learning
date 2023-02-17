@@ -77,6 +77,12 @@ class MessageWidget extends StatelessWidget {
           ),
         );
         break;
+      case MessageMenuItem.addAsAStatus:
+        context.navigator.pushNamed(
+          Routes.addStatusText,
+          arguments: message,
+        );
+        break;
     }
   }
 
@@ -186,6 +192,21 @@ class MessageWidget extends StatelessWidget {
                   ThemeSizedBox.width5,
                   Text(
                     context.translator.saveMessage,
+                  ),
+                ],
+              ),
+            ),
+            PopupMenuItem(
+              value: MessageMenuItem.addAsAStatus,
+              child: Row(
+                children: [
+                  const Icon(
+                    Icons.add,
+                    size: 15,
+                  ),
+                  ThemeSizedBox.width5,
+                  Text(
+                    context.translator.addAsAStatus,
                   ),
                 ],
               ),

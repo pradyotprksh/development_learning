@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:whatsapp/app/app.dart';
+import 'package:whatsapp/domain/models/single_message.dart';
 
 abstract class AddStatusEvent extends Equatable {
   const AddStatusEvent();
@@ -31,9 +32,13 @@ class UpdateFontFamily extends AddStatusEvent {
 }
 
 class UploadStatus extends AddStatusEvent {
-  const UploadStatus(this.statusValue);
+  const UploadStatus(
+    this.statusValue, {
+    this.messageDetails,
+  });
 
   final String statusValue;
+  final SingleMessageDetails? messageDetails;
 
   @override
   List<Object?> get props => [statusValue];

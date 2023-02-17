@@ -42,6 +42,7 @@ enum MessageMenuItem {
   forward,
   pin,
   saveMessage,
+  addAsAStatus,
   delete,
 }
 

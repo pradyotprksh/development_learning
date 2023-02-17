@@ -14,6 +14,7 @@ class StatusDetails {
     this.userDeviceDetails,
     this.createdOnTimeStamp,
     this.isFileImage,
+    this.messageDetails,
     this.statusId = '',
   });
 
@@ -58,6 +59,7 @@ class StatusDetails {
   final String statusId;
   final bool? isFileImage;
   final DocumentReference? userReference;
+  final SingleMessageDetails? messageDetails;
 
   Map<String, dynamic> toFirestore() => <String, dynamic>{
         FirestoreItemKey.status: EncryptorService.encryptData(status),
@@ -77,5 +79,7 @@ class StatusDetails {
         if (userDeviceDetails != null)
           FirestoreItemKey.userDeviceDetails: userDeviceDetails!.toMap(),
         if (isFileImage != null) FirestoreItemKey.isFileImage: isFileImage,
+        if (messageDetails != null)
+          FirestoreItemKey.messageDetails: messageDetails!.toFirestore()
       };
 }

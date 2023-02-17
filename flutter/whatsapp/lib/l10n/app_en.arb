@@ -132,5 +132,6 @@
   "messageSaved": "Message saved",
   "check": "Check",
   "saved": "Saved ",
-  "clear": "Clear"
+  "clear": "Clear",
+  "addAsAStatus": "Add as a status"
 }

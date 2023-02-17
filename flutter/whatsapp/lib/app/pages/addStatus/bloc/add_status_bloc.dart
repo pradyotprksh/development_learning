@@ -98,6 +98,7 @@ class AddStatusBloc extends Bloc<AddStatusEvent, AddStatusState> {
             userReference: _firebaseFirestoreService.getUserDocumentReference(
               userId,
             ),
+            messageDetails: event.messageDetails,
           ),
         );
 
