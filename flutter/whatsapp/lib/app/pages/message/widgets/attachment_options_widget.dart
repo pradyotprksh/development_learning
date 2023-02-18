@@ -2,6 +2,7 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:whatsapp/app/app.dart';
 import 'package:whatsapp/device/device.dart';
+import 'package:whatsapp/domain/domain.dart';
 
 class AttachmentOptionsWidget extends StatefulWidget {
   const AttachmentOptionsWidget({super.key});
@@ -53,7 +54,7 @@ class _AttachmentOptionsWidgetState extends State<AttachmentOptionsWidget> {
                 if (path != null) {
                   navigator.pop(
                     [
-                      FileInformation(
+                      FileInformationDetails(
                         filePath: path,
                         isFromFileSystem: false,
                         isFromCamera: true,
@@ -86,7 +87,7 @@ class _AttachmentOptionsWidgetState extends State<AttachmentOptionsWidget> {
                 if (path != null) {
                   navigator.pop(
                     [
-                      FileInformation(
+                      FileInformationDetails(
                         filePath: path,
                         isFromFileSystem: false,
                         isFromCamera: true,
@@ -119,7 +120,7 @@ class _AttachmentOptionsWidgetState extends State<AttachmentOptionsWidget> {
                 if (details != null) {
                   final files = details.files
                       .map(
-                        (e) => FileInformation(
+                        (e) => FileInformationDetails(
                           filePath: e.path ?? '',
                           isFromFileSystem: true,
                           isFromCamera: false,

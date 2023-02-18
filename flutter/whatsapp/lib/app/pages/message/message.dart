@@ -1,6 +1,5 @@
 export 'directMessage/direct_message.dart';
 export 'groupMessage/group_message.dart';
-export 'utils/file_information.dart';
 export 'utils/utils_methods.dart';
 export 'widgets/attachment_options_widget.dart';
 export 'widgets/attachments_preview_widget.dart';

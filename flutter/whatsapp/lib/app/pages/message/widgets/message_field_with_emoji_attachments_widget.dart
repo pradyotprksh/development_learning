@@ -1,6 +1,7 @@
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:whatsapp/app/app.dart';
+import 'package:whatsapp/domain/domain.dart';
 
 class MessageFieldWithEmojiAttachmentsWidget extends StatefulWidget {
   const MessageFieldWithEmojiAttachmentsWidget({
@@ -17,8 +18,8 @@ class MessageFieldWithEmojiAttachmentsWidget extends StatefulWidget {
   final Function closeEmojiOption;
   final Function(String) onMessageSubmitted;
   final bool isEmojiOptionVisible;
-  final Function(List<FileInformation>) onAttachmentSelected;
-  final List<FileInformation> attachments;
+  final Function(List<FileInformationDetails>) onAttachmentSelected;
+  final List<FileInformationDetails> attachments;
 
   @override
   State<MessageFieldWithEmojiAttachmentsWidget> createState() =>

@@ -43,5 +43,5 @@ abstract class CoreConstants {
   static String userStatusImage() =>
       '$userCollection/status/$userIdPlaceholder-${DeviceUtilsMethods.getCurrentTimeStamp()}';
   static String groupProfileImage() =>
-      'groups/profileImages/$userIdPlaceholder-${DeviceUtilsMethods.getCurrentTimeStamp()}';
+      '$groupMessageCollection/profileImages/$userIdPlaceholder-${DeviceUtilsMethods.getCurrentTimeStamp()}';
 }

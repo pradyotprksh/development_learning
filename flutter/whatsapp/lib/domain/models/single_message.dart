@@ -16,6 +16,7 @@ class SingleMessageDetails extends Equatable {
     this.isFileImage,
     this.messageId = '',
     this.isSystemMessage = false,
+    this.attachments,
   });
 
   factory SingleMessageDetails.fromFirestore(
@@ -44,6 +45,13 @@ class SingleMessageDetails extends Equatable {
       messageId: snapshot.id,
       isFileImage: data?[FirestoreItemKey.isFileImage] as bool?,
       isSystemMessage: data?[FirestoreItemKey.isSystemMessage] as bool,
+      attachments: (data?[FirestoreItemKey.attachments] as List<dynamic>)
+          .map(
+            (dynamic e) => FileInformationDetails.fromMap(
+              e as Map<String, dynamic>,
+            ),
+          )
+          .toList(),
     );
   }
 
@@ -58,6 +66,7 @@ class SingleMessageDetails extends Equatable {
   final bool? isFileImage;
   final DocumentReference? sentToUserReference;
   final bool isSystemMessage;
+  final List<FileInformationDetails>? attachments;
 
   Map<String, dynamic> toFirestore() => <String, dynamic>{
         FirestoreItemKey.message: EncryptorService.encryptData(message),
@@ -78,6 +87,9 @@ class SingleMessageDetails extends Equatable {
         if (isFileImage != null) FirestoreItemKey.isFileImage: isFileImage,
         if (sentToUserReference != null)
           FirestoreItemKey.sentToUserReference: sentToUserReference,
+        if (attachments != null)
+          FirestoreItemKey.attachments:
+              attachments?.map((e) => e.toMap()).toList(),
       };
 
   @override

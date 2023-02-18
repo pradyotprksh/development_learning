@@ -10,6 +10,8 @@ class DirectMessageState extends Equatable {
     this.isEmojiOptionVisible = false,
     this.messages = const [],
     this.attachments = const [],
+    this.uploadedFile,
+    this.uploadingFile,
   });
 
   DirectMessageState copyWith({
@@ -18,7 +20,9 @@ class DirectMessageState extends Equatable {
     DirectMessageDetails? directMessageDetails,
     bool? isEmojiOptionVisible,
     List<SingleMessageDetails>? messages,
-    List<FileInformation>? attachments,
+    List<FileInformationDetails>? attachments,
+    FileInformationDetails? uploadedFile,
+    FileInformationDetails? uploadingFile,
   }) =>
       DirectMessageState(
         userDetails: userDetails ?? this.userDetails,
@@ -27,6 +31,8 @@ class DirectMessageState extends Equatable {
         isEmojiOptionVisible: isEmojiOptionVisible ?? this.isEmojiOptionVisible,
         messages: messages ?? this.messages,
         attachments: attachments ?? this.attachments,
+        uploadedFile: uploadedFile ?? this.uploadedFile,
+        uploadingFile: uploadingFile ?? this.uploadingFile,
       );
 
   final UserDetails? userDetails;
@@ -34,7 +40,9 @@ class DirectMessageState extends Equatable {
   final PageState pageState;
   final bool isEmojiOptionVisible;
   final List<SingleMessageDetails> messages;
-  final List<FileInformation> attachments;
+  final List<FileInformationDetails> attachments;
+  final FileInformationDetails? uploadingFile;
+  final FileInformationDetails? uploadedFile;
 
   @override
   List<Object?> get props => [
@@ -44,5 +52,7 @@ class DirectMessageState extends Equatable {
         isEmojiOptionVisible,
         messages,
         attachments,
+        uploadedFile,
+        uploadingFile,
       ];
 }

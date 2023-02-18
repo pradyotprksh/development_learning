@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:whatsapp/app/app.dart';
+import 'package:whatsapp/domain/domain.dart';
 
 class AttachmentsPreviewWidget extends StatelessWidget {
   const AttachmentsPreviewWidget({
@@ -9,7 +10,7 @@ class AttachmentsPreviewWidget extends StatelessWidget {
     required this.attachments,
   });
 
-  final List<FileInformation> attachments;
+  final List<FileInformationDetails> attachments;
 
   @override
   Widget build(BuildContext context) => Padding(

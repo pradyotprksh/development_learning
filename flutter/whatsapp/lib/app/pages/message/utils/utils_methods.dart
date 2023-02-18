@@ -3,12 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:whatsapp/app/app.dart';
+import 'package:whatsapp/domain/domain.dart';
 
 abstract class MessageUtilsMethods {
-  static Future<List<FileInformation>?> showAttachmentOptionsBottomSheet(
+  static Future<List<FileInformationDetails>?> showAttachmentOptionsBottomSheet(
     BuildContext context,
   ) async =>
-      await showModalBottomSheet<List<FileInformation>>(
+      await showModalBottomSheet<List<FileInformationDetails>>(
         context: context,
         builder: (_) => const AttachmentOptionsWidget(),
       );

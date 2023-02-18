@@ -11,6 +11,7 @@ class DirectMessageBloc
   DirectMessageBloc(
     this._firebaseFirestoreService,
     this._firebaseAuthService,
+    this._firebaseStorageService,
     this._deviceDetails,
   ) : super(const DirectMessageState()) {
     on<FetchSelectedUserDetails>(_fetchUserDetails);
@@ -25,6 +26,7 @@ class DirectMessageBloc
 
   final FirebaseFirestoreService _firebaseFirestoreService;
   final FirebaseAuthService _firebaseAuthService;
+  final FirebaseStorageService _firebaseStorageService;
   final DeviceDetails _deviceDetails;
 
   void _fetchUserDetails(
@@ -157,6 +159,15 @@ class DirectMessageBloc
     final otherUserId = state.userDetails?.userId;
     if (currentUserId != null && directMessageId != null) {
       final deviceTimeStamp = DeviceUtilsMethods.getCurrentTimeStamp();
+
+      if (state.attachments.isNotEmpty) {
+        for (final file in state.attachments) {
+          try {} catch (e) {
+            FirebaseUtils.recordFlutterError(e);
+          }
+        }
+      }
+
       await _firebaseFirestoreService.sendDirectMessage(
         SingleMessageDetails(
           message: event.message,

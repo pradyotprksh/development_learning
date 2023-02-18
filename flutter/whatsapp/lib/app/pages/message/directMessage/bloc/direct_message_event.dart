@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:replay_bloc/replay_bloc.dart';
-import 'package:whatsapp/app/app.dart';
+import 'package:whatsapp/domain/domain.dart';
 
 abstract class DirectMessageEvent extends ReplayEvent with EquatableMixin {
   const DirectMessageEvent();
@@ -66,5 +66,5 @@ class SaveDirectMessageEvent extends DirectMessageEvent {
 class DirectMessageAttachmentSelectedEvent extends DirectMessageEvent {
   const DirectMessageAttachmentSelectedEvent(this.fileInformation);
 
-  final List<FileInformation> fileInformation;
+  final List<FileInformationDetails> fileInformation;
 }

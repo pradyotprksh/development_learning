@@ -165,7 +165,8 @@ class _DirectMessageViewState extends State<DirectMessageView> {
                             );
                       },
                       onMessageSubmitted: (message) {
-                        if (message.trim().isNotEmpty) {
+                        if (message.trim().isNotEmpty ||
+                            directMessageState.attachments.isNotEmpty) {
                           context.read<DirectMessageBloc>().add(
                                 AddMessage(message),
                               );

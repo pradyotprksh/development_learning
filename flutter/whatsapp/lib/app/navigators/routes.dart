@@ -117,6 +117,7 @@ abstract class Routes {
           create: (_) => DirectMessageBloc(
             FirebaseFirestoreServiceImplementation(),
             FirebaseAuthServiceImplementation(),
+            FirebaseStorageServiceImplementation(),
             DeviceDetailsImplementation(),
           ),
           child: const DirectMessageView(),

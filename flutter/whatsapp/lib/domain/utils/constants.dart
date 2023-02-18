@@ -45,6 +45,7 @@ abstract class FirestoreItemKey {
   static const lastMessageByUserId = 'lastMessageByUserId';
   static const lastMessage = 'lastMessage';
   static const sentToUserReference = 'sentToUserReference';
+  static const attachments = 'attachments';
   static const createdByUserDeviceDetails = 'createdByUserDeviceDetails';
   static const isPhoneNumberVerified = 'isPhoneNumberVerified';
   static const isEmailVerified = 'isEmailVerified';
@@ -60,4 +61,11 @@ abstract class FirestoreItemKey {
   static const isCopied = 'isCopied';
   static const isSaved = 'isSaved';
   static const isForwardOptionSelected = 'isForwardOptionSelected';
+  static const filePath = 'filePath';
+  static const isFromCamera = 'isFromCamera';
+  static const isFromFileSystem = 'isFromFileSystem';
+  static const isFromGallery = 'isFromGallery';
+  static const fileType = 'fileType';
+  static const fileSize = 'fileSize';
+  static const fileName = 'fileName';
 }
