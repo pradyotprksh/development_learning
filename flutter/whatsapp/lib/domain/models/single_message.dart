@@ -45,8 +45,8 @@ class SingleMessageDetails extends Equatable {
       messageId: snapshot.id,
       isFileImage: data?[FirestoreItemKey.isFileImage] as bool?,
       isSystemMessage: data?[FirestoreItemKey.isSystemMessage] as bool,
-      attachments: (data?[FirestoreItemKey.attachments] as List<dynamic>)
-          .map(
+      attachments: (data?[FirestoreItemKey.attachments] as List<dynamic>?)
+          ?.map(
             (dynamic e) => FileInformationDetails.fromMap(
               e as Map<String, dynamic>,
             ),

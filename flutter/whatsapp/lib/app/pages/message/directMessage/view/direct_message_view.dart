@@ -189,6 +189,7 @@ class _DirectMessageViewState extends State<DirectMessageView> {
                             );
                       },
                       attachments: directMessageState.attachments,
+                      uploadingAttachment: directMessageState.uploadingFile,
                     ),
                   );
                 } else {

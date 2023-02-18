@@ -8,6 +8,7 @@ class FileInformationDetails extends Equatable {
     required this.isFromGallery,
     required this.isFromFileSystem,
     this.firestoreFilePath = '',
+    this.fileUrl = '',
     this.fileType,
     this.fileSize = 0,
     this.fileName = '',
@@ -25,10 +26,28 @@ class FileInformationDetails extends Equatable {
         fileName: json?[FirestoreItemKey.fileName] as String? ?? '',
         firestoreFilePath:
             json?[FirestoreItemKey.firestoreFilePath] as String? ?? '',
+        fileUrl: json?[FirestoreItemKey.fileUrl] as String,
+      );
+
+  FileInformationDetails copyFirestoreDetails(
+    String firestorePath,
+    String fileUrl,
+  ) =>
+      FileInformationDetails(
+        filePath: filePath,
+        isFromCamera: isFromCamera,
+        isFromGallery: isFromGallery,
+        isFromFileSystem: isFromFileSystem,
+        firestoreFilePath: firestorePath,
+        fileUrl: fileUrl,
+        fileType: fileType,
+        fileSize: fileSize,
+        fileName: fileName,
       );
 
   final String filePath;
   final String firestoreFilePath;
+  final String fileUrl;
   final bool isFromCamera;
   final bool isFromFileSystem;
   final bool isFromGallery;
@@ -45,6 +64,7 @@ class FileInformationDetails extends Equatable {
         fileType,
         fileSize,
         fileName,
+        fileUrl,
       ];
 
   Map<String, dynamic> toMap() => <String, dynamic>{
@@ -56,5 +76,6 @@ class FileInformationDetails extends Equatable {
         FirestoreItemKey.fileSize: fileSize,
         FirestoreItemKey.firestoreFilePath: firestoreFilePath,
         FirestoreItemKey.fileName: fileName,
+        FirestoreItemKey.fileUrl: fileUrl,
       };
 }

@@ -4,7 +4,7 @@ import 'package:whatsapp/core/core.dart';
 import 'package:whatsapp/device/device.dart';
 
 abstract class FileCompressor {
-  static Future<String?> getCompressedImagePath(
+  static Future<String> getCompressedImagePath(
     String rawFilePath,
   ) async {
     try {
@@ -14,14 +14,14 @@ abstract class FileCompressor {
         quality: FirebaseRemoteConfigService.imageCompressionValue(),
       );
 
-      return result?.path;
+      return result?.path ?? rawFilePath;
     } catch (e) {
       FirebaseUtils.recordFlutterError(e);
       return rawFilePath;
     }
   }
 
-  static Future<String?> getCompressedVideoPath(
+  static Future<String> getCompressedVideoPath(
     String rawFilePath,
   ) async {
     try {
@@ -31,7 +31,27 @@ abstract class FileCompressor {
         deleteOrigin: true,
         includeAudio: true,
       );
-      return mediaInfo?.path;
+      return mediaInfo?.path ?? rawFilePath;
+    } catch (e) {
+      FirebaseUtils.recordFlutterError(e);
+      return rawFilePath;
+    }
+  }
+
+  static Future<String> tryAllCompression(String rawFilePath) async {
+    try {
+      final imageCompression = await getCompressedImagePath(rawFilePath);
+      if (imageCompression == rawFilePath) {
+        final videoCompression = await getCompressedVideoPath(rawFilePath);
+        if (videoCompression == rawFilePath) {
+          // Add more compression mechanism
+          return rawFilePath;
+        } else {
+          return videoCompression;
+        }
+      } else {
+        return imageCompression;
+      }
     } catch (e) {
       FirebaseUtils.recordFlutterError(e);
       return rawFilePath;

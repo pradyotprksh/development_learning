@@ -67,20 +67,18 @@ class AddStatusBloc extends Bloc<AddStatusEvent, AddStatusState> {
               ? await FileCompressor.getCompressedImagePath(path)
               : await FileCompressor.getCompressedVideoPath(path);
         }
-        if (path != null) {
-          firestorePath = CoreConstants.userStatusImage().replaceAll(
-            CoreConstants.userIdPlaceholder,
-            userId,
-          );
-          filePathUrl = await _firebaseStorageService.uploadFile(
-            path,
-            firestorePath,
-            {
-              FirestoreItemKey.userId: userId,
-              ...deviceDetails.toStringMap(),
-            },
-          );
-        }
+        firestorePath = CoreConstants.userStatusImage().replaceAll(
+          CoreConstants.userIdPlaceholder,
+          userId,
+        );
+        filePathUrl = await _firebaseStorageService.uploadFile(
+          path,
+          firestorePath,
+          {
+            FirestoreItemKey.userId: userId,
+            ...deviceDetails.toStringMap(),
+          },
+        );
       }
 
       try {

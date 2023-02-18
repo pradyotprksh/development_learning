@@ -40,8 +40,13 @@ abstract class CoreConstants {
   static const isApplicationDown = 'isApplicationDown';
   static const userProfileImage =
       '$userCollection/profileImages/$userIdPlaceholder';
+
   static String userStatusImage() =>
       '$userCollection/status/$userIdPlaceholder-${DeviceUtilsMethods.getCurrentTimeStamp()}';
+
   static String groupProfileImage() =>
       '$groupMessageCollection/profileImages/$userIdPlaceholder-${DeviceUtilsMethods.getCurrentTimeStamp()}';
+
+  static String directMessagesAttachments(String messageId) =>
+      '$directMessageCollection/attachments/$messageId/$userIdPlaceholder-${DeviceUtilsMethods.getCurrentTimeStamp()}';
 }

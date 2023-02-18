@@ -12,6 +12,7 @@ class MessageFieldWithEmojiAttachmentsWidget extends StatefulWidget {
     required this.onAttachmentSelected,
     this.isEmojiOptionVisible = false,
     this.attachments = const [],
+    this.uploadingAttachment,
   });
 
   final Function onEmojiButtonPressed;
@@ -20,6 +21,7 @@ class MessageFieldWithEmojiAttachmentsWidget extends StatefulWidget {
   final bool isEmojiOptionVisible;
   final Function(List<FileInformationDetails>) onAttachmentSelected;
   final List<FileInformationDetails> attachments;
+  final FileInformationDetails? uploadingAttachment;
 
   @override
   State<MessageFieldWithEmojiAttachmentsWidget> createState() =>
@@ -89,7 +91,10 @@ class _MessageFieldWithEmojiAttachmentsWidgetState
           textInputAction: TextInputAction.send,
         ),
         if (widget.attachments.isNotEmpty)
-          AttachmentsPreviewWidget(attachments: widget.attachments),
+          AttachmentsPreviewWidget(
+            attachments: widget.attachments,
+            uploadingAttachment: widget.uploadingAttachment,
+          ),
         if (widget.isEmojiOptionVisible)
           SizedBox(
             height: context.mediaQuery.size.height * 0.4,

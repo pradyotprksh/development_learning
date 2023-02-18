@@ -159,23 +159,65 @@ class DirectMessageBloc
     final otherUserId = state.userDetails?.userId;
     if (currentUserId != null && directMessageId != null) {
       final deviceTimeStamp = DeviceUtilsMethods.getCurrentTimeStamp();
-
+      final deviceDetails = await _deviceDetails.getDeviceDetails();
+      var attachments = <FileInformationDetails>[];
       if (state.attachments.isNotEmpty) {
         for (final file in state.attachments) {
-          try {} catch (e) {
+          emit(
+            state.copyWith(uploadingFile: file),
+          );
+          String? imageUrl;
+          String? firestorePath;
+          try {
+            firestorePath =
+                CoreConstants.directMessagesAttachments(directMessageId)
+                    .replaceAll(
+              CoreConstants.userIdPlaceholder,
+              currentUserId,
+            );
+            final compressedFilePath =
+                await FileCompressor.tryAllCompression(file.filePath);
+            imageUrl = await _firebaseStorageService.uploadFile(
+              compressedFilePath,
+              firestorePath,
+              {
+                FirestoreItemKey.userId: currentUserId,
+                ...deviceDetails.toStringMap(),
+              },
+            );
+          } catch (e) {
+            firestorePath = null;
             FirebaseUtils.recordFlutterError(e);
           }
+
+          if (imageUrl != null) {
+            attachments.add(
+              file.copyFirestoreDetails(
+                firestorePath ?? '',
+                imageUrl,
+              ),
+            );
+          }
+
+          emit(
+            state.copyWith(
+              uploadingFile: null,
+            ),
+          );
         }
       }
+
+      attachments.removeWhere((element) => element.fileUrl.isEmpty);
 
       await _firebaseFirestoreService.sendDirectMessage(
         SingleMessageDetails(
           message: event.message,
           sentByUserId: currentUserId,
-          sentByUserDeviceDetails: await _deviceDetails.getDeviceDetails(),
+          sentByUserDeviceDetails: deviceDetails,
           sentOnTimeStamp: deviceTimeStamp,
           isSystemMessage: false,
           sentToUserId: otherUserId,
+          attachments: attachments.isEmpty ? null : attachments,
         ),
         directMessageId,
       );
@@ -187,6 +229,13 @@ class DirectMessageBloc
           FirestoreItemKey.lastMessageOnTimeStamp: deviceTimeStamp,
           FirestoreItemKey.lastMessageByUserId: currentUserId,
         },
+      );
+
+      emit(
+        state.copyWith(
+          uploadingFile: null,
+          attachments: [],
+        ),
       );
     }
   }

@@ -68,4 +68,5 @@ abstract class FirestoreItemKey {
   static const fileType = 'fileType';
   static const fileSize = 'fileSize';
   static const fileName = 'fileName';
+  static const fileUrl = 'fileUrl';
 }

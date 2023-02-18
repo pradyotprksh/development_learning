@@ -8,9 +8,11 @@ class AttachmentsPreviewWidget extends StatelessWidget {
   const AttachmentsPreviewWidget({
     super.key,
     required this.attachments,
+    this.uploadingAttachment,
   });
 
   final List<FileInformationDetails> attachments;
+  final FileInformationDetails? uploadingAttachment;
 
   @override
   Widget build(BuildContext context) => Padding(
@@ -22,30 +24,43 @@ class AttachmentsPreviewWidget extends StatelessWidget {
             itemCount: attachments.length,
             itemBuilder: (_, index) {
               final fileDetails = attachments[index];
+              final isUploading = uploadingAttachment == fileDetails;
               return Row(
                 children: [
                   if (fileDetails.isFromCamera || fileDetails.isFromGallery)
-                    Image.file(
-                      File(
-                        fileDetails.filePath,
-                      ),
-                    ),
-                  if (fileDetails.isFromFileSystem)
-                    Container(
-                      width: 50,
-                      decoration: const BoxDecoration(
-                        color: Colors.amberAccent,
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(
-                            10,
+                    Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        Image.file(
+                          File(
+                            fileDetails.filePath,
                           ),
                         ),
-                      ),
-                      child: const Center(
-                        child: Icon(
-                          Icons.file_present,
+                        if (isUploading) const CircularProgressIndicator(),
+                      ],
+                    ),
+                  if (fileDetails.isFromFileSystem)
+                    Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        Container(
+                          width: 50,
+                          decoration: const BoxDecoration(
+                            color: Colors.amberAccent,
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(
+                                10,
+                              ),
+                            ),
+                          ),
+                          child: const Center(
+                            child: Icon(
+                              Icons.file_present,
+                            ),
+                          ),
                         ),
-                      ),
+                        if (isUploading) const CircularProgressIndicator(),
+                      ],
                     ),
                   ThemeSizedBox.width5,
                 ],
