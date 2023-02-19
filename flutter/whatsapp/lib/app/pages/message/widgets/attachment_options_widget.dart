@@ -114,45 +114,31 @@ class _AttachmentOptionsWidgetState extends State<AttachmentOptionsWidget> {
               ),
             ),
             GestureDetector(
-              onTap: () async {
-                final navigator = context.navigator;
-                final details = await MessageUtilsMethods.pickFileFromStorage();
-                if (details != null) {
-                  final files = details.files
-                      .map(
-                        (e) => FileInformationDetails(
-                          filePath: e.path ?? '',
-                          isFromFileSystem: true,
-                          isFromCamera: false,
-                          isFromGallery: false,
-                          fileSize: e.size,
-                          fileType: e.extension,
-                          fileName: e.name,
-                        ),
-                      )
-                      .toList()
-                    ..removeWhere((element) => element.filePath.isEmpty);
-                  navigator.pop(
-                    files,
-                  );
-                }
-              },
-              child: Container(
-                decoration: const BoxDecoration(
-                  color: Colors.amberAccent,
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(
-                      10,
-                    ),
-                  ),
-                ),
-                child: const Center(
-                  child: Icon(
-                    Icons.file_present,
-                  ),
-                ),
-              ),
-            ),
+                onTap: () async {
+                  final navigator = context.navigator;
+                  final details =
+                      await MessageUtilsMethods.pickFileFromStorage();
+                  if (details != null) {
+                    final files = details.files
+                        .map(
+                          (e) => FileInformationDetails(
+                            filePath: e.path ?? '',
+                            isFromFileSystem: true,
+                            isFromCamera: false,
+                            isFromGallery: false,
+                            fileSize: e.size,
+                            fileType: e.extension,
+                            fileName: e.name,
+                          ),
+                        )
+                        .toList()
+                      ..removeWhere((element) => element.filePath.isEmpty);
+                    navigator.pop(
+                      files,
+                    );
+                  }
+                },
+                child: const DefaultAttachmentWidget()),
           ],
         ),
       );

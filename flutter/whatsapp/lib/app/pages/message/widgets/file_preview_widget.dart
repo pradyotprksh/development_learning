@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:whatsapp/app/app.dart';
 import 'package:whatsapp/domain/domain.dart';
 
 class FilePreviewWidget extends StatelessWidget {
@@ -10,23 +11,26 @@ class FilePreviewWidget extends StatelessWidget {
   final FileInformationDetails fileDetails;
 
   @override
-  Widget build(BuildContext context) => Image.network(
-        fileDetails.fileUrl,
-        fit: BoxFit.cover,
-        errorBuilder: (_, __, ___) => Container(
-          decoration: const BoxDecoration(
-            color: Colors.amberAccent,
-            borderRadius: BorderRadius.all(
-              Radius.circular(
-                10,
-              ),
-            ),
-          ),
-          child: const Center(
-            child: Icon(
-              Icons.file_present,
-            ),
-          ),
+  Widget build(BuildContext context) => GestureDetector(
+        onLongPress: () {
+          MessageUtilsMethods.showFileDetails(context, fileDetails);
+        },
+        child: Image.network(
+          fileDetails.fileUrl,
+          fit: BoxFit.cover,
+          errorBuilder: (_, __, ___) {
+            if (fileDetails.fileType == 'pdf') {
+              return const DefaultAttachmentWidget(
+                icon: Icons.picture_as_pdf,
+              );
+            }
+            if (fileDetails.fileType == 'txt') {
+              return const DefaultAttachmentWidget(
+                icon: Icons.text_snippet,
+              );
+            }
+            return const DefaultAttachmentWidget();
+          },
         ),
       );
 }

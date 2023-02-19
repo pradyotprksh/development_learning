@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:whatsapp/domain/domain.dart';
 
 abstract class GroupMessageEvent extends Equatable {
   const GroupMessageEvent();
@@ -52,4 +53,10 @@ class SaveGroupMessageEvent extends GroupMessageEvent {
   final String sentByUserId;
   final String? directMessageId;
   final String? groupId;
+}
+
+class GroupMessageAttachmentSelectedEvent extends GroupMessageEvent {
+  const GroupMessageAttachmentSelectedEvent(this.fileInformation);
+
+  final List<FileInformationDetails> fileInformation;
 }

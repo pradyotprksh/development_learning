@@ -69,6 +69,7 @@ abstract class Routes {
           create: (_) => GroupMessageBloc(
             FirebaseFirestoreServiceImplementation(),
             FirebaseAuthServiceImplementation(),
+            FirebaseStorageServiceImplementation(),
             DeviceDetailsImplementation(),
           ),
           child: const GroupMessageView(),

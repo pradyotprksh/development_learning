@@ -317,22 +317,23 @@ class MessageWidget extends StatelessWidget {
                                           ),
                                         ),
                                         ThemeSizedBox.height10,
-                                        Text(
-                                          message.message,
-                                          textAlign: message.sentByUserId ==
-                                                  currentUserId
-                                              ? TextAlign.end
-                                              : TextAlign.start,
-                                          style: context
-                                              .themeData.textTheme.bodyMedium
-                                              ?.copyWith(
-                                            color: message.sentByUserId ==
+                                        if (message.message.isNotEmpty)
+                                          Text(
+                                            message.message,
+                                            textAlign: message.sentByUserId ==
                                                     currentUserId
-                                                ? context.themeData.textTheme
-                                                    .bodyMedium?.color
-                                                : Colors.white,
+                                                ? TextAlign.end
+                                                : TextAlign.start,
+                                            style: context
+                                                .themeData.textTheme.bodyMedium
+                                                ?.copyWith(
+                                              color: message.sentByUserId ==
+                                                      currentUserId
+                                                  ? context.themeData.textTheme
+                                                      .bodyMedium?.color
+                                                  : Colors.white,
+                                            ),
                                           ),
-                                        ),
                                       ],
                                     )
                                   : Text(

@@ -14,6 +14,56 @@ abstract class MessageUtilsMethods {
         builder: (_) => const AttachmentOptionsWidget(),
       );
 
+  static Future<void> showFileDetails(
+    BuildContext context,
+    FileInformationDetails fileInformationDetails,
+  ) async {
+    await showModalBottomSheet<List<FileInformationDetails>>(
+      context: context,
+      builder: (_) => Scaffold(
+        backgroundColor: Colors.transparent,
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          leading: const CloseButton(),
+          elevation: 0,
+          title: Text(
+            context.translator.details,
+          ),
+        ),
+        body: ListView(
+          primary: false,
+          children: [
+            if (!(fileInformationDetails.fileName.isNotEmpty &&
+                fileInformationDetails.fileSize != 0 &&
+                fileInformationDetails.fileType != null &&
+                fileInformationDetails.fileType?.isNotEmpty == true))
+              Padding(
+                padding: ThemeEdgeInsets.all15,
+                child: Text(context.translator.noFileDetails),
+              ),
+            if (fileInformationDetails.fileName.isNotEmpty)
+              ListTile(
+                title: Text(context.translator.localFileName),
+                subtitle: Text(fileInformationDetails.fileName),
+              ),
+            if (fileInformationDetails.fileSize != 0)
+              ListTile(
+                title: Text(context.translator.fileSize),
+                subtitle: Text(
+                    '${fileInformationDetails.fileSize} ${context.translator.bytes}'),
+              ),
+            if (fileInformationDetails.fileType != null &&
+                fileInformationDetails.fileType?.isNotEmpty == true)
+              ListTile(
+                title: Text(context.translator.fileType),
+                subtitle: Text(fileInformationDetails.fileType ?? ''),
+              ),
+          ],
+        ),
+      ),
+    );
+  }
+
   static Future<String?> startCameraFilePicker(BuildContext context) async {
     final webSettings = WebUiSettings(
       context: context,

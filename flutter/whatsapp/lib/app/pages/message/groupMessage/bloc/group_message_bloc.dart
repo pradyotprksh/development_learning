@@ -10,6 +10,7 @@ class GroupMessageBloc extends Bloc<GroupMessageEvent, GroupMessageState> {
   GroupMessageBloc(
     this._firebaseFirestoreService,
     this._firebaseAuthService,
+    this._firebaseStorageService,
     this._deviceDetails,
   ) : super(const GroupMessageState()) {
     on<FetchGroupDetails>(_fetchGroupDetails);
@@ -18,11 +19,13 @@ class GroupMessageBloc extends Bloc<GroupMessageEvent, GroupMessageState> {
     on<AddGroupMessage>(_addANewMessage);
     on<UpdateUsersDetails>(_updateUsersDetails);
     on<SaveGroupMessageEvent>(_saveMessage);
+    on<GroupMessageAttachmentSelectedEvent>(_attachmentSelected);
   }
 
   final FirebaseFirestoreService _firebaseFirestoreService;
   final FirebaseAuthService _firebaseAuthService;
   final DeviceDetails _deviceDetails;
+  final FirebaseStorageService _firebaseStorageService;
 
   void _showEmojisOption(
     ToggleGroupEmojisOption event,
@@ -88,13 +91,64 @@ class GroupMessageBloc extends Bloc<GroupMessageEvent, GroupMessageState> {
     final groupId = state.groupMessageDetails?.groupMessageDetails?.groupId;
     if (currentUserId != null && groupId != null) {
       final deviceTimeStamp = DeviceUtilsMethods.getCurrentTimeStamp();
+      final deviceDetails = await _deviceDetails.getDeviceDetails();
+
+      var attachments = <FileInformationDetails>[];
+      if (state.attachments.isNotEmpty) {
+        for (final file in state.attachments) {
+          emit(
+            state.copyWith(uploadingFile: file),
+          );
+          String? imageUrl;
+          String? firestorePath;
+          try {
+            firestorePath =
+                CoreConstants.groupMessagesAttachments(groupId).replaceAll(
+              CoreConstants.userIdPlaceholder,
+              currentUserId,
+            );
+            final compressedFilePath =
+                await FileCompressor.tryAllCompression(file.filePath);
+            imageUrl = await _firebaseStorageService.uploadFile(
+              compressedFilePath,
+              firestorePath,
+              {
+                FirestoreItemKey.userId: currentUserId,
+                ...deviceDetails.toStringMap(),
+              },
+            );
+          } catch (e) {
+            firestorePath = null;
+            FirebaseUtils.recordFlutterError(e);
+          }
+
+          if (imageUrl != null) {
+            attachments.add(
+              file.copyFirestoreDetails(
+                firestorePath ?? '',
+                imageUrl,
+              ),
+            );
+          }
+
+          emit(
+            state.copyWith(
+              uploadingFile: null,
+            ),
+          );
+        }
+      }
+
+      attachments.removeWhere((element) => element.fileUrl.isEmpty);
+
       await _firebaseFirestoreService.sendGroupMessage(
         SingleMessageDetails(
           message: event.message,
           sentByUserId: currentUserId,
-          sentByUserDeviceDetails: await _deviceDetails.getDeviceDetails(),
+          sentByUserDeviceDetails: deviceDetails,
           sentOnTimeStamp: deviceTimeStamp,
           isSystemMessage: false,
+          attachments: attachments.isEmpty ? null : attachments,
         ),
         groupId,
       );
@@ -106,6 +160,12 @@ class GroupMessageBloc extends Bloc<GroupMessageEvent, GroupMessageState> {
           FirestoreItemKey.lastMessageOnTimeStamp: deviceTimeStamp,
           FirestoreItemKey.lastMessageByUserId: currentUserId,
         },
+      );
+      emit(
+        state.copyWith(
+          uploadingFile: null,
+          attachments: [],
+        ),
       );
     }
   }
@@ -138,5 +198,20 @@ class GroupMessageBloc extends Bloc<GroupMessageEvent, GroupMessageState> {
         ),
       );
     }
+  }
+
+  void _attachmentSelected(
+    GroupMessageAttachmentSelectedEvent event,
+    Emitter<GroupMessageState> emit,
+  ) {
+    final attachments = {
+      ...event.fileInformation,
+      ...state.attachments,
+    };
+    emit(
+      state.copyWith(
+        attachments: attachments.toList(),
+      ),
+    );
   }
 }

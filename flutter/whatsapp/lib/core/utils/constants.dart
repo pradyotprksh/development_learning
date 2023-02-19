@@ -49,4 +49,7 @@ abstract class CoreConstants {
 
   static String directMessagesAttachments(String messageId) =>
       '$directMessageCollection/attachments/$messageId/$userIdPlaceholder-${DeviceUtilsMethods.getCurrentTimeStamp()}';
+
+  static String groupMessagesAttachments(String messageId) =>
+      '$groupMessageCollection/attachments/$messageId/$userIdPlaceholder-${DeviceUtilsMethods.getCurrentTimeStamp()}';
 }

@@ -133,5 +133,11 @@
   "check": "Check",
   "saved": "Saved ",
   "clear": "Clear",
-  "addAsAStatus": "Add as a status"
+  "addAsAStatus": "Add as a status",
+  "details": "Details",
+  "localFileName": "Local file name",
+  "fileSize": "File size",
+  "bytes": "bytes",
+  "fileType": "File type",
+  "noFileDetails": "Sorry no details available for the selected file"
 }

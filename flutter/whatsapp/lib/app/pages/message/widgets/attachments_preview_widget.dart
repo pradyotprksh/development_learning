@@ -27,7 +27,7 @@ class AttachmentsPreviewWidget extends StatelessWidget {
               final isUploading = uploadingAttachment == fileDetails;
               return Row(
                 children: [
-                  if (fileDetails.isFromCamera || fileDetails.isFromGallery)
+                  if (fileDetails.isFromCamera)
                     Stack(
                       alignment: Alignment.center,
                       children: [
@@ -39,7 +39,7 @@ class AttachmentsPreviewWidget extends StatelessWidget {
                         if (isUploading) const CircularProgressIndicator(),
                       ],
                     ),
-                  if (fileDetails.isFromFileSystem)
+                  if (fileDetails.isFromFileSystem || fileDetails.isFromGallery)
                     Stack(
                       alignment: Alignment.center,
                       children: [
