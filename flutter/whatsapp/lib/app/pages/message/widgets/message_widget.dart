@@ -90,6 +90,7 @@ class MessageWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final currentUserId = context.read<UserBloc>().state.userDetails?.userId;
     final isCurrentUserMessage = message.sentByUserId == currentUserId;
+    final attachments = message.attachments;
 
     if (message.isSystemMessage) {
       return Padding(
@@ -270,19 +271,86 @@ class MessageWidget extends StatelessWidget {
                         ),
                         child: Padding(
                           padding: ThemeEdgeInsets.leftRight15TopBottom5,
-                          child: Text(
-                            message.message,
-                            textAlign: message.sentByUserId == currentUserId
-                                ? TextAlign.end
-                                : TextAlign.start,
-                            style: context.themeData.textTheme.bodyMedium
-                                ?.copyWith(
-                              color: message.sentByUserId == currentUserId
-                                  ? context
-                                      .themeData.textTheme.bodyMedium?.color
-                                  : Colors.white,
-                            ),
-                          ),
+                          child: (attachments == null)
+                              ? Text(
+                                  message.message,
+                                  textAlign:
+                                      message.sentByUserId == currentUserId
+                                          ? TextAlign.end
+                                          : TextAlign.start,
+                                  style: context.themeData.textTheme.bodyMedium
+                                      ?.copyWith(
+                                    color: message.sentByUserId == currentUserId
+                                        ? context.themeData.textTheme.bodyMedium
+                                            ?.color
+                                        : Colors.white,
+                                  ),
+                                )
+                              : (attachments.isNotEmpty)
+                                  ? Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.stretch,
+                                      children: [
+                                        ThemeSizedBox.height10,
+                                        GridView.builder(
+                                          primary: false,
+                                          padding: ThemeEdgeInsets.zero,
+                                          itemCount: attachments.length,
+                                          gridDelegate:
+                                              const SliverGridDelegateWithMaxCrossAxisExtent(
+                                            maxCrossAxisExtent: 100,
+                                            crossAxisSpacing: 5,
+                                            mainAxisSpacing: 5,
+                                          ),
+                                          shrinkWrap: true,
+                                          itemBuilder: (_, index) => ClipRRect(
+                                            borderRadius:
+                                                const BorderRadius.all(
+                                              Radius.circular(
+                                                10,
+                                              ),
+                                            ),
+                                            child: FilePreviewWidget(
+                                              fileDetails: attachments[index],
+                                            ),
+                                          ),
+                                        ),
+                                        ThemeSizedBox.height10,
+                                        Text(
+                                          message.message,
+                                          textAlign: message.sentByUserId ==
+                                                  currentUserId
+                                              ? TextAlign.end
+                                              : TextAlign.start,
+                                          style: context
+                                              .themeData.textTheme.bodyMedium
+                                              ?.copyWith(
+                                            color: message.sentByUserId ==
+                                                    currentUserId
+                                                ? context.themeData.textTheme
+                                                    .bodyMedium?.color
+                                                : Colors.white,
+                                          ),
+                                        ),
+                                      ],
+                                    )
+                                  : Text(
+                                      message.message,
+                                      textAlign:
+                                          message.sentByUserId == currentUserId
+                                              ? TextAlign.end
+                                              : TextAlign.start,
+                                      style: context
+                                          .themeData.textTheme.bodyMedium
+                                          ?.copyWith(
+                                        color: message.sentByUserId ==
+                                                currentUserId
+                                            ? context.themeData.textTheme
+                                                .bodyMedium?.color
+                                            : Colors.white,
+                                      ),
+                                    ),
                         ),
                       ),
                     ),
