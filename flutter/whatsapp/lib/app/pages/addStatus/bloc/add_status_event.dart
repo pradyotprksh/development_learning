@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:whatsapp/app/app.dart';
-import 'package:whatsapp/domain/models/single_message.dart';
+import 'package:whatsapp/domain/domain.dart';
 
 abstract class AddStatusEvent extends Equatable {
   const AddStatusEvent();
