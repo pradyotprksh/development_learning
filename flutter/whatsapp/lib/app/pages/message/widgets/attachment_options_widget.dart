@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:whatsapp/app/app.dart';
@@ -52,6 +54,8 @@ class _AttachmentOptionsWidgetState extends State<AttachmentOptionsWidget> {
                 final path =
                     await MessageUtilsMethods.startCameraFilePicker(context);
                 if (path != null) {
+                  final fileDetails = File(path);
+                  final fileSize = await fileDetails.length();
                   navigator.pop(
                     [
                       FileInformationDetails(
@@ -59,6 +63,8 @@ class _AttachmentOptionsWidgetState extends State<AttachmentOptionsWidget> {
                         isFromFileSystem: false,
                         isFromCamera: true,
                         isFromGallery: false,
+                        fileSize: fileSize,
+                        fileName: fileDetails.name ?? '',
                       ),
                     ],
                   );
@@ -85,6 +91,8 @@ class _AttachmentOptionsWidgetState extends State<AttachmentOptionsWidget> {
                 final path =
                     await MessageUtilsMethods.startGalleryFilePicker(context);
                 if (path != null) {
+                  final fileDetails = File(path);
+                  final fileSize = await fileDetails.length();
                   navigator.pop(
                     [
                       FileInformationDetails(
@@ -92,6 +100,8 @@ class _AttachmentOptionsWidgetState extends State<AttachmentOptionsWidget> {
                         isFromFileSystem: false,
                         isFromCamera: true,
                         isFromGallery: false,
+                        fileSize: fileSize,
+                        fileName: fileDetails.name ?? '',
                       ),
                     ],
                   );
@@ -114,31 +124,31 @@ class _AttachmentOptionsWidgetState extends State<AttachmentOptionsWidget> {
               ),
             ),
             GestureDetector(
-                onTap: () async {
-                  final navigator = context.navigator;
-                  final details =
-                      await MessageUtilsMethods.pickFileFromStorage();
-                  if (details != null) {
-                    final files = details.files
-                        .map(
-                          (e) => FileInformationDetails(
-                            filePath: e.path ?? '',
-                            isFromFileSystem: true,
-                            isFromCamera: false,
-                            isFromGallery: false,
-                            fileSize: e.size,
-                            fileType: e.extension,
-                            fileName: e.name,
-                          ),
-                        )
-                        .toList()
-                      ..removeWhere((element) => element.filePath.isEmpty);
-                    navigator.pop(
-                      files,
-                    );
-                  }
-                },
-                child: const DefaultAttachmentWidget()),
+              onTap: () async {
+                final navigator = context.navigator;
+                final details = await MessageUtilsMethods.pickFileFromStorage();
+                if (details != null) {
+                  final files = details.files
+                      .map(
+                        (e) => FileInformationDetails(
+                          filePath: e.path ?? '',
+                          isFromFileSystem: true,
+                          isFromCamera: false,
+                          isFromGallery: false,
+                          fileSize: e.size,
+                          fileType: e.extension,
+                          fileName: e.name,
+                        ),
+                      )
+                      .toList()
+                    ..removeWhere((element) => element.filePath.isEmpty);
+                  navigator.pop(
+                    files,
+                  );
+                }
+              },
+              child: const DefaultAttachmentWidget(),
+            ),
           ],
         ),
       );

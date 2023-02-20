@@ -14,6 +14,7 @@ class AuthenticationBloc
     on<CheckForAuthenticationStatus>(_checkForAuthenticationStatus);
     on<UserAuthenticatedEvent>(_userAuthenticatedEvent);
     on<UnAuthenticateUserEvent>(_unAuthenticateUserEvent);
+    on<ListenToAuthStateChange>(_listenToAuthStateChangeEvent);
   }
 
   final FirebaseAuthService _firebaseAuthService;
@@ -115,6 +116,20 @@ class AuthenticationBloc
     emit(
       state.copyWith(
         authenticationState: AuthenticationStatus.unauthenticated,
+      ),
+    );
+  }
+
+  void _listenToAuthStateChangeEvent(
+    ListenToAuthStateChange event,
+    Emitter<AuthenticationState> emit,
+  ) async {
+    await emit.forEach(
+      _firebaseAuthService.isUserAuthenticated(),
+      onData: (userDetails) => state.copyWith(
+        authenticationState: userDetails != null
+            ? AuthenticationStatus.authenticated
+            : AuthenticationStatus.unauthenticated,
       ),
     );
   }

@@ -11,4 +11,6 @@ abstract class FirebaseAuthService {
   bool isUserLoggedIn();
 
   void updateUserDetails(UserDetails userDetails);
+
+  Stream<User?> isUserAuthenticated();
 }

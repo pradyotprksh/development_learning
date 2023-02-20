@@ -30,3 +30,7 @@ class UserAuthenticatedEvent extends AuthenticationEvent {
 class UnAuthenticateUserEvent extends AuthenticationEvent {
   const UnAuthenticateUserEvent();
 }
+
+class ListenToAuthStateChange extends AuthenticationEvent {
+  const ListenToAuthStateChange();
+}

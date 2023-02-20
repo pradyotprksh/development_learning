@@ -1,4 +1,5 @@
 import 'package:file_picker/file_picker.dart';
+import 'package:filesize/filesize.dart';
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
@@ -33,10 +34,10 @@ abstract class MessageUtilsMethods {
         body: ListView(
           primary: false,
           children: [
-            if (!(fileInformationDetails.fileName.isNotEmpty &&
-                fileInformationDetails.fileSize != 0 &&
-                fileInformationDetails.fileType != null &&
-                fileInformationDetails.fileType?.isNotEmpty == true))
+            if (fileInformationDetails.fileName.isEmpty &&
+                fileInformationDetails.fileSize == 0 &&
+                (fileInformationDetails.fileType == null ||
+                    fileInformationDetails.fileType?.isEmpty == true))
               Padding(
                 padding: ThemeEdgeInsets.all15,
                 child: Text(context.translator.noFileDetails),
@@ -50,7 +51,8 @@ abstract class MessageUtilsMethods {
               ListTile(
                 title: Text(context.translator.fileSize),
                 subtitle: Text(
-                    '${fileInformationDetails.fileSize} ${context.translator.bytes}'),
+                  filesize(fileInformationDetails.fileSize),
+                ),
               ),
             if (fileInformationDetails.fileType != null &&
                 fileInformationDetails.fileType?.isNotEmpty == true)

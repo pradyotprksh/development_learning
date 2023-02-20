@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:email_validator/email_validator.dart';
 import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter/material.dart';
@@ -45,4 +47,8 @@ extension StringExtensions on String {
       );
 
   bool isValidEmailAddress() => EmailValidator.validate(this);
+}
+
+extension FileExtention on FileSystemEntity {
+  String? get name => path.split('/').last;
 }

@@ -37,4 +37,7 @@ class FirebaseAuthServiceImplementation extends FirebaseAuthService {
       }
     }
   }
+
+  @override
+  Stream<User?> isUserAuthenticated() => auth.authStateChanges();
 }
