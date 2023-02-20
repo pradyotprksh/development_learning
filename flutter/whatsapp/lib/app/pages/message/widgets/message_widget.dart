@@ -311,7 +311,8 @@ class MessageWidget extends StatelessWidget {
                                                 10,
                                               ),
                                             ),
-                                            child: FilePreviewWidget(
+                                            child:
+                                                CachedAttachmentPreviewWidget(
                                               fileDetails: attachments[index],
                                             ),
                                           ),

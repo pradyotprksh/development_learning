@@ -139,5 +139,20 @@
   "fileSize": "File size",
   "bytes": "bytes",
   "fileType": "File type",
-  "noFileDetails": "Sorry no details available for the selected file"
+  "noFileDetails": "Sorry no details available for the selected file",
+  "manageStorage": "Manage storage",
+  "networkUsage": "Network usage",
+  "useLessDataForCalls": "Use less data for calls",
+  "mediaAutoDownload": "Media auto-download",
+  "voiceMessageDownloadNote": "Voice messages are always automatically downloaded",
+  "whenUsingMobileData": "When using mobile data",
+  "whenConnectedToWifi": "When connected to Wi-Fi",
+  "whenRoaming": "When roaming",
+  "noMedia": "No media",
+  "mediaUploadQuality": "Media upload quality",
+  "chooseQuality": "Choose the quality of media files to be sent",
+  "photoUploadQuality": "Photo upload quality",
+  "autoRecommended": "Auto (recommended)",
+  "sent": "sent",
+  "received": "received"
 }

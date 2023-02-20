@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:whatsapp/app/app.dart';
 import 'package:whatsapp/core/core.dart';
 
 class CachedNetworkImageWidget extends StatelessWidget {
@@ -12,15 +13,19 @@ class CachedNetworkImageWidget extends StatelessWidget {
     this.showProgressIndicator = false,
     this.clipToCircle = false,
     this.tag,
+    this.errorWidget = ThemeSizedBox.shrink,
+    this.fit,
   });
 
   final String imageUrl;
   final Widget placeholder;
+  final Widget errorWidget;
   final double width;
   final double height;
   final bool showProgressIndicator;
   final bool clipToCircle;
   final String? tag;
+  final BoxFit? fit;
 
   @override
   Widget build(BuildContext context) => Stack(
@@ -35,11 +40,13 @@ class CachedNetworkImageWidget extends StatelessWidget {
                 imageUrl: imageUrl,
                 width: width,
                 height: height,
+                fit: fit,
                 progressIndicatorBuilder: (_, __, progress) {
                   NetworkListeners.downloadFileSizeStream
                       .add(progress.downloaded);
                   return placeholder;
                 },
+                errorWidget: (_, __, dynamic ___) => errorWidget,
               ),
             ),
           if (imageUrl.isEmpty) placeholder,

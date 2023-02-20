@@ -1,5 +1,4 @@
 import 'package:file_picker/file_picker.dart';
-import 'package:filesize/filesize.dart';
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
@@ -51,7 +50,7 @@ abstract class MessageUtilsMethods {
               ListTile(
                 title: Text(context.translator.fileSize),
                 subtitle: Text(
-                  filesize(fileInformationDetails.fileSize),
+                  fileInformationDetails.fileSize.convertToComputerSize(),
                 ),
               ),
             if (fileInformationDetails.fileType != null &&
