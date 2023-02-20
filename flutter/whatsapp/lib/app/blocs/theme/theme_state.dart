@@ -10,7 +10,7 @@ class ThemeState extends Equatable {
     this.currentLightContrastFlexScheme = FlexScheme.materialHc,
     this.currentDarkFlexScheme = FlexScheme.material,
     this.currentDarkContrastFlexScheme = FlexScheme.materialHc,
-    this.currentFontFamily = Constants.defaultFontFamily,
+    this.currentFontFamily = AppConstants.defaultFontFamily,
     this.currentEnableMaterial3 = true,
   });
 

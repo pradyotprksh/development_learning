@@ -14,4 +14,5 @@ export 'search/search.dart';
 export 'selectContact/select_contact.dart';
 export 'settings/settings.dart';
 export 'splash/splash.dart';
+export 'storageData/storage_data.dart';
 export 'userDetails/user_details.dart';

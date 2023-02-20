@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:whatsapp/core/core.dart';
 
 class CachedNetworkImageWidget extends StatelessWidget {
   const CachedNetworkImageWidget({
@@ -32,9 +33,14 @@ class CachedNetworkImageWidget extends StatelessWidget {
                   : BorderRadius.zero,
               child: CachedNetworkImage(
                 imageUrl: imageUrl,
-                placeholder: (_, __) => placeholder,
                 width: width,
                 height: height,
+                progressIndicatorBuilder: (_, __, progress) {
+                  UtilsLogger.errorLog(progress.progress);
+                  NetworkListeners.downloadFileSizeStream
+                      .add(progress.downloaded);
+                  return placeholder;
+                },
               ),
             ),
           if (imageUrl.isEmpty) placeholder,

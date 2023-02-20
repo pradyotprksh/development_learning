@@ -21,7 +21,7 @@ class WhatsappApp extends StatelessWidget {
           );
 
           return MaterialApp(
-            title: Constants.applicationName,
+            title: AppConstants.applicationName,
             themeMode: themeState.currentThemeMode,
             debugShowCheckedModeBanner: !AppDetails.isReleaseMode,
             theme: _getThemeData(

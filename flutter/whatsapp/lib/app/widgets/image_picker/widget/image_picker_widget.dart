@@ -36,14 +36,14 @@ class ImagePickerWidget extends StatelessWidget {
                 cropStyle,
                 [
                   AndroidUiSettings(
-                    toolbarTitle: Constants.applicationName,
+                    toolbarTitle: AppConstants.applicationName,
                     toolbarColor: themeData.appBarTheme.backgroundColor,
                     toolbarWidgetColor: themeData.iconTheme.color,
                     initAspectRatio: CropAspectRatioPreset.original,
                     lockAspectRatio: false,
                   ),
                   IOSUiSettings(
-                    title: Constants.applicationName,
+                    title: AppConstants.applicationName,
                   ),
                   webSettings,
                 ],

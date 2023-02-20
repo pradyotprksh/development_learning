@@ -5,7 +5,7 @@ import 'package:whatsapp/app/app.dart';
 
 class LocalizationsState extends Equatable {
   const LocalizationsState({
-    this.currentLocale = const Locale(Constants.defaultLanguage, ''),
+    this.currentLocale = const Locale(AppConstants.defaultLanguage, ''),
   });
 
   final Locale currentLocale;

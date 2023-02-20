@@ -24,6 +24,15 @@ void main() async {
             ),
         ),
         BlocProvider(
+          create: (_) => NetworkBloc()
+            ..add(
+              const ListenToFileSizeUploadEvent(),
+            )
+            ..add(
+              const ListenToFileSizeDownloadEvent(),
+            ),
+        ),
+        BlocProvider(
           create: (_) => ThemeBloc()
             ..add(
               const FetchCurrentThemeEvent(),

@@ -8,7 +8,7 @@ abstract class AddStatusConstants {
 class AddStatusState extends Equatable {
   const AddStatusState({
     this.chosenColor = AddStatusConstants.defaultColor,
-    this.currentFontFamily = Constants.defaultFontFamily,
+    this.currentFontFamily = AppConstants.defaultFontFamily,
     this.pageState = PageState.idle,
     this.fileDetails,
   });

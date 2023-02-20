@@ -78,7 +78,7 @@ class AddCameraStatusView extends StatelessWidget {
                               null,
                               [
                                 AndroidUiSettings(
-                                  toolbarTitle: Constants.applicationName,
+                                  toolbarTitle: AppConstants.applicationName,
                                   toolbarColor: context
                                       .themeData.appBarTheme.backgroundColor,
                                   toolbarWidgetColor:
@@ -88,7 +88,7 @@ class AddCameraStatusView extends StatelessWidget {
                                   lockAspectRatio: false,
                                 ),
                                 IOSUiSettings(
-                                  title: Constants.applicationName,
+                                  title: AppConstants.applicationName,
                                 ),
                                 WebUiSettings(
                                   context: context,
