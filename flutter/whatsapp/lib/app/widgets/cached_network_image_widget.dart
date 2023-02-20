@@ -36,7 +36,6 @@ class CachedNetworkImageWidget extends StatelessWidget {
                 width: width,
                 height: height,
                 progressIndicatorBuilder: (_, __, progress) {
-                  UtilsLogger.errorLog(progress.progress);
                   NetworkListeners.downloadFileSizeStream
                       .add(progress.downloaded);
                   return placeholder;
