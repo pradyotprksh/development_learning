@@ -40,7 +40,7 @@ class StorageDataView extends StatelessWidget {
                   children: [
                     Flexible(
                       child: Text(
-                        '${networkState.totalUploadFileSize.convertToComputerSize()} ${context.translator.sent}',
+                        '${networkState.totalUploadSize.convertToComputerSize()} ${context.translator.sent}',
                       ),
                     ),
                     Padding(
@@ -53,7 +53,7 @@ class StorageDataView extends StatelessWidget {
                     ),
                     Flexible(
                       child: Text(
-                        '${networkState.totalDownloadFileSize.convertToComputerSize()} ${context.translator.received}',
+                        '${networkState.totalDownloadSize.convertToComputerSize()} ${context.translator.received}',
                       ),
                     ),
                   ],

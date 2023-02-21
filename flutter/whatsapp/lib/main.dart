@@ -30,6 +30,12 @@ void main() async {
             )
             ..add(
               const ListenToFileSizeDownloadEvent(),
+            )
+            ..add(
+              const ListenToVideoCallSizeEvent(),
+            )
+            ..add(
+              const ListenToPhoneCallEvent(),
             ),
         ),
         BlocProvider(

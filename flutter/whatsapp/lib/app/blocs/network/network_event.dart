@@ -14,3 +14,11 @@ class ListenToFileSizeUploadEvent extends NetworkEvent {
 class ListenToFileSizeDownloadEvent extends NetworkEvent {
   const ListenToFileSizeDownloadEvent();
 }
+
+class ListenToVideoCallSizeEvent extends NetworkEvent {
+  const ListenToVideoCallSizeEvent();
+}
+
+class ListenToPhoneCallEvent extends NetworkEvent {
+  const ListenToPhoneCallEvent();
+}

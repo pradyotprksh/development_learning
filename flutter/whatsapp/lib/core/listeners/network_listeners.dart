@@ -4,4 +4,6 @@ abstract class NetworkListeners {
   static final StreamController<int> uploadFileSizeStream = StreamController();
   static final StreamController<int> downloadFileSizeStream =
       StreamController();
+  static final StreamController<int> videoCallSizeStream = StreamController();
+  static final StreamController<int> phoneCallSizeStream = StreamController();
 }

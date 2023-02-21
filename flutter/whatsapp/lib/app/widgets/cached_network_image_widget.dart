@@ -15,6 +15,7 @@ class CachedNetworkImageWidget extends StatelessWidget {
     this.tag,
     this.errorWidget = ThemeSizedBox.shrink,
     this.fit,
+    this.failed,
   });
 
   final String imageUrl;
@@ -26,6 +27,7 @@ class CachedNetworkImageWidget extends StatelessWidget {
   final bool clipToCircle;
   final String? tag;
   final BoxFit? fit;
+  final Function()? failed;
 
   @override
   Widget build(BuildContext context) => Stack(
@@ -46,7 +48,10 @@ class CachedNetworkImageWidget extends StatelessWidget {
                       .add(progress.downloaded);
                   return placeholder;
                 },
-                errorWidget: (_, __, dynamic ___) => errorWidget,
+                errorWidget: (_, __, dynamic ___) {
+                  failed?.call();
+                  return errorWidget;
+                },
               ),
             ),
           if (imageUrl.isEmpty) placeholder,

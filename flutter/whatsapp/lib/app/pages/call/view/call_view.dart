@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
 import 'package:whatsapp/app/app.dart';
+import 'package:whatsapp/core/core.dart';
 
 class CallView extends StatefulWidget {
   const CallView({super.key});
@@ -50,6 +51,19 @@ class _CallViewState extends State<CallView> {
                     value ?? 0,
                     milliSecond: false,
                   );
+
+                  if (callDetails != null) {
+                    final seconds = StopWatchTimer.getRawSecond(value ?? 0);
+                    if (callDetails.isPhoneCall) {
+                      NetworkListeners.phoneCallSizeStream.add(
+                        AppConstants.oneSecPhoneCallSizeInBytes * seconds,
+                      );
+                    } else if (callDetails.isVideoCall) {
+                      NetworkListeners.videoCallSizeStream.add(
+                        AppConstants.oneSecVideoCallSizeInBytes * seconds,
+                      );
+                    }
+                  }
 
                   return Text(displayTime);
                 },
