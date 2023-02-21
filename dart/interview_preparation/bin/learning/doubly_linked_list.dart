@@ -294,4 +294,39 @@ class DoublyLinkedList {
       print("Linked list reversed $head");
     }
   }
+
+  void addInSortedManner(int data) {
+    final newNode = DoublyLinkedListNode(data: data);
+    if (head == null) {
+      head = newNode;
+    } else {
+      var temp = head;
+      if (temp != null) {
+        while (temp!.next != null && temp.data < data) {
+          temp = temp.next;
+        }
+        if (temp.prev == null && temp.next != null) {
+          if (temp.data < data) {
+            newNode.prev = temp;
+            temp.next = newNode;
+          } else {
+            newNode.next = temp;
+            temp.prev = newNode;
+          }
+          head = newNode;
+        } else {
+          if (temp.data < data) {
+            temp.next = newNode;
+            newNode.prev = temp;
+          } else {
+            newNode.prev = temp.prev;
+            newNode.next = temp;
+            temp.prev?.next = newNode;
+            temp.prev = newNode;
+          }
+        }
+      }
+    }
+    print("Item $data added in sorted $head");
+  }
 }

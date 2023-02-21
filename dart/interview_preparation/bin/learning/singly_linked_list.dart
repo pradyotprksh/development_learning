@@ -1,3 +1,5 @@
+import 'dart:math';
+
 class SinglyLinkedListNode {
   SinglyLinkedListNode({
     this.data = -1,
@@ -9,6 +11,14 @@ class SinglyLinkedListNode {
 
   @override
   String toString() => "$data->$next";
+
+  @override
+  bool operator ==(Object other) {
+    return toString() == other.toString();
+  }
+
+  @override
+  int get hashCode => Random().nextInt(10);
 }
 
 void singlyLinkedList() {
