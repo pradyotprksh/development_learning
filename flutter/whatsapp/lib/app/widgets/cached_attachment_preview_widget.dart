@@ -11,20 +11,25 @@ class CachedAttachmentPreviewWidget extends StatelessWidget {
   final FileInformationDetails fileDetails;
 
   @override
-  Widget build(BuildContext context) => CachedNetworkImageWidget(
-        imageUrl: fileDetails.fileUrl,
-        fit: BoxFit.cover,
-        placeholder: const DefaultAttachmentWidget(),
-        width: double.infinity,
-        height: double.infinity,
-        errorWidget: (fileDetails.fileType == 'pdf')
-            ? const DefaultAttachmentWidget(
-                icon: Icons.picture_as_pdf,
-              )
-            : (fileDetails.fileType == 'txt')
-                ? const DefaultAttachmentWidget(
-                    icon: Icons.text_snippet,
-                  )
-                : const DefaultAttachmentWidget(),
+  Widget build(BuildContext context) => GestureDetector(
+        onLongPress: () {
+          MessageUtilsMethods.showFileDetails(context, fileDetails);
+        },
+        child: CachedNetworkImageWidget(
+          imageUrl: fileDetails.fileUrl,
+          fit: BoxFit.cover,
+          placeholder: const DefaultAttachmentWidget(),
+          width: double.infinity,
+          height: double.infinity,
+          errorWidget: (fileDetails.fileType == 'pdf')
+              ? const DefaultAttachmentWidget(
+                  icon: Icons.picture_as_pdf,
+                )
+              : (fileDetails.fileType == 'txt')
+                  ? const DefaultAttachmentWidget(
+                      icon: Icons.text_snippet,
+                    )
+                  : const DefaultAttachmentWidget(),
+        ),
       );
 }
