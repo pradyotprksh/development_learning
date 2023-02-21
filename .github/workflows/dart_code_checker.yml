@@ -24,6 +24,7 @@ jobs:
         run: |
           dart pub get
           dart analyze
+          dart run
   algorithms:
     name: algorithms Code Checker
     runs-on: ubuntu-latest
@@ -42,6 +43,7 @@ jobs:
         run: |
           dart pub get
           dart analyze
+          dart run
   data_structures:
     name: data_structures Code Checker
     runs-on: ubuntu-latest
@@ -56,6 +58,7 @@ jobs:
         run: |
           dart pub get
           dart analyze
+          dart run
   stackexchange_api:
     name: stackexchange_api Code Checker
     runs-on: ubuntu-latest
