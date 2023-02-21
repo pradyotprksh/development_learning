@@ -123,6 +123,7 @@ class UserDetailsView extends StatelessWidget {
                             showProgressIndicator:
                                 userState.imageUploadStatus ==
                                     ImageUploadStatus.uploading,
+                            useAvatarAsProfile: false,
                           ),
                         ),
                       ),

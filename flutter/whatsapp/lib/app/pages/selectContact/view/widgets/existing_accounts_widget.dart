@@ -43,6 +43,8 @@ class ExistingAccountsWidget extends StatelessWidget {
                   currentMood: userDetail.currentMood,
                   isOnline: userDetail.isOnline,
                   enableAction: false,
+                  useAvatarAsProfile: userDetail.useAvatarAsProfile,
+                  avatarDetails: userDetail.avatarDetails,
                 ),
                 title: Text(
                   userDetail.name ?? '',

@@ -34,3 +34,7 @@ class UpdateCurrentMood extends ProfileEvent {
 
   final String mood;
 }
+
+class UseAvatarAsProfileImage extends ProfileEvent {
+  const UseAvatarAsProfileImage();
+}

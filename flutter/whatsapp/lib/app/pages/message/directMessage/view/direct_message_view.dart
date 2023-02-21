@@ -35,6 +35,9 @@ class _DirectMessageViewState extends State<DirectMessageView> {
               isOnline: messageState.userDetails?.isOnline,
               enableAction: false,
               size: 30,
+              useAvatarAsProfile:
+                  messageState.userDetails?.useAvatarAsProfile ?? false,
+              avatarDetails: messageState.userDetails?.avatarDetails,
             ),
             title: Text(
               messageState.userDetails?.name ?? '',

@@ -11,6 +11,8 @@ class StatusProfileImageWidget extends StatelessWidget {
     required this.userId,
     required this.currentMode,
     required this.isOnline,
+    required this.useAvatarAsProfile,
+    this.avatarDetails,
   });
 
   final String profileImage;
@@ -19,6 +21,8 @@ class StatusProfileImageWidget extends StatelessWidget {
   final String userId;
   final String? currentMode;
   final bool? isOnline;
+  final bool useAvatarAsProfile;
+  final String? avatarDetails;
 
   @override
   Widget build(BuildContext context) => SizedBox(
@@ -34,6 +38,8 @@ class StatusProfileImageWidget extends StatelessWidget {
               size: 40,
               isOnline: isOnline,
               enableAction: false,
+              useAvatarAsProfile: useAvatarAsProfile,
+              avatarDetails: avatarDetails,
             ),
             if (totalStatusCount > 0)
               CircularStepProgressIndicator(

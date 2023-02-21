@@ -73,6 +73,9 @@ class SavedMessagesView extends StatelessWidget {
                                       isOnline: details.isOnline,
                                       enableAction:
                                           currentUserId != details.userId,
+                                      useAvatarAsProfile:
+                                          details.useAvatarAsProfile,
+                                      avatarDetails: details.avatarDetails,
                                     );
                                     return ListTile(
                                       contentPadding: ThemeEdgeInsets.zero,

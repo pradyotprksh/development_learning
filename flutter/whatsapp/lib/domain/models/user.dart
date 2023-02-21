@@ -23,6 +23,7 @@ class UserDetails extends Equatable {
     this.isEmailVerified = false,
     this.isPhoneNumberVerified = false,
     this.isOnline = true,
+    this.useAvatarAsProfile = false,
   });
 
   factory UserDetails.fromFirestore(
@@ -61,13 +62,14 @@ class UserDetails extends Equatable {
           data?[FirestoreItemKey.allDetailsAvailable] as bool? ?? false,
       isEmailVerified:
           data?[FirestoreItemKey.isEmailVerified] as bool? ?? false,
+      useAvatarAsProfile:
+          data?[FirestoreItemKey.useAvatarAsProfile] as bool? ?? false,
       isPhoneNumberVerified:
           data?[FirestoreItemKey.isPhoneNumberVerified] as bool? ?? false,
       isOnline: data?[FirestoreItemKey.isOnline] as bool? ?? false,
       currentMood: data?[FirestoreItemKey.currentMood] as String?,
       userDeviceDetails: UserDeviceDetails.fromMap(deviceDetails),
-      avatarDetails:
-          data?[FirestoreItemKey.avatarDetails] as Map<String, dynamic>?,
+      avatarDetails: data?[FirestoreItemKey.avatarDetails] as String?,
     );
   }
 
@@ -87,7 +89,8 @@ class UserDetails extends Equatable {
   final bool isOnline;
   final String? currentMood;
   final int? lastPinConfirmationTimeStamp;
-  final Map<String, dynamic>? avatarDetails;
+  final String? avatarDetails;
+  final bool useAvatarAsProfile;
 
   Map<String, dynamic> toFirestore() => <String, dynamic>{
         if (name != null)
@@ -121,6 +124,7 @@ class UserDetails extends Equatable {
           FirestoreItemKey.userDeviceDetails: userDeviceDetails!.toMap(),
         if (avatarDetails != null)
           FirestoreItemKey.avatarDetails: avatarDetails,
+        FirestoreItemKey.useAvatarAsProfile: useAvatarAsProfile,
       };
 
   @override
@@ -141,5 +145,7 @@ class UserDetails extends Equatable {
         isPhoneNumberVerified,
         isOnline,
         currentMood,
+        useAvatarAsProfile,
+        avatarDetails,
       ];
 }

@@ -167,5 +167,9 @@
   "storageData": "Storage and data",
   "storageDataSubtitle": "Network usage, auto-download",
   "appLanguage": "App language",
-  "helpSubtitle": "Help center, contacts us, privacy policy"
+  "helpSubtitle": "Help center, contacts us, privacy policy",
+  "useAvatar": "Use avatar",
+  "usePhone": "Use phone options",
+  "noAvatarAvailable": "Please create avatar first and then select it.",
+  "navigate": "Navigate"
 }

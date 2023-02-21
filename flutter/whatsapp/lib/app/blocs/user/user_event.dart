@@ -14,5 +14,5 @@ class FetchUserDetails extends UserEvent {
 class SaveAvatar extends UserEvent {
   const SaveAvatar(this.avatarDetails);
 
-  final Map<String, dynamic> avatarDetails;
+  final String avatarDetails;
 }

@@ -69,6 +69,9 @@ class _StatusViewState extends State<StatusView>
                           statusState.currentUserStatus?.statusDetails.length ??
                               0,
                       userId: statusState.currentUserStatus?.userId ?? '',
+                      useAvatarAsProfile:
+                          userState.userDetails?.useAvatarAsProfile ?? false,
+                      avatarDetails: userState.userDetails?.avatarDetails,
                     ),
                     if (statusState.currentUserStatus?.statusDetails.isEmpty ==
                         true)
@@ -117,6 +120,8 @@ class _StatusViewState extends State<StatusView>
                             userId: userDetails.userId,
                             currentMode: userDetails.currentMood,
                             isOnline: userDetails.isOnline,
+                            useAvatarAsProfile: userDetails.useAvatarAsProfile,
+                            avatarDetails: userDetails.avatarDetails,
                           ),
                           title: Text(
                             userDetails.name ?? '',

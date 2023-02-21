@@ -5,8 +5,65 @@ import 'package:image_picker/image_picker.dart';
 import 'package:whatsapp/app/app.dart';
 import 'package:whatsapp/core/core.dart';
 
+enum PickerOptions {
+  phone,
+  userAvatarOption,
+}
+
 abstract class ImagePickerUtils {
   static final ImagePicker _picker = ImagePicker();
+
+  static Future<PickerOptions?> selectSourceOption(
+    BuildContext context,
+  ) async {
+    final option = await showModalBottomSheet<PickerOptions>(
+      context: context,
+      builder: (_) => Scaffold(
+        backgroundColor: Colors.transparent,
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          leading: const CloseButton(),
+          title: Text(
+            context.translator.imagePickerTitle,
+            style: context.themeData.appBarTheme.titleTextStyle,
+          ),
+          elevation: 0,
+        ),
+        body: ListView(
+          children: [
+            ...PickerOptions.values.map(
+              (e) {
+                switch (e) {
+                  case PickerOptions.phone:
+                    return ListTile(
+                      title: Text(
+                        context.translator.usePhone,
+                        style: context.themeData.textTheme.titleLarge,
+                      ),
+                      onTap: () {
+                        context.navigator.pop(e);
+                      },
+                    );
+                  case PickerOptions.userAvatarOption:
+                    return ListTile(
+                      title: Text(
+                        context.translator.useAvatar,
+                        style: context.themeData.textTheme.titleLarge,
+                      ),
+                      onTap: () {
+                        context.navigator.pop(e);
+                      },
+                    );
+                }
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+
+    return option;
+  }
 
   static Future<ImageSource?> selectPickerType(
     BuildContext context,

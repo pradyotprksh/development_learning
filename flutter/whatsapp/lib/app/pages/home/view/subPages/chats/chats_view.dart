@@ -64,6 +64,9 @@ class _ChatsViewState extends State<ChatsView>
                       isOnline: userDetails.data?.isOnline,
                       enableAction: false,
                       size: 40,
+                      useAvatarAsProfile:
+                          userDetails.data?.useAvatarAsProfile ?? false,
+                      avatarDetails: userDetails.data?.avatarDetails,
                     ),
                     title: Text(
                       userDetails.data?.name ?? '',

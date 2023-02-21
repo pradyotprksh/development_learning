@@ -177,6 +177,9 @@ class _StatusDetailsWidgetState extends State<StatusDetailsWidget> {
                           context.navigator.pop();
                         },
                         enableAction: !widget.isCurrentUser,
+                        useAvatarAsProfile:
+                            widget.userDetails?.useAvatarAsProfile ?? false,
+                        avatarDetails: widget.userDetails?.avatarDetails,
                       ),
                       title: Text(
                         widget.userDetails?.name ?? '',

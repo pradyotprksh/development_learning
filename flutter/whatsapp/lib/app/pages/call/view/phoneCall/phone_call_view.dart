@@ -20,6 +20,9 @@ class PhoneCallView extends StatelessWidget {
                 userId: callDetails.userDetails[0]?.userId ?? '',
                 enableAction: false,
                 size: context.mediaQuery.size.width * 0.80,
+                useAvatarAsProfile:
+                    callDetails.userDetails[0]?.useAvatarAsProfile ?? false,
+                avatarDetails: callDetails.userDetails[0]?.avatarDetails,
               ),
             ),
           if (callDetails.userDetails.length > 1)
@@ -38,6 +41,9 @@ class PhoneCallView extends StatelessWidget {
                 userId: callDetails.userDetails[index]?.userId ?? '',
                 enableAction: false,
                 size: context.mediaQuery.size.width * 0.80,
+                useAvatarAsProfile:
+                    callDetails.userDetails[index]?.useAvatarAsProfile ?? false,
+                avatarDetails: callDetails.userDetails[index]?.avatarDetails,
               ),
             ),
           Align(

@@ -32,6 +32,8 @@ class SelectedUsersWidget extends StatelessWidget {
                     userId: userDetail.userId,
                     isOnline: null,
                     enableAction: false,
+                    useAvatarAsProfile: userDetail.useAvatarAsProfile,
+                    avatarDetails: userDetail.avatarDetails,
                   ),
                   label: Text(
                     userDetail.name ?? '',

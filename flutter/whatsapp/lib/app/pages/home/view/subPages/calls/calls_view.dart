@@ -134,6 +134,9 @@ class _CallsViewState extends State<CallsView>
                                 currentMood: otherUserDetails.currentMood,
                                 isOnline: otherUserDetails.isOnline,
                                 size: 40,
+                                useAvatarAsProfile:
+                                    otherUserDetails.useAvatarAsProfile,
+                                avatarDetails: otherUserDetails.avatarDetails,
                               ),
                               title: Text(
                                 otherUserDetails.name ?? '',

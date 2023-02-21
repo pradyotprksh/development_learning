@@ -14,6 +14,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     on<EnableDisableUserNameForm>(_enableUsernameEditOperation);
     on<UpdateUserName>(_updateUsernameImage);
     on<UpdateCurrentMood>(_updateUserMood);
+    on<UseAvatarAsProfileImage>(_useAvatarAsProfileImage);
   }
 
   final FirebaseFirestoreService _firebaseFirestoreService;
@@ -79,6 +80,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
           {
             FirestoreItemKey.profileImage: imageUrl,
             FirestoreItemKey.firestoreFilePath: firestorePath,
+            FirestoreItemKey.useAvatarAsProfile: false,
             FirestoreItemKey.userDeviceDetails: deviceDetails.toMap(),
           },
         );
@@ -115,6 +117,23 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       );
       add(
         const EnableDisableUserNameForm(),
+      );
+    }
+  }
+
+  void _useAvatarAsProfileImage(
+    UseAvatarAsProfileImage event,
+    Emitter<ProfileState> emit,
+  ) async {
+    final userId = _firebaseAuthService.getUserId();
+    if (userId != null) {
+      final deviceDetails = await _deviceDetails.getDeviceDetails();
+      await _firebaseFirestoreService.updateUserDetails(
+        userId,
+        {
+          FirestoreItemKey.useAvatarAsProfile: true,
+          FirestoreItemKey.userDeviceDetails: deviceDetails.toMap(),
+        },
       );
     }
   }

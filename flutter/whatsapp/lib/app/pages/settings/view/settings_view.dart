@@ -60,6 +60,9 @@ class SettingsView extends StatelessWidget {
                   isOnline: userState.userDetails?.isOnline,
                   size: 50,
                   enableAction: false,
+                  useAvatarAsProfile:
+                      userState.userDetails?.useAvatarAsProfile ?? false,
+                  avatarDetails: userState.userDetails?.avatarDetails,
                 ),
                 title: Text(
                   userState.userDetails?.name ?? '',

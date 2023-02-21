@@ -249,6 +249,9 @@ class MessageWidget extends StatelessWidget {
                         userId: userDetails?.userId ?? '',
                         isOnline: userDetails?.isOnline,
                         size: 25,
+                        useAvatarAsProfile:
+                            userDetails?.useAvatarAsProfile ?? false,
+                        avatarDetails: userDetails?.avatarDetails,
                       ),
                     if (message.sentByUserId != currentUserId &&
                         showOtherDetailsAndOption)

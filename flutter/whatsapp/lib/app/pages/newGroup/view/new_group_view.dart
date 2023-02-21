@@ -119,6 +119,8 @@ class NewGroupView extends StatelessWidget {
                                   ? null
                                   : userDetail.isOnline,
                               enableAction: false,
+                              useAvatarAsProfile: userDetail.useAvatarAsProfile,
+                              avatarDetails: userDetail.avatarDetails,
                             ),
                             if (accountDetails.isSelected)
                               Icon(

@@ -48,7 +48,25 @@ class ProfileView extends StatelessWidget {
                           UpdateUserProfileImage(path),
                         );
                   },
+                  avatarOptionSelected: () {
+                    if (userState.userDetails?.avatarDetails != null) {
+                      context.read<ProfileBloc>().add(
+                            const UseAvatarAsProfileImage(),
+                          );
+                    } else {
+                      context.replaceAndShowSnackBar(
+                        context.translator.noAvatarAvailable,
+                        SnackBarAction(
+                          label: context.translator.navigate,
+                          onPressed: () {
+                            context.navigator.pushNamed(Routes.avatar);
+                          },
+                        ),
+                      );
+                    }
+                  },
                   cropStyle: CropStyle.circle,
+                  showAvatarOption: true,
                   aspectRatioPresets: const [
                     CropAspectRatioPreset.square,
                   ],
@@ -66,6 +84,13 @@ class ProfileView extends StatelessWidget {
                             currentMood: null,
                             size: 150,
                             enableAction: false,
+                            showProgressIndicator:
+                                profileState.imageUploadStatus ==
+                                    ImageUploadStatus.uploading,
+                            useAvatarAsProfile:
+                                userState.userDetails?.useAvatarAsProfile ??
+                                    false,
+                            avatarDetails: userState.userDetails?.avatarDetails,
                           ),
                         ),
                         Container(

@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+// ignore: depend_on_referenced_packages
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:fluttermoji/fluttermoji.dart';
 import 'package:whatsapp/app/app.dart';
 
 class UserImageWidget extends StatelessWidget {
@@ -12,6 +15,8 @@ class UserImageWidget extends StatelessWidget {
     this.showProgressIndicator = false,
     this.size = 40,
     this.extraAction,
+    this.useAvatarAsProfile = false,
+    this.avatarDetails,
   });
 
   final String profileImage;
@@ -22,6 +27,8 @@ class UserImageWidget extends StatelessWidget {
   final void Function()? extraAction;
   final bool? isOnline;
   final bool showProgressIndicator;
+  final bool useAvatarAsProfile;
+  final String? avatarDetails;
 
   @override
   Widget build(BuildContext context) => GestureDetector(
@@ -41,23 +48,42 @@ class UserImageWidget extends StatelessWidget {
         child: Stack(
           alignment: Alignment.bottomRight,
           children: [
-            CachedNetworkImageWidget(
-              tag: userId,
-              imageUrl: profileImage,
-              showProgressIndicator: showProgressIndicator,
-              placeholder: CircleAvatar(
+            if (useAvatarAsProfile && avatarDetails != null)
+              CircleAvatar(
                 radius: size / 2,
                 backgroundColor: context.themeData.primaryColor,
-                child: Icon(
-                  Icons.person,
-                  color: Colors.white,
-                  size: size / 2,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(
+                      size,
+                    ),
+                  ),
+                  child: SvgPicture.string(
+                    FluttermojiFunctions()
+                        .decodeFluttermojifromString(avatarDetails.toString()),
+                    height: size,
+                    width: size,
+                  ),
                 ),
               ),
-              height: size,
-              width: size,
-              clipToCircle: true,
-            ),
+            if (!useAvatarAsProfile || avatarDetails == null)
+              CachedNetworkImageWidget(
+                tag: userId,
+                imageUrl: profileImage,
+                showProgressIndicator: showProgressIndicator,
+                placeholder: CircleAvatar(
+                  radius: size / 2,
+                  backgroundColor: context.themeData.primaryColor,
+                  child: Icon(
+                    Icons.person,
+                    color: Colors.white,
+                    size: size / 2,
+                  ),
+                ),
+                height: size,
+                width: size,
+                clipToCircle: true,
+              ),
             if (isOnline != null)
               Container(
                 height: size / 2.5,
