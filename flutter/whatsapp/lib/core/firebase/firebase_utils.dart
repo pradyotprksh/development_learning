@@ -5,6 +5,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
+import 'package:whatsapp/app/app.dart';
 import 'package:whatsapp/core/core.dart';
 import 'package:whatsapp/firebase_options.dart';
 
@@ -24,7 +25,9 @@ abstract class FirebaseUtils {
   static Future<void> crashlyticsInitiation() async {
     FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
     PlatformDispatcher.instance.onError = (error, stack) {
-      FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
+      if (AppDetails.isReleaseMode) {
+        FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
+      }
       return true;
     };
   }
@@ -42,10 +45,12 @@ abstract class FirebaseUtils {
 
   static void recordFlutterError(Object exception) {
     UtilsLogger.errorLog(exception);
-    FirebaseCrashlytics.instance.recordFlutterError(
-      FlutterErrorDetails(
-        exception: exception,
-      ),
-    );
+    if (AppDetails.isReleaseMode) {
+      FirebaseCrashlytics.instance.recordFlutterError(
+        FlutterErrorDetails(
+          exception: exception,
+        ),
+      );
+    }
   }
 }

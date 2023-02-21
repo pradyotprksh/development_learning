@@ -22,49 +22,43 @@ class AvatarView extends StatelessWidget {
       unselectedIconColor: context.themeData.unselectedWidgetColor,
     );
 
-    return WillPopScope(
-      onWillPop: () async {
-        await _saveAvatar(context);
-        return Future.value(true);
-      },
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text(
-            context.translator.avatar,
-          ),
-          actions: [
-            IconButton(
-              onPressed: () async {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          context.translator.avatar,
+        ),
+        actions: [
+          IconButton(
+            onPressed: () async {
+              await _saveAvatar(context);
+              if (context.mounted) {
+                context.navigator.pop();
+              }
+            },
+            icon: FluttermojiSaveWidget(
+              theme: theme,
+              onTap: () async {
                 await _saveAvatar(context);
                 if (context.mounted) {
                   context.navigator.pop();
                 }
               },
-              icon: FluttermojiSaveWidget(
-                theme: theme,
-                onTap: () async {
-                  await _saveAvatar(context);
-                  if (context.mounted) {
-                    context.navigator.pop();
-                  }
-                },
-              ),
             ),
-          ],
-        ),
-        body: Column(
-          children: [
-            const Spacer(),
-            FluttermojiCircleAvatar(
-              radius: 150,
-              backgroundColor: context.themeData.primaryColor,
-            ),
-            const Spacer(),
-            FluttermojiCustomizer(
-              theme: theme,
-            ),
-          ],
-        ),
+          ),
+        ],
+      ),
+      body: Column(
+        children: [
+          const Spacer(),
+          FluttermojiCircleAvatar(
+            radius: 150,
+            backgroundColor: context.themeData.primaryColor,
+          ),
+          const Spacer(),
+          FluttermojiCustomizer(
+            theme: theme,
+          ),
+        ],
       ),
     );
   }
