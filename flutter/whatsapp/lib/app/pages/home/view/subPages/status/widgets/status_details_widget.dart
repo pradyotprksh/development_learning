@@ -42,7 +42,9 @@ class _StatusDetailsWidgetState extends State<StatusDetailsWidget> {
     return Scaffold(
       extendBodyBehindAppBar: true,
       extendBody: true,
-      backgroundColor: Color(currentStatus.color),
+      backgroundColor: (currentStatus.filePathUrl != null)
+          ? context.themeData.scaffoldBackgroundColor
+          : Color(currentStatus.color),
       appBar: AppBar(
         automaticallyImplyLeading: false,
         backgroundColor: Colors.transparent,
@@ -82,6 +84,7 @@ class _StatusDetailsWidgetState extends State<StatusDetailsWidget> {
                 placeholder: ThemeSizedBox.shrink,
                 width: double.infinity,
                 height: double.infinity,
+                fit: BoxFit.cover,
               ),
           Column(
             children: [
@@ -113,42 +116,51 @@ class _StatusDetailsWidgetState extends State<StatusDetailsWidget> {
                   ),
                 ),
               ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
-              GestureDetector(
-                onTap: () {
-                  if (currentStatusIndex != 0) {
-                    setState(
-                      () {
-                        currentStatus = widget
-                            .statusDetails.statusDetails[--currentStatusIndex];
+              ThemeSizedBox.height30,
+              Flexible(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        if (currentStatusIndex != 0) {
+                          setState(
+                            () {
+                              currentStatus = widget.statusDetails
+                                  .statusDetails[--currentStatusIndex];
+                            },
+                          );
+                        }
                       },
-                    );
-                  }
-                },
-                child: Container(
-                  height: double.infinity,
-                  width: context.mediaQuery.size.width / 3,
-                  color: Colors.transparent,
+                      child: Container(
+                        height: double.infinity,
+                        width: context.mediaQuery.size.width / 3,
+                        color: Colors.transparent,
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        if (currentStatusIndex <
+                            widget.statusDetails.statusDetails.length - 1) {
+                          setState(() {
+                            currentStatus = widget.statusDetails
+                                .statusDetails[++currentStatusIndex];
+                          });
+                        }
+                      },
+                      child: Container(
+                        width: context.mediaQuery.size.width / 3,
+                        height: double.infinity,
+                        color: Colors.transparent,
+                      ),
+                    ),
+                  ],
                 ),
               ),
-              GestureDetector(
-                onTap: () {
-                  if (currentStatusIndex <
-                      widget.statusDetails.statusDetails.length - 1) {
-                    setState(() {
-                      currentStatus = widget
-                          .statusDetails.statusDetails[++currentStatusIndex];
-                    });
-                  }
-                },
-                child: Container(
-                  width: context.mediaQuery.size.width / 3,
-                  height: double.infinity,
-                  color: Colors.transparent,
-                ),
-              ),
+              ThemeSizedBox.height30,
             ],
           ),
           Column(
