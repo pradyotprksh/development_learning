@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:whatsapp/app/app.dart';
 import 'package:whatsapp/core/core.dart';
 
 class FirebaseStorageServiceImplementation extends FirebaseStorageService {
@@ -26,7 +25,7 @@ class FirebaseStorageServiceImplementation extends FirebaseStorageService {
       ),
     );
     final metaData = await storageReference.getMetadata();
-    NetworkListeners.uploadFileSizeStream.add(metaData.size ?? 0);
+    NetworkListeners.uploadFileSizeStream.add((metaData.size ?? 0).toDouble());
     return await storageReference.getDownloadURL();
   }
 }

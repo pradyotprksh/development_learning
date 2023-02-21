@@ -60,10 +60,14 @@ class StorageDataView extends StatelessWidget {
                 ),
               ),
               ListTile(
-                onTap: () {},
+                onTap: () {
+                  context.read<NetworkBloc>().add(
+                        const ToggleLessDataForCall(),
+                      );
+                },
                 leading: ThemeSizedBox.shrink,
                 trailing: Switch(
-                  value: false,
+                  value: networkState.useLessDataForCalls,
                   onChanged: (value) {},
                 ),
                 title: Text(context.translator.useLessDataForCalls),

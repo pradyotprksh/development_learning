@@ -54,10 +54,10 @@ extension FileExtention on FileSystemEntity {
   String? get name => path.split('/').last;
 }
 
-extension IntExtensions on int {
+extension DoubleExtensions on double {
   String convertToComputerSize() {
     try {
-      return filesize(this);
+      return filesize(toInt());
     } catch (e) {
       return '~';
     }

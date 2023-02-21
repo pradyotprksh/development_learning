@@ -22,3 +22,7 @@ class ListenToVideoCallSizeEvent extends NetworkEvent {
 class ListenToPhoneCallEvent extends NetworkEvent {
   const ListenToPhoneCallEvent();
 }
+
+class ToggleLessDataForCall extends NetworkEvent {
+  const ToggleLessDataForCall();
+}

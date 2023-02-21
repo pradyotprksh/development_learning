@@ -6,6 +6,8 @@ abstract class AppConstants {
   static const totalDownloadFileSize = 'totalDownloadFileSize';
   static const totalVideoCallSize = 'totalVideoCallSize';
   static const totalPhoneCallSize = 'totalPhoneCallSize';
-  static const oneSecVideoCallSizeInBytes = 81260;
-  static const oneSecPhoneCallSizeInBytes = 1000;
+  static const oneSecVideoCallSizeInBytes = 81260.0;
+  static const oneSecPhoneCallSizeInBytes = 1000.0;
+  static const lessVideoCallSizeBytes = oneSecVideoCallSizeInBytes / 4;
+  static const lessPhoneCallSizeBytes = oneSecPhoneCallSizeInBytes / 3;
 }

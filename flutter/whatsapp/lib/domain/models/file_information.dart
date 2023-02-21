@@ -22,7 +22,9 @@ class FileInformationDetails extends Equatable {
             json?[FirestoreItemKey.isFromFileSystem] as bool? ?? false,
         isFromGallery: json?[FirestoreItemKey.isFromGallery] as bool? ?? false,
         fileType: json?[FirestoreItemKey.fileType] as String?,
-        fileSize: json?[FirestoreItemKey.fileSize] as int? ?? 0,
+        fileSize: (json?[FirestoreItemKey.fileSize] is int?)
+            ? (json?[FirestoreItemKey.fileSize] as int? ?? 0).toDouble()
+            : json?[FirestoreItemKey.fileSize] as double? ?? 0,
         fileName: json?[FirestoreItemKey.fileName] as String? ?? '',
         firestoreFilePath:
             json?[FirestoreItemKey.firestoreFilePath] as String? ?? '',
@@ -52,7 +54,7 @@ class FileInformationDetails extends Equatable {
   final bool isFromFileSystem;
   final bool isFromGallery;
   final String? fileType;
-  final int fileSize;
+  final double fileSize;
   final String fileName;
 
   @override

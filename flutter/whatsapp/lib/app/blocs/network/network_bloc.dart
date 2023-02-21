@@ -8,6 +8,7 @@ class NetworkBloc extends HydratedBloc<NetworkEvent, NetworkState> {
     on<ListenToFileSizeDownloadEvent>(_fileSizeDownloadEventListener);
     on<ListenToVideoCallSizeEvent>(_videoCallSizeEventListener);
     on<ListenToPhoneCallEvent>(_phoneCallSizeEventListener);
+    on<ToggleLessDataForCall>(_toggleLessDataForCallEvent);
   }
 
   void _fileSizeUploadEventListener(
@@ -40,9 +41,14 @@ class NetworkBloc extends HydratedBloc<NetworkEvent, NetworkState> {
   ) async {
     await emit.forEach(
       NetworkListeners.videoCallSizeStream.stream,
-      onData: (fileSize) => state.copyWith(
-        newVideoCallSize: fileSize,
-      ),
+      onData: (fileSize) {
+        final difference =
+            state.useLessDataForCalls ? AppConstants.lessVideoCallSizeBytes : 0;
+
+        return state.copyWith(
+          newVideoCallSize: fileSize - difference,
+        );
+      },
     );
   }
 
@@ -52,20 +58,27 @@ class NetworkBloc extends HydratedBloc<NetworkEvent, NetworkState> {
   ) async {
     await emit.forEach(
       NetworkListeners.phoneCallSizeStream.stream,
-      onData: (fileSize) => state.copyWith(
-        newPhoneCallSize: fileSize,
-      ),
+      onData: (fileSize) {
+        final difference =
+            state.useLessDataForCalls ? AppConstants.lessPhoneCallSizeBytes : 0;
+
+        return state.copyWith(
+          newPhoneCallSize: fileSize - difference,
+        );
+      },
     );
   }
 
   @override
   NetworkState? fromJson(Map<String, dynamic> json) => NetworkState(
         totalUploadFileSize:
-            json[AppConstants.totalUploadFileSize] as int? ?? 0,
+            json[AppConstants.totalUploadFileSize] as double? ?? 0,
         totalDownloadFileSize:
-            json[AppConstants.totalDownloadFileSize] as int? ?? 0,
-        totalVideoCallSize: json[AppConstants.totalVideoCallSize] as int? ?? 0,
-        totalPhoneCallSize: json[AppConstants.totalPhoneCallSize] as int? ?? 0,
+            json[AppConstants.totalDownloadFileSize] as double? ?? 0,
+        totalVideoCallSize:
+            json[AppConstants.totalVideoCallSize] as double? ?? 0,
+        totalPhoneCallSize:
+            json[AppConstants.totalPhoneCallSize] as double? ?? 0,
       );
 
   @override
@@ -75,4 +88,13 @@ class NetworkBloc extends HydratedBloc<NetworkEvent, NetworkState> {
         AppConstants.totalVideoCallSize: state.totalVideoCallSize,
         AppConstants.totalPhoneCallSize: state.totalPhoneCallSize,
       };
+
+  void _toggleLessDataForCallEvent(
+    ToggleLessDataForCall event,
+    Emitter<NetworkState> emit,
+  ) {
+    emit(
+      state.copyWith(useLessDataForCalls: !state.useLessDataForCalls),
+    );
+  }
 }

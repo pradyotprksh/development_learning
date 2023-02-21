@@ -45,7 +45,7 @@ class CachedNetworkImageWidget extends StatelessWidget {
                 fit: fit,
                 progressIndicatorBuilder: (_, __, progress) {
                   NetworkListeners.downloadFileSizeStream
-                      .add(progress.downloaded);
+                      .add(progress.downloaded.toDouble());
                   return placeholder;
                 },
                 errorWidget: (_, __, dynamic ___) {
