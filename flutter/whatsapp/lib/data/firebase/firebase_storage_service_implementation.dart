@@ -28,4 +28,11 @@ class FirebaseStorageServiceImplementation extends FirebaseStorageService {
     NetworkListeners.uploadFileSizeStream.add((metaData.size ?? 0).toDouble());
     return await storageReference.getDownloadURL();
   }
+
+  @override
+  Future<void> deleteFiles(List<String> storageReference) async {
+    for (final reference in storageReference) {
+      await storage.ref(reference).delete();
+    }
+  }
 }

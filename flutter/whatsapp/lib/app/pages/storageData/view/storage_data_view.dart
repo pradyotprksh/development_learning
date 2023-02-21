@@ -66,9 +66,11 @@ class StorageDataView extends StatelessWidget {
                       );
                 },
                 leading: ThemeSizedBox.shrink,
-                trailing: Switch(
-                  value: networkState.useLessDataForCalls,
-                  onChanged: (value) {},
+                trailing: GestureDetector(
+                  child: Switch(
+                    value: networkState.useLessDataForCalls,
+                    onChanged: (value) {},
+                  ),
                 ),
                 title: Text(context.translator.useLessDataForCalls),
               ),

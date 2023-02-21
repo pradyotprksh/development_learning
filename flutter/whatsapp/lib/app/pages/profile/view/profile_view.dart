@@ -65,6 +65,7 @@ class ProfileView extends StatelessWidget {
                             isOnline: null,
                             currentMood: null,
                             size: 150,
+                            enableAction: false,
                           ),
                         ),
                         Container(

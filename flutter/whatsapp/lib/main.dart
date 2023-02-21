@@ -57,6 +57,7 @@ void main() async {
           create: (_) => UserBloc(
             FirebaseFirestoreServiceImplementation(),
             FirebaseAuthServiceImplementation(),
+            FirebaseStorageServiceImplementation(),
           ),
         ),
         BlocProvider(

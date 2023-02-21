@@ -25,7 +25,7 @@ class UserImageWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => GestureDetector(
-        onTap: userId.isNotEmpty
+        onTap: userId.isNotEmpty && extraAction != null && enableAction
             ? () {
                 extraAction?.call();
                 if (enableAction) {

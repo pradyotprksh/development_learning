@@ -8,12 +8,14 @@ class UserBloc extends Bloc<UserEvent, UserState> {
   UserBloc(
     this._firebaseFirestoreService,
     this._firebaseAuthService,
+    this._firebaseStorageService,
   ) : super(const FetchingUserDetails()) {
     on<FetchUserDetails>(_fetchUserDetailsEvent);
   }
 
   final FirebaseFirestoreService _firebaseFirestoreService;
   final FirebaseAuthService _firebaseAuthService;
+  final FirebaseStorageService _firebaseStorageService;
 
   Future<void> _fetchUserDetailsEvent(
     FetchUserDetails event,
@@ -22,7 +24,11 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     emit(const FetchingUserDetails());
     var userId = _firebaseAuthService.getUserId();
     if (userId != null) {
-      await _firebaseFirestoreService.deleteStatusOnTimeCompletion(userId);
+      final storageReference =
+          await _firebaseFirestoreService.deleteStatusOnTimeCompletion(userId);
+      if (storageReference.isNotEmpty) {
+        await _firebaseStorageService.deleteFiles(storageReference);
+      }
       await emit.forEach(
         _firebaseFirestoreService.getUserDetails(userId),
         onData: (userDetails) {

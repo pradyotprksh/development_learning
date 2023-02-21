@@ -154,5 +154,18 @@
   "photoUploadQuality": "Photo upload quality",
   "autoRecommended": "Auto (recommended)",
   "sent": "sent",
-  "received": "received"
+  "received": "received",
+  "account": "Account",
+  "accountSubtitle": "Security notifications, change number",
+  "privacy": "Privacy",
+  "privacySubtitle": "Bloc contacts, disappearing messages",
+  "avatar": "Avatar",
+  "avatarSubtitle": "Create, edit, profile photo",
+  "chatsSubtitle": "Theme, wallpapers, chat history",
+  "notifications": "Notifications",
+  "notificationsSubtitle": "Message, group & call tones",
+  "storageData": "Storage and data",
+  "storageDataSubtitle": "Network usage, auto-download",
+  "appLanguage": "App language",
+  "helpSubtitle": "Help center, contacts us, privacy policy"
 }

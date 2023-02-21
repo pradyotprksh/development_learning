@@ -10,4 +10,6 @@ abstract class FirebaseStorageService {
     String referenceName,
     Map<String, String> metaDataDetails,
   );
+
+  Future<void> deleteFiles(List<String> storageReference);
 }

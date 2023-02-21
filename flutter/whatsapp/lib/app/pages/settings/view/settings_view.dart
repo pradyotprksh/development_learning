@@ -70,21 +70,68 @@ class SettingsView extends StatelessWidget {
             ListTile(
               onTap: () {},
               leading: Icon(
-                Icons.notifications,
+                Icons.key,
                 color: context.themeData.iconTheme.color,
               ),
               title: Text(
-                context.translator.notificationsAndSounds,
+                context.translator.account,
+              ),
+              subtitle: Text(
+                context.translator.accountSubtitle,
               ),
             ),
             ListTile(
               onTap: () {},
               leading: Icon(
-                Icons.security,
+                Icons.lock,
                 color: context.themeData.iconTheme.color,
               ),
               title: Text(
-                context.translator.privacyAndSecurity,
+                context.translator.privacy,
+              ),
+              subtitle: Text(
+                context.translator.privacySubtitle,
+              ),
+            ),
+            ListTile(
+              onTap: () {},
+              leading: Icon(
+                Icons.face,
+                color: context.themeData.iconTheme.color,
+              ),
+              title: Text(
+                context.translator.avatar,
+              ),
+              subtitle: Text(
+                context.translator.avatarSubtitle,
+              ),
+            ),
+            ListTile(
+              onTap: () {
+                context.navigator.pushNamed(Routes.personaliseRoute);
+              },
+              leading: Icon(
+                Icons.message,
+                color: context.themeData.iconTheme.color,
+              ),
+              title: Text(
+                context.translator.chats,
+              ),
+              subtitle: Text(
+                context.translator.chatsSubtitle,
+              ),
+            ),
+            ListTile(
+              onTap: () {},
+              leading: Icon(
+                Icons.notifications,
+                color: context.themeData.iconTheme.color,
+              ),
+              title: Text(
+                context.translator.notifications,
+              ),
+              subtitle: Text(
+                context.translator.notificationsSubtitle,
               ),
             ),
             ListTile(
@@ -96,29 +143,10 @@ class SettingsView extends StatelessWidget {
                 color: context.themeData.iconTheme.color,
               ),
               title: Text(
-                context.translator.dataAndStorage,
+                context.translator.storageData,
               ),
-            ),
-            ListTile(
-              onTap: () {
-                context.navigator.pushNamed(Routes.personaliseRoute);
-              },
-              leading: Icon(
-                Icons.chat,
-                color: context.themeData.iconTheme.color,
-              ),
-              title: Text(
-                context.translator.chatSettings,
-              ),
-            ),
-            ListTile(
-              onTap: () {},
-              leading: Icon(
-                Icons.devices,
-                color: context.themeData.iconTheme.color,
-              ),
-              title: Text(
-                context.translator.devices,
+              subtitle: Text(
+                context.translator.storageDataSubtitle,
               ),
             ),
             ListTile(
@@ -130,10 +158,32 @@ class SettingsView extends StatelessWidget {
                 color: context.themeData.iconTheme.color,
               ),
               title: Text(
-                context.translator.language,
+                context.translator.appLanguage,
               ),
             ),
-            const Divider(),
+            ListTile(
+              onTap: () {},
+              leading: Icon(
+                Icons.help,
+                color: context.themeData.iconTheme.color,
+              ),
+              title: Text(
+                context.translator.help,
+              ),
+              subtitle: Text(
+                context.translator.helpSubtitle,
+              ),
+            ),
+            ListTile(
+              onTap: () {},
+              leading: Icon(
+                Icons.people,
+                color: context.themeData.iconTheme.color,
+              ),
+              title: Text(
+                context.translator.inviteAFriend,
+              ),
+            ),
           ],
         ),
       );

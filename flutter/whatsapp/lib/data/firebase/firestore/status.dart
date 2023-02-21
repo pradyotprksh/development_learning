@@ -73,7 +73,8 @@ mixin FirestoreStatusImplementation implements FirebaseFirestoreService {
   }
 
   @override
-  Future<void> deleteStatusOnTimeCompletion(String userId) async {
+  Future<List<String>> deleteStatusOnTimeCompletion(String userId) async {
+    var storageReference = <String>[];
     final allCurrentUserStatus = await getStatusCollectionReference()
         .where(
           FirestoreItemKey.userId,
@@ -85,9 +86,14 @@ mixin FirestoreStatusImplementation implements FirebaseFirestoreService {
       final statusTime = status.data().createdOnTimeStamp;
       if (DeviceUtilsMethods.getTimeDifferenceInHrs(statusTime) >=
           FirebaseRemoteConfigService.statusDeleteTimeValue()) {
+        if (status.data().firestoreFilePath != null) {
+          storageReference.add(status.data().firestoreFilePath ?? '');
+        }
         batch.delete(status.reference);
       }
     }
     await batch.commit();
+    storageReference.removeWhere((element) => element.isEmpty);
+    return storageReference;
   }
 }
