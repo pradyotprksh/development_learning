@@ -11,6 +11,7 @@ abstract class Keys {
   static const userId = 'userId';
   static const groupId = 'groupId';
   static const qrCodeData = 'qrCodeData';
+  static const userDetails = 'userDetails';
   static const imageUrl = 'imageUrl';
   static const placeHolderPath = 'placeHolderPath';
 }

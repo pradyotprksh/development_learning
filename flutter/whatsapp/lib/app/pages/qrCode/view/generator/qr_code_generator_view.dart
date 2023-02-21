@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:whatsapp/app/app.dart';
+import 'package:whatsapp/domain/domain.dart';
 
 class QrCodeGeneratorView extends StatelessWidget {
   const QrCodeGeneratorView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final arguments = context.routeSettings?.arguments as Map<String, String>;
-    final qrData = arguments[Keys.qrCodeData] ?? '';
-    final imageUrl = arguments[Keys.imageUrl] ?? '';
+    final arguments = context.routeSettings?.arguments as Map<String, dynamic>;
+    final qrData = arguments[Keys.qrCodeData] as String? ?? '';
+    final imageUrl = arguments[Keys.imageUrl] as String? ?? '';
+    final userDetails = arguments[Keys.userDetails] as UserDetails?;
 
     return Scaffold(
       backgroundColor: context.themeData.scaffoldBackgroundColor,
@@ -44,20 +46,32 @@ class QrCodeGeneratorView extends StatelessWidget {
                     ),
                   ),
                 ),
-                CachedNetworkImageWidget(
-                  imageUrl: imageUrl,
-                  placeholder: CircleAvatar(
-                    radius: 30,
-                    backgroundColor: context.themeData.primaryColor,
-                    child: const Icon(
-                      Icons.qr_code,
-                      color: Colors.white,
-                    ),
+                if (userDetails != null)
+                  UserImageWidget(
+                    profileImage: userDetails.profileImage ?? '',
+                    userId: userDetails.userId,
+                    isOnline: null,
+                    currentMood: null,
+                    size: 60,
+                    enableAction: false,
+                    useAvatarAsProfile: userDetails.useAvatarAsProfile,
+                    avatarDetails: userDetails.avatarDetails,
                   ),
-                  height: 60,
-                  width: 60,
-                  clipToCircle: true,
-                ),
+                if (imageUrl.isNotEmpty && userDetails == null)
+                  CachedNetworkImageWidget(
+                    imageUrl: imageUrl,
+                    placeholder: CircleAvatar(
+                      radius: 30,
+                      backgroundColor: context.themeData.primaryColor,
+                      child: const Icon(
+                        Icons.qr_code,
+                        color: Colors.white,
+                      ),
+                    ),
+                    height: 60,
+                    width: 60,
+                    clipToCircle: true,
+                  ),
               ],
             ),
           ),

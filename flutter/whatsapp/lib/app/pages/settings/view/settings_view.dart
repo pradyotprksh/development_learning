@@ -15,11 +15,11 @@ class SettingsView extends StatelessWidget {
                 final userDetails = context.read<UserBloc>().state.userDetails;
                 context.navigator.pushNamed(
                   Routes.qrCode,
-                  arguments: <String, String>{
+                  arguments: {
                     Keys.qrCodeData: AppUtilsMethods.getUserQrCode(
                       userDetails?.userId ?? '',
                     ),
-                    Keys.imageUrl: userDetails?.profileImage ?? '',
+                    Keys.userDetails: userDetails,
                   },
                 );
               },
