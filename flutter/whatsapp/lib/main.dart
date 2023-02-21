@@ -58,6 +58,7 @@ void main() async {
             FirebaseFirestoreServiceImplementation(),
             FirebaseAuthServiceImplementation(),
             FirebaseStorageServiceImplementation(),
+            DeviceDetailsImplementation(),
           ),
         ),
         BlocProvider(

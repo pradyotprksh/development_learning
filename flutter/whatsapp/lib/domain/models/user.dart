@@ -19,6 +19,7 @@ class UserDetails extends Equatable {
     this.lastPinConfirmationTimeStamp,
     this.updatedOnTimeStamp,
     this.currentMood,
+    this.avatarDetails,
     this.isEmailVerified = false,
     this.isPhoneNumberVerified = false,
     this.isOnline = true,
@@ -65,6 +66,8 @@ class UserDetails extends Equatable {
       isOnline: data?[FirestoreItemKey.isOnline] as bool? ?? false,
       currentMood: data?[FirestoreItemKey.currentMood] as String?,
       userDeviceDetails: UserDeviceDetails.fromMap(deviceDetails),
+      avatarDetails:
+          data?[FirestoreItemKey.avatarDetails] as Map<String, dynamic>?,
     );
   }
 
@@ -84,6 +87,7 @@ class UserDetails extends Equatable {
   final bool isOnline;
   final String? currentMood;
   final int? lastPinConfirmationTimeStamp;
+  final Map<String, dynamic>? avatarDetails;
 
   Map<String, dynamic> toFirestore() => <String, dynamic>{
         if (name != null)
@@ -115,6 +119,8 @@ class UserDetails extends Equatable {
         FirestoreItemKey.pin: pin,
         if (userDeviceDetails != null)
           FirestoreItemKey.userDeviceDetails: userDeviceDetails!.toMap(),
+        if (avatarDetails != null)
+          FirestoreItemKey.avatarDetails: avatarDetails,
       };
 
   @override

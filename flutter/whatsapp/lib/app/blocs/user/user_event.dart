@@ -10,3 +10,9 @@ abstract class UserEvent extends Equatable {
 class FetchUserDetails extends UserEvent {
   const FetchUserDetails();
 }
+
+class SaveAvatar extends UserEvent {
+  const SaveAvatar(this.avatarDetails);
+
+  final Map<String, dynamic> avatarDetails;
+}

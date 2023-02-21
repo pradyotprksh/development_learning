@@ -29,6 +29,7 @@ abstract class Routes {
   static const savedMessages = '/saved-messages';
   static const search = '/search';
   static const storageData = '/storage-and-data';
+  static const avatar = '/avatar';
 
   static const initialRoute = splashRoute;
 
@@ -43,6 +44,7 @@ abstract class Routes {
     pinConfirmation: (context) => const PinConfirmationView(),
     search: (context) => const SearchView(),
     storageData: (context) => const StorageDataView(),
+    avatar: (context) => const AvatarView(),
     savedMessages: (context) => BlocProvider(
           create: (_) => SavedMessagesBloc(
             FirebaseFirestoreServiceImplementation(),

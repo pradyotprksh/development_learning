@@ -3,19 +3,23 @@ import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:whatsapp/app/app.dart';
 import 'package:whatsapp/core/core.dart';
+import 'package:whatsapp/domain/domain.dart';
 
 class UserBloc extends Bloc<UserEvent, UserState> {
   UserBloc(
     this._firebaseFirestoreService,
     this._firebaseAuthService,
     this._firebaseStorageService,
+    this._deviceDetails,
   ) : super(const FetchingUserDetails()) {
     on<FetchUserDetails>(_fetchUserDetailsEvent);
+    on<SaveAvatar>(_saveAvatar);
   }
 
   final FirebaseFirestoreService _firebaseFirestoreService;
   final FirebaseAuthService _firebaseAuthService;
   final FirebaseStorageService _firebaseStorageService;
+  final DeviceDetails _deviceDetails;
 
   Future<void> _fetchUserDetailsEvent(
     FetchUserDetails event,
@@ -38,6 +42,23 @@ class UserBloc extends Bloc<UserEvent, UserState> {
           } else {
             return const UserDataNotAvailable();
           }
+        },
+      );
+    }
+  }
+
+  void _saveAvatar(
+    SaveAvatar event,
+    Emitter<UserState> emit,
+  ) async {
+    var userId = _firebaseAuthService.getUserId();
+    if (userId != null) {
+      final deviceDetails = await _deviceDetails.getDeviceDetails();
+      await _firebaseFirestoreService.updateUserDetails(
+        userId,
+        {
+          FirestoreItemKey.avatarDetails: event.avatarDetails,
+          FirestoreItemKey.userDeviceDetails: deviceDetails.toMap(),
         },
       );
     }

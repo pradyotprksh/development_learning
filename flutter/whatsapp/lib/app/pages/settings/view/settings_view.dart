@@ -94,7 +94,9 @@ class SettingsView extends StatelessWidget {
               ),
             ),
             ListTile(
-              onTap: () {},
+              onTap: () {
+                context.navigator.pushNamed(Routes.avatar);
+              },
               leading: Icon(
                 Icons.face,
                 color: context.themeData.iconTheme.color,
