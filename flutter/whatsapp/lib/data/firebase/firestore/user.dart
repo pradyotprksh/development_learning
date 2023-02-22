@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:collection/collection.dart';
 import 'package:whatsapp/core/core.dart';
 import 'package:whatsapp/device/device.dart';
 import 'package:whatsapp/domain/domain.dart';
@@ -7,12 +8,17 @@ mixin FirestoreUserImplementation implements FirebaseFirestoreService {
   @override
   Stream<UserDetails?> getUserDetails(String userId) =>
       getUserCollectionReference().doc(userId).snapshots().map(
-            (event) => event.data(),
-          );
+        (event) {
+          final data = event.data();
+          NetworkListeners.userDocumentReadSizeStream.add(data?.size ?? 0);
+          return data;
+        },
+      );
 
   @override
   Future<void> setUserDetails(String userId, UserDetails userDetails) async {
     final userRef = getUserCollectionReference().doc(userId);
+    NetworkListeners.userDocumentWriteSizeStream.add(userDetails.calculateSize);
     await userRef.set(userDetails);
   }
 
@@ -26,7 +32,10 @@ mixin FirestoreUserImplementation implements FirebaseFirestoreService {
           )
           .limit(1)
           .get();
-      return usersCollection.docs.first.data();
+      final data = usersCollection.docs.firstOrNull?.data();
+      NetworkListeners.userDocumentReadSizeStream
+          .add((data?.size ?? 0).toDouble());
+      return data;
     } catch (e) {
       FirebaseUtils.recordFlutterError(e);
       return null;
@@ -43,7 +52,10 @@ mixin FirestoreUserImplementation implements FirebaseFirestoreService {
           )
           .limit(1)
           .get();
-      return usersCollection.docs.first.data();
+      final data = usersCollection.docs.firstOrNull?.data();
+      NetworkListeners.userDocumentReadSizeStream
+          .add((data?.size ?? 0).toDouble());
+      return data;
     } catch (e) {
       FirebaseUtils.recordFlutterError(e);
       return null;
@@ -66,6 +78,8 @@ mixin FirestoreUserImplementation implements FirebaseFirestoreService {
       await getLoginHistoryCollectionReference(loginHistoryDetails.userId)
           .doc(DeviceUtilsMethods.getCurrentDateWithCurrentHour())
           .set(loginHistoryDetails);
+      NetworkListeners.userDocumentWriteSizeStream
+          .add(loginHistoryDetails.calculateSize);
     }
   }
 
@@ -75,13 +89,16 @@ mixin FirestoreUserImplementation implements FirebaseFirestoreService {
     Map<String, Object> values,
   ) async {
     final userRef = getUserCollectionReference().doc(userId);
+    final details = {
+      ...values,
+      FirestoreItemKey.updatedOnTimeStamp:
+          DeviceUtilsMethods.getCurrentTimeStamp(),
+    };
     await userRef.update(
-      {
-        ...values,
-        FirestoreItemKey.updatedOnTimeStamp:
-            DeviceUtilsMethods.getCurrentTimeStamp(),
-      },
+      details,
     );
+    NetworkListeners.userDocumentWriteSizeStream
+        .add(details.getDocumentSize().toDouble());
   }
 
   @override
@@ -90,6 +107,13 @@ mixin FirestoreUserImplementation implements FirebaseFirestoreService {
           .where(FirestoreItemKey.userId, whereIn: userIds)
           .snapshots()
           .map(
-            (event) => event.docs.map((e) => e.data()).toList(),
+            (event) => event.docs.map(
+              (e) {
+                final data = e.data();
+                NetworkListeners.userDocumentReadSizeStream
+                    .add((data.size).toDouble());
+                return data;
+              },
+            ).toList(),
           );
 }

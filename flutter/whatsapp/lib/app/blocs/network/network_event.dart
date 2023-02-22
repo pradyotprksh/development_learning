@@ -23,6 +23,14 @@ class ListenToPhoneCallEvent extends NetworkEvent {
   const ListenToPhoneCallEvent();
 }
 
+class ListenToUserDocumentReadEvent extends NetworkEvent {
+  const ListenToUserDocumentReadEvent();
+}
+
+class ListenToUserDocumentWriteEvent extends NetworkEvent {
+  const ListenToUserDocumentWriteEvent();
+}
+
 class ToggleLessDataForCall extends NetworkEvent {
   const ToggleLessDataForCall();
 }

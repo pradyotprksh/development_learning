@@ -9,6 +9,8 @@ class NetworkBloc extends HydratedBloc<NetworkEvent, NetworkState> {
     on<ListenToVideoCallSizeEvent>(_videoCallSizeEventListener);
     on<ListenToPhoneCallEvent>(_phoneCallSizeEventListener);
     on<ToggleLessDataForCall>(_toggleLessDataForCallEvent);
+    on<ListenToUserDocumentReadEvent>(_userDocumentReadSizeEventListener);
+    on<ListenToUserDocumentWriteEvent>(_userDocumentWriteSizeEventListener);
   }
 
   void _fileSizeUploadEventListener(
@@ -95,6 +97,30 @@ class NetworkBloc extends HydratedBloc<NetworkEvent, NetworkState> {
   ) {
     emit(
       state.copyWith(useLessDataForCalls: !state.useLessDataForCalls),
+    );
+  }
+
+  void _userDocumentReadSizeEventListener(
+    ListenToUserDocumentReadEvent event,
+    Emitter<NetworkState> emit,
+  ) async {
+    await emit.forEach(
+      NetworkListeners.userDocumentReadSizeStream.stream,
+      onData: (size) => state.copyWith(
+        newUserDocumentReadSize: size,
+      ),
+    );
+  }
+
+  void _userDocumentWriteSizeEventListener(
+    ListenToUserDocumentWriteEvent event,
+    Emitter<NetworkState> emit,
+  ) async {
+    await emit.forEach(
+      NetworkListeners.userDocumentWriteSizeStream.stream,
+      onData: (size) => state.copyWith(
+        newUserDocumentWriteSize: size,
+      ),
     );
   }
 }

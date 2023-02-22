@@ -36,6 +36,12 @@ void main() async {
             )
             ..add(
               const ListenToPhoneCallEvent(),
+            )
+            ..add(
+              const ListenToUserDocumentReadEvent(),
+            )
+            ..add(
+              const ListenToUserDocumentWriteEvent(),
             ),
         ),
         BlocProvider(

@@ -6,6 +6,8 @@ class NetworkState extends Equatable {
     this.totalDownloadFileSize = 0,
     this.totalVideoCallSize = 0,
     this.totalPhoneCallSize = 0,
+    this.totalUserDocumentReadSize = 0,
+    this.totalUserDocumentWriteSize = 0,
     this.useLessDataForCalls = false,
   });
 
@@ -20,19 +22,29 @@ class NetworkState extends Equatable {
 
   // Phone call - 1000 bytes for 1 second
   final double totalPhoneCallSize;
+  final double totalUserDocumentReadSize;
+  final double totalUserDocumentWriteSize;
   final bool useLessDataForCalls;
 
   double get totalUploadSize =>
-      totalUploadFileSize + totalVideoCallSize + totalPhoneCallSize;
+      totalUploadFileSize +
+      totalVideoCallSize +
+      totalPhoneCallSize +
+      totalUserDocumentReadSize;
 
   double get totalDownloadSize =>
-      totalDownloadFileSize + totalVideoCallSize + totalPhoneCallSize;
+      totalDownloadFileSize +
+      totalVideoCallSize +
+      totalPhoneCallSize +
+      totalUserDocumentWriteSize;
 
   NetworkState copyWith({
     double newFileUploadSize = 0,
     double newFileDownloadSize = 0,
     double newVideoCallSize = 0,
     double newPhoneCallSize = 0,
+    double newUserDocumentReadSize = 0,
+    double newUserDocumentWriteSize = 0,
     bool? useLessDataForCalls,
   }) =>
       NetworkState(
@@ -40,6 +52,10 @@ class NetworkState extends Equatable {
         totalDownloadFileSize: newFileDownloadSize + totalDownloadFileSize,
         totalVideoCallSize: newVideoCallSize + totalVideoCallSize,
         totalPhoneCallSize: newPhoneCallSize + totalPhoneCallSize,
+        totalUserDocumentReadSize:
+            newUserDocumentReadSize + totalUserDocumentReadSize,
+        totalUserDocumentWriteSize:
+            newUserDocumentWriteSize + totalUserDocumentWriteSize,
         useLessDataForCalls: useLessDataForCalls ?? this.useLessDataForCalls,
       );
 
@@ -50,5 +66,7 @@ class NetworkState extends Equatable {
         totalVideoCallSize,
         totalPhoneCallSize,
         useLessDataForCalls,
+        totalUserDocumentReadSize,
+        totalUserDocumentWriteSize,
       ];
 }

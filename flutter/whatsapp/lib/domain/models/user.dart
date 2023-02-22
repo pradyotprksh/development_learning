@@ -6,24 +6,25 @@ import 'package:whatsapp/domain/domain.dart';
 
 class UserDetails extends Equatable {
   const UserDetails({
+    required this.userId,
+    required this.pin,
     this.name,
     this.emailId,
     this.phoneNumber,
     this.profileImage,
     this.firestoreFilePath,
-    required this.userId,
-    required this.pin,
-    this.allDetailsAvailable = false,
     this.userDeviceDetails,
     this.createdOnTimeStamp,
     this.lastPinConfirmationTimeStamp,
     this.updatedOnTimeStamp,
     this.currentMood,
     this.avatarDetails,
+    this.allDetailsAvailable = false,
     this.isEmailVerified = false,
     this.isPhoneNumberVerified = false,
     this.isOnline = true,
     this.useAvatarAsProfile = false,
+    this.size = 0,
   });
 
   factory UserDetails.fromFirestore(
@@ -70,6 +71,7 @@ class UserDetails extends Equatable {
       currentMood: data?[FirestoreItemKey.currentMood] as String?,
       userDeviceDetails: UserDeviceDetails.fromMap(deviceDetails),
       avatarDetails: data?[FirestoreItemKey.avatarDetails] as String?,
+      size: (data?.getDocumentSize() ?? 0).toDouble(),
     );
   }
 
@@ -91,6 +93,7 @@ class UserDetails extends Equatable {
   final int? lastPinConfirmationTimeStamp;
   final String? avatarDetails;
   final bool useAvatarAsProfile;
+  final double size;
 
   Map<String, dynamic> toFirestore() => <String, dynamic>{
         if (name != null)
@@ -148,4 +151,6 @@ class UserDetails extends Equatable {
         useAvatarAsProfile,
         avatarDetails,
       ];
+
+  double get calculateSize => toFirestore().getDocumentSize().toDouble();
 }

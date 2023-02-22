@@ -9,4 +9,8 @@ abstract class NetworkListeners {
       StreamController();
   static final StreamController<double> phoneCallSizeStream =
       StreamController();
+  static final StreamController<double> userDocumentReadSizeStream =
+      StreamController();
+  static final StreamController<double> userDocumentWriteSizeStream =
+      StreamController();
 }
