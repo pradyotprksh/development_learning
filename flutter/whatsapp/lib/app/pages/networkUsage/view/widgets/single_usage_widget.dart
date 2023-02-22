@@ -6,9 +6,9 @@ class SingleUsageWidget extends StatelessWidget {
     super.key,
     required this.icon,
     required this.title,
-    required this.upload,
-    required this.download,
-    required this.totalValue,
+    this.upload = 0,
+    this.download = 0,
+    this.totalValue = 0,
   });
 
   final IconData icon;

@@ -176,5 +176,8 @@
   "media": "Media",
   "messages": "Messages",
   "resetStatistics": "Reset statistics",
-  "existingImage": "Use existing image"
+  "existingImage": "Use existing image",
+  "security": "Security",
+  "users": "Users",
+  "currentUser": "Current user"
 }

@@ -104,10 +104,30 @@ class NetworkUsageView extends StatelessWidget {
                 title: context.translator.messages,
                 upload: networkState.totalDirectMessagesDocumentWriteSize +
                     networkState.totalGroupMessagesMessagesDocumentWriteSize +
-                    networkState.totalSingleMessagesMessagesDocumentWriteSize,
+                    networkState.totalSingleMessagesMessagesDocumentWriteSize +
+                    networkState.totalSavedMessageDocumentWriteSize,
                 download: networkState.totalDirectMessagesDocumentReadSize +
                     networkState.totalGroupMessagesMessagesDocumentReadSize +
-                    networkState.totalSingleMessagesMessagesDocumentReadSize,
+                    networkState.totalSingleMessagesMessagesDocumentReadSize +
+                    networkState.totalSavedMessageDocumentReadSize,
+                totalValue: networkState.totalUploadSize +
+                    networkState.totalDownloadSize,
+              ),
+              SingleUsageWidget(
+                icon: Icons.person,
+                title: context.translator.currentUser,
+                upload: networkState.totalSavedMessageDocumentWriteSize +
+                    networkState.totalContactsDocumentWriteSize,
+                download: networkState.totalSavedMessageDocumentReadSize +
+                    networkState.totalContactsDocumentReadSize,
+                totalValue: networkState.totalUploadSize +
+                    networkState.totalDownloadSize,
+              ),
+              SingleUsageWidget(
+                icon: Icons.emoji_people,
+                title: context.translator.users,
+                upload: networkState.totalUserDocumentWriteSize,
+                download: networkState.totalUserDocumentReadSize,
                 totalValue: networkState.totalUploadSize +
                     networkState.totalDownloadSize,
               ),
@@ -116,6 +136,13 @@ class NetworkUsageView extends StatelessWidget {
                 title: context.translator.status,
                 upload: networkState.totalStatusDocumentWriteSize,
                 download: networkState.totalStatusDocumentReadSize,
+                totalValue: networkState.totalUploadSize +
+                    networkState.totalDownloadSize,
+              ),
+              SingleUsageWidget(
+                icon: Icons.security,
+                title: context.translator.security,
+                upload: networkState.totalSecurityDocumentWriteSize,
                 totalValue: networkState.totalUploadSize +
                     networkState.totalDownloadSize,
               ),
