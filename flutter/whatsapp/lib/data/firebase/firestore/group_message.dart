@@ -119,4 +119,28 @@ mixin FirestoreGroupMessageService implements FirebaseFirestoreService {
       ),
     );
   }
+
+  @override
+  Stream<SingleMessageDetails?>? getSingleMessageDetailsForGroupMessage(
+    String messageId,
+    String groupId, [
+    bool isForSavedMessage = false,
+  ]) =>
+      getGroupMessagesCollectionReference(groupId)
+          .doc(messageId)
+          .snapshots()
+          .map(
+        (event) {
+          NetworkListeners.listener.add(
+            Listener(
+              isForSavedMessage
+                  ? ListenersFor.savedMessage
+                  : ListenersFor.directMessages,
+              ListenersType.read,
+              event.data()?.size ?? 0,
+            ),
+          );
+          return event.data();
+        },
+      );
 }

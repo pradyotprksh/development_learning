@@ -151,4 +151,28 @@ mixin FirestoreDirectMessageService implements FirebaseFirestoreService {
           return messagesDetails;
         },
       );
+
+  @override
+  Stream<SingleMessageDetails?>? getSingleMessageDetailsForDirectMessage(
+    String messageId,
+    String directMessageId, [
+    bool isForSavedMessage = false,
+  ]) =>
+      getDirectMessagesCollectionReference(directMessageId)
+          .doc(messageId)
+          .snapshots()
+          .map(
+        (event) {
+          NetworkListeners.listener.add(
+            Listener(
+              isForSavedMessage
+                  ? ListenersFor.savedMessage
+                  : ListenersFor.directMessages,
+              ListenersType.read,
+              event.data()?.size ?? 0,
+            ),
+          );
+          return event.data();
+        },
+      );
 }

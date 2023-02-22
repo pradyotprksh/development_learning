@@ -34,19 +34,19 @@ mixin FirestoreSavedMessagesService implements FirebaseFirestoreService {
                     if (messagePathSplit.first ==
                         CoreConstants.directMessageCollection) {
                       singleMessageDetails =
-                          getDirectMessagesCollectionReference(
-                                  messagePathSplit[1])
-                              .doc(messagePathSplit[2])
-                              .snapshots()
-                              .map((event) => event.data());
+                          getSingleMessageDetailsForDirectMessage(
+                        messagePathSplit[2],
+                        messagePathSplit[1],
+                        true,
+                      );
                     } else if (messagePathSplit.first ==
                         CoreConstants.groupMessageCollection) {
                       singleMessageDetails =
-                          getGroupMessagesCollectionReference(
-                                  messagePathSplit[1])
-                              .doc(messagePathSplit[2])
-                              .snapshots()
-                              .map((event) => event.data());
+                          getSingleMessageDetailsForGroupMessage(
+                        messagePathSplit[2],
+                        messagePathSplit[1],
+                        true,
+                      );
                     }
                   } catch (e) {
                     FirebaseUtils.recordFlutterError(e);

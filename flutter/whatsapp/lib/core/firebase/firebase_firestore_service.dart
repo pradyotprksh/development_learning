@@ -38,6 +38,18 @@ abstract class FirebaseFirestoreService {
     String currentUserId,
   );
 
+  Stream<SingleMessageDetails?>? getSingleMessageDetailsForDirectMessage(
+    String messageId,
+    String directMessageId, [
+    bool isForSavedMessage = false,
+  ]);
+
+  Stream<SingleMessageDetails?>? getSingleMessageDetailsForGroupMessage(
+    String messageId,
+    String groupId, [
+    bool isForSavedMessage = false,
+  ]);
+
   Future<void> deleteAllSavedMessages(String userId);
 
   Stream<List<SingleMessageDetails>> getDirectMessages(String directMessageId);
