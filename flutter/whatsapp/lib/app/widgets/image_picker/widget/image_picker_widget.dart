@@ -27,11 +27,13 @@ class ImagePickerWidget extends StatelessWidget {
             final fromSource = await ImagePickerUtils.selectSourceOption(
               context,
             );
-            if (fromSource == PickerOptions.userAvatarOption) {
-              avatarOptionSelected?.call();
-            } else {
-              if (context.mounted) {
-                await _performPhoneOperation(context);
+            if (fromSource != null) {
+              if (fromSource == PickerOptions.userAvatarOption) {
+                avatarOptionSelected?.call();
+              } else {
+                if (context.mounted) {
+                  await _performPhoneOperation(context);
+                }
               }
             }
           } else {

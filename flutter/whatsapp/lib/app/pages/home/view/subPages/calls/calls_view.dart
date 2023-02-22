@@ -57,6 +57,7 @@ class _CallsViewState extends State<CallsView>
                                 profileImage: groupDetails.profileImage ?? '',
                                 groupId: groupDetails.groupId,
                                 size: 40,
+                                enableAction: true,
                               ),
                               title: Text(
                                 groupDetails.name,
@@ -137,6 +138,7 @@ class _CallsViewState extends State<CallsView>
                                 useAvatarAsProfile:
                                     otherUserDetails.useAvatarAsProfile,
                                 avatarDetails: otherUserDetails.avatarDetails,
+                                enableAction: true,
                               ),
                               title: Text(
                                 otherUserDetails.name ?? '',
