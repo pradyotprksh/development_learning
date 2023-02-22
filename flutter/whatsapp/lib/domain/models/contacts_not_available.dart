@@ -10,6 +10,7 @@ class ContactsNotAvailableDetails extends Equatable {
     this.detailsFetchedOn,
     this.userDeviceDetails,
     this.contactId = '',
+    this.size = 0,
   });
 
   factory ContactsNotAvailableDetails.fromFirestore(
@@ -29,6 +30,7 @@ class ContactsNotAvailableDetails extends Equatable {
       detailsFetchedOn: data?[FirestoreItemKey.detailsFetchedOn] as int?,
       userDeviceDetails: UserDeviceDetails.fromMap(deviceDetails),
       contactId: snapshot.id,
+      size: (data?.getDocumentSize() ?? 0).toDouble(),
     );
   }
 
@@ -42,6 +44,7 @@ class ContactsNotAvailableDetails extends Equatable {
   final int? detailsFetchedOn;
   final UserDeviceDetails? userDeviceDetails;
   final String contactId;
+  final double size;
 
   Map<String, dynamic> toFirestore() => <String, dynamic>{
         if (displayName != null) FirestoreItemKey.displayName: displayName,
@@ -62,4 +65,6 @@ class ContactsNotAvailableDetails extends Equatable {
         userDeviceDetails,
         contactId,
       ];
+
+  double get calculateSize => toFirestore().getDocumentSize().toDouble();
 }

@@ -13,6 +13,7 @@ class CallDetails extends Equatable {
     this.groupId,
     this.startedByUserDeviceDetails,
     this.callId = '',
+    this.size = 0,
   });
 
   factory CallDetails.fromFirestore(
@@ -37,6 +38,7 @@ class CallDetails extends Equatable {
       groupId: data?[FirestoreItemKey.groupId] as String?,
       startedByUserDeviceDetails: UserDeviceDetails.fromMap(deviceDetails),
       callId: snapshot.id,
+      size: (data?.getDocumentSize() ?? 0).toDouble(),
     );
   }
 
@@ -49,6 +51,7 @@ class CallDetails extends Equatable {
   final String? groupId;
   final UserDeviceDetails? startedByUserDeviceDetails;
   final String callId;
+  final double size;
 
   Map<String, dynamic> toFirestore() => <String, dynamic>{
         FirestoreItemKey.startedByUserId: startedByUserId,
@@ -76,4 +79,6 @@ class CallDetails extends Equatable {
         startedByUserDeviceDetails,
         callId,
       ];
+
+  double get calculateSize => toFirestore().getDocumentSize().toDouble();
 }

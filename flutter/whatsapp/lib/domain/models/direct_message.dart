@@ -13,6 +13,7 @@ class DirectMessageDetails extends Equatable {
     this.createdByUserDeviceDetails,
     this.lastMessageOnTimeStamp,
     this.lastMessageByUserId,
+    this.size = 0,
   });
 
   factory DirectMessageDetails.fromFirestore(
@@ -40,6 +41,7 @@ class DirectMessageDetails extends Equatable {
       messageId: snapshot.id,
       lastMessage: EncryptorService.decryptData(
           data?[FirestoreItemKey.lastMessage] as String?),
+      size: (data?.getDocumentSize() ?? 0).toDouble(),
     );
   }
 
@@ -51,6 +53,7 @@ class DirectMessageDetails extends Equatable {
   final int? lastMessageOnTimeStamp;
   final String? lastMessageByUserId;
   final String messageId;
+  final double size;
 
   Map<String, dynamic> toFirestore() => <String, dynamic>{
         FirestoreItemKey.users: users,
@@ -80,4 +83,6 @@ class DirectMessageDetails extends Equatable {
         lastMessageByUserId,
         messageId,
       ];
+
+  double get calculateSize => toFirestore().getDocumentSize().toDouble();
 }

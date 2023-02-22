@@ -9,13 +9,14 @@ class GroupMessageDetails extends Equatable {
     required this.name,
     required this.createdByUserId,
     this.lastMessage,
-    this.groupId = '',
     this.createdOnTimeStamp,
     this.createdByUserDeviceDetails,
     this.lastMessageOnTimeStamp,
     this.lastMessageByUserId,
     this.profileImage,
     this.firestoreFilePath,
+    this.groupId = '',
+    this.size = 0,
   });
 
   factory GroupMessageDetails.fromFirestore(
@@ -46,6 +47,7 @@ class GroupMessageDetails extends Equatable {
       groupId: snapshot.id,
       lastMessage: EncryptorService.decryptData(
           data?[FirestoreItemKey.lastMessage] as String?),
+      size: (data?.getDocumentSize() ?? 0).toDouble(),
     );
   }
 
@@ -60,6 +62,7 @@ class GroupMessageDetails extends Equatable {
   final String? profileImage;
   final String? firestoreFilePath;
   final String name;
+  final double size;
 
   Map<String, dynamic> toFirestore() => <String, dynamic>{
         FirestoreItemKey.users: users,
@@ -96,4 +99,6 @@ class GroupMessageDetails extends Equatable {
         profileImage,
         firestoreFilePath,
       ];
+
+  double get calculateSize => toFirestore().getDocumentSize().toDouble();
 }

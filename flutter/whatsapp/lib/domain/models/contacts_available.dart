@@ -8,6 +8,7 @@ class ContactsAvailableDetails {
     this.detailsFetchedOn,
     this.userDeviceDetails,
     this.contactId = '',
+    this.size = 0,
   });
 
   factory ContactsAvailableDetails.fromFirestore(
@@ -27,6 +28,7 @@ class ContactsAvailableDetails {
       userReference:
           data?[FirestoreItemKey.userReference] as DocumentReference?,
       contactId: snapshot.id,
+      size: (data?.getDocumentSize() ?? 0).toDouble(),
     );
   }
 
@@ -46,6 +48,7 @@ class ContactsAvailableDetails {
   final UserDeviceDetails? userDeviceDetails;
   final String contactId;
   final String userId;
+  final double size;
 
   Map<String, dynamic> toFirestore() => <String, dynamic>{
         if (userReference != null)
@@ -56,4 +59,6 @@ class ContactsAvailableDetails {
           FirestoreItemKey.userDeviceDetails: userDeviceDetails!.toMap(),
         FirestoreItemKey.userId: userId,
       };
+
+  double get calculateSize => toFirestore().getDocumentSize().toDouble();
 }

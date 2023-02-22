@@ -9,9 +9,10 @@ class FileInformationDetails extends Equatable {
     required this.isFromFileSystem,
     this.firestoreFilePath = '',
     this.fileUrl = '',
-    this.fileType,
     this.fileSize = 0,
     this.fileName = '',
+    this.size = 0,
+    this.fileType,
   });
 
   factory FileInformationDetails.fromMap(Map<String, dynamic>? json) =>
@@ -29,6 +30,7 @@ class FileInformationDetails extends Equatable {
         firestoreFilePath:
             json?[FirestoreItemKey.firestoreFilePath] as String? ?? '',
         fileUrl: json?[FirestoreItemKey.fileUrl] as String,
+        size: (json?.getDocumentSize() ?? 0).toDouble(),
       );
 
   FileInformationDetails copyFirestoreDetails(
@@ -56,6 +58,7 @@ class FileInformationDetails extends Equatable {
   final String? fileType;
   final double fileSize;
   final String fileName;
+  final double size;
 
   @override
   List<Object?> get props => [
@@ -80,4 +83,6 @@ class FileInformationDetails extends Equatable {
         FirestoreItemKey.fileName: fileName,
         FirestoreItemKey.fileUrl: fileUrl,
       };
+
+  double get calculateSize => toMap().getDocumentSize().toDouble();
 }

@@ -14,9 +14,10 @@ class SingleMessageDetails extends Equatable {
     this.sentByUserDeviceDetails,
     this.sentOnTimeStamp,
     this.isFileImage,
+    this.attachments,
     this.messageId = '',
     this.isSystemMessage = false,
-    this.attachments,
+    this.size = 0,
   });
 
   factory SingleMessageDetails.fromFirestore(
@@ -52,6 +53,7 @@ class SingleMessageDetails extends Equatable {
             ),
           )
           .toList(),
+      size: (data?.getDocumentSize() ?? 0).toDouble(),
     );
   }
 
@@ -67,6 +69,7 @@ class SingleMessageDetails extends Equatable {
   final DocumentReference? sentToUserReference;
   final bool isSystemMessage;
   final List<FileInformationDetails>? attachments;
+  final double size;
 
   Map<String, dynamic> toFirestore() => <String, dynamic>{
         FirestoreItemKey.message: EncryptorService.encryptData(message),
@@ -106,4 +109,6 @@ class SingleMessageDetails extends Equatable {
         sentToUserReference,
         isSystemMessage,
       ];
+
+  double get calculateSize => toFirestore().getDocumentSize().toDouble();
 }

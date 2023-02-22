@@ -8,6 +8,7 @@ class StatusSeenDetails extends Equatable {
     required this.userId,
     required this.statusId,
     this.seenOnTimeStamp,
+    this.size = 0,
   });
 
   factory StatusSeenDetails.fromFirestore(
@@ -25,6 +26,7 @@ class StatusSeenDetails extends Equatable {
       statusId: data?[FirestoreItemKey.statusId] as String,
       seenOnTimeStamp: data?[FirestoreItemKey.seenOnTimeStamp] as int? ?? 0,
       userDeviceDetails: UserDeviceDetails.fromMap(deviceDetails),
+      size: (data?.getDocumentSize() ?? 0).toDouble(),
     );
   }
 
@@ -32,6 +34,7 @@ class StatusSeenDetails extends Equatable {
   final String userId;
   final String statusId;
   final int? seenOnTimeStamp;
+  final double size;
 
   Map<String, dynamic> toFirestore() => <String, dynamic>{
         if (seenOnTimeStamp != null)
