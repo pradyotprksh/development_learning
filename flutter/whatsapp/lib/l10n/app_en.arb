@@ -171,5 +171,10 @@
   "useAvatar": "Use avatar",
   "usePhone": "Use phone options",
   "noAvatarAvailable": "Please create avatar first and then select it.",
-  "navigate": "Navigate"
+  "navigate": "Navigate",
+  "usage": "Usage",
+  "media": "Media",
+  "messages": "Messages",
+  "resetStatistics": "Reset statistics",
+  "existingImage": "Use existing image"
 }

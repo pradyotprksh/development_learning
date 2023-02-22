@@ -48,21 +48,27 @@ class ProfileView extends StatelessWidget {
                           UpdateUserProfileImage(path),
                         );
                   },
-                  avatarOptionSelected: () {
-                    if (userState.userDetails?.avatarDetails != null) {
-                      context.read<ProfileBloc>().add(
-                            const UseAvatarAsProfileImage(),
-                          );
+                  avatarOptionSelected: (useAvatar) {
+                    if (useAvatar) {
+                      if (userState.userDetails?.avatarDetails != null) {
+                        context.read<ProfileBloc>().add(
+                              const UseAvatarAsProfileImage(),
+                            );
+                      } else {
+                        context.replaceAndShowSnackBar(
+                          context.translator.noAvatarAvailable,
+                          SnackBarAction(
+                            label: context.translator.navigate,
+                            onPressed: () {
+                              context.navigator.pushNamed(Routes.avatar);
+                            },
+                          ),
+                        );
+                      }
                     } else {
-                      context.replaceAndShowSnackBar(
-                        context.translator.noAvatarAvailable,
-                        SnackBarAction(
-                          label: context.translator.navigate,
-                          onPressed: () {
-                            context.navigator.pushNamed(Routes.avatar);
-                          },
-                        ),
-                      );
+                      context.read<ProfileBloc>().add(
+                            const DoNotUseAvatarAsProfileImage(),
+                          );
                     }
                   },
                   cropStyle: CropStyle.circle,

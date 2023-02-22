@@ -5,6 +5,7 @@ export 'call/call.dart';
 export 'home/home.dart';
 export 'intro/intro.dart';
 export 'message/message.dart';
+export 'networkUsage/network_usage.dart';
 export 'newGroup/new_group.dart';
 export 'personalise/personalise.dart';
 export 'pinConfirmation/pin_confirmation.dart';

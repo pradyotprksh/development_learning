@@ -15,7 +15,7 @@ class ImagePickerWidget extends StatelessWidget {
 
   final Widget child;
   final void Function(String) image;
-  final void Function()? avatarOptionSelected;
+  final void Function(bool)? avatarOptionSelected;
   final List<CropAspectRatioPreset> aspectRatioPresets;
   final CropStyle cropStyle;
   final bool showAvatarOption;
@@ -29,7 +29,9 @@ class ImagePickerWidget extends StatelessWidget {
             );
             if (fromSource != null) {
               if (fromSource == PickerOptions.userAvatarOption) {
-                avatarOptionSelected?.call();
+                avatarOptionSelected?.call(true);
+              } else if (fromSource == PickerOptions.existingImage) {
+                avatarOptionSelected?.call(false);
               } else {
                 if (context.mounted) {
                   await _performPhoneOperation(context);

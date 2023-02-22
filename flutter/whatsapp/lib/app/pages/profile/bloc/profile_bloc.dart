@@ -15,6 +15,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     on<UpdateUserName>(_updateUsernameImage);
     on<UpdateCurrentMood>(_updateUserMood);
     on<UseAvatarAsProfileImage>(_useAvatarAsProfileImage);
+    on<DoNotUseAvatarAsProfileImage>(_doNotUseAvatarAsProfileImage);
   }
 
   final FirebaseFirestoreService _firebaseFirestoreService;
@@ -132,6 +133,23 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
         userId,
         {
           FirestoreItemKey.useAvatarAsProfile: true,
+          FirestoreItemKey.userDeviceDetails: deviceDetails.toMap(),
+        },
+      );
+    }
+  }
+
+  void _doNotUseAvatarAsProfileImage(
+    DoNotUseAvatarAsProfileImage event,
+    Emitter<ProfileState> emit,
+  ) async {
+    final userId = _firebaseAuthService.getUserId();
+    if (userId != null) {
+      final deviceDetails = await _deviceDetails.getDeviceDetails();
+      await _firebaseFirestoreService.updateUserDetails(
+        userId,
+        {
+          FirestoreItemKey.useAvatarAsProfile: false,
           FirestoreItemKey.userDeviceDetails: deviceDetails.toMap(),
         },
       );

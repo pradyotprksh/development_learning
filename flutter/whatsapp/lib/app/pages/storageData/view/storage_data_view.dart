@@ -13,22 +13,27 @@ class StorageDataView extends StatelessWidget {
             context.translator.dataAndStorage,
           ),
         ),
-        body: BlocBuilder<NetworkBloc, NetworkState>(
-          builder: (_, networkState) => ListView(
-            children: [
-              ListTile(
-                onTap: () {},
-                leading: Icon(
-                  Icons.folder,
-                  color: context.themeData.iconTheme.color,
-                ),
-                title: Text(
-                  context.translator.manageStorage,
-                ),
+        body: ListView(
+          children: [
+            ListTile(
+              onTap: () {},
+              leading: Icon(
+                Icons.folder,
+                color: context.themeData.iconTheme.color,
               ),
-              const Divider(),
-              ListTile(
-                onTap: () {},
+              title: Text(
+                context.translator.manageStorage,
+              ),
+            ),
+            const Divider(),
+            BlocBuilder<NetworkBloc, NetworkState>(
+              buildWhen: (previousState, state) =>
+                  previousState.totalDownloadSize != state.totalDownloadSize ||
+                  previousState.totalUploadSize != state.totalUploadSize,
+              builder: (_, networkState) => ListTile(
+                onTap: () {
+                  context.navigator.pushNamed(Routes.networkUsage);
+                },
                 leading: Icon(
                   Icons.pie_chart,
                   color: context.themeData.iconTheme.color,
@@ -59,7 +64,12 @@ class StorageDataView extends StatelessWidget {
                   ],
                 ),
               ),
-              ListTile(
+            ),
+            BlocBuilder<NetworkBloc, NetworkState>(
+              buildWhen: (previousState, state) =>
+                  previousState.useLessDataForCalls !=
+                  state.useLessDataForCalls,
+              builder: (_, networkState) => ListTile(
                 onTap: () {
                   context.read<NetworkBloc>().add(
                         const ToggleLessDataForCall(),
@@ -74,66 +84,66 @@ class StorageDataView extends StatelessWidget {
                 ),
                 title: Text(context.translator.useLessDataForCalls),
               ),
-              const Divider(),
-              ListTile(
-                title: Text(
-                  context.translator.mediaAutoDownload,
-                ),
-                subtitle: Text(
-                  context.translator.voiceMessageDownloadNote,
-                ),
+            ),
+            const Divider(),
+            ListTile(
+              title: Text(
+                context.translator.mediaAutoDownload,
               ),
-              ListTile(
-                onTap: () {},
-                leading: ThemeSizedBox.shrink,
-                title: Text(
-                  context.translator.whenUsingMobileData,
-                ),
-                subtitle: Text(
-                  context.translator.noMedia,
-                ),
+              subtitle: Text(
+                context.translator.voiceMessageDownloadNote,
               ),
-              ListTile(
-                onTap: () {},
-                leading: ThemeSizedBox.shrink,
-                title: Text(
-                  context.translator.whenConnectedToWifi,
-                ),
-                subtitle: Text(
-                  context.translator.noMedia,
-                ),
+            ),
+            ListTile(
+              onTap: () {},
+              leading: ThemeSizedBox.shrink,
+              title: Text(
+                context.translator.whenUsingMobileData,
               ),
-              ListTile(
-                onTap: () {},
-                leading: ThemeSizedBox.shrink,
-                title: Text(
-                  context.translator.whenRoaming,
-                ),
-                subtitle: Text(
-                  context.translator.noMedia,
-                ),
+              subtitle: Text(
+                context.translator.noMedia,
               ),
-              const Divider(),
-              ListTile(
-                title: Text(
-                  context.translator.mediaUploadQuality,
-                ),
-                subtitle: Text(
-                  context.translator.chooseQuality,
-                ),
+            ),
+            ListTile(
+              onTap: () {},
+              leading: ThemeSizedBox.shrink,
+              title: Text(
+                context.translator.whenConnectedToWifi,
               ),
-              ListTile(
-                onTap: () {},
-                leading: ThemeSizedBox.shrink,
-                title: Text(
-                  context.translator.photoUploadQuality,
-                ),
-                subtitle: Text(
-                  context.translator.autoRecommended,
-                ),
+              subtitle: Text(
+                context.translator.noMedia,
               ),
-            ],
-          ),
+            ),
+            ListTile(
+              onTap: () {},
+              leading: ThemeSizedBox.shrink,
+              title: Text(
+                context.translator.whenRoaming,
+              ),
+              subtitle: Text(
+                context.translator.noMedia,
+              ),
+            ),
+            const Divider(),
+            ListTile(
+              title: Text(
+                context.translator.mediaUploadQuality,
+              ),
+              subtitle: Text(
+                context.translator.chooseQuality,
+              ),
+            ),
+            ListTile(
+              onTap: () {},
+              leading: ThemeSizedBox.shrink,
+              title: Text(
+                context.translator.photoUploadQuality,
+              ),
+              subtitle: Text(
+                context.translator.autoRecommended,
+              ),
+            ),
+          ],
         ),
       );
 }

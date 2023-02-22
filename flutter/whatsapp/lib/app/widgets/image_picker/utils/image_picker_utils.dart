@@ -8,6 +8,7 @@ import 'package:whatsapp/core/core.dart';
 enum PickerOptions {
   phone,
   userAvatarOption,
+  existingImage,
 }
 
 abstract class ImagePickerUtils {
@@ -48,6 +49,16 @@ abstract class ImagePickerUtils {
                     return ListTile(
                       title: Text(
                         context.translator.useAvatar,
+                        style: context.themeData.textTheme.titleLarge,
+                      ),
+                      onTap: () {
+                        context.navigator.pop(e);
+                      },
+                    );
+                  case PickerOptions.existingImage:
+                    return ListTile(
+                      title: Text(
+                        context.translator.existingImage,
                         style: context.themeData.textTheme.titleLarge,
                       ),
                       onTap: () {
