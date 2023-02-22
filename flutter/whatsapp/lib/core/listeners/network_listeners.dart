@@ -1,26 +1,42 @@
 import 'dart:async';
 
+import 'package:equatable/equatable.dart';
+
+enum ListenersFor {
+  file,
+  videoCall,
+  phoneCall,
+  user,
+  status,
+  security,
+  savedMessage,
+  calls,
+  contacts,
+  directMessages,
+  groupMessages,
+  singleMessage,
+}
+
+enum ListenersType {
+  read,
+  write,
+}
+
+class Listener extends Equatable {
+  const Listener(this.listenersFor, this.listenersType, this.size);
+
+  final ListenersFor listenersFor;
+  final ListenersType listenersType;
+  final double size;
+
+  @override
+  List<Object?> get props => [
+        listenersFor,
+        listenersType,
+        size,
+      ];
+}
+
 abstract class NetworkListeners {
-  static final StreamController<double> uploadFileSizeStream =
-      StreamController();
-  static final StreamController<double> downloadFileSizeStream =
-      StreamController();
-  static final StreamController<double> videoCallSizeStream =
-      StreamController();
-  static final StreamController<double> phoneCallSizeStream =
-      StreamController();
-  static final StreamController<double> userDocumentReadSizeStream =
-      StreamController();
-  static final StreamController<double> userDocumentWriteSizeStream =
-      StreamController();
-  static final StreamController<double> statusDocumentReadSizeStream =
-      StreamController();
-  static final StreamController<double> statusDocumentWriteSizeStream =
-      StreamController();
-  static final StreamController<double> securityDocumentWriteSizeStream =
-      StreamController();
-  static final StreamController<double> savedMessageDocumentReadSizeStream =
-      StreamController();
-  static final StreamController<double> savedMessageDocumentWriteSizeStream =
-      StreamController();
+  static final StreamController<Listener> listener = StreamController();
 }

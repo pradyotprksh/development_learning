@@ -34,6 +34,13 @@ mixin FirestoreDirectMessageService implements FirebaseFirestoreService {
           if (!found) {
             directMessageDetails = null;
           }
+          NetworkListeners.listener.add(
+            Listener(
+              ListenersFor.directMessages,
+              ListenersType.read,
+              directMessageDetails?.size ?? 0,
+            ),
+          );
           return directMessageDetails;
         },
       );
@@ -44,6 +51,13 @@ mixin FirestoreDirectMessageService implements FirebaseFirestoreService {
     Map<String, Object> values,
   ) async {
     await getDirectMessageCollectionReference().doc(messageId).update(values);
+    NetworkListeners.listener.add(
+      Listener(
+        ListenersFor.directMessages,
+        ListenersType.write,
+        values.getDocumentSize().toDouble(),
+      ),
+    );
   }
 
   @override
@@ -52,6 +66,13 @@ mixin FirestoreDirectMessageService implements FirebaseFirestoreService {
   ) async {
     final directMessage =
         await getDirectMessageCollectionReference().add(directMessageDetails);
+    NetworkListeners.listener.add(
+      Listener(
+        ListenersFor.directMessages,
+        ListenersType.write,
+        directMessageDetails.calculateSize,
+      ),
+    );
     return directMessage.id;
   }
 
@@ -62,6 +83,13 @@ mixin FirestoreDirectMessageService implements FirebaseFirestoreService {
   ) async {
     await getDirectMessagesCollectionReference(directMessageId)
         .add(singleMessageDetails);
+    NetworkListeners.listener.add(
+      Listener(
+        ListenersFor.singleMessage,
+        ListenersType.write,
+        singleMessageDetails.calculateSize,
+      ),
+    );
   }
 
   @override
@@ -71,7 +99,19 @@ mixin FirestoreDirectMessageService implements FirebaseFirestoreService {
           .orderBy(FirestoreItemKey.sentOnTimeStamp, descending: true)
           .snapshots()
           .map(
-            (event) => event.docs.map((e) => e.data()).toList(),
+            (event) => event.docs.map(
+              (e) {
+                final data = e.data();
+                NetworkListeners.listener.add(
+                  Listener(
+                    ListenersFor.singleMessage,
+                    ListenersType.read,
+                    data.size,
+                  ),
+                );
+                return data;
+              },
+            ).toList(),
           );
 
   @override
@@ -96,9 +136,14 @@ mixin FirestoreDirectMessageService implements FirebaseFirestoreService {
               messagesDetails.add(
                 DirectMessagesListUserDetails(
                   doc.data(),
-                  getUserCollectionReference().doc(otherUserId).snapshots().map(
-                        (event) => event.data(),
-                      ),
+                  getUserDetails(otherUserId),
+                ),
+              );
+              NetworkListeners.listener.add(
+                Listener(
+                  ListenersFor.directMessages,
+                  ListenersType.read,
+                  doc.data().size,
                 ),
               );
             }

@@ -7,6 +7,13 @@ mixin FirestoreCallsService implements FirebaseFirestoreService {
     final batch = firestore.batch();
     for (var userId in callDetails.usersId) {
       batch.set(getCallDetailsCollectionReference(userId).doc(), callDetails);
+      NetworkListeners.listener.add(
+        Listener(
+          ListenersFor.calls,
+          ListenersType.write,
+          callDetails.calculateSize,
+        ),
+      );
     }
     await batch.commit();
   }
@@ -35,6 +42,14 @@ mixin FirestoreCallsService implements FirebaseFirestoreService {
                   );
                 }
 
+                NetworkListeners.listener.add(
+                  Listener(
+                    ListenersFor.calls,
+                    ListenersType.read,
+                    callDetails.size,
+                  ),
+                );
+
                 return UserGroupCallDetails(
                   callDetails,
                   groupMessageDetails,
@@ -50,6 +65,13 @@ mixin FirestoreCallsService implements FirebaseFirestoreService {
     final callLogs = await getCallDetailsCollectionReference(userId).get();
     for (var call in callLogs.docs) {
       batch.delete(call.reference);
+      NetworkListeners.listener.add(
+        Listener(
+          ListenersFor.calls,
+          ListenersType.write,
+          call.data().size,
+        ),
+      );
     }
     await batch.commit();
   }

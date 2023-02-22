@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:whatsapp/app/app.dart';
 import 'package:whatsapp/core/core.dart';
+import 'package:whatsapp/core/core.dart' as listener;
 
 class CachedNetworkImageWidget extends StatelessWidget {
   const CachedNetworkImageWidget({
@@ -44,8 +45,13 @@ class CachedNetworkImageWidget extends StatelessWidget {
                 height: height,
                 fit: fit,
                 progressIndicatorBuilder: (_, __, progress) {
-                  NetworkListeners.downloadFileSizeStream
-                      .add(progress.downloaded.toDouble());
+                  NetworkListeners.listener.add(
+                    listener.Listener(
+                      ListenersFor.file,
+                      ListenersType.read,
+                      progress.downloaded.toDouble(),
+                    ),
+                  );
                   return placeholder;
                 },
                 errorWidget: (_, __, dynamic ___) {

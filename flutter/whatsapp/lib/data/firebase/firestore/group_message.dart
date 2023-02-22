@@ -7,6 +7,13 @@ mixin FirestoreGroupMessageService implements FirebaseFirestoreService {
       GroupMessageDetails groupMessageDetails) async {
     final group =
         await getGroupMessageCollectionReference().add(groupMessageDetails);
+    NetworkListeners.listener.add(
+      Listener(
+        ListenersFor.groupMessages,
+        ListenersType.write,
+        groupMessageDetails.calculateSize,
+      ),
+    );
     return group.id;
   }
 
@@ -21,7 +28,19 @@ mixin FirestoreGroupMessageService implements FirebaseFirestoreService {
           )
           .snapshots()
           .map(
-            (event) => event.docs.map((e) => e.data()).toList(),
+            (event) => event.docs.map(
+              (e) {
+                final data = e.data();
+                NetworkListeners.listener.add(
+                  Listener(
+                    ListenersFor.groupMessages,
+                    ListenersType.read,
+                    data.size,
+                  ),
+                );
+                return data;
+              },
+            ).toList(),
           );
 
   @override
@@ -33,9 +52,17 @@ mixin FirestoreGroupMessageService implements FirebaseFirestoreService {
           final groupDetails = event.data();
           final userIds = groupDetails?.users ?? [];
 
+          NetworkListeners.listener.add(
+            Listener(
+              ListenersFor.groupMessages,
+              ListenersType.read,
+              groupDetails?.size ?? 0,
+            ),
+          );
+
           return UsersGroupMessageDetails(
             getUsersDetails(userIds),
-            event.data(),
+            groupDetails,
           );
         },
       );
@@ -47,6 +74,14 @@ mixin FirestoreGroupMessageService implements FirebaseFirestoreService {
   ) async {
     await getGroupMessagesCollectionReference(groupMessageId)
         .add(singleMessageDetails);
+
+    NetworkListeners.listener.add(
+      Listener(
+        ListenersFor.singleMessage,
+        ListenersType.write,
+        singleMessageDetails.calculateSize,
+      ),
+    );
   }
 
   @override
@@ -55,7 +90,19 @@ mixin FirestoreGroupMessageService implements FirebaseFirestoreService {
           .orderBy(FirestoreItemKey.sentOnTimeStamp, descending: true)
           .snapshots()
           .map(
-            (event) => event.docs.map((e) => e.data()).toList(),
+            (event) => event.docs.map(
+              (e) {
+                final data = e.data();
+                NetworkListeners.listener.add(
+                  Listener(
+                    ListenersFor.singleMessage,
+                    ListenersType.read,
+                    data.size,
+                  ),
+                );
+                return data;
+              },
+            ).toList(),
           );
 
   @override
@@ -64,5 +111,12 @@ mixin FirestoreGroupMessageService implements FirebaseFirestoreService {
     Map<String, Object> values,
   ) async {
     await getGroupMessageCollectionReference().doc(messageId).update(values);
+    NetworkListeners.listener.add(
+      Listener(
+        ListenersFor.groupMessages,
+        ListenersType.write,
+        values.getDocumentSize().toDouble(),
+      ),
+    );
   }
 }

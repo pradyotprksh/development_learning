@@ -10,7 +10,13 @@ mixin FirestoreUserImplementation implements FirebaseFirestoreService {
       getUserCollectionReference().doc(userId).snapshots().map(
         (event) {
           final data = event.data();
-          NetworkListeners.userDocumentReadSizeStream.add(data?.size ?? 0);
+          NetworkListeners.listener.add(
+            Listener(
+              ListenersFor.user,
+              ListenersType.read,
+              data?.size ?? 0,
+            ),
+          );
           return data;
         },
       );
@@ -18,7 +24,13 @@ mixin FirestoreUserImplementation implements FirebaseFirestoreService {
   @override
   Future<void> setUserDetails(String userId, UserDetails userDetails) async {
     final userRef = getUserCollectionReference().doc(userId);
-    NetworkListeners.userDocumentWriteSizeStream.add(userDetails.calculateSize);
+    NetworkListeners.listener.add(
+      Listener(
+        ListenersFor.user,
+        ListenersType.write,
+        userDetails.calculateSize,
+      ),
+    );
     await userRef.set(userDetails);
   }
 
@@ -33,8 +45,13 @@ mixin FirestoreUserImplementation implements FirebaseFirestoreService {
           .limit(1)
           .get();
       final data = usersCollection.docs.firstOrNull?.data();
-      NetworkListeners.userDocumentReadSizeStream
-          .add((data?.size ?? 0).toDouble());
+      NetworkListeners.listener.add(
+        Listener(
+          ListenersFor.user,
+          ListenersType.read,
+          (data?.size ?? 0).toDouble(),
+        ),
+      );
       return data;
     } catch (e) {
       FirebaseUtils.recordFlutterError(e);
@@ -53,8 +70,13 @@ mixin FirestoreUserImplementation implements FirebaseFirestoreService {
           .limit(1)
           .get();
       final data = usersCollection.docs.firstOrNull?.data();
-      NetworkListeners.userDocumentReadSizeStream
-          .add((data?.size ?? 0).toDouble());
+      NetworkListeners.listener.add(
+        Listener(
+          ListenersFor.user,
+          ListenersType.read,
+          (data?.size ?? 0).toDouble(),
+        ),
+      );
       return data;
     } catch (e) {
       FirebaseUtils.recordFlutterError(e);
@@ -78,8 +100,13 @@ mixin FirestoreUserImplementation implements FirebaseFirestoreService {
       await getLoginHistoryCollectionReference(loginHistoryDetails.userId)
           .doc(DeviceUtilsMethods.getCurrentDateWithCurrentHour())
           .set(loginHistoryDetails);
-      NetworkListeners.userDocumentWriteSizeStream
-          .add(loginHistoryDetails.calculateSize);
+      NetworkListeners.listener.add(
+        Listener(
+          ListenersFor.user,
+          ListenersType.write,
+          loginHistoryDetails.calculateSize,
+        ),
+      );
     }
   }
 
@@ -97,8 +124,13 @@ mixin FirestoreUserImplementation implements FirebaseFirestoreService {
     await userRef.update(
       details,
     );
-    NetworkListeners.userDocumentWriteSizeStream
-        .add(details.getDocumentSize().toDouble());
+    NetworkListeners.listener.add(
+      Listener(
+        ListenersFor.user,
+        ListenersType.write,
+        details.getDocumentSize().toDouble(),
+      ),
+    );
   }
 
   @override
@@ -110,8 +142,13 @@ mixin FirestoreUserImplementation implements FirebaseFirestoreService {
             (event) => event.docs.map(
               (e) {
                 final data = e.data();
-                NetworkListeners.userDocumentReadSizeStream
-                    .add((data.size).toDouble());
+                NetworkListeners.listener.add(
+                  Listener(
+                    ListenersFor.user,
+                    ListenersType.read,
+                    (data.size).toDouble(),
+                  ),
+                );
                 return data;
               },
             ).toList(),

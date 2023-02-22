@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:whatsapp/app/app.dart';
 import 'package:whatsapp/core/core.dart';
+import 'package:whatsapp/core/core.dart' as listener;
 import 'package:whatsapp/domain/domain.dart';
 
 class CachedAttachmentPreviewWidget extends StatelessWidget {
@@ -23,7 +24,13 @@ class CachedAttachmentPreviewWidget extends StatelessWidget {
           width: double.infinity,
           height: double.infinity,
           failed: () {
-            NetworkListeners.downloadFileSizeStream.add(fileDetails.fileSize);
+            NetworkListeners.listener.add(
+              listener.Listener(
+                ListenersFor.file,
+                ListenersType.read,
+                fileDetails.size,
+              ),
+            );
           },
           errorWidget: (fileDetails.fileType == 'pdf')
               ? const DefaultAttachmentWidget(

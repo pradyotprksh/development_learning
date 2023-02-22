@@ -6,8 +6,13 @@ mixin FirestoreSecurityDetailsService implements FirebaseFirestoreService {
   Future<void> createScreenshot(ScreenshotDetails screenshotDetails) async {
     await getScreenshotCollectionReference(screenshotDetails.userId)
         .add(screenshotDetails);
-    NetworkListeners.securityDocumentWriteSizeStream
-        .add(screenshotDetails.calculateSize);
+    NetworkListeners.listener.add(
+      Listener(
+        ListenersFor.security,
+        ListenersType.write,
+        screenshotDetails.calculateSize,
+      ),
+    );
   }
 
   @override
@@ -17,7 +22,12 @@ mixin FirestoreSecurityDetailsService implements FirebaseFirestoreService {
     await getMessageCopyForwardSavedCollectionReference(
             messageCopyForwardDetails)
         .add(messageCopyForwardDetails);
-    NetworkListeners.securityDocumentWriteSizeStream
-        .add(messageCopyForwardDetails.calculateSize);
+    NetworkListeners.listener.add(
+      Listener(
+        ListenersFor.security,
+        ListenersType.write,
+        messageCopyForwardDetails.calculateSize,
+      ),
+    );
   }
 }

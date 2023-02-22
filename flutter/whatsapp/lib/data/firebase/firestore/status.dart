@@ -6,8 +6,13 @@ mixin FirestoreStatusImplementation implements FirebaseFirestoreService {
   @override
   Future<void> setStatus(StatusDetails statusDetails) async {
     await getStatusCollectionReference().add(statusDetails);
-    NetworkListeners.statusDocumentWriteSizeStream
-        .add(statusDetails.calculateSize);
+    NetworkListeners.listener.add(
+      Listener(
+        ListenersFor.status,
+        ListenersType.write,
+        statusDetails.calculateSize,
+      ),
+    );
   }
 
   @override
@@ -45,7 +50,13 @@ mixin FirestoreStatusImplementation implements FirebaseFirestoreService {
                 .toList();
 
             for (var element in allStatus) {
-              NetworkListeners.statusDocumentReadSizeStream.add(element.size);
+              NetworkListeners.listener.add(
+                Listener(
+                  ListenersFor.status,
+                  ListenersType.read,
+                  element.size,
+                ),
+              );
             }
 
             statusWithUserDetails.add(
@@ -72,8 +83,13 @@ mixin FirestoreStatusImplementation implements FirebaseFirestoreService {
       await getStatusSeenCollectionReference(statusId)
           .doc(statusSeenDetails.userId)
           .set(statusSeenDetails);
-      NetworkListeners.statusDocumentWriteSizeStream
-          .add(statusSeenDetails.calculateSize);
+      NetworkListeners.listener.add(
+        Listener(
+          ListenersFor.status,
+          ListenersType.write,
+          statusSeenDetails.calculateSize,
+        ),
+      );
     }
   }
 
@@ -95,7 +111,13 @@ mixin FirestoreStatusImplementation implements FirebaseFirestoreService {
           storageReference.add(status.data().firestoreFilePath ?? '');
         }
         batch.delete(status.reference);
-        NetworkListeners.statusDocumentWriteSizeStream.add(status.data().size);
+        NetworkListeners.listener.add(
+          Listener(
+            ListenersFor.status,
+            ListenersType.write,
+            status.data().size,
+          ),
+        );
       }
     }
     await batch.commit();

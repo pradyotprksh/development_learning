@@ -25,7 +25,13 @@ class FirebaseStorageServiceImplementation extends FirebaseStorageService {
       ),
     );
     final metaData = await storageReference.getMetadata();
-    NetworkListeners.uploadFileSizeStream.add((metaData.size ?? 0).toDouble());
+    NetworkListeners.listener.add(
+      Listener(
+        ListenersFor.file,
+        ListenersType.write,
+        (metaData.size ?? 0).toDouble(),
+      ),
+    );
     return await storageReference.getDownloadURL();
   }
 

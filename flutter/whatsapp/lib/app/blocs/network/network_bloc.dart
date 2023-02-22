@@ -5,179 +5,90 @@ import 'package:whatsapp/core/core.dart';
 class NetworkBloc extends HydratedBloc<NetworkEvent, NetworkState> {
   NetworkBloc() : super(const NetworkState()) {
     on<StartAllSizeListenersEvent>(_startAllSizeListeners);
-    on<ListenToFileSizeUploadEvent>(_fileSizeUploadEventListener);
-    on<ListenToFileSizeDownloadEvent>(_fileSizeDownloadEventListener);
-    on<ListenToVideoCallSizeEvent>(_videoCallSizeEventListener);
-    on<ListenToPhoneCallEvent>(_phoneCallSizeEventListener);
     on<ToggleLessDataForCall>(_toggleLessDataForCallEvent);
-    on<ListenToUserDocumentReadEvent>(_userDocumentReadSizeEventListener);
-    on<ListenToUserDocumentWriteEvent>(_userDocumentWriteSizeEventListener);
-    on<ListenToStatusDocumentReadEvent>(_statusDocumentReadSizeEventListener);
-    on<ListenToStatusDocumentWriteEvent>(_statusDocumentWriteSizeEventListener);
-    on<ListenToSecurityDocumentWriteEvent>(
-        _securityDocumentWriteSizeEventListener);
-    on<ListenToSavedMessageDocumentReadEvent>(
-        _savedMessageDocumentReadSizeEventListener);
-    on<ListenToSavedMessageDocumentWriteEvent>(
-        _savedMessageDocumentWriteSizeEventListener);
   }
 
   void _startAllSizeListeners(
     StartAllSizeListenersEvent event,
     Emitter<NetworkState> emit,
-  ) {
-    add(const ListenToFileSizeUploadEvent());
-    add(const ListenToFileSizeDownloadEvent());
-    add(const ListenToVideoCallSizeEvent());
-    add(const ListenToPhoneCallEvent());
-    add(const ListenToUserDocumentReadEvent());
-    add(const ListenToUserDocumentWriteEvent());
-    add(const ListenToStatusDocumentReadEvent());
-    add(const ListenToStatusDocumentWriteEvent());
-    add(const ListenToSecurityDocumentWriteEvent());
-    add(const ListenToSavedMessageDocumentReadEvent());
-    add(const ListenToSavedMessageDocumentWriteEvent());
-  }
-
-  void _fileSizeUploadEventListener(
-    ListenToFileSizeUploadEvent event,
-    Emitter<NetworkState> emit,
   ) async {
     await emit.forEach(
-      NetworkListeners.uploadFileSizeStream.stream,
-      onData: (fileSize) => state.copyWith(
-        totalUploadFileSize: fileSize,
-      ),
-    );
-  }
+      NetworkListeners.listener.stream,
+      onData: (listener) {
+        var writeSize = 0.0;
+        var readSize = 0.0;
 
-  void _fileSizeDownloadEventListener(
-    ListenToFileSizeDownloadEvent event,
-    Emitter<NetworkState> emit,
-  ) async {
-    await emit.forEach(
-      NetworkListeners.downloadFileSizeStream.stream,
-      onData: (fileSize) => state.copyWith(
-        totalDownloadFileSize: fileSize,
-      ),
-    );
-  }
+        switch (listener.listenersType) {
+          case ListenersType.read:
+            readSize = listener.size;
+            break;
+          case ListenersType.write:
+            writeSize = listener.size;
+            break;
+        }
 
-  void _videoCallSizeEventListener(
-    ListenToVideoCallSizeEvent event,
-    Emitter<NetworkState> emit,
-  ) async {
-    await emit.forEach(
-      NetworkListeners.videoCallSizeStream.stream,
-      onData: (fileSize) {
-        final difference =
-            state.useLessDataForCalls ? AppConstants.lessVideoCallSizeBytes : 0;
-
-        return state.copyWith(
-          totalVideoCallSize: fileSize - difference,
-        );
+        switch (listener.listenersFor) {
+          case ListenersFor.file:
+            return state.copyWith(
+              totalDownloadFileSize: readSize,
+              totalUploadFileSize: writeSize,
+            );
+          case ListenersFor.videoCall:
+            return state.copyWith(
+              totalVideoCallSize: readSize,
+            );
+          case ListenersFor.phoneCall:
+            return state.copyWith(
+              totalPhoneCallSize: readSize,
+            );
+          case ListenersFor.user:
+            return state.copyWith(
+              totalUserDocumentReadSize: readSize,
+              totalUserDocumentWriteSize: writeSize,
+            );
+          case ListenersFor.status:
+            return state.copyWith(
+              totalStatusDocumentReadSize: readSize,
+              totalStatusDocumentWriteSize: writeSize,
+            );
+          case ListenersFor.security:
+            return state.copyWith(
+              totalSecurityDocumentWriteSize: writeSize,
+            );
+          case ListenersFor.savedMessage:
+            return state.copyWith(
+              totalSavedMessageDocumentReadSize: readSize,
+              totalSavedMessageDocumentWriteSize: writeSize,
+            );
+          case ListenersFor.calls:
+            return state.copyWith(
+              totalCallsDocumentReadSize: readSize,
+              totalCallsDocumentWriteSize: writeSize,
+            );
+          case ListenersFor.contacts:
+            state.copyWith(
+              totalContactsDocumentReadSize: readSize,
+              totalContactsDocumentWriteSize: writeSize,
+            );
+            break;
+          case ListenersFor.directMessages:
+            return state.copyWith(
+              totalDirectMessagesDocumentReadSize: readSize,
+              totalDirectMessagesDocumentWriteSize: writeSize,
+            );
+          case ListenersFor.groupMessages:
+            return state.copyWith(
+              totalGroupMessagesMessagesDocumentReadSize: readSize,
+              totalGroupMessagesMessagesDocumentWriteSize: writeSize,
+            );
+          case ListenersFor.singleMessage:
+            return state.copyWith(
+              totalSingleMessagesMessagesDocumentReadSize: readSize,
+              totalSingleMessagesMessagesDocumentWriteSize: writeSize,
+            );
+        }
+        return state;
       },
-    );
-  }
-
-  void _phoneCallSizeEventListener(
-    ListenToPhoneCallEvent event,
-    Emitter<NetworkState> emit,
-  ) async {
-    await emit.forEach(
-      NetworkListeners.phoneCallSizeStream.stream,
-      onData: (fileSize) {
-        final difference =
-            state.useLessDataForCalls ? AppConstants.lessPhoneCallSizeBytes : 0;
-
-        return state.copyWith(
-          totalPhoneCallSize: fileSize - difference,
-        );
-      },
-    );
-  }
-
-  void _userDocumentReadSizeEventListener(
-    ListenToUserDocumentReadEvent event,
-    Emitter<NetworkState> emit,
-  ) async {
-    await emit.forEach(
-      NetworkListeners.userDocumentReadSizeStream.stream,
-      onData: (size) => state.copyWith(
-        totalUserDocumentReadSize: size,
-      ),
-    );
-  }
-
-  void _userDocumentWriteSizeEventListener(
-    ListenToUserDocumentWriteEvent event,
-    Emitter<NetworkState> emit,
-  ) async {
-    await emit.forEach(
-      NetworkListeners.userDocumentWriteSizeStream.stream,
-      onData: (size) => state.copyWith(
-        totalUserDocumentWriteSize: size,
-      ),
-    );
-  }
-
-  void _statusDocumentReadSizeEventListener(
-    ListenToStatusDocumentReadEvent event,
-    Emitter<NetworkState> emit,
-  ) async {
-    await emit.forEach(
-      NetworkListeners.statusDocumentReadSizeStream.stream,
-      onData: (size) => state.copyWith(
-        totalStatusDocumentReadSize: size,
-      ),
-    );
-  }
-
-  void _statusDocumentWriteSizeEventListener(
-    ListenToStatusDocumentWriteEvent event,
-    Emitter<NetworkState> emit,
-  ) async {
-    await emit.forEach(
-      NetworkListeners.statusDocumentWriteSizeStream.stream,
-      onData: (size) => state.copyWith(
-        totalStatusDocumentWriteSize: size,
-      ),
-    );
-  }
-
-  void _securityDocumentWriteSizeEventListener(
-    ListenToSecurityDocumentWriteEvent event,
-    Emitter<NetworkState> emit,
-  ) async {
-    await emit.forEach(
-      NetworkListeners.securityDocumentWriteSizeStream.stream,
-      onData: (size) => state.copyWith(
-        totalSecurityDocumentWriteSize: size,
-      ),
-    );
-  }
-
-  void _savedMessageDocumentReadSizeEventListener(
-    ListenToSavedMessageDocumentReadEvent event,
-    Emitter<NetworkState> emit,
-  ) async {
-    await emit.forEach(
-      NetworkListeners.savedMessageDocumentReadSizeStream.stream,
-      onData: (size) => state.copyWith(
-        totalSavedMessageDocumentReadSize: size,
-      ),
-    );
-  }
-
-  void _savedMessageDocumentWriteSizeEventListener(
-    ListenToSavedMessageDocumentWriteEvent event,
-    Emitter<NetworkState> emit,
-  ) async {
-    await emit.forEach(
-      NetworkListeners.savedMessageDocumentWriteSizeStream.stream,
-      onData: (size) => state.copyWith(
-        totalSavedMessageDocumentWriteSize: size,
-      ),
     );
   }
 
@@ -207,6 +118,37 @@ class NetworkBloc extends HydratedBloc<NetworkEvent, NetworkState> {
         totalSavedMessageDocumentWriteSize:
             json[AppConstants.totalSavedMessageDocumentWriteSize] as double? ??
                 0,
+        totalCallsDocumentReadSize:
+            json[AppConstants.totalCallsDocumentReadSize] as double? ?? 0,
+        totalCallsDocumentWriteSize:
+            json[AppConstants.totalCallsDocumentWriteSize] as double? ?? 0,
+        totalContactsDocumentReadSize:
+            json[AppConstants.totalContactsDocumentReadSize] as double? ?? 0,
+        totalContactsDocumentWriteSize:
+            json[AppConstants.totalContactsDocumentWriteSize] as double? ?? 0,
+        totalDirectMessagesDocumentReadSize:
+            json[AppConstants.totalDirectMessagesDocumentReadSize] as double? ??
+                0,
+        totalDirectMessagesDocumentWriteSize:
+            json[AppConstants.totalDirectMessagesDocumentWriteSize]
+                    as double? ??
+                0,
+        totalGroupMessagesMessagesDocumentReadSize:
+            json[AppConstants.totalGroupMessagesMessagesDocumentReadSize]
+                    as double? ??
+                0,
+        totalGroupMessagesMessagesDocumentWriteSize:
+            json[AppConstants.totalGroupMessagesMessagesDocumentWriteSize]
+                    as double? ??
+                0,
+        totalSingleMessagesMessagesDocumentReadSize:
+            json[AppConstants.totalSingleMessagesMessagesDocumentReadSize]
+                    as double? ??
+                0,
+        totalSingleMessagesMessagesDocumentWriteSize:
+            json[AppConstants.totalSingleMessagesMessagesDocumentWriteSize]
+                    as double? ??
+                0,
       );
 
   @override
@@ -228,6 +170,26 @@ class NetworkBloc extends HydratedBloc<NetworkEvent, NetworkState> {
             state.totalSavedMessageDocumentReadSize,
         AppConstants.totalSavedMessageDocumentWriteSize:
             state.totalSavedMessageDocumentWriteSize,
+        AppConstants.totalCallsDocumentReadSize:
+            state.totalCallsDocumentReadSize,
+        AppConstants.totalCallsDocumentWriteSize:
+            state.totalCallsDocumentWriteSize,
+        AppConstants.totalContactsDocumentReadSize:
+            state.totalContactsDocumentReadSize,
+        AppConstants.totalContactsDocumentWriteSize:
+            state.totalContactsDocumentWriteSize,
+        AppConstants.totalDirectMessagesDocumentReadSize:
+            state.totalDirectMessagesDocumentReadSize,
+        AppConstants.totalDirectMessagesDocumentWriteSize:
+            state.totalDirectMessagesDocumentWriteSize,
+        AppConstants.totalGroupMessagesMessagesDocumentReadSize:
+            state.totalGroupMessagesMessagesDocumentReadSize,
+        AppConstants.totalGroupMessagesMessagesDocumentWriteSize:
+            state.totalGroupMessagesMessagesDocumentWriteSize,
+        AppConstants.totalSingleMessagesMessagesDocumentReadSize:
+            state.totalSingleMessagesMessagesDocumentReadSize,
+        AppConstants.totalSingleMessagesMessagesDocumentWriteSize:
+            state.totalSingleMessagesMessagesDocumentWriteSize,
       };
 
   void _toggleLessDataForCallEvent(

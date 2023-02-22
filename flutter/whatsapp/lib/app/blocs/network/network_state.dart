@@ -13,6 +13,16 @@ class NetworkState extends Equatable {
     this.totalSecurityDocumentWriteSize = 0,
     this.totalSavedMessageDocumentReadSize = 0,
     this.totalSavedMessageDocumentWriteSize = 0,
+    this.totalCallsDocumentReadSize = 0,
+    this.totalCallsDocumentWriteSize = 0,
+    this.totalContactsDocumentReadSize = 0,
+    this.totalContactsDocumentWriteSize = 0,
+    this.totalDirectMessagesDocumentReadSize = 0,
+    this.totalDirectMessagesDocumentWriteSize = 0,
+    this.totalGroupMessagesMessagesDocumentReadSize = 0,
+    this.totalGroupMessagesMessagesDocumentWriteSize = 0,
+    this.totalSingleMessagesMessagesDocumentReadSize = 0,
+    this.totalSingleMessagesMessagesDocumentWriteSize = 0,
     this.useLessDataForCalls = false,
   });
 
@@ -27,6 +37,16 @@ class NetworkState extends Equatable {
   final double totalSecurityDocumentWriteSize;
   final double totalSavedMessageDocumentReadSize;
   final double totalSavedMessageDocumentWriteSize;
+  final double totalCallsDocumentReadSize;
+  final double totalCallsDocumentWriteSize;
+  final double totalContactsDocumentReadSize;
+  final double totalContactsDocumentWriteSize;
+  final double totalDirectMessagesDocumentReadSize;
+  final double totalDirectMessagesDocumentWriteSize;
+  final double totalGroupMessagesMessagesDocumentReadSize;
+  final double totalGroupMessagesMessagesDocumentWriteSize;
+  final double totalSingleMessagesMessagesDocumentReadSize;
+  final double totalSingleMessagesMessagesDocumentWriteSize;
   final bool useLessDataForCalls;
 
   double get totalUploadSize =>
@@ -36,7 +56,12 @@ class NetworkState extends Equatable {
       totalUserDocumentWriteSize +
       totalStatusDocumentWriteSize +
       totalSecurityDocumentWriteSize +
-      totalSavedMessageDocumentWriteSize;
+      totalSavedMessageDocumentWriteSize +
+      totalCallsDocumentWriteSize +
+      totalContactsDocumentWriteSize +
+      totalDirectMessagesDocumentWriteSize +
+      totalGroupMessagesMessagesDocumentWriteSize +
+      totalSingleMessagesMessagesDocumentWriteSize;
 
   double get totalDownloadSize =>
       totalDownloadFileSize +
@@ -44,7 +69,12 @@ class NetworkState extends Equatable {
       totalPhoneCallSize +
       totalUserDocumentReadSize +
       totalStatusDocumentReadSize +
-      totalSavedMessageDocumentReadSize;
+      totalSavedMessageDocumentReadSize +
+      totalCallsDocumentReadSize +
+      totalContactsDocumentReadSize +
+      totalDirectMessagesDocumentReadSize +
+      totalGroupMessagesMessagesDocumentReadSize +
+      totalSingleMessagesMessagesDocumentReadSize;
 
   NetworkState copyWith({
     double totalUploadFileSize = 0,
@@ -58,6 +88,16 @@ class NetworkState extends Equatable {
     double totalSecurityDocumentWriteSize = 0,
     double totalSavedMessageDocumentReadSize = 0,
     double totalSavedMessageDocumentWriteSize = 0,
+    double totalCallsDocumentReadSize = 0,
+    double totalCallsDocumentWriteSize = 0,
+    double totalContactsDocumentReadSize = 0,
+    double totalContactsDocumentWriteSize = 0,
+    double totalDirectMessagesDocumentReadSize = 0,
+    double totalDirectMessagesDocumentWriteSize = 0,
+    double totalGroupMessagesMessagesDocumentReadSize = 0,
+    double totalGroupMessagesMessagesDocumentWriteSize = 0,
+    double totalSingleMessagesMessagesDocumentReadSize = 0,
+    double totalSingleMessagesMessagesDocumentWriteSize = 0,
     bool? useLessDataForCalls,
   }) =>
       NetworkState(
@@ -80,6 +120,32 @@ class NetworkState extends Equatable {
             this.totalSavedMessageDocumentReadSize,
         totalSavedMessageDocumentWriteSize: totalSavedMessageDocumentWriteSize +
             this.totalSavedMessageDocumentWriteSize,
+        totalCallsDocumentReadSize:
+            totalCallsDocumentReadSize + this.totalCallsDocumentReadSize,
+        totalCallsDocumentWriteSize:
+            totalCallsDocumentWriteSize + this.totalCallsDocumentWriteSize,
+        totalContactsDocumentReadSize:
+            totalContactsDocumentReadSize + this.totalContactsDocumentReadSize,
+        totalContactsDocumentWriteSize: totalContactsDocumentWriteSize +
+            this.totalContactsDocumentWriteSize,
+        totalDirectMessagesDocumentReadSize:
+            totalDirectMessagesDocumentReadSize +
+                this.totalDirectMessagesDocumentReadSize,
+        totalDirectMessagesDocumentWriteSize:
+            totalDirectMessagesDocumentWriteSize +
+                this.totalDirectMessagesDocumentWriteSize,
+        totalGroupMessagesMessagesDocumentReadSize:
+            totalGroupMessagesMessagesDocumentReadSize +
+                this.totalGroupMessagesMessagesDocumentReadSize,
+        totalGroupMessagesMessagesDocumentWriteSize:
+            totalGroupMessagesMessagesDocumentWriteSize +
+                this.totalGroupMessagesMessagesDocumentWriteSize,
+        totalSingleMessagesMessagesDocumentReadSize:
+            totalSingleMessagesMessagesDocumentReadSize +
+                this.totalSingleMessagesMessagesDocumentReadSize,
+        totalSingleMessagesMessagesDocumentWriteSize:
+            totalSingleMessagesMessagesDocumentWriteSize +
+                this.totalSingleMessagesMessagesDocumentWriteSize,
         useLessDataForCalls: useLessDataForCalls ?? this.useLessDataForCalls,
       );
 
@@ -97,5 +163,15 @@ class NetworkState extends Equatable {
         totalSecurityDocumentWriteSize,
         totalSavedMessageDocumentReadSize,
         totalSavedMessageDocumentWriteSize,
+        totalCallsDocumentReadSize,
+        totalCallsDocumentWriteSize,
+        totalContactsDocumentReadSize,
+        totalContactsDocumentWriteSize,
+        totalDirectMessagesDocumentReadSize,
+        totalDirectMessagesDocumentWriteSize,
+        totalGroupMessagesMessagesDocumentReadSize,
+        totalGroupMessagesMessagesDocumentWriteSize,
+        totalSingleMessagesMessagesDocumentReadSize,
+        totalSingleMessagesMessagesDocumentWriteSize,
       ];
 }

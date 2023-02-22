@@ -18,6 +18,14 @@ mixin FirestoreContactsService implements FirebaseFirestoreService {
         .set(
           updatedDetails,
         );
+
+    NetworkListeners.listener.add(
+      Listener(
+        ListenersFor.contacts,
+        ListenersType.write,
+        contactsAvailableDetails.calculateSize,
+      ),
+    );
   }
 
   @override
@@ -40,6 +48,14 @@ mixin FirestoreContactsService implements FirebaseFirestoreService {
               false,
             ),
           );
+
+          NetworkListeners.listener.add(
+            Listener(
+              ListenersFor.contacts,
+              ListenersType.read,
+              doc.data().size,
+            ),
+          );
         }
         userContactsAvailableDetails.add(contacts);
       },
@@ -52,7 +68,19 @@ mixin FirestoreContactsService implements FirebaseFirestoreService {
     String userId,
   ) =>
       getContactNotAvailableDetailsCollectionReference(userId).snapshots().map(
-            (event) => event.docs.map((e) => e.data()).toList(),
+            (event) => event.docs.map(
+              (e) {
+                final data = e.data();
+                NetworkListeners.listener.add(
+                  Listener(
+                    ListenersFor.contacts,
+                    ListenersType.read,
+                    data.size,
+                  ),
+                );
+                return data;
+              },
+            ).toList(),
           );
 
   @override
@@ -66,6 +94,13 @@ mixin FirestoreContactsService implements FirebaseFirestoreService {
             contactsNotAvailableDetails.getDocId(),
           )
           .set(contactsNotAvailableDetails);
+      NetworkListeners.listener.add(
+        Listener(
+          ListenersFor.contacts,
+          ListenersType.write,
+          contactsNotAvailableDetails.calculateSize,
+        ),
+      );
     }
   }
 
@@ -73,6 +108,15 @@ mixin FirestoreContactsService implements FirebaseFirestoreService {
   Future<bool> isContactsAvailableListPresent(String userId) async {
     final details =
         await getContactAvailableDetailsCollectionReference(userId).get();
+    for (var element in details.docs) {
+      NetworkListeners.listener.add(
+        Listener(
+          ListenersFor.contacts,
+          ListenersType.read,
+          element.data().size,
+        ),
+      );
+    }
     return details.size > 0;
   }
 
@@ -80,6 +124,15 @@ mixin FirestoreContactsService implements FirebaseFirestoreService {
   Future<bool> isContactsNotAvailableListPresent(String userId) async {
     final details =
         await getContactNotAvailableDetailsCollectionReference(userId).get();
+    for (var element in details.docs) {
+      NetworkListeners.listener.add(
+        Listener(
+          ListenersFor.contacts,
+          ListenersType.read,
+          element.data().size,
+        ),
+      );
+    }
     return details.size > 0;
   }
 }

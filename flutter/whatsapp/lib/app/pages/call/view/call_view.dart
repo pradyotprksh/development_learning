@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
 import 'package:whatsapp/app/app.dart';
 import 'package:whatsapp/core/core.dart';
+import 'package:whatsapp/core/core.dart' as listener;
 
 class CallView extends StatefulWidget {
   const CallView({super.key});
@@ -55,12 +56,20 @@ class _CallViewState extends State<CallView> {
                   if (callDetails != null) {
                     final seconds = StopWatchTimer.getRawSecond(value ?? 0);
                     if (callDetails.isPhoneCall) {
-                      NetworkListeners.phoneCallSizeStream.add(
-                        AppConstants.oneSecPhoneCallSizeInBytes * seconds,
+                      NetworkListeners.listener.add(
+                        listener.Listener(
+                          ListenersFor.phoneCall,
+                          ListenersType.read,
+                          AppConstants.oneSecPhoneCallSizeInBytes * seconds,
+                        ),
                       );
                     } else if (callDetails.isVideoCall) {
-                      NetworkListeners.videoCallSizeStream.add(
-                        AppConstants.oneSecVideoCallSizeInBytes * seconds,
+                      NetworkListeners.listener.add(
+                        listener.Listener(
+                          ListenersFor.videoCall,
+                          ListenersType.read,
+                          AppConstants.oneSecVideoCallSizeInBytes * seconds,
+                        ),
                       );
                     }
                   }
