@@ -54,4 +54,6 @@ class MessageCopyForwardSavedDetails {
         if (userDeviceDetails != null)
           FirestoreItemKey.userDeviceDetails: userDeviceDetails!.toMap(),
       };
+
+  double get calculateSize => toFirestore().getDocumentSize().toDouble();
 }

@@ -7,6 +7,7 @@ class SavedMessageDetails {
     required this.messageId,
     this.savedOnTimeStamp,
     this.userDeviceDetails,
+    this.size = 0,
   });
 
   factory SavedMessageDetails.fromFirestore(
@@ -25,6 +26,7 @@ class SavedMessageDetails {
       messageId: data?[FirestoreItemKey.messageId] as String,
       savedOnTimeStamp: data?[FirestoreItemKey.savedOnTimeStamp] as int? ?? 0,
       userDeviceDetails: UserDeviceDetails.fromMap(deviceDetails),
+      size: (data?.getDocumentSize() ?? 0).toDouble(),
     );
   }
 
@@ -32,6 +34,7 @@ class SavedMessageDetails {
   final String messageId;
   final int? savedOnTimeStamp;
   final UserDeviceDetails? userDeviceDetails;
+  final double size;
 
   Map<String, dynamic> toFirestore() => <String, dynamic>{
         FirestoreItemKey.messageSentByUserId: messageSentByUserId,
@@ -41,4 +44,6 @@ class SavedMessageDetails {
         if (userDeviceDetails != null)
           FirestoreItemKey.userDeviceDetails: userDeviceDetails!.toMap(),
       };
+
+  double get calculateSize => toFirestore().getDocumentSize().toDouble();
 }

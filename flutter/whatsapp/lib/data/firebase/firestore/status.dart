@@ -6,6 +6,8 @@ mixin FirestoreStatusImplementation implements FirebaseFirestoreService {
   @override
   Future<void> setStatus(StatusDetails statusDetails) async {
     await getStatusCollectionReference().add(statusDetails);
+    NetworkListeners.statusDocumentWriteSizeStream
+        .add(statusDetails.calculateSize);
   }
 
   @override
@@ -42,14 +44,15 @@ mixin FirestoreStatusImplementation implements FirebaseFirestoreService {
                 .map((e) => e.data())
                 .toList();
 
+            for (var element in allStatus) {
+              NetworkListeners.statusDocumentReadSizeStream.add(element.size);
+            }
+
             statusWithUserDetails.add(
               UserWithSingleStatusDetails(
                 userId,
                 allStatus,
-                getUserCollectionReference()
-                    .doc(userId)
-                    .snapshots()
-                    .map((event) => event.data()),
+                getUserDetails(userId),
               ),
             );
           }
@@ -69,6 +72,8 @@ mixin FirestoreStatusImplementation implements FirebaseFirestoreService {
       await getStatusSeenCollectionReference(statusId)
           .doc(statusSeenDetails.userId)
           .set(statusSeenDetails);
+      NetworkListeners.statusDocumentWriteSizeStream
+          .add(statusSeenDetails.calculateSize);
     }
   }
 
@@ -90,6 +95,7 @@ mixin FirestoreStatusImplementation implements FirebaseFirestoreService {
           storageReference.add(status.data().firestoreFilePath ?? '');
         }
         batch.delete(status.reference);
+        NetworkListeners.statusDocumentWriteSizeStream.add(status.data().size);
       }
     }
     await batch.commit();

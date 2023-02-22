@@ -8,54 +8,78 @@ class NetworkState extends Equatable {
     this.totalPhoneCallSize = 0,
     this.totalUserDocumentReadSize = 0,
     this.totalUserDocumentWriteSize = 0,
+    this.totalStatusDocumentReadSize = 0,
+    this.totalStatusDocumentWriteSize = 0,
+    this.totalSecurityDocumentWriteSize = 0,
+    this.totalSavedMessageDocumentReadSize = 0,
+    this.totalSavedMessageDocumentWriteSize = 0,
     this.useLessDataForCalls = false,
   });
 
-  // Storage service
   final double totalUploadFileSize;
-
-  // Cached network image | Other file size
   final double totalDownloadFileSize;
-
-  // Video call - 81260 bytes for 1 second
   final double totalVideoCallSize;
-
-  // Phone call - 1000 bytes for 1 second
   final double totalPhoneCallSize;
   final double totalUserDocumentReadSize;
   final double totalUserDocumentWriteSize;
+  final double totalStatusDocumentReadSize;
+  final double totalStatusDocumentWriteSize;
+  final double totalSecurityDocumentWriteSize;
+  final double totalSavedMessageDocumentReadSize;
+  final double totalSavedMessageDocumentWriteSize;
   final bool useLessDataForCalls;
 
   double get totalUploadSize =>
       totalUploadFileSize +
       totalVideoCallSize +
       totalPhoneCallSize +
-      totalUserDocumentReadSize;
+      totalUserDocumentWriteSize +
+      totalStatusDocumentWriteSize +
+      totalSecurityDocumentWriteSize +
+      totalSavedMessageDocumentWriteSize;
 
   double get totalDownloadSize =>
       totalDownloadFileSize +
       totalVideoCallSize +
       totalPhoneCallSize +
-      totalUserDocumentWriteSize;
+      totalUserDocumentReadSize +
+      totalStatusDocumentReadSize +
+      totalSavedMessageDocumentReadSize;
 
   NetworkState copyWith({
-    double newFileUploadSize = 0,
-    double newFileDownloadSize = 0,
-    double newVideoCallSize = 0,
-    double newPhoneCallSize = 0,
-    double newUserDocumentReadSize = 0,
-    double newUserDocumentWriteSize = 0,
+    double totalUploadFileSize = 0,
+    double totalDownloadFileSize = 0,
+    double totalVideoCallSize = 0,
+    double totalPhoneCallSize = 0,
+    double totalUserDocumentReadSize = 0,
+    double totalUserDocumentWriteSize = 0,
+    double totalStatusDocumentReadSize = 0,
+    double totalStatusDocumentWriteSize = 0,
+    double totalSecurityDocumentWriteSize = 0,
+    double totalSavedMessageDocumentReadSize = 0,
+    double totalSavedMessageDocumentWriteSize = 0,
     bool? useLessDataForCalls,
   }) =>
       NetworkState(
-        totalUploadFileSize: newFileUploadSize + totalUploadFileSize,
-        totalDownloadFileSize: newFileDownloadSize + totalDownloadFileSize,
-        totalVideoCallSize: newVideoCallSize + totalVideoCallSize,
-        totalPhoneCallSize: newPhoneCallSize + totalPhoneCallSize,
+        totalUploadFileSize: totalUploadFileSize + this.totalUploadFileSize,
+        totalDownloadFileSize:
+            totalDownloadFileSize + this.totalDownloadFileSize,
+        totalVideoCallSize: totalVideoCallSize + this.totalVideoCallSize,
+        totalPhoneCallSize: totalPhoneCallSize + this.totalPhoneCallSize,
         totalUserDocumentReadSize:
-            newUserDocumentReadSize + totalUserDocumentReadSize,
+            totalUserDocumentReadSize + this.totalUserDocumentReadSize,
         totalUserDocumentWriteSize:
-            newUserDocumentWriteSize + totalUserDocumentWriteSize,
+            totalUserDocumentWriteSize + this.totalUserDocumentWriteSize,
+        totalStatusDocumentReadSize:
+            totalStatusDocumentReadSize + this.totalStatusDocumentReadSize,
+        totalStatusDocumentWriteSize:
+            totalStatusDocumentWriteSize + this.totalStatusDocumentWriteSize,
+        totalSecurityDocumentWriteSize: totalSecurityDocumentWriteSize +
+            this.totalSecurityDocumentWriteSize,
+        totalSavedMessageDocumentReadSize: totalSavedMessageDocumentReadSize +
+            this.totalSavedMessageDocumentReadSize,
+        totalSavedMessageDocumentWriteSize: totalSavedMessageDocumentWriteSize +
+            this.totalSavedMessageDocumentWriteSize,
         useLessDataForCalls: useLessDataForCalls ?? this.useLessDataForCalls,
       );
 
@@ -68,5 +92,10 @@ class NetworkState extends Equatable {
         useLessDataForCalls,
         totalUserDocumentReadSize,
         totalUserDocumentWriteSize,
+        totalStatusDocumentReadSize,
+        totalStatusDocumentWriteSize,
+        totalSecurityDocumentWriteSize,
+        totalSavedMessageDocumentReadSize,
+        totalSavedMessageDocumentWriteSize,
       ];
 }

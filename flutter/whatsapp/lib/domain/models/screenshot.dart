@@ -16,9 +16,9 @@ class ScreenshotDetails {
   ) {
     final data = snapshot.data();
 
-    final deviceDetails = data?[FirestoreItemKey.userDeviceDetails]
-            as Map<String, dynamic>? ??
-        <String, dynamic>{};
+    final deviceDetails =
+        data?[FirestoreItemKey.userDeviceDetails] as Map<String, dynamic>? ??
+            <String, dynamic>{};
 
     return ScreenshotDetails(
       userId: data?[FirestoreItemKey.userId] as String,
@@ -45,4 +45,6 @@ class ScreenshotDetails {
         if (route != null) FirestoreItemKey.route: route,
         if (arguments != null) FirestoreItemKey.arguments: arguments.toString(),
       };
+
+  double get calculateSize => toFirestore().getDocumentSize().toDouble();
 }

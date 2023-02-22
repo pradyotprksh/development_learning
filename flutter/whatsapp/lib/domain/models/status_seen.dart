@@ -48,4 +48,6 @@ class StatusSeenDetails extends Equatable {
         statusId,
         seenOnTimeStamp,
       ];
+
+  double get calculateSize => toFirestore().getDocumentSize().toDouble();
 }

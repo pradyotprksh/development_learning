@@ -7,6 +7,10 @@ abstract class NetworkEvent extends Equatable {
   List<Object?> get props => [];
 }
 
+class StartAllSizeListenersEvent extends NetworkEvent {
+  const StartAllSizeListenersEvent();
+}
+
 class ListenToFileSizeUploadEvent extends NetworkEvent {
   const ListenToFileSizeUploadEvent();
 }
@@ -29,6 +33,26 @@ class ListenToUserDocumentReadEvent extends NetworkEvent {
 
 class ListenToUserDocumentWriteEvent extends NetworkEvent {
   const ListenToUserDocumentWriteEvent();
+}
+
+class ListenToStatusDocumentReadEvent extends NetworkEvent {
+  const ListenToStatusDocumentReadEvent();
+}
+
+class ListenToStatusDocumentWriteEvent extends NetworkEvent {
+  const ListenToStatusDocumentWriteEvent();
+}
+
+class ListenToSecurityDocumentWriteEvent extends NetworkEvent {
+  const ListenToSecurityDocumentWriteEvent();
+}
+
+class ListenToSavedMessageDocumentReadEvent extends NetworkEvent {
+  const ListenToSavedMessageDocumentReadEvent();
+}
+
+class ListenToSavedMessageDocumentWriteEvent extends NetworkEvent {
+  const ListenToSavedMessageDocumentWriteEvent();
 }
 
 class ToggleLessDataForCall extends NetworkEvent {

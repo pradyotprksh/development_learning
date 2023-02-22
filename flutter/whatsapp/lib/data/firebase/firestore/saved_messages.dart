@@ -11,6 +11,8 @@ mixin FirestoreSavedMessagesService implements FirebaseFirestoreService {
     await getSavedMessagesCollectionReference(userId).doc(messageId).set(
           savedMessageDetails,
         );
+    NetworkListeners.savedMessageDocumentWriteSizeStream
+        .add(savedMessageDetails.calculateSize);
   }
 
   @override
@@ -65,6 +67,8 @@ mixin FirestoreSavedMessagesService implements FirebaseFirestoreService {
     final callLogs = await getSavedMessagesCollectionReference(userId).get();
     for (var call in callLogs.docs) {
       batch.delete(call.reference);
+      NetworkListeners.savedMessageDocumentWriteSizeStream
+          .add(call.data().size);
     }
     await batch.commit();
   }

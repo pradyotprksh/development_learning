@@ -16,6 +16,7 @@ class StatusDetails {
     this.isFileImage,
     this.messageDetails,
     this.statusId = '',
+    this.size = 0,
   });
 
   factory StatusDetails.fromFirestore(
@@ -45,6 +46,7 @@ class StatusDetails {
       userDeviceDetails: UserDeviceDetails.fromMap(deviceDetails),
       statusId: snapshot.id,
       isFileImage: data?[FirestoreItemKey.isFileImage] as bool?,
+      size: (data?.getDocumentSize() ?? 0).toDouble(),
     );
   }
 
@@ -60,6 +62,7 @@ class StatusDetails {
   final bool? isFileImage;
   final DocumentReference? userReference;
   final SingleMessageDetails? messageDetails;
+  final double size;
 
   Map<String, dynamic> toFirestore() => <String, dynamic>{
         FirestoreItemKey.status: EncryptorService.encryptData(status),
@@ -82,4 +85,6 @@ class StatusDetails {
         if (messageDetails != null)
           FirestoreItemKey.messageDetails: messageDetails!.toFirestore()
       };
+
+  double get calculateSize => toFirestore().getDocumentSize().toDouble();
 }

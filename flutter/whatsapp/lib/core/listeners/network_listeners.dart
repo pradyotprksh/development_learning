@@ -13,4 +13,14 @@ abstract class NetworkListeners {
       StreamController();
   static final StreamController<double> userDocumentWriteSizeStream =
       StreamController();
+  static final StreamController<double> statusDocumentReadSizeStream =
+      StreamController();
+  static final StreamController<double> statusDocumentWriteSizeStream =
+      StreamController();
+  static final StreamController<double> securityDocumentWriteSizeStream =
+      StreamController();
+  static final StreamController<double> savedMessageDocumentReadSizeStream =
+      StreamController();
+  static final StreamController<double> savedMessageDocumentWriteSizeStream =
+      StreamController();
 }

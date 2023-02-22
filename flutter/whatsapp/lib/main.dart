@@ -26,22 +26,7 @@ void main() async {
         BlocProvider(
           create: (_) => NetworkBloc()
             ..add(
-              const ListenToFileSizeUploadEvent(),
-            )
-            ..add(
-              const ListenToFileSizeDownloadEvent(),
-            )
-            ..add(
-              const ListenToVideoCallSizeEvent(),
-            )
-            ..add(
-              const ListenToPhoneCallEvent(),
-            )
-            ..add(
-              const ListenToUserDocumentReadEvent(),
-            )
-            ..add(
-              const ListenToUserDocumentWriteEvent(),
+              const StartAllSizeListenersEvent(),
             ),
         ),
         BlocProvider(

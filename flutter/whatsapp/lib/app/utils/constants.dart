@@ -8,6 +8,14 @@ abstract class AppConstants {
   static const totalPhoneCallSize = 'totalPhoneCallSize';
   static const totalUserDocumentReadSize = 'totalUserDocumentReadSize';
   static const totalUserDocumentWriteSize = 'totalUserDocumentWriteSize';
+  static const totalStatusDocumentReadSize = 'totalStatusDocumentReadSize';
+  static const totalStatusDocumentWriteSize = 'totalStatusDocumentWriteSize';
+  static const totalSecurityDocumentWriteSize =
+      'totalSecurityDocumentWriteSize';
+  static const totalSavedMessageDocumentReadSize =
+      'totalSavedMessageDocumentReadSize';
+  static const totalSavedMessageDocumentWriteSize =
+      'totalSavedMessageDocumentWriteSize';
   static const oneSecVideoCallSizeInBytes = 81260.0;
   static const oneSecPhoneCallSizeInBytes = 1000.0;
   static const lessVideoCallSizeBytes = oneSecVideoCallSizeInBytes / 4;
