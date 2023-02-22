@@ -6,6 +6,7 @@ class NetworkBloc extends HydratedBloc<NetworkEvent, NetworkState> {
   NetworkBloc() : super(const NetworkState()) {
     on<StartAllSizeListenersEvent>(_startAllSizeListeners);
     on<ToggleLessDataForCall>(_toggleLessDataForCallEvent);
+    on<ClearNetworkUsageDetails>(_clearNetworkUsageDetails);
   }
 
   void _startAllSizeListeners(
@@ -149,6 +150,8 @@ class NetworkBloc extends HydratedBloc<NetworkEvent, NetworkState> {
             json[AppConstants.totalSingleMessagesMessagesDocumentWriteSize]
                     as double? ??
                 0,
+        useLessDataForCalls:
+            json[AppConstants.useLessDataForCalls] as bool? ?? false,
       );
 
   @override
@@ -190,6 +193,7 @@ class NetworkBloc extends HydratedBloc<NetworkEvent, NetworkState> {
             state.totalSingleMessagesMessagesDocumentReadSize,
         AppConstants.totalSingleMessagesMessagesDocumentWriteSize:
             state.totalSingleMessagesMessagesDocumentWriteSize,
+        AppConstants.useLessDataForCalls: state.useLessDataForCalls,
       };
 
   void _toggleLessDataForCallEvent(
@@ -198,6 +202,17 @@ class NetworkBloc extends HydratedBloc<NetworkEvent, NetworkState> {
   ) {
     emit(
       state.copyWith(useLessDataForCalls: !state.useLessDataForCalls),
+    );
+  }
+
+  void _clearNetworkUsageDetails(
+    ClearNetworkUsageDetails event,
+    Emitter<NetworkState> emit,
+  ) {
+    emit(
+      NetworkState(
+        useLessDataForCalls: state.useLessDataForCalls,
+      ),
     );
   }
 }

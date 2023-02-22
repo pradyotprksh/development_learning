@@ -14,3 +14,7 @@ class StartAllSizeListenersEvent extends NetworkEvent {
 class ToggleLessDataForCall extends NetworkEvent {
   const ToggleLessDataForCall();
 }
+
+class ClearNetworkUsageDetails extends NetworkEvent {
+  const ClearNetworkUsageDetails();
+}

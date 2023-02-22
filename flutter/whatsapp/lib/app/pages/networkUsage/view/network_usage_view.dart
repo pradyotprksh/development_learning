@@ -121,7 +121,11 @@ class NetworkUsageView extends StatelessWidget {
               ),
               const Divider(),
               ListTile(
-                onTap: () {},
+                onTap: () {
+                  context.read<NetworkBloc>().add(
+                        const ClearNetworkUsageDetails(),
+                      );
+                },
                 leading: ThemeSizedBox.shrink,
                 title: Text(context.translator.resetStatistics),
               ),

@@ -59,7 +59,9 @@ class SingleUsageWidget extends StatelessWidget {
             ),
           ),
           child: LinearProgressIndicator(
-            value: (upload + download) / totalValue,
+            value: ((upload + download) == 0 || totalValue == 0)
+                ? 0
+                : (upload + download) / totalValue,
             backgroundColor: context.themeData.highlightColor,
           ),
         ),

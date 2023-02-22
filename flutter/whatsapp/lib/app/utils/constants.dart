@@ -13,6 +13,7 @@ abstract class AppConstants {
   static const totalCallsDocumentReadSize = 'totalCallsDocumentReadSize';
   static const totalCallsDocumentWriteSize = 'totalCallsDocumentWriteSize';
   static const totalContactsDocumentReadSize = 'totalContactsDocumentReadSize';
+  static const useLessDataForCalls = 'useLessDataForCalls';
   static const totalContactsDocumentWriteSize =
       'totalContactsDocumentWriteSize';
   static const totalDirectMessagesDocumentReadSize =
