@@ -43,6 +43,8 @@ dependencies:
 
   equatable: ^2.0.5
 
+  fast_cached_network_image: ^1.1.1
+
   file_picker: ^5.2.5
 
   filesize: ^2.0.1
@@ -101,7 +103,7 @@ dependencies:
 
   liquid_swipe: ^3.0.0
 
-  logger: ^1.2.1
+  logger: ^1.2.2
 
   memory_cache: ^1.2.0
 

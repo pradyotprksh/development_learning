@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttermoji/fluttermoji.dart';
-// ignore: depend_on_referenced_packages
 import 'package:get/get.dart';
 import 'package:whatsapp/app/app.dart';
 

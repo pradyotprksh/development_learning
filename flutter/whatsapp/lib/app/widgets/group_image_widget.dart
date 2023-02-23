@@ -42,6 +42,15 @@ class GroupImageWidget extends StatelessWidget {
               size: size / 2,
             ),
           ),
+          errorWidget: CircleAvatar(
+            radius: size / 2,
+            backgroundColor: context.themeData.primaryColor,
+            child: Icon(
+              Icons.group,
+              color: Colors.white,
+              size: size / 2,
+            ),
+          ),
           height: size,
           width: size,
           clipToCircle: true,

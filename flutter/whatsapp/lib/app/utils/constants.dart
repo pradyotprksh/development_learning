@@ -38,4 +38,5 @@ abstract class AppConstants {
   static const oneSecPhoneCallSizeInBytes = 1000.0;
   static const lessVideoCallSizeBytes = oneSecVideoCallSizeInBytes / 4;
   static const lessPhoneCallSizeBytes = oneSecPhoneCallSizeInBytes / 3;
+  static const browserName = 'browserName';
 }

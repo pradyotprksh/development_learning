@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-// ignore: depend_on_referenced_packages
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttermoji/fluttermoji.dart';
 import 'package:whatsapp/app/app.dart';
@@ -72,6 +71,15 @@ class UserImageWidget extends StatelessWidget {
                 imageUrl: profileImage,
                 showProgressIndicator: showProgressIndicator,
                 placeholder: CircleAvatar(
+                  radius: size / 2,
+                  backgroundColor: context.themeData.primaryColor,
+                  child: Icon(
+                    Icons.person,
+                    color: Colors.white,
+                    size: size / 2,
+                  ),
+                ),
+                errorWidget: CircleAvatar(
                   radius: size / 2,
                   backgroundColor: context.themeData.primaryColor,
                   child: Icon(

@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:fast_cached_network_image/fast_cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:whatsapp/app/app.dart';
 import 'package:whatsapp/core/core.dart';
@@ -39,26 +40,47 @@ class CachedNetworkImageWidget extends StatelessWidget {
               borderRadius: clipToCircle && height != null
                   ? BorderRadius.circular(height ?? 0)
                   : BorderRadius.zero,
-              child: CachedNetworkImage(
-                imageUrl: imageUrl,
-                width: width,
-                height: height,
-                fit: fit,
-                progressIndicatorBuilder: (_, __, progress) {
-                  NetworkListeners.listener.add(
-                    listener.Listener(
-                      ListenersFor.file,
-                      ListenersType.read,
-                      progress.downloaded.toDouble(),
+              child: AppDetails.isWeb
+                  ? FastCachedImage(
+                      url: imageUrl,
+                      width: width,
+                      height: height,
+                      fit: fit,
+                      loadingBuilder: (_, progress) {
+                        NetworkListeners.listener.add(
+                          listener.Listener(
+                            ListenersFor.file,
+                            ListenersType.read,
+                            progress.downloadedBytes.toDouble(),
+                          ),
+                        );
+                        return placeholder;
+                      },
+                      errorBuilder: (_, __, dynamic ___) {
+                        failed?.call();
+                        return errorWidget;
+                      },
+                    )
+                  : CachedNetworkImage(
+                      imageUrl: imageUrl,
+                      width: width,
+                      height: height,
+                      fit: fit,
+                      progressIndicatorBuilder: (_, __, progress) {
+                        NetworkListeners.listener.add(
+                          listener.Listener(
+                            ListenersFor.file,
+                            ListenersType.read,
+                            progress.downloaded.toDouble(),
+                          ),
+                        );
+                        return placeholder;
+                      },
+                      errorWidget: (_, __, dynamic ___) {
+                        failed?.call();
+                        return errorWidget;
+                      },
                     ),
-                  );
-                  return placeholder;
-                },
-                errorWidget: (_, __, dynamic ___) {
-                  failed?.call();
-                  return errorWidget;
-                },
-              ),
             ),
           if (imageUrl.isEmpty) placeholder,
           if (showProgressIndicator)

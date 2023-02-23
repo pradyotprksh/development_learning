@@ -64,29 +64,31 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     ApplicationBackgroundCheck event,
     Emitter<HomeState> emit,
   ) async {
-    final userId = _firebaseAuthService.getUserId();
-    if (userId != null) {
-      await emit.forEach(
-        FGBGEvents.stream,
-        onData: (data) {
-          if (data == FGBGType.background) {
-            _firebaseFirestoreService.updateUserDetails(
-              userId,
-              {
-                FirestoreItemKey.isOnline: false,
-              },
-            );
-          } else {
-            _firebaseFirestoreService.updateUserDetails(
-              userId,
-              {
-                FirestoreItemKey.isOnline: true,
-              },
-            );
-          }
-          return state;
-        },
-      );
+    if (!AppDetails.isWeb) {
+      final userId = _firebaseAuthService.getUserId();
+      if (userId != null) {
+        await emit.forEach(
+          FGBGEvents.stream,
+          onData: (data) {
+            if (data == FGBGType.background) {
+              _firebaseFirestoreService.updateUserDetails(
+                userId,
+                {
+                  FirestoreItemKey.isOnline: false,
+                },
+              );
+            } else {
+              _firebaseFirestoreService.updateUserDetails(
+                userId,
+                {
+                  FirestoreItemKey.isOnline: true,
+                },
+              );
+            }
+            return state;
+          },
+        );
+      }
     }
   }
 

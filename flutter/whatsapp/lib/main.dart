@@ -1,5 +1,7 @@
+import 'package:fast_cached_network_image/fast_cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
 import 'package:whatsapp/app/app.dart';
@@ -70,8 +72,11 @@ Future blocSetup() async {
 }
 
 Future localStorageSetup() async {
+  await Hive.initFlutter();
   HydratedBloc.storage = await HydratedStorage.build(
-    storageDirectory: await path_provider.getApplicationDocumentsDirectory(),
+    storageDirectory: AppDetails.isWeb
+        ? HydratedStorage.webStorageDirectory
+        : await path_provider.getApplicationDocumentsDirectory(),
   );
 }
 
@@ -84,4 +89,6 @@ Future _initialSetups() async {
   await blocSetup();
 
   await DeviceCameras.getCameras();
+
+  await FastCachedImageConfig.init(clearCacheAfter: const Duration(days: 15));
 }
