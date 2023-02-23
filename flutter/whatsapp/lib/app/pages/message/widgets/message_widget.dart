@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:whatsapp/app/app.dart';
 import 'package:whatsapp/domain/domain.dart';
 
@@ -319,8 +320,8 @@ class MessageWidget extends StatelessWidget {
                               if (attachments != null && attachments.isNotEmpty)
                                 ThemeSizedBox.height10,
                               if (message.message.isNotEmpty)
-                                Text(
-                                  message.message,
+                                Linkify(
+                                  text: message.message,
                                   textAlign:
                                       message.sentByUserId == currentUserId
                                           ? TextAlign.end
@@ -331,6 +332,15 @@ class MessageWidget extends StatelessWidget {
                                         ? context.themeData.textTheme.bodyMedium
                                             ?.color
                                         : Colors.white,
+                                  ),
+                                  linkStyle: context
+                                      .themeData.textTheme.bodyMedium
+                                      ?.copyWith(
+                                    color: message.sentByUserId == currentUserId
+                                        ? context.themeData.textTheme.bodyMedium
+                                            ?.color
+                                        : Colors.white,
+                                    decoration: TextDecoration.underline,
                                   ),
                                 ),
                             ],

@@ -82,6 +82,8 @@ dependencies:
 
   flutter_link_previewer: ^3.2.0
 
+  flutter_linkify: ^5.0.2
+
   flutter_localizations:
     sdk: flutter
 
