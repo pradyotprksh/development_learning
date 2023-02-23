@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 abstract class ThemeEdgeInsets {
   static const top20Bottom20 = EdgeInsets.only(top: 20, bottom: 20);
   static const top15Bottom15 = EdgeInsets.only(top: 15, bottom: 15);
+  static const top5Bottom5 = EdgeInsets.only(top: 5, bottom: 5);
   static const left15Right15 = EdgeInsets.only(left: 15, right: 15);
   static const top15lest15Right15 = EdgeInsets.only(
     left: 15,

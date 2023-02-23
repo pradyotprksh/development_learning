@@ -48,6 +48,20 @@ extension StringExtensions on String {
       );
 
   bool isValidEmailAddress() => EmailValidator.validate(this);
+
+  List<String> links() {
+    var exp = RegExp(r'(?:(?:https?|ftp)://)?[\w/\-?=%.]+\.[\w/\-?=%.]+');
+    var matches = exp.allMatches(this);
+    return matches
+        .toList()
+        .map(
+          (match) => substring(
+            match.start,
+            match.end,
+          ),
+        )
+        .toList();
+  }
 }
 
 extension FileExtention on FileSystemEntity {

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 import 'package:whatsapp/app/app.dart';
 import 'package:whatsapp/core/core.dart';
 import 'package:whatsapp/core/core.dart' as listener;
@@ -41,25 +40,19 @@ class CachedAttachmentPreviewWidget extends StatelessWidget {
                       arguments: fileDetails,
                     );
                   },
-                  child: AbsorbPointer(
-                    absorbing: true,
-                    child: SfPdfViewer.network(
-                      fileDetails.fileUrl,
-                      pageLayoutMode: PdfPageLayoutMode.continuous,
-                      canShowPaginationDialog: false,
-                      canShowPasswordDialog: false,
-                      canShowScrollHead: false,
-                      canShowHyperlinkDialog: false,
-                      canShowScrollStatus: false,
-                      onDocumentLoaded: (_) {
-                        NetworkListeners.listener.add(
-                          listener.Listener(
-                            ListenersFor.file,
-                            ListenersType.read,
-                            fileDetails.size,
-                          ),
-                        );
-                      },
+                  child: Container(
+                    padding: ThemeEdgeInsets.all10,
+                    decoration: BoxDecoration(
+                      color: context.themeData.colorScheme.secondary,
+                      borderRadius: const BorderRadius.all(
+                        Radius.circular(
+                          10,
+                        ),
+                      ),
+                    ),
+                    child: Text(
+                      fileDetails.fileName,
+                      style: context.themeData.textTheme.labelSmall,
                     ),
                   ),
                 )

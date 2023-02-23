@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:whatsapp/app/app.dart';
 import 'package:whatsapp/domain/domain.dart';
 
@@ -38,7 +37,7 @@ class NonExistingAccountsWidget extends StatelessWidget {
                 ? ListTile(
                     onTap: () async {
                       if (phoneNumber != null) {
-                        final smsUri = Uri.parse(
+                        await AppUtilsMethods.openUrl(
                           AppUtilsMethods.smsUrl(
                             phoneNumber,
                             AppUtilsMethods.invitationMessage(
@@ -46,15 +45,13 @@ class NonExistingAccountsWidget extends StatelessWidget {
                             ),
                           ),
                         );
-                        await launchUrl(smsUri);
                       } else if (emailAddress != null) {
-                        final emailAddressUri = Uri.parse(
+                        await AppUtilsMethods.openUrl(
                           AppUtilsMethods.emailUrl(
                             context.translator.applicationName,
                             emailAddress,
                           ),
                         );
-                        await launchUrl(emailAddressUri);
                       }
                     },
                     leading: CircleAvatar(

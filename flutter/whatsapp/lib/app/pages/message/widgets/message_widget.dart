@@ -91,6 +91,7 @@ class MessageWidget extends StatelessWidget {
     final currentUserId = context.read<UserBloc>().state.userDetails?.userId;
     final isCurrentUserMessage = message.sentByUserId == currentUserId;
     final attachments = message.attachments;
+    final links = message.message.links();
 
     if (message.isSystemMessage) {
       return Padding(
@@ -274,8 +275,54 @@ class MessageWidget extends StatelessWidget {
                         ),
                         child: Padding(
                           padding: ThemeEdgeInsets.leftRight15TopBottom5,
-                          child: (attachments == null)
-                              ? Text(
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              if (links.isNotEmpty)
+                                ListView.builder(
+                                  padding: ThemeEdgeInsets.zero,
+                                  primary: false,
+                                  shrinkWrap: true,
+                                  itemCount: links.length,
+                                  itemBuilder: (_, index) => ShowLinkPreview(
+                                    link: links[index],
+                                    backgroundColor:
+                                        message.sentByUserId == currentUserId
+                                            ? context.themeData.primaryColor
+                                                .withAlpha(25)
+                                            : context.themeData.primaryColor,
+                                  ),
+                                ),
+                              if (links.isNotEmpty) ThemeSizedBox.height10,
+                              if (attachments != null && attachments.isNotEmpty)
+                                ThemeSizedBox.height10,
+                              if (attachments != null && attachments.isNotEmpty)
+                                GridView.builder(
+                                  primary: false,
+                                  padding: ThemeEdgeInsets.zero,
+                                  itemCount: attachments.length,
+                                  gridDelegate:
+                                      const SliverGridDelegateWithMaxCrossAxisExtent(
+                                    maxCrossAxisExtent: 100,
+                                    crossAxisSpacing: 5,
+                                    mainAxisSpacing: 5,
+                                  ),
+                                  shrinkWrap: true,
+                                  itemBuilder: (_, index) => ClipRRect(
+                                    borderRadius: const BorderRadius.all(
+                                      Radius.circular(
+                                        10,
+                                      ),
+                                    ),
+                                    child: CachedAttachmentPreviewWidget(
+                                      fileDetails: attachments[index],
+                                    ),
+                                  ),
+                                ),
+                              if (attachments != null && attachments.isNotEmpty)
+                                ThemeSizedBox.height10,
+                              if (message.message.isNotEmpty)
+                                Text(
                                   message.message,
                                   textAlign:
                                       message.sentByUserId == currentUserId
@@ -288,74 +335,9 @@ class MessageWidget extends StatelessWidget {
                                             ?.color
                                         : Colors.white,
                                   ),
-                                )
-                              : (attachments.isNotEmpty)
-                                  ? Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.stretch,
-                                      children: [
-                                        ThemeSizedBox.height10,
-                                        GridView.builder(
-                                          primary: false,
-                                          padding: ThemeEdgeInsets.zero,
-                                          itemCount: attachments.length,
-                                          gridDelegate:
-                                              const SliverGridDelegateWithMaxCrossAxisExtent(
-                                            maxCrossAxisExtent: 100,
-                                            crossAxisSpacing: 5,
-                                            mainAxisSpacing: 5,
-                                          ),
-                                          shrinkWrap: true,
-                                          itemBuilder: (_, index) => ClipRRect(
-                                            borderRadius:
-                                                const BorderRadius.all(
-                                              Radius.circular(
-                                                10,
-                                              ),
-                                            ),
-                                            child:
-                                                CachedAttachmentPreviewWidget(
-                                              fileDetails: attachments[index],
-                                            ),
-                                          ),
-                                        ),
-                                        ThemeSizedBox.height10,
-                                        if (message.message.isNotEmpty)
-                                          Text(
-                                            message.message,
-                                            textAlign: message.sentByUserId ==
-                                                    currentUserId
-                                                ? TextAlign.end
-                                                : TextAlign.start,
-                                            style: context
-                                                .themeData.textTheme.bodyMedium
-                                                ?.copyWith(
-                                              color: message.sentByUserId ==
-                                                      currentUserId
-                                                  ? context.themeData.textTheme
-                                                      .bodyMedium?.color
-                                                  : Colors.white,
-                                            ),
-                                          ),
-                                      ],
-                                    )
-                                  : Text(
-                                      message.message,
-                                      textAlign:
-                                          message.sentByUserId == currentUserId
-                                              ? TextAlign.end
-                                              : TextAlign.start,
-                                      style: context
-                                          .themeData.textTheme.bodyMedium
-                                          ?.copyWith(
-                                        color: message.sentByUserId ==
-                                                currentUserId
-                                            ? context.themeData.textTheme
-                                                .bodyMedium?.color
-                                            : Colors.white,
-                                      ),
-                                    ),
+                                ),
+                            ],
+                          ),
                         ),
                       ),
                     ),

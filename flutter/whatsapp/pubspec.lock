@@ -101,10 +101,10 @@ packages:
     dependency: "direct main"
     description:
       name: camera
-      sha256: e7ac55af24a890d20276821eb3c95857074d03b7de6f9892b99a205ee30bd179
+      sha256: "0e0a7c190810a1d3be75de882a666ac86b36c8d763e203e23c76508ebe1ea5d1"
       url: "https://pub.dev"
     source: hosted
-    version: "0.10.3"
+    version: "0.10.3+1"
   camera_android:
     dependency: transitive
     description:
@@ -281,6 +281,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.2"
+  csslib:
+    dependency: transitive
+    description:
+      name: csslib
+      sha256: b36c7f7e24c0bdf1bf9a3da461c837d1de64b9f8beb190c9011d8c72a3dfd745
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.17.2"
   cupertino_icons:
     dependency: "direct main"
     description:
@@ -670,6 +678,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.3.0"
+  flutter_chat_types:
+    dependency: transitive
+    description:
+      name: flutter_chat_types
+      sha256: "34d1d61e46d5ca15f3b46e72d0a9ac98da72edc5eb5bf644a26e27351c9e15ba"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.6.0"
   flutter_colorpicker:
     dependency: "direct main"
     description:
@@ -702,6 +718,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.11.0"
+  flutter_link_previewer:
+    dependency: "direct main"
+    description:
+      name: flutter_link_previewer
+      sha256: d495edef667d4b5db37fb6f31571406c137161a8399dd44a5de4ce2a7c7ba529
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.2.0"
+  flutter_linkify:
+    dependency: transitive
+    description:
+      name: flutter_linkify
+      sha256: c89fe74de985ec22f23d3538d2249add085a4f37ac1c29fd79e1a207efb81d63
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.0.2"
   flutter_lints:
     dependency: "direct dev"
     description:
@@ -781,6 +813,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.2.3"
+  html:
+    dependency: transitive
+    description:
+      name: html
+      sha256: d9793e10dbe0e6c364f4c59bf3e01fb33a9b2a674bc7a1081693dba0614b6269
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.15.1"
   http:
     dependency: transitive
     description:
@@ -841,10 +881,10 @@ packages:
     dependency: "direct main"
     description:
       name: image_picker
-      sha256: d39cc12402dab8365fe5b5370e64694ae0223d675c36b15ff0490b7cc3d32551
+      sha256: "22207768556b82d55ec70166824350fee32298732d5efa4d6e756f848f51f66a"
       url: "https://pub.dev"
     source: hosted
-    version: "0.8.6+2"
+    version: "0.8.6+3"
   image_picker_android:
     dependency: transitive
     description:
@@ -901,6 +941,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.8.0"
+  linkify:
+    dependency: transitive
+    description:
+      name: linkify
+      sha256: bdfbdafec6cdc9cd0ebb333a868cafc046714ad508e48be8095208c54691d959
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.1.0"
   lints:
     dependency: transitive
     description:
@@ -921,10 +969,10 @@ packages:
     dependency: "direct main"
     description:
       name: logger
-      sha256: "5076f09225f91dc49289a4ccb92df2eeea9ea01cf7c26d49b3a1f04c6a49eec1"
+      sha256: "3584a87540706f7c2de29fa2b0bc0e0825bacab8a6deac736c2d8cb947331526"
       url: "https://pub.dev"
     source: hosted
-    version: "1.1.0"
+    version: "1.2.1"
   matcher:
     dependency: transitive
     description:
@@ -1049,10 +1097,10 @@ packages:
     dependency: "direct main"
     description:
       name: path_provider
-      sha256: dcea5feb97d8abf90cab9e9030b497fb7c3cbf26b7a1fe9e3ef7dcb0a1ddec95
+      sha256: "04890b994ee89bfa80bf3080bfec40d5a92c5c7a785ebb02c13084a099d2b6f9"
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.12"
+    version: "2.0.13"
   path_provider_android:
     dependency: transitive
     description:
@@ -1161,10 +1209,10 @@ packages:
     dependency: "direct main"
     description:
       name: pinput
-      sha256: "121d3b16aa5ff51568a9234d75c099bc8ad1f415cfeef7031c20bc730f368d4c"
+      sha256: "1773743c188cdd2f8d0398ea708ec72645bb41ac9311755c4f7bb03a4184bdcf"
       url: "https://pub.dev"
     source: hosted
-    version: "2.2.30"
+    version: "2.2.31"
   platform:
     dependency: transitive
     description:
@@ -1502,10 +1550,10 @@ packages:
     dependency: "direct main"
     description:
       name: url_launcher
-      sha256: e8f2efc804810c0f2f5b485f49e7942179f56eabcfe81dce3387fec4bb55876b
+      sha256: "75f2846facd11168d007529d6cd8fcb2b750186bea046af9711f10b907e1587e"
       url: "https://pub.dev"
     source: hosted
-    version: "6.1.9"
+    version: "6.1.10"
   url_launcher_android:
     dependency: transitive
     description:
