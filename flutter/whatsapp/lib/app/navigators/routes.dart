@@ -32,6 +32,7 @@ abstract class Routes {
   static const avatar = '/avatar';
   static const networkUsage = '/network-usage';
   static const pdfView = '/pdf-view';
+  static const help = '/help';
 
   static const initialRoute = splashRoute;
 
@@ -49,6 +50,7 @@ abstract class Routes {
     avatar: (context) => const AvatarView(),
     networkUsage: (context) => const NetworkUsageView(),
     pdfView: (context) => const PdfView(),
+    help: (context) => const HelpView(),
     savedMessages: (context) => BlocProvider(
           create: (_) => SavedMessagesBloc(
             FirebaseFirestoreServiceImplementation(),

@@ -2,6 +2,7 @@ export 'addStatus/add_status.dart';
 export 'authenticate/authenticate.dart';
 export 'avatar/avatar.dart';
 export 'call/call.dart';
+export 'help/help.dart';
 export 'home/home.dart';
 export 'intro/intro.dart';
 export 'message/message.dart';
