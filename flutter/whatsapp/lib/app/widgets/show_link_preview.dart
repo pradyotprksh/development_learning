@@ -22,28 +22,48 @@ class _ShowLinkPreviewState extends State<ShowLinkPreview> {
   PreviewData? _data;
 
   @override
-  Widget build(BuildContext context) => Padding(
-        padding: ThemeEdgeInsets.top5Bottom5,
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(
-            20,
-          ),
-          child: Container(
-            color: widget.backgroundColor,
-            child: LinkPreview(
-              enableAnimation: true,
-              onLinkPressed: (_) async {
-                await AppUtilsMethods.openUrl(widget.link);
-              },
-              onPreviewDataFetched: (data) {
-                setState(() {
-                  _data = data;
-                });
-              },
-              previewData: _data,
-              text: widget.link,
-              width: double.infinity,
+  Widget build(BuildContext context) => ClipRRect(
+        borderRadius: BorderRadius.circular(
+          20,
+        ),
+        child: Card(
+          color: widget.backgroundColor,
+          shadowColor: context.themeData.scaffoldBackgroundColor,
+          child: LinkPreview(
+            linkStyle: context.themeData.textTheme.bodySmall?.copyWith(
+              color: Colors.white,
+              decoration: TextDecoration.underline,
             ),
+            metadataTextStyle:
+                context.themeData.textTheme.titleMedium?.copyWith(
+              color: Colors.white,
+            ),
+            metadataTitleStyle:
+                context.themeData.textTheme.titleSmall?.copyWith(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+            ),
+            enableAnimation: true,
+            onLinkPressed: (link) async {
+              await AppUtilsMethods.openUrl(link);
+            },
+            onPreviewDataFetched: (data) {
+              setState(() {
+                _data = data;
+              });
+            },
+            imageBuilder: (url) => CachedNetworkImageWidget(
+              imageUrl: url,
+              placeholder: Icon(
+                Icons.link,
+                color: context.themeData.iconTheme.color,
+              ),
+            ),
+            previewData: _data,
+            text: widget.link,
+            width: double.infinity,
+            openOnPreviewImageTap: true,
+            openOnPreviewTitleTap: true,
           ),
         ),
       );

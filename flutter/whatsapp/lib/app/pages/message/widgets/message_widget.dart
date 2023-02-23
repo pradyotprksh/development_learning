@@ -277,20 +277,17 @@ class MessageWidget extends StatelessWidget {
                           padding: ThemeEdgeInsets.leftRight15TopBottom5,
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment:
+                                message.sentByUserId == currentUserId
+                                    ? CrossAxisAlignment.end
+                                    : CrossAxisAlignment.start,
                             children: [
                               if (links.isNotEmpty)
-                                ListView.builder(
-                                  padding: ThemeEdgeInsets.zero,
-                                  primary: false,
-                                  shrinkWrap: true,
-                                  itemCount: links.length,
-                                  itemBuilder: (_, index) => ShowLinkPreview(
-                                    link: links[index],
+                                ...links.map(
+                                  (e) => ShowLinkPreview(
+                                    link: e,
                                     backgroundColor:
-                                        message.sentByUserId == currentUserId
-                                            ? context.themeData.primaryColor
-                                                .withAlpha(25)
-                                            : context.themeData.primaryColor,
+                                        context.themeData.primaryColor,
                                   ),
                                 ),
                               if (links.isNotEmpty) ThemeSizedBox.height10,

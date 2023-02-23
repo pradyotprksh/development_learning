@@ -9,12 +9,12 @@ class CachedNetworkImageWidget extends StatelessWidget {
     super.key,
     required this.imageUrl,
     required this.placeholder,
-    required this.width,
-    required this.height,
     this.showProgressIndicator = false,
     this.clipToCircle = false,
-    this.tag,
     this.errorWidget = ThemeSizedBox.shrink,
+    this.tag,
+    this.width,
+    this.height,
     this.fit,
     this.failed,
   });
@@ -22,8 +22,8 @@ class CachedNetworkImageWidget extends StatelessWidget {
   final String imageUrl;
   final Widget placeholder;
   final Widget errorWidget;
-  final double width;
-  final double height;
+  final double? width;
+  final double? height;
   final bool showProgressIndicator;
   final bool clipToCircle;
   final String? tag;
@@ -36,8 +36,8 @@ class CachedNetworkImageWidget extends StatelessWidget {
         children: [
           if (imageUrl.isNotEmpty)
             ClipRRect(
-              borderRadius: clipToCircle
-                  ? BorderRadius.circular(height)
+              borderRadius: clipToCircle && height != null
+                  ? BorderRadius.circular(height ?? 0)
                   : BorderRadius.zero,
               child: CachedNetworkImage(
                 imageUrl: imageUrl,
