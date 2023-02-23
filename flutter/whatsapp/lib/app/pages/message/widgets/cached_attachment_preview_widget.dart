@@ -18,35 +18,15 @@ class CachedAttachmentPreviewWidget extends StatelessWidget {
           MessageUtilsMethods.showFileDetails(context, fileDetails);
         },
         child: (fileDetails.fileType == 'pdf')
-            ? GestureDetector(
+            ? PdfPreviewWidget(
+                url: fileDetails.fileUrl,
+                size: fileDetails.size,
                 onTap: () {
-                  NetworkListeners.listener.add(
-                    listener.Listener(
-                      ListenersFor.file,
-                      ListenersType.read,
-                      fileDetails.size,
-                    ),
-                  );
                   context.navigator.pushNamed(
                     Routes.pdfView,
                     arguments: fileDetails,
                   );
                 },
-                child: Container(
-                  padding: ThemeEdgeInsets.all10,
-                  decoration: BoxDecoration(
-                    color: context.themeData.colorScheme.secondary,
-                    borderRadius: const BorderRadius.all(
-                      Radius.circular(
-                        10,
-                      ),
-                    ),
-                  ),
-                  child: Text(
-                    fileDetails.fileName,
-                    style: context.themeData.textTheme.labelSmall,
-                  ),
-                ),
               )
             : (fileDetails.fileType == 'txt')
                 ? const DefaultAttachmentWidget(

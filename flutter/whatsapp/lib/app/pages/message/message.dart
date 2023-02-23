@@ -3,5 +3,8 @@ export 'groupMessage/group_message.dart';
 export 'utils/utils_methods.dart';
 export 'widgets/attachment_options_widget.dart';
 export 'widgets/attachments_preview_widget.dart';
+export 'widgets/cached_attachment_preview_widget.dart';
 export 'widgets/message_field_with_emoji_attachments_widget.dart';
 export 'widgets/message_widget.dart';
+export 'widgets/pdf_preview_widget.dart';
+export 'widgets/show_link_preview.dart';

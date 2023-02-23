@@ -53,11 +53,15 @@ class AttachmentsPreviewWidget extends StatelessWidget {
                               ),
                             ),
                           ),
-                          child: const Center(
-                            child: Icon(
-                              Icons.file_present,
-                            ),
-                          ),
+                          child: (fileDetails.fileType == 'pdf')
+                              ? PdfPreviewWidget(
+                                  path: fileDetails.filePath,
+                                )
+                              : const Center(
+                                  child: Icon(
+                                    Icons.file_present,
+                                  ),
+                                ),
                         ),
                         if (isUploading) const CircularProgressIndicator(),
                       ],
