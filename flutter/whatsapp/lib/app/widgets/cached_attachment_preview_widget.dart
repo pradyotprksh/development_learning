@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 import 'package:whatsapp/app/app.dart';
 import 'package:whatsapp/core/core.dart';
 import 'package:whatsapp/core/core.dart' as listener;
@@ -33,8 +34,34 @@ class CachedAttachmentPreviewWidget extends StatelessWidget {
             );
           },
           errorWidget: (fileDetails.fileType == 'pdf')
-              ? const DefaultAttachmentWidget(
-                  icon: Icons.picture_as_pdf,
+              ? GestureDetector(
+                  onTap: () {
+                    context.navigator.pushNamed(
+                      Routes.pdfView,
+                      arguments: fileDetails,
+                    );
+                  },
+                  child: AbsorbPointer(
+                    absorbing: true,
+                    child: SfPdfViewer.network(
+                      fileDetails.fileUrl,
+                      pageLayoutMode: PdfPageLayoutMode.continuous,
+                      canShowPaginationDialog: false,
+                      canShowPasswordDialog: false,
+                      canShowScrollHead: false,
+                      canShowHyperlinkDialog: false,
+                      canShowScrollStatus: false,
+                      onDocumentLoaded: (_) {
+                        NetworkListeners.listener.add(
+                          listener.Listener(
+                            ListenersFor.file,
+                            ListenersType.read,
+                            fileDetails.size,
+                          ),
+                        );
+                      },
+                    ),
+                  ),
                 )
               : (fileDetails.fileType == 'txt')
                   ? const DefaultAttachmentWidget(
