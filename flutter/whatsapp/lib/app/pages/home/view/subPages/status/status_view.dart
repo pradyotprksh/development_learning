@@ -19,6 +19,9 @@ class _StatusViewState extends State<StatusView>
       backgroundColor: context.themeData.scaffoldBackgroundColor,
       floatingActionButton: Wrap(
         direction: Axis.vertical,
+        alignment: WrapAlignment.center,
+        runAlignment: WrapAlignment.center,
+        crossAxisAlignment: WrapCrossAlignment.center,
         children: [
           FloatingActionButton(
             onPressed: () {

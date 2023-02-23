@@ -90,5 +90,11 @@ Future _initialSetups() async {
 
   await DeviceCameras.getCameras();
 
-  await FastCachedImageConfig.init(clearCacheAfter: const Duration(days: 15));
+  if (AppDetails.isWeb) {
+    await FastCachedImageConfig.init(
+      clearCacheAfter: const Duration(
+        days: 1,
+      ),
+    );
+  }
 }
