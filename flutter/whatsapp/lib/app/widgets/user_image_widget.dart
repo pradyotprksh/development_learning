@@ -59,7 +59,7 @@ class UserImageWidget extends StatelessWidget {
                   ),
                   child: SvgPicture.string(
                     FluttermojiFunctions()
-                        .decodeFluttermojifromString(avatarDetails.toString()),
+                        .decodeFluttermojifromString(avatarDetails!),
                     height: size,
                     width: size,
                   ),

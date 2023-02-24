@@ -17,4 +17,7 @@ abstract class LocalizationsDetails {
   static Map<String, String> getSupportedLanguage() => const {
         'en': 'English',
       };
+
+  static String getHumanReadableValue(String code) =>
+      getSupportedLanguage()[code] ?? '';
 }

@@ -56,6 +56,7 @@ class AvatarView extends StatelessWidget {
           const Spacer(),
           FluttermojiCustomizer(
             theme: theme,
+            autosave: false,
           ),
         ],
       ),

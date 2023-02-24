@@ -157,16 +157,23 @@ class SettingsView extends StatelessWidget {
                 context.translator.storageDataSubtitle,
               ),
             ),
-            ListTile(
-              onTap: () {
-                context.navigator.pushNamed(Routes.personaliseRoute);
-              },
-              leading: Icon(
-                Icons.language,
-                color: context.themeData.iconTheme.color,
-              ),
-              title: Text(
-                context.translator.appLanguage,
+            BlocBuilder<LocalizationsBloc, LocalizationsState>(
+              builder: (_, localizationState) => ListTile(
+                onTap: () {
+                  context.navigator.pushNamed(Routes.personaliseRoute);
+                },
+                leading: Icon(
+                  Icons.language,
+                  color: context.themeData.iconTheme.color,
+                ),
+                title: Text(
+                  context.translator.appLanguage,
+                ),
+                subtitle: Text(
+                  LocalizationsDetails.getHumanReadableValue(
+                    localizationState.currentLocale.languageCode,
+                  ),
+                ),
               ),
             ),
             ListTile(
