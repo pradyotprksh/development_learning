@@ -64,6 +64,9 @@ abstract class Routes {
           actions: [
             SignedOutAction(
               (context) {
+                context.read<NetworkBloc>().add(
+                      const ClearNetworkUsageDetails(),
+                    );
                 context.read<AuthenticationBloc>().add(
                       const UnAuthenticateUserEvent(),
                     );

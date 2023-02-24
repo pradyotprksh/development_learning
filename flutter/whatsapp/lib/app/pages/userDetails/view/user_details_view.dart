@@ -175,18 +175,12 @@ class UserDetailsView extends StatelessWidget {
                         textAlign: TextAlign.center,
                       ),
                       ThemeSizedBox.height10,
-                      TextFormField(
-                        decoration: InputDecoration(
-                          label: Text(
-                            context.translator.setPin,
-                          ),
-                        ),
-                        validator: (pin) => _pinValidator(
-                          pin,
+                      PinInputWidget(
+                        validator: (value) => _pinValidator(
+                          value,
                           context.translator.invalidPin,
                         ),
-                        keyboardType: TextInputType.number,
-                        controller: _pinController,
+                        pinController: _pinController,
                       ),
                       ThemeSizedBox.height10,
                       Text(

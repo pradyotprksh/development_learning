@@ -15,7 +15,9 @@ class QrCodeGeneratorView extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: context.themeData.scaffoldBackgroundColor,
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: Text(context.translator.qrCode),
+      ),
       body: Column(
         children: [
           const Spacer(),

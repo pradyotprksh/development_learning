@@ -84,10 +84,10 @@ class NetworkUsageView extends StatelessWidget {
                 title: context.translator.calls,
                 upload: networkState.totalPhoneCallSize +
                     networkState.totalVideoCallSize +
-                    networkState.totalCallsDocumentReadSize,
+                    networkState.totalCallsDocumentWriteSize,
                 download: networkState.totalPhoneCallSize +
                     networkState.totalVideoCallSize +
-                    networkState.totalContactsDocumentWriteSize,
+                    networkState.totalCallsDocumentReadSize,
                 totalValue: networkState.totalUploadSize +
                     networkState.totalDownloadSize,
               ),

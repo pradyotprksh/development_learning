@@ -9,6 +9,9 @@ class SettingsView extends StatelessWidget {
   Widget build(BuildContext context) => Scaffold(
         backgroundColor: context.themeData.scaffoldBackgroundColor,
         appBar: AppBar(
+          title: Text(
+            context.translator.settings,
+          ),
           actions: [
             IconButton(
               onPressed: () {

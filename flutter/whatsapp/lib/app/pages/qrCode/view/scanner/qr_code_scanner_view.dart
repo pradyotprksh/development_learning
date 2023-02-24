@@ -29,6 +29,7 @@ class _QrCodeScannerViewState extends State<QrCodeScannerView> {
   Widget build(BuildContext context) => Scaffold(
         backgroundColor: context.themeData.scaffoldBackgroundColor,
         appBar: AppBar(
+          title: Text(context.translator.scanQrCode),
           actions: [
             IconButton(
               onPressed: () async {
