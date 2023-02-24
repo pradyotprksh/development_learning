@@ -70,12 +70,17 @@ class _MessageFieldWithEmojiAttachmentsWidgetState
             ),
             suffixIcon: IconButton(
               onPressed: () async {
-                final file =
-                    await MessageUtilsMethods.showAttachmentOptionsBottomSheet(
-                  context,
-                );
-                if (file != null) {
-                  widget.onAttachmentSelected(file);
+                List<FileInformationDetails>? files;
+                if (AppDetails.isWeb) {
+                  files = await MessageUtilsMethods.getFilesFromFile();
+                } else {
+                  files = await MessageUtilsMethods
+                      .showAttachmentOptionsBottomSheet(
+                    context,
+                  );
+                }
+                if (files != null) {
+                  widget.onAttachmentSelected(files);
                 }
               },
               icon: const Icon(

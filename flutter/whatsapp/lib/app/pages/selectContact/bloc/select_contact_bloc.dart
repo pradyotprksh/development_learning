@@ -19,6 +19,7 @@ class SelectContactBloc extends Bloc<SelectContactEvent, SelectContactState> {
     on<GetAvailableContacts>(_getAvailableContacts);
     on<GetNotAvailableContacts>(_getNotAvailableContacts);
     on<RefreshContacts>(_refreshContacts);
+    on<FetchContactsForWeb>(_fetchContactsForWeb);
   }
 
   final FirebaseFirestoreService _firebaseFirestoreService;
@@ -183,5 +184,18 @@ class SelectContactBloc extends Bloc<SelectContactEvent, SelectContactState> {
         FirebaseUtils.recordFlutterError(e);
       }
     }
+  }
+
+  void _fetchContactsForWeb(
+    FetchContactsForWeb event,
+    Emitter<SelectContactState> emit,
+  ) {
+    add(const GetAvailableContacts());
+    add(const GetNotAvailableContacts());
+    emit(
+      state.copyWith(
+        checkForContacts: false,
+      ),
+    );
   }
 }

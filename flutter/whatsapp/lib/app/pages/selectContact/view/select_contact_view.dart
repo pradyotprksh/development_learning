@@ -43,24 +43,29 @@ class SelectContactView extends StatelessWidget {
 
   void _fetchContactDetails(BuildContext context, bool isRefresh) async {
     final selectContactBloc = context.read<SelectContactBloc>();
-    if (selectContactBloc.state.permissionStatus == PermissionStatus.granted) {
-      selectContactBloc.add(
-        const UpdatePageStateEvent(
-          pageState: PageState.loading,
-        ),
-      );
-      var contacts = await ContactsService.getContacts();
-      if (isRefresh) {
-        selectContactBloc.add(
-          RefreshContacts(contacts),
-        );
-      } else {
-        selectContactBloc.add(
-          LocalContactsDetails(contacts),
-        );
-      }
+    if (AppDetails.isWeb) {
+      selectContactBloc.add(const FetchContactsForWeb());
     } else {
-      _checkForContactPermission(context);
+      if (selectContactBloc.state.permissionStatus ==
+          PermissionStatus.granted) {
+        selectContactBloc.add(
+          const UpdatePageStateEvent(
+            pageState: PageState.loading,
+          ),
+        );
+        var contacts = await ContactsService.getContacts();
+        if (isRefresh) {
+          selectContactBloc.add(
+            RefreshContacts(contacts),
+          );
+        } else {
+          selectContactBloc.add(
+            LocalContactsDetails(contacts),
+          );
+        }
+      } else {
+        _checkForContactPermission(context);
+      }
     }
   }
 
@@ -93,24 +98,27 @@ class SelectContactView extends StatelessWidget {
                 },
                 color: context.themeData.popupMenuTheme.color,
                 itemBuilder: (_) => [
-                  PopupMenuItem(
-                    value: SelectContactMenuItems.inviteAFriend,
-                    child: Text(
-                      context.translator.inviteAFriend,
+                  if (!AppDetails.isWeb)
+                    PopupMenuItem(
+                      value: SelectContactMenuItems.inviteAFriend,
+                      child: Text(
+                        context.translator.inviteAFriend,
+                      ),
                     ),
-                  ),
-                  PopupMenuItem(
-                    value: SelectContactMenuItems.contacts,
-                    child: Text(
-                      context.translator.contacts,
+                  if (!AppDetails.isWeb)
+                    PopupMenuItem(
+                      value: SelectContactMenuItems.contacts,
+                      child: Text(
+                        context.translator.contacts,
+                      ),
                     ),
-                  ),
-                  PopupMenuItem(
-                    value: SelectContactMenuItems.refresh,
-                    child: Text(
-                      context.translator.refresh,
+                  if (!AppDetails.isWeb)
+                    PopupMenuItem(
+                      value: SelectContactMenuItems.refresh,
+                      child: Text(
+                        context.translator.refresh,
+                      ),
                     ),
-                  ),
                   PopupMenuItem(
                     value: SelectContactMenuItems.help,
                     child: Text(
@@ -139,20 +147,22 @@ class SelectContactView extends StatelessWidget {
                       context.translator.newGroup,
                     ),
                   ),
-                  ListTile(
-                    onTap: () async {
-                      await ContactsService.openContactForm();
-                    },
-                    contentPadding: ThemeEdgeInsets.left15Right15,
-                    leading: const Icon(
-                      Icons.person_add,
+                  if (!AppDetails.isWeb)
+                    ListTile(
+                      onTap: () async {
+                        await ContactsService.openContactForm();
+                      },
+                      contentPadding: ThemeEdgeInsets.left15Right15,
+                      leading: const Icon(
+                        Icons.person_add,
+                      ),
+                      title: Text(
+                        context.translator.newContact,
+                      ),
                     ),
-                    title: Text(
-                      context.translator.newContact,
-                    ),
-                  ),
                   if (selectContactState.permissionStatus !=
-                      PermissionStatus.granted)
+                          PermissionStatus.granted &&
+                      !AppDetails.isWeb)
                     GestureDetector(
                       onTap: () {
                         _askForContactPermission(context);
@@ -165,8 +175,9 @@ class SelectContactView extends StatelessWidget {
                         ),
                       ),
                     ),
-                  if (selectContactState.permissionStatus ==
-                          PermissionStatus.granted &&
+                  if ((selectContactState.permissionStatus ==
+                              PermissionStatus.granted ||
+                          AppDetails.isWeb) &&
                       selectContactState.existingAccount.isNotEmpty)
                     ExistingAccountsWidget(
                       selectContactState.existingAccount,

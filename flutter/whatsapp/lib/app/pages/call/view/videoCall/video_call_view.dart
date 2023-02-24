@@ -17,11 +17,13 @@ class _VideoCallViewState extends State<VideoCallView> {
 
   @override
   void initState() {
-    controller =
-        CameraController(DeviceCameras.getFrontCamera(), ResolutionPreset.max);
-    controller.initialize().then((_) {
-      setState(() {});
-    });
+    final camera = DeviceCameras.getFrontCamera();
+    if (camera != null) {
+      controller = CameraController(camera, ResolutionPreset.max);
+      controller.initialize().then((_) {
+        setState(() {});
+      });
+    }
     super.initState();
   }
 
@@ -34,7 +36,8 @@ class _VideoCallViewState extends State<VideoCallView> {
   @override
   Widget build(BuildContext context) => Stack(
         children: [
-          if (!controller.value.isInitialized) Container(),
+          if (!controller.value.isInitialized)
+            const CircularProgressIndicatorWidget(),
           if (controller.value.isInitialized)
             if (widget.callDetails.userDetails.length == 1)
               SizedBox(

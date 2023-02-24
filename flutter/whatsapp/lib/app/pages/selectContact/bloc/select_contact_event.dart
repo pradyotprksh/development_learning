@@ -55,3 +55,7 @@ class RefreshContacts extends SelectContactEvent {
   @override
   List<Object?> get props => [localContacts];
 }
+
+class FetchContactsForWeb extends SelectContactEvent {
+  const FetchContactsForWeb();
+}

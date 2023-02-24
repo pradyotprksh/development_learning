@@ -14,6 +14,28 @@ abstract class MessageUtilsMethods {
         builder: (_) => const AttachmentOptionsWidget(),
       );
 
+  static Future<List<FileInformationDetails>?> getFilesFromFile() async {
+    final details = await pickFileFromStorage();
+    if (details != null) {
+      final files = details.files
+          .map(
+            (e) => FileInformationDetails(
+              filePath: e.path ?? '',
+              isFromFileSystem: true,
+              isFromCamera: false,
+              isFromGallery: false,
+              fileSize: e.size.toDouble(),
+              fileType: e.extension,
+              fileName: e.name,
+            ),
+          )
+          .toList()
+        ..removeWhere((element) => element.filePath.isEmpty);
+      return files;
+    }
+    return null;
+  }
+
   static Future<void> showFileDetails(
     BuildContext context,
     FileInformationDetails fileInformationDetails,

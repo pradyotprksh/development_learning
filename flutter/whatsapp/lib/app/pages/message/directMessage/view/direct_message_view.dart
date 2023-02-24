@@ -46,75 +46,77 @@ class _DirectMessageViewState extends State<DirectMessageView> {
             ),
           ),
         ),
-        actions: [
-          IconButton(
-            onPressed: () {
-              _makeVideoOrPhoneCall(context, false);
-            },
-            icon: const Icon(
-              Icons.video_call,
-            ),
-          ),
-          IconButton(
-            onPressed: () {
-              _makeVideoOrPhoneCall(context, true);
-            },
-            icon: const Icon(
-              Icons.call,
-            ),
-          ),
-          PopupMenuButton<DirectMessageMenuItems>(
-            onSelected: (item) {},
-            color: context.themeData.popupMenuTheme.color,
-            itemBuilder: (_) => [
-              PopupMenuItem(
-                value: DirectMessageMenuItems.viewContact,
-                child: Text(
-                  context.translator.viewContact,
+        actions: AppDetails.isWeb
+            ? []
+            : [
+                IconButton(
+                  onPressed: () {
+                    _makeVideoOrPhoneCall(context, false);
+                  },
+                  icon: const Icon(
+                    Icons.video_call,
+                  ),
                 ),
-              ),
-              PopupMenuItem(
-                value: DirectMessageMenuItems.mediaLinksDocs,
-                child: Text(
-                  context.translator.mediaLinksDocs,
+                IconButton(
+                  onPressed: () {
+                    _makeVideoOrPhoneCall(context, true);
+                  },
+                  icon: const Icon(
+                    Icons.call,
+                  ),
                 ),
-              ),
-              PopupMenuItem(
-                value: DirectMessageMenuItems.search,
-                child: Text(
-                  context.translator.search,
+                PopupMenuButton<DirectMessageMenuItems>(
+                  onSelected: (item) {},
+                  color: context.themeData.popupMenuTheme.color,
+                  itemBuilder: (_) => [
+                    PopupMenuItem(
+                      value: DirectMessageMenuItems.viewContact,
+                      child: Text(
+                        context.translator.viewContact,
+                      ),
+                    ),
+                    PopupMenuItem(
+                      value: DirectMessageMenuItems.mediaLinksDocs,
+                      child: Text(
+                        context.translator.mediaLinksDocs,
+                      ),
+                    ),
+                    PopupMenuItem(
+                      value: DirectMessageMenuItems.search,
+                      child: Text(
+                        context.translator.search,
+                      ),
+                    ),
+                    PopupMenuItem(
+                      value: DirectMessageMenuItems.muteNotifications,
+                      child: Text(
+                        context.translator.muteNotifications,
+                      ),
+                    ),
+                    PopupMenuItem(
+                      value: DirectMessageMenuItems.disappearingMessages,
+                      child: Text(
+                        context.translator.disappearingMessages,
+                      ),
+                    ),
+                    PopupMenuItem(
+                      value: DirectMessageMenuItems.wallpaper,
+                      child: Text(
+                        context.translator.wallpaper,
+                      ),
+                    ),
+                    PopupMenuItem(
+                      value: DirectMessageMenuItems.more,
+                      child: Text(
+                        context.translator.more,
+                      ),
+                    ),
+                  ],
+                  icon: const Icon(
+                    Icons.more_vert,
+                  ),
                 ),
-              ),
-              PopupMenuItem(
-                value: DirectMessageMenuItems.muteNotifications,
-                child: Text(
-                  context.translator.muteNotifications,
-                ),
-              ),
-              PopupMenuItem(
-                value: DirectMessageMenuItems.disappearingMessages,
-                child: Text(
-                  context.translator.disappearingMessages,
-                ),
-              ),
-              PopupMenuItem(
-                value: DirectMessageMenuItems.wallpaper,
-                child: Text(
-                  context.translator.wallpaper,
-                ),
-              ),
-              PopupMenuItem(
-                value: DirectMessageMenuItems.more,
-                child: Text(
-                  context.translator.more,
-                ),
-              ),
-            ],
-            icon: const Icon(
-              Icons.more_vert,
-            ),
-          ),
-        ],
+              ],
       ),
       body: Column(
         children: [

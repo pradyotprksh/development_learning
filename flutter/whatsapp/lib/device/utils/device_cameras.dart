@@ -1,18 +1,24 @@
 import 'package:camera/camera.dart';
+import 'package:whatsapp/app/app.dart';
 
 abstract class DeviceCameras {
-  static late List<CameraDescription> cameras;
+  static List<CameraDescription>? cameras;
 
   static Future getCameras() async {
-    cameras = await availableCameras();
-  }
-
-  static CameraDescription getFrontCamera() {
-    if (cameras.length > 1) {
-      return cameras[1];
+    if (!AppDetails.isWeb) {
+      cameras = await availableCameras();
     }
-    return cameras[0];
   }
 
-  static CameraDescription getBackCamera() => cameras[0];
+  static CameraDescription? getFrontCamera() {
+    if (cameras != null && (cameras?.length ?? 0) > 0) {
+      if (cameras!.length > 1) {
+        return cameras![1];
+      }
+      return cameras![0];
+    }
+    return null;
+  }
+
+  static CameraDescription? getBackCamera() => cameras?[0];
 }

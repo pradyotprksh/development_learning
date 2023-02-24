@@ -79,7 +79,11 @@ class StorageDataView extends StatelessWidget {
                 trailing: GestureDetector(
                   child: Switch(
                     value: networkState.useLessDataForCalls,
-                    onChanged: (value) {},
+                    onChanged: (value) {
+                      context.read<NetworkBloc>().add(
+                            const ToggleLessDataForCall(),
+                          );
+                    },
                   ),
                 ),
                 title: Text(context.translator.useLessDataForCalls),

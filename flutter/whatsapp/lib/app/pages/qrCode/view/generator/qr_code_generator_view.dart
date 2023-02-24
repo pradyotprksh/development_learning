@@ -20,78 +20,82 @@ class QrCodeGeneratorView extends StatelessWidget {
         children: [
           const Spacer(),
           SizedBox(
-            width: context.mediaQuery.size.width * 0.65,
-            height: context.mediaQuery.size.height * 0.46,
-            child: Stack(
-              alignment: Alignment.topCenter,
-              children: [
-                Align(
-                  alignment: Alignment.center,
-                  child: Container(
-                    width: context.mediaQuery.size.width * 0.65,
-                    height: context.mediaQuery.size.height * 0.40,
+            width: double.infinity,
+            child: SizedBox(
+              width: context.mediaQuery.size.width * 0.65,
+              height: context.mediaQuery.size.height * 0.46,
+              child: Stack(
+                alignment: Alignment.topCenter,
+                children: [
+                  Align(
                     alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(
-                        40,
-                      ),
-                      border: Border.all(
-                        color: context.themeData.primaryColor,
-                      ),
-                      color: Colors.white,
-                    ),
-                    child: QrImage(
-                      data: qrData,
-                      padding: ThemeEdgeInsets.all40,
-                    ),
-                  ),
-                ),
-                if (userDetails != null)
-                  UserImageWidget(
-                    profileImage: userDetails.profileImage ?? '',
-                    userId: userDetails.userId,
-                    isOnline: null,
-                    currentMood: null,
-                    size: 60,
-                    enableAction: false,
-                    useAvatarAsProfile: userDetails.useAvatarAsProfile,
-                    avatarDetails: userDetails.avatarDetails,
-                  ),
-                if (imageUrl.isNotEmpty && userDetails == null)
-                  CachedNetworkImageWidget(
-                    imageUrl: imageUrl,
-                    placeholder: CircleAvatar(
-                      radius: 30,
-                      backgroundColor: context.themeData.primaryColor,
-                      child: const Icon(
-                        Icons.qr_code,
+                    child: Container(
+                      width: context.mediaQuery.size.width * 0.65,
+                      height: context.mediaQuery.size.height * 0.40,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(
+                          40,
+                        ),
+                        border: Border.all(
+                          color: context.themeData.primaryColor,
+                        ),
                         color: Colors.white,
                       ),
+                      child: QrImage(
+                        data: qrData,
+                        padding: ThemeEdgeInsets.all40,
+                      ),
                     ),
-                    height: 60,
-                    width: 60,
-                    clipToCircle: true,
                   ),
-              ],
-            ),
-          ),
-          const Spacer(),
-          Container(
-            padding: ThemeEdgeInsets.all15,
-            width: double.infinity,
-            child: ElevatedButton(
-              onPressed: () async {
-                final navigator = context.navigator;
-                final data = await navigator.pushNamed(
-                  Routes.qrCodeScanner,
-                ) as String?;
-                _getResultDetails(navigator, data);
-              },
-              child: Text(
-                context.translator.scanQrCode,
+                  if (userDetails != null)
+                    UserImageWidget(
+                      profileImage: userDetails.profileImage ?? '',
+                      userId: userDetails.userId,
+                      isOnline: null,
+                      currentMood: null,
+                      size: 60,
+                      enableAction: false,
+                      useAvatarAsProfile: userDetails.useAvatarAsProfile,
+                      avatarDetails: userDetails.avatarDetails,
+                    ),
+                  if (imageUrl.isNotEmpty && userDetails == null)
+                    CachedNetworkImageWidget(
+                      imageUrl: imageUrl,
+                      placeholder: CircleAvatar(
+                        radius: 30,
+                        backgroundColor: context.themeData.primaryColor,
+                        child: const Icon(
+                          Icons.qr_code,
+                          color: Colors.white,
+                        ),
+                      ),
+                      height: 60,
+                      width: 60,
+                      clipToCircle: true,
+                    ),
+                ],
               ),
             ),
           ),
+          const Spacer(),
+          if (!AppDetails.isWeb)
+            Container(
+              padding: ThemeEdgeInsets.all15,
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: () async {
+                  final navigator = context.navigator;
+                  final data = await navigator.pushNamed(
+                    Routes.qrCodeScanner,
+                  ) as String?;
+                  _getResultDetails(navigator, data);
+                },
+                child: Text(
+                  context.translator.scanQrCode,
+                ),
+              ),
+            ),
         ],
       ),
     );

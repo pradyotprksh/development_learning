@@ -16,11 +16,13 @@ class _CallsViewState extends State<CallsView>
   Widget build(BuildContext context) {
     super.build(context);
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        heroTag: Icons.add_call.toString(),
-        child: const Icon(Icons.add_call),
-      ),
+      floatingActionButton: AppDetails.isWeb
+          ? null
+          : FloatingActionButton(
+              onPressed: () {},
+              heroTag: Icons.add_call.toString(),
+              child: const Icon(Icons.add_call),
+            ),
       body: BlocBuilder<CallsBloc, CallsState>(
         builder: (_, callState) => ListView(
           children: [
@@ -83,29 +85,33 @@ class _CallsViewState extends State<CallsView>
                                 ],
                               ),
                               trailing: IconButton(
-                                onPressed: () async {
-                                  if (groupWithUsers != null) {
-                                    final navigator = context.navigator;
-                                    final currentUserId = context
-                                        .read<UserBloc>()
-                                        .state
-                                        .userDetails
-                                        ?.userId;
-                                    final users =
-                                        await groupWithUsers.usersDetails.first;
-                                    users.removeWhere((element) =>
-                                        element.userId == currentUserId);
-                                    await navigator.pushNamed(
-                                      Routes.call,
-                                      arguments: CallDetailsArguments(
-                                        userDetails: users,
-                                        isPhoneCall: callDetails.isPhoneCall,
-                                        isVideoCall: callDetails.isVideoCall,
-                                        isGroupCall: true,
-                                      ),
-                                    );
-                                  }
-                                },
+                                onPressed: AppDetails.isWeb
+                                    ? null
+                                    : () async {
+                                        if (groupWithUsers != null) {
+                                          final navigator = context.navigator;
+                                          final currentUserId = context
+                                              .read<UserBloc>()
+                                              .state
+                                              .userDetails
+                                              ?.userId;
+                                          final users = await groupWithUsers
+                                              .usersDetails.first;
+                                          users.removeWhere((element) =>
+                                              element.userId == currentUserId);
+                                          await navigator.pushNamed(
+                                            Routes.call,
+                                            arguments: CallDetailsArguments(
+                                              userDetails: users,
+                                              isPhoneCall:
+                                                  callDetails.isPhoneCall,
+                                              isVideoCall:
+                                                  callDetails.isVideoCall,
+                                              isGroupCall: true,
+                                            ),
+                                          );
+                                        }
+                                      },
                                 icon: Icon(
                                   callDetails.isVideoCall
                                       ? Icons.videocam
@@ -164,19 +170,23 @@ class _CallsViewState extends State<CallsView>
                                 ],
                               ),
                               trailing: IconButton(
-                                onPressed: () {
-                                  context.navigator.pushNamed(
-                                    Routes.call,
-                                    arguments: CallDetailsArguments(
-                                      userDetails: [
-                                        otherUserDetails,
-                                      ],
-                                      isPhoneCall: callDetails.isPhoneCall,
-                                      isVideoCall: callDetails.isVideoCall,
-                                      isGroupCall: false,
-                                    ),
-                                  );
-                                },
+                                onPressed: AppDetails.isWeb
+                                    ? null
+                                    : () {
+                                        context.navigator.pushNamed(
+                                          Routes.call,
+                                          arguments: CallDetailsArguments(
+                                            userDetails: [
+                                              otherUserDetails,
+                                            ],
+                                            isPhoneCall:
+                                                callDetails.isPhoneCall,
+                                            isVideoCall:
+                                                callDetails.isVideoCall,
+                                            isGroupCall: false,
+                                          ),
+                                        );
+                                      },
                                 icon: Icon(
                                   callDetails.isVideoCall
                                       ? Icons.videocam

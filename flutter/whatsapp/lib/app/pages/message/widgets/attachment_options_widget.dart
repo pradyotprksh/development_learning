@@ -15,21 +15,23 @@ class AttachmentOptionsWidget extends StatefulWidget {
 }
 
 class _AttachmentOptionsWidgetState extends State<AttachmentOptionsWidget> {
-  late CameraController controller;
+  CameraController? controller;
 
   @override
   void initState() {
-    controller =
-        CameraController(DeviceCameras.getBackCamera(), ResolutionPreset.max);
-    controller.initialize().then((_) {
-      setState(() {});
-    });
+    final camera = DeviceCameras.getBackCamera();
+    if (camera != null) {
+      controller = CameraController(camera, ResolutionPreset.max);
+      controller?.initialize().then((_) {
+        setState(() {});
+      });
+    }
     super.initState();
   }
 
   @override
   void dispose() {
-    controller.dispose();
+    controller?.dispose();
     super.dispose();
   }
 
@@ -48,43 +50,44 @@ class _AttachmentOptionsWidgetState extends State<AttachmentOptionsWidget> {
           mainAxisSpacing: 5,
           shrinkWrap: true,
           children: [
-            GestureDetector(
-              onTap: () async {
-                final navigator = context.navigator;
-                final path =
-                    await MessageUtilsMethods.startCameraFilePicker(context);
-                if (path != null) {
-                  final fileDetails = File(path);
-                  final fileSize = await fileDetails.length();
-                  navigator.pop(
-                    [
-                      FileInformationDetails(
-                        filePath: path,
-                        isFromFileSystem: false,
-                        isFromCamera: true,
-                        isFromGallery: false,
-                        fileSize: fileSize.toDouble(),
-                        fileName: fileDetails.name ?? '',
-                      ),
-                    ],
-                  );
-                }
-              },
-              child: ClipRRect(
-                borderRadius: const BorderRadius.all(
-                  Radius.circular(
-                    10,
+            if (!AppDetails.isWeb && controller != null)
+              GestureDetector(
+                onTap: () async {
+                  final navigator = context.navigator;
+                  final path =
+                      await MessageUtilsMethods.startCameraFilePicker(context);
+                  if (path != null) {
+                    final fileDetails = File(path);
+                    final fileSize = await fileDetails.length();
+                    navigator.pop(
+                      [
+                        FileInformationDetails(
+                          filePath: path,
+                          isFromFileSystem: false,
+                          isFromCamera: true,
+                          isFromGallery: false,
+                          fileSize: fileSize.toDouble(),
+                          fileName: fileDetails.name ?? '',
+                        ),
+                      ],
+                    );
+                  }
+                },
+                child: ClipRRect(
+                  borderRadius: const BorderRadius.all(
+                    Radius.circular(
+                      10,
+                    ),
                   ),
-                ),
-                child: SizedBox(
-                  width: 120,
-                  height: 150,
-                  child: CameraPreview(
-                    controller,
+                  child: SizedBox(
+                    width: 120,
+                    height: 150,
+                    child: CameraPreview(
+                      controller!,
+                    ),
                   ),
                 ),
               ),
-            ),
             GestureDetector(
               onTap: () async {
                 final navigator = context.navigator;
@@ -126,24 +129,10 @@ class _AttachmentOptionsWidgetState extends State<AttachmentOptionsWidget> {
             GestureDetector(
               onTap: () async {
                 final navigator = context.navigator;
-                final details = await MessageUtilsMethods.pickFileFromStorage();
+                final details = await MessageUtilsMethods.getFilesFromFile();
                 if (details != null) {
-                  final files = details.files
-                      .map(
-                        (e) => FileInformationDetails(
-                          filePath: e.path ?? '',
-                          isFromFileSystem: true,
-                          isFromCamera: false,
-                          isFromGallery: false,
-                          fileSize: e.size.toDouble(),
-                          fileType: e.extension,
-                          fileName: e.name,
-                        ),
-                      )
-                      .toList()
-                    ..removeWhere((element) => element.filePath.isEmpty);
                   navigator.pop(
-                    files,
+                    details,
                   );
                 }
               },

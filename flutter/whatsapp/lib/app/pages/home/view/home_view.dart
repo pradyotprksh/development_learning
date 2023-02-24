@@ -81,6 +81,8 @@ class _HomeViewState extends State<HomeView>
                     Routes.authenticateRoute,
                     (route) => false,
                   );
+                } else {
+                  context.read<UserBloc>().add(const FetchUserDetails());
                 }
               },
             ),
@@ -143,14 +145,15 @@ class _HomeViewState extends State<HomeView>
                   context.translator.applicationName,
                 ),
                 actions: [
-                  IconButton(
-                    onPressed: () {
-                      context.navigator.pushNamed(Routes.addStatusCamera);
-                    },
-                    icon: const Icon(
-                      Icons.camera,
+                  if (!AppDetails.isWeb)
+                    IconButton(
+                      onPressed: () {
+                        context.navigator.pushNamed(Routes.addStatusCamera);
+                      },
+                      icon: const Icon(
+                        Icons.camera,
+                      ),
                     ),
-                  ),
                   IconButton(
                     onPressed: () {
                       context.navigator.pushNamed(Routes.search);

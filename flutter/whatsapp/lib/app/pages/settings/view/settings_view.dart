@@ -181,6 +181,7 @@ class SettingsView extends StatelessWidget {
                 context.translator.helpSubtitle,
               ),
             ),
+            if (!AppDetails.isWeb)
             ListTile(
               onTap: () {},
               leading: Icon(

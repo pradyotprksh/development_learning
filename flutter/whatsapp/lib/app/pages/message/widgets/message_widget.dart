@@ -111,14 +111,14 @@ class MessageWidget extends StatelessWidget {
         ),
         child: PopupMenuButton<MessageMenuItem>(
           position: PopupMenuPosition.under,
-          enabled: showOtherDetailsAndOption,
+          enabled: showOtherDetailsAndOption && !AppDetails.isWeb,
           offset: Offset(
             isCurrentUserMessage ? context.mediaQuery.size.width : 0,
             0,
           ),
           padding: ThemeEdgeInsets.zero,
           enableFeedback: false,
-          tooltip: message.message,
+          tooltip: '',
           splashRadius: 0,
           onSelected: (item) {
             _itemSelectedFromMenu(context, item);
@@ -283,7 +283,7 @@ class MessageWidget extends StatelessWidget {
                                     ? CrossAxisAlignment.end
                                     : CrossAxisAlignment.start,
                             children: [
-                              if (links.isNotEmpty)
+                              if (links.isNotEmpty && !AppDetails.isWeb)
                                 ...links.map(
                                   (e) => ShowLinkPreview(
                                     link: e,

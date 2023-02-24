@@ -22,32 +22,43 @@ class CachedAttachmentPreviewWidget extends StatelessWidget {
                 url: fileDetails.fileUrl,
                 size: fileDetails.size,
                 onTap: () {
-                  context.navigator.pushNamed(
-                    Routes.pdfView,
-                    arguments: fileDetails,
-                  );
+                  if (AppDetails.isWeb) {
+                    AppUtilsMethods.openUrl(fileDetails.fileUrl);
+                  } else {
+                    context.navigator.pushNamed(
+                      Routes.pdfView,
+                      arguments: fileDetails,
+                    );
+                  }
                 },
               )
             : (fileDetails.fileType == 'txt')
                 ? const DefaultAttachmentWidget(
                     icon: Icons.text_snippet,
                   )
-                : CachedNetworkImageWidget(
-                    imageUrl: fileDetails.fileUrl,
-                    fit: BoxFit.cover,
-                    placeholder: const DefaultAttachmentWidget(),
-                    width: double.infinity,
-                    height: double.infinity,
-                    failed: () {
-                      NetworkListeners.listener.add(
-                        listener.Listener(
-                          ListenersFor.file,
-                          ListenersType.read,
-                          fileDetails.size,
-                        ),
-                      );
+                : GestureDetector(
+                    onTap: () {
+                      if (AppDetails.isWeb) {
+                        AppUtilsMethods.openUrl(fileDetails.fileUrl);
+                      } else {}
                     },
-                    errorWidget: const DefaultAttachmentWidget(),
+                    child: CachedNetworkImageWidget(
+                      imageUrl: fileDetails.fileUrl,
+                      fit: BoxFit.cover,
+                      placeholder: const DefaultAttachmentWidget(),
+                      width: double.infinity,
+                      height: double.infinity,
+                      failed: () {
+                        NetworkListeners.listener.add(
+                          listener.Listener(
+                            ListenersFor.file,
+                            ListenersType.read,
+                            fileDetails.size,
+                          ),
+                        );
+                      },
+                      errorWidget: const DefaultAttachmentWidget(),
+                    ),
                   ),
       );
 }

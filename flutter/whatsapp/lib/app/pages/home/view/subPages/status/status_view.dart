@@ -27,18 +27,19 @@ class _StatusViewState extends State<StatusView>
             onPressed: () {
               context.navigator.pushNamed(Routes.addStatusText);
             },
-            mini: true,
+            mini: !AppDetails.isWeb,
             heroTag: Icons.edit.toString(),
             child: const Icon(Icons.edit),
           ),
-          ThemeSizedBox.height10,
-          FloatingActionButton(
-            onPressed: () {
-              context.navigator.pushNamed(Routes.addStatusCamera);
-            },
-            heroTag: Icons.camera.toString(),
-            child: const Icon(Icons.camera),
-          ),
+          if (!AppDetails.isWeb) ThemeSizedBox.height10,
+          if (!AppDetails.isWeb)
+            FloatingActionButton(
+              onPressed: () {
+                context.navigator.pushNamed(Routes.addStatusCamera);
+              },
+              heroTag: Icons.camera.toString(),
+              child: const Icon(Icons.camera),
+            ),
         ],
       ),
       body: BlocBuilder<UserBloc, UserState>(
