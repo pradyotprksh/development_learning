@@ -27,12 +27,12 @@ class _StatusViewState extends State<StatusView>
             onPressed: () {
               context.navigator.pushNamed(Routes.addStatusText);
             },
-            mini: !AppDetails.isWeb,
+            mini: AppDetails.isPhone,
             heroTag: Icons.edit.toString(),
             child: const Icon(Icons.edit),
           ),
-          if (!AppDetails.isWeb) ThemeSizedBox.height10,
-          if (!AppDetails.isWeb)
+          if (AppDetails.isPhone) ThemeSizedBox.height10,
+          if (AppDetails.isPhone)
             FloatingActionButton(
               onPressed: () {
                 context.navigator.pushNamed(Routes.addStatusCamera);

@@ -79,7 +79,7 @@ class QrCodeGeneratorView extends StatelessWidget {
             ),
           ),
           const Spacer(),
-          if (!AppDetails.isWeb)
+          if (AppDetails.isPhone)
             Container(
               padding: ThemeEdgeInsets.all15,
               width: double.infinity,

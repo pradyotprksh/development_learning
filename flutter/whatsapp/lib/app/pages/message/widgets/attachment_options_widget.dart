@@ -15,14 +15,14 @@ class AttachmentOptionsWidget extends StatefulWidget {
 }
 
 class _AttachmentOptionsWidgetState extends State<AttachmentOptionsWidget> {
-  CameraController? controller;
+  late CameraController controller;
 
   @override
   void initState() {
-    final camera = DeviceCameras.getBackCamera();
-    if (camera != null) {
-      controller = CameraController(camera, ResolutionPreset.max);
-      controller?.initialize().then((_) {
+    if (AppDetails.isPhone) {
+      controller =
+          CameraController(DeviceCameras.getBackCamera(), ResolutionPreset.max);
+      controller.initialize().then((_) {
         setState(() {});
       });
     }
@@ -31,7 +31,9 @@ class _AttachmentOptionsWidgetState extends State<AttachmentOptionsWidget> {
 
   @override
   void dispose() {
-    controller?.dispose();
+    if (AppDetails.isPhone) {
+      controller.dispose();
+    }
     super.dispose();
   }
 
@@ -50,7 +52,7 @@ class _AttachmentOptionsWidgetState extends State<AttachmentOptionsWidget> {
           mainAxisSpacing: 5,
           shrinkWrap: true,
           children: [
-            if (!AppDetails.isWeb && controller != null)
+            if (AppDetails.isPhone)
               GestureDetector(
                 onTap: () async {
                   final navigator = context.navigator;
@@ -83,7 +85,7 @@ class _AttachmentOptionsWidgetState extends State<AttachmentOptionsWidget> {
                     width: 120,
                     height: 150,
                     child: CameraPreview(
-                      controller!,
+                      controller,
                     ),
                   ),
                 ),

@@ -145,7 +145,7 @@ class _HomeViewState extends State<HomeView>
                   context.translator.applicationName,
                 ),
                 actions: [
-                  if (!AppDetails.isWeb)
+                  if (AppDetails.isPhone)
                     IconButton(
                       onPressed: () {
                         context.navigator.pushNamed(Routes.addStatusCamera);

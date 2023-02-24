@@ -181,17 +181,17 @@ class SettingsView extends StatelessWidget {
                 context.translator.helpSubtitle,
               ),
             ),
-            if (!AppDetails.isWeb)
-            ListTile(
-              onTap: () {},
-              leading: Icon(
-                Icons.people,
-                color: context.themeData.iconTheme.color,
+            if (AppDetails.isPhone)
+              ListTile(
+                onTap: () {},
+                leading: Icon(
+                  Icons.people,
+                  color: context.themeData.iconTheme.color,
+                ),
+                title: Text(
+                  context.translator.inviteAFriend,
+                ),
               ),
-              title: Text(
-                context.translator.inviteAFriend,
-              ),
-            ),
           ],
         ),
       );

@@ -98,21 +98,21 @@ class SelectContactView extends StatelessWidget {
                 },
                 color: context.themeData.popupMenuTheme.color,
                 itemBuilder: (_) => [
-                  if (!AppDetails.isWeb)
+                  if (AppDetails.isPhone)
                     PopupMenuItem(
                       value: SelectContactMenuItems.inviteAFriend,
                       child: Text(
                         context.translator.inviteAFriend,
                       ),
                     ),
-                  if (!AppDetails.isWeb)
+                  if (AppDetails.isPhone)
                     PopupMenuItem(
                       value: SelectContactMenuItems.contacts,
                       child: Text(
                         context.translator.contacts,
                       ),
                     ),
-                  if (!AppDetails.isWeb)
+                  if (AppDetails.isPhone)
                     PopupMenuItem(
                       value: SelectContactMenuItems.refresh,
                       child: Text(
@@ -147,7 +147,7 @@ class SelectContactView extends StatelessWidget {
                       context.translator.newGroup,
                     ),
                   ),
-                  if (!AppDetails.isWeb)
+                  if (AppDetails.isPhone)
                     ListTile(
                       onTap: () async {
                         await ContactsService.openContactForm();
@@ -162,7 +162,7 @@ class SelectContactView extends StatelessWidget {
                     ),
                   if (selectContactState.permissionStatus !=
                           PermissionStatus.granted &&
-                      !AppDetails.isWeb)
+                      AppDetails.isPhone)
                     GestureDetector(
                       onTap: () {
                         _askForContactPermission(context);

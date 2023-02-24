@@ -111,7 +111,7 @@ class MessageWidget extends StatelessWidget {
         ),
         child: PopupMenuButton<MessageMenuItem>(
           position: PopupMenuPosition.under,
-          enabled: showOtherDetailsAndOption && !AppDetails.isWeb,
+          enabled: showOtherDetailsAndOption && AppDetails.isPhone,
           offset: Offset(
             isCurrentUserMessage ? context.mediaQuery.size.width : 0,
             0,
@@ -283,7 +283,7 @@ class MessageWidget extends StatelessWidget {
                                     ? CrossAxisAlignment.end
                                     : CrossAxisAlignment.start,
                             children: [
-                              if (links.isNotEmpty && !AppDetails.isWeb)
+                              if (links.isNotEmpty && AppDetails.isPhone)
                                 ...links.map(
                                   (e) => ShowLinkPreview(
                                     link: e,

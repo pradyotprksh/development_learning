@@ -88,7 +88,9 @@ Future _initialSetups() async {
 
   await blocSetup();
 
-  await DeviceCameras.getCameras();
+  if (AppDetails.isPhone) {
+    await DeviceCameras.getCameras();
+  }
 
   if (AppDetails.isWeb) {
     await FastCachedImageConfig.init(

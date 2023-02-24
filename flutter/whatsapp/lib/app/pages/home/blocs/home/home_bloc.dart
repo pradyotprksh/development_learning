@@ -64,7 +64,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     ApplicationBackgroundCheck event,
     Emitter<HomeState> emit,
   ) async {
-    if (!AppDetails.isWeb) {
+    if (AppDetails.isPhone) {
       final userId = _firebaseAuthService.getUserId();
       if (userId != null) {
         await emit.forEach(

@@ -16,6 +16,8 @@ abstract class AppDetails {
 
   static bool isWeb = foundation.kIsWeb;
 
+  static bool isPhone = isAndroid || isIos;
+
   static void setApplicationOrientation() {
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
