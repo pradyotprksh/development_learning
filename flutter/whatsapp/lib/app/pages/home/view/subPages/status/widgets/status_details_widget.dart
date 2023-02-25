@@ -84,20 +84,16 @@ class _StatusDetailsWidgetState extends State<StatusDetailsWidget> {
                 placeholder: ThemeSizedBox.shrink,
                 width: double.infinity,
                 height: double.infinity,
-                fit: BoxFit.cover,
+                fit: BoxFit.contain,
               ),
-          Column(
-            children: [
-              const Spacer(),
-              VideoWidget(
-                path: currentStatus.filePathUrl,
-                isNetwork: true,
-                play: currentStatus.isFileImage == false,
-                showWidget: currentStatus.filePathUrl != null &&
-                    currentStatus.isFileImage == false,
-              ),
-              const Spacer(),
-            ],
+          Center(
+            child: VideoWidget(
+              path: currentStatus.filePathUrl,
+              isNetwork: true,
+              play: currentStatus.isFileImage == false,
+              showWidget: currentStatus.filePathUrl != null &&
+                  currentStatus.isFileImage == false,
+            ),
           ),
           if (currentStatus.filePathUrl != null)
             if (currentStatus.status.isNotEmpty)

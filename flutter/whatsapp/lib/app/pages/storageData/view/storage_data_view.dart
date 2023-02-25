@@ -65,70 +65,75 @@ class StorageDataView extends StatelessWidget {
                 ),
               ),
             ),
-            BlocBuilder<NetworkBloc, NetworkState>(
-              buildWhen: (previousState, state) =>
-                  previousState.useLessDataForCalls !=
-                  state.useLessDataForCalls,
-              builder: (_, networkState) => ListTile(
-                onTap: () {
-                  context.read<NetworkBloc>().add(
-                        const ToggleLessDataForCall(),
-                      );
-                },
-                leading: ThemeSizedBox.shrink,
-                trailing: GestureDetector(
-                  child: Switch(
-                    value: networkState.useLessDataForCalls,
-                    onChanged: (value) {
-                      context.read<NetworkBloc>().add(
-                            const ToggleLessDataForCall(),
-                          );
-                    },
+            if (AppDetails.isPhone)
+              BlocBuilder<NetworkBloc, NetworkState>(
+                buildWhen: (previousState, state) =>
+                    previousState.useLessDataForCalls !=
+                    state.useLessDataForCalls,
+                builder: (_, networkState) => ListTile(
+                  onTap: () {
+                    context.read<NetworkBloc>().add(
+                          const ToggleLessDataForCall(),
+                        );
+                  },
+                  leading: ThemeSizedBox.shrink,
+                  trailing: GestureDetector(
+                    child: Switch(
+                      value: networkState.useLessDataForCalls,
+                      onChanged: (value) {
+                        context.read<NetworkBloc>().add(
+                              const ToggleLessDataForCall(),
+                            );
+                      },
+                    ),
                   ),
+                  title: Text(context.translator.useLessDataForCalls),
                 ),
-                title: Text(context.translator.useLessDataForCalls),
               ),
-            ),
             const Divider(),
-            ListTile(
-              title: Text(
-                context.translator.mediaAutoDownload,
+            if (AppDetails.isPhone)
+              ListTile(
+                title: Text(
+                  context.translator.mediaAutoDownload,
+                ),
+                subtitle: Text(
+                  context.translator.voiceMessageDownloadNote,
+                ),
               ),
-              subtitle: Text(
-                context.translator.voiceMessageDownloadNote,
+            if (AppDetails.isPhone)
+              ListTile(
+                onTap: () {},
+                leading: ThemeSizedBox.shrink,
+                title: Text(
+                  context.translator.whenUsingMobileData,
+                ),
+                subtitle: Text(
+                  context.translator.noMedia,
+                ),
               ),
-            ),
-            ListTile(
-              onTap: () {},
-              leading: ThemeSizedBox.shrink,
-              title: Text(
-                context.translator.whenUsingMobileData,
+            if (AppDetails.isPhone)
+              ListTile(
+                onTap: () {},
+                leading: ThemeSizedBox.shrink,
+                title: Text(
+                  context.translator.whenConnectedToWifi,
+                ),
+                subtitle: Text(
+                  context.translator.noMedia,
+                ),
               ),
-              subtitle: Text(
-                context.translator.noMedia,
+            if (AppDetails.isPhone)
+              ListTile(
+                onTap: () {},
+                leading: ThemeSizedBox.shrink,
+                title: Text(
+                  context.translator.whenRoaming,
+                ),
+                subtitle: Text(
+                  context.translator.noMedia,
+                ),
               ),
-            ),
-            ListTile(
-              onTap: () {},
-              leading: ThemeSizedBox.shrink,
-              title: Text(
-                context.translator.whenConnectedToWifi,
-              ),
-              subtitle: Text(
-                context.translator.noMedia,
-              ),
-            ),
-            ListTile(
-              onTap: () {},
-              leading: ThemeSizedBox.shrink,
-              title: Text(
-                context.translator.whenRoaming,
-              ),
-              subtitle: Text(
-                context.translator.noMedia,
-              ),
-            ),
-            const Divider(),
+            if (AppDetails.isPhone) const Divider(),
             ListTile(
               title: Text(
                 context.translator.mediaUploadQuality,

@@ -82,7 +82,10 @@ class _HomeViewState extends State<HomeView>
                     (route) => false,
                   );
                 } else {
-                  context.read<UserBloc>().add(const FetchUserDetails());
+                  final userBloc = context.read<UserBloc>();
+                  if (userBloc.state.userDetails == null) {
+                    userBloc.add(const FetchUserDetails());
+                  }
                 }
               },
             ),

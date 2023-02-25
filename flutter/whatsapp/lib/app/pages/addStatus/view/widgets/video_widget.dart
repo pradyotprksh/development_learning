@@ -1,7 +1,8 @@
 import 'dart:io';
 
-import 'package:cache_video_player/player/video_player.dart';
+import 'package:cache_video_player/player/video_player.dart' as cache;
 import 'package:flutter/material.dart';
+import 'package:video_player/video_player.dart';
 import 'package:whatsapp/app/app.dart';
 
 class VideoWidget extends StatefulWidget {
@@ -23,11 +24,12 @@ class VideoWidget extends StatefulWidget {
 }
 
 class _VideoWidgetState extends State<VideoWidget> {
-  VideoPlayerController? _controller;
+  cache.VideoPlayerController? _cacheVideoController;
+  VideoPlayerController? _videoController;
 
   @override
   void dispose() {
-    _controller?.dispose();
+    (AppDetails.isPhone ? _cacheVideoController : _videoController)?.dispose();
     super.dispose();
   }
 
@@ -35,57 +37,113 @@ class _VideoWidgetState extends State<VideoWidget> {
   void initState() {
     super.initState();
     if (widget.path != null && widget.path!.isNotEmpty) {
-      _controller = widget.isNetwork
-          ? VideoPlayerController.network(widget.path!)
-          : VideoPlayerController.file(File(widget.path!))
-        ..initialize().then(
-          (_) {
-            setState(() {});
-          },
-        );
+      if (AppDetails.isPhone) {
+        _cacheVideoController = widget.isNetwork
+            ? cache.VideoPlayerController.network(widget.path!)
+            : cache.VideoPlayerController.file(File(widget.path!))
+          ..initialize().then(
+            (_) {
+              setState(() {});
+            },
+          );
+      } else {
+        _videoController = widget.isNetwork
+            ? VideoPlayerController.network(widget.path!)
+            : VideoPlayerController.file(File(widget.path!))
+          ..initialize().then(
+            (_) {
+              setState(() {});
+            },
+          );
+      }
     }
   }
 
   @override
   Widget build(BuildContext context) {
     if (widget.play && widget.showWidget) {
-      _controller?.play();
-      _controller?.setLooping(true);
+      if (AppDetails.isPhone) {
+        _cacheVideoController?.play();
+        _cacheVideoController?.setLooping(true);
+      } else {
+        _videoController?.play();
+        _videoController?.setLooping(true);
+      }
     } else {
-      _controller?.pause();
+      if (AppDetails.isPhone) {
+        _cacheVideoController?.pause();
+      } else {
+        _videoController?.pause();
+      }
     }
 
-    return _controller != null &&
-            _controller!.value.isInitialized &&
-            widget.showWidget
-        ? Stack(
+    if (widget.showWidget) {
+      if (AppDetails.isPhone && _cacheVideoController != null) {
+        if (_cacheVideoController!.value.isInitialized) {
+          return Stack(
             alignment: Alignment.center,
             children: [
               AspectRatio(
-                aspectRatio: _controller!.value.aspectRatio,
-                child: VideoPlayer(
-                  _controller!,
+                aspectRatio: _cacheVideoController!.value.aspectRatio,
+                child: cache.VideoPlayer(
+                  _cacheVideoController!,
                 ),
               ),
               if (!widget.isNetwork)
                 IconButton(
                   onPressed: () {
-                    setState(() {
-                      _controller!.value.isPlaying
-                          ? _controller!.pause()
-                          : _controller!.play();
-                    });
+                    setState(
+                      () {
+                        _cacheVideoController!.value.isPlaying
+                            ? _cacheVideoController!.pause()
+                            : _cacheVideoController!.play();
+                      },
+                    );
                   },
                   icon: Icon(
-                    _controller!.value.isPlaying
+                    _cacheVideoController!.value.isPlaying
                         ? Icons.pause
                         : Icons.play_arrow,
                   ),
                 ),
             ],
-          )
-        : widget.showWidget
-            ? const Center(child: CircularProgressIndicatorWidget())
-            : ThemeSizedBox.shrink;
+          );
+        }
+      } else if (AppDetails.isWeb && _videoController != null) {
+        if (_videoController!.value.isInitialized) {
+          return Stack(
+            alignment: Alignment.center,
+            children: [
+              AspectRatio(
+                aspectRatio: _videoController!.value.aspectRatio,
+                child: VideoPlayer(
+                  _videoController!,
+                ),
+              ),
+              if (!widget.isNetwork)
+                IconButton(
+                  onPressed: () {
+                    setState(
+                      () {
+                        _videoController!.value.isPlaying
+                            ? _videoController!.pause()
+                            : _videoController!.play();
+                      },
+                    );
+                  },
+                  icon: Icon(
+                    _videoController!.value.isPlaying
+                        ? Icons.pause
+                        : Icons.play_arrow,
+                  ),
+                ),
+            ],
+          );
+        }
+      }
+      return const Center(child: CircularProgressIndicatorWidget());
+    } else {
+      return ThemeSizedBox.shrink;
+    }
   }
 }
