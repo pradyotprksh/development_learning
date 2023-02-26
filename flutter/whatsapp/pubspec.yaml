@@ -113,6 +113,8 @@ dependencies:
 
   path_provider: ^2.0.13
 
+  pdf_manipulator: ^0.5.9
+
   permission_handler: ^10.2.0
 
   pinput: ^2.2.31

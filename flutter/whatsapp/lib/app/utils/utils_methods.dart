@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:clipboard/clipboard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:url_launcher/url_launcher.dart';
 import 'package:whatsapp/app/app.dart';
@@ -74,5 +77,12 @@ abstract class AppUtilsMethods {
 
   static Future<void> openUrl(String url) async {
     await launchUrl(Uri.parse(url));
+  }
+
+  static Future<String> getTempDirectory(String endPath) async {
+    final extDir = await getTemporaryDirectory();
+    final statusDir =
+        await Directory('${extDir.path}/$endPath').create(recursive: true);
+    return statusDir.path;
   }
 }

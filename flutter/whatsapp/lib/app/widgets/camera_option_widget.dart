@@ -1,8 +1,5 @@
-import 'dart:io';
-
 import 'package:camerawesome/camerawesome_plugin.dart';
 import 'package:flutter/material.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:whatsapp/app/app.dart';
 
 class FileDetails {
@@ -38,12 +35,10 @@ class CameraOptionWidget extends StatelessWidget {
   final void Function(FileDetails) onMediaSelected;
 
   Future<String> _path(CaptureMode captureMode) async {
-    final extDir = await getTemporaryDirectory();
-    final statusDir =
-        await Directory('${extDir.path}/status').create(recursive: true);
+    final tempPath = await AppUtilsMethods.getTempDirectory('status');
     final fileExtension = captureMode == CaptureMode.photo ? 'jpg' : 'mp4';
     final filePath =
-        '${statusDir.path}/${DateTime.now().millisecondsSinceEpoch}.$fileExtension';
+        '$tempPath}/${DateTime.now().millisecondsSinceEpoch}.$fileExtension';
     return filePath;
   }
 
