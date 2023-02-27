@@ -25,7 +25,9 @@ class HelpView extends StatelessWidget {
               ),
             ),
             ListTile(
-              onTap: () {},
+              onTap: () {
+                context.navigator.pushNamed(Routes.contactUs);
+              },
               leading: Icon(
                 Icons.people,
                 color: context.themeData.iconTheme.color,

@@ -185,5 +185,11 @@
   "contactUsSubTitle": "Questions? Need help?",
   "termsAndPrivacyPolicy": "Terms and privacy policy",
   "appInfo": "App info",
-  "qrCode": "QR Code"
+  "qrCode": "QR Code",
+  "tellUsForHelp": "Tell us how we can help",
+  "deviceDetailsOption": "Include device information? (optional)\nTechnical details like your model and settings can help us answer your question. ",
+  "learnMore": "Learn more",
+  "paymentSupportOption": "For support with payments, go to ",
+  "helpInPayment": "Help in your payments home screen.",
+  "weWillRespond": "We will respond to you in a %s chat"
 }
