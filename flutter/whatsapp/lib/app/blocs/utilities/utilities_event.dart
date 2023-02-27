@@ -18,8 +18,8 @@ class ScreenshotTaken extends UtilitiesEvent {
   final Object? arguments;
 }
 
-class MessageCopyForwardEvent extends UtilitiesEvent {
-  const MessageCopyForwardEvent({
+class MessageCopyForwardSaveEvent extends UtilitiesEvent {
+  const MessageCopyForwardSaveEvent({
     required this.messageId,
     this.directMessageId,
     this.groupId,

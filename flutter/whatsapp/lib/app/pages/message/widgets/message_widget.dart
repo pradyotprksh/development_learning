@@ -33,7 +33,7 @@ class MessageWidget extends StatelessWidget {
         break;
       case MessageMenuItem.copy:
         context.read<UtilitiesBloc>().add(
-              MessageCopyForwardEvent(
+              MessageCopyForwardSaveEvent(
                 messageId: message.messageId,
                 directMessageId: directMessageId,
                 groupId: groupId,
@@ -44,7 +44,7 @@ class MessageWidget extends StatelessWidget {
         break;
       case MessageMenuItem.forward:
         context.read<UtilitiesBloc>().add(
-              MessageCopyForwardEvent(
+              MessageCopyForwardSaveEvent(
                 messageId: message.messageId,
                 directMessageId: directMessageId,
                 groupId: groupId,
@@ -59,7 +59,7 @@ class MessageWidget extends StatelessWidget {
         break;
       case MessageMenuItem.saveMessage:
         context.read<UtilitiesBloc>().add(
-              MessageCopyForwardEvent(
+              MessageCopyForwardSaveEvent(
                 messageId: message.messageId,
                 directMessageId: directMessageId,
                 groupId: groupId,

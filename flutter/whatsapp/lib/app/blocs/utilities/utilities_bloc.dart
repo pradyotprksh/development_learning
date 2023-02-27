@@ -13,7 +13,7 @@ class UtilitiesBloc extends Bloc<UtilitiesEvent, UtilitiesState> {
   ) : super(const UtilitiesState()) {
     on<InitiateConnectivityCheck>(_onConnectivityCheck);
     on<ScreenshotTaken>(_onScreenshotTaken);
-    on<MessageCopyForwardEvent>(_onMessageCopiedForwarded);
+    on<MessageCopyForwardSaveEvent>(_onMessageCopiedForwarded);
   }
 
   final FirebaseAuthService _firebaseAuthService;
@@ -51,7 +51,7 @@ class UtilitiesBloc extends Bloc<UtilitiesEvent, UtilitiesState> {
   }
 
   void _onMessageCopiedForwarded(
-    MessageCopyForwardEvent event,
+    MessageCopyForwardSaveEvent event,
     Emitter<UtilitiesState> emit,
   ) async {
     final userId = _firebaseAuthService.getUserId();
