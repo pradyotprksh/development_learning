@@ -1,0 +1,3 @@
+[submodule "flutter/flutter-firebase-whatsapp"]
+	path = flutter/flutter-firebase-whatsapp
+	url = https://github.com/pradyotprksh/flutter-firebase-whatsapp.git
