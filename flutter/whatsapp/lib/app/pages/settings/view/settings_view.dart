@@ -87,7 +87,9 @@ class SettingsView extends StatelessWidget {
               ),
             ),
             ListTile(
-              onTap: () {},
+              onTap: () {
+                context.navigator.pushNamed(Routes.privacy);
+              },
               leading: Icon(
                 Icons.lock,
                 color: context.themeData.iconTheme.color,

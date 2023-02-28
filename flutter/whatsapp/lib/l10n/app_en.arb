@@ -192,5 +192,21 @@
   "paymentSupportOption": "For support with payments, go to ",
   "helpInPayment": "Help in your payments home screen.",
   "weWillRespond": "We will respond to you in a %s chat",
-  "contactUsDetails": "Length should be greater than or equal to 10 characters."
+  "contactUsDetails": "Length should be greater than or equal to 10 characters.",
+  "whoCanSeePersonalInfo": "Who can see my personal info",
+  "lastSeenAndOnline": "Last seen and online",
+  "profilePhoto": "Profile photo",
+  "about": "About",
+  "readReceipts": "Read receipts",
+  "readReceiptsNote": "If turned off, you won't send or receive read receipts. Read receipts are always sent for group chats.",
+  "defaultMessageTimer": "Default message timer",
+  "defaultMessageTimerNote": "Start new chats with disappearing messages set to your timer",
+  "liveLocation": "Live location",
+  "blockedContacts": "Bloc contacts",
+  "fingerprintLock": "Fingerprint lock",
+  "everyone": "Everyone",
+  "myContacts": "My contacts",
+  "off": "Off",
+  "none": "None",
+  "disabled": "Disabled"
 }

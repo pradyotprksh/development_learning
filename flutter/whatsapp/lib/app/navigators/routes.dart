@@ -34,6 +34,7 @@ abstract class Routes {
   static const pdfView = '/pdf-view';
   static const help = '/help';
   static const contactUs = '/contact-us';
+  static const privacy = '/privacy';
 
   static const initialRoute = splashRoute;
 
@@ -52,6 +53,7 @@ abstract class Routes {
     networkUsage: (context) => const NetworkUsageView(),
     pdfView: (context) => const PdfView(),
     help: (context) => const HelpView(),
+    privacy: (context) => const PrivacyView(),
     contactUs: (context) => BlocProvider(
           create: (_) => ContactUsBloc(
             FirebaseAuthServiceImplementation(),

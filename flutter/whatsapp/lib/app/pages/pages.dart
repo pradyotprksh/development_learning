@@ -12,6 +12,7 @@ export 'newGroup/new_group.dart';
 export 'pdf/pdf.dart';
 export 'personalise/personalise.dart';
 export 'pinConfirmation/pin_confirmation.dart';
+export 'privacy/privacy.dart';
 export 'profile/profile.dart';
 export 'qrCode/qr_code.dart';
 export 'savedMessages/saved_messages.dart';
