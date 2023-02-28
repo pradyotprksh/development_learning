@@ -48,12 +48,12 @@ abstract class AppUtilsMethods {
   }
 
   static String? lengthShouldBeGraterThan(
-    String? userName,
+    String? value,
     int length,
     String errorMessage,
   ) {
-    if (userName != null) {
-      if (userName.length < length) {
+    if (value != null) {
+      if (value.length < length) {
         return errorMessage;
       } else {
         return null;

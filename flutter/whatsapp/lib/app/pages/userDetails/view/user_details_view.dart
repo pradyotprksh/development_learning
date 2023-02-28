@@ -36,7 +36,7 @@ class UserDetailsView extends StatelessWidget {
     bool getTextFieldPhoneNumber,
     UserDetailsState currentState,
     BuildContext context,
-  ) async {
+  ) {
     final userDetailsBloc = context.read<UserDetailsBloc>();
 
     var isFormValid = _formKey.currentState?.validate() == true;
