@@ -52,7 +52,14 @@ abstract class Routes {
     networkUsage: (context) => const NetworkUsageView(),
     pdfView: (context) => const PdfView(),
     help: (context) => const HelpView(),
-    contactUs: (context) => ContactUsView(),
+    contactUs: (context) => BlocProvider(
+          create: (_) => ContactUsBloc(
+            FirebaseAuthServiceImplementation(),
+            FirebaseFirestoreServiceImplementation(),
+            DeviceDetailsImplementation(),
+          ),
+          child: ContactUsView(),
+        ),
     savedMessages: (context) => BlocProvider(
           create: (_) => SavedMessagesBloc(
             FirebaseFirestoreServiceImplementation(),

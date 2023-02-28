@@ -96,12 +96,7 @@ mixin FirestoreStatusImplementation implements FirebaseFirestoreService {
   @override
   Future<List<String>> deleteStatusOnTimeCompletion(String userId) async {
     var storageReference = <String>[];
-    final allCurrentUserStatus = await getStatusCollectionReference()
-        .where(
-          FirestoreItemKey.userId,
-          isEqualTo: userId,
-        )
-        .get();
+    final allCurrentUserStatus = await getStatusCollectionReference().get();
     final batch = firestore.batch();
     for (var status in allCurrentUserStatus.docs) {
       final statusTime = status.data().createdOnTimeStamp;

@@ -192,5 +192,5 @@
   "paymentSupportOption": "For support with payments, go to ",
   "helpInPayment": "Help in your payments home screen.",
   "weWillRespond": "We will respond to you in a %s chat",
-  "contactUsDetails": "Length of the details should be greater than or equal to 10 characters."
+  "contactUsDetails": "Length should be greater than or equal to 10 characters."
 }

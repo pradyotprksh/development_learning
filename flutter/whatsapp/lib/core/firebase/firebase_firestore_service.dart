@@ -67,6 +67,8 @@ abstract class FirebaseFirestoreService {
 
   Stream<List<UserGroupCallDetails>> getCurrentUserCalls(String userId);
 
+  Future<void> createAnIssue(ContactUsDetails contactUsDetails);
+
   Future<void> createCall(CallDetails callDetails);
 
   Future<bool> isContactsAvailableListPresent(String userId);
@@ -153,6 +155,14 @@ abstract class FirebaseFirestoreService {
                 .replaceAll(CoreConstants.userIdPlaceholder, userId),
             ContactsAvailableDetails.fromFirestore,
             (ContactsAvailableDetails loginHistoryDetails, _) =>
+                loginHistoryDetails.toFirestore(),
+          );
+
+  CollectionReference<ContactUsDetails>
+      getContactUsDetailsCollectionReference() => _getCollectionReference(
+            CoreConstants.contactUsCollection,
+            ContactUsDetails.fromFirestore,
+            (ContactUsDetails loginHistoryDetails, _) =>
                 loginHistoryDetails.toFirestore(),
           );
 
