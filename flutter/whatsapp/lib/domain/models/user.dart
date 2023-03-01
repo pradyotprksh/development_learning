@@ -36,10 +36,6 @@ class UserDetails extends Equatable {
     final pin = data?[FirestoreItemKey.pin] as String;
     MemoryCache.instance.create(FirestoreItemKey.pin, pin * 4);
 
-    final deviceDetails =
-        data?[FirestoreItemKey.userDeviceDetails] as Map<String, dynamic>? ??
-            <String, dynamic>{};
-
     return UserDetails(
       name:
           EncryptorService.decryptData(data?[FirestoreItemKey.name] as String?),
@@ -69,7 +65,6 @@ class UserDetails extends Equatable {
           data?[FirestoreItemKey.isPhoneNumberVerified] as bool? ?? false,
       isOnline: data?[FirestoreItemKey.isOnline] as bool? ?? false,
       currentMood: data?[FirestoreItemKey.currentMood] as String?,
-      userDeviceDetails: UserDeviceDetails.fromMap(deviceDetails),
       avatarDetails: data?[FirestoreItemKey.avatarDetails] as String?,
       size: (data?.getDocumentSize() ?? 0).toDouble(),
     );

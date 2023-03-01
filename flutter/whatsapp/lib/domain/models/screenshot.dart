@@ -16,17 +16,12 @@ class ScreenshotDetails {
   ) {
     final data = snapshot.data();
 
-    final deviceDetails =
-        data?[FirestoreItemKey.userDeviceDetails] as Map<String, dynamic>? ??
-            <String, dynamic>{};
-
     return ScreenshotDetails(
       userId: data?[FirestoreItemKey.userId] as String,
       route: data?[FirestoreItemKey.route] as String?,
       arguments: data?[FirestoreItemKey.arguments] as String?,
       createdOnTimeStamp:
           data?[FirestoreItemKey.createdOnTimeStamp] as int? ?? 0,
-      userDeviceDetails: UserDeviceDetails.fromMap(deviceDetails),
     );
   }
 

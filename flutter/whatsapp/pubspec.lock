@@ -941,6 +941,15 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.6.2"
+  installer_info:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: project-upgrade
+      resolved-ref: "3a1fd49027b7dda1893571a8712a1a8d96cab0e6"
+      url: "https://github.com/pradyotprksh/flutter-installer-info.git"
+    source: git
+    version: "0.3.0"
   intl:
     dependency: transitive
     description:
@@ -1373,6 +1382,15 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.27.7"
+  screenshot_callback:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: project-upgrade
+      resolved-ref: "5b7c8c559e3ec3f4207d12e087e0afbde417ed4d"
+      url: "https://github.com/pradyotprksh/flutter_screenshot_callback.git"
+    source: git
+    version: "2.0.3"
   shared_preferences:
     dependency: transitive
     description:

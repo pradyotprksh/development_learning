@@ -15,16 +15,11 @@ class ContactUsDetails {
   ) {
     final data = snapshot.data();
 
-    final deviceDetails = data?[FirestoreItemKey.createdByUserDeviceDetails]
-            as Map<String, dynamic>? ??
-        <String, dynamic>{};
-
     return ContactUsDetails(
       description: data?[FirestoreItemKey.description] as String,
       createdByUserId: data?[FirestoreItemKey.createdByUserId] as String,
       createdOnTimeStamp:
           data?[FirestoreItemKey.createdOnTimeStamp] as int? ?? 0,
-      userDeviceDetails: UserDeviceDetails.fromMap(deviceDetails),
     );
   }
 

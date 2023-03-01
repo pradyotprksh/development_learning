@@ -21,11 +21,6 @@ class CallDetails extends Equatable {
     SnapshotOptions? _,
   ) {
     final data = snapshot.data();
-
-    final deviceDetails = data?[FirestoreItemKey.startedByUserDeviceDetails]
-            as Map<String, dynamic>? ??
-        <String, dynamic>{};
-
     return CallDetails(
       startedByUserId: data?[FirestoreItemKey.startedByUserId] as String,
       usersId: (data?[FirestoreItemKey.usersId] as List<dynamic>)
@@ -36,7 +31,6 @@ class CallDetails extends Equatable {
       isVideoCall: data?[FirestoreItemKey.isVideoCall] as bool,
       createdOnTimeStamp: data?[FirestoreItemKey.createdOnTimeStamp] as int?,
       groupId: data?[FirestoreItemKey.groupId] as String?,
-      startedByUserDeviceDetails: UserDeviceDetails.fromMap(deviceDetails),
       callId: snapshot.id,
       size: (data?.getDocumentSize() ?? 0).toDouble(),
     );

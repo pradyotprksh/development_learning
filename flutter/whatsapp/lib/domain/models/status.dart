@@ -25,10 +25,6 @@ class StatusDetails {
   ) {
     final data = snapshot.data();
 
-    final deviceDetails =
-        data?[FirestoreItemKey.userDeviceDetails] as Map<String, dynamic>? ??
-            <String, dynamic>{};
-
     return StatusDetails(
       status: EncryptorService.decryptData(
           data?[FirestoreItemKey.status] as String),
@@ -43,7 +39,6 @@ class StatusDetails {
           data?[FirestoreItemKey.createdOnTimeStamp] as int? ?? 0,
       userReference:
           data?[FirestoreItemKey.userReference] as DocumentReference?,
-      userDeviceDetails: UserDeviceDetails.fromMap(deviceDetails),
       statusId: snapshot.id,
       isFileImage: data?[FirestoreItemKey.isFileImage] as bool?,
       size: (data?.getDocumentSize() ?? 0).toDouble(),

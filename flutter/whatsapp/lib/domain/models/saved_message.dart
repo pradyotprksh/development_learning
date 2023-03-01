@@ -16,16 +16,11 @@ class SavedMessageDetails {
   ) {
     final data = snapshot.data();
 
-    final deviceDetails =
-        data?[FirestoreItemKey.userDeviceDetails] as Map<String, dynamic>? ??
-            <String, dynamic>{};
-
     return SavedMessageDetails(
       messageSentByUserId:
           data?[FirestoreItemKey.messageSentByUserId] as String,
       messageId: data?[FirestoreItemKey.messageId] as String,
       savedOnTimeStamp: data?[FirestoreItemKey.savedOnTimeStamp] as int? ?? 0,
-      userDeviceDetails: UserDeviceDetails.fromMap(deviceDetails),
       size: (data?.getDocumentSize() ?? 0).toDouble(),
     );
   }

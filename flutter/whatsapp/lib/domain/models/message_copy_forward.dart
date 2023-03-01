@@ -18,10 +18,6 @@ class MessageCopyForwardSavedDetails {
   ) {
     final data = snapshot.data();
 
-    final deviceDetails = data?[FirestoreItemKey.createdByUserDeviceDetails]
-            as Map<String, dynamic>? ??
-        <String, dynamic>{};
-
     return MessageCopyForwardSavedDetails(
       userId: data?[FirestoreItemKey.userId] as String,
       messageId: data?[FirestoreItemKey.messageId] as String,
@@ -31,7 +27,6 @@ class MessageCopyForwardSavedDetails {
           data?[FirestoreItemKey.isForwardOptionSelected] as bool? ?? false,
       createdOnTimeStamp:
           data?[FirestoreItemKey.createdOnTimeStamp] as int? ?? 0,
-      userDeviceDetails: UserDeviceDetails.fromMap(deviceDetails),
     );
   }
 

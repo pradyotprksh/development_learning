@@ -101,6 +101,11 @@ dependencies:
 
   image_picker: ^0.8.6+4
 
+  installer_info:
+    git:
+      url: https://github.com/pradyotprksh/flutter-installer-info.git
+      ref: project-upgrade
+
   liquid_swipe: ^3.0.0
 
   local_auth: ^2.1.5
@@ -126,6 +131,11 @@ dependencies:
   qr_flutter: ^4.0.0
 
   replay_bloc: ^0.2.3
+
+  screenshot_callback:
+    git:
+      url: https://github.com/pradyotprksh/flutter_screenshot_callback.git
+      ref: project-upgrade
 
   step_progress_indicator: ^1.0.2
 

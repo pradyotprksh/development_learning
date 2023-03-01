@@ -8,13 +8,9 @@ class UserDeviceDetails {
     this.packageName,
     this.version,
     this.buildNumber,
+    this.installer,
+    this.installerName,
   });
-
-  factory UserDeviceDetails.fromMap(Map<String, dynamic>? json) =>
-      UserDeviceDetails(
-        version: json?[FirestoreItemKey.version] as String?,
-        buildNumber: json?[FirestoreItemKey.buildNumber] as String?,
-      );
 
   final Map<String, dynamic>? deviceInfo;
   final String? ipAddress;
@@ -22,6 +18,8 @@ class UserDeviceDetails {
   final String? packageName;
   final String? version;
   final String? buildNumber;
+  final String? installer;
+  final String? installerName;
 
   Map<String, dynamic> toMap() => <String, dynamic>{
         if (deviceInfo != null) FirestoreItemKey.deviceInfo: deviceInfo,
@@ -30,6 +28,9 @@ class UserDeviceDetails {
         if (packageName != null) FirestoreItemKey.packageName: packageName,
         if (version != null) FirestoreItemKey.version: version,
         if (buildNumber != null) FirestoreItemKey.buildNumber: buildNumber,
+        if (installer != null) FirestoreItemKey.installer: installer,
+        if (installerName != null)
+          FirestoreItemKey.installerName: installerName,
       };
 
   Map<String, String> toStringMap() => <String, String>{
@@ -38,5 +39,8 @@ class UserDeviceDetails {
         if (packageName != null) FirestoreItemKey.packageName: packageName!,
         if (version != null) FirestoreItemKey.version: version!,
         if (buildNumber != null) FirestoreItemKey.buildNumber: buildNumber!,
+        if (installer != null) FirestoreItemKey.installer: installer!,
+        if (installerName != null)
+          FirestoreItemKey.installerName: installerName!,
       };
 }

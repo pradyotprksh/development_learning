@@ -22,10 +22,6 @@ class DirectMessageDetails extends Equatable {
   ) {
     final data = snapshot.data();
 
-    final deviceDetails = data?[FirestoreItemKey.createdByUserDeviceDetails]
-            as Map<String, dynamic>? ??
-        <String, dynamic>{};
-
     return DirectMessageDetails(
       users: (data?[FirestoreItemKey.users] as List<dynamic>)
           .map((dynamic e) => e.toString())
@@ -37,7 +33,6 @@ class DirectMessageDetails extends Equatable {
           data?[FirestoreItemKey.lastMessageByUserId] as String?,
       createdOnTimeStamp:
           data?[FirestoreItemKey.createdOnTimeStamp] as int? ?? 0,
-      createdByUserDeviceDetails: UserDeviceDetails.fromMap(deviceDetails),
       messageId: snapshot.id,
       lastMessage: EncryptorService.decryptData(
           data?[FirestoreItemKey.lastMessage] as String?),

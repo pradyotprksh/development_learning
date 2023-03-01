@@ -1,5 +1,6 @@
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:get_ip_address/get_ip_address.dart';
+import 'package:installer_info/installer_info.dart';
 import 'package:network_info_plus/network_info_plus.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:whatsapp/app/app.dart';
@@ -13,6 +14,7 @@ class DeviceDetailsImplementation extends DeviceDetails {
     final info = NetworkInfo();
     final getIpAddress = IpAddress(type: RequestType.text);
     final packageInfo = await PackageInfo.fromPlatform();
+    final installerInfo = await getInstallerInfo();
 
     final deviceDetails = await deviceInfo.deviceInfo;
     final ipAddress = AppDetails.isWeb
@@ -37,6 +39,8 @@ class DeviceDetailsImplementation extends DeviceDetails {
       packageName: packageName,
       version: version,
       buildNumber: buildNumber,
+      installer: installerInfo?.installer?.name,
+      installerName: installerInfo?.installerName,
     );
   }
 }

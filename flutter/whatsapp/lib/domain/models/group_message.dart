@@ -25,10 +25,6 @@ class GroupMessageDetails extends Equatable {
   ) {
     final data = snapshot.data();
 
-    final deviceDetails = data?[FirestoreItemKey.createdByUserDeviceDetails]
-            as Map<String, dynamic>? ??
-        <String, dynamic>{};
-
     return GroupMessageDetails(
       users: (data?[FirestoreItemKey.users] as List<dynamic>)
           .map((dynamic e) => e.toString())
@@ -43,7 +39,6 @@ class GroupMessageDetails extends Equatable {
       firestoreFilePath: data?[FirestoreItemKey.firestoreFilePath] as String?,
       createdOnTimeStamp:
           data?[FirestoreItemKey.createdOnTimeStamp] as int? ?? 0,
-      createdByUserDeviceDetails: UserDeviceDetails.fromMap(deviceDetails),
       groupId: snapshot.id,
       lastMessage: EncryptorService.decryptData(
           data?[FirestoreItemKey.lastMessage] as String?),

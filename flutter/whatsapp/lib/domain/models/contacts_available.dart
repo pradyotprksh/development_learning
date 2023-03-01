@@ -17,14 +17,9 @@ class ContactsAvailableDetails {
   ) {
     final data = snapshot.data();
 
-    final deviceDetails =
-        data?[FirestoreItemKey.userDeviceDetails] as Map<String, dynamic>? ??
-            <String, dynamic>{};
-
     return ContactsAvailableDetails(
       userId: data?[FirestoreItemKey.userId] as String,
       detailsFetchedOn: data?[FirestoreItemKey.detailsFetchedOn] as int?,
-      userDeviceDetails: UserDeviceDetails.fromMap(deviceDetails),
       userReference:
           data?[FirestoreItemKey.userReference] as DocumentReference?,
       contactId: snapshot.id,

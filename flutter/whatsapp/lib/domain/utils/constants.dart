@@ -73,4 +73,6 @@ abstract class FirestoreItemKey {
   static const fileSize = 'fileSize';
   static const fileName = 'fileName';
   static const fileUrl = 'fileUrl';
+  static const installer = 'installer';
+  static const installerName = 'installerName';
 }

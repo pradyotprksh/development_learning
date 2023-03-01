@@ -19,16 +19,11 @@ class ContactsNotAvailableDetails extends Equatable {
   ) {
     final data = snapshot.data();
 
-    final deviceDetails =
-        data?[FirestoreItemKey.userDeviceDetails] as Map<String, dynamic>? ??
-            <String, dynamic>{};
-
     return ContactsNotAvailableDetails(
       displayName: data?[FirestoreItemKey.displayName] as String?,
       phoneNumber: data?[FirestoreItemKey.phoneNumber] as String?,
       emailId: data?[FirestoreItemKey.emailId] as String?,
       detailsFetchedOn: data?[FirestoreItemKey.detailsFetchedOn] as int?,
-      userDeviceDetails: UserDeviceDetails.fromMap(deviceDetails),
       contactId: snapshot.id,
       size: (data?.getDocumentSize() ?? 0).toDouble(),
     );

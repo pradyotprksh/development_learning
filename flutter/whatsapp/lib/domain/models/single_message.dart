@@ -26,10 +26,6 @@ class SingleMessageDetails extends Equatable {
   ) {
     final data = snapshot.data();
 
-    final deviceDetails = data?[FirestoreItemKey.sentByUserDeviceDetails]
-            as Map<String, dynamic>? ??
-        <String, dynamic>{};
-
     return SingleMessageDetails(
       message: EncryptorService.decryptData(
           data?[FirestoreItemKey.message] as String),
@@ -42,7 +38,6 @@ class SingleMessageDetails extends Equatable {
       sentOnTimeStamp: data?[FirestoreItemKey.sentOnTimeStamp] as int? ?? 0,
       sentToUserReference:
           data?[FirestoreItemKey.sentToUserReference] as DocumentReference?,
-      sentByUserDeviceDetails: UserDeviceDetails.fromMap(deviceDetails),
       messageId: snapshot.id,
       isFileImage: data?[FirestoreItemKey.isFileImage] as bool?,
       isSystemMessage: data?[FirestoreItemKey.isSystemMessage] as bool,
