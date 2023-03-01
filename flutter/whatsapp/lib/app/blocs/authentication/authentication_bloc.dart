@@ -193,16 +193,19 @@ class AuthenticationBloc
     CheckForBiometric event,
     Emitter<AuthenticationState> emit,
   ) async {
-    final canAuthenticateWithBiometrics = await _localAuth.canCheckBiometrics;
-    final canAuthenticate =
-        canAuthenticateWithBiometrics || await _localAuth.isDeviceSupported();
-    final availableBiometrics = await _localAuth.getAvailableBiometrics();
+    if (AppDetails.isPhone) {
+      final canAuthenticateWithBiometrics = await _localAuth.canCheckBiometrics;
+      final canAuthenticate =
+          canAuthenticateWithBiometrics || await _localAuth.isDeviceSupported();
+      final availableBiometrics = await _localAuth.getAvailableBiometrics();
 
-    emit(
-      state.copyWith(
-        isLocalAuthAvailable: canAuthenticate && availableBiometrics.isNotEmpty,
-      ),
-    );
+      emit(
+        state.copyWith(
+          isLocalAuthAvailable:
+              canAuthenticate && availableBiometrics.isNotEmpty,
+        ),
+      );
+    }
 
     add(const CheckForAuthenticationStatus());
   }
