@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:whatsapp/app/app.dart';
 
 abstract class AuthenticationEvent extends Equatable {
   const AuthenticationEvent();
@@ -33,4 +34,28 @@ class UnAuthenticateUserEvent extends AuthenticationEvent {
 
 class ListenToAuthStateChange extends AuthenticationEvent {
   const ListenToAuthStateChange();
+}
+
+class CheckForBiometric extends AuthenticationEvent {
+  const CheckForBiometric();
+}
+
+class EnableBiometric extends AuthenticationEvent {
+  const EnableBiometric(this.message);
+
+  final String message;
+}
+
+class DisableBiometric extends AuthenticationEvent {
+  const DisableBiometric();
+}
+
+class ChangeLocalAuthTime extends AuthenticationEvent {
+  const ChangeLocalAuthTime(this.authTime);
+
+  final LocalAuthTime authTime;
+}
+
+class ToggleMessageVisibilityInNotification extends AuthenticationEvent {
+  const ToggleMessageVisibilityInNotification();
 }

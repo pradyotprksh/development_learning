@@ -208,5 +208,14 @@
   "myContacts": "My contacts",
   "off": "Off",
   "none": "None",
-  "disabled": "Disabled"
+  "disabled": "Disabled",
+  "enableBiometric": "Please authenticate yourself to enable local authentication.",
+  "unlockWithFingerprint": "Unlock with fingerprint",
+  "unlockWithFingerprintNote": "When enabled, you'll need to use fingerprint to open %s. You can still answer calls if %s is locked.",
+  "automaticallyLock": "Automatically lock",
+  "immediately": "Immediately",
+  "after1Minute": "After 1 minute",
+  "after30Minutes": "After 30 minutes",
+  "showContentInNotifications": "Show content in notifications",
+  "showContentInNotificationsNote": "Preview sender and messages text inside new message notifications."
 }

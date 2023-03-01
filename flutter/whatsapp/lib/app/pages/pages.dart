@@ -3,6 +3,7 @@ export 'authenticate/authenticate.dart';
 export 'avatar/avatar.dart';
 export 'call/call.dart';
 export 'contactUs/contact_us.dart';
+export 'fingerprintLock/fingerprint_lock.dart';
 export 'help/help.dart';
 export 'home/home.dart';
 export 'intro/intro.dart';

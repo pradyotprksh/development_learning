@@ -14,4 +14,9 @@ abstract class Keys {
   static const userDetails = 'userDetails';
   static const imageUrl = 'imageUrl';
   static const placeHolderPath = 'placeHolderPath';
+  static const isLocalAuthEnabled = 'isLocalAuthEnabled';
+  static const showMessagesInNotificationWhenBiometricEnable =
+      'showMessagesInNotificationWhenBiometricEnable';
+  static const localAuthTime = 'localAuthTime';
+  static const lastLocalAuthAsk = 'lastLocalAuthAsk';
 }

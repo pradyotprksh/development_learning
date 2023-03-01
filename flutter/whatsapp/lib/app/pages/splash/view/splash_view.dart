@@ -15,15 +15,19 @@ class SplashView extends StatelessWidget {
                   context.read<UserBloc>().add(const FetchUserDetails());
                   break;
                 case AuthenticationStatus.unauthenticated:
-                  Future<void>.delayed(
-                    const Duration(seconds: 3),
-                    () {
-                      context.navigator.pushNamedAndRemoveUntil(
-                        Routes.introRoute,
-                        (route) => false,
-                      );
-                    },
-                  );
+                  if (authState.isLocalAuthAvailable &&
+                      authState.isLocalAuthEnabled) {
+                  } else {
+                    Future<void>.delayed(
+                      const Duration(seconds: 3),
+                      () {
+                        context.navigator.pushNamedAndRemoveUntil(
+                          Routes.introRoute,
+                          (route) => false,
+                        );
+                      },
+                    );
+                  }
                   break;
                 case AuthenticationStatus.applicationDown:
                 case AuthenticationStatus.unknown:

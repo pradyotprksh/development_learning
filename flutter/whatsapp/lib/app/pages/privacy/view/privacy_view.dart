@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:whatsapp/app/app.dart';
 
 class PrivacyView extends StatelessWidget {
@@ -77,10 +78,26 @@ class PrivacyView extends StatelessWidget {
               title: Text(context.translator.blockedContacts),
               subtitle: Text(context.translator.none),
             ),
-            ListTile(
-              onTap: () {},
-              title: Text(context.translator.fingerprintLock),
-              subtitle: Text(context.translator.none),
+            BlocBuilder<AuthenticationBloc, AuthenticationState>(
+              builder: (_, authState) => authState.isLocalAuthAvailable
+                  ? ListTile(
+                      onTap: () {
+                        context.navigator.pushNamed(Routes.fingerprintLock);
+                      },
+                      title: Text(context.translator.fingerprintLock),
+                      subtitle: Text(
+                        authState.localAuthTime == LocalAuthTime.none
+                            ? context.translator.none
+                            : authState.localAuthTime ==
+                                    LocalAuthTime.immediately
+                                ? context.translator.immediately
+                                : authState.localAuthTime ==
+                                        LocalAuthTime.after1Minute
+                                    ? context.translator.after1Minute
+                                    : context.translator.after30Minutes,
+                      ),
+                    )
+                  : ThemeSizedBox.shrink,
             ),
           ],
         ),

@@ -25,4 +25,10 @@ class WhatsAppBlocObserver extends BlocObserver {
     super.onTransition(bloc, transition);
     UtilsLogger.debugLog('${bloc.runtimeType} transitioned to $transition');
   }
+
+  @override
+  void onError(BlocBase bloc, Object error, StackTrace stackTrace) {
+    super.onError(bloc, error, stackTrace);
+    UtilsLogger.errorLog('${bloc.runtimeType} error $error');
+  }
 }

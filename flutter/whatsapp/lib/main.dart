@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
+import 'package:local_auth/local_auth.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
 import 'package:whatsapp/app/app.dart';
 import 'package:whatsapp/core/core.dart';
@@ -42,6 +43,7 @@ void main() async {
             FirebaseAuthServiceImplementation(),
             FirebaseFirestoreServiceImplementation(),
             DeviceDetailsImplementation(),
+            LocalAuthentication(),
           )..add(
               const CheckForRemoteConfigs(),
             ),

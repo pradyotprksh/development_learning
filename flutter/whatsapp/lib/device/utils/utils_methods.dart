@@ -18,6 +18,13 @@ abstract class DeviceUtilsMethods {
     return getCurrentTimeStamp();
   }
 
+  static int getTimeDifferenceInMins(int? timestamp) {
+    if (timestamp != null) {
+      return _getTimeDifference(timestamp).inMinutes;
+    }
+    return getCurrentTimeStamp();
+  }
+
   static int getTimeDifferenceInDays(int? timestamp) {
     if (timestamp != null) {
       return _getTimeDifference(timestamp).inDays;

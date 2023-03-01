@@ -35,6 +35,7 @@ abstract class Routes {
   static const help = '/help';
   static const contactUs = '/contact-us';
   static const privacy = '/privacy';
+  static const fingerprintLock = '/fingerprint-lock';
 
   static const initialRoute = splashRoute;
 
@@ -54,6 +55,7 @@ abstract class Routes {
     pdfView: (context) => const PdfView(),
     help: (context) => const HelpView(),
     privacy: (context) => const PrivacyView(),
+    fingerprintLock: (context) => const FingerprintLockView(),
     contactUs: (context) => BlocProvider(
           create: (_) => ContactUsBloc(
             FirebaseAuthServiceImplementation(),

@@ -6,6 +6,7 @@ list(APPEND FLUTTER_PLUGIN_LIST
   connectivity_plus
   desktop_webview_auth
   emoji_picker_flutter
+  local_auth_windows
   network_info_plus
   permission_handler_windows
   smart_auth
