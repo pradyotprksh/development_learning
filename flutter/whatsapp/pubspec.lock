@@ -1126,15 +1126,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.2"
-  open_ai:
-    dependency: "direct main"
-    description:
-      path: "dart/open_ai"
-      ref: main
-      resolved-ref: "62d26a4db95c6968722370099fd8db60f1358d4b"
-      url: "https://github.com/pradyotprksh/development_learning.git"
-    source: git
-    version: "1.0.0"
   package_info_plus:
     dependency: "direct main"
     description:
@@ -1806,5 +1797,5 @@ packages:
     source: hosted
     version: "3.1.1"
 sdks:
-  dart: ">=2.19.2 <3.0.0"
+  dart: ">=2.18.4 <3.0.0"
   flutter: ">=3.7.0"

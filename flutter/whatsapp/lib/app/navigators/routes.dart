@@ -58,7 +58,9 @@ abstract class Routes {
     privacy: (context) => const PrivacyView(),
     fingerprintLock: (context) => const FingerprintLockView(),
     messageDetails: (context) => BlocProvider(
-          create: (_) => MessageDetailsBloc(),
+          create: (_) => MessageDetailsBloc(
+            FirebaseFirestoreServiceImplementation(),
+          ),
           child: const MessageDetailsView(),
         ),
     contactUs: (context) => BlocProvider(

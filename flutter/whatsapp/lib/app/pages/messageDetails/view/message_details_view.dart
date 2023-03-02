@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:whatsapp/app/app.dart';
 
 class MessageDetailsView extends StatelessWidget {
@@ -6,7 +7,10 @@ class MessageDetailsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final details = context.routeSettings?.arguments as MessageRouteDetails;
+    final details = context.routeSettings?.arguments as MessageRouteDetails?;
+    if (details != null) {
+      context.read<MessageDetailsBloc>().add(FetchDetails(details));
+    }
 
     return Scaffold(
       backgroundColor: context.themeData.scaffoldBackgroundColor,

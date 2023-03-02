@@ -13,3 +13,19 @@ class FetchDetails extends MessageDetailsEvent {
 
   final MessageRouteDetails messageRouteDetails;
 }
+
+class GetDirectMessageDetails extends MessageDetailsEvent {
+  const GetDirectMessageDetails(this.directMessageId);
+
+  final String directMessageId;
+}
+
+class GetGroupMessageDetails extends MessageDetailsEvent {
+  const GetGroupMessageDetails(this.groupMessageId);
+
+  final String groupMessageId;
+}
+
+class FetchUsersDetails extends MessageDetailsEvent {
+  const FetchUsersDetails();
+}

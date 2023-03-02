@@ -55,4 +55,5 @@ enum MessageDetailsMenuItem {
   edit,
   viewInAddressBook,
   viewSecurityCode,
+  changeSubject,
 }
