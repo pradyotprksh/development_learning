@@ -49,3 +49,10 @@ enum MessageMenuItem {
 enum SavedMessagesMenuItem {
   clear,
 }
+
+enum MessageDetailsMenuItem {
+  share,
+  edit,
+  viewInAddressBook,
+  viewSecurityCode,
+}

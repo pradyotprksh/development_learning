@@ -13,9 +13,10 @@ class _DirectMessageViewState extends State<DirectMessageView> {
   @override
   Widget build(BuildContext context) {
     final arguments = context.routeSettings?.arguments as Map<String, String>;
+    final userId = arguments[Keys.userId] ?? '';
     context.read<DirectMessageBloc>().add(
           FetchSelectedUserDetails(
-            arguments[Keys.userId] ?? '',
+            userId,
           ),
         );
 
@@ -26,7 +27,14 @@ class _DirectMessageViewState extends State<DirectMessageView> {
           buildWhen: (previousState, currentState) =>
               previousState.userDetails != currentState.userDetails,
           builder: (_, messageState) => ListTile(
-            onTap: () {},
+            onTap: () {
+              context.navigator.pushNamed(
+                Routes.messageDetails,
+                arguments: MessageRouteDetails(
+                  directMessageId: userId,
+                ),
+              );
+            },
             contentPadding: ThemeEdgeInsets.zero,
             leading: UserImageWidget(
               profileImage: messageState.userDetails?.profileImage ?? '',
@@ -66,7 +74,30 @@ class _DirectMessageViewState extends State<DirectMessageView> {
                   ),
                 ),
                 PopupMenuButton<DirectMessageMenuItems>(
-                  onSelected: (item) {},
+                  onSelected: (item) {
+                    switch (item) {
+                      case DirectMessageMenuItems.viewContact:
+                        context.navigator.pushNamed(
+                          Routes.messageDetails,
+                          arguments: MessageRouteDetails(
+                            directMessageId: userId,
+                          ),
+                        );
+                        break;
+                      case DirectMessageMenuItems.mediaLinksDocs:
+                        break;
+                      case DirectMessageMenuItems.search:
+                        break;
+                      case DirectMessageMenuItems.muteNotifications:
+                        break;
+                      case DirectMessageMenuItems.disappearingMessages:
+                        break;
+                      case DirectMessageMenuItems.wallpaper:
+                        break;
+                      case DirectMessageMenuItems.more:
+                        break;
+                    }
+                  },
                   color: context.themeData.popupMenuTheme.color,
                   itemBuilder: (_) => [
                     PopupMenuItem(

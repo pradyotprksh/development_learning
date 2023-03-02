@@ -20,7 +20,14 @@ class GroupMessageView extends StatelessWidget {
       appBar: AppBar(
         title: BlocBuilder<GroupMessageBloc, GroupMessageState>(
           builder: (_, groupMessageState) => ListTile(
-            onTap: () {},
+            onTap: () {
+              context.navigator.pushNamed(
+                Routes.messageDetails,
+                arguments: MessageRouteDetails(
+                  groupId: groupId,
+                ),
+              );
+            },
             contentPadding: ThemeEdgeInsets.zero,
             leading: CachedNetworkImageWidget(
               imageUrl: groupMessageState
@@ -87,7 +94,30 @@ class GroupMessageView extends StatelessWidget {
             ),
           ),
           PopupMenuButton<GroupMessageMenuItems>(
-            onSelected: (item) {},
+            onSelected: (item) {
+              switch (item) {
+                case GroupMessageMenuItems.groupInfo:
+                  context.navigator.pushNamed(
+                    Routes.messageDetails,
+                    arguments: MessageRouteDetails(
+                      groupId: groupId,
+                    ),
+                  );
+                  break;
+                case GroupMessageMenuItems.groupMedia:
+                  break;
+                case GroupMessageMenuItems.search:
+                  break;
+                case GroupMessageMenuItems.muteNotifications:
+                  break;
+                case GroupMessageMenuItems.disappearingMessages:
+                  break;
+                case GroupMessageMenuItems.wallpaper:
+                  break;
+                case GroupMessageMenuItems.more:
+                  break;
+              }
+            },
             color: context.themeData.popupMenuTheme.color,
             itemBuilder: (_) => [
               PopupMenuItem(

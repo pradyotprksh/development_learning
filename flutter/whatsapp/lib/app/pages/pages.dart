@@ -8,6 +8,7 @@ export 'help/help.dart';
 export 'home/home.dart';
 export 'intro/intro.dart';
 export 'message/message.dart';
+export 'messageDetails/message_details.dart';
 export 'networkUsage/network_usage.dart';
 export 'newGroup/new_group.dart';
 export 'pdf/pdf.dart';

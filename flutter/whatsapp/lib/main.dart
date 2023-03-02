@@ -18,6 +18,7 @@ void main() async {
     MultiBlocProvider(
       providers: [
         BlocProvider(
+          lazy: false,
           create: (_) => UtilitiesBloc(
             FirebaseAuthServiceImplementation(),
             FirebaseFirestoreServiceImplementation(),
@@ -27,18 +28,28 @@ void main() async {
             ),
         ),
         BlocProvider(
+          lazy: false,
           create: (_) => NetworkBloc()
             ..add(
               const StartAllSizeListenersEvent(),
             ),
         ),
         BlocProvider(
+          lazy: false,
           create: (_) => ThemeBloc()
             ..add(
               const FetchCurrentThemeEvent(),
             ),
         ),
         BlocProvider(
+          lazy: false,
+          create: (_) => LocalizationsBloc()
+            ..add(
+              const FetchCurrentLocalizationEvent(),
+            ),
+        ),
+        BlocProvider(
+          lazy: false,
           create: (_) => AuthenticationBloc(
             FirebaseAuthServiceImplementation(),
             FirebaseFirestoreServiceImplementation(),
@@ -49,18 +60,13 @@ void main() async {
             ),
         ),
         BlocProvider(
+          lazy: false,
           create: (_) => UserBloc(
             FirebaseFirestoreServiceImplementation(),
             FirebaseAuthServiceImplementation(),
             FirebaseStorageServiceImplementation(),
             DeviceDetailsImplementation(),
           ),
-        ),
-        BlocProvider(
-          create: (_) => LocalizationsBloc()
-            ..add(
-              const FetchCurrentLocalizationEvent(),
-            ),
         ),
       ],
       child: const WhatsappApp(),

@@ -36,6 +36,7 @@ abstract class Routes {
   static const contactUs = '/contact-us';
   static const privacy = '/privacy';
   static const fingerprintLock = '/fingerprint-lock';
+  static const messageDetails = '/message-details';
 
   static const initialRoute = splashRoute;
 
@@ -56,6 +57,10 @@ abstract class Routes {
     help: (context) => const HelpView(),
     privacy: (context) => const PrivacyView(),
     fingerprintLock: (context) => const FingerprintLockView(),
+    messageDetails: (context) => BlocProvider(
+          create: (_) => MessageDetailsBloc(),
+          child: const MessageDetailsView(),
+        ),
     contactUs: (context) => BlocProvider(
           create: (_) => ContactUsBloc(
             FirebaseAuthServiceImplementation(),
@@ -174,6 +179,7 @@ abstract class Routes {
                 ),
             ),
             BlocProvider(
+              lazy: false,
               create: (_) => ChatBloc(
                 FirebaseFirestoreServiceImplementation(),
                 FirebaseAuthServiceImplementation(),
@@ -186,6 +192,7 @@ abstract class Routes {
                 ),
             ),
             BlocProvider(
+              lazy: false,
               create: (_) => StatusBloc(
                 FirebaseFirestoreServiceImplementation(),
                 FirebaseAuthServiceImplementation(),
@@ -195,6 +202,7 @@ abstract class Routes {
                 ),
             ),
             BlocProvider(
+              lazy: false,
               create: (_) => CallsBloc(
                 FirebaseFirestoreServiceImplementation(),
                 FirebaseAuthServiceImplementation(),
