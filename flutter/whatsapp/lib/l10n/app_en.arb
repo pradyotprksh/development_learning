@@ -217,5 +217,21 @@
   "after1Minute": "After 1 minute",
   "after30Minutes": "After 30 minutes",
   "showContentInNotifications": "Show content in notifications",
-  "showContentInNotificationsNote": "Preview sender and messages text inside new message notifications."
+  "showContentInNotificationsNote": "Preview sender and messages text inside new message notifications.",
+  "edit": "Edit",
+  "changeSubject": "Change subject",
+  "share": "Share",
+  "viewInAddressBook": "View in address book",
+  "viewSecurityCode": "View security code",
+  "addGroupDescription": "Add group description",
+  "createdOn": "Created on",
+  "customNotifications": "Custom notifications",
+  "mediaVisibility": "Media visibility",
+  "encryption": "Encryption",
+  "encryptionNote": "Messages and calls are end-to-end encrypted. Tap to learn more.",
+  "groupSettings": "Group settings",
+  "addParticipants": "Add participants",
+  "inviteViaLink": "Invite via link",
+  "exitGroup": "Exit group",
+  "reportGroup": "Report group"
 }

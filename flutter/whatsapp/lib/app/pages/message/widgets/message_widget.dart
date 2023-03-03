@@ -306,15 +306,9 @@ class MessageWidget extends StatelessWidget {
                                     mainAxisSpacing: 5,
                                   ),
                                   shrinkWrap: true,
-                                  itemBuilder: (_, index) => ClipRRect(
-                                    borderRadius: const BorderRadius.all(
-                                      Radius.circular(
-                                        10,
-                                      ),
-                                    ),
-                                    child: CachedAttachmentPreviewWidget(
-                                      fileDetails: attachments[index],
-                                    ),
+                                  itemBuilder: (_, index) =>
+                                      CachedAttachmentPreviewWidget(
+                                    fileDetails: attachments[index],
                                   ),
                                 ),
                               if (attachments != null && attachments.isNotEmpty)

@@ -181,7 +181,6 @@ abstract class Routes {
                 ),
             ),
             BlocProvider(
-              lazy: false,
               create: (_) => ChatBloc(
                 FirebaseFirestoreServiceImplementation(),
                 FirebaseAuthServiceImplementation(),
@@ -194,7 +193,6 @@ abstract class Routes {
                 ),
             ),
             BlocProvider(
-              lazy: false,
               create: (_) => StatusBloc(
                 FirebaseFirestoreServiceImplementation(),
                 FirebaseAuthServiceImplementation(),
@@ -204,7 +202,6 @@ abstract class Routes {
                 ),
             ),
             BlocProvider(
-              lazy: false,
               create: (_) => CallsBloc(
                 FirebaseFirestoreServiceImplementation(),
                 FirebaseAuthServiceImplementation(),

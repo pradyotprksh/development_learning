@@ -11,8 +11,12 @@ class MessageDetailsView extends StatelessWidget {
     context.read<MessageDetailsBloc>().add(FetchDetails(details));
 
     return Scaffold(
+      extendBody: true,
+      extendBodyBehindAppBar: true,
       backgroundColor: context.themeData.scaffoldBackgroundColor,
       appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
         actions: [
           PopupMenuButton<MessageDetailsMenuItem>(
             onSelected: (item) {
@@ -35,35 +39,35 @@ class MessageDetailsView extends StatelessWidget {
                 PopupMenuItem(
                   value: MessageDetailsMenuItem.edit,
                   child: Text(
-                    context.translator.viewContact,
+                    context.translator.edit,
                   ),
                 ),
               if (details.isGroup)
                 PopupMenuItem(
                   value: MessageDetailsMenuItem.changeSubject,
                   child: Text(
-                    context.translator.mediaLinksDocs,
+                    context.translator.changeSubject,
                   ),
                 ),
               if (details.isDirectMessage)
                 PopupMenuItem(
                   value: MessageDetailsMenuItem.share,
                   child: Text(
-                    context.translator.search,
+                    context.translator.share,
                   ),
                 ),
               if (details.isDirectMessage)
                 PopupMenuItem(
                   value: MessageDetailsMenuItem.viewInAddressBook,
                   child: Text(
-                    context.translator.muteNotifications,
+                    context.translator.viewInAddressBook,
                   ),
                 ),
               if (details.isDirectMessage)
                 PopupMenuItem(
                   value: MessageDetailsMenuItem.viewSecurityCode,
                   child: Text(
-                    context.translator.disappearingMessages,
+                    context.translator.viewSecurityCode,
                   ),
                 ),
             ],
@@ -72,6 +76,131 @@ class MessageDetailsView extends StatelessWidget {
             ),
           ),
         ],
+      ),
+      body: BlocBuilder<MessageDetailsBloc, MessageDetailsState>(
+        builder: (_, messageState) {
+          final groupDetails =
+              messageState.groupMessageDetails?.groupMessageDetails;
+          final directMessageDetails = messageState.directMessageDetails;
+
+          return ListView(
+            children: [
+              if (groupDetails != null)
+                GroupImageWidget(
+                  profileImage: groupDetails.profileImage ?? '',
+                  groupId: groupDetails.groupId,
+                  enableAction: false,
+                  size: 180,
+                ),
+              ThemeSizedBox.height20,
+              if (groupDetails != null)
+                Text(
+                  groupDetails.name,
+                  textAlign: TextAlign.center,
+                  style: context.themeData.textTheme.headlineMedium,
+                ),
+              ThemeSizedBox.height20,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  IconButton(
+                    onPressed: () {},
+                    icon: Icon(
+                      Icons.call,
+                      color: context.themeData.primaryColor,
+                      size: 30,
+                    ),
+                  ),
+                  ThemeSizedBox.width10,
+                  IconButton(
+                    onPressed: () {},
+                    icon: Icon(
+                      Icons.videocam,
+                      color: context.themeData.primaryColor,
+                      size: 30,
+                    ),
+                  ),
+                  ThemeSizedBox.width10,
+                  IconButton(
+                    onPressed: () {},
+                    icon: Icon(
+                      Icons.search,
+                      color: context.themeData.primaryColor,
+                      size: 30,
+                    ),
+                  ),
+                ],
+              ),
+              ThemeSizedBox.height10,
+              if (groupDetails != null)
+                ListTile(
+                  onTap: () {},
+                  title: Text(
+                    context.translator.addGroupDescription,
+                    style: context.themeData.textTheme.labelLarge?.copyWith(
+                      color: context.themeData.primaryColor,
+                    ),
+                  ),
+                  subtitle: Text(
+                    '${context.translator.created}${AppUtilsMethods.timeAgo(
+                      groupDetails.createdOnTimeStamp,
+                      context,
+                    )}',
+                  ),
+                ),
+              if (messageState.attachments.isNotEmpty)
+                Padding(
+                  padding: ThemeEdgeInsets.all15,
+                  child: GestureDetector(
+                    onTap: () {},
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          context.translator.mediaLinksDocs,
+                          style: context.themeData.textTheme.labelSmall,
+                        ),
+                        Row(
+                          children: [
+                            Text(
+                              messageState.attachments.length.toString(),
+                              style: context.themeData.textTheme.labelSmall,
+                            ),
+                            const Icon(
+                              Icons.keyboard_arrow_right,
+                              size: 12,
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              if (messageState.attachments.isNotEmpty)
+                SizedBox(
+                  height: 150,
+                  child: ListView.builder(
+                    physics: const ClampingScrollPhysics(),
+                    shrinkWrap: true,
+                    padding: ThemeEdgeInsets.left15TopBottom5,
+                    scrollDirection: Axis.horizontal,
+                    itemCount: messageState.attachments.length,
+                    itemBuilder: (_, index) => SizedBox(
+                      height: 150,
+                      width: 100,
+                      child: Padding(
+                        padding: ThemeEdgeInsets.right15,
+                        child: CachedAttachmentPreviewWidget(
+                          fileDetails: messageState.attachments[index],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+            ],
+          );
+        },
       ),
     );
   }

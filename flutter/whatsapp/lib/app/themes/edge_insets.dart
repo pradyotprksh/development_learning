@@ -11,11 +11,17 @@ abstract class ThemeEdgeInsets {
     top: 15,
   );
   static const left16 = EdgeInsets.only(left: 16);
+  static const right15 = EdgeInsets.only(right: 15);
   static const leftRight15TopBottom5 = EdgeInsets.only(
     top: 5,
     bottom: 5,
     left: 15,
     right: 15,
+  );
+  static const left15TopBottom5 = EdgeInsets.only(
+    top: 5,
+    bottom: 5,
+    left: 15,
   );
   static const left15 = EdgeInsets.only(left: 15);
   static const bottom20 = EdgeInsets.only(bottom: 20);

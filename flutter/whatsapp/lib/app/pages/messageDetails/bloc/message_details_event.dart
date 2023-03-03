@@ -29,3 +29,15 @@ class GetGroupMessageDetails extends MessageDetailsEvent {
 class FetchUsersDetails extends MessageDetailsEvent {
   const FetchUsersDetails();
 }
+
+class GetGroupMessageAttachments extends MessageDetailsEvent {
+  const GetGroupMessageAttachments(this.groupMessageId);
+
+  final String groupMessageId;
+}
+
+class GetDirectMessageAttachments extends MessageDetailsEvent {
+  const GetDirectMessageAttachments(this.directMessageId);
+
+  final String directMessageId;
+}

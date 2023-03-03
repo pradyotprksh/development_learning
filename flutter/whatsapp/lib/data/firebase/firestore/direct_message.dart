@@ -175,4 +175,62 @@ mixin FirestoreDirectMessageService implements FirebaseFirestoreService {
           return event.data();
         },
       );
+
+  @override
+  Stream<DirectMessageDetails?> getDirectMessageDetails(
+    String directMessageId,
+  ) =>
+      getDirectMessageCollectionReference()
+          .doc(directMessageId)
+          .snapshots()
+          .map(
+        (event) {
+          NetworkListeners.listener.add(
+            Listener(
+              ListenersFor.directMessages,
+              ListenersType.read,
+              event.data()?.size ?? 0,
+            ),
+          );
+          return event.data();
+        },
+      );
+
+  @override
+  Stream<List<FileInformationDetails>> getDirectMessagesAttachments(
+          String directMessageId) =>
+      getDirectMessagesCollectionReference(directMessageId)
+          .orderBy(FirestoreItemKey.sentOnTimeStamp, descending: true)
+          .snapshots()
+          .map(
+        (event) {
+          final docs = event.docs;
+          final data = docs.map(
+            (e) {
+              final details = e.data();
+              NetworkListeners.listener.add(
+                Listener(
+                  ListenersFor.singleMessage,
+                  ListenersType.read,
+                  details.size,
+                ),
+              );
+              return details;
+            },
+          ).toList();
+
+          final attachments = data.map((e) => e.attachments).toList()
+            ..removeWhere(
+              (element) => element == null || element.isEmpty,
+            );
+
+          final allAttachments = attachments
+              .expand<FileInformationDetails>(
+                (element) => element as List<FileInformationDetails>,
+              )
+              .toList();
+
+          return allAttachments;
+        },
+      );
 }

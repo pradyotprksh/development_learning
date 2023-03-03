@@ -14,6 +14,18 @@ abstract class FirebaseFirestoreService {
     String selectedUserId,
   );
 
+  Stream<List<FileInformationDetails>> getGroupMessagesAttachments(
+    String groupMessageId,
+  );
+
+  Stream<List<FileInformationDetails>> getDirectMessagesAttachments(
+    String directMessageId,
+  );
+
+  Stream<DirectMessageDetails?> getDirectMessageDetails(
+    String groupId,
+  );
+
   Stream<UsersGroupMessageDetails?> getGroupMessageWithUsersDetails(
     String selectedGroupId,
   );

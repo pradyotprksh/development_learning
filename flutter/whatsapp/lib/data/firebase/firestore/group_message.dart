@@ -143,4 +143,43 @@ mixin FirestoreGroupMessageService implements FirebaseFirestoreService {
           return event.data();
         },
       );
+
+  @override
+  Stream<List<FileInformationDetails>> getGroupMessagesAttachments(
+    String groupMessageId,
+  ) =>
+      getGroupMessagesCollectionReference(groupMessageId)
+          .orderBy(FirestoreItemKey.sentOnTimeStamp, descending: true)
+          .snapshots()
+          .map(
+        (event) {
+          final docs = event.docs;
+          final data = docs.map(
+            (e) {
+              final details = e.data();
+              NetworkListeners.listener.add(
+                Listener(
+                  ListenersFor.singleMessage,
+                  ListenersType.read,
+                  details.size,
+                ),
+              );
+              return details;
+            },
+          ).toList();
+
+          final attachments = data.map((e) => e.attachments).toList()
+            ..removeWhere(
+              (element) => element == null || element.isEmpty,
+            );
+
+          final allAttachments = attachments
+              .expand<FileInformationDetails>(
+                (element) => element as List<FileInformationDetails>,
+              )
+              .toList();
+
+          return allAttachments;
+        },
+      );
 }

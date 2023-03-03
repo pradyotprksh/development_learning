@@ -11,6 +11,8 @@ class MessageDetailsBloc
     on<GetDirectMessageDetails>(_getDirectMessageDetails);
     on<GetGroupMessageDetails>(_getGroupMessageDetails);
     on<FetchUsersDetails>(_fetchUserDetails);
+    on<GetGroupMessageAttachments>(_getGroupMessageAttachments);
+    on<GetDirectMessageAttachments>(_getDirectMessageAttachments);
   }
 
   final FirebaseFirestoreService _firebaseFirestoreService;
@@ -31,7 +33,21 @@ class MessageDetailsBloc
   void _getDirectMessageDetails(
     GetDirectMessageDetails event,
     Emitter<MessageDetailsState> emit,
-  ) {}
+  ) async {
+    await emit.forEach(
+      _firebaseFirestoreService.getDirectMessageDetails(
+        event.directMessageId,
+      ),
+      onData: (details) {
+        if (details != null) {
+          add(GetDirectMessageAttachments(event.directMessageId));
+        }
+        return state.copyWith(
+          directMessageDetails: details,
+        );
+      },
+    );
+  }
 
   void _getGroupMessageDetails(
     GetGroupMessageDetails event,
@@ -44,6 +60,7 @@ class MessageDetailsBloc
       onData: (details) {
         if (details?.groupMessageDetails?.groupId != null) {
           add(const FetchUsersDetails());
+          add(GetGroupMessageAttachments(event.groupMessageId));
         }
         return state.copyWith(
           groupMessageDetails: details,
@@ -65,5 +82,33 @@ class MessageDetailsBloc
         ),
       );
     }
+  }
+
+  void _getGroupMessageAttachments(
+    GetGroupMessageAttachments event,
+    Emitter<MessageDetailsState> emit,
+  ) async {
+    await emit.forEach(
+      _firebaseFirestoreService.getGroupMessagesAttachments(
+        event.groupMessageId,
+      ),
+      onData: (attachments) => state.copyWith(
+        attachments: attachments,
+      ),
+    );
+  }
+
+  void _getDirectMessageAttachments(
+    GetDirectMessageAttachments event,
+    Emitter<MessageDetailsState> emit,
+  ) async {
+    await emit.forEach(
+      _firebaseFirestoreService.getDirectMessagesAttachments(
+        event.directMessageId,
+      ),
+      onData: (attachments) => state.copyWith(
+        attachments: attachments,
+      ),
+    );
   }
 }

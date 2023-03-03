@@ -24,14 +24,12 @@ class _DirectMessageViewState extends State<DirectMessageView> {
       backgroundColor: context.themeData.scaffoldBackgroundColor,
       appBar: AppBar(
         title: BlocBuilder<DirectMessageBloc, DirectMessageState>(
-          buildWhen: (previousState, currentState) =>
-              previousState.userDetails != currentState.userDetails,
           builder: (_, messageState) => ListTile(
             onTap: () {
               context.navigator.pushNamed(
                 Routes.messageDetails,
                 arguments: MessageRouteDetails(
-                  directMessageId: userId,
+                  directMessageId: messageState.directMessageDetails?.messageId,
                 ),
               );
             },
