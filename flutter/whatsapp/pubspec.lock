@@ -25,14 +25,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.3.2"
-  asn1lib:
-    dependency: transitive
-    description:
-      name: asn1lib
-      sha256: ab96a1cb3beeccf8145c52e449233fe68364c9641623acd3adad66f8184f1039
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.4.0"
   async:
     dependency: transitive
     description:
@@ -353,14 +345,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.5.2"
-  encrypt:
-    dependency: "direct main"
-    description:
-      name: encrypt
-      sha256: "4fd4e4fdc21b9d7d4141823e1e6515cd94e7b8d84749504c232999fba25d9bbb"
-      url: "https://pub.dev"
-    source: hosted
-    version: "5.0.1"
   enum_to_string:
     dependency: "direct main"
     description:
@@ -629,10 +613,10 @@ packages:
     dependency: "direct main"
     description:
       name: firebase_ui_auth
-      sha256: "67b52b2f7d607355a07bae28d67f28e7b52a1e555a7f7cd1455f2e95be4d0816"
+      sha256: f3bfe9c09394bbe2442771add2bb970070a8ad35efe440a9d61c1ab5f5ccfbe8
       url: "https://pub.dev"
     source: hosted
-    version: "1.1.14"
+    version: "1.1.15"
   firebase_ui_localizations:
     dependency: transitive
     description:
@@ -645,10 +629,10 @@ packages:
     dependency: transitive
     description:
       name: firebase_ui_oauth
-      sha256: "77faba56761198f57b8939e4a93ef6dbabc1b972a22ff90ec1033dcff981a071"
+      sha256: e1d7373b08e69bd763072dc83857cbc9acbfa187df19ecd222773234b4506e3a
       url: "https://pub.dev"
     source: hosted
-    version: "1.1.14"
+    version: "1.1.15"
   flex_color_scheme:
     dependency: "direct main"
     description:
@@ -1002,10 +986,10 @@ packages:
     dependency: "direct main"
     description:
       name: local_auth
-      sha256: "1625a217c599db02044df992509eb52584cfdaa8219958d516b74f644ef2c626"
+      sha256: "0cf238be2bfa51a6c9e7e9cfc11c05ea39f2a3a4d3e5bb255d0ebc917da24401"
       url: "https://pub.dev"
     source: hosted
-    version: "2.1.5"
+    version: "2.1.6"
   local_auth_android:
     dependency: transitive
     description:
@@ -1070,14 +1054,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.4"
-  memory_cache:
-    dependency: "direct main"
-    description:
-      name: memory_cache
-      sha256: "33cb7d3330a67c87fa61441400317d46eb011041aded7e5279bb5f675cf981bb"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.2.0"
   meta:
     dependency: transitive
     description:
@@ -1728,10 +1704,10 @@ packages:
     dependency: "direct main"
     description:
       name: video_player
-      sha256: "6cec15c21974282994577ffcfb5b42e64a699d38583138ec8dcb3d0a6902a41c"
+      sha256: "58dc3d6ceb199b82e652ec27f16485e33167ef021fe4221a954ff1aa12b1a5c0"
       url: "https://pub.dev"
     source: hosted
-    version: "2.5.2"
+    version: "2.5.3"
   video_player_android:
     dependency: transitive
     description:

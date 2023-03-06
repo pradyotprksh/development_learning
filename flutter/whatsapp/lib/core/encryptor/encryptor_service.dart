@@ -1,22 +1,15 @@
-import 'package:encrypt/encrypt.dart';
-import 'package:memory_cache/memory_cache.dart';
+import 'dart:convert' show utf8, base64;
+
 import 'package:whatsapp/core/core.dart';
-import 'package:whatsapp/domain/domain.dart';
 
 abstract class EncryptorService {
   const EncryptorService();
 
   static String encryptData(dynamic data) {
-    final key = MemoryCache.instance.read<String?>(FirestoreItemKey.pin);
-    if (FirebaseRemoteConfigService.isEncryptionEnabled() &&
-        key != null &&
-        data != null) {
+    if (FirebaseRemoteConfigService.isEncryptionEnabled() && data != null) {
       try {
-        final utf8Key = Key.fromUtf8(key);
-        final iv = IV.fromLength(16);
-        final encryptor = Encrypter(AES(utf8Key));
-        final encrypted = encryptor.encrypt(data.toString(), iv: iv);
-        return encrypted.base64;
+        final encoded = base64.encode(utf8.encode(data.toString()));
+        return encoded;
       } catch (e) {
         FirebaseUtils.recordFlutterError(e);
         return data.toString();
@@ -27,16 +20,10 @@ abstract class EncryptorService {
   }
 
   static T decryptData<T>(T data) {
-    final key = MemoryCache.instance.read<String?>(FirestoreItemKey.pin);
-    if (FirebaseRemoteConfigService.isEncryptionEnabled() &&
-        key != null &&
-        data != null) {
+    if (FirebaseRemoteConfigService.isEncryptionEnabled() && data != null) {
       try {
-        final utf8Key = Key.fromUtf8(key);
-        final iv = IV.fromLength(16);
-        final decryptor = Encrypter(AES(utf8Key));
-        final decrypted = decryptor.decrypt64(data.toString(), iv: iv);
-        return decrypted as T;
+        final decoded = utf8.decode(base64.decode(data.toString()));
+        return decoded as T;
       } catch (e) {
         FirebaseUtils.recordFlutterError(e);
         return data;

@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
-import 'package:memory_cache/memory_cache.dart';
 import 'package:whatsapp/core/core.dart';
 import 'package:whatsapp/domain/domain.dart';
 
@@ -33,9 +32,6 @@ class UserDetails extends Equatable {
   ) {
     final data = snapshot.data();
 
-    final pin = data?[FirestoreItemKey.pin] as String;
-    MemoryCache.instance.create(FirestoreItemKey.pin, pin * 4);
-
     return UserDetails(
       name:
           EncryptorService.decryptData(data?[FirestoreItemKey.name] as String?),
@@ -48,7 +44,7 @@ class UserDetails extends Equatable {
       firestoreFilePath: EncryptorService.decryptData(
           data?[FirestoreItemKey.firestoreFilePath] as String?),
       userId: data?[FirestoreItemKey.userId] as String,
-      pin: pin,
+      pin: data?[FirestoreItemKey.pin] as String,
       createdOnTimeStamp:
           data?[FirestoreItemKey.createdOnTimeStamp] as int? ?? 0,
       updatedOnTimeStamp:
