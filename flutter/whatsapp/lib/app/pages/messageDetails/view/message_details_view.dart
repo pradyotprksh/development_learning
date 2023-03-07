@@ -105,7 +105,9 @@ class MessageDetailsView extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      _makeVideoOrPhoneCall(context, true);
+                    },
                     icon: Icon(
                       Icons.call,
                       color: context.themeData.primaryColor,
@@ -114,7 +116,9 @@ class MessageDetailsView extends StatelessWidget {
                   ),
                   ThemeSizedBox.width10,
                   IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      _makeVideoOrPhoneCall(context, false);
+                    },
                     icon: Icon(
                       Icons.videocam,
                       color: context.themeData.primaryColor,
@@ -198,10 +202,44 @@ class MessageDetailsView extends StatelessWidget {
                     ),
                   ),
                 ),
+              ThemeSizedBox.height10,
+              ListTile(
+                onTap: () {},
+                leading: Icon(
+                  Icons.notifications,
+                  color: context.themeData.iconTheme.color,
+                ),
+                trailing: GestureDetector(
+                  child: Switch(
+                    value: false,
+                    onChanged: (value) {},
+                  ),
+                ),
+                title: Text(context.translator.muteNotifications),
+              ),
             ],
           );
         },
       ),
     );
+  }
+
+  void _makeVideoOrPhoneCall(
+    BuildContext context,
+    bool isPhoneCall,
+  ) {
+    final users = context.read<MessageDetailsBloc>().state.usersDetails;
+
+    if (users.isNotEmpty) {
+      context.navigator.pushNamed(
+        Routes.call,
+        arguments: CallDetailsArguments(
+          userDetails: context.read<MessageDetailsBloc>().state.usersDetails,
+          isPhoneCall: isPhoneCall,
+          isVideoCall: !isPhoneCall,
+          isGroupCall: false,
+        ),
+      );
+    }
   }
 }
