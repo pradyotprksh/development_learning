@@ -28,30 +28,7 @@ class ExistingAccountsWidget extends StatelessWidget {
             final userDetail = existingAccount[index - 1].userDetails;
 
             if (userDetail != null) {
-              return ListTile(
-                onTap: () {
-                  context.navigator.pushNamed(
-                    Routes.messages,
-                    arguments: <String, String>{
-                      Keys.userId: userDetail.userId,
-                    },
-                  );
-                },
-                leading: UserImageWidget(
-                  profileImage: userDetail.profileImage ?? '',
-                  userId: userDetail.userId,
-                  currentMood: userDetail.currentMood,
-                  isOnline: userDetail.isOnline,
-                  enableAction: false,
-                  useAvatarAsProfile: userDetail.useAvatarAsProfile,
-                  avatarDetails: userDetail.avatarDetails,
-                ),
-                title: Text(
-                  userDetail.name ?? '',
-                ),
-                subtitle:
-                    Text('${userDetail.phoneNumber} | ${userDetail.emailId}'),
-              );
+              return UserWithDetailsWidget(userDetail: userDetail);
             } else {
               return ThemeSizedBox.shrink;
             }

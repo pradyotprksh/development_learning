@@ -197,8 +197,9 @@ mixin FirestoreDirectMessageService implements FirebaseFirestoreService {
       );
 
   @override
-  Stream<List<FileInformationDetails>> getDirectMessagesAttachments(
-          String directMessageId) =>
+  Stream<List<SingleMessageDetails>> getDirectMessagesMediaLinksDocs(
+    String directMessageId,
+  ) =>
       getDirectMessagesCollectionReference(directMessageId)
           .orderBy(FirestoreItemKey.sentOnTimeStamp, descending: true)
           .snapshots()
@@ -219,18 +220,7 @@ mixin FirestoreDirectMessageService implements FirebaseFirestoreService {
             },
           ).toList();
 
-          final attachments = data.map((e) => e.attachments).toList()
-            ..removeWhere(
-              (element) => element == null || element.isEmpty,
-            );
-
-          final allAttachments = attachments
-              .expand<FileInformationDetails>(
-                (element) => element as List<FileInformationDetails>,
-              )
-              .toList();
-
-          return allAttachments;
+          return data;
         },
       );
 }

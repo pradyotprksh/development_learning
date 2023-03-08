@@ -14,11 +14,11 @@ abstract class FirebaseFirestoreService {
     String selectedUserId,
   );
 
-  Stream<List<FileInformationDetails>> getGroupMessagesAttachments(
+  Stream<List<SingleMessageDetails>> getGroupMessagesMediaLinksDocs(
     String groupMessageId,
   );
 
-  Stream<List<FileInformationDetails>> getDirectMessagesAttachments(
+  Stream<List<SingleMessageDetails>> getDirectMessagesMediaLinksDocs(
     String directMessageId,
   );
 

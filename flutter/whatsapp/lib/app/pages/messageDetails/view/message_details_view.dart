@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:whatsapp/app/app.dart';
+import 'package:whatsapp/domain/domain.dart';
 
 class MessageDetailsView extends StatelessWidget {
   const MessageDetailsView({super.key});
@@ -15,8 +16,6 @@ class MessageDetailsView extends StatelessWidget {
       extendBodyBehindAppBar: true,
       backgroundColor: context.themeData.scaffoldBackgroundColor,
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
         actions: [
           PopupMenuButton<MessageDetailsMenuItem>(
             onSelected: (item) {
@@ -83,8 +82,21 @@ class MessageDetailsView extends StatelessWidget {
               messageState.groupMessageDetails?.groupMessageDetails;
           final directMessageDetails = messageState.directMessageDetails;
 
+          final imageAttachments = messageState.media
+              .where(
+                (element) =>
+                    element.attachments != null &&
+                    element.attachments?.isNotEmpty == true,
+              )
+              .map((e) => e.attachments)
+              .expand<FileInformationDetails>(
+                (element) => element as List<FileInformationDetails>,
+              )
+              .toList();
+
           return ListView(
             children: [
+              ThemeSizedBox.height20,
               if (groupDetails != null)
                 GroupImageWidget(
                   profileImage: groupDetails.profileImage ?? '',
@@ -136,7 +148,9 @@ class MessageDetailsView extends StatelessWidget {
                   ),
                 ],
               ),
-              ThemeSizedBox.height10,
+              const AppBarDividerWidget(
+                thickness: 10,
+              ),
               if (groupDetails != null)
                 ListTile(
                   onTap: () {},
@@ -153,7 +167,11 @@ class MessageDetailsView extends StatelessWidget {
                     )}',
                   ),
                 ),
-              if (messageState.attachments.isNotEmpty)
+              if (groupDetails != null)
+                const AppBarDividerWidget(
+                  thickness: 10,
+                ),
+              if (messageState.media.isNotEmpty)
                 Padding(
                   padding: ThemeEdgeInsets.all15,
                   child: GestureDetector(
@@ -168,7 +186,7 @@ class MessageDetailsView extends StatelessWidget {
                         Row(
                           children: [
                             Text(
-                              messageState.attachments.length.toString(),
+                              messageState.media.length.toString(),
                               style: context.themeData.textTheme.labelSmall,
                             ),
                             const Icon(
@@ -181,7 +199,7 @@ class MessageDetailsView extends StatelessWidget {
                     ),
                   ),
                 ),
-              if (messageState.attachments.isNotEmpty)
+              if (imageAttachments.isNotEmpty)
                 SizedBox(
                   height: 150,
                   child: ListView.builder(
@@ -189,20 +207,23 @@ class MessageDetailsView extends StatelessWidget {
                     shrinkWrap: true,
                     padding: ThemeEdgeInsets.left15TopBottom5,
                     scrollDirection: Axis.horizontal,
-                    itemCount: messageState.attachments.length,
+                    itemCount: imageAttachments.length,
                     itemBuilder: (_, index) => SizedBox(
                       height: 150,
                       width: 100,
                       child: Padding(
                         padding: ThemeEdgeInsets.right15,
                         child: CachedAttachmentPreviewWidget(
-                          fileDetails: messageState.attachments[index],
+                          fileDetails: imageAttachments[index],
+                          showOnlyImage: true,
                         ),
                       ),
                     ),
                   ),
                 ),
-              ThemeSizedBox.height10,
+              const AppBarDividerWidget(
+                thickness: 10,
+              ),
               ListTile(
                 onTap: () {},
                 leading: Icon(
@@ -217,6 +238,79 @@ class MessageDetailsView extends StatelessWidget {
                 ),
                 title: Text(context.translator.muteNotifications),
               ),
+              ListTile(
+                onTap: () {},
+                leading: Icon(
+                  Icons.music_note,
+                  color: context.themeData.iconTheme.color,
+                ),
+                title: Text(context.translator.customNotifications),
+              ),
+              ListTile(
+                onTap: () {},
+                leading: Icon(
+                  Icons.image,
+                  color: context.themeData.iconTheme.color,
+                ),
+                title: Text(context.translator.mediaVisibility),
+              ),
+              const AppBarDividerWidget(
+                thickness: 10,
+              ),
+              ListTile(
+                onTap: () {},
+                leading: Icon(
+                  Icons.lock,
+                  color: context.themeData.iconTheme.color,
+                ),
+                title: Text(context.translator.encryption),
+                subtitle: Text(context.translator.encryptionNote),
+              ),
+              ListTile(
+                onTap: () {},
+                leading: Icon(
+                  Icons.timer,
+                  color: context.themeData.iconTheme.color,
+                ),
+                title: Text(context.translator.disappearingMessages),
+                subtitle: Text(context.translator.off),
+              ),
+              const AppBarDividerWidget(
+                thickness: 10,
+              ),
+              if (groupDetails != null && messageState.usersDetails.isNotEmpty)
+                Padding(
+                  padding: ThemeEdgeInsets.all15,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        '${messageState.usersDetails.length}${context.translator.participants}',
+                        style: context.themeData.textTheme.labelSmall,
+                      ),
+                      InkWell(
+                        onTap: () {},
+                        child: const Icon(
+                          Icons.search,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              if (groupDetails != null && messageState.usersDetails.isNotEmpty)
+                ListView.builder(
+                  primary: false,
+                  shrinkWrap: true,
+                  padding: ThemeEdgeInsets.zero,
+                  itemCount: messageState.usersDetails.length,
+                  itemBuilder: (_, index) => UserWithDetailsWidget(
+                    userDetail: messageState.usersDetails[index],
+                  ),
+                ),
+              if (groupDetails != null && messageState.usersDetails.isNotEmpty)
+                const AppBarDividerWidget(
+                  thickness: 10,
+                ),
             ],
           );
         },

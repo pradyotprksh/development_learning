@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:screenshot_callback/screenshot_callback.dart';
 import 'package:whatsapp/app/app.dart';
-import 'package:whatsapp/core/core.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -22,7 +21,6 @@ class _HomeViewState extends State<HomeView>
     _tabController = TabController(vsync: this, length: 3);
     _screenshotCallback.addListener(
       () {
-        UtilsLogger.errorLog("asdfasdf");
         context.read<UtilitiesBloc>().add(
               ScreenshotTaken(
                 context.routeSettings?.name,

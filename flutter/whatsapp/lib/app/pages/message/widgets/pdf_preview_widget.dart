@@ -13,11 +13,13 @@ class PdfPreviewWidget extends StatefulWidget {
     this.path,
     this.size,
     this.onTap,
+    this.showPreview = true,
   });
 
   final String? url;
   final String? path;
   final double? size;
+  final bool showPreview;
   final Function()? onTap;
 
   @override
@@ -33,45 +35,49 @@ class _PdfPreviewWidgetState extends State<PdfPreviewWidget>
       onTap: () {
         widget.onTap?.call();
       },
-      child: AbsorbPointer(
-        absorbing: true,
-        child: (widget.url != null)
-            ? SfPdfViewer.network(
-                widget.url!,
-                pageLayoutMode: PdfPageLayoutMode.continuous,
-                canShowPaginationDialog: false,
-                canShowPasswordDialog: false,
-                canShowScrollHead: false,
-                canShowHyperlinkDialog: false,
-                canShowScrollStatus: false,
-                onDocumentLoaded: (_) {
-                  if (widget.size != null) {
-                    NetworkListeners.listener.add(
-                      listener.Listener(
-                        ListenersFor.file,
-                        ListenersType.read,
-                        widget.size!,
-                      ),
-                    );
-                  }
-                },
-              )
-            : (widget.path != null)
-                ? SfPdfViewer.file(
-                    File(
-                      widget.path!,
-                    ),
-                    pageLayoutMode: PdfPageLayoutMode.continuous,
-                    canShowPaginationDialog: false,
-                    canShowPasswordDialog: false,
-                    canShowScrollHead: false,
-                    canShowHyperlinkDialog: false,
-                    canShowScrollStatus: false,
-                  )
-                : const DefaultAttachmentWidget(
-                    icon: Icons.picture_as_pdf,
-                  ),
-      ),
+      child: widget.showPreview
+          ? AbsorbPointer(
+              absorbing: true,
+              child: (widget.url != null)
+                  ? SfPdfViewer.network(
+                      widget.url!,
+                      pageLayoutMode: PdfPageLayoutMode.continuous,
+                      canShowPaginationDialog: false,
+                      canShowPasswordDialog: false,
+                      canShowScrollHead: false,
+                      canShowHyperlinkDialog: false,
+                      canShowScrollStatus: false,
+                      onDocumentLoaded: (_) {
+                        if (widget.size != null) {
+                          NetworkListeners.listener.add(
+                            listener.Listener(
+                              ListenersFor.file,
+                              ListenersType.read,
+                              widget.size!,
+                            ),
+                          );
+                        }
+                      },
+                    )
+                  : (widget.path != null)
+                      ? SfPdfViewer.file(
+                          File(
+                            widget.path!,
+                          ),
+                          pageLayoutMode: PdfPageLayoutMode.continuous,
+                          canShowPaginationDialog: false,
+                          canShowPasswordDialog: false,
+                          canShowScrollHead: false,
+                          canShowHyperlinkDialog: false,
+                          canShowScrollStatus: false,
+                        )
+                      : const DefaultAttachmentWidget(
+                          icon: Icons.picture_as_pdf,
+                        ),
+            )
+          : const DefaultAttachmentWidget(
+              icon: Icons.picture_as_pdf,
+            ),
     );
   }
 

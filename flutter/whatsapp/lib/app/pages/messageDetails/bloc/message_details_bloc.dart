@@ -89,12 +89,20 @@ class MessageDetailsBloc
     Emitter<MessageDetailsState> emit,
   ) async {
     await emit.forEach(
-      _firebaseFirestoreService.getGroupMessagesAttachments(
+      _firebaseFirestoreService.getGroupMessagesMediaLinksDocs(
         event.groupMessageId,
       ),
-      onData: (attachments) => state.copyWith(
-        attachments: attachments,
-      ),
+      onData: (attachments) {
+        attachments.removeWhere(
+          (element) =>
+              element.message.links().isEmpty &&
+              (element.attachments == null ||
+                  element.attachments?.isEmpty == true),
+        );
+        return state.copyWith(
+          media: attachments,
+        );
+      },
     );
   }
 
@@ -103,12 +111,20 @@ class MessageDetailsBloc
     Emitter<MessageDetailsState> emit,
   ) async {
     await emit.forEach(
-      _firebaseFirestoreService.getDirectMessagesAttachments(
+      _firebaseFirestoreService.getDirectMessagesMediaLinksDocs(
         event.directMessageId,
       ),
-      onData: (attachments) => state.copyWith(
-        attachments: attachments,
-      ),
+      onData: (attachments) {
+        attachments.removeWhere(
+          (element) =>
+              element.message.links().isEmpty &&
+              (element.attachments == null ||
+                  element.attachments?.isEmpty == true),
+        );
+        return state.copyWith(
+          media: attachments,
+        );
+      },
     );
   }
 }

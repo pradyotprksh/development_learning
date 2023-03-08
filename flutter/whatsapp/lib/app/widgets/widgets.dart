@@ -1,3 +1,4 @@
+export 'app_bar_divider_widget.dart';
 export 'cached_network_image_widget.dart';
 export 'camera_option_widget.dart';
 export 'circular_progress_indicator_widget.dart';
@@ -8,3 +9,4 @@ export 'linear_progress_indicator_widget.dart';
 export 'pin_input_widget.dart';
 export 'show_emoji_bottom_sheet.dart';
 export 'user_image_widget.dart';
+export 'user_with_details_widget.dart';

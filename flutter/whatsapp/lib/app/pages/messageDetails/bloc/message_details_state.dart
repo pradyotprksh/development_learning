@@ -8,7 +8,7 @@ class MessageDetailsState extends Equatable {
     this.groupMessageDetails,
     this.directMessageDetails,
     this.usersDetails = const [],
-    this.attachments = const [],
+    this.media = const [],
   });
 
   MessageDetailsState copyWith({
@@ -16,21 +16,21 @@ class MessageDetailsState extends Equatable {
     UsersGroupMessageDetails? groupMessageDetails,
     DirectMessageDetails? directMessageDetails,
     List<UserDetails>? usersDetails,
-    List<FileInformationDetails>? attachments,
+    List<SingleMessageDetails>? media,
   }) =>
       MessageDetailsState(
         pageState: pageState ?? this.pageState,
         groupMessageDetails: groupMessageDetails ?? this.groupMessageDetails,
         directMessageDetails: directMessageDetails ?? this.directMessageDetails,
         usersDetails: usersDetails ?? this.usersDetails,
-        attachments: attachments ?? this.attachments,
+        media: media ?? this.media,
       );
 
   final PageState pageState;
   final UsersGroupMessageDetails? groupMessageDetails;
   final DirectMessageDetails? directMessageDetails;
   final List<UserDetails> usersDetails;
-  final List<FileInformationDetails> attachments;
+  final List<SingleMessageDetails> media;
 
   @override
   List<Object?> get props => [
@@ -38,6 +38,6 @@ class MessageDetailsState extends Equatable {
         groupMessageDetails,
         directMessageDetails,
         usersDetails,
-        attachments,
+        media,
       ];
 }

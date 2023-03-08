@@ -145,7 +145,7 @@ mixin FirestoreGroupMessageService implements FirebaseFirestoreService {
       );
 
   @override
-  Stream<List<FileInformationDetails>> getGroupMessagesAttachments(
+  Stream<List<SingleMessageDetails>> getGroupMessagesMediaLinksDocs(
     String groupMessageId,
   ) =>
       getGroupMessagesCollectionReference(groupMessageId)
@@ -167,19 +167,7 @@ mixin FirestoreGroupMessageService implements FirebaseFirestoreService {
               return details;
             },
           ).toList();
-
-          final attachments = data.map((e) => e.attachments).toList()
-            ..removeWhere(
-              (element) => element == null || element.isEmpty,
-            );
-
-          final allAttachments = attachments
-              .expand<FileInformationDetails>(
-                (element) => element as List<FileInformationDetails>,
-              )
-              .toList();
-
-          return allAttachments;
+          return data;
         },
       );
 }
