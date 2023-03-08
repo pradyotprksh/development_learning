@@ -23,7 +23,7 @@ abstract class FirebaseFirestoreService {
   );
 
   Stream<DirectMessageDetails?> getDirectMessageDetails(
-    String groupId,
+    String directMessageId,
   );
 
   Stream<UsersGroupMessageDetails?> getGroupMessageWithUsersDetails(

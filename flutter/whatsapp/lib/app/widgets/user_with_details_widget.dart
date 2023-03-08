@@ -6,20 +6,26 @@ class UserWithDetailsWidget extends StatelessWidget {
   const UserWithDetailsWidget({
     super.key,
     required this.userDetail,
+    this.onTap,
   });
 
   final UserDetails userDetail;
+  final Function(UserDetails)? onTap;
 
   @override
   Widget build(BuildContext context) => ListTile(
-        onTap: () {
-          context.navigator.pushNamed(
-            Routes.messages,
-            arguments: <String, String>{
-              Keys.userId: userDetail.userId,
-            },
-          );
-        },
+        onTap: onTap != null
+            ? () {
+                onTap?.call(userDetail);
+              }
+            : () {
+                context.navigator.pushNamed(
+                  Routes.messages,
+                  arguments: <String, String>{
+                    Keys.userId: userDetail.userId,
+                  },
+                );
+              },
         leading: UserImageWidget(
           profileImage: userDetail.profileImage ?? '',
           userId: userDetail.userId,

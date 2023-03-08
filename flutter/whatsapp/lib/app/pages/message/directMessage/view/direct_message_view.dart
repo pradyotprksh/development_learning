@@ -13,12 +13,21 @@ class _DirectMessageViewState extends State<DirectMessageView> {
   @override
   Widget build(BuildContext context) {
     final arguments = context.routeSettings?.arguments as Map<String, String>;
-    final userId = arguments[Keys.userId] ?? '';
-    context.read<DirectMessageBloc>().add(
-          FetchSelectedUserDetails(
-            userId,
-          ),
-        );
+    final messageId = arguments[Keys.messageId];
+    final userId = arguments[Keys.userId];
+    if (messageId != null) {
+      context.read<DirectMessageBloc>().add(
+            FetchSelectedMessageDetails(
+              messageId,
+            ),
+          );
+    } else if (userId != null) {
+      context.read<DirectMessageBloc>().add(
+            FetchSelectedUserDetails(
+              userId,
+            ),
+          );
+    }
 
     return Scaffold(
       backgroundColor: context.themeData.scaffoldBackgroundColor,
@@ -29,7 +38,7 @@ class _DirectMessageViewState extends State<DirectMessageView> {
               context.navigator.pushNamed(
                 Routes.messageDetails,
                 arguments: MessageRouteDetails(
-                  directMessageId: messageState.directMessageDetails?.messageId,
+                  directMessageId: messageId,
                 ),
               );
             },
@@ -78,7 +87,7 @@ class _DirectMessageViewState extends State<DirectMessageView> {
                         context.navigator.pushNamed(
                           Routes.messageDetails,
                           arguments: MessageRouteDetails(
-                            directMessageId: userId,
+                            directMessageId: messageId,
                           ),
                         );
                         break;

@@ -52,7 +52,8 @@ class _ChatsViewState extends State<ChatsView>
                         context.navigator.pushNamed(
                           Routes.messages,
                           arguments: <String, String>{
-                            Keys.userId: otherUserId,
+                            Keys.messageId:
+                                details.directMessageDetails.messageId,
                           },
                         );
                       }

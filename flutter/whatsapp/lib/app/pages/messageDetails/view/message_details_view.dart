@@ -305,6 +305,7 @@ class MessageDetailsView extends StatelessWidget {
                   itemCount: messageState.usersDetails.length,
                   itemBuilder: (_, index) => UserWithDetailsWidget(
                     userDetail: messageState.usersDetails[index],
+                    onTap: (userDetails) {},
                   ),
                 ),
               if (groupDetails != null && messageState.usersDetails.isNotEmpty)

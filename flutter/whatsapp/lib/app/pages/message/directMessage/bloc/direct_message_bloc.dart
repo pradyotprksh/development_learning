@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:collection/collection.dart';
 import 'package:replay_bloc/replay_bloc.dart';
 import 'package:whatsapp/app/app.dart';
 import 'package:whatsapp/core/core.dart';
@@ -14,8 +15,9 @@ class DirectMessageBloc
     this._firebaseStorageService,
     this._deviceDetails,
   ) : super(const DirectMessageState()) {
+    on<FetchSelectedMessageDetails>(_fetchMessageDetails);
     on<FetchSelectedUserDetails>(_fetchUserDetails);
-    on<GetMessageDetails>(_fetchMessageDetails);
+    on<GetMessageDetails>(_getMessageDetails);
     on<CreateDirectMessage>(_createDirectMessage);
     on<ToggleEmojisOption>(_showEmojisOption);
     on<GetAllMessages>(_getAllMessages);
@@ -28,6 +30,43 @@ class DirectMessageBloc
   final FirebaseAuthService _firebaseAuthService;
   final FirebaseStorageService _firebaseStorageService;
   final DeviceDetails _deviceDetails;
+
+  void _fetchMessageDetails(
+    FetchSelectedMessageDetails event,
+    Emitter<DirectMessageState> emit,
+  ) async {
+    emit(state.copyWith(pageState: PageState.loading));
+    await emit.forEach(
+      _firebaseFirestoreService.getDirectMessageDetails(
+        event.messageId,
+      ),
+      onData: (directMessageDetails) {
+        emit(state.copyWith(pageState: PageState.success));
+        if (directMessageDetails == null &&
+            state.directMessageDetails != null) {
+          return DirectMessageState(
+            directMessageDetails: null,
+            userDetails: state.userDetails,
+            pageState: state.pageState,
+          );
+        } else {
+          final currentUserId = _firebaseAuthService.getUserId();
+          add(
+            FetchSelectedUserDetails(
+              directMessageDetails?.users
+                      .where((element) => element != currentUserId)
+                      .firstOrNull ??
+                  '',
+            ),
+          );
+          add(GetAllMessages(directMessageDetails?.messageId ?? ''));
+          return state.copyWith(
+            directMessageDetails: directMessageDetails,
+          );
+        }
+      },
+    );
+  }
 
   void _fetchUserDetails(
     FetchSelectedUserDetails event,
@@ -93,7 +132,7 @@ class DirectMessageBloc
     }
   }
 
-  void _fetchMessageDetails(
+  void _getMessageDetails(
     GetMessageDetails event,
     Emitter<DirectMessageState> emit,
   ) async {

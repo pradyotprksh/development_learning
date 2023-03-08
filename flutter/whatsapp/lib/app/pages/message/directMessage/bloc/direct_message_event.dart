@@ -9,6 +9,12 @@ abstract class DirectMessageEvent extends ReplayEvent with EquatableMixin {
   List<Object?> get props => [];
 }
 
+class FetchSelectedMessageDetails extends DirectMessageEvent {
+  const FetchSelectedMessageDetails(this.messageId);
+
+  final String messageId;
+}
+
 class FetchSelectedUserDetails extends DirectMessageEvent {
   const FetchSelectedUserDetails(this.userId);
 
