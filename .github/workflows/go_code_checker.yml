@@ -18,6 +18,9 @@ jobs:
         with:
           go-version-file: 'go/learning/hello/go.mod'
       - run: go version
-      - name: Checking learning
+      - name: Checking greetings
+        working-directory: ./go/learning/greetings
+        run: go test
+      - name: Checking hello
         working-directory: ./go/learning/hello
         run: go run .
