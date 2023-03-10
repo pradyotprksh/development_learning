@@ -2,16 +2,11 @@ package main
 
 import (
     "fmt"
-	"log"
     "pradyot.com/greetings"
 	"rsc.io/quote"
 )
 
 func main() {
-	// Setup log
-	log.SetPrefix("greetings: ")
-    log.SetFlags(0)
-
 	// Print
 	fmt.Println("Hello, World!")
 
@@ -31,7 +26,7 @@ func main() {
 	messages, errs := greetings.Hellos([]string{"Pradyot", "Prakash"})
 
 	if errs != nil {
-		log.Fatal(errs)
+		fmt.Println(errs)
 	} else {
 		fmt.Println(messages)
 	}
@@ -39,6 +34,6 @@ func main() {
 	// error handling
 	_, err := greetings.Hello("")
 	if err != nil {
-    	log.Fatal(err)
+    	fmt.Println(err)
 	}
 }
