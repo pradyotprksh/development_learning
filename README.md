@@ -65,4 +65,6 @@ README will be only updated when the project/learning is completed. So make sure
 
 ---
 
+Check [here](https://pradyotprksh.notion.site/Learning-3aff0981d42e4da293b6ae693c73b56a) for the small articles or notes related to my learnings, This I have started recently will keep on editing it.
+
 > If you found this helpful or you learned something today and want to thank me, consider buying me a cup of ☕ at [PayPal](https://paypal.me/pradyotprksh)
