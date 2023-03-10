@@ -60,6 +60,9 @@ README will be only updated when the project/learning is completed. So make sure
     - For more details go to this [link](https://pradyotprksh4.medium.com/pyblog-python-firebase-448233b9baa2)
   - [Rental](https://github.com/pradyotprksh/development_learning/tree/main/python/renter)
 
+[<img src="https://img.shields.io/badge/Go-FFD43B?style=for-the-badge&logo=go&logoColor=blue" />](https://github.com/pradyotprksh/development_learning/tree/main/go) [![Go Projects](https://github.com/pradyotprksh/development_learning/actions/workflows/go_code_checker.yml/badge.svg)](https://github.com/pradyotprksh/development_learning/actions/workflows/go_code_checker.yml)
+ - [Leanring](https://github.com/pradyotprksh/development_learning/tree/main/go/learning)
+
 ---
 
 > If you found this helpful or you learned something today and want to thank me, consider buying me a cup of ☕ at [PayPal](https://paypal.me/pradyotprksh)
