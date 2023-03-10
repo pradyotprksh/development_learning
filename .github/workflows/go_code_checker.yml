@@ -10,7 +10,7 @@ concurrency:
 name: Go Projects
 jobs:
   hello:
-    name: hello Code Checker
+    name: learning Code Checker
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -18,3 +18,6 @@ jobs:
         with:
           go-version-file: 'go/learning/hello/go.mod'
       - run: go version
+      - name: Checking learning
+        working-directory: ./go/learning/hello
+        run: go run .

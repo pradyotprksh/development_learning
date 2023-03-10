@@ -17,6 +17,6 @@ func main() {
 	fmt.Println(quote.Opt())
 
 	// Creating your own module
-	message := greetings.Hello("Pradyot Prakash")
+	message := greetings.Hello("Pradyot")
     fmt.Println(message)
 }
