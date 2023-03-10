@@ -1,0 +1,19 @@
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - go/**
+concurrency:
+  group: ${{ github.ref }}
+  cancel-in-progress: true
+name: Go Projects
+jobs:
+  hello:
+    name: hello Code Checker
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-go@v3
+        with:
+          go-version-file: 'learning/hello/go.mod'
+      - run: go version
