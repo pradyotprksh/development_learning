@@ -24,3 +24,9 @@ jobs:
       - name: Checking hello
         working-directory: ./go/learning/hello
         run: go run .
+      - name: Checking workspace
+        working-directory: ./go/learning/workspace
+        run: go run pradyot.com/hello
+      - name: Checking example
+        working-directory: ./go/learning/workspace/example
+        run: go test ./...
