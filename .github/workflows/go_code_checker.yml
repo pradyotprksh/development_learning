@@ -9,7 +9,7 @@ concurrency:
   cancel-in-progress: true
 name: Go Projects
 jobs:
-  hello:
+  learning:
     name: learning Code Checker
     runs-on: ubuntu-latest
     steps:
@@ -30,3 +30,14 @@ jobs:
       - name: Checking example
         working-directory: ./go/learning/workspace/example
         run: go test ./...
+      - name: Checking web-service-gin
+        working-directory: ./go/learning/web-service-gin
+        run: |
+          go run .
+          curl http://localhost:8080/albums
+          curl http://localhost:8080/albums \
+            --include \
+            --header "Content-Type: application/json" \
+            --request "POST" \
+            --data '{"id": "4","title": "The Modern Sound of Betty Carter","artist": "Betty Carter","price": 49.99}'
+          curl http://localhost:8080/albums/4
