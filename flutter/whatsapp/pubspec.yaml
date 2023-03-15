@@ -43,7 +43,7 @@ dependencies:
 
   fast_cached_network_image: ^1.1.1
 
-  file_picker: ^5.2.5
+  file_picker: ^5.2.6
 
   filesize: ^2.0.1
 
@@ -105,7 +105,7 @@ dependencies:
 
   local_auth: ^2.1.6
 
-  logger: ^1.2.2
+  logger: ^1.3.0
 
   network_info_plus: ^3.0.2
 
@@ -142,7 +142,7 @@ dependencies:
 
   video_compress: ^3.1.2
 
-  video_player: ^2.5.3
+  video_player: ^2.6.0
 
 dev_dependencies:
   flutter_launcher_icons: ^0.11.0
