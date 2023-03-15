@@ -30,5 +30,3 @@ jobs:
       - name: Checking example
         working-directory: ./go/learning/workspace/example
         run: go test ./...
-      - name: Checking web-service-gin
-        working-directory: ./go/learning/web-service-gin
