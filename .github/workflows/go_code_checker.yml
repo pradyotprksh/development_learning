@@ -30,3 +30,13 @@ jobs:
       - name: Checking example
         working-directory: ./go/learning/workspace/example
         run: go test ./...
+  stephen_udemy:
+    name: stephen_udemy Code Checker
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-go@v3
+      - run: go version
+      - name: Checking helloworld
+        working-directory: ./go/stephen_udemy/helloworld
+        run: go run main.go
