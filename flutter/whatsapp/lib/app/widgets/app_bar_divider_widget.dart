@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:whatsapp/app/utils/utils.dart';
+import 'package:whatsapp/app/app.dart';
 
 class AppBarDividerWidget extends StatelessWidget {
   const AppBarDividerWidget({

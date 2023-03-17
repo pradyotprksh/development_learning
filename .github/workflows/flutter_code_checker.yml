@@ -119,5 +119,4 @@ jobs:
           flutter pub upgrade
           flutter pub get
           flutter analyze
-#          Enable test after adding one test
-#          flutter test
+          flutter test
