@@ -40,3 +40,6 @@ jobs:
       - name: Checking helloworld
         working-directory: ./go/stephen_udemy/helloworld
         run: go run main.go
+      - name: Checking cards
+        working-directory: ./go/stephen_udemy/cards
+        run: go run main.go

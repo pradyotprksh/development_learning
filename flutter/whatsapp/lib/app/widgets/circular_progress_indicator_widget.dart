@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:whatsapp/app/app.dart';
+import 'package:whatsapp/core/core.dart';
 
+@WidgetTests()
 class CircularProgressIndicatorWidget extends StatelessWidget {
   const CircularProgressIndicatorWidget({super.key});
 

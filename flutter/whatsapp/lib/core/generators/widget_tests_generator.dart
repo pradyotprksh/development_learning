@@ -1,0 +1,3 @@
+class WidgetTests {
+  const WidgetTests();
+}
