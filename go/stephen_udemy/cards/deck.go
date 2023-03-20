@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"io/ioutil"
 	"math/rand"
 	"os"
 	"strings"
@@ -15,11 +14,11 @@ func newDeck() deck {
 	cards := deck{}
 
 	cardsSuits := []string{"Spades", "Diamonds", "Hearts", "Club"}
-	cardsValue := []string{"Ace", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Jack", "Queen", "King"}
+	cardsValue := []string{"Ace", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Jack", "Queen", "King"}
 
 	for _, suit := range cardsSuits {
 		for _, value := range cardsValue {
-			cards = append(cards, suit+" of "+value)
+			cards = append(cards, value+" of "+suit)
 		}
 	}
 
@@ -41,11 +40,11 @@ func (d deck) toString() string {
 }
 
 func (d deck) saveToFile(filename string) error {
-	return ioutil.WriteFile(filename, []byte(d.toString()), 06666)
+	return os.WriteFile(filename, []byte(d.toString()), 06666)
 }
 
 func newDeckFromFile(filename string) deck {
-	bs, err := ioutil.ReadFile(filename)
+	bs, err := os.ReadFile(filename)
 	if err != nil {
 		fmt.Println("Error: ", err)
 		os.Exit(1)
