@@ -43,3 +43,6 @@ jobs:
       - name: Checking cards
         working-directory: ./go/stephen_udemy/cards
         run: go run . && go test
+      - name: Checking evenodd
+        working-directory: ./go/stephen_udemy/evenodd
+        run: go run main.go
