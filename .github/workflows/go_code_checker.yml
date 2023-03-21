@@ -23,7 +23,7 @@ jobs:
         run: go test
       - name: Checking hello
         working-directory: ./go/learning/hello
-        run: go run .
+        run: go vet && go run .
       - name: Checking workspace
         working-directory: ./go/learning/workspace
         run: go run pradyot.com/hello
@@ -42,7 +42,10 @@ jobs:
         run: go run main.go
       - name: Checking cards
         working-directory: ./go/stephen_udemy/cards
-        run: go run . && go test
+        run: go vet && go run . && go test
       - name: Checking evenodd
         working-directory: ./go/stephen_udemy/evenodd
         run: go run main.go
+      - name: Checking structs
+        working-directory: ./go/stephen_udemy/structs
+        run: go vet && go run .
