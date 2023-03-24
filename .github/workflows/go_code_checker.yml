@@ -49,3 +49,6 @@ jobs:
       - name: Checking structs
         working-directory: ./go/stephen_udemy/structs
         run: go vet && go run .
+      - name: Checking maps
+        working-directory: ./go/stephen_udemy/maps
+        run: go run main.go
