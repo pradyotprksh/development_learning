@@ -32,6 +32,25 @@ class MessageDetailsState extends Equatable {
   final List<UserDetails> usersDetails;
   final List<SingleMessageDetails> media;
 
+  int get attachmentsLength {
+    var attachments = 0;
+    var links = 0;
+
+    for (var element in media) {
+      if (element.attachments != null) {
+        if (element.attachments?.isNotEmpty == true) {
+          attachments += element.attachments?.length ?? 0;
+        }
+      }
+
+      if (element.message.links().isNotEmpty) {
+        links += element.message.links().length;
+      }
+    }
+
+    return attachments + links;
+  }
+
   @override
   List<Object?> get props => [
         pageState,

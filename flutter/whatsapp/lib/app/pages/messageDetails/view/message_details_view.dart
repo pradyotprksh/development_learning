@@ -186,7 +186,7 @@ class MessageDetailsView extends StatelessWidget {
                         Row(
                           children: [
                             Text(
-                              messageState.media.length.toString(),
+                              '${messageState.attachmentsLength}',
                               style: context.themeData.textTheme.labelSmall,
                             ),
                             const Icon(

@@ -64,6 +64,7 @@ class _ShowLinkPreviewState extends State<ShowLinkPreview>
           width: double.infinity,
           openOnPreviewImageTap: true,
           openOnPreviewTitleTap: true,
+          hideImage: true,
         ),
       ),
     );
