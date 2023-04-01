@@ -63,4 +63,4 @@ jobs:
         run: go run main.go
       - name: Checking interfaces_assignment_2
         working-directory: ./go/stephen_udemy/interfaces_assignment_2
-        run: go run main.go example.txt && ./main main.go
+        run: go run main.go example.txt
