@@ -16,7 +16,7 @@ func main() {
 
 		file, err := os.Open(filename)
 		if err != nil {
-			fmt.Println("Something went wrong while opening the file", filename, "Error:", err)
+			fmt.Println("Something went wrong while opening the file", filename, "\nError:", err)
 			os.Exit(1)
 		}
 
