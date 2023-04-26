@@ -80,7 +80,6 @@ class MessageDetailsView extends StatelessWidget {
         builder: (_, messageState) {
           final groupDetails =
               messageState.groupMessageDetails?.groupMessageDetails;
-          final directMessageDetails = messageState.directMessageDetails;
 
           final imageAttachments = messageState.media
               .where(
