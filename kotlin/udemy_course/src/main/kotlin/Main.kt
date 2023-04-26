@@ -1,6 +1,6 @@
 import data_structures.DataStructures
 
-fun main(args: Array<String>) {
+fun main() {
     val dataStructures = DataStructures()
     dataStructures.startDataStructures()
 }
