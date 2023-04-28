@@ -157,4 +157,23 @@ class SinglyLinkedListTest : TestCase() {
 
         assertEquals(3, singlyLinkedList.remove(1))
     }
+
+    @Test(expected = IllegalStateException::class)
+    fun reverse() {
+        singlyLinkedList.reverse()
+
+        singlyLinkedList.push(1)
+        singlyLinkedList.push(2)
+        singlyLinkedList.push(3)
+        singlyLinkedList.push(4)
+        singlyLinkedList.push(5)
+
+        assertEquals(5, singlyLinkedList.tail?.data)
+        assertEquals(1, singlyLinkedList.head?.data)
+
+        singlyLinkedList.reverse()
+
+        assertEquals(5, singlyLinkedList.head?.data)
+        assertEquals(1, singlyLinkedList.tail?.data)
+    }
 }
