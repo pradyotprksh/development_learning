@@ -21,7 +21,11 @@ class Trees {
         binarySearchTree.print()
         binarySearchTree.insert(4)
         binarySearchTree.print()
-
         println(binarySearchTree.find(5))
+
+        println("Starting Tree Traversal")
+        if (binarySearchTree.root != null) {
+            println(TreeTraversal().breadthFirstSearch(binarySearchTree.root!!))
+        }
     }
 }

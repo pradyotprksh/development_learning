@@ -10,8 +10,10 @@ class BinarySearchTree {
             root = node
         } else {
             var temp = root
+            var parent: Node? = null
 
-            while (temp?.left != null && temp.right != null) {
+            while (temp != null) {
+                parent = temp
                 if (temp.data < data) {
                     temp = temp.right
                 } else if (temp.data > data) {
@@ -19,11 +21,11 @@ class BinarySearchTree {
                 }
             }
 
-            if (temp != null) {
-                if (temp.data < data) {
-                    temp.right = node
-                } else if (temp.data > data) {
-                    temp.left = node
+            if (parent != null) {
+                if (parent.data < data) {
+                    parent.right = node
+                } else {
+                    parent.left = node
                 }
             }
         }
