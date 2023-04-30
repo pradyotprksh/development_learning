@@ -24,8 +24,12 @@ class Trees {
         println(binarySearchTree.find(5))
 
         println("Starting Tree Traversal")
-        if (binarySearchTree.root != null) {
-            println(TreeTraversal().breadthFirstSearch(binarySearchTree.root!!))
+        binarySearchTree.root?.let { root ->
+            val treeTraversal = TreeTraversal()
+
+            println(treeTraversal.breadthFirstSearch(root))
+
+            println(treeTraversal.depthFirstSearchPreOrder(root))
         }
     }
 }

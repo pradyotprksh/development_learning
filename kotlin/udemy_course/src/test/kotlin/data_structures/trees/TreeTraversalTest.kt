@@ -14,14 +14,30 @@ class TreeTraversalTest : TestCase() {
         val binarySearchTree = BinarySearchTree()
         binarySearchTree.insert(10)
         binarySearchTree.insert(6)
+        binarySearchTree.insert(15)
         binarySearchTree.insert(3)
         binarySearchTree.insert(8)
-        binarySearchTree.insert(15)
         binarySearchTree.insert(20)
 
         assertEquals(
             "[10, 6, 15, 3, 8, 20]",
             treeTraversal.breadthFirstSearch(binarySearchTree.root!!).toString()
+        )
+    }
+
+    @Test
+    fun depthFirstSearchPreOrder() {
+        val binarySearchTree = BinarySearchTree()
+        binarySearchTree.insert(10)
+        binarySearchTree.insert(6)
+        binarySearchTree.insert(15)
+        binarySearchTree.insert(3)
+        binarySearchTree.insert(8)
+        binarySearchTree.insert(20)
+
+        assertEquals(
+            "[10, 6, 3, 8, 15, 20]",
+            treeTraversal.depthFirstSearchPreOrder(binarySearchTree.root!!).toString()
         )
     }
 }

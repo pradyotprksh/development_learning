@@ -18,4 +18,15 @@ class TreeTraversal {
 
         return visited
     }
+
+    fun depthFirstSearchPreOrder(root: Node, order: ArrayList<Int> = ArrayList()): List<Int> {
+        order.add(root.data)
+        root.left?.let { left ->
+            depthFirstSearchPreOrder(left, order)
+        }
+        root.right?.let { right ->
+            depthFirstSearchPreOrder(right, order)
+        }
+        return order
+    }
 }
