@@ -37,18 +37,18 @@ class StacksTest : TestCase() {
         stacks.push(3)
         stacks.push(4)
 
-        stacks.pop()
+        assertEquals(4, stacks.pop())
 
         assertEquals(3, stacks.top)
         assertEquals(3, stacks.length)
 
-        stacks.pop()
-        stacks.pop()
+        assertEquals(3, stacks.pop())
+        assertEquals(2, stacks.pop())
 
         assertEquals(1, stacks.top)
         assertEquals(1, stacks.length)
 
-        stacks.pop()
+        assertEquals(1, stacks.pop())
 
         assertNull(stacks.top)
         assertEquals(0, stacks.length)

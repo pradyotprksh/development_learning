@@ -38,14 +38,14 @@ class QueuesTest : TestCase() {
         queues.enqueue(3)
         queues.enqueue(4)
 
-        queues.dequeue()
+        assertEquals(4, queues.dequeue())
 
         assertEquals(3, queues.top)
         assertEquals(3, queues.length)
 
-        queues.dequeue()
-        queues.dequeue()
-        queues.dequeue()
+        assertEquals(3, queues.dequeue())
+        assertEquals(2, queues.dequeue())
+        assertEquals(1, queues.dequeue())
 
         assertNull(queues.top)
         assertEquals(0, queues.length)

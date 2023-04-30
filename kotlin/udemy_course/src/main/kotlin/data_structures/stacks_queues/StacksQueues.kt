@@ -49,10 +49,9 @@ class Stacks {
         return singlyLinkedList.length
     }
 
-    fun pop(): Int {
+    fun pop(): Int? {
         try {
-            singlyLinkedList.shift()
-            return singlyLinkedList.length
+            return singlyLinkedList.shift()
         } catch (e: Exception) {
             throw IllegalStateException("Stack is empty")
         }
@@ -75,10 +74,9 @@ class Queues {
         return singlyLinkedList.length
     }
 
-    fun dequeue(): Int {
+    fun dequeue(): Int? {
         try {
-            singlyLinkedList.pop()
-            return singlyLinkedList.length
+            return singlyLinkedList.pop()
         } catch (e: Exception) {
             throw IllegalStateException("Queue is empty")
         }
