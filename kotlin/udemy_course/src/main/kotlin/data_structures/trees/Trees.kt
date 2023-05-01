@@ -9,6 +9,7 @@ data class Node(var left: Node? = null, val data: Int, var right: Node? = null) 
 class Trees {
     fun startTrees() {
         println("Starting Trees")
+
         println("Starting Binary Search Tree")
         val binarySearchTree = BinarySearchTree()
         binarySearchTree.insert(3)
@@ -26,11 +27,26 @@ class Trees {
         println("Starting Tree Traversal")
         binarySearchTree.root?.let { root ->
             val treeTraversal = TreeTraversal()
-
             println(treeTraversal.breadthFirstSearch(root))
             println(treeTraversal.depthFirstSearchPreOrder(root))
             println(treeTraversal.depthFirstSearchPostOrder(root))
             println(treeTraversal.depthFirstSearchInOrder(root))
         }
+
+        println("Starting Binary Heap Tree")
+        val maxBinaryHeap = MaxBinaryHeap()
+        maxBinaryHeap.insert(41)
+        maxBinaryHeap.insert(39)
+        maxBinaryHeap.insert(33)
+        maxBinaryHeap.insert(18)
+        maxBinaryHeap.insert(27)
+        maxBinaryHeap.insert(12)
+        maxBinaryHeap.print()
+
+        maxBinaryHeap.remove()
+        maxBinaryHeap.print()
+
+        maxBinaryHeap.insert(55)
+        maxBinaryHeap.print()
     }
 }
