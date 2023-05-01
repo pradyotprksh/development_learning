@@ -1,16 +1,22 @@
 package data_structures.trees
 
-class MaxBinaryHeap {
-    var heap = ArrayList<Int>()
+data class PriorityNode(val data: String, val priority: Int) {
+    override fun toString(): String {
+        return "{$data ^ $priority}"
+    }
+}
+
+class PriorityQueue {
+    var heap = ArrayList<PriorityNode>()
         private set
 
-    fun insert(data: Int) {
-        heap.add(data)
+    fun enqueue(data: String, priority: Int) {
+        heap.add(PriorityNode(data = data, priority = priority))
 
         var dataIndex = heap.size - 1
         var parentIndex = (dataIndex - 1) / 2
 
-        while (parentIndex >= 0 && heap[parentIndex] < heap[dataIndex]) {
+        while (parentIndex >= 0 && heap[parentIndex].priority < heap[dataIndex].priority) {
             val temp = heap[parentIndex]
             heap[parentIndex] = heap[dataIndex]
             heap[dataIndex] = temp
@@ -21,7 +27,7 @@ class MaxBinaryHeap {
     }
 
     @Suppress("KotlinConstantConditions")
-    fun remove(): Int {
+    fun dequeue(): PriorityNode {
         if (heap.isEmpty()) {
             throw IllegalStateException("Heap is empty")
         }
@@ -38,13 +44,13 @@ class MaxBinaryHeap {
         var rightChildIndex = 2 * dataIndex + 2
 
         while (true) {
-            if (leftChildIndex < heap.size && heap[leftChildIndex] > heap[dataIndex] && heap[leftChildIndex] > heap[rightChildIndex]) {
+            if (leftChildIndex < heap.size && heap[leftChildIndex].priority > heap[dataIndex].priority && heap[leftChildIndex].priority > heap[rightChildIndex].priority) {
                 val temp = heap[dataIndex]
                 heap[dataIndex] = heap[leftChildIndex]
                 heap[leftChildIndex] = temp
 
                 dataIndex = leftChildIndex
-            } else if (rightChildIndex < heap.size && heap[rightChildIndex] > heap[dataIndex]) {
+            } else if (rightChildIndex < heap.size && heap[rightChildIndex].priority > heap[dataIndex].priority) {
                 val temp = heap[dataIndex]
                 heap[dataIndex] = heap[rightChildIndex]
                 heap[rightChildIndex] = temp
