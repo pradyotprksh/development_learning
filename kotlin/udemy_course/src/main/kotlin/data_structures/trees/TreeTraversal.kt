@@ -29,4 +29,26 @@ class TreeTraversal {
         }
         return order
     }
+
+    fun depthFirstSearchPostOrder(root: Node, order: ArrayList<Int> = ArrayList()): List<Int> {
+        root.left?.let { left ->
+            depthFirstSearchPostOrder(left, order)
+        }
+        root.right?.let { right ->
+            depthFirstSearchPostOrder(right, order)
+        }
+        order.add(root.data)
+        return order
+    }
+
+    fun depthFirstSearchInOrder(root: Node, order: ArrayList<Int> = ArrayList()): List<Int> {
+        root.left?.let { left ->
+            depthFirstSearchInOrder(left, order)
+        }
+        order.add(root.data)
+        root.right?.let { right ->
+            depthFirstSearchInOrder(right, order)
+        }
+        return order
+    }
 }

@@ -28,8 +28,9 @@ class Trees {
             val treeTraversal = TreeTraversal()
 
             println(treeTraversal.breadthFirstSearch(root))
-
             println(treeTraversal.depthFirstSearchPreOrder(root))
+            println(treeTraversal.depthFirstSearchPostOrder(root))
+            println(treeTraversal.depthFirstSearchInOrder(root))
         }
     }
 }
