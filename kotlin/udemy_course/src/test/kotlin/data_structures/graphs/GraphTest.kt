@@ -68,4 +68,63 @@ class GraphTest : TestCase() {
         assertFalse(graph.adjacencyList.containsKey("A"))
         assertFalse(graph.adjacencyList["D"]?.contains("A") == true)
     }
+
+    @Test(expected = IllegalStateException::class)
+    fun dfsRecursive() {
+        graph.addEdge("A", "B")
+        graph.addEdge("A", "C")
+        graph.addEdge("B", "D")
+        graph.addEdge("C", "E")
+        graph.addEdge("D", "E")
+        graph.addEdge("D", "F")
+        graph.addEdge("E", "F")
+
+        assertEquals(
+            "[A, B, D, E, C, F]",
+            graph.dfsRecursiveTraversal("A").toString()
+        )
+
+        graph.dfsRecursiveTraversal("G")
+    }
+
+    @Test(expected = IllegalStateException::class)
+    fun dfsIterative() {
+        graph.addEdge("A", "B")
+        graph.addEdge("A", "C")
+        graph.addEdge("B", "D")
+        graph.addEdge("C", "E")
+        graph.addEdge("D", "E")
+        graph.addEdge("D", "F")
+        graph.addEdge("E", "F")
+
+        assertEquals(
+            "[A, C, E, F, D, B]",
+            graph.dfsIterativeTraversal("A").toString()
+        )
+
+        assertNotSame(
+            graph.dfsRecursiveTraversal("A").toString(),
+            graph.dfsIterativeTraversal("A").toString()
+        )
+
+        graph.dfsIterativeTraversal("G")
+    }
+
+    @Test(expected = IllegalStateException::class)
+    fun bfsTraversal() {
+        graph.addEdge("A", "B")
+        graph.addEdge("A", "C")
+        graph.addEdge("B", "D")
+        graph.addEdge("C", "E")
+        graph.addEdge("D", "E")
+        graph.addEdge("D", "F")
+        graph.addEdge("E", "F")
+
+        assertEquals(
+            "[A, B, C, D, E, F]",
+            graph.bfsTraversal("A").toString()
+        )
+
+        graph.bfsTraversal("G")
+    }
 }
