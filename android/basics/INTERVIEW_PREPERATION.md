@@ -194,3 +194,63 @@ In this example, `MyService` extends the `Service` class, which is a built-in cl
 
 ## Broadcast receivers
 
+Broadcast Receivers in Android are components that receive and handle system-wide broadcast announcements, allowing the application to respond to various system or application events like low battery, network state change, incoming SMS or phone call, device boot, and more.
+
+Broadcast receivers can be defined in the manifest file or registered dynamically through code. When a broadcast is sent, the system dispatches the intent to all the registered receivers with a matching intent filter. 
+
+To create a BroadcastReceiver in Kotlin, you can create a class that extends the BroadcastReceiver class, override the onReceive() method, and define the broadcast receiver in the manifest file or register it dynamically.
+
+Here's an example of a BroadcastReceiver that listens to the ACTION_POWER_CONNECTED and ACTION_POWER_DISCONNECTED broadcasts:
+
+```kotlin
+class PowerConnectionReceiver : BroadcastReceiver() {
+    override fun onReceive(context: Context?, intent: Intent?) {
+        when (intent?.action) {
+            Intent.ACTION_POWER_CONNECTED -> {
+                Log.d("PowerConnectionReceiver", "Power connected")
+            }
+            Intent.ACTION_POWER_DISCONNECTED -> {
+                Log.d("PowerConnectionReceiver", "Power disconnected")
+            }
+        }
+    }
+}
+```
+
+To register the BroadcastReceiver in the manifest file, you can add the following code inside the <application> tag:
+
+```
+<receiver android:name=".PowerConnectionReceiver">
+    <intent-filter>
+        <action android:name="android.intent.action.ACTION_POWER_CONNECTED"/>
+        <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED"/>
+    </intent-filter>
+</receiver>
+```
+
+Alternatively, you can register the BroadcastReceiver dynamically using the registerReceiver() method:
+
+```kotlin
+val powerConnectionReceiver = PowerConnectionReceiver()
+val filter = IntentFilter().apply {
+    addAction(Intent.ACTION_POWER_CONNECTED)
+    addAction(Intent.ACTION_POWER_DISCONNECTED)
+}
+registerReceiver(powerConnectionReceiver, filter)
+```
+
+Broadcast Receivers do not have a lifecycle in the same way that activities or services have a lifecycle. They are not created or destroyed by the system. Instead, they are registered with the system to listen for specific broadcast intents, and when a matching intent is broadcast, the onReceive() method of the receiver is called to handle the event. Once the onReceive() method is executed, the receiver goes back to a dormant state until the next matching intent is broadcast.
+    
+## Intents
+    
+Intents are objects that allow you to communicate between components in an Android application, such as activities, services, and broadcast receivers. Intents can be used to start activities, start services, broadcast messages to broadcast receivers, and more.
+
+There are two types of Intents in Android:
+
+1. Implicit Intents: These intents don't specify a particular component to start, but rather specify an action to perform, and the Android system decides which component to start based on the available components and the intent filters defined by those components.
+
+2. Explicit Intents: These intents are used to start a specific component by specifying its class name or package name.
+
+Intents also carry data as key-value pairs called extras, which can be used to pass information between components.
+
+Overall, Intents are an important part of Android development, as they allow components to communicate with each other and enable many features of an Android application.
