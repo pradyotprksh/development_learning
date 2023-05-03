@@ -217,7 +217,7 @@ class PowerConnectionReceiver : BroadcastReceiver() {
 }
 ```
 
-To register the BroadcastReceiver in the manifest file, you can add the following code inside the <application> tag:
+To register the BroadcastReceiver in the manifest file, you can add the following code inside the `<application>` tag:
 
 ```
 <receiver android:name=".PowerConnectionReceiver">
@@ -254,3 +254,251 @@ There are two types of Intents in Android:
 Intents also carry data as key-value pairs called extras, which can be used to pass information between components.
 
 Overall, Intents are an important part of Android development, as they allow components to communicate with each other and enable many features of an Android application.
+
+### Implicit Intents
+    
+Implicit intents are used to request an action to be performed by another application that is available on the device. They do not specify a particular application to handle the intent. Instead, the system matches the intent to an appropriate component based on the intent's content and the available components' capabilities.
+
+When an implicit intent is created, it is sent to the Android system using the `startActivity()` method. The Android system then searches for the available components that can handle the intent by examining the intent's action, category, and data type. If a single component is found, it is launched immediately. If multiple components are found, the user is prompted to select the component to handle the intent.
+
+For example, if you want to share an image, you can create an implicit intent with the action `Intent.ACTION_SEND` and set the data type to `"image/*"`. The Android system will then find the available applications that can handle sharing images and provide the user with a list of options to choose from.
+    
+# Fragments
+    
+Fragments in Android are reusable UI components that represent a portion of the user interface in an Activity. They were introduced in Android 3.0 (API level 11) as a way to build more flexible and dynamic user interfaces. Fragments can be combined together to create a single Activity that can adapt its layout based on the device’s screen size or the user’s actions.
+
+Fragments have their own lifecycle and can be added, removed, replaced, or reused within an Activity, making it easier to manage complex UIs. Fragments can also communicate with each other and the Activity using a shared ViewModel or interfaces.
+
+Fragments can be added to an Activity in XML layout files or programmatically using a FragmentManager. Each Fragment has its own layout file, lifecycle callbacks, and set of methods for interacting with the parent Activity. By breaking up an Activity into smaller Fragments, developers can create more modular and maintainable code.
+    
+The lifecycle of a Fragment in Android can be broken down into the following major states:
+
+1. **Instantiation**: The Fragment object is created by calling the constructor.
+2. **Attachment**: The Fragment is attached to an Activity.
+3. **Creation**: The Fragment's `onCreate()` method is called, where you can initialize the Fragment.
+4. **View Inflation**: The Fragment's `onCreateView()` method is called to inflate its UI and create the View hierarchy.
+5. **ActivityCreated**: The Fragment's `onActivityCreated()` method is called after the parent Activity's `onCreate()` method has completed execution.
+6. **Started**: The Fragment's `onStart()` method is called after the parent Activity's `onStart()` method has completed execution.
+7. **Resumed**: The Fragment's `onResume()` method is called after the parent Activity's `onResume()` method has completed execution.
+8. **Paused**: The Fragment's `onPause()` method is called when the user navigates to another Activity or the parent Activity is paused.
+9. **Stopped**: The Fragment's `onStop()` method is called when the user navigates away from the parent Activity.
+10. **DestroyView**: The Fragment's `onDestroyView()` method is called to remove its UI and destroy the View hierarchy.
+11. **Destroy**: The Fragment's `onDestroy()` method is called to release resources and clean up the Fragment.
+12. **Detachment**: The Fragment is detached from the parent Activity.
+
+It is important to note that unlike an Activity, a Fragment can be stopped and started multiple times without being destroyed, so the Fragment lifecycle is more complex than that of an Activity.
+    
+There are two types of fragments:
+
+1. **UI Fragment**: This is the traditional fragment that has a UI component associated with it. It is used to create reusable UI components that can be combined into an activity or other fragments.
+
+2. **Headless Fragment**: This type of fragment does not have any UI components associated with it. It is used to perform background tasks, such as data processing or downloading, independent of any UI.
+    
+You can create a fragment without UI, which is known as a headless fragment. Headless fragments are useful for performing background tasks, such as data processing or network operations, that do not require a user interface. To create a headless fragment in Kotlin, you can extend the `Fragment` class and override the `onCreate()` method to perform your background task.
+
+Here's an example of a headless fragment that performs a network operation:
+
+```kotlin
+class NetworkFragment : Fragment() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        // Perform network operation here
+        // ...
+    }
+}
+```
+
+You can then use this fragment in your activity by adding it to the fragment manager:
+
+```kotlin
+val fragmentManager = supportFragmentManager
+val fragmentTransaction = fragmentManager.beginTransaction()
+
+val networkFragment = NetworkFragment()
+fragmentTransaction.add(networkFragment, "network")
+fragmentTransaction.commit()
+``` 
+
+Note that because headless fragments do not have a UI, you do not need to inflate a layout or override any of the UI-related lifecycle methods.
+    
+Here are some additional things you may want to know about fragments:
+
+1. Nested Fragments: Fragments can be nested inside other fragments, which allows for more complex UI designs.
+
+2. Fragment Transactions: Fragments are added, removed, and replaced using Fragment Transactions. Transactions are used to perform a set of changes atomically, ensuring that they are all committed or none of them are committed.
+
+3. Fragment Back Stack: The Fragment Back Stack is a stack that keeps track of the Fragments that are added to the Activity. When the user presses the Back button, the top Fragment is popped from the stack, and the previous Fragment is shown.
+
+4. Communication between Fragments: Fragments can communicate with each other using interfaces, BroadcastReceivers, or shared ViewModels.
+
+5. Fragment Factory: Fragment Factory is used to create fragments dynamically at runtime. It allows the developer to create a custom constructor and initialize the fragment with the required arguments.
+
+6. Compatibility with different devices: Fragments are designed to work on a wide range of devices, including smartphones, tablets, and wearable devices. With the introduction of the Navigation component, it is easier to create a consistent user experience across different devices.
+    
+Using fragments can improve performance in some cases because they allow for better reuse of UI components and can simplify the management of UI elements. However, improperly used fragments can also negatively impact performance, such as by increasing the complexity of the code or causing excessive memory usage. 
+
+It's important to use fragments judiciously and only when they make sense for the particular use case. In general, if you have a UI component that needs to be reused across different activities or layouts, a fragment can be a good choice. If you have a UI component that is specific to a single activity or layout, it may be better to use a regular view or custom view instead.
+    
+## Fragment Manager
+    
+FragmentManager is a class in Android that manages fragments for an Activity. It is responsible for handling the lifecycle of fragments, adding or removing fragments from an Activity, and handling backstack functionality. The FragmentManager class can be used to perform transactions like adding, removing, or replacing fragments and to manage the backstack of fragments. It also provides methods to find a fragment by its tag or ID and to retrieve a list of all fragments currently attached to an activity. Overall, FragmentManager is an essential class for working with fragments in Android.
+    
+## Fragment communication
+    
+Fragment communication is a mechanism in Android that allows two or more fragments to share data or events with each other. There are two approaches to implementing fragment communication:
+
+1. Using an Interface: This approach involves defining an interface in the fragment that sends data to the hosting activity. The activity then sends the data to the target fragment using the fragment manager. The target fragment implements the interface to receive the data from the activity. This approach is useful when the communication is one-way, i.e., from the sending fragment to the receiving fragment.
+
+2. Using a Shared ViewModel: This approach involves creating a ViewModel object and sharing it between the fragments that need to communicate. The ViewModel holds the data that needs to be shared, and both fragments can access and modify it as needed. This approach is useful when the communication is two-way, i.e., both fragments need to send and receive data.
+
+In general, fragment communication allows for better modularity and organization of code in an Android application. By separating different parts of the app into smaller fragments that communicate with each other, developers can create more flexible and maintainable apps.
+    
+## Activity - Fragment Communication
+    
+Activity and Fragment communication can be done in several ways:
+
+1. Interface implementation: You can define an interface in your Fragment and implement it in your Activity. This way, you can call the interface method in your Fragment to send data to your Activity. 
+
+2. Shared ViewModel: You can use a ViewModel that is shared between the Activity and Fragment to communicate. The ViewModel can store data that both the Activity and Fragment can access and modify.
+
+3. Intents: You can also use Intents to communicate between the Activity and Fragment. You can pass data through an Intent from the Fragment to the Activity, or vice versa.
+
+4. Local Broadcasts: You can use Local Broadcasts to send messages between the Activity and Fragment within the same application.
+
+It's important to choose the appropriate communication method based on your specific use case and requirements.
+    
+# Views
+    
+In Android, a View is an object that draws something on the screen and responds to user input. Views are the building blocks of user interface (UI) in Android. Examples of views include TextView, EditText, Button, ImageView, and many more.
+
+A View is a rectangular area on the screen that displays something. Views can be arranged in different layouts to create the overall UI of an Android application. For example, LinearLayout, RelativeLayout, and ConstraintLayout are different types of layouts that can be used to arrange Views on the screen.
+
+Each View has its own set of properties, which define its appearance and behavior. For example, the TextView class has properties like text color, font size, and text alignment, which can be set programmatically or in XML layout files.
+
+Views can also have event listeners attached to them, which can respond to user input such as clicks or touches. These event listeners are implemented using interfaces like OnClickListener or OnTouchListener.
+
+In summary, Views are the basic building blocks of an Android UI. They can be arranged in different layouts to create complex UIs, and they can have properties and event listeners attached to them to define their appearance and behavior.
+
+# Jetpack Compose
+
+Jetpack Compose is a modern UI toolkit for building native Android apps using a declarative approach to UI programming. It is designed to make building UIs easier and more efficient by enabling developers to use a simple and intuitive way to define the layout, behavior, and appearance of their apps.
+
+With Jetpack Compose, developers can create UI components using a tree of composable functions, which are like building blocks that can be combined to create complex UIs. Each composable function is responsible for rendering a specific part of the UI and can be reused throughout the app.
+
+One of the key advantages of Jetpack Compose is its simplicity. The code is easier to read and maintain, as it focuses on the what, rather than the how. Compose uses a reactive programming model, where UI elements are automatically updated when their underlying data changes. This makes it easier to build responsive UIs that react to user input in real-time.
+
+Another advantage of Jetpack Compose is its flexibility. It is designed to be modular and extensible, allowing developers to create custom components that can be reused across different parts of their app. Compose also integrates with the existing Android ecosystem, so developers can easily use it alongside existing Android APIs and libraries.
+
+Overall, Jetpack Compose is a powerful tool for building modern, high-performance, and scalable UIs for Android apps. It simplifies the UI development process and offers a more intuitive approach to building UIs, while also providing developers with greater control and flexibility.
+
+There are several advantages of using Jetpack Compose in Android app development:
+
+1. Declarative UI: Jetpack Compose allows developers to build UI elements declaratively, which means the UI is defined using a series of functions and parameters that describe what should be displayed, rather than requiring developers to manually manipulate UI elements.
+
+2. Faster and more efficient development: With Compose, developers can build UI elements faster and more efficiently compared to traditional Android UI development. The declarative nature of Compose reduces boilerplate code and makes it easier to create complex UI elements.
+
+3. Simplified UI testing: Because Compose code is written in pure Kotlin, it can be easily unit tested using existing testing frameworks, which simplifies UI testing and makes it easier to catch bugs early in the development process.
+
+4. Interactive preview: Compose provides an interactive preview tool that allows developers to see how their UI will look and behave in real-time, making it easier to iterate and experiment with different design choices.
+
+5. Improved performance: Compose leverages the latest advancements in Android's rendering engine, which can result in improved app performance and smoother animations.
+
+6. Easy theming: Compose provides an easy-to-use theming system that allows developers to create custom themes for their apps. This makes it easier to create a consistent and polished UI across an app.
+
+7. Easy to learn: Compose is designed to be easy to learn, even for developers who are new to Android app development. The API is intuitive and requires less boilerplate code, which can reduce the learning curve and make it easier to onboard new team members.
+
+While Jetpack Compose brings many advantages, there are some potential disadvantages to consider:
+
+1. Learning curve: Compose has a new syntax and way of thinking about UI development, which may take time to learn for developers who are used to traditional Android UI development.
+
+2. Limited resources and documentation: As Compose is a relatively new technology, there may be limited resources and documentation available compared to more established Android frameworks.
+
+3. Compatibility with existing code: Since Compose is a new way of creating UI, it may not be fully compatible with existing codebases that use traditional Android UI development frameworks. This can require additional work to migrate existing code to Compose.
+
+4. Runtime performance: While Compose is designed to be efficient and performant, there may be cases where it could lead to reduced performance compared to traditional Android UI development frameworks. This can be mitigated by optimizing Compose code and ensuring proper use of Compose's performance tools.
+
+There are different types of Jetpack Compose functions that serve different purposes. Here are some examples:
+
+1. `@Composable` functions: These are the building blocks of Jetpack Compose UI. They are used to create reusable UI components that can be combined and arranged to create complex UI layouts.
+
+2. `ViewModel`: This is an architecture component that is used to store and manage UI-related data. It is commonly used in conjunction with Jetpack Compose to manage stateful data.
+
+3. `Navigation`: This is a set of libraries and tools for implementing navigation between different screens in an app. It provides a flexible and easy-to-use API for defining and navigating between screens.
+
+4. `Data binding`: This is a technique for connecting UI components with data sources. It allows you to bind UI elements directly to data objects, making it easy to update the UI based on changes to the data.
+
+5. `Animation`: Jetpack Compose provides a powerful and easy-to-use animation API that allows you to create complex animations with just a few lines of code.
+
+6. `Material Design`: Jetpack Compose provides a set of Material Design components that are optimized for performance and ease of use. These components make it easy to create apps that conform to Google's Material Design guidelines.
+
+Overall, Jetpack Compose provides a modern and efficient way to build UI in Android apps, and it offers a number of advantages over traditional XML-based UI layouts.
+
+Here are some more facts about Jetpack Compose:
+
+1. Jetpack Compose uses Kotlin as its programming language and applies functional programming concepts.
+
+2. Compose is a declarative UI toolkit, which means that developers describe the UI using a set of functions and not by modifying the views directly.
+
+3. Compose simplifies the UI development process by providing an easy-to-use and intuitive API. The process is less verbose compared to traditional XML-based layout development.
+
+4. Compose offers a live preview feature, which allows developers to view changes in real-time as they write code.
+
+5. Compose is built on top of the existing Android platform, meaning it can work seamlessly with existing Android apps.
+
+6. Compose offers better performance and reduces the risk of memory leaks and crashes.
+
+7. Compose also offers a set of Material Design components that developers can use to create beautiful and consistent UI across their app.
+
+8. Compose supports animations and motion graphics, making it easy to add fluid and dynamic UI elements to an app.
+
+9. Compose supports testing, making it easy to write unit tests for UI elements.
+
+10. Compose is an open-source project, which means that developers can contribute to its development and help shape the future of Android UI development.
+
+## Lifecycle of a Compose
+
+Jetpack Compose is a modern Android UI toolkit for building native UI hierarchies in a declarative way, using Kotlin. It follows a completely different architecture compared to the traditional View-based UI toolkit, and hence the lifecycle of a Compose app is also different.
+
+In Jetpack Compose, the UI is built using Composable functions that are annotated with `@Composable`. These functions take some input parameters and return a hierarchy of Composable objects, which represent the UI.
+
+The lifecycle of a Compose app is managed by the Compose runtime, which is part of the Jetpack Compose library. The Compose runtime is responsible for managing the composition of the UI hierarchy, and it is based on a reactive programming model.
+
+Here are the main lifecycle events in a Compose app:
+
+1. Composition: The Compose runtime creates and maintains the UI hierarchy by invoking Composable functions, based on the current state of the app.
+
+2. Recomposition: When some state of the app changes, the Compose runtime recomposes the UI hierarchy, by invoking only the affected Composable functions.
+
+3. Disposal: When a Composable object is no longer needed, the Compose runtime disposes of it, and releases any associated resources.
+
+4. Suspension: When a Composable function performs a long-running operation, it can suspend the composition, and resume it when the operation completes.
+
+In general, the lifecycle of a Compose app is simpler than the lifecycle of a traditional Android app, because the Compose runtime handles most of the UI-related logic, and provides a more predictable and efficient way of building UIs.
+
+## Compose Examples
+
+Jetpack Compose provides a number of built-in UI elements, including:
+
+1. Text: A composable for displaying text.
+2. Image: A composable for displaying images.
+3. Button: A composable for creating buttons.
+4. TextField: A composable for creating text input fields.
+5. Checkbox: A composable for creating checkboxes.
+6. Radio Button: A composable for creating radio buttons.
+7. Switch: A composable for creating switches.
+8. Slider: A composable for creating sliders.
+9. Progress Indicator: A composable for displaying progress indicators.
+10. Snackbar: A composable for creating snackbars.
+11. Dialog: A composable for creating dialogs.
+12. Navigation: A set of composable functions for building navigation in your app.
+13. Material Design: A set of pre-built Material Design components, including AppBar, BottomNavigationBar, and more. 
+
+These built-in UI elements can be used to create a wide range of user interfaces for your app.
+
+Columns and Rows are composable functions that are used to arrange UI elements in a vertical or horizontal line, respectively. They are similar to LinearLayout in the traditional Android view system.
+
+A Column composable is used to arrange its child composables vertically from top to bottom, whereas a Row composable arranges its child composables horizontally from left to right.
+
+You can specify the order, alignment, and other layout properties for the child composables in a Column or Row using modifiers. For example, you can use the `verticalArrangement` modifier to specify how the child composables should be spaced vertically in a Column, or the `horizontalArrangement` modifier to specify how the child composables should be spaced horizontally in a Row.
