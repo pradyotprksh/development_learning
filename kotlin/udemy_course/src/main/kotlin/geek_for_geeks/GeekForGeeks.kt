@@ -20,6 +20,34 @@ class GeekForGeeks {
         println(findIndex(a = listOf(6, 5, 4, 3, 1, 2), k = 8))
         println(seriesSum(1))
         println(seriesSum(5))
+        println(findElements(a = listOf(2, 8, 7, 1, 5)))
+        println(findElements(a = listOf(7, -2, 3, 4, 9, -1)))
+        println(fascinating(192))
+        println(fascinating(853))
+    }
+
+    private fun fascinating(a: Int): Boolean {
+        if (a.toString().length < 3) {
+            return false
+        } else {
+            val num1 = a * 2
+            val num2 = a * 3
+
+            val finalNum = "$a$num1$num2"
+
+            for (i in 1..9) {
+                if (!finalNum.contains(i.toString())) {
+                    return false
+                }
+            }
+        }
+
+        return true
+    }
+
+    private fun findElements(a: List<Int>): List<Int> {
+        val sorted = a.sorted()
+        return sorted.subList(0, sorted.size - 2)
     }
 
     private fun seriesSum(n: Int): Int {
