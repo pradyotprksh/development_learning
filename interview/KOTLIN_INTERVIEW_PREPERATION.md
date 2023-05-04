@@ -475,3 +475,50 @@ class MyViewModel : ViewModel() {
 In this example, we create a `viewModelScope` that is tied to the lifecycle of the `MyViewModel` instance. We launch a coroutine inside the `performTask` method using this scope. When the `MyViewModel` is destroyed, the `viewModelScope` will cancel any running coroutines automatically.
 
 By using `LifecycleScope` and `ViewModelScope`, you can ensure that coroutines are cancelled automatically when they are no longer needed, without having to manually manage their lifecycle. This makes it easier to write clean and efficient code that does not leak memory or waste resources.
+
+# HashMap
+
+A `HashMap` in Kotlin is a data structure that maps keys to values. It works by storing elements in an array and using a hashing function to determine the index at which to store and retrieve elements. The hashing function converts the key to an integer value, which is used as an index in the array. When a collision occurs (i.e., two or more keys are hashed to the same index), the elements are stored in a linked list.
+
+Here's an example of how to use a `HashMap` in Kotlin:
+
+```kotlin
+val map = hashMapOf("a" to 1, "b" to 2, "c" to 3)
+
+// add an element to the map
+map["d"] = 4
+
+// get the value associated with a key
+val value = map["b"] // returns 2
+
+// iterate over the map
+for ((key, value) in map) {
+    println("$key -> $value")
+}
+```
+
+In this example, we create a `HashMap` with three key-value pairs, then add a fourth element to the map. We retrieve the value associated with the key "b" using the subscript operator, and then iterate over the map using a for loop.
+
+`HashMap` in Kotlin provides constant-time average performance for adding, removing, and retrieving elements, as long as the hashing function distributes the keys evenly across the array. However, if too many elements are hashed to the same index, performance can degrade to linear time. It is also important to note that `HashMap` is not thread-safe by default, and care must be taken to ensure that access to the map is properly synchronized in a multithreaded environment.
+
+## Collision In HashMap
+
+When two or more keys are hashed to the same index in a `HashMap`, a collision occurs. In Kotlin, collisions are handled by storing the colliding elements in a linked list at the index. 
+
+When retrieving an element with a specific key, the `HashMap` first calculates the index of the corresponding linked list using the key's hash code, and then iterates over the linked list to find the element with the matching key. This is why the performance of a `HashMap` can degrade to linear time if too many elements are hashed to the same index.
+
+To minimize the occurrence of collisions, a good hashing function is essential. A good hashing function should generate a reasonably uniform distribution of hash codes for the keys, which means that the likelihood of collisions is reduced. In Kotlin, the `hashCode()` function is used to generate the hash codes for keys in a `HashMap`. By default, `hashCode()` generates a hash code based on the object's memory address, but this behavior can be overridden by implementing a custom `hashCode()` function in a class.
+
+In Kotlin, the `HashMap` class uses a linked list to handle collisions when two or more keys are hashed to the same index. When a new key-value pair is added to the map and a collision occurs, the pair is added to the linked list at the corresponding index.
+
+However, starting from JDK 8, the Java `HashMap` class uses a combination of linked lists and binary trees to handle collisions. When a linked list at a particular index grows beyond a certain threshold, it is converted into a binary tree to improve the performance of adding and retrieving elements. This optimization is known as a "treeification" process.
+
+Since Kotlin compiles to Java bytecode, it is possible to use the Java `HashMap` class in Kotlin and take advantage of this optimization if needed. The Java `HashMap` can be accessed from Kotlin using the standard Java interop syntax. For example:
+
+```kotlin
+val map = java.util.HashMap<String, Int>()
+map["a"] = 1
+map["b"] = 2
+```
+
+In this example, we create a new `java.util.HashMap` object, add two key-value pairs to it using the subscript operator, and take advantage of the treeification optimization provided by the Java `HashMap` class.
