@@ -1,5 +1,3 @@
-# Some Topics Related To Android
-
 Some topics that you should consider learning or refreshing your knowledge on:
 
 1. Architecture components: This includes understanding and implementing MVVM, LiveData, Room, and other components.
