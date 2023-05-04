@@ -24,6 +24,48 @@ class GeekForGeeks {
         println(findElements(a = listOf(7, -2, 3, 4, 9, -1)))
         println(fascinating(192))
         println(fascinating(853))
+        println(valueEqualToIndex(a = listOf(15, 2, 45, 12, 7)))
+        println(valueEqualToIndex(a = listOf(1)))
+        println(valueEqualToIndex(a = listOf(1, 2, 3, 4, 6)))
+        println(scores(a = listOf(4, 2, 7), b = listOf(5, 6, 3)))
+        println(scores(a = listOf(4, 2, 7), b = listOf(5, 2, 8)))
+        println(swapKth(a = listOf(1, 2, 3, 4, 5, 6, 7, 8), k = 3))
+        println(swapKth(a = listOf(5, 3, 6, 1, 2), k = 2))
+    }
+
+    private fun swapKth(a: List<Int>, k: Int): List<Int> {
+        val swapList = ArrayList<Int>(a)
+
+        val temp = swapList[k - 1]
+        swapList[k - 1] = swapList[swapList.size - k]
+        swapList[swapList.size - k] = temp
+
+        return swapList
+    }
+
+    private fun scores(a: List<Int>, b: List<Int>): List<Int> {
+        var firstScore = 0
+        var secondScore = 0
+
+        for (i in a.indices) {
+            if (a[i] > b[i]) {
+                ++firstScore
+            } else if (a[i] < b[i]) {
+                ++secondScore
+            }
+        }
+
+        return listOf(firstScore, secondScore)
+    }
+
+    private fun valueEqualToIndex(a: List<Int>): List<Int> {
+        val elements = ArrayList<Int>()
+        for ((index, value) in a.withIndex()) {
+            if (value == index + 1) {
+                elements.add(value)
+            }
+        }
+        return elements
     }
 
     private fun fascinating(a: Int): Boolean {
