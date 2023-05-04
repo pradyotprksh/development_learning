@@ -522,3 +522,105 @@ map["b"] = 2
 ```
 
 In this example, we create a new `java.util.HashMap` object, add two key-value pairs to it using the subscript operator, and take advantage of the treeification optimization provided by the Java `HashMap` class.
+
+# Scope Functions
+
+Scope functions are higher-order functions that allow you to perform operations on an object within a specified scope. They are used to simplify and streamline your code by providing a concise way to manipulate objects and perform operations on them. The five scope functions available in Kotlin are `let`, `also`, `run`, `apply`, and `with`.
+
+1. `let`: `let` is a scope function that is used to perform operations on a non-null object. It takes a lambda expression as an argument and within the lambda expression, the object is referred to using the `it` keyword. The return value of the lambda expression is the result of the `let` function call. `let` is often used for null-checking and chaining operations on a non-null object. Here's an example:
+
+```kotlin
+val result = nullableObject?.let {
+    // Perform operations on the non-null object
+    it.operation1()
+    it.operation2()
+    // The result of the last expression is returned by the let function
+    it.operation3()
+}
+```
+
+2. `also`: `also` is a scope function that is used to perform operations on an object and return the object itself. It takes a lambda expression as an argument and within the lambda expression, the object is referred to using the `it` keyword. The return value of the lambda expression is ignored and the original object is returned by the `also` function call. `also` is often used for performing side-effects, such as logging or printing debug information. Here's an example:
+
+```kotlin
+val result = myObject.also {
+    // Perform operations on the object, such as logging
+    Log.d("TAG", "Object value: $it")
+}
+```
+
+3. `run`: `run` is a scope function that is used to perform operations on an object and return the result of the lambda expression. It takes a lambda expression as an argument and within the lambda expression, the object is referred to using the `this` keyword. The return value of the lambda expression is the result of the `run` function call. `run` is often used for performing a series of operations on an object. Here's an example:
+
+```kotlin
+val result = myObject.run {
+    // Perform operations on the object
+    val intermediateResult = operation1()
+    val secondIntermediateResult = operation2(intermediateResult)
+    // The result of the last expression is returned by the run function
+    operation3(secondIntermediateResult)
+}
+```
+
+4. `apply`: `apply` is a scope function that is used to perform operations on an object and return the object itself. It takes a lambda expression as an argument and within the lambda expression, the object is referred to using the `this` keyword. The return value of the lambda expression is ignored and the original object is returned by the `apply` function call. `apply` is often used for initializing an object with a series of properties or performing a series of operations on an object. Here's an example:
+
+```kotlin
+val result = myObject.apply {
+    // Set properties of the object
+    property1 = value1
+    property2 = value2
+    // Perform operations on the object
+    operation1()
+    operation2()
+    // The original object is returned by the apply function
+}
+```
+
+5. `with`: `with` is a scope function that is used to perform operations on an object and return the result of the lambda expression. It is similar to `run`, but it takes the object as a separate argument instead of using the `this` keyword within the lambda expression. Here's an example:
+
+```kotlin
+val result = with(myObject) {
+    // Perform operations on the object
+    val intermediateResult = operation1()
+    val secondIntermediateResult = operation2(intermediateResult)
+    // The result of the last expression is returned by the with function
+    operation3(secondIntermediateResult)
+}
+```
+
+## Difference between `also`, `run`, and `apply`
+
+The `also`, `run`, and `apply` are all scope functions in Kotlin that can be used to perform operations on an object. The main difference between them is the way they handle the context or receiver of the function.
+
+1. `also`: The `also` function executes a given block of code and returns the original object. The context object is available as a parameter in the lambda expression, and it can be referred to using the `it` keyword. The primary use of `also` is for performing additional actions on an object that has just been created or modified.
+
+   Example:
+
+   ```
+   val myString = "Hello"
+   myString.also { println(it) }
+   ```
+
+2. `run`: The `run` function executes a given block of code and returns the result of the last expression in that block. The context object is available as a receiver in the lambda expression, and it can be referred to using the `this` keyword or omitted altogether. The primary use of `run` is for performing a sequence of operations on an object and returning a result.
+
+   Example:
+
+   ```
+   val result = "Hello".run {
+       val length = length
+       println("The length of this string is $length")
+       length
+   }
+   ```
+
+3. `apply`: The `apply` function is similar to `also` in that it executes a given block of code and returns the original object. The context object is available as a receiver in the lambda expression, and it can be referred to using the `this` keyword. The primary use of `apply` is for performing a sequence of operations on an object and returning the modified object.
+
+   Example:
+
+   ```
+   val myStringBuilder = StringBuilder().apply {
+       append("Hello ")
+       append("World")
+   }
+   println(myStringBuilder.toString())
+   ```
+
+In summary, `also` and `apply` are used for performing additional operations on an object and returning the original or modified object, respectively. On the other hand, `run` is used for performing a sequence of operations on an object and returning a result.
