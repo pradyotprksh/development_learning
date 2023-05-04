@@ -31,6 +31,61 @@ class GeekForGeeks {
         println(scores(a = listOf(4, 2, 7), b = listOf(5, 2, 8)))
         println(swapKth(a = listOf(1, 2, 3, 4, 5, 6, 7, 8), k = 3))
         println(swapKth(a = listOf(5, 3, 6, 1, 2), k = 2))
+        println(print2largest(a = listOf(12, 35, 1, 10, 34, 1)))
+        println(print2largest(a = listOf(10, 5, 10)))
+        println(getMoreAndLess(a = listOf(1, 2, 8, 10, 11, 12, 19), x = 0))
+        println(getMoreAndLess(a = listOf(1, 2, 8, 10, 11, 12, 19), x = 5))
+        println(streamAvg(a = listOf(10, 20, 30, 40, 50)))
+        println(streamAvg(a = listOf(12, 2)))
+    }
+
+    private fun streamAvg(a: List<Int>): List<Int> {
+        val avg = ArrayList<Int>()
+
+        var sum = 0
+
+        for ((i, num) in a.withIndex()) {
+            sum += num
+            avg.add(sum / (i + 1))
+        }
+
+        return avg
+    }
+
+    private fun getMoreAndLess(a: List<Int>, x: Int): List<Int> {
+        var lessNum = 0
+        var moreNum = 0
+
+        for (num in a) {
+            if (num <= x) {
+                ++lessNum
+            }
+            if (num >= x) {
+                ++moreNum
+            }
+        }
+
+        return listOf(lessNum, moreNum)
+    }
+
+    private fun print2largest(a: List<Int>): Int {
+        if (a.size == 1) {
+            return -1
+        }
+
+        var largestNum = a[0]
+        var secondLargestNum = -1
+
+        for (num in a) {
+            if (num > largestNum) {
+                secondLargestNum = largestNum
+                largestNum = num
+            } else if (num > secondLargestNum && num != largestNum) {
+                secondLargestNum = num
+            }
+        }
+
+        return secondLargestNum
     }
 
     private fun swapKth(a: List<Int>, k: Int): List<Int> {
