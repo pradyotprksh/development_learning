@@ -37,6 +37,83 @@ class GeekForGeeks {
         println(getMoreAndLess(a = listOf(1, 2, 8, 10, 11, 12, 19), x = 5))
         println(streamAvg(a = listOf(10, 20, 30, 40, 50)))
         println(streamAvg(a = listOf(12, 2)))
+        println(leftElement(a = listOf(7, 8, 3, 4, 2, 9, 5)))
+        println(leftElement(a = listOf(8, 1, 2, 9, 4, 3, 7, 5)))
+        println(longest(a = listOf("Geek", "Geeks", "Geeksfor", "GeeksforGeek", "GeeksforGeeks")))
+        println(getSum(a = listOf(1, 2, 3, 4)))
+        println(getSum(a = listOf(5, 8, 3, 10, 22, 45)))
+        println(transpose(a = listOf(listOf(1, 2, 3), listOf(4, 5, 6), listOf(7, 8, 9))))
+        println(transpose(a = listOf(listOf(1, 2), listOf(1, 2))))
+    }
+
+    // https://practice.geeksforgeeks.org/problems/toeplitz-matrix/1?page=2&sortBy=difficulty
+    // https://practice.geeksforgeeks.org/problems/multiply-matrices/1?page=2&sortBy=difficulty
+
+    private fun transpose(a: List<List<Int>>): List<List<Int>> {
+        val temp = ArrayList<ArrayList<Int>>()
+
+        for (i in a.indices) {
+            val row = ArrayList<Int>()
+            for (j in a[i].indices) {
+                row.add(a[j][i])
+            }
+            temp.add(row)
+        }
+
+        return temp
+    }
+
+    private fun getSum(a: List<Int>): Int {
+        var sum = 0
+
+        for (num in a) {
+            sum += num
+        }
+
+        return sum
+    }
+
+    private fun longest(a: List<String>): String {
+        var longestString = ""
+
+        for (str in a) {
+            if (str.length > longestString.length) {
+                longestString = str
+            }
+        }
+
+        return longestString
+    }
+
+    private fun leftElement(a: List<Int>): Int {
+        val temp = ArrayList(a)
+
+        var removeMax = true
+
+        while (temp.size > 1) {
+            var num = if (removeMax) Int.MIN_VALUE else Int.MAX_VALUE
+            var numIndex = -1
+
+            for ((i, item) in temp.withIndex()) {
+                if (removeMax) {
+                    if (item > num) {
+                        num = item
+                        numIndex = i
+                    }
+                } else {
+                    if (item < num) {
+                        num = item
+                        numIndex = i
+                    }
+                }
+            }
+
+            temp.removeAt(numIndex)
+
+            removeMax = !removeMax
+        }
+
+        return temp.first()
     }
 
     private fun streamAvg(a: List<Int>): List<Int> {
