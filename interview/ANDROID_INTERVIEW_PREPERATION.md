@@ -616,3 +616,49 @@ Internally, RecyclerView is composed of several key components:
 When a RecyclerView is first created, it creates a number of ViewHolders and LayoutManager starts creating views as per the layout. When the user scrolls the list, the RecyclerView calls the Adapter to bind new data to the ViewHolder for the item that has come into view, while the ViewHolder for the item that has just gone out of view is recycled and reused for the new item.
 
 Overall, the RecyclerView is designed to efficiently handle large datasets by only creating and rendering the views that are visible on the screen, and by recycling the views that are no longer visible. This makes it a more efficient alternative to the older ListView and GridView components.
+
+# How to avoid API keys from check-in into VCS?
+
+To avoid API keys from being checked into version control systems (VCS), you can follow these best practices:
+
+1. Store API keys in environment variables: Instead of hardcoding API keys in your code, store them as environment variables. This way, you can access the values in your code without exposing them in plain text. You can set the environment variables on your local machine, as well as on your deployment environments.
+
+2. Use a configuration file: You can store API keys in a configuration file and load them into your code at runtime. This way, you can keep the configuration file out of version control and only include a sample or template file that developers can use to create their own local configuration files.
+
+3. Use a secrets management tool: You can use a secrets management tool such as Vault or AWS Secrets Manager to store and manage API keys. These tools allow you to securely store secrets and control access to them.
+
+4. Use gitignore: Add files containing API keys or other sensitive information to the `.gitignore` file. This will ensure that these files are not committed to version control.
+
+By following these practices, you can prevent API keys from being exposed in your codebase and ensure that they are secure.
+
+# Can you create transparent activity in Android?
+
+Yes, it is possible to create a transparent activity in Android. To create a transparent activity, you need to set the alpha value of the activity to 0 or use a transparent theme.
+
+Here's an example of how to create a transparent activity:
+
+1. Create a new activity in your Android project.
+2. In the `onCreate()` method of the activity, add the following line of code to make the activity transparent:
+
+   ```kotlin
+   window.setBackgroundDrawableResource(android.R.color.transparent)
+   ```
+
+   Alternatively, you can also set the alpha value of the activity to 0:
+
+   ```kotlin
+   window.setDimAmount(0f)
+   ```
+
+3. Set the theme of the activity to a transparent theme in the `AndroidManifest.xml` file:
+
+   ```xml
+   <activity android:name=".MainActivity"
+             android:theme="@android:style/Theme.Translucent.NoTitleBar">
+   </activity>
+   ```
+
+   This will set the theme of the activity to a translucent, no-title-bar theme.
+
+With these changes, your activity should now be transparent.
+
