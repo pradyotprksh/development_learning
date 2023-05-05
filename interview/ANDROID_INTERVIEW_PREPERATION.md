@@ -568,3 +568,13 @@ To reduce the size of the APK, you can take the following steps:
 9. Use APK analyzer: Use the APK analyzer tool to analyze your APK and find the unused resources, which can be removed to reduce the size of the APK.
 
 10. Use ProGuard or R8 for resource shrinking: You can also use ProGuard or R8 for resource shrinking to remove unused resources from your app, which can reduce the size of the APK.
+
+# What is the difference between onCreate() and onStart()?
+
+In the Android Activity lifecycle, `onCreate()` and `onStart()` are two of the important methods. Here are the differences between the two:
+
+1. `onCreate()`: This is the first method that gets called when an Activity is created. It is used for initialization of the Activity, such as setting the layout with `setContentView()`, initializing variables, and binding views to the Activity.
+
+2. `onStart()`: This method gets called after `onCreate()` and before `onResume()`. It is used to prepare the Activity to become visible on the screen. This includes creating and starting animations, connecting to external resources, and initializing UI components. Once `onStart()` is completed, the Activity becomes visible to the user.
+
+In summary, `onCreate()` is used for initial setup and `onStart()` is used for preparing the Activity to become visible.
