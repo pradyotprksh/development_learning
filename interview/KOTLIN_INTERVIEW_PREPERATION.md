@@ -624,3 +624,40 @@ The `also`, `run`, and `apply` are all scope functions in Kotlin that can be use
    ```
 
 In summary, `also` and `apply` are used for performing additional operations on an object and returning the original or modified object, respectively. On the other hand, `run` is used for performing a sequence of operations on an object and returning a result.
+
+# What's the difference between val, var and const?
+
+In Kotlin, `val`, `var`, and `const` are keywords used for variable declaration, but they have different characteristics.
+
+`val` is used to declare an immutable variable, meaning that its value cannot be changed once it has been assigned. For example, `val x = 5` creates a variable `x` with the value of 5. You cannot reassign `x` to a different value later in the program.
+
+`var` is used to declare a mutable variable, meaning that its value can be changed after it has been assigned. For example, `var y = 10` creates a variable `y` with the initial value of 10, but you can reassign `y` to a different value later in the program, such as `y = 20`.
+
+`const` is used to declare a compile-time constant, which is a value that is known at compile-time and cannot be changed during runtime. Compile-time constants are only allowed at the top level or in objects. They must be initialized with a value or with another constant expression. For example, `const val PI = 3.14` creates a compile-time constant `PI` with a value of 3.14. You cannot reassign `PI` to a different value later in the program.
+
+In summary, `val` declares an immutable variable, `var` declares a mutable variable, and `const` declares a compile-time constant.
+
+There is a significant difference between `val` and `const`.
+
+`val` is used to declare an immutable variable. The value assigned to a `val` variable cannot be changed once it has been assigned, but it is not a compile-time constant. The value assigned to a `val` variable can be determined at runtime.
+
+`const`, on the other hand, is used to declare a compile-time constant, which means that its value is known at compile-time and cannot be changed during runtime. A `const` variable is implicitly `val`, which means that it is also immutable, but the key difference is that it is a compile-time constant.
+
+The `const` keyword is used for values that can be determined at compile time, such as literal values, simple expressions, or expressions that involve only other `const` values. If the value cannot be determined at compile-time, then it cannot be declared as `const`.
+
+In summary, the main difference between `val` and `const` is that `val` declares an immutable variable whose value can be determined at runtime, whereas `const` declares a compile-time constant whose value is determined at compile-time and cannot be changed during runtime.
+
+Here is an example that illustrates the difference between `val` and `const`:
+
+```
+const val PI = 3.14
+val radius = 5
+
+val circumference = 2 * PI * radius
+```
+
+In this example, `PI` is a compile-time constant declared using the `const` keyword, and its value is determined at compile-time. `radius` is a variable declared using the `val` keyword, and its value can be determined at runtime.
+
+The `circumference` variable is also declared using the `val` keyword, and its value is determined at runtime by computing `2 * PI * radius`. Since `PI` is a compile-time constant, its value is known at compile-time and can be used in the computation of `circumference`.
+
+So, `PI` is a true constant that cannot be changed at runtime, whereas `radius` is a variable that can be assigned a value at runtime but cannot be changed afterwards.
