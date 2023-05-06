@@ -1,6 +1,15 @@
 package data_structures.trees
 
 class MaxBinaryHeap {
+    // Formula
+    //
+    // Child of parent
+    // left = 2n + 1
+    // right = 2n + 2
+    //
+    // Parent of the child
+    // parent = (n - 1) / 2
+
     var heap = ArrayList<Int>()
         private set
 
@@ -59,6 +68,22 @@ class MaxBinaryHeap {
         }
 
         return max
+    }
+
+    fun height(): Int {
+        var height = 0
+
+        var lastChildIndex = heap.size - 1
+        var parentIndex = (lastChildIndex - 1) / 2
+
+        while (parentIndex > 0) {
+            ++height
+
+            lastChildIndex = parentIndex
+            parentIndex = (lastChildIndex - 1) / 2
+        }
+
+        return ++height
     }
 
     fun print() {

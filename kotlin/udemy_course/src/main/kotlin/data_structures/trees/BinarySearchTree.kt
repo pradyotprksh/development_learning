@@ -52,6 +52,26 @@ class BinarySearchTree {
         return null
     }
 
+    fun getSize(): Int {
+        var size = 0
+
+        val queue = arrayListOf(root)
+
+        while (queue.isNotEmpty()) {
+            val node = queue.removeFirst()
+            ++size
+
+            node?.left?.let {
+                queue.add(it)
+            }
+            node?.right?.let {
+                queue.add(it)
+            }
+        }
+
+        return size
+    }
+
     fun print() {
         println(root.toString())
     }

@@ -1,5 +1,9 @@
 package geek_for_geeks
 
+import data_structures.trees.BinarySearchTree
+import data_structures.trees.MaxBinaryHeap
+import data_structures.trees.Node
+
 class GeekForGeeks {
     fun startGeekForGeeks() {
         println("Starting problems from GeekForGeeks [https://practice.geeksforgeeks.org/explore?page=1]")
@@ -44,10 +48,64 @@ class GeekForGeeks {
         println(getSum(a = listOf(5, 8, 3, 10, 22, 45)))
         println(transpose(a = listOf(listOf(1, 2, 3), listOf(4, 5, 6), listOf(7, 8, 9))))
         println(transpose(a = listOf(listOf(1, 2), listOf(1, 2))))
+
+        val node = Node(data = 1)
+        node.left = Node(data = 4)
+        node.left?.left = Node(data = 4)
+        node.left?.right = Node(data = 2)
+        preorder(node)
+        println()
+
+        heapHeight()
+
+        getHeight()
     }
 
-    // https://practice.geeksforgeeks.org/problems/toeplitz-matrix/1?page=2&sortBy=difficulty
-    // https://practice.geeksforgeeks.org/problems/multiply-matrices/1?page=2&sortBy=difficulty
+    private fun getHeight() {
+        val binarySearchTree = BinarySearchTree()
+        binarySearchTree.insert(1)
+        binarySearchTree.insert(10)
+        binarySearchTree.insert(39)
+        binarySearchTree.insert(5)
+
+        println(binarySearchTree.getSize())
+    }
+
+    private fun heapHeight() {
+        val maxBinaryHeap1 = MaxBinaryHeap()
+        maxBinaryHeap1.insert(1)
+        maxBinaryHeap1.insert(3)
+        maxBinaryHeap1.insert(6)
+        maxBinaryHeap1.insert(5)
+        maxBinaryHeap1.insert(9)
+        maxBinaryHeap1.insert(8)
+
+        maxBinaryHeap1.print()
+
+        println(maxBinaryHeap1.height())
+
+        val maxBinaryHeap2 = MaxBinaryHeap()
+        maxBinaryHeap2.insert(3)
+        maxBinaryHeap2.insert(6)
+        maxBinaryHeap2.insert(9)
+        maxBinaryHeap2.insert(2)
+        maxBinaryHeap2.insert(15)
+        maxBinaryHeap2.insert(10)
+        maxBinaryHeap2.insert(14)
+        maxBinaryHeap2.insert(5)
+        maxBinaryHeap2.insert(12)
+
+        maxBinaryHeap2.print()
+
+        println(maxBinaryHeap2.height())
+    }
+
+    private fun preorder(root: Node?) {
+        if (root == null) return
+        print("${root.data} ")
+        preorder(root.left)
+        preorder(root.right)
+    }
 
     private fun transpose(a: List<List<Int>>): List<List<Int>> {
         val temp = ArrayList<ArrayList<Int>>()

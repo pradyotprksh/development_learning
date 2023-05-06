@@ -49,6 +49,8 @@ class Trees {
         maxBinaryHeap.insert(55)
         maxBinaryHeap.print()
 
+        println(maxBinaryHeap.height())
+
         println("Starting Priority Queue")
         val priorityQueue = PriorityQueue()
         priorityQueue.enqueue("one", 1)
