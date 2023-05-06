@@ -664,7 +664,7 @@ So, `PI` is a true constant that cannot be changed at runtime, whereas `radius` 
 
 # SOLID Principles in Kotlin
 
-See https://medium.com/huawei-developers/kotlin-solid-principles-tutorial-examples-192bf8c049dd.
+[Check this link](https://medium.com/huawei-developers/kotlin-solid-principles-tutorial-examples-192bf8c049dd).
 
 # Create singleton class wothout using object keyword?
 
