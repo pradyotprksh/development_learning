@@ -661,3 +661,73 @@ In this example, `PI` is a compile-time constant declared using the `const` keyw
 The `circumference` variable is also declared using the `val` keyword, and its value is determined at runtime by computing `2 * PI * radius`. Since `PI` is a compile-time constant, its value is known at compile-time and can be used in the computation of `circumference`.
 
 So, `PI` is a true constant that cannot be changed at runtime, whereas `radius` is a variable that can be assigned a value at runtime but cannot be changed afterwards.
+
+# SOLID Principles in Kotlin
+
+See https://medium.com/huawei-developers/kotlin-solid-principles-tutorial-examples-192bf8c049dd.
+
+# Create singleton class wothout using object keyword?
+
+In Kotlin, you can create a singleton class without using the `object` keyword by using a `companion object`. A `companion object` is an object that is associated with a class, and it can have a name just like any other object. Here's an example:
+
+```kotlin
+class MySingleton private constructor() {
+    companion object {
+        private val instance = MySingleton()
+
+        fun getInstance(): MySingleton {
+            return instance
+        }
+    }
+
+    // other properties and methods
+}
+```
+
+In this example, the `MySingleton` class has a private constructor, which prevents other classes from instantiating it. The `MySingleton` class also has a `companion object`, which has a private property `instance` that holds the single instance of the `MySingleton` class.
+
+The `companion object` also has a public method `getInstance()`, which returns the single instance of the `MySingleton` class. This method can be called from other classes to get the instance of the `MySingleton` class.
+
+Note that the `companion object` is declared inside the `MySingleton` class, and its properties and methods can be accessed using the class name, like this:
+
+```kotlin
+val singleton = MySingleton.getInstance()
+```
+
+## What are Companion Objects?
+
+In Kotlin, a `companion object` is an object that is associated with a class. It can be used to define properties and methods that are related to the class, but don't require an instance of the class to be called. It can also be used to create static members, which are similar to static members in Java.
+
+Here's an example of a class that has a companion object:
+
+```kotlin
+class MyClass {
+    companion object {
+        val CONSTANT_VALUE = 42
+
+        fun staticMethod() {
+            // ...
+        }
+    }
+}
+```
+
+In this example, the `MyClass` class has a `companion object`, which contains a constant property `CONSTANT_VALUE` and a method `staticMethod()`. These properties and methods can be accessed using the class name, like this:
+
+```kotlin
+val constantValue = MyClass.CONSTANT_VALUE
+MyClass.staticMethod()
+```
+
+Note that a class can only have one `companion object`, and its name can be omitted, in which case it will be called `Companion` by default. This means that the properties and methods in the `companion object` can be accessed using the class name and the `Companion` keyword, like this:
+
+```kotlin
+class MyClass {
+    companion object {
+        // ...
+    }
+}
+
+val constantValue = MyClass.Companion.CONSTANT_VALUE
+MyClass.Companion.staticMethod()
+```
