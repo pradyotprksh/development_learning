@@ -14,11 +14,11 @@ class GeekForGeeks {
         println()
         println(sumElement(a = listOf(3, 2, 1)))
         println(sumElement(a = listOf(1, 2, 3, 4)))
-        println(IsPerfect(a = listOf(1, 2, 3, 2, 1)))
-        println(IsPerfect(a = listOf(1, 2, 3, 4, 5)))
-        println(IsPerfect(a = listOf(1, 2, 3, 4)))
-        println(IsPerfect(a = listOf(1, 2, 2, 1)))
-        println(IsPerfect(a = listOf(1, 2, 1, 1)))
+        println(isPerfect(a = listOf(1, 2, 3, 2, 1)))
+        println(isPerfect(a = listOf(1, 2, 3, 4, 5)))
+        println(isPerfect(a = listOf(1, 2, 3, 4)))
+        println(isPerfect(a = listOf(1, 2, 2, 1)))
+        println(isPerfect(a = listOf(1, 2, 1, 1)))
         println(findIndex(a = listOf(1, 2, 3, 4, 5, 5), k = 5))
         println(findIndex(a = listOf(6, 5, 4, 3, 1, 2), k = 4))
         println(findIndex(a = listOf(6, 5, 4, 3, 1, 2), k = 8))
@@ -48,16 +48,13 @@ class GeekForGeeks {
         println(getSum(a = listOf(5, 8, 3, 10, 22, 45)))
         println(transpose(a = listOf(listOf(1, 2, 3), listOf(4, 5, 6), listOf(7, 8, 9))))
         println(transpose(a = listOf(listOf(1, 2), listOf(1, 2))))
-
         val node = Node(data = 1)
         node.left = Node(data = 4)
         node.left?.left = Node(data = 4)
         node.left?.right = Node(data = 2)
         preorder(node)
         println()
-
         heapHeight()
-
         getHeight()
     }
 
@@ -309,7 +306,7 @@ class GeekForGeeks {
         return listOf(start, end)
     }
 
-    private fun IsPerfect(a: List<Int>): Boolean {
+    private fun isPerfect(a: List<Int>): Boolean {
         for (i in 0 until a.size / 2) {
             if (a[i] != a[a.size - 1 - i]) {
                 return false
