@@ -4,6 +4,6 @@ import geek_for_geeks.GeekForGeeks
 
 fun main() {
     DataStructures().startDataStructures()
-    GeekForGeeks().startGeekForGeeks()
     Algorithms().startAlgorithms()
+    GeekForGeeks().startGeekForGeeks()
 }
