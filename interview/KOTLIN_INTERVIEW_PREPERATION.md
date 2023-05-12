@@ -50,6 +50,19 @@ A data class in Kotlin is different from a normal class in several ways:
 
 Overall, the main purpose of a data class is to provide a convenient way to define classes that primarily hold data, with built-in implementations of common methods. In contrast, a normal class is more flexible and can be used to define any type of class, including those that contain behavior as well as data.
 
+## What is the major difference between POJO and data class?
+
+The main difference between a POJO (Plain Old Java Object) and a data class in Kotlin is the amount of boilerplate code required to define a class. In a POJO, developers must manually define the class properties, getters and setters, equals and hashCode methods, and a constructor. In contrast, a data class in Kotlin automatically generates these methods and properties.
+
+In a data class, Kotlin generates the following methods automatically:
+
+- `toString()` - Returns a string representation of the object.
+- `equals()` - Compares two objects for equality based on their property values.
+- `hashCode()` - Generates a unique hash code for the object based on its property values.
+- `copy()` - Creates a copy of the object, optionally modifying some of its properties.
+
+A data class is designed to hold data and is used extensively in Kotlin for modeling data structures and transferring data between components of an application. It can also be used as a replacement for POJOs in many cases, as it offers concise and readable code.
+
 # High Order Functions
 
 In Kotlin, a higher-order function is a function that takes one or more functions as parameters or returns a function as its result. In other words, a higher-order function can be thought of as a function that operates on other functions.
@@ -304,6 +317,64 @@ There are a few other types of classes in Kotlin, although they are less commonl
 
 Overall, the various types of classes in Kotlin give you a lot of flexibility in how you structure and organize your code. By choosing the right type of class for your needs, you can write code that is efficient, readable, and maintainable.
 
+## Abstraction
+
+Abstraction is a fundamental concept in object-oriented programming (OOP) that refers to the ability to represent the essential features of an object while hiding the details. In other words, abstraction focuses on the "what" rather than the "how" of an object. It allows you to create a simplified model of an object that includes only the essential features needed to solve a particular problem or complete a task.
+
+In OOP, abstraction is achieved through the use of abstract classes and interfaces. Abstract classes are classes that cannot be instantiated and are used to provide a template for other classes. They contain abstract methods, which are methods that have no implementation and must be implemented by the classes that inherit from them. Interfaces, on the other hand, are a collection of abstract methods and constants that define a contract that implementing classes must follow.
+
+By using abstraction, you can simplify complex systems and make them easier to understand and work with. It also makes it easier to modify and extend the system over time, as changes can be made to the implementation details without affecting the overall abstraction.
+
+Here's an example of abstraction in Kotlin:
+
+```
+abstract class Shape {
+    abstract fun calculateArea(): Double
+}
+
+class Circle(val radius: Double) : Shape() {
+    override fun calculateArea(): Double {
+        return Math.PI * radius * radius
+    }
+}
+
+class Square(val side: Double) : Shape() {
+    override fun calculateArea(): Double {
+        return side * side
+    }
+}
+```
+
+In this example, `Shape` is an abstract class that defines a method `calculateArea()`, which is implemented by its concrete subclasses `Circle` and `Square`. The `calculateArea()` method is left abstract in the `Shape` class, as the formula to calculate the area of different shapes can vary. This is an example of abstraction, where the common behavior of different shapes is abstracted into a single class `Shape`.
+
+### Difference between Abstraction and Inheritence?
+
+Abstraction and inheritance are both important concepts in object-oriented programming, but they serve different purposes.
+
+Inheritance is a mechanism in which a new class is derived from an existing class, and it can inherit all the properties and behaviors of its parent class. This allows code reuse and helps to create a hierarchical relationship between classes.
+
+Abstraction, on the other hand, is the process of hiding implementation details and exposing only the necessary information to the user. It is a way of modeling complex systems by breaking them down into smaller, simpler components that can be easily understood and manipulated. In Kotlin, abstraction can be achieved through abstract classes, interfaces, and sealed classes.
+
+The main difference between inheritance and abstraction is that inheritance focuses on reusing code and establishing relationships between classes, while abstraction focuses on simplifying the complexity of a system and providing a clean and intuitive interface for the user.
+
+## Types of Inheritence
+
+There are different types of inheritance in object-oriented programming:
+
+1. Single inheritance: A class can inherit from only one parent class.
+2. Multiple inheritance: A class can inherit from multiple parent classes.
+3. Multilevel inheritance: A class can inherit from a parent class, and that parent class can inherit from another parent class, and so on.
+4. Hierarchical inheritance: Multiple child classes inherit from the same parent class.
+5. Hybrid inheritance: A combination of multiple and multilevel inheritance, where a class inherits from multiple parent classes and those parent classes inherit from other parent classes in a hierarchical manner. 
+
+In Kotlin, single inheritance is supported, which means a class can inherit from only one parent class. However, Kotlin allows interfaces, which can be seen as a form of multiple inheritance. A class can implement multiple interfaces, and an interface can also inherit from multiple other interfaces.
+
+### Why Multiple inheritance through classes is not possible in Java?
+
+The designers of Java made the decision to exclude multiple inheritance through classes because it can lead to a number of complications and ambiguities in the language. In particular, it can result in the "diamond problem" where two classes inherit from the same superclass, and a third class inherits from both of these classes. This can lead to ambiguity about which implementation of a method to use. To avoid this issue, Java only allows single inheritance through classes, and multiple inheritance through interfaces.
+
+However, Java does support multiple inheritance through interfaces
+
 # How Kotlin file is executed?
 
 In Kotlin, a file is executed by compiling it into bytecode and running it on the Java Virtual Machine (JVM). When you write Kotlin code in a file, you save that file with a `.kt` extension. Then, you can use a Kotlin compiler such as `kotlinc` to compile the file into bytecode.
@@ -360,6 +431,10 @@ Here are some key features of coroutines in Kotlin:
 5. Integration with Existing APIs: Coroutines can be integrated with existing APIs, including Java APIs and libraries.
 
 Overall, coroutines are a powerful tool for writing asynchronous code in Kotlin. They provide a way to write non-blocking code that is easy to read and understand, while also being performant and efficient.
+
+Coroutines in Kotlin are lightweight because they are implemented on top of threads, but do not require one-to-one mapping with threads. Unlike threads, coroutines do not need their own call stack. Instead, they use the same call stack as the main program or the caller coroutine. This means that they can be created and destroyed much faster than threads, which makes them more efficient and scalable for concurrent programming. 
+
+In summary, coroutines are lightweight because they allow for cooperative multitasking, which is implemented by suspending and resuming the execution of code without the need to allocate a new thread or call stack for each coroutine.
 
 ## What are Dispatchers()
 
@@ -475,6 +550,14 @@ class MyViewModel : ViewModel() {
 In this example, we create a `viewModelScope` that is tied to the lifecycle of the `MyViewModel` instance. We launch a coroutine inside the `performTask` method using this scope. When the `MyViewModel` is destroyed, the `viewModelScope` will cancel any running coroutines automatically.
 
 By using `LifecycleScope` and `ViewModelScope`, you can ensure that coroutines are cancelled automatically when they are no longer needed, without having to manually manage their lifecycle. This makes it easier to write clean and efficient code that does not leak memory or waste resources.
+
+## Does suspend function has special functionality?
+
+`suspend` functions in Kotlin have special functionality. A `suspend` function is a function that can be paused and resumed later without blocking a thread. This allows for efficient use of resources since threads are not blocked while waiting for the function to complete.
+
+When a `suspend` function is called, it can be thought of as returning a `Continuation` object, which allows the function to be suspended and resumed later. The `Continuation` object represents the state of the function at the point where it was suspended. When the function is resumed, it continues execution from the point where it left off, using the `Continuation` object to restore its state.
+
+`suspend` functions can be called from other `suspend` functions or from within a coroutine, using the `suspendCoroutine` function. They can also be called from regular functions, but in that case they are executed synchronously, without suspension.
 
 # HashMap
 
@@ -731,3 +814,120 @@ class MyClass {
 val constantValue = MyClass.Companion.CONSTANT_VALUE
 MyClass.Companion.staticMethod()
 ```
+
+# Can we create private constructor in Kotlin?
+
+Yes, we can create a private constructor in Kotlin. It is useful in cases where we want to restrict the creation of an object of a class from outside the class or limit the number of objects created from the class.
+
+For example, consider the following code:
+
+```
+class MySingleton private constructor() {
+    companion object {
+        val instance: MySingleton by lazy { MySingleton() }
+    }
+}
+```
+
+In the above code, we have created a private constructor for the class `MySingleton`. We have also created a companion object with a `lazy` initialization to ensure that the object is created only once.
+
+By making the constructor private, we ensure that the only way to create an object of the `MySingleton` class is through the `instance` property of the companion object.
+
+# Difference between this and super keyword?
+
+In Kotlin, `this` refers to the current instance of a class, while `super` refers to the parent class of the current instance.
+
+More specifically, `this` is used to access instance properties or methods of the current class, while `super` is used to access properties or methods of the parent class. 
+
+For example, consider a class `Vehicle` and a subclass `Car`:
+
+```
+open class Vehicle(val color: String) {
+    open fun start() {
+        println("Starting Vehicle")
+    }
+}
+
+class Car(color: String) : Vehicle(color) {
+    override fun start() {
+        super.start()
+        println("Starting Car")
+    }
+}
+```
+
+In the above example, `super` is used in the `start()` method of the `Car` class to call the `start()` method of the parent class `Vehicle`, and then the method of `Car` class.
+
+Similarly, `this` can be used to refer to an instance of the current class:
+
+```
+class Car(val model: String) {
+    fun printModel() {
+        println("Model: $model")
+    }
+}
+
+val car = Car("Tesla")
+car.printModel() // output: "Model: Tesla"
+```
+
+In the above example, `this` is not used explicitly, but `model` is an instance property of the `Car` class, so it can be accessed using `this.model`.
+
+# Difference between lazy and lateinit
+
+In Kotlin, both `lazy` and `lateinit` are used for delaying the initialization of a property.
+
+`lazy` is used to create a property whose value is computed only when it is accessed for the first time. The value is then stored and returned on subsequent accesses. It is initialized using a lambda expression and the type of the property must be specified. The initialization is thread-safe and happens only once. `lazy` is a function that takes a lambda as its argument.
+
+Here's an example of `lazy`:
+
+```
+val myValue: String by lazy { 
+    // expensive initialization code here
+    "Hello, World!"
+}
+```
+
+`lateinit` is used to declare a non-null property that doesn't need to be initialized during object creation, but will be initialized before the property is accessed. The type of the property must be specified, and it cannot be used with `val`, only with `var`. `lateinit` is designed to be used with dependency injection frameworks like Dagger.
+
+Here's an example of `lateinit`:
+
+```
+lateinit var myString: String
+```
+
+So, the main difference between `lazy` and `lateinit` is that `lazy` is used for properties that are computed only when accessed, while `lateinit` is used for properties that will be initialized later but need to be declared as non-null.
+
+# Why divide by zero is an exception?
+
+Divide by zero is an exception because it is an undefined operation in mathematics. Dividing any number by zero is not possible and mathematically results in an undefined value. Therefore, when a program tries to divide a number by zero, it results in an error, known as a DivideByZeroException or ArithmeticException. Most programming languages, including Java and Kotlin, throw an exception when a program tries to divide a number by zero to prevent the program from producing an incorrect or undefined result.
+
+Dividing any non-zero number by zero is undefined in mathematics. In fact, division by zero is considered an invalid operation and is not defined in most programming languages, including Java and Kotlin. Dividing a number by zero will result in an exception, because it is not possible to compute the result. 
+
+For example, if you divide 6 by 0, the answer can be any number or it can be undefined. Therefore, the operation is considered invalid and an exception is thrown.
+
+# What is the difference between extension function and lambda function?
+
+Extension functions and lambda functions are two different concepts in Kotlin.
+
+Extension functions allow us to extend the functionality of an existing class without having to inherit from it or modify its source code. This means that we can define new functions for existing classes that are not originally defined in them. Extension functions are declared using the `fun` keyword and are prefixed with the name of the class that they extend. For example:
+
+```
+fun String.reverse(): String {
+    return this.reversed()
+}
+```
+
+This function extends the `String` class and can be called on any instance of `String`.
+
+Lambda functions, on the other hand, are anonymous functions that can be passed as arguments to other functions or stored in variables. They are declared using curly braces `{}` and the `->` operator. Lambda functions allow for functional programming constructs like higher-order functions, closures, and functional composition. For example:
+
+```
+val numbers = listOf(1, 2, 3, 4, 5)
+val sum = numbers.fold(0) { acc, num -> acc + num }
+```
+
+In this example, the lambda function `{ acc, num -> acc + num }` is passed as an argument to the `fold` function and is used to accumulate the sum of the list of numbers.
+
+In summary, extension functions extend the functionality of an existing class, while lambda functions are anonymous functions that can be passed as arguments to other functions.
+
