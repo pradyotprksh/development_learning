@@ -79,6 +79,34 @@ In this example, the lambda function updates a TextView with the new value of th
 
 LiveData takes care of managing the observers and ensuring that the lambda function is only called when the LiveData value actually changes. It also ensures that the lambda function is only called on the main thread, making it safe to update UI elements.
 
+### Difference between LiveData and Kotlin Flow?
+
+Both LiveData and Flow are used for asynchronous programming in Android and are part of the Android Jetpack architecture components. However, there are some differences between them.
+
+LiveData is a data holder class that can be observed by UI components, such as activities or fragments. It is lifecycle-aware and will only update the UI when the UI is active, preventing memory leaks and crashes due to UI updates after the activity or fragment has been destroyed. LiveData is not a stream of data, and once a value is emitted, it cannot be re-emitted.
+
+Flow, on the other hand, is a reactive stream of data that can emit multiple values. It is similar to RxJava's Observables or Kotlin's Sequences. It is not lifecycle-aware by default, but it can be made so using the kotlinx-coroutines-lifecycle library. Flow also provides operators to transform, combine, and filter streams of data.
+
+In summary, LiveData is used for one-time events and is lifecycle-aware, while Flow is used for streams of data and provides a more comprehensive set of operators.
+
+### Can we use livedata inside the background thread?
+
+Technically, LiveData can be used inside a background thread, but it is not recommended as it is designed to be used with the main thread in mind. 
+
+LiveData provides certain features such as automatic lifecycle management that are designed to work seamlessly with the Android UI framework. When used in a background thread, LiveData loses these advantages and can lead to issues such as race conditions, memory leaks, and other unexpected behaviors.
+
+If you need to update UI elements from a background thread, you can use a combination of LiveData and Kotlin coroutines. You can use a coroutine to perform the background work, and then use the `withContext` method to switch to the main thread and update the LiveData object. This way, you can ensure that the UI updates are performed on the main thread, while still taking advantage of LiveData's lifecycle-aware behavior.
+
+### What is difference between setValue and postValue?
+
+In Android, both `setValue()` and `postValue()` methods are used to set a new value for a LiveData object.
+
+`setValue()` is a synchronous method, which means it updates the LiveData object on the same thread on which it is called. If `setValue()` is called from the main/UI thread, the observers of the LiveData object are immediately notified and the onChanged() method is executed. If `setValue()` is called from a background thread, it may cause a crash.
+
+`postValue()` is an asynchronous method, which means it posts the new value of the LiveData object to the main thread to update it. If `postValue()` is called multiple times from a background thread before the main thread is updated, only the last value will be delivered to the observer.
+
+In summary, if you are updating the LiveData object from the main/UI thread, you should use `setValue()`, and if you are updating it from a background thread, you should use `postValue()`.
+
 ## Jetpack
 
 Jetpack is a suite of libraries, tools, and guidance from Google to help developers write high-quality Android apps more easily and efficiently. Jetpack provides a set of libraries that are designed to work together, follow best practices, and make development tasks easier, faster, and more efficient.
@@ -129,6 +157,42 @@ In simpler terms, DI is a process of providing objects that a class needs to fun
 By using DI, components can be easily swapped out and replaced with other implementations, making the application more modular and flexible. Additionally, it makes unit testing easier, as dependencies can be easily mocked or substituted during testing.
 
 DI can be implemented in different ways, such as constructor injection, setter injection, and interface injection. Popular DI frameworks in the Android world include Dagger and Koin.
+
+### How Dependency Injection works internally?
+
+Dependency Injection (DI) is a software design pattern that helps to increase the flexibility and modularity of software systems by decoupling their components and managing their dependencies. DI works by externalizing the creation and management of an object's dependencies from the object itself. Instead of an object creating its own dependencies, these dependencies are injected or provided by an external framework or system. 
+
+When using DI, the objects that require dependencies have these dependencies injected into them, typically through a constructor or a setter method. The dependency injection framework is responsible for creating the required dependencies and providing them to the object that needs them. 
+
+Internally, the dependency injection framework uses a few different techniques to create and provide dependencies. These techniques include:
+
+1. Constructor injection: Dependencies are provided to an object through its constructor. The framework creates the dependencies and passes them to the constructor when the object is created.
+
+2. Setter injection: Dependencies are provided to an object through setter methods. The framework creates the dependencies and calls the setter methods to provide them to the object.
+
+3. Field injection: Dependencies are provided to an object through public fields. The framework creates the dependencies and sets them directly on the object's fields.
+
+4. Contextual injection: The framework uses information about the context in which an object is being created to provide the appropriate dependencies.
+
+5. Injection via annotations: The framework uses annotations to identify the dependencies that need to be provided to an object.
+
+DI frameworks like Dagger, Guice, and Spring provide implementations of these techniques and make it easy to configure and manage dependencies in a large software system.
+
+## ViewModel
+
+### How ViewModel survive configuration changes?
+
+In Android, configuration changes like screen rotation, keyboard availability, or language change, cause the current activity to be destroyed and recreated. This can lead to data loss and performance issues if not handled properly. 
+
+The ViewModel is designed to survive configuration changes by separating the UI data from the UI controller logic. It allows the data to survive across configuration changes by storing it in the ViewModel instance, which is not destroyed when the activity is recreated. 
+
+When the activity is recreated, the new instance of the activity can access the existing ViewModel instance and retrieve the stored data. This is achieved using the ViewModelProvider class, which creates or retrieves an existing ViewModel instance associated with the activity. 
+
+The ViewModel is also lifecycle-aware, which means it is tied to the lifecycle of the activity or fragment it is associated with. When the activity is destroyed, the ViewModel is cleared, and when the activity is recreated, the ViewModel is recreated and initialized with the previous data. This makes it easier to manage the lifecycle of the UI data and prevents memory leaks.
+
+The `ViewModel` instance is stored in the `ViewModelStore`, which is a container object that is attached to the activity or fragment's lifecycle. When the activity or fragment is recreated due to configuration changes, the `ViewModelStore` persists the `ViewModel` instance, so that it can be retrieved and reused by the newly created activity or fragment. 
+
+This allows the `ViewModel` to survive configuration changes, such as device rotation, without having to reload the data or re-initialize the application state.
 
 # Android Components
 
@@ -774,3 +838,28 @@ Network security in Android refers to measures taken to protect the app's commun
 8. Permission management: Android provides a comprehensive permission model that allows developers to control the app's access to sensitive resources, such as the camera, microphone, and contacts. Developers should ensure that their app requests only the permissions that are necessary for its functionality.
 
 Overall, network security is a critical aspect of Android app development, and developers should pay close attention to the security measures outlined above to ensure that their app is secure and free from vulnerabilities.
+
+# What is the difference between crash and ANR?
+
+In Android, a crash occurs when an app stops working and shuts down unexpectedly, while ANR (Application Not Responding) occurs when an app becomes unresponsive and doesn't respond to user input for a certain period of time, usually 5 seconds. The difference between them is that a crash happens when an app encounters a fatal error and stops working altogether, while ANR occurs when an app is still running, but it's unable to process user input or perform any other action in a timely manner. 
+
+In other words, a crash means the app has stopped functioning completely, while ANR means the app is still running, but has become unresponsive.
+
+# What is the difference between gradle and manifest?
+
+Gradle and Manifest are two different components of the Android build system:
+
+1. Gradle: It is a build automation tool that is used to automate the process of building, testing, and deploying Android applications. Gradle is responsible for downloading dependencies, compiling source code, packaging the application, and signing the APK.
+
+2. Manifest: It is an XML file that describes essential information about the application to the Android system. It contains details such as the package name, permissions, activities, services, receivers, and more. The manifest file is used by the Android system to determine the capabilities and requirements of the application.
+
+In summary, Gradle is responsible for building the application, while the manifest file provides information to the Android system about the application.
+
+# Android Theme and Design System
+
+In Android development, themes are a way to define and manage the visual style of an app, such as colors, fonts, and layouts. Android provides a default Material Design theme, which is a design system that offers guidelines and principles for creating consistent and visually appealing UI across different devices and platforms. Material Design emphasizes the use of minimalistic and intuitive design patterns, such as bold typography, simple iconography, and smooth motion, to provide a seamless user experience.
+
+Design systems, in general, are a set of rules, principles, and guidelines that define how a product or service should look and behave. They provide a consistent and unified approach to designing and building user interfaces, ensuring that the design is coherent, efficient, and easy to use. Design systems also help to improve collaboration and communication between designers, developers, and stakeholders, as they provide a common language and framework for discussing and iterating on design decisions.
+
+In the context of Android development, Material Design is a design system that provides a set of guidelines and principles for designing visually appealing and intuitive user interfaces. Android developers can use Material Design themes and components to ensure that their apps are consistent with the overall Android ecosystem and provide a seamless and familiar experience for users.
+
