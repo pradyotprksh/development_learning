@@ -10,9 +10,6 @@
 include: package:flutter_lints/flutter.yaml
 
 analyzer:
-  strong-mode:
-    implicit-casts: false
-    implicit-dynamic: false
   errors:
     close_sinks: ignore
     missing_required_param: warning
@@ -81,7 +78,6 @@ linter:
     prefer_conditional_assignment: true
     prefer_const_constructors: true
     prefer_contains: true
-    prefer_equal_for_default_values: true
     prefer_final_fields: true
     prefer_initializing_formals: true
     prefer_interpolation_to_compose_strings: true

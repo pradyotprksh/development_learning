@@ -9,8 +9,8 @@
 #include <connectivity_plus/connectivity_plus_windows_plugin.h>
 #include <desktop_webview_auth/desktop_webview_auth_plugin.h>
 #include <emoji_picker_flutter/emoji_picker_flutter_plugin_c_api.h>
+#include <firebase_core/firebase_core_plugin_c_api.h>
 #include <local_auth_windows/local_auth_plugin.h>
-#include <network_info_plus/network_info_plus_windows_plugin.h>
 #include <permission_handler_windows/permission_handler_windows_plugin.h>
 #include <smart_auth/smart_auth_plugin.h>
 #include <syncfusion_pdfviewer_windows/syncfusion_pdfviewer_windows_plugin.h>
@@ -23,10 +23,10 @@ void RegisterPlugins(flutter::PluginRegistry* registry) {
       registry->GetRegistrarForPlugin("DesktopWebviewAuthPlugin"));
   EmojiPickerFlutterPluginCApiRegisterWithRegistrar(
       registry->GetRegistrarForPlugin("EmojiPickerFlutterPluginCApi"));
+  FirebaseCorePluginCApiRegisterWithRegistrar(
+      registry->GetRegistrarForPlugin("FirebaseCorePluginCApi"));
   LocalAuthPluginRegisterWithRegistrar(
       registry->GetRegistrarForPlugin("LocalAuthPlugin"));
-  NetworkInfoPlusWindowsPluginRegisterWithRegistrar(
-      registry->GetRegistrarForPlugin("NetworkInfoPlusWindowsPlugin"));
   PermissionHandlerWindowsPluginRegisterWithRegistrar(
       registry->GetRegistrarForPlugin("PermissionHandlerWindowsPlugin"));
   SmartAuthPluginRegisterWithRegistrar(
