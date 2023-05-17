@@ -1,0 +1,27 @@
+[versions]
+composeUi = "1.4.3"
+activityCompose = "1.7.1"
+androidGradlePlugin = "8.0.1"
+androidLibrary = "8.0.1"
+kotlin = "1.8.10"
+serialization = "1.8.21"
+kotlinCoroutines = "1.6.4"
+ktorVersion = "2.2.4"
+
+[libraries]
+androidx-compose-ui = { group = "androidx.compose.ui", name = "ui", version.ref = "composeUi" }
+androidx-compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling", version.ref = "composeUi" }
+androidx-compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview", version.ref = "composeUi" }
+androidx-compose-foundation = { group = "androidx.compose.foundation", name = "foundation", version.ref = "composeUi" }
+androidx-compose-material = { group = "androidx.compose.material", name = "material", version.ref = "composeUi" }
+androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
+kotlinx-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "kotlinCoroutines" }
+ktor-client = { group = "io.ktor", name = "ktor-client-core", version.ref = "ktorVersion" }
+ktor-content-negotiation = { group = "io.ktor", name = "ktor-client-content-negotiation", version.ref = "ktorVersion" }
+ktor-serialization-json = { group = "io.ktor", name = "ktor-serialization-kotlinx-json", version.ref = "ktorVersion" }
+ktor-client-android = { group = "io.ktor", name = "ktor-client-android", version.ref = "ktorVersion" }
+ktor-client-darwin = { group = "io.ktor", name = "ktor-client-darwin", version.ref = "ktorVersion" }
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
+android-library = { id = "com.android.library", version.ref = "androidLibrary" }
