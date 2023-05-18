@@ -1,12 +1,17 @@
 [versions]
-composeUi = "1.4.3"
 activityCompose = "1.7.1"
 androidGradlePlugin = "8.0.1"
 androidLibrary = "8.0.1"
+androidxAppcompat = "1.6.1"
+composeUi = "1.4.3"
+coreKtx = "1.10.1"
+jetbrainsCompose = "1.5.0-dev1049"
 kotlin = "1.8.10"
-serialization = "1.8.21"
 kotlinCoroutines = "1.6.4"
 ktorVersion = "2.2.4"
+kodein = "7.19.0"
+napier = "2.6.1"
+serialization = "1.8.21"
 
 [libraries]
 androidx-compose-ui = { group = "androidx.compose.ui", name = "ui", version.ref = "composeUi" }
@@ -15,13 +20,19 @@ androidx-compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "u
 androidx-compose-foundation = { group = "androidx.compose.foundation", name = "foundation", version.ref = "composeUi" }
 androidx-compose-material = { group = "androidx.compose.material", name = "material", version.ref = "composeUi" }
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
+androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "androidxAppcompat" }
+androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 kotlinx-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "kotlinCoroutines" }
 ktor-client = { group = "io.ktor", name = "ktor-client-core", version.ref = "ktorVersion" }
 ktor-content-negotiation = { group = "io.ktor", name = "ktor-client-content-negotiation", version.ref = "ktorVersion" }
 ktor-serialization-json = { group = "io.ktor", name = "ktor-serialization-kotlinx-json", version.ref = "ktorVersion" }
 ktor-client-android = { group = "io.ktor", name = "ktor-client-android", version.ref = "ktorVersion" }
 ktor-client-darwin = { group = "io.ktor", name = "ktor-client-darwin", version.ref = "ktorVersion" }
+ktor-client-logger = { group = "io.ktor", name = "ktor-client-logging", version.ref = "ktorVersion" }
+kodien-di = { group = "org.kodein.di", name = "kodein-di", version.ref = "kodein" }
+napier-looger = { group = "io.github.aakira", name = "napier", version.ref = "napier" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
 android-library = { id = "com.android.library", version.ref = "androidLibrary" }
+jetbrains-compose = { id = "org.jetbrains.compose", version.ref = "jetbrainsCompose" }
