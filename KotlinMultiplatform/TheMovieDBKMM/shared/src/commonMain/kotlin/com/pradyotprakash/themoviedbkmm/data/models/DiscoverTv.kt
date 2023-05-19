@@ -13,7 +13,7 @@ import kotlinx.serialization.encoding.*
 @Serializable
 data class DiscoverTv (
     val page: Long,
-    val `tvResults `: List<TvResult>,
+    val tvResults: List<TvResult>,
 
     @SerialName("total_pages")
     val totalPages: Long,

@@ -26,5 +26,7 @@ class KodeinDI {
 }
 
 object DiFactory {
-    val di = KodeinDI().di
+    private val di = KodeinDI().di
+
+    val discoverPresenter: DiscoverPresenter by di.instance()
 }

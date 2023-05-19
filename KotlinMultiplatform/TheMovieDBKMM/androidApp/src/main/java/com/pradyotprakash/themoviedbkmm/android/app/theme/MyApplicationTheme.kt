@@ -1,4 +1,4 @@
-package com.pradyotprakash.themoviedbkmm.android
+package com.pradyotprakash.themoviedbkmm.android.app.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.shape.RoundedCornerShape
