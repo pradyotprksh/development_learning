@@ -7,6 +7,7 @@ data class RequestDetails(
     val apiKey: String = API_KEY,
     val version: Int = 3,
     val endpoint: String,
+    val queries: List<Query> = emptyList(),
 ) {
     val path: String
         get() = "$baseUrl/$version/$endpoint?api_key=$apiKey"
