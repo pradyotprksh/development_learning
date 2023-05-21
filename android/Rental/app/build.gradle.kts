@@ -88,7 +88,7 @@ android {
         enable = true
     }
 
-    project.tasks.preBuild.dependsOn("checkEnvironment")
+//    project.tasks.preBuild.dependsOn("checkEnvironment")
     project.tasks.preBuild.dependsOn("updateTranslations")
 
     namespace = "com.project.pradyotprakash.rental"

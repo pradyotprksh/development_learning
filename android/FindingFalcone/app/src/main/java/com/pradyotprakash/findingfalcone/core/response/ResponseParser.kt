@@ -19,10 +19,22 @@ fun <T> Response<T>.parseResponse() =
                 val errorDetails = error.string()
                 val jsonError = JSONObject(errorDetails)
 
+                val errorCode = try {
+                    jsonError.getInt("code")
+                } catch (e: Exception) {
+                    400
+                }
+
+                val message = try {
+                    jsonError.getString("message")
+                } catch (e: Exception) {
+                    jsonError.getString("error")
+                }
+
                 FindingFalconeResponse.Error(
                     FindingFalconeException(
-                        code = jsonError.getInt("code"),
-                        message = jsonError.getString("message")
+                        code = errorCode,
+                        message = message
                     )
                 )
             } ?: kotlin.run {

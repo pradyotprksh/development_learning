@@ -41,7 +41,6 @@ fun PageStateComposable(
     errorMessage: String = "",
     retryOperation: () -> Unit = {},
     dismissErrorAlert: () -> Unit = {},
-    confirmationDialog: ConfirmationDialog = ConfirmationDialog(),
     content: @Composable () -> Unit,
 ) {
     Box(
@@ -96,31 +95,6 @@ fun PageStateComposable(
                 properties = DialogProperties(
                     dismissOnBackPress = true,
                     dismissOnClickOutside = true
-                )
-            )
-        }
-        if (confirmationDialog.showDialog) {
-            AlertDialog(
-                text = {
-                    Text(
-                        text = confirmationDialog.text,
-                        textAlign = TextAlign.Center,
-                    )
-                },
-                onDismissRequest = confirmationDialog.onDismiss,
-                confirmButton = {
-                    TextButton(onClick = confirmationDialog.onConfirm) {
-                        Text(text = TR.okay)
-                    }
-                },
-                dismissButton = {
-                    TextButton(onClick = confirmationDialog.onDismiss) {
-                        Text(text = TR.no)
-                    }
-                },
-                properties = DialogProperties(
-                    dismissOnBackPress = false,
-                    dismissOnClickOutside = false
                 )
             )
         }

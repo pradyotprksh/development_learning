@@ -1,6 +1,8 @@
 package com.pradyotprakash.findingfalcone.di
 
+import com.pradyotprakash.findingfalcone.data.services.FindService
 import com.pradyotprakash.findingfalcone.data.services.PlanetsService
+import com.pradyotprakash.findingfalcone.data.services.TokenService
 import com.pradyotprakash.findingfalcone.data.services.VehiclesService
 import dagger.Module
 import dagger.Provides
@@ -24,4 +26,14 @@ object RetrofitServices {
     @Provides
     fun provideVehiclesService(retrofit: Retrofit): VehiclesService =
         retrofit.create(VehiclesService::class.java)
+
+    @Singleton
+    @Provides
+    fun provideTokenService(retrofit: Retrofit): TokenService =
+        retrofit.create(TokenService::class.java)
+
+    @Singleton
+    @Provides
+    fun provideFindService(retrofit: Retrofit): FindService =
+        retrofit.create(FindService::class.java)
 }

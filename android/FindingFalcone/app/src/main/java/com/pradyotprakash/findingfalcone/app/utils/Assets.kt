@@ -44,6 +44,21 @@ sealed class Assets(
         imageDescription = "Icon for planet"
     )
 
+    object Spaceship1 : Assets(
+        resourceId = R.drawable.spaceship_1,
+        imageDescription = "Icon for spaceship"
+    )
+
+    object Spaceship2 : Assets(
+        resourceId = R.drawable.spaceship_2,
+        imageDescription = "Icon for spaceship"
+    )
+
+    object Spaceship3 : Assets(
+        resourceId = R.drawable.spaceship_3,
+        imageDescription = "Icon for spaceship"
+    )
+
     data class Localization(val lanKey: String = defaultLanguage) :
         Assets(path = "localization_${lanKey}.json")
 }
@@ -57,5 +72,14 @@ fun getPlanet(number: Int): Assets {
         5 -> Assets.PlanetIcon5
         6 -> Assets.PlanetIcon6
         else -> Assets.PlanetIcon1
+    }
+}
+
+fun getSpaceship(number: Int): Assets {
+    return when (number) {
+        1 -> Assets.Spaceship1
+        2 -> Assets.Spaceship2
+        3 -> Assets.Spaceship3
+        else -> Assets.AppIcon
     }
 }

@@ -17,16 +17,6 @@ sealed class FindingFalconeResponse<out R> {
      * @param exception Exception details
      * */
     data class Error(val exception: FindingFalconeException) : FindingFalconeResponse<Nothing>()
-
-    /**
-     * The loading type, when the request is initiated
-     * */
-    object Loading : FindingFalconeResponse<Nothing>()
-
-    /**
-     * The Idle type, when the request is done
-     * */
-    object Idle : FindingFalconeResponse<Nothing>()
 }
 
 /**

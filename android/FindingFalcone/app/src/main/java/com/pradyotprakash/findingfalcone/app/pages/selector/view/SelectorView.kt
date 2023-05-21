@@ -1,27 +1,32 @@
 package com.pradyotprakash.findingfalcone.app.pages.selector.view
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.pradyotprakash.findingfalcone.app.composables.ConfirmationDialog
-import com.pradyotprakash.findingfalcone.app.composables.HeaderComposable
 import com.pradyotprakash.findingfalcone.app.composables.PageStateComposable
 import com.pradyotprakash.findingfalcone.app.localization.TR
-import com.pradyotprakash.findingfalcone.app.pages.selector.composables.PlanetDetails
+import com.pradyotprakash.findingfalcone.app.pages.selector.composables.PlanetWithVehiclesDetails
 import com.pradyotprakash.findingfalcone.app.pages.selector.viewmodel.SelectorViewModel
 import com.pradyotprakash.findingfalcone.app.utils.getPlanet
 
@@ -36,35 +41,51 @@ fun SelectorView(
 
     val loading by selectorViewModel.loading.observeAsState(false)
     val error by selectorViewModel.error.observeAsState("")
-    val confirmationDialog by selectorViewModel.confirmationDialog.observeAsState(
-        ConfirmationDialog()
-    )
     val planets by selectorViewModel.planets.observeAsState(emptyList())
     val vehicles by selectorViewModel.vehicles.observeAsState(emptyList())
-    val planetsSelected by selectorViewModel.planetsSelected.observeAsState(false)
+    val isArmySelected by selectorViewModel.isArmySelected.observeAsState(false)
+    val totalTime by selectorViewModel.totalTime.observeAsState(0)
+    val findResult by selectorViewModel.findResult.observeAsState()
 
     PageStateComposable(
         isLoading = loading,
         errorMessage = error,
         retryOperation = selectorViewModel::retry,
         dismissErrorAlert = selectorViewModel::updateErrorState,
-        confirmationDialog = confirmationDialog,
     ) {
         Scaffold(
             topBar = {
                 TopAppBar(
                     title = {
-                        Text(text = TR.appName)
-                    }
+                        Text(
+                            text = TR.selectPlanetsVehicles,
+                            style = MaterialTheme.typography.titleSmall.copy(
+                                color = Color.Black,
+                            ),
+                        )
+                    },
+                    actions = {
+                        Text(
+                            text = "${TR.timeTaken} $totalTime",
+                            style = MaterialTheme.typography.titleSmall.copy(
+                                color = Color.Black,
+                            ),
+                        )
+                    },
+                    colors = TopAppBarDefaults.mediumTopAppBarColors(
+                        containerColor = MaterialTheme.colorScheme.primary
+                    )
                 )
             },
             floatingActionButton = {
-                if (planetsSelected) {
+                if (isArmySelected) {
                     FloatingActionButton(
-                        onClick = {}
+                        onClick = {
+                            selectorViewModel.sendTheArmy()
+                        }
                     ) {
                         Text(
-                            text = TR.selectShips,
+                            text = TR.sendArmy,
                             modifier = Modifier.padding(
                                 all = 15.dp
                             )
@@ -73,32 +94,60 @@ fun SelectorView(
                 }
             },
             content = { padding ->
-                Column(
-                    modifier = Modifier.padding(
-                        bottom = padding.calculateBottomPadding(),
-                        top = padding.calculateTopPadding(),
-                    ),
-                ) {
-                    if (planets.isNotEmpty()) {
-                        HeaderComposable(title = TR.selectPlanets)
-                        LazyVerticalGrid(
-                            modifier = Modifier
-                                .padding(
-                                    start = 15.dp,
-                                    bottom = 15.dp,
-                                    top = 15.dp,
-                                    end = 15.dp,
-                                )
-                                .fillMaxSize(),
-                            columns = GridCells.Fixed(2),
+                findResult?.let {
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.Center,
+                        modifier = Modifier.fillMaxSize(),
+                    ) {
+                        if (it.isFound) {
+                            Text(text = TR.successMessage)
+                        } else {
+                            Text(text = TR.errorMessage)
+                        }
+                        Box(modifier = Modifier.height(10.dp))
+                        Text(
+                            text = "${TR.timeTaken} $totalTime",
+                        )
+                        if (it.isFound) {
+                            Text(
+                                text = "${TR.planetFound} ${it.planet_name}",
+                            )
+                        }
+                        Box(modifier = Modifier.height(10.dp))
+                        Button(
+                            onClick = {
+                                selectorViewModel.retry()
+                            }
                         ) {
-                            items(planets.size) { index ->
-                                val planetIcon = getPlanet(selectorViewModel.randomList[index])
-                                val planet = planets[index]
-                                PlanetDetails(planet = planet, planetIcon = planetIcon) {
+                            Text(text = TR.startAgain)
+                        }
+                    }
+                }
+
+                if (planets.isNotEmpty() && vehicles.isNotEmpty() && findResult == null) {
+                    LazyColumn(
+                        modifier = Modifier
+                            .padding(
+                                bottom = padding.calculateBottomPadding(),
+                                top = padding.calculateTopPadding(),
+                            )
+                            .fillMaxSize(),
+                    ) {
+                        items(planets.size) { index ->
+                            val planetIcon = getPlanet(selectorViewModel.randomList[index])
+                            val planet = planets[index]
+                            PlanetWithVehiclesDetails(
+                                planet = planet,
+                                planetIcon = planetIcon,
+                                vehicles = vehicles,
+                                onVehicleSelect = { vehicleName ->
+                                    selectorViewModel.selectVehicle(index, vehicleName)
+                                },
+                                onPlanetSelect = {
                                     selectorViewModel.selectPlanet(index)
                                 }
-                            }
+                            )
                         }
                     }
                 }

@@ -4,7 +4,7 @@ typealias Vehicles = List<VehiclesEntity>
 
 data class VehiclesEntity(
     val name: String,
-    val totalNo: Long,
-    val maxDistance: Long,
+    var total_no: Long,
+    val max_distance: Long,
     val speed: Long
 )

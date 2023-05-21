@@ -4,7 +4,14 @@
   "okay": "Okay",
   "no": "No",
   "retry": "Retry",
-  "selectPlanets": "Select four planets you want to search in",
+  "selectPlanetsVehicles": "Select four planets you want to search in with vehicles",
   "distance": "Distance:",
-  "selectShips": "Select ships"
+  "sendArmy": "Send Army",
+  "speed": "Speed:",
+  "pods": "Pods:",
+  "timeTaken": "Time taken",
+  "successMessage": "Success! Congratulations on Finding Falcone. King Shan is pleased",
+  "errorMessage": "Sorry King Shan we couldn't find Falcone on any planets.",
+  "startAgain": "Start Again",
+  "planetFound": "Planet found:"
 }

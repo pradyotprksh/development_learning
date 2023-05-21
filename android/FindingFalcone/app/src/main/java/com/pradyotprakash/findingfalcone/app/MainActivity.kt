@@ -1,5 +1,6 @@
 package com.pradyotprakash.findingfalcone.app
 
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -56,8 +57,13 @@ class MainActivity : ComponentActivity() {
 
     private fun setAppBasicRequirements() {
         // Fetch and save the translation values at the starting of the application
+        setApplicationOrientation()
         Translation.updateLocalizationMap(context = this)
         navigationChangeListener()
+    }
+
+    private fun setApplicationOrientation() {
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
     }
 
     /**

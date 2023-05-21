@@ -6,4 +6,5 @@ data class PlanetsEntity(
     val name: String,
     val distance: Long,
     var selected: Boolean = false,
+    var vehicleDetails: VehiclesEntity? = null,
 )

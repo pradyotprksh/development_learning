@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
@@ -20,32 +21,39 @@ import androidx.compose.ui.unit.dp
 import com.pradyotprakash.findingfalcone.app.localization.TR
 import com.pradyotprakash.findingfalcone.app.utils.Assets
 import com.pradyotprakash.findingfalcone.domain.entity.PlanetsEntity
+import com.pradyotprakash.findingfalcone.domain.entity.VehiclesEntity
 
 @Composable
-fun PlanetDetails(
+fun VehicleDetails(
     planet: PlanetsEntity,
-    planetIcon: Assets,
-    onPlanetSelect: () -> Unit,
+    vehicle: VehiclesEntity,
+    vehicleIcon: Assets,
+    onVehicleSelect: (String) -> Unit,
 ) {
     Column(
         modifier = Modifier
+            .padding(5.dp)
             .border(
                 width = 1.dp,
-                color = if (planet.selected) Color.Green else MaterialTheme.colorScheme.background,
+                color = if (planet.vehicleDetails == vehicle) Color.Green else MaterialTheme.colorScheme.background,
                 shape = RoundedCornerShape(10)
             )
-            .clickable { onPlanetSelect() },
+            .clickable {
+                if (vehicle.total_no != 0L) {
+                    onVehicleSelect(vehicle.name)
+                }
+            },
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
     ) {
         Image(
-            painter = painterResource(id = planetIcon.resourceId),
-            contentDescription = planetIcon.imageDescription,
-            modifier = Modifier.size(100.dp)
+            painter = painterResource(id = vehicleIcon.resourceId),
+            contentDescription = vehicleIcon.imageDescription,
+            modifier = Modifier.size(50.dp)
         )
         Box(modifier = Modifier.height(10.dp))
-        Text(text = planet.name)
+        Text(text = "${vehicle.name} (${vehicle.total_no})")
         Box(modifier = Modifier.height(10.dp))
-        Text(text = "${TR.distance} ${planet.distance}")
+        Text(text = "${TR.speed} ${vehicle.speed} | ${TR.distance} ${vehicle.max_distance}")
     }
 }

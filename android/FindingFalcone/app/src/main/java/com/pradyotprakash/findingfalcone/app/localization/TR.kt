@@ -10,8 +10,15 @@ object TR {
     var okay = Translation.getString("okay")
     var no = Translation.getString("no")
     var retry = Translation.getString("retry")
-    var selectPlanets = Translation.getString("selectPlanets")
+    var selectPlanetsVehicles = Translation.getString("selectPlanetsVehicles")
     var distance = Translation.getString("distance")
-    var selectShips = Translation.getString("selectShips")
+    var sendArmy = Translation.getString("sendArmy")
+    var speed = Translation.getString("speed")
+    var pods = Translation.getString("pods")
+    var timeTaken = Translation.getString("timeTaken")
+    var successMessage = Translation.getString("successMessage")
+    var errorMessage = Translation.getString("errorMessage")
+    var startAgain = Translation.getString("startAgain")
+    var planetFound = Translation.getString("planetFound")
     
 }

@@ -5,12 +5,13 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.orhanobut.logger.Logger
-import com.pradyotprakash.findingfalcone.app.composables.ConfirmationDialog
 import com.pradyotprakash.findingfalcone.app.localization.TR
 import com.pradyotprakash.findingfalcone.core.response.FindingFalconeResponse
 import com.pradyotprakash.findingfalcone.core.utils.Constants.PLANETS_COUNT
+import com.pradyotprakash.findingfalcone.domain.entity.FindEntity
 import com.pradyotprakash.findingfalcone.domain.entity.Planets
 import com.pradyotprakash.findingfalcone.domain.entity.Vehicles
+import com.pradyotprakash.findingfalcone.domain.usecase.FindUseCase
 import com.pradyotprakash.findingfalcone.domain.usecase.PlanetsUseCase
 import com.pradyotprakash.findingfalcone.domain.usecase.VehiclesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -22,6 +23,7 @@ import javax.inject.Inject
 class SelectorViewModel @Inject constructor(
     private val planetsUseCase: PlanetsUseCase,
     private val vehiclesUseCase: VehiclesUseCase,
+    private val findUseCase: FindUseCase,
 ) : ViewModel() {
     val randomList = (1..6).toList().shuffled()
     private val _loading = MutableLiveData(false)
@@ -30,20 +32,26 @@ class SelectorViewModel @Inject constructor(
     private val _errorText = MutableLiveData("")
     val error: LiveData<String>
         get() = _errorText
-    private val _confirmationDialog = MutableLiveData(ConfirmationDialog())
-    val confirmationDialog: LiveData<ConfirmationDialog>
-        get() = _confirmationDialog
     private val _planets = MutableLiveData<Planets>(emptyList())
     val planets: LiveData<Planets>
         get() = _planets
     private val _vehicles = MutableLiveData<Vehicles>(emptyList())
     val vehicles: LiveData<Vehicles>
         get() = _vehicles
-    private val _planetsSelected = MutableLiveData(false)
-    val planetsSelected: LiveData<Boolean>
-        get() = _planetsSelected
+    private val _isArmySelected = MutableLiveData(false)
+    val isArmySelected: LiveData<Boolean>
+        get() = _isArmySelected
+    private val _totalTime = MutableLiveData<Long>(0)
+    val totalTime: LiveData<Long>
+        get() = _totalTime
+    private val _findResult = MutableLiveData<FindEntity?>()
+    val findResult: LiveData<FindEntity?>
+        get() = _findResult
 
     fun retry() {
+        _totalTime.value = 0
+        _findResult.value = null
+        _isArmySelected.value = false
         getDetails()
     }
 
@@ -70,9 +78,7 @@ class SelectorViewModel @Inject constructor(
                 _vehicles.value = emptyList()
             }
 
-            is FindingFalconeResponse.Idle -> _loading.value = false
-            is FindingFalconeResponse.Loading -> _loading.value = true
-            is FindingFalconeResponse.Success -> _vehicles.value = vehiclesResponse.data!!
+            is FindingFalconeResponse.Success -> _vehicles.value = vehiclesResponse.data
         }
     }
 
@@ -83,9 +89,7 @@ class SelectorViewModel @Inject constructor(
                 _planets.value = emptyList()
             }
 
-            is FindingFalconeResponse.Idle -> _loading.value = false
-            is FindingFalconeResponse.Loading -> _loading.value = true
-            is FindingFalconeResponse.Success -> _planets.value = planetsResponse.data!!
+            is FindingFalconeResponse.Success -> _planets.value = planetsResponse.data
         }
     }
 
@@ -95,14 +99,10 @@ class SelectorViewModel @Inject constructor(
     }
 
     fun selectPlanet(index: Int) {
+        if (_loading.value == true) return
         val oldList = _planets.value
 
-        var totalSelected = 0
-        oldList?.forEach { planet ->
-            if (planet.selected) {
-                ++totalSelected
-            }
-        }
+        val totalSelected = numberOfPlanetsSelected(oldList)
 
         _planets.value = emptyList()
         _planets.value = oldList?.run {
@@ -111,23 +111,113 @@ class SelectorViewModel @Inject constructor(
             } else if (this[index].selected) {
                 this[index].selected = false
             }
+            if (!this[index].selected) {
+                updateVehiclePodCount(
+                    this[index].vehicleDetails?.name ?: "",
+                    false
+                )
+                this[index].vehicleDetails = null
+            }
             this
         }
-        isPlanetsSelected()
+        isArmySelected()
     }
 
-    private fun isPlanetsSelected() {
-        _planetsSelected.value = numberOfPlanetsSelected() == PLANETS_COUNT
+    private fun isArmySelected() {
+        _isArmySelected.value = numberOfPlanetsSelected(_planets.value) == PLANETS_COUNT
     }
 
-    private fun numberOfPlanetsSelected(): Int {
+    private fun numberOfPlanetsSelected(planets: Planets?): Int {
         var totalSelected = 0
-        _planets.value?.forEach { planet ->
-            if (planet.selected) {
+        var totalTime: Long = 0
+        planets?.forEach { planet ->
+            if (planet.selected && planet.vehicleDetails != null) {
                 ++totalSelected
+
+                planet.vehicleDetails?.let { vehicle ->
+                    getVehicleDetails(vehicle.name)?.let { details ->
+                        totalTime += planet.distance / details.speed
+                    }
+                }
             }
         }
-        Logger.e(totalSelected.toString())
+        _totalTime.value = totalTime
         return totalSelected
+    }
+
+    private fun updateVehiclePodCount(vehicleName: String, isSelected: Boolean) {
+        val oldList = _vehicles.value
+
+        _vehicles.value = oldList?.run {
+            this.forEach { vehicle ->
+                if (vehicle.name == vehicleName) {
+                    vehicle.total_no = if (isSelected) --vehicle.total_no else ++vehicle.total_no
+                }
+            }
+            this
+        }
+    }
+
+    fun selectVehicle(index: Int, vehicleName: String) {
+        if (_loading.value == true) return
+        val vehicleDetails = getVehicleDetails(vehicleName)
+
+        val oldPlanetsList = _planets.value
+        _planets.value = emptyList()
+        _planets.value = oldPlanetsList?.run {
+            if (this[index].vehicleDetails != vehicleDetails) {
+                updateVehiclePodCount(
+                    this[index].vehicleDetails?.name ?: "",
+                    false
+                )
+                this[index].vehicleDetails = vehicleDetails
+                updateVehiclePodCount(
+                    this[index].vehicleDetails?.name ?: "",
+                    true
+                )
+            }
+            this
+        }
+        isArmySelected()
+    }
+
+    private fun getVehicleDetails(name: String) = _vehicles.value?.first { it.name == name }
+    fun sendTheArmy() {
+        val selectedPlanets = ArrayList<String>()
+        val selectedVehicles = ArrayList<String>()
+        _planets.value?.let { planets ->
+            planets.forEach { planet ->
+                if (planet.selected) {
+                    selectedPlanets.add(planet.name)
+                    planet.vehicleDetails?.let {
+                        selectedVehicles.add(it.name)
+                    }
+                }
+            }
+        }
+        viewModelScope.launch {
+            _loading.value = true
+            try {
+                when (val result = findUseCase
+                    .findFalcone(
+                        planetNames = selectedPlanets,
+                        vehicleNames = selectedVehicles
+                    )
+                ) {
+                    is FindingFalconeResponse.Error -> {
+                        updateErrorState(result.exception.message)
+                    }
+
+                    is FindingFalconeResponse.Success -> {
+                        _findResult.value = result.data
+                        _isArmySelected.value = false
+                    }
+                }
+            } catch (e: Exception) {
+                Logger.e(e.localizedMessage ?: "")
+                updateErrorState(TR.noDataFoundError)
+            }
+            _loading.value = false
+        }
     }
 }
