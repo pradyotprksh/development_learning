@@ -9,16 +9,18 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.pradyotprakash.findingfalcone.app.localization.Translation
+import com.pradyotprakash.findingfalcone.app.pages.result.view.ResultView
 import com.pradyotprakash.findingfalcone.app.pages.selector.view.SelectorView
 import com.pradyotprakash.findingfalcone.app.pages.splash.view.SplashView
 import com.pradyotprakash.findingfalcone.app.theme.FindingFalconeTheme
 import com.pradyotprakash.findingfalcone.core.navigation.Navigator
 import com.pradyotprakash.findingfalcone.core.navigation.Routes
-import com.pradyotprakash.findingfalcone.core.navigation.path
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -47,8 +49,27 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     NavHost(navController = navController, startDestination = Routes.Splash.route) {
-                        composable(Routes.Splash.path()) { SplashView() }
-                        composable(Routes.Selector.path()) { SelectorView() }
+                        composable(Routes.Splash.route) { SplashView() }
+                        composable(Routes.Selector.route) { SelectorView() }
+                        composable(
+                            Routes.Result.route,
+                            arguments = listOf(
+                                navArgument("planets") { type = NavType.StringType },
+                                navArgument("vehicles") { type = NavType.StringType },
+                                navArgument("timeTaken") { type = NavType.IntType },
+                            )
+                        ) {
+                            val arguments = requireNotNull(it.arguments)
+                            val planets = arguments.getString("planets")?.split(",")?.toTypedArray() ?: emptyArray()
+                            val vehicles = arguments.getString("vehicles")?.split(",")?.toTypedArray() ?: emptyArray()
+                            val timeTaken = arguments.getInt("timeTaken") ?: 0
+
+                            ResultView(
+                                planets = planets.toList(),
+                                vehicles = vehicles.toList(),
+                                timeTaken = timeTaken,
+                            )
+                        }
                     }
                 }
             }

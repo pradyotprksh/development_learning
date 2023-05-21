@@ -26,15 +26,6 @@ import androidx.compose.ui.window.DialogProperties
 import com.pradyotprakash.findingfalcone.app.localization.TR
 import com.pradyotprakash.findingfalcone.app.localization.Translation
 
-data class ConfirmationDialog(
-    val text: String = "",
-    val onConfirm: () -> Unit = {},
-    val onDismiss: () -> Unit = {},
-) {
-    val showDialog: Boolean
-        get() = text.isNotBlank()
-}
-
 @Composable
 fun PageStateComposable(
     isLoading: Boolean = false,

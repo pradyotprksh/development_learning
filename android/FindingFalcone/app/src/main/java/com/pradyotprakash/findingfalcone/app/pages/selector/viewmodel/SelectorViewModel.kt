@@ -6,6 +6,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.orhanobut.logger.Logger
 import com.pradyotprakash.findingfalcone.app.localization.TR
+import com.pradyotprakash.findingfalcone.core.navigation.Navigator
+import com.pradyotprakash.findingfalcone.core.navigation.Routes
 import com.pradyotprakash.findingfalcone.core.response.FindingFalconeResponse
 import com.pradyotprakash.findingfalcone.core.utils.Constants.PLANETS_COUNT
 import com.pradyotprakash.findingfalcone.domain.entity.FindEntity
@@ -23,7 +25,7 @@ import javax.inject.Inject
 class SelectorViewModel @Inject constructor(
     private val planetsUseCase: PlanetsUseCase,
     private val vehiclesUseCase: VehiclesUseCase,
-    private val findUseCase: FindUseCase,
+    private val navigator: Navigator,
 ) : ViewModel() {
     val randomList = (1..6).toList().shuffled()
     private val _loading = MutableLiveData(false)
@@ -49,6 +51,8 @@ class SelectorViewModel @Inject constructor(
         get() = _findResult
 
     fun retry() {
+        _vehicles.value = emptyList()
+        _planets.value = emptyList()
         _totalTime.value = 0
         _findResult.value = null
         _isArmySelected.value = false
@@ -195,29 +199,24 @@ class SelectorViewModel @Inject constructor(
                 }
             }
         }
-        viewModelScope.launch {
-            _loading.value = true
-            try {
-                when (val result = findUseCase
-                    .findFalcone(
-                        planetNames = selectedPlanets,
-                        vehicleNames = selectedVehicles
-                    )
-                ) {
-                    is FindingFalconeResponse.Error -> {
-                        updateErrorState(result.exception.message)
-                    }
 
-                    is FindingFalconeResponse.Success -> {
-                        _findResult.value = result.data
-                        _isArmySelected.value = false
-                    }
-                }
-            } catch (e: Exception) {
-                Logger.e(e.localizedMessage ?: "")
-                updateErrorState(TR.noDataFoundError)
-            }
-            _loading.value = false
+        val route = Routes.Result.route
+            .replace(
+                "{planets}",
+                selectedPlanets.joinToString(",")
+            )
+            .replace(
+                "{vehicles}",
+                selectedVehicles.joinToString(",")
+            )
+            .replace(
+                "{timeTaken}",
+                (_totalTime.value ?: 0).toString()
+            )
+
+        navigator.navigate {
+            retry()
+            it.navigate(route)
         }
     }
 }
