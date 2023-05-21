@@ -13,7 +13,6 @@ import com.pradyotprakash.findingfalcone.core.utils.Constants.PLANETS_COUNT
 import com.pradyotprakash.findingfalcone.domain.entity.FindEntity
 import com.pradyotprakash.findingfalcone.domain.entity.Planets
 import com.pradyotprakash.findingfalcone.domain.entity.Vehicles
-import com.pradyotprakash.findingfalcone.domain.usecase.FindUseCase
 import com.pradyotprakash.findingfalcone.domain.usecase.PlanetsUseCase
 import com.pradyotprakash.findingfalcone.domain.usecase.VehiclesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel

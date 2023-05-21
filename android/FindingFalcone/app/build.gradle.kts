@@ -98,12 +98,9 @@ dependencies {
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.compose.ui)
     implementation(libs.androidx.compose.ui.graphics)
-    implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.compose.material3)
     implementation(libs.compose.livedata)
     implementation(libs.androidx.navigation.compose)
-    debugImplementation(libs.androidx.compose.ui.tooling)
-    debugImplementation(libs.androidx.compose.ui.manifest)
 
     // Dependency Injection
     implementation(libs.hilt.android)
@@ -112,13 +109,6 @@ dependencies {
 
     // Logger
     implementation(libs.logger)
-
-    // Tests
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.test.junit)
-    androidTestImplementation(libs.androidx.espresso)
-    androidTestImplementation(platform(libs.androidx.compose.bom))
-    androidTestImplementation(libs.compose.test.junit)
 
     // Retrofit
     implementation(libs.retrofit2)

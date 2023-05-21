@@ -60,9 +60,12 @@ class MainActivity : ComponentActivity() {
                             )
                         ) {
                             val arguments = requireNotNull(it.arguments)
-                            val planets = arguments.getString("planets")?.split(",")?.toTypedArray() ?: emptyArray()
-                            val vehicles = arguments.getString("vehicles")?.split(",")?.toTypedArray() ?: emptyArray()
-                            val timeTaken = arguments.getInt("timeTaken") ?: 0
+                            val planets = arguments.getString("planets")?.split(",")?.toTypedArray()
+                                ?: emptyArray()
+                            val vehicles =
+                                arguments.getString("vehicles")?.split(",")?.toTypedArray()
+                                    ?: emptyArray()
+                            val timeTaken = arguments.getInt("timeTaken")
 
                             ResultView(
                                 planets = planets.toList(),

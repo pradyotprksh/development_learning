@@ -18,7 +18,7 @@ import javax.inject.Inject
 class ResultViewModel @Inject constructor(
     private val findUseCase: FindUseCase,
     private val navigator: Navigator,
-): ViewModel() {
+) : ViewModel() {
     private val _loading = MutableLiveData(false)
     val loading: LiveData<Boolean>
         get() = _loading
