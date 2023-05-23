@@ -21,7 +21,7 @@ jobs:
           distribution: 'adopt'
           cache: gradle
       - name: Checking TheMovieDBKMM
-        working-directory: ./android/TheMovieDBKMM
+        working-directory: ./KotlinMultiplatform/TheMovieDBKMM
         run: |
           chmod +x ./gradlew
           ./gradlew lint
@@ -41,7 +41,7 @@ jobs:
           distribution: 'adopt'
           cache: gradle
       - name: Checking KotlinMultiplatformSandbox
-        working-directory: ./android/KotlinMultiplatformSandbox
+        working-directory: ./KotlinMultiplatform/KotlinMultiplatformSandbox
         run: |
           chmod +x ./gradlew
           ./gradlew lint
