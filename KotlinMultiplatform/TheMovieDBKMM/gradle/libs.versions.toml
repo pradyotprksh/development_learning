@@ -7,6 +7,7 @@ composeUi = "1.4.3"
 coreKtx = "1.10.1"
 composeViewmodel = "2.6.1"
 composeLiveData = "1.4.3"
+coil = "2.4.0"
 jetbrainsCompose = "1.5.0-dev1049"
 kotlin = "1.8.10"
 kotlinCoroutines = "1.6.4"
@@ -25,6 +26,7 @@ androidx-activity-compose = { group = "androidx.activity", name = "activity-comp
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "androidxAppcompat" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 compose-livedata = { group = "androidx.compose.runtime", name = "runtime-livedata", version.ref = "composeLiveData" }
+coil = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
 kotlinx-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "kotlinCoroutines" }
 ktor-client = { group = "io.ktor", name = "ktor-client-core", version.ref = "ktorVersion" }
 ktor-content-negotiation = { group = "io.ktor", name = "ktor-client-content-negotiation", version.ref = "ktorVersion" }

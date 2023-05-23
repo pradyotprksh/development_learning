@@ -57,4 +57,7 @@ data class MovieResult (
 
     @SerialName("vote_count")
     val voteCount: Long
-)
+) {
+    val imageUrl: String
+        get() = "https://image.tmdb.org/t/p/w200/$posterPath"
+}

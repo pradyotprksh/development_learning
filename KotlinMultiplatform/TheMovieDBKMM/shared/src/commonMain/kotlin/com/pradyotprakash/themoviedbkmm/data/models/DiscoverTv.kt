@@ -13,7 +13,7 @@ import kotlinx.serialization.encoding.*
 @Serializable
 data class DiscoverTv (
     val page: Long,
-    val tvResults: List<TvResult>,
+    val results: List<TvResult>,
 
     @SerialName("total_pages")
     val totalPages: Long,
@@ -56,4 +56,7 @@ data class TvResult (
 
     @SerialName("vote_count")
     val voteCount: Long
-)
+) {
+    val imageUrl: String
+        get() = "https://image.tmdb.org/t/p/w200/$posterPath"
+}
