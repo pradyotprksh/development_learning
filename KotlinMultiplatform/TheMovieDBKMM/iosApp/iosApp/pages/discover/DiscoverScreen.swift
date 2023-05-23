@@ -32,7 +32,7 @@ struct DiscoverScreen: View {
                     }
                     
                     ForEach(discoverViewModel.movies?.results ?? [], id: \.self) { movie in
-                        Text(movie.title)
+                        DiscoverDetails(title: movie.title, imageUrl: movie.imageUrl)
                     }
                 }
                 
@@ -42,7 +42,7 @@ struct DiscoverScreen: View {
                     }
                     
                     ForEach(discoverViewModel.tvs?.results ?? [], id: \.self) { tv in
-                        Text(tv.name)
+                        DiscoverDetails(title: tv.name, imageUrl: tv.imageUrl)
                     }
                 }
             }

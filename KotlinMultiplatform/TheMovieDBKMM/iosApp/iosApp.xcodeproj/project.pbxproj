@@ -12,6 +12,7 @@
 		2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2152FB032600AC8F00CF470E /* iOSApp.swift */; };
 		9B8EFCC82A1CAC850000ABFB /* DiscoverScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B8EFCC72A1CAC850000ABFB /* DiscoverScreen.swift */; };
 		9B8EFCCA2A1CACA70000ABFB /* DiscoverViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B8EFCC92A1CACA70000ABFB /* DiscoverViewModel.swift */; };
+		9B8EFCCD2A1CDB360000ABFB /* DiscoverDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B8EFCCC2A1CDB360000ABFB /* DiscoverDetails.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -35,6 +36,7 @@
 		7555FF8C242A565B00829871 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9B8EFCC72A1CAC850000ABFB /* DiscoverScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverScreen.swift; sourceTree = "<group>"; };
 		9B8EFCC92A1CACA70000ABFB /* DiscoverViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverViewModel.swift; sourceTree = "<group>"; };
+		9B8EFCCC2A1CDB360000ABFB /* DiscoverDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverDetails.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,6 +105,7 @@
 		9B8EFCC42A1CAC530000ABFB /* discover */ = {
 			isa = PBXGroup;
 			children = (
+				9B8EFCCB2A1CDB220000ABFB /* views */,
 				9B8EFCC62A1CAC6A0000ABFB /* viewmodel */,
 				9B8EFCC52A1CAC5D0000ABFB /* view */,
 			);
@@ -123,6 +126,14 @@
 				9B8EFCC92A1CACA70000ABFB /* DiscoverViewModel.swift */,
 			);
 			path = viewmodel;
+			sourceTree = "<group>";
+		};
+		9B8EFCCB2A1CDB220000ABFB /* views */ = {
+			isa = PBXGroup;
+			children = (
+				9B8EFCCC2A1CDB360000ABFB /* DiscoverDetails.swift */,
+			);
+			name = views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -218,6 +229,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */,
+				9B8EFCCD2A1CDB360000ABFB /* DiscoverDetails.swift in Sources */,
 				9B8EFCCA2A1CACA70000ABFB /* DiscoverViewModel.swift in Sources */,
 				9B8EFCC82A1CAC850000ABFB /* DiscoverScreen.swift in Sources */,
 			);
