@@ -578,6 +578,8 @@ In summary, Views are the basic building blocks of an Android UI. They can be ar
 
 # Jetpack Compose
 
+Check [this](https://developer.android.com/jetpack/compose/documentation) for more details.
+
 Jetpack Compose is a modern UI toolkit for building native Android apps using a declarative approach to UI programming. It is designed to make building UIs easier and more efficient by enabling developers to use a simple and intuitive way to define the layout, behavior, and appearance of their apps.
 
 With Jetpack Compose, developers can create UI components using a tree of composable functions, which are like building blocks that can be combined to create complex UIs. Each composable function is responsible for rendering a specific part of the UI and can be reused throughout the app.
@@ -697,6 +699,84 @@ Columns and Rows are composable functions that are used to arrange UI elements i
 A Column composable is used to arrange its child composables vertically from top to bottom, whereas a Row composable arranges its child composables horizontally from left to right.
 
 You can specify the order, alignment, and other layout properties for the child composables in a Column or Row using modifiers. For example, you can use the `verticalArrangement` modifier to specify how the child composables should be spaced vertically in a Column, or the `horizontalArrangement` modifier to specify how the child composables should be spaced horizontally in a Row.
+
+## LaunchedEffect
+
+In Jetpack Compose, `LaunchedEffect` is a composable function that allows you to perform side effects or start asynchronous tasks in response to certain events or changes. It is similar to the `launch` coroutine builder in Kotlin coroutines.
+
+To use `LaunchedEffect`, you need to provide a key and a lambda that represents the side effect or asynchronous task. The lambda will be executed when the key changes.
+
+Here's an example of how to use `LaunchedEffect`:
+
+```kotlin
+@Composable
+fun ExampleScreen() {
+    var counter by remember { mutableStateOf(0) }
+
+    LaunchedEffect(counter) {
+        // Perform a side effect or start an asynchronous task
+        // This code will be executed when `counter` changes
+
+        // Example: Delay for 1 second
+        delay(1000)
+
+        // Example: Update the counter after the delay
+        counter++
+    }
+
+    Text(text = "Counter: $counter")
+}
+```
+
+In the above example, whenever the `counter` value changes, the code inside the `LaunchedEffect` block will be executed. In this case, it delays for 1 second using `delay(1000)` and then increments the `counter` value.
+
+Note that `LaunchedEffect` is a side-effect-only composable and doesn't emit any UI elements itself. It is commonly used for performing tasks like fetching data from a remote server, updating a database, or handling animations.
+
+It's important to use `LaunchedEffect` appropriately and ensure that the side effects are handled correctly. For example, cancelling any active coroutines when the composable is no longer active to prevent memory leaks or unexpected behavior.
+
+If you want the `LaunchedEffect` block to be called only once, you can use an empty key or a constant value as the key for `LaunchedEffect`. This ensures that the block is executed only when the composable is first recomposed.
+
+Here's an example:
+
+```kotlin
+@Composable
+fun ExampleScreen() {
+    LaunchedEffect(key1 = true) {
+        // This code will be executed only once when the composable is first recomposed
+        // You can perform one-time initialization or start an asynchronous task here
+    }
+
+    // Rest of the composable content
+}
+```
+
+In the above example, the `LaunchedEffect` block will be executed only once because the key is a constant value (`true`). Subsequent recompositions of the `ExampleScreen` composable will not trigger the `LaunchedEffect` block.
+
+Keep in mind that if you pass a changing value as the key to `LaunchedEffect`, the block will be called each time the key changes. So, if you want to ensure a one-time execution, make sure the key remains constant or use an empty key like `LaunchedEffect(Unit)`.
+
+There is an alternative to `LaunchedEffect` if you want to ensure that a block of code is executed only once when the composable is first recomposed. You can use the `remember` function combined with a flag variable.
+
+Here's an example:
+
+```kotlin
+@Composable
+fun ExampleScreen() {
+    val executedOnce = remember { mutableStateOf(false) }
+
+    if (!executedOnce.value) {
+        executedOnce.value = true
+
+        // This code will be executed only once when the composable is first recomposed
+        // You can perform one-time initialization or start an asynchronous task here
+    }
+
+    // Rest of the composable content
+}
+```
+
+In the above example, the `executedOnce` variable is a `MutableState<Boolean>` that starts as `false`. When the composable is first recomposed, the `if` condition checks if `executedOnce.value` is `false`. If it is `false`, the block of code inside the `if` statement is executed, and then `executedOnce.value` is set to `true`. On subsequent recompositions, the `if` condition will be `false`, and the block of code will not be executed.
+
+Using `remember` in combination with a flag variable provides a way to control the one-time execution of a block of code in Jetpack Compose.
 
 # Android Performance Optimization
 
