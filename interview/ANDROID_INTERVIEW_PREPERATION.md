@@ -148,6 +148,34 @@ dependencies {
 
 When the multidexEnabled flag is set to true, the Dalvik bytecode build tool creates multiple DEX files for the application, which are then merged together at runtime to create the final DEX file. The multidex support library provides a class called MultiDexApplication, which should be used as the base class for the application class if the application is using multidex.
 
+### ViewPager2
+
+ViewPager2 is an updated version of ViewPager that was introduced as part of the Android Jetpack library. It is designed to provide an improved user experience and additional functionality compared to the original ViewPager.
+
+Here are some key differences between ViewPager2 and ViewPager:
+
+1. Orientation: ViewPager only supports horizontal scrolling, while ViewPager2 supports both horizontal and vertical scrolling. This allows for more flexible layouts and scrolling directions.
+
+2. API and functionality: ViewPager2 offers a simplified API compared to ViewPager, making it easier to work with. It also provides additional features such as support for right-to-left layouts, vertical swiping, and better handling of dynamic content updates.
+
+3. Adapter: ViewPager2 uses a new adapter called `RecyclerView.Adapter` instead of the older `PagerAdapter` used by ViewPager. This allows for better integration with RecyclerView, enabling features such as data binding and efficient view recycling.
+
+4. Performance: ViewPager2 is built on top of RecyclerView, which is optimized for handling large datasets and efficient view recycling. This can result in improved performance and smoother scrolling compared to ViewPager.
+
+5. Compatibility: ViewPager2 is backward-compatible with older versions of Android (starting from Android API level 14) through the use of the AndroidX library. This makes it easier to adopt ViewPager2 in existing projects or support a wider range of devices.
+
+Overall, ViewPager2 is recommended for new projects or when migrating from ViewPager, as it provides a more modern and feature-rich implementation with better performance and flexibility.
+
+While ViewPager2 and RecyclerView are both components in the Android Jetpack library and share some similarities, they serve different purposes and have distinct use cases:
+
+1. Layout: RecyclerView is primarily used for displaying a list or grid of items in a linear, scrollable layout. It provides a flexible and efficient way to handle large datasets and dynamically update the content as needed. ViewPager2, on the other hand, is designed for displaying and navigating between multiple views or fragments in a swipeable manner. It is commonly used for implementing features like image galleries, onboarding screens, or tabbed layouts.
+
+2. Adapter: RecyclerView uses the `RecyclerView.Adapter` to bind data to individual views within the list or grid. It supports various view types and allows for efficient recycling and reuse of views as the user scrolls. ViewPager2, similar to its predecessor ViewPager, uses an adapter (either `FragmentStateAdapter` or `RecyclerView.Adapter`) to manage the content displayed in each page or view within the ViewPager2 container. The adapter handles the creation and destruction of views or fragments as the user navigates between pages.
+
+3. Scrolling Behavior: RecyclerView provides full control over the scrolling behavior, allowing for customized scrolling effects, animations, and item decorations. It supports both vertical and horizontal scrolling based on the layout manager configuration. ViewPager2, on the other hand, handles the swipe-based navigation between pages or views automatically. It provides built-in support for horizontal and vertical swiping gestures, and handles the smooth scrolling and transition animations between pages.
+
+In summary, RecyclerView is suitable for displaying lists or grids of data in a scrollable layout, while ViewPager2 is more suitable for implementing swipeable screens or layouts with multiple views or fragments. Both components have their own specific use cases and can be used together in complex UI scenarios where both scrolling lists and swipeable views are required.
+
 ## Dependency Injection
 
 Dependency Injection (DI) is a design pattern used in software development that allows components to be more modular, reusable, and easier to test. In this pattern, the dependencies required by a component are injected into the component by an external entity, instead of the component itself creating those dependencies.
@@ -259,34 +287,6 @@ The ViewModel is also lifecycle-aware, which means it is tied to the lifecycle o
 The `ViewModel` instance is stored in the `ViewModelStore`, which is a container object that is attached to the activity or fragment's lifecycle. When the activity or fragment is recreated due to configuration changes, the `ViewModelStore` persists the `ViewModel` instance, so that it can be retrieved and reused by the newly created activity or fragment. 
 
 This allows the `ViewModel` to survive configuration changes, such as device rotation, without having to reload the data or re-initialize the application state.
-
-## ViewPager2
-
-ViewPager2 is an updated version of ViewPager that was introduced as part of the Android Jetpack library. It is designed to provide an improved user experience and additional functionality compared to the original ViewPager.
-
-Here are some key differences between ViewPager2 and ViewPager:
-
-1. Orientation: ViewPager only supports horizontal scrolling, while ViewPager2 supports both horizontal and vertical scrolling. This allows for more flexible layouts and scrolling directions.
-
-2. API and functionality: ViewPager2 offers a simplified API compared to ViewPager, making it easier to work with. It also provides additional features such as support for right-to-left layouts, vertical swiping, and better handling of dynamic content updates.
-
-3. Adapter: ViewPager2 uses a new adapter called `RecyclerView.Adapter` instead of the older `PagerAdapter` used by ViewPager. This allows for better integration with RecyclerView, enabling features such as data binding and efficient view recycling.
-
-4. Performance: ViewPager2 is built on top of RecyclerView, which is optimized for handling large datasets and efficient view recycling. This can result in improved performance and smoother scrolling compared to ViewPager.
-
-5. Compatibility: ViewPager2 is backward-compatible with older versions of Android (starting from Android API level 14) through the use of the AndroidX library. This makes it easier to adopt ViewPager2 in existing projects or support a wider range of devices.
-
-Overall, ViewPager2 is recommended for new projects or when migrating from ViewPager, as it provides a more modern and feature-rich implementation with better performance and flexibility.
-
-While ViewPager2 and RecyclerView are both components in the Android Jetpack library and share some similarities, they serve different purposes and have distinct use cases:
-
-1. Layout: RecyclerView is primarily used for displaying a list or grid of items in a linear, scrollable layout. It provides a flexible and efficient way to handle large datasets and dynamically update the content as needed. ViewPager2, on the other hand, is designed for displaying and navigating between multiple views or fragments in a swipeable manner. It is commonly used for implementing features like image galleries, onboarding screens, or tabbed layouts.
-
-2. Adapter: RecyclerView uses the `RecyclerView.Adapter` to bind data to individual views within the list or grid. It supports various view types and allows for efficient recycling and reuse of views as the user scrolls. ViewPager2, similar to its predecessor ViewPager, uses an adapter (either `FragmentStateAdapter` or `RecyclerView.Adapter`) to manage the content displayed in each page or view within the ViewPager2 container. The adapter handles the creation and destruction of views or fragments as the user navigates between pages.
-
-3. Scrolling Behavior: RecyclerView provides full control over the scrolling behavior, allowing for customized scrolling effects, animations, and item decorations. It supports both vertical and horizontal scrolling based on the layout manager configuration. ViewPager2, on the other hand, handles the swipe-based navigation between pages or views automatically. It provides built-in support for horizontal and vertical swiping gestures, and handles the smooth scrolling and transition animations between pages.
-
-In summary, RecyclerView is suitable for displaying lists or grids of data in a scrollable layout, while ViewPager2 is more suitable for implementing swipeable screens or layouts with multiple views or fragments. Both components have their own specific use cases and can be used together in complex UI scenarios where both scrolling lists and swipeable views are required.
 
 # Android Components
 
