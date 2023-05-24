@@ -4,7 +4,7 @@ on:
       - main
     paths:
       - KotlinMultiplatform/**
-name: Android Projects
+name: KotlinMultiplatform Projects
 jobs:
   TheMovieDBKMM:
     name: TheMovieDBKMM Code Checker
