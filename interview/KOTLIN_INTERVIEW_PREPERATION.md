@@ -931,3 +931,43 @@ In this example, the lambda function `{ acc, num -> acc + num }` is passed as an
 
 In summary, extension functions extend the functionality of an existing class, while lambda functions are anonymous functions that can be passed as arguments to other functions.
 
+# inline
+
+In Kotlin, the `inline` keyword is used to declare an inline function or inline lambda expression. When a function or lambda is declared as `inline`, it instructs the compiler to replace the call to that function or lambda with the actual code inside the function or lambda at the call site. This is done at compile-time, similar to a macro expansion.
+
+The purpose of using `inline` is to improve performance by reducing the runtime overhead of function calls and lambda expressions. By inlining the code, unnecessary function call overhead, such as creating a function object and performing a function call, can be eliminated.
+
+Benefits of using `inline`:
+1. Performance improvement: Inlining reduces the overhead of function calls, leading to faster execution.
+2. Control over function behavior: Inlining allows the function code to be directly inserted at the call site, enabling more control over how the code is executed and optimized.
+3. Support for higher-order functions: Inlining is particularly useful when working with higher-order functions or lambdas, as it eliminates the overhead associated with capturing and invoking function objects.
+
+Example of an inline function:
+
+```kotlin
+inline fun calculateSum(a: Int, b: Int): Int {
+    return a + b
+}
+```
+
+In the above example, the `calculateSum` function is declared as `inline`. When the function is called, the compiler replaces the function call with the actual code `a + b`, eliminating the overhead of the function call.
+
+Note that the decision to use `inline` should be made judiciously, as inlining larger functions or functions that are called in many places can lead to increased code size. Inlining is most effective for small, frequently called functions or lambdas.
+
+Additionally, the `inline` keyword can be used with other constructs like `inline class` and `crossinline` to provide additional functionality and control in specific contexts.
+
+The `inline` keyword in Kotlin provides several advantages:
+
+1. Performance Improvement: By inlining the code at the call site, the overhead of function calls is eliminated. This can result in improved performance, especially for small, frequently called functions or lambdas.
+
+2. Reduction of Function Objects: Inlining allows the elimination of function objects and related memory allocations. Instead of creating a function object for each call, the code is directly inserted at the call site, reducing memory consumption.
+
+3. Control over Function Behavior: Inlining provides more control over how the code is executed and optimized. It allows optimizations such as loop unrolling, constant folding, and other compiler optimizations that might not be possible with regular function calls.
+
+4. Higher-Order Functions and Lambdas: Inlining is particularly useful when working with higher-order functions or lambdas. It eliminates the overhead associated with capturing and invoking function objects, making the code more efficient.
+
+5. DSL (Domain-Specific Language) Support: Inlining can be beneficial when creating domain-specific languages or building DSL-like constructs. It allows for concise and efficient syntax by eliminating the need for function call overhead.
+
+6. Integration with Control Flow Constructs: Inlined functions can seamlessly integrate with control flow constructs like `return`, `break`, and `continue`. The inlined code can be inserted directly into the calling context, preserving the control flow behavior.
+
+It's important to note that the decision to use `inline` should be made carefully, considering the size and complexity of the code being inlined. Inlining larger functions or functions with complex logic may increase the code size and impact maintainability. It's best to use `inline` selectively for small, performance-critical functions or lambdas to maximize the benefits while maintaining code readability and maintainability.
