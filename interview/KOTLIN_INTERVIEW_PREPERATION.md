@@ -89,7 +89,7 @@ Higher-order functions are a powerful feature of Kotlin that allow you to write 
 
 # Null Safety
 
-Yes, sure! Kotlin has built-in null safety features that help prevent common NullPointerException (NPE) errors that can occur in Java and other programming languages.
+Kotlin has built-in null safety features that help prevent common NullPointerException (NPE) errors that can occur in Java and other programming languages.
 
 In Kotlin, null safety is enforced through the use of nullable and non-nullable types. A nullable type is a type that can hold a null value, while a non-nullable type is a type that cannot hold a null value.
 
