@@ -51,10 +51,13 @@ README will be only updated when the project/learning is completed. So make sure
     - For more details go to this [link](https://medium.com/geekculture/whatsapp-clone-jetpack-compose-d90120723d88)
   - [Rental](https://github.com/pradyotprksh/development_learning/tree/main/android/Rental)
 
-[<img src="https://img.shields.io/badge/KotlinMulitplatform-3DDC84?style=for-the-badge&logo=android&logoColor=white" />](https://github.com/pradyotprksh/development_learning/tree/main/KotlinMulitplatform) [![Kotlin Mulitplatform](https://github.com/pradyotprksh/development_learning/actions/workflows/kotlin_multiplatform_code_checker.yml/badge.svg)](https://github.com/pradyotprksh/development_learning/actions/workflows/kotlin_multiplatform_code_checker.yml)
+[<img src="https://img.shields.io/badge/KotlinMulitplatform-3DDC84?style=for-the-badge&logo=android&logoColor=white" />](https://github.com/pradyotprksh/development_learning/tree/main/KotlinMultiplatform) [![Kotlin Mulitplatform](https://github.com/pradyotprksh/development_learning/actions/workflows/kotlin_multiplatform_code_checker.yml/badge.svg)](https://github.com/pradyotprksh/development_learning/actions/workflows/kotlin_multiplatform_code_checker.yml)
+  - [TheMovieDBKMM](https://github.com/pradyotprksh/development_learning/tree/main/KotlinMultiplatform/TheMovieDBKMM)
 
 [<img src="https://img.shields.io/badge/Kotlin-0095D5?&style=for-the-badge&logo=kotlin&logoColor=white" />](https://github.com/pradyotprksh/development_learning/tree/main/kotlin)
   - [basics](https://github.com/pradyotprksh/development_learning/tree/main/kotlin/basics)
+  - [DS&Algo](https://github.com/pradyotprksh/development_learning/tree/main/kotlin/udemy_course)
+  - [friends_tree](https://github.com/pradyotprksh/development_learning/tree/main/kotlin/friends_tree)
   
 [<img src="https://img.shields.io/badge/Python-FFD43B?style=for-the-badge&logo=python&logoColor=blue" />](https://github.com/pradyotprksh/development_learning/tree/main/python) [![Python Projects](https://github.com/pradyotprksh/development_learning/actions/workflows/python_code_checker.yml/badge.svg)](https://github.com/pradyotprksh/development_learning/actions/workflows/python_code_checker.yml)
   - [2022 Bootcamp Udemy Python Course](https://github.com/pradyotprksh/development_learning/tree/main/python/UdemyCourse/2022_Python_Bootcamp) 
@@ -65,6 +68,10 @@ README will be only updated when the project/learning is completed. So make sure
 [<img src="https://img.shields.io/badge/Go-FFD43B?style=for-the-badge&logo=go&logoColor=blue" />](https://github.com/pradyotprksh/development_learning/tree/main/go) [![Go Projects](https://github.com/pradyotprksh/development_learning/actions/workflows/go_code_checker.yml/badge.svg)](https://github.com/pradyotprksh/development_learning/actions/workflows/go_code_checker.yml)
  - [Learning](https://github.com/pradyotprksh/development_learning/tree/main/go/learning)
  - [Udemy course](https://github.com/pradyotprksh/development_learning/tree/main/go/stephen_udemy)
+
+[<img src="https://img.shields.io/badge/Interview-FFD43B?style=for-the-badge&logo=go&logoColor=blue" />]([https://github.com/pradyotprksh/development_learning/tree/main/go](https://github.com/pradyotprksh/development_learning/tree/main/interview))
+  - [Android](https://github.com/pradyotprksh/development_learning/blob/main/interview/ANDROID_INTERVIEW_PREPERATION.md)
+  - [Kotlin](https://github.com/pradyotprksh/development_learning/blob/main/interview/KOTLIN_INTERVIEW_PREPERATION.md)
 
 ---
 
