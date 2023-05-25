@@ -69,7 +69,7 @@ README will be only updated when the project/learning is completed. So make sure
  - [Learning](https://github.com/pradyotprksh/development_learning/tree/main/go/learning)
  - [Udemy course](https://github.com/pradyotprksh/development_learning/tree/main/go/stephen_udemy)
 
-[<img src="https://img.shields.io/badge/Interview-FFD43B?style=for-the-badge&logo=go&logoColor=blue" />]([https://github.com/pradyotprksh/development_learning/tree/main/go](https://github.com/pradyotprksh/development_learning/tree/main/interview))
+[<img src="https://img.shields.io/badge/Interview-FFD43B?style=for-the-badge&logo=go&logoColor=blue" />](https://github.com/pradyotprksh/development_learning/tree/main/interview)
   - [Android](https://github.com/pradyotprksh/development_learning/blob/main/interview/ANDROID_INTERVIEW_PREPERATION.md)
   - [Kotlin](https://github.com/pradyotprksh/development_learning/blob/main/interview/KOTLIN_INTERVIEW_PREPERATION.md)
 
