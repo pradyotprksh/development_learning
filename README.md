@@ -51,6 +51,8 @@ README will be only updated when the project/learning is completed. So make sure
     - For more details go to this [link](https://medium.com/geekculture/whatsapp-clone-jetpack-compose-d90120723d88)
   - [Rental](https://github.com/pradyotprksh/development_learning/tree/main/android/Rental)
 
+[<img src="https://img.shields.io/badge/KotlinMulitplatform-3DDC84?style=for-the-badge&logo=android&logoColor=white" />](https://github.com/pradyotprksh/development_learning/tree/main/KotlinMulitplatform) [![Kotlin Mulitplatform](https://github.com/pradyotprksh/development_learning/actions/workflows/kotlin_multiplatform_code_checker.yml/badge.svg)](https://github.com/pradyotprksh/development_learning/actions/workflows/kotlin_multiplatform_code_checker.yml)
+
 [<img src="https://img.shields.io/badge/Kotlin-0095D5?&style=for-the-badge&logo=kotlin&logoColor=white" />](https://github.com/pradyotprksh/development_learning/tree/main/kotlin)
   - [basics](https://github.com/pradyotprksh/development_learning/tree/main/kotlin/basics)
   
