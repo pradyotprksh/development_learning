@@ -3,26 +3,29 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.jetbrains.compose)
     kotlin("multiplatform")
+    kotlin("native.cocoapods")
     kotlin("plugin.serialization") version libs.versions.serialization
 }
 
 kotlin {
-    android {
-        compilations.all {
-            kotlinOptions {
-                jvmTarget = "1.8"
-            }
-        }
-    }
-    
-    listOf(
-        iosX64(),
-        iosArm64(),
-        iosSimulatorArm64()
-    ).forEach {
-        it.binaries.framework {
+    android()
+
+    iosX64()
+    iosArm64()
+    iosSimulatorArm64()
+
+    cocoapods {
+        version = "1.0.0"
+        summary = "Shared module for iOS and Android"
+        homepage = "https://github.com/pradyotprksh/development_learning/tree/main/KotlinMultiplatform/TheMovieDBKMM"
+        authors = "Pradyot Prakash"
+        ios.deploymentTarget = "14.1"
+        podfile = project.file("../iosApp/Podfile")
+        framework {
             baseName = "shared"
+            isStatic = true
         }
+        extraSpecAttributes["resources"] = "['src/commonMain/resources/**', 'src/iosMain/resources/**']"
     }
 
     sourceSets {
@@ -36,10 +39,10 @@ kotlin {
                 implementation(libs.napier.looger)
                 implementation(libs.kodien.di)
                 implementation(compose.runtime)
-//                implementation(compose.foundation)
-//                implementation(compose.material)
-//                @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
-//                implementation(compose.components.resources)
+                implementation(compose.foundation)
+                implementation(compose.material)
+                @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
+                implementation(compose.components.resources)
             }
         }
         val commonTest by getting {
@@ -83,8 +86,21 @@ kotlin {
 
 android {
     namespace = "com.pradyotprakash.themoviedbkmm"
-    compileSdk = 33
+    compileSdk = (findProperty("android.compileSdk") as String).toInt()
+
+    sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
+    sourceSets["main"].res.srcDirs("src/androidMain/res")
+    sourceSets["main"].resources.srcDirs("src/commonMain/resources")
+
     defaultConfig {
-        minSdk = 24
+        minSdk = (findProperty("android.minSdk") as String).toInt()
+        targetSdk = (findProperty("android.targetSdk") as String).toInt()
+    }
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
+    }
+    kotlin {
+        jvmToolchain(11)
     }
 }
