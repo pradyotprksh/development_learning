@@ -1,7 +1,7 @@
 @Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     alias(libs.plugins.android.library)
-//    alias(libs.plugins.jetbrains.compose)
+    alias(libs.plugins.jetbrains.compose)
     kotlin("multiplatform")
     kotlin("plugin.serialization") version libs.versions.serialization
 }
@@ -35,7 +35,7 @@ kotlin {
                 implementation(libs.ktor.client.logger)
                 implementation(libs.napier.looger)
                 implementation(libs.kodien.di)
-//                implementation(compose.runtime)
+                implementation(compose.runtime)
 //                implementation(compose.foundation)
 //                implementation(compose.material)
 //                @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
@@ -50,9 +50,9 @@ kotlin {
         val androidMain by getting {
             dependencies {
                 implementation(libs.ktor.client.android)
-//                api(libs.androidx.activity.compose)
-//                api(libs.androidx.appcompat)
-//                api(libs.androidx.core.ktx)
+                api(libs.androidx.activity.compose)
+                api(libs.androidx.appcompat)
+                api(libs.androidx.core.ktx)
             }
         }
         val androidUnitTest by getting
