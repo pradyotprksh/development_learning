@@ -15,6 +15,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.pradyotprakash.postscomments.app.localization.Translation
+import com.pradyotprakash.postscomments.app.pages.splash.view.SplashView
 import com.pradyotprakash.postscomments.app.theme.PostsCommentsTheme
 import com.pradyotprakash.postscomments.core.navigator.Navigator
 import com.pradyotprakash.postscomments.core.navigator.Routes
@@ -42,7 +43,7 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     NavHost(navController = navController, startDestination = Routes.Splash.route) {
-                        composable(Routes.Splash.route) { }
+                        composable(Routes.Splash.route) { SplashView() }
                     }
                 }
             }
