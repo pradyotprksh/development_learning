@@ -195,3 +195,57 @@ jobs:
           token: ${{ secrets.TELEGRAM_TOKEN }}
           message: |
             GitHub Action for android/whatsAppCompose is completed with status ${{ job.status }} for ${{ github.ref }}.
+  FindingFalcone:
+    name: FindingFalcone Code Checker
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cancel Previous Runs
+        uses: styfle/cancel-workflow-action@0.9.1
+        with:
+          access_token: ${{ github.token }}
+      - uses: actions/checkout@v2
+      - uses: actions/setup-java@v1
+        with:
+          java-version: '12.x'
+          distribution: 'adopt'
+          cache: gradle
+      - name: Checking FindingFalcone
+        working-directory: ./android/FindingFalcone
+        run: |
+          chmod +x ./gradlew
+          ./gradlew lint
+          ./gradlew build
+      - name: Send Message
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+            GitHub Action for android/FindingFalcone is completed with status ${{ job.status }} for ${{ github.ref }}.
+  PostsComments:
+    name: PostsComments Code Checker
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cancel Previous Runs
+        uses: styfle/cancel-workflow-action@0.9.1
+        with:
+          access_token: ${{ github.token }}
+      - uses: actions/checkout@v2
+      - uses: actions/setup-java@v1
+        with:
+          java-version: '12.x'
+          distribution: 'adopt'
+          cache: gradle
+      - name: Checking PostsComments
+        working-directory: ./android/PostsComments
+        run: |
+          chmod +x ./gradlew
+          ./gradlew lint
+          ./gradlew build
+      - name: Send Message
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+            GitHub Action for android/PostsComments is completed with status ${{ job.status }} for ${{ github.ref }}.
