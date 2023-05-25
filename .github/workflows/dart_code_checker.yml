@@ -24,6 +24,13 @@ jobs:
         run: |
           dart pub get
           dart analyze
+      - name: Send Message
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+            GitHub Action for dart/open_ai is completed with status ${{ job.status }} for ${{ github.ref }}.
   interview_preparation:
     name: interview_preparation Code Checker
     runs-on: ubuntu-latest
@@ -43,6 +50,13 @@ jobs:
           dart pub get
           dart analyze
           dart run
+      - name: Send Message
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+            GitHub Action for dart/interview_preparation is completed with status ${{ job.status }} for ${{ github.ref }}.
   algorithms:
     name: algorithms Code Checker
     runs-on: ubuntu-latest
@@ -62,6 +76,13 @@ jobs:
           dart pub get
           dart analyze
           dart run
+      - name: Send Message
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+            GitHub Action for dart/algorithms is completed with status ${{ job.status }} for ${{ github.ref }}.
   data_structures:
     name: data_structures Code Checker
     runs-on: ubuntu-latest
@@ -77,6 +98,13 @@ jobs:
           dart pub get
           dart analyze
           dart run
+      - name: Send Message
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+            GitHub Action for dart/data_structures is completed with status ${{ job.status }} for ${{ github.ref }}.
   stackexchange_api:
     name: stackexchange_api Code Checker
     runs-on: ubuntu-latest
@@ -93,3 +121,10 @@ jobs:
           dart analyze
           dart test
           dart pub publish --dry-run
+      - name: Send Message
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+            GitHub Action for dart/stackexchange_api is completed with status ${{ job.status }} for ${{ github.ref }}.

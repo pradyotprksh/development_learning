@@ -28,6 +28,13 @@ jobs:
           flutter pub upgrade
           flutter pub get
           flutter analyze
+      - name: Send Message
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+            GitHub Action for flutter/flublog is completed with status ${{ job.status }} for ${{ github.ref }}.
   stackoverflow:
     name: stackoverflow Code Checker
     runs-on: ubuntu-latest
@@ -46,6 +53,13 @@ jobs:
           flutter pub upgrade
           flutter pub get
           flutter analyze
+      - name: Send Message
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+            GitHub Action for flutter/stackoverflow is completed with status ${{ job.status }} for ${{ github.ref }}.
   second_hand_clothes:
     name: second_hand_clothes Code Checker
     runs-on: ubuntu-latest
@@ -64,6 +78,13 @@ jobs:
           flutter pub upgrade
           flutter pub get
           flutter analyze
+      - name: Send Message
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+            GitHub Action for flutter/second_hand_clothes is completed with status ${{ job.status }} for ${{ github.ref }}.
   bang_bang:
     name: bang_bang Code Checker
     runs-on: ubuntu-latest
@@ -82,6 +103,13 @@ jobs:
           flutter pub upgrade
           flutter pub get
           flutter analyze
+      - name: Send Message
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+            GitHub Action for flutter/bang_bang is completed with status ${{ job.status }} for ${{ github.ref }}.
   clean_architecture_example:
     name: clean_architecture_example Code Checker
     runs-on: ubuntu-latest
@@ -101,6 +129,13 @@ jobs:
           flutter pub get
           flutter analyze
           flutter test
+      - name: Send Message
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+            GitHub Action for flutter/clean_architecture_example is completed with status ${{ job.status }} for ${{ github.ref }}.
   whatsapp_clone:
     name: whatsapp_clone Code Checker
     runs-on: ubuntu-latest
@@ -120,3 +155,10 @@ jobs:
           flutter pub get
           flutter analyze
           flutter test
+      - name: Send Message
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+            GitHub Action for flutter/whatsapp_clone is completed with status ${{ job.status }} for ${{ github.ref }}.

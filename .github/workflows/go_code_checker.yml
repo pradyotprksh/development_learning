@@ -30,6 +30,13 @@ jobs:
       - name: Checking example
         working-directory: ./go/learning/workspace/example
         run: go test ./...
+      - name: Send Message
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+            GitHub Action for go/learning is completed with status ${{ job.status }} for ${{ github.ref }}.
   stephen_udemy:
     name: stephen_udemy Code Checker
     runs-on: ubuntu-latest
@@ -64,3 +71,10 @@ jobs:
       - name: Checking interfaces_assignment_2
         working-directory: ./go/stephen_udemy/interfaces_assignment_2
         run: go run main.go example.txt
+      - name: Send Message
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+            GitHub Action for go/stephen_udemy is completed with status ${{ job.status }} for ${{ github.ref }}.

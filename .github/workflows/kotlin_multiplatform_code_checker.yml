@@ -25,6 +25,13 @@ jobs:
         run: |
           chmod +x ./gradlew
           ./gradlew assemble
+      - name: Send Message
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+            GitHub Action for KotlinMultiplatform/TheMovieDBKMM is completed with status ${{ job.status }} for ${{ github.ref }}.
   KotlinMultiplatformSandbox:
     name: KotlinMultiplatformSandbox Code Checker
     runs-on: macos-latest
@@ -44,3 +51,10 @@ jobs:
         run: |
           chmod +x ./gradlew
           ./gradlew assemble
+      - name: Send Message
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+            GitHub Action for KotlinMultiplatform/KotlinMultiplatformSandbox is completed with status ${{ job.status }} for ${{ github.ref }}.
