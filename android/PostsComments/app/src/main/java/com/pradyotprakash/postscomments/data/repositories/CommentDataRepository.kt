@@ -10,7 +10,6 @@ import com.pradyotprakash.postscomments.core.services.CommentService
 import com.pradyotprakash.postscomments.core.utils.FirestoreKeys
 import com.pradyotprakash.postscomments.domain.models.CommentCompleteDetails
 import com.pradyotprakash.postscomments.domain.models.CommentDetails
-import com.pradyotprakash.postscomments.domain.models.PostCompleteDetails
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
@@ -105,37 +104,39 @@ class CommentDataRepository(
             )
         }
 
-    override suspend fun getComment(commentId: String): PostsCommentsResponse<CommentCompleteDetails> = try {
-        val data =
-            firestore.collection(FirestoreKeys.Collection.comments).document(commentId).get().await()
+    override suspend fun getComment(commentId: String): PostsCommentsResponse<CommentCompleteDetails> =
+        try {
+            val data =
+                firestore.collection(FirestoreKeys.Collection.comments).document(commentId).get()
+                    .await()
 
-        val comment = data.getString(FirestoreKeys.Keys.Comment.comment)
-        val postId = data.getString(FirestoreKeys.Keys.Comment.postId)
-        val createdBy =
-            data.getString(FirestoreKeys.Keys.Comment.createdBy)
-        val createdOn =
-            data.getLong(FirestoreKeys.Keys.Comment.createdOn) ?: 0L
+            val comment = data.getString(FirestoreKeys.Keys.Comment.comment)
+            val postId = data.getString(FirestoreKeys.Keys.Comment.postId)
+            val createdBy =
+                data.getString(FirestoreKeys.Keys.Comment.createdBy)
+            val createdOn =
+                data.getLong(FirestoreKeys.Keys.Comment.createdOn) ?: 0L
 
-        if (comment != null && createdBy != null && postId != null) {
-            PostsCommentsResponse.Success(
-                CommentCompleteDetails(
-                    comment = comment,
-                    postId = postId,
-                    createdBy = createdBy,
-                    createdOn = createdOn,
-                    commentId = data.id,
-                    userDetails = null
-                ),
-            )
-        } else {
+            if (comment != null && createdBy != null && postId != null) {
+                PostsCommentsResponse.Success(
+                    CommentCompleteDetails(
+                        comment = comment,
+                        postId = postId,
+                        createdBy = createdBy,
+                        createdOn = createdOn,
+                        commentId = data.id,
+                        userDetails = null
+                    ),
+                )
+            } else {
+                PostsCommentsResponse.Error(
+                    PostsCommentsException(message = TR.noDataFoundError)
+                )
+            }
+        } catch (e: Exception) {
+            Logger.e(e.toString())
             PostsCommentsResponse.Error(
-                PostsCommentsException(message = TR.noDataFoundError)
+                PostsCommentsException(message = e.localizedMessage ?: TR.noDataFoundError)
             )
         }
-    } catch (e: Exception) {
-        Logger.e(e.toString())
-        PostsCommentsResponse.Error(
-            PostsCommentsException(message = e.localizedMessage ?: TR.noDataFoundError)
-        )
-    }
 }

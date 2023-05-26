@@ -36,8 +36,8 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.pradyotprakash.postscomments.app.composables.ConfirmationDialog
 import com.pradyotprakash.postscomments.app.composables.PageStateComposable
-import com.pradyotprakash.postscomments.app.localization.TR
 import com.pradyotprakash.postscomments.app.composables.PostDetailsComposable
+import com.pradyotprakash.postscomments.app.localization.TR
 import com.pradyotprakash.postscomments.app.pages.posts.viewmodel.PostsViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)

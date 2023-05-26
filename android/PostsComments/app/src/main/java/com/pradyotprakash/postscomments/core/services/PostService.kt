@@ -14,5 +14,9 @@ interface PostService {
 
     suspend fun getPost(postId: String): PostsCommentsResponse<PostCompleteDetails>
 
-    suspend fun updatePost(title: String, text: String, postId: String): PostsCommentsResponse<Boolean>
+    suspend fun updatePost(
+        title: String,
+        text: String,
+        postId: String
+    ): PostsCommentsResponse<Boolean>
 }

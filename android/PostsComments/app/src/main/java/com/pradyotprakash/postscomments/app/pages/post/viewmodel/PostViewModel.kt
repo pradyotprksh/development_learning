@@ -75,6 +75,7 @@ class PostViewModel @Inject constructor(
                     _comments.value = emptyList()
                     _comments.value = it.data ?: emptyList()
                 }
+
                 else -> {}
             }
         }

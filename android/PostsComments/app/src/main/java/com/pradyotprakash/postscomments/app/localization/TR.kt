@@ -31,5 +31,5 @@ object TR {
     var add = Translation.getString("add")
     var createComment = Translation.getString("createComment")
     var commentEditing = Translation.getString("commentEditing")
-    
+
 }

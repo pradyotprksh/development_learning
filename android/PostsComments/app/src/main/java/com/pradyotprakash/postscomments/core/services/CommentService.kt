@@ -3,7 +3,6 @@ package com.pradyotprakash.postscomments.core.services
 import com.pradyotprakash.postscomments.core.response.PostsCommentsResponse
 import com.pradyotprakash.postscomments.domain.models.CommentCompleteDetails
 import com.pradyotprakash.postscomments.domain.models.CommentDetails
-import com.pradyotprakash.postscomments.domain.models.PostCompleteDetails
 import kotlinx.coroutines.flow.Flow
 
 interface CommentService {
