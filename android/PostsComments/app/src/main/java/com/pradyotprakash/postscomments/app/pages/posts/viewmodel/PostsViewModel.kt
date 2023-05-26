@@ -7,6 +7,9 @@ import com.pradyotprakash.postscomments.app.composables.ConfirmationDialog
 import com.pradyotprakash.postscomments.app.localization.TR
 import com.pradyotprakash.postscomments.core.auth.AuthState
 import com.pradyotprakash.postscomments.core.auth.AuthStateListener
+import com.pradyotprakash.postscomments.core.navigator.Navigator
+import com.pradyotprakash.postscomments.core.navigator.Routes
+import com.pradyotprakash.postscomments.core.utils.PostArguments
 import com.pradyotprakash.postscomments.domain.usecases.AuthenticationUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -15,7 +18,8 @@ import javax.inject.Inject
 class PostsViewModel @Inject constructor(
     private val authenticationUseCase: AuthenticationUseCase,
     private val authStateListener: AuthStateListener,
-): ViewModel() {
+    private val navigator: Navigator,
+) : ViewModel() {
     private val _loading = MutableLiveData(false)
     val loading: LiveData<Boolean>
         get() = _loading
@@ -44,8 +48,16 @@ class PostsViewModel @Inject constructor(
         )
     }
 
-    fun logoutUser() {
+    private fun logoutUser() {
         authenticationUseCase.logoutUser()
         authStateListener.stateChange(AuthState.Unauthenticated)
+    }
+
+    fun openCreatePostScreen() {
+        navigator.navigate {
+            it.navigate(
+                "${Routes.Post.route}${PostArguments.createPost}/${PostArguments.defaultPostId}"
+            )
+        }
     }
 }

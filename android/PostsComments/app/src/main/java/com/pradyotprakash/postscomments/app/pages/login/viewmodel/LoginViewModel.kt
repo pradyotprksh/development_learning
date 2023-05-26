@@ -4,12 +4,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.pradyotprakash.postscomments.app.pages.signUp.viewmodel.SignUpViewModel
 import com.pradyotprakash.postscomments.app.utils.isValidEmailAddress
 import com.pradyotprakash.postscomments.core.auth.AuthState
 import com.pradyotprakash.postscomments.core.auth.AuthStateListener
 import com.pradyotprakash.postscomments.core.navigator.Navigator
 import com.pradyotprakash.postscomments.core.navigator.Routes
+import com.pradyotprakash.postscomments.core.navigator.path
 import com.pradyotprakash.postscomments.core.response.PostsCommentsResponse
 import com.pradyotprakash.postscomments.domain.usecases.AuthenticationUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -99,7 +99,7 @@ class LoginViewModel @Inject constructor(
 
     fun goToRegisterScreen() {
         navigator.navigate {
-            it.navigate(Routes.SignUp.route)
+            it.navigate(Routes.SignUp.path())
         }
     }
 }

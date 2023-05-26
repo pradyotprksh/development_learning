@@ -27,12 +27,6 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
-
-        buildConfigField(
-            name = "baseUrl",
-            value = "\"${rootProject.extra.get("baseUrl").toString()}\"",
-            type = "String"
-        )
     }
 
     buildTypes {

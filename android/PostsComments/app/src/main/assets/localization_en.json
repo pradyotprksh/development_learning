@@ -14,5 +14,8 @@
   "alreadyHaveAccount": "Already have an account?",
   "forgotPassword": "Forgot Password",
   "confirmLogout": "Are you sure you want to logout?",
-  "cancel": "Cancel"
+  "cancel": "Cancel",
+  "createPost": "Create Post",
+  "back": "Back",
+  "postEditing": "Post Editing"
 }

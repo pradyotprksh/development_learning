@@ -1,10 +1,9 @@
 package com.pradyotprakash.postscomments.core.utils
 
-import com.pradyotprakash.postscomments.BuildConfig
-
-/**
- * A constant class for core level
- */
-object Constants {
-    const val BASE_URL = BuildConfig.baseUrl
+object PostArguments {
+    const val postType = "postType"
+    const val postId = "postId"
+    const val createPost = "createPost"
+    const val editPost = "editPost"
+    const val defaultPostId = "na"
 }

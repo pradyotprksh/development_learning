@@ -17,5 +17,8 @@ object TR {
     var forgotPassword = Translation.getString("forgotPassword")
     var confirmLogout = Translation.getString("confirmLogout")
     var cancel = Translation.getString("cancel")
-    
+    var createPost = Translation.getString("createPost")
+    var back = Translation.getString("back")
+    var postEditing = Translation.getString("postEditing")
+
 }

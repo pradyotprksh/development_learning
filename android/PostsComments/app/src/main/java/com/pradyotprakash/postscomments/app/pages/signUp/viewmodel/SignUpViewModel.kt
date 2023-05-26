@@ -8,11 +8,9 @@ import com.pradyotprakash.postscomments.app.utils.isValidEmailAddress
 import com.pradyotprakash.postscomments.core.auth.AuthState
 import com.pradyotprakash.postscomments.core.auth.AuthStateListener
 import com.pradyotprakash.postscomments.core.navigator.Navigator
-import com.pradyotprakash.postscomments.core.navigator.Routes
 import com.pradyotprakash.postscomments.core.response.PostsCommentsResponse
 import com.pradyotprakash.postscomments.domain.usecases.AuthenticationUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 

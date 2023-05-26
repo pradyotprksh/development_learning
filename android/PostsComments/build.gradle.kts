@@ -5,8 +5,6 @@ plugins {
     id("org.jetbrains.kotlin.android") version "1.7.20" apply false
 }
 
-val baseUrl by rootProject.extra { "" }
-
 buildscript {
     repositories {
         google()

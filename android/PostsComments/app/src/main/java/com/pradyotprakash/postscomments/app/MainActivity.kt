@@ -8,11 +8,14 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.pradyotprakash.postscomments.app.localization.Translation
 import com.pradyotprakash.postscomments.app.pages.login.view.LoginView
+import com.pradyotprakash.postscomments.app.pages.post.view.PostView
 import com.pradyotprakash.postscomments.app.pages.posts.view.PostsView
 import com.pradyotprakash.postscomments.app.pages.signUp.view.SignUpView
 import com.pradyotprakash.postscomments.app.pages.splash.view.SplashView
@@ -21,6 +24,8 @@ import com.pradyotprakash.postscomments.core.auth.AuthState
 import com.pradyotprakash.postscomments.core.auth.AuthStateListener
 import com.pradyotprakash.postscomments.core.navigator.Navigator
 import com.pradyotprakash.postscomments.core.navigator.Routes
+import com.pradyotprakash.postscomments.core.navigator.path
+import com.pradyotprakash.postscomments.core.utils.PostArguments
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -47,11 +52,31 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    NavHost(navController = navController, startDestination = Routes.Splash.route) {
-                        composable(Routes.Splash.route) { SplashView() }
-                        composable(Routes.Login.route) { LoginView() }
-                        composable(Routes.SignUp.route) { SignUpView() }
-                        composable(Routes.Posts.route) { PostsView() }
+                    NavHost(
+                        navController = navController,
+                        startDestination = Routes.Splash.path()
+                    ) {
+                        composable(Routes.Splash.path()) { SplashView() }
+                        composable(Routes.Login.path()) { LoginView() }
+                        composable(Routes.SignUp.path()) { SignUpView() }
+                        composable(Routes.Posts.path()) { PostsView() }
+                        composable(
+                            Routes.Post.path(),
+                            arguments = Routes.Post.arguments.map {
+                                navArgument(it) { type = NavType.StringType }
+                            }
+                        ) {
+                            val postType = it.arguments?.getString(
+                                PostArguments.postType
+                            ) ?: PostArguments.createPost
+                            val postId = it.arguments?.getString(
+                                PostArguments.postId
+                            ) ?: PostArguments.defaultPostId
+                            PostView(
+                                postType = postType,
+                                postId = postId,
+                            )
+                        }
                     }
                 }
             }
@@ -71,14 +96,14 @@ class MainActivity : ComponentActivity() {
                 AuthState.Authenticated -> {
                     navigator.navigate { navController ->
                         navController.popBackStack()
-                        navController.navigate(Routes.Posts.route)
+                        navController.navigate(Routes.Posts.path())
                     }
                 }
 
                 AuthState.Unauthenticated -> {
                     navigator.navigate { navController ->
                         navController.popBackStack()
-                        navController.navigate(Routes.Splash.route)
+                        navController.navigate(Routes.Splash.path())
                     }
                 }
 

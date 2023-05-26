@@ -1,6 +1,7 @@
 package com.pradyotprakash.postscomments.app.pages.signUp.view
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -10,8 +11,11 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -53,13 +57,24 @@ fun SignUpView(
                 .fillMaxSize()
                 .padding(15.dp),
         ) {
-            Image(
-                painter = painterResource(id = Assets.AppIcon.resourceId),
-                contentDescription = Assets.AppIcon.imageDescription,
-                modifier = Modifier
-                    .size(100.dp)
-                    .align(Alignment.CenterHorizontally)
-            )
+            Box(
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Icon(
+                    imageVector = Icons.Default.ArrowBack,
+                    contentDescription = Icons.Default.ArrowBack.name,
+                    modifier = Modifier.clickable {
+                        signUpViewModel.goToLoginScreen()
+                    }
+                )
+                Image(
+                    painter = painterResource(id = Assets.AppIcon.resourceId),
+                    contentDescription = Assets.AppIcon.imageDescription,
+                    modifier = Modifier
+                        .size(100.dp)
+                        .align(Alignment.Center)
+                )
+            }
             Box(modifier = Modifier.height(30.dp))
             Text(
                 text = TR.signingUp,

@@ -31,7 +31,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.pradyotprakash.postscomments.app.composables.PageStateComposable
 import com.pradyotprakash.postscomments.app.localization.TR
 import com.pradyotprakash.postscomments.app.pages.login.viewmodel.LoginViewModel
-import com.pradyotprakash.postscomments.app.pages.signUp.viewmodel.SignUpViewModel
 import com.pradyotprakash.postscomments.app.utils.Assets
 
 @OptIn(ExperimentalMaterial3Api::class)
