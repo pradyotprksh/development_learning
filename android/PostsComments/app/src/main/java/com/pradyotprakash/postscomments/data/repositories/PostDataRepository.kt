@@ -1,6 +1,7 @@
 package com.pradyotprakash.postscomments.data.repositories
 
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import com.orhanobut.logger.Logger
 import com.pradyotprakash.postscomments.app.localization.TR
 import com.pradyotprakash.postscomments.core.response.PostsCommentsException
@@ -31,7 +32,7 @@ class PostDataRepository(
     override suspend fun getPosts(): Flow<PostsCommentsResponse<List<PostCompleteDetails>>> {
         return callbackFlow {
             val subscription = firestore.collection(FirestoreKeys.Collection.posts)
-                .orderBy(FirestoreKeys.Keys.Post.createdOn)
+                .orderBy(FirestoreKeys.Keys.Post.createdOn, Query.Direction.DESCENDING)
                 .addSnapshotListener { data, error ->
                     if (error != null) {
                         trySend(

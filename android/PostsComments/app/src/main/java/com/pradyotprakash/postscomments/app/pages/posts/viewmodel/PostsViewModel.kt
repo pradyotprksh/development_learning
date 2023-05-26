@@ -103,12 +103,11 @@ class PostsViewModel @Inject constructor(
             postUseCase.getPosts().collect {
                 when (it) {
                     is PostsCommentsResponse.Error -> updateErrorState(it.exception.message)
-                    PostsCommentsResponse.Idle -> _loading.value = false
-                    PostsCommentsResponse.Loading -> _loading.value = true
                     is PostsCommentsResponse.Success -> {
                         _posts.value = emptyList()
                         _posts.value = it.data ?: emptyList()
                     }
+                    else -> {}
                 }
             }
         }

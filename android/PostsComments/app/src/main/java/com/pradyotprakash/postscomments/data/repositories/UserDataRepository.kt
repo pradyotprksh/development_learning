@@ -14,11 +14,20 @@ class UserDataRepository(
 ) : UserService {
     override suspend fun createUser(userDetails: UserDetails): PostsCommentsResponse<Boolean> =
         try {
-            firestore.collection(FirestoreKeys.Collection.user)
-                .document(userDetails.userId).set(userDetails).await()
+            firestore.collection(FirestoreKeys.Collection.user).document(userDetails.userId)
+                .set(userDetails).await()
             PostsCommentsResponse.Success(true)
         } catch (e: Exception) {
             Logger.e(e.toString())
             PostsCommentsResponse.Error(PostsCommentsException(message = e.localizedMessage ?: ""))
         }
+
+    override suspend fun getUserDetails(userId: String): PostsCommentsResponse<UserDetails?> = try {
+        val data =
+            firestore.collection(FirestoreKeys.Collection.user).document(userId).get().await()
+        PostsCommentsResponse.Success(data.toObject(UserDetails::class.java))
+    } catch (e: Exception) {
+        Logger.e(e.toString())
+        PostsCommentsResponse.Error(PostsCommentsException(message = e.localizedMessage ?: ""))
+    }
 }

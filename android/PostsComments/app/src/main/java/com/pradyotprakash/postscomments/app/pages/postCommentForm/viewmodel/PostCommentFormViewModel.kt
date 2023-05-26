@@ -144,9 +144,17 @@ class PostCommentFormViewModel @Inject constructor(
                         }
                     }
                 } else if (formType == PostCommentFormArguments.commentForm
-                    && commentId != PostCommentFormArguments.na
-                    && postId != PostCommentFormArguments.na) {
-
+                    && commentId != PostCommentFormArguments.na) {
+                    commentUseCase.getComment(commentId).collect {
+                        when (it) {
+                            is PostsCommentsResponse.Error -> updateErrorState(it.exception.message)
+                            PostsCommentsResponse.Idle -> _loading.value = false
+                            PostsCommentsResponse.Loading -> _loading.value = true
+                            is PostsCommentsResponse.Success -> {
+                                _text.value = it.data.comment
+                            }
+                        }
+                    }
                 }
             }
         }

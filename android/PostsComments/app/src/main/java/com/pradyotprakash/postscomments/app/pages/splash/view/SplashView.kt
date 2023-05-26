@@ -11,6 +11,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -25,7 +27,8 @@ import com.pradyotprakash.postscomments.app.utils.Assets
 fun SplashView(
     splashViewModel: SplashViewModel = hiltViewModel()
 ) {
-    LaunchedEffect(true) {
+    val key = remember { mutableStateOf(Unit) }
+    LaunchedEffect(key1 = key) {
         splashViewModel.startJourney()
     }
 

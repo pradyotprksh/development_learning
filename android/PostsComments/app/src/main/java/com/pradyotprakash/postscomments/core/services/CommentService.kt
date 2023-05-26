@@ -12,4 +12,8 @@ interface CommentService {
     suspend fun updateComment(text: String, commentId: String): PostsCommentsResponse<Boolean>
 
     suspend fun getComments(postId: String): Flow<PostsCommentsResponse<List<CommentCompleteDetails>>>
+
+    suspend fun deleteComment(commentId: String): PostsCommentsResponse<Boolean>
+
+    suspend fun getComment(commentId: String): PostsCommentsResponse<CommentCompleteDetails>
 }

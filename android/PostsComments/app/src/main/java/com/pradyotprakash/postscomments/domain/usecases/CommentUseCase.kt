@@ -5,6 +5,7 @@ import com.pradyotprakash.postscomments.core.response.PostsCommentsException
 import com.pradyotprakash.postscomments.core.response.PostsCommentsResponse
 import com.pradyotprakash.postscomments.core.services.AuthenticationService
 import com.pradyotprakash.postscomments.core.services.CommentService
+import com.pradyotprakash.postscomments.core.services.UserService
 import com.pradyotprakash.postscomments.device.DeviceUtils
 import com.pradyotprakash.postscomments.domain.models.CommentDetails
 import com.pradyotprakash.postscomments.domain.models.PostDetails
@@ -15,6 +16,7 @@ import javax.inject.Inject
 class CommentUseCase @Inject constructor(
     private val commentService: CommentService,
     private val authenticationService: AuthenticationService,
+    private val userService: UserService,
 ) {
     fun createComment(
         comment: String,
@@ -62,5 +64,27 @@ class CommentUseCase @Inject constructor(
         emit(PostsCommentsResponse.Idle)
     }
 
-    suspend fun getComments(postId: String) = commentService.getComments(postId)
+    suspend fun getComments(postId: String) = commentService.getComments(postId).map {
+        if (it is PostsCommentsResponse.Success) {
+            it.data.forEach { comment ->
+                val details = userService.getUserDetails(comment.createdBy)
+                if (details is PostsCommentsResponse.Success) {
+                    comment.userDetails = details.data
+                }
+            }
+        }
+        it
+    }
+
+    fun deleteComment(commentId: String) = flow {
+        emit(PostsCommentsResponse.Loading)
+        emit(commentService.deleteComment(commentId))
+        emit(PostsCommentsResponse.Idle)
+    }
+
+    fun getComment(commentId: String) = flow {
+        emit(PostsCommentsResponse.Loading)
+        emit(commentService.getComment(commentId))
+        emit(PostsCommentsResponse.Idle)
+    }
 }

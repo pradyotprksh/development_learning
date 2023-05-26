@@ -1,6 +1,7 @@
 package com.pradyotprakash.postscomments.data.repositories
 
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import com.orhanobut.logger.Logger
 import com.pradyotprakash.postscomments.app.localization.TR
 import com.pradyotprakash.postscomments.core.response.PostsCommentsException
@@ -17,8 +18,8 @@ import kotlinx.coroutines.tasks.await
 
 class CommentDataRepository(
     private val firestore: FirebaseFirestore,
-): CommentService {
-    override suspend fun createComment(commentDetails: CommentDetails): PostsCommentsResponse<Boolean>  =
+) : CommentService {
+    override suspend fun createComment(commentDetails: CommentDetails): PostsCommentsResponse<Boolean> =
         try {
             firestore.collection(FirestoreKeys.Collection.comments).add(commentDetails).await()
             PostsCommentsResponse.Success(true)
@@ -51,7 +52,7 @@ class CommentDataRepository(
         return callbackFlow {
             val subscription = firestore.collection(FirestoreKeys.Collection.comments)
                 .whereEqualTo(FirestoreKeys.Keys.Comment.postId, postId)
-                .orderBy(FirestoreKeys.Keys.Post.createdOn)
+                .orderBy(FirestoreKeys.Keys.Post.createdOn, Query.Direction.DESCENDING)
                 .addSnapshotListener { data, error ->
                     if (error != null) {
                         trySend(
@@ -63,7 +64,7 @@ class CommentDataRepository(
                         )
                     } else {
                         if (data != null) {
-                            val posts = ArrayList<CommentCompleteDetails>()
+                            val comments = ArrayList<CommentCompleteDetails>()
                             data.documents.forEach { document ->
                                 val comment = document.getString(FirestoreKeys.Keys.Comment.comment)
                                 val createdBy =
@@ -72,7 +73,7 @@ class CommentDataRepository(
                                     document.getLong(FirestoreKeys.Keys.Comment.createdOn) ?: 0L
 
                                 if (comment != null && createdBy != null) {
-                                    posts.add(
+                                    comments.add(
                                         CommentCompleteDetails(
                                             comment = comment,
                                             postId = postId,
@@ -84,11 +85,57 @@ class CommentDataRepository(
                                     )
                                 }
                             }
-                            trySend(PostsCommentsResponse.Success(posts.toList()))
+                            trySend(PostsCommentsResponse.Success(comments.toList()))
                         }
                     }
                 }
             awaitClose { subscription.remove() }
         }
+    }
+
+    override suspend fun deleteComment(commentId: String): PostsCommentsResponse<Boolean> =
+        try {
+            firestore.collection(FirestoreKeys.Collection.comments).document(commentId).delete()
+                .await()
+            PostsCommentsResponse.Success(true)
+        } catch (e: Exception) {
+            Logger.e(e.toString())
+            PostsCommentsResponse.Error(
+                PostsCommentsException(message = e.localizedMessage ?: TR.noDataFoundError)
+            )
+        }
+
+    override suspend fun getComment(commentId: String): PostsCommentsResponse<CommentCompleteDetails> = try {
+        val data =
+            firestore.collection(FirestoreKeys.Collection.comments).document(commentId).get().await()
+
+        val comment = data.getString(FirestoreKeys.Keys.Comment.comment)
+        val postId = data.getString(FirestoreKeys.Keys.Comment.postId)
+        val createdBy =
+            data.getString(FirestoreKeys.Keys.Comment.createdBy)
+        val createdOn =
+            data.getLong(FirestoreKeys.Keys.Comment.createdOn) ?: 0L
+
+        if (comment != null && createdBy != null && postId != null) {
+            PostsCommentsResponse.Success(
+                CommentCompleteDetails(
+                    comment = comment,
+                    postId = postId,
+                    createdBy = createdBy,
+                    createdOn = createdOn,
+                    commentId = data.id,
+                    userDetails = null
+                ),
+            )
+        } else {
+            PostsCommentsResponse.Error(
+                PostsCommentsException(message = TR.noDataFoundError)
+            )
+        }
+    } catch (e: Exception) {
+        Logger.e(e.toString())
+        PostsCommentsResponse.Error(
+            PostsCommentsException(message = e.localizedMessage ?: TR.noDataFoundError)
+        )
     }
 }
