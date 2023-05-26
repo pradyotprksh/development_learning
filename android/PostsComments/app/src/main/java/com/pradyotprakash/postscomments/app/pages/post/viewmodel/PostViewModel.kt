@@ -8,8 +8,11 @@ import com.pradyotprakash.postscomments.core.navigator.Navigator
 import com.pradyotprakash.postscomments.core.navigator.Routes
 import com.pradyotprakash.postscomments.core.response.PostsCommentsResponse
 import com.pradyotprakash.postscomments.core.utils.PostCommentFormArguments
+import com.pradyotprakash.postscomments.domain.models.CommentCompleteDetails
+import com.pradyotprakash.postscomments.domain.usecases.CommentUseCase
 import com.pradyotprakash.postscomments.domain.usecases.PostUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -17,6 +20,7 @@ import javax.inject.Inject
 class PostViewModel @Inject constructor(
     private val navigator: Navigator,
     private val postUseCase: PostUseCase,
+    private val commentUseCase: CommentUseCase,
 ) : ViewModel() {
     private val _loading = MutableLiveData(false)
     val loading: LiveData<Boolean>
@@ -30,6 +34,9 @@ class PostViewModel @Inject constructor(
     private val _text = MutableLiveData("")
     val text: LiveData<String>
         get() = _text
+    private val _comments = MutableLiveData<List<CommentCompleteDetails>>(emptyList())
+    val comments: LiveData<List<CommentCompleteDetails>>
+        get() = _comments
 
     fun updateErrorState(message: String? = "") {
         _loading.value = false
@@ -46,7 +53,22 @@ class PostViewModel @Inject constructor(
                     is PostsCommentsResponse.Success -> {
                         _text.value = it.data.text
                         _title.value = it.data.title
+                        getComments(postId)
                     }
+                }
+            }
+        }
+    }
+
+    private suspend fun getComments(postId: String) {
+        commentUseCase.getComments(postId).collect {
+            when (it) {
+                is PostsCommentsResponse.Error -> updateErrorState(it.exception.message)
+                PostsCommentsResponse.Idle -> _loading.value = false
+                PostsCommentsResponse.Loading -> _loading.value = true
+                is PostsCommentsResponse.Success -> {
+                    _comments.value = emptyList()
+                    _comments.value = it.data ?: emptyList()
                 }
             }
         }

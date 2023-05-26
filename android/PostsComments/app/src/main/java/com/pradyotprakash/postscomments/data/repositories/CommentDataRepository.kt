@@ -7,7 +7,12 @@ import com.pradyotprakash.postscomments.core.response.PostsCommentsException
 import com.pradyotprakash.postscomments.core.response.PostsCommentsResponse
 import com.pradyotprakash.postscomments.core.services.CommentService
 import com.pradyotprakash.postscomments.core.utils.FirestoreKeys
+import com.pradyotprakash.postscomments.domain.models.CommentCompleteDetails
 import com.pradyotprakash.postscomments.domain.models.CommentDetails
+import com.pradyotprakash.postscomments.domain.models.PostCompleteDetails
+import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.tasks.await
 
 class CommentDataRepository(
@@ -31,7 +36,7 @@ class CommentDataRepository(
         try {
             firestore.collection(FirestoreKeys.Collection.comments).document(commentId).update(
                 mapOf(
-                    FirestoreKeys.Keys.Comment.text to text,
+                    FirestoreKeys.Keys.Comment.comment to text,
                 )
             )
             PostsCommentsResponse.Success(true)
@@ -41,4 +46,49 @@ class CommentDataRepository(
                 PostsCommentsException(message = e.localizedMessage ?: TR.noDataFoundError)
             )
         }
+
+    override suspend fun getComments(postId: String): Flow<PostsCommentsResponse<List<CommentCompleteDetails>>> {
+        return callbackFlow {
+            val subscription = firestore.collection(FirestoreKeys.Collection.comments)
+                .whereEqualTo(FirestoreKeys.Keys.Comment.postId, postId)
+                .orderBy(FirestoreKeys.Keys.Post.createdOn)
+                .addSnapshotListener { data, error ->
+                    if (error != null) {
+                        trySend(
+                            PostsCommentsResponse.Error(
+                                PostsCommentsException(
+                                    message = error.localizedMessage ?: TR.noDataFoundError
+                                )
+                            )
+                        )
+                    } else {
+                        if (data != null) {
+                            val posts = ArrayList<CommentCompleteDetails>()
+                            data.documents.forEach { document ->
+                                val comment = document.getString(FirestoreKeys.Keys.Comment.comment)
+                                val createdBy =
+                                    document.getString(FirestoreKeys.Keys.Comment.createdBy)
+                                val createdOn =
+                                    document.getLong(FirestoreKeys.Keys.Comment.createdOn) ?: 0L
+
+                                if (comment != null && createdBy != null) {
+                                    posts.add(
+                                        CommentCompleteDetails(
+                                            comment = comment,
+                                            postId = postId,
+                                            createdBy = createdBy,
+                                            createdOn = createdOn,
+                                            commentId = document.id,
+                                            userDetails = null
+                                        ),
+                                    )
+                                }
+                            }
+                            trySend(PostsCommentsResponse.Success(posts.toList()))
+                        }
+                    }
+                }
+            awaitClose { subscription.remove() }
+        }
+    }
 }

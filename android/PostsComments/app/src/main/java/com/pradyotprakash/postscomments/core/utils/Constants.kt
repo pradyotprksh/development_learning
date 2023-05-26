@@ -34,8 +34,8 @@ object FirestoreKeys {
         object Comment {
             const val createdOn = "createdOn"
             const val createdBy = "createdBy"
-            const val title = "title"
-            const val text = "text"
+            const val comment = "comment"
+            const val postId = "postId"
         }
     }
 }

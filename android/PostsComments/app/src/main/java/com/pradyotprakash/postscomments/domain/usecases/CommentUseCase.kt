@@ -9,6 +9,7 @@ import com.pradyotprakash.postscomments.device.DeviceUtils
 import com.pradyotprakash.postscomments.domain.models.CommentDetails
 import com.pradyotprakash.postscomments.domain.models.PostDetails
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class CommentUseCase @Inject constructor(
@@ -60,4 +61,6 @@ class CommentUseCase @Inject constructor(
         }
         emit(PostsCommentsResponse.Idle)
     }
+
+    suspend fun getComments(postId: String) = commentService.getComments(postId)
 }

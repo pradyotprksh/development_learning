@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -51,6 +52,7 @@ fun PostView(
     val error by postViewModel.error.observeAsState("")
     val title by postViewModel.title.observeAsState("")
     val text by postViewModel.text.observeAsState("")
+    val comments by postViewModel.comments.observeAsState(emptyList())
 
     PageStateComposable(
         isLoading = loading,
@@ -118,6 +120,10 @@ fun PostView(
                             }
                         }
                     }
+                }
+
+                items(comments) { comment ->
+                    
                 }
             }
         }
