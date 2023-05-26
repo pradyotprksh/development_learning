@@ -1,4 +1,4 @@
-package com.pradyotprakash.postscomments.app.pages.post.view
+package com.pradyotprakash.postscomments.app.pages.postForm.view
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -30,33 +30,33 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.pradyotprakash.postscomments.app.composables.PageStateComposable
 import com.pradyotprakash.postscomments.app.localization.TR
-import com.pradyotprakash.postscomments.app.pages.post.viewmodel.PostViewModel
+import com.pradyotprakash.postscomments.app.pages.postForm.viewmodel.PostFormViewModel
 import com.pradyotprakash.postscomments.core.utils.PostArguments
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PostView(
-    postViewModel: PostViewModel = hiltViewModel(),
+fun PostFormView(
+    postFormViewModel: PostFormViewModel = hiltViewModel(),
     postType: String,
     postId: String,
 ) {
     LaunchedEffect(key1 = true) {
-        postViewModel.getPostDetails(
+        postFormViewModel.getPostDetails(
             postId,
             postType,
         )
     }
 
-    val loading by postViewModel.loading.observeAsState(false)
-    val enableSend by postViewModel.enableSend.observeAsState(false)
-    val error by postViewModel.error.observeAsState("")
-    val title by postViewModel.title.observeAsState("")
-    val text by postViewModel.text.observeAsState("")
+    val loading by postFormViewModel.loading.observeAsState(false)
+    val enableSend by postFormViewModel.enableSend.observeAsState(false)
+    val error by postFormViewModel.error.observeAsState("")
+    val title by postFormViewModel.title.observeAsState("")
+    val text by postFormViewModel.text.observeAsState("")
 
     PageStateComposable(
         isLoading = loading,
         errorMessage = error,
-        dismissErrorAlert = postViewModel::updateErrorState,
+        dismissErrorAlert = postFormViewModel::updateErrorState,
     ) {
         Scaffold(
             topBar = {
@@ -71,7 +71,7 @@ fun PostView(
                     },
                     navigationIcon = {
                         IconButton(
-                            onClick = postViewModel::goToPostsScreen,
+                            onClick = postFormViewModel::goToPostsScreen,
                         ) {
                             Icon(
                                 imageVector = Icons.Default.ArrowBack,
@@ -95,7 +95,7 @@ fun PostView(
                 OutlinedTextField(
                     value = title,
                     onValueChange = {
-                        postViewModel.updateValue(it, PostViewModel.FiledType.Title)
+                        postFormViewModel.updateValue(it, PostFormViewModel.FiledType.Title)
                     },
                     modifier = Modifier.fillMaxWidth(),
                     label = {
@@ -110,7 +110,7 @@ fun PostView(
                 OutlinedTextField(
                     value = text,
                     onValueChange = {
-                        postViewModel.updateValue(it, PostViewModel.FiledType.Text)
+                        postFormViewModel.updateValue(it, PostFormViewModel.FiledType.Text)
                     },
                     modifier = Modifier.fillMaxWidth(),
                     label = {
@@ -124,7 +124,7 @@ fun PostView(
                 Spacer(modifier = Modifier.weight(1f))
                 Button(
                     onClick = {
-                        postViewModel.sendPost(postId)
+                        postFormViewModel.sendPost(postId)
                     },
                     modifier = Modifier.fillMaxWidth(),
                     enabled = enableSend

@@ -15,7 +15,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.pradyotprakash.postscomments.app.localization.Translation
 import com.pradyotprakash.postscomments.app.pages.login.view.LoginView
-import com.pradyotprakash.postscomments.app.pages.post.view.PostView
+import com.pradyotprakash.postscomments.app.pages.postForm.view.PostFormView
 import com.pradyotprakash.postscomments.app.pages.posts.view.PostsView
 import com.pradyotprakash.postscomments.app.pages.signUp.view.SignUpView
 import com.pradyotprakash.postscomments.app.pages.splash.view.SplashView
@@ -72,7 +72,7 @@ class MainActivity : ComponentActivity() {
                             val postId = it.arguments?.getString(
                                 PostArguments.postId
                             ) ?: PostArguments.defaultPostId
-                            PostView(
+                            PostFormView(
                                 postType = postType,
                                 postId = postId,
                             )

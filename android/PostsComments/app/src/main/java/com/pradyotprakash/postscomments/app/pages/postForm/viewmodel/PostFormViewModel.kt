@@ -1,4 +1,4 @@
-package com.pradyotprakash.postscomments.app.pages.post.viewmodel
+package com.pradyotprakash.postscomments.app.pages.postForm.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -13,7 +13,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class PostViewModel @Inject constructor(
+class PostFormViewModel @Inject constructor(
     private val navigator: Navigator,
     private val postUseCase: PostUseCase,
 ) : ViewModel() {
