@@ -12,5 +12,7 @@
   "signUp": "Don't Have An Account? Create One.",
   "signingUp": "Signing Up",
   "alreadyHaveAccount": "Already have an account?",
-  "forgotPassword": "Forgot Password"
+  "forgotPassword": "Forgot Password",
+  "confirmLogout": "Are you sure you want to logout?",
+  "cancel": "Cancel"
 }

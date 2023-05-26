@@ -13,6 +13,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.pradyotprakash.postscomments.app.localization.Translation
 import com.pradyotprakash.postscomments.app.pages.login.view.LoginView
+import com.pradyotprakash.postscomments.app.pages.posts.view.PostsView
 import com.pradyotprakash.postscomments.app.pages.signUp.view.SignUpView
 import com.pradyotprakash.postscomments.app.pages.splash.view.SplashView
 import com.pradyotprakash.postscomments.app.theme.PostsCommentsTheme
@@ -50,7 +51,7 @@ class MainActivity : ComponentActivity() {
                         composable(Routes.Splash.route) { SplashView() }
                         composable(Routes.Login.route) { LoginView() }
                         composable(Routes.SignUp.route) { SignUpView() }
-                        composable(Routes.Posts.route) { }
+                        composable(Routes.Posts.route) { PostsView() }
                     }
                 }
             }
@@ -69,21 +70,15 @@ class MainActivity : ComponentActivity() {
             when (it) {
                 AuthState.Authenticated -> {
                     navigator.navigate { navController ->
-                        navController.navigate(Routes.Posts.route) {
-                            popUpTo(Routes.Splash.route) {
-                                inclusive = true
-                            }
-                        }
+                        navController.popBackStack()
+                        navController.navigate(Routes.Posts.route)
                     }
                 }
 
                 AuthState.Unauthenticated -> {
                     navigator.navigate { navController ->
-                        navController.navigate(Routes.Login.route) {
-                            popUpTo(Routes.Splash.route) {
-                                inclusive = true
-                            }
-                        }
+                        navController.popBackStack()
+                        navController.navigate(Routes.Splash.route)
                     }
                 }
 

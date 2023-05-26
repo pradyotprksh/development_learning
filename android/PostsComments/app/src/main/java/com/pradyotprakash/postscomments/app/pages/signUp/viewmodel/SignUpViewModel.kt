@@ -5,7 +5,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.pradyotprakash.postscomments.app.utils.isValidEmailAddress
+import com.pradyotprakash.postscomments.core.auth.AuthState
+import com.pradyotprakash.postscomments.core.auth.AuthStateListener
 import com.pradyotprakash.postscomments.core.navigator.Navigator
+import com.pradyotprakash.postscomments.core.navigator.Routes
 import com.pradyotprakash.postscomments.core.response.PostsCommentsResponse
 import com.pradyotprakash.postscomments.domain.usecases.AuthenticationUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,6 +20,7 @@ import javax.inject.Inject
 class SignUpViewModel @Inject constructor(
     private val authenticationUseCase: AuthenticationUseCase,
     private val navigator: Navigator,
+    private val authStateListener: AuthStateListener,
 ) : ViewModel() {
     enum class FieldType {
         Email,
@@ -88,10 +92,16 @@ class SignUpViewModel @Inject constructor(
                     is PostsCommentsResponse.Error -> updateErrorState(it.exception.message)
                     PostsCommentsResponse.Idle -> _loading.value = false
                     PostsCommentsResponse.Loading -> _loading.value = true
-                    is PostsCommentsResponse.Success -> {}
+                    is PostsCommentsResponse.Success -> {
+                        goToPostsScreen()
+                    }
                 }
             }
         }
+    }
+
+    private fun goToPostsScreen() {
+        authStateListener.stateChange(AuthState.Authenticated)
     }
 
     fun goToLoginScreen() {

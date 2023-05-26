@@ -84,7 +84,7 @@ fun PageStateComposable(
                 },
                 dismissButton = {
                     TextButton(onClick = confirmationDialog.onDismiss) {
-                        Text(text = TR.no)
+                        Text(text = TR.cancel)
                     }
                 },
                 properties = DialogProperties(

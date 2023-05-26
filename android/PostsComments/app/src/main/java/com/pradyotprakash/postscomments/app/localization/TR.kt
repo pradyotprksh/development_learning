@@ -15,5 +15,7 @@ object TR {
     var signingUp = Translation.getString("signingUp")
     var alreadyHaveAccount = Translation.getString("alreadyHaveAccount")
     var forgotPassword = Translation.getString("forgotPassword")
+    var confirmLogout = Translation.getString("confirmLogout")
+    var cancel = Translation.getString("cancel")
     
 }
