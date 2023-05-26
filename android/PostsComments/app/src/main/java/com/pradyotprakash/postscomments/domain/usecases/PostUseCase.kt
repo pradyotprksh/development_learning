@@ -36,11 +36,39 @@ class PostUseCase @Inject constructor(
         emit(PostsCommentsResponse.Idle)
     }
 
+    fun updatePost(title: String, text: String, postId: String) = flow {
+        emit(PostsCommentsResponse.Loading)
+        val userId = authenticationService.currentUser()?.uid
+
+        if (userId == null) {
+            emit(
+                PostsCommentsResponse.Error(
+                    PostsCommentsException(message = TR.noDataFoundError)
+                )
+            )
+        } else {
+            emit(
+                postService.updatePost(
+                    title = title,
+                    text = text,
+                    postId = postId
+                )
+            )
+        }
+        emit(PostsCommentsResponse.Idle)
+    }
+
     suspend fun getPosts() = postService.getPosts()
 
     fun deletePost(postId: String) = flow {
         emit(PostsCommentsResponse.Loading)
         emit(postService.deletePost(postId))
+        emit(PostsCommentsResponse.Idle)
+    }
+
+    fun getPost(postId: String) = flow {
+        emit(PostsCommentsResponse.Loading)
+        emit(postService.getPost(postId))
         emit(PostsCommentsResponse.Idle)
     }
 }

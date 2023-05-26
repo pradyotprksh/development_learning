@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -21,6 +20,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
@@ -40,6 +40,13 @@ fun PostView(
     postType: String,
     postId: String,
 ) {
+    LaunchedEffect(key1 = true) {
+        postViewModel.getPostDetails(
+            postId,
+            postType,
+        )
+    }
+
     val loading by postViewModel.loading.observeAsState(false)
     val enableSend by postViewModel.enableSend.observeAsState(false)
     val error by postViewModel.error.observeAsState("")
@@ -116,7 +123,9 @@ fun PostView(
                 )
                 Spacer(modifier = Modifier.weight(1f))
                 Button(
-                    onClick = postViewModel::sendPost,
+                    onClick = {
+                        postViewModel.sendPost(postId)
+                    },
                     modifier = Modifier.fillMaxWidth(),
                     enabled = enableSend
                 ) {

@@ -114,4 +114,12 @@ class PostsViewModel @Inject constructor(
 
     fun isFromCurrentUser(createdBy: String): Boolean =
         authenticationUseCase.getCurrentUserId() == createdBy
+
+    fun editPost(postId: String) {
+        navigator.navigate {
+            it.navigate(
+                "${Routes.Post.route}${PostArguments.editPost}/$postId"
+            )
+        }
+    }
 }

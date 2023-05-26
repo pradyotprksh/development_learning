@@ -118,6 +118,9 @@ fun PostsView(
                         isFromCurrentUser = postsViewModel.isFromCurrentUser(post.createdBy),
                         deletePost = {
                             postsViewModel.confirmDeletePosts(post.postId)
+                        },
+                        editPost = {
+                            postsViewModel.editPost(post.postId)
                         }
                     )
                     Box(modifier = Modifier.height(10.dp))

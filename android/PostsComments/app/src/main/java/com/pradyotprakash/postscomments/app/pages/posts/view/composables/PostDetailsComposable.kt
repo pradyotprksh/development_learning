@@ -27,6 +27,7 @@ fun PostDetailsComposable(
     text: String,
     isFromCurrentUser: Boolean,
     deletePost: () -> Unit,
+    editPost: () -> Unit,
 ) {
     Box(
         modifier = Modifier
@@ -43,7 +44,9 @@ fun PostDetailsComposable(
             )
             .fillMaxWidth()
     ) {
-        Column {
+        Column(
+            modifier = Modifier.fillMaxWidth()
+        ) {
             Text(
                 text = title,
                 style = MaterialTheme.typography.titleMedium
@@ -77,7 +80,7 @@ fun PostDetailsComposable(
                             )
                         }
                         IconButton(
-                            onClick = { }
+                            onClick = editPost
                         ) {
                             Icon(
                                 imageVector = Icons.Default.Edit,

@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.pradyotprakash.postscomments.core.navigator.Navigator
 import com.pradyotprakash.postscomments.core.response.PostsCommentsResponse
+import com.pradyotprakash.postscomments.core.utils.PostArguments
 import com.pradyotprakash.postscomments.domain.usecases.PostUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -64,26 +65,52 @@ class PostViewModel @Inject constructor(
         _enableSend.value = title.trim().isNotEmpty() && text.trim().isNotEmpty()
     }
 
-    fun sendPost() {
+    fun sendPost(postId: String) {
         if (_enableSend.value == true) {
             val title = _title.value ?: ""
             val text = _text.value ?: ""
 
-            sendPostToDb(title, text)
+            sendPostToDb(title, text, postId)
         }
     }
 
-    private fun sendPostToDb(title: String, text: String) {
+    private fun sendPostToDb(title: String, text: String, postId: String) {
         viewModelScope.launch {
-            postUseCase.createPost(
-                title = title,
-                text = text
-            ).collect {
+            if (postId != PostArguments.defaultPostId) {
+                postUseCase.updatePost(
+                    title = title,
+                    text = text,
+                    postId = postId,
+                )
+            } else {
+                postUseCase.createPost(
+                    title = title,
+                    text = text
+                )
+            }.collect {
                 when (it) {
                     is PostsCommentsResponse.Error -> updateErrorState(it.exception.message)
                     PostsCommentsResponse.Idle -> _loading.value = false
                     PostsCommentsResponse.Loading -> _loading.value = true
                     is PostsCommentsResponse.Success -> goToPostsScreen()
+                }
+            }
+        }
+    }
+
+    fun getPostDetails(postId: String, postType: String) {
+        if (postId != PostArguments.defaultPostId && postType == PostArguments.editPost) {
+            viewModelScope.launch {
+                postUseCase.getPost(postId).collect {
+                    when (it) {
+                        is PostsCommentsResponse.Error -> updateErrorState(it.exception.message)
+                        PostsCommentsResponse.Idle -> _loading.value = false
+                        PostsCommentsResponse.Loading -> _loading.value = true
+                        is PostsCommentsResponse.Success -> {
+                            _text.value = it.data.text
+                            _title.value = it.data.title
+                        }
+                    }
                 }
             }
         }

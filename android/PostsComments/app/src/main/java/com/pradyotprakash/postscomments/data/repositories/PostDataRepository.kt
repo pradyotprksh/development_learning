@@ -47,8 +47,10 @@ class PostDataRepository(
                             data.documents.forEach { document ->
                                 val title = document.getString(FirestoreKeys.Keys.Post.title)
                                 val text = document.getString(FirestoreKeys.Keys.Post.text)
-                                val createdBy = document.getString(FirestoreKeys.Keys.Post.createdBy)
-                                val createdOn = document.getLong(FirestoreKeys.Keys.Post.createdOn) ?: 0L
+                                val createdBy =
+                                    document.getString(FirestoreKeys.Keys.Post.createdBy)
+                                val createdOn =
+                                    document.getLong(FirestoreKeys.Keys.Post.createdOn) ?: 0L
 
                                 if (title != null && text != null && createdBy != null) {
                                     posts.add(
@@ -73,6 +75,57 @@ class PostDataRepository(
     override suspend fun deletePost(postId: String): PostsCommentsResponse<Boolean> =
         try {
             firestore.collection(FirestoreKeys.Collection.posts).document(postId).delete().await()
+            PostsCommentsResponse.Success(true)
+        } catch (e: Exception) {
+            Logger.e(e.toString())
+            PostsCommentsResponse.Error(
+                PostsCommentsException(message = e.localizedMessage ?: TR.noDataFoundError)
+            )
+        }
+
+    override suspend fun getPost(postId: String): PostsCommentsResponse<PostCompleteDetails> = try {
+        val data =
+            firestore.collection(FirestoreKeys.Collection.posts).document(postId).get().await()
+
+        val title = data.getString(FirestoreKeys.Keys.Post.title)
+        val text = data.getString(FirestoreKeys.Keys.Post.text)
+        val createdBy = data.getString(FirestoreKeys.Keys.Post.createdBy)
+        val createdOn = data.getLong(FirestoreKeys.Keys.Post.createdOn) ?: 0L
+
+        if (title != null && text != null && createdBy != null) {
+            PostsCommentsResponse.Success(
+                PostCompleteDetails(
+                    title = title,
+                    text = text,
+                    createdBy = createdBy,
+                    createdOn = createdOn,
+                    postId = data.id,
+                )
+            )
+        } else {
+            PostsCommentsResponse.Error(
+                PostsCommentsException(message = TR.noDataFoundError)
+            )
+        }
+    } catch (e: Exception) {
+        Logger.e(e.toString())
+        PostsCommentsResponse.Error(
+            PostsCommentsException(message = e.localizedMessage ?: TR.noDataFoundError)
+        )
+    }
+
+    override suspend fun updatePost(
+        title: String,
+        text: String,
+        postId: String
+    ): PostsCommentsResponse<Boolean> =
+        try {
+            firestore.collection(FirestoreKeys.Collection.posts).document(postId).update(
+                mapOf(
+                    FirestoreKeys.Keys.Post.title to title,
+                    FirestoreKeys.Keys.Post.text to text,
+                )
+            )
             PostsCommentsResponse.Success(true)
         } catch (e: Exception) {
             Logger.e(e.toString())
