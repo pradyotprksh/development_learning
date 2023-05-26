@@ -5,7 +5,7 @@ import com.pradyotprakash.postscomments.core.response.PostsCommentsException
 import com.pradyotprakash.postscomments.core.response.PostsCommentsResponse
 import com.pradyotprakash.postscomments.core.services.AuthenticationService
 import com.pradyotprakash.postscomments.core.services.UserService
-import com.pradyotprakash.postscomments.device.DeviceUtils
+import com.pradyotprakash.postscomments.device.utils.DeviceUtils
 import com.pradyotprakash.postscomments.domain.models.UserDetails
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject

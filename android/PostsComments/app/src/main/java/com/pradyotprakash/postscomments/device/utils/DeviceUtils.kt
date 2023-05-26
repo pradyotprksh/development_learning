@@ -1,4 +1,4 @@
-package com.pradyotprakash.postscomments.device
+package com.pradyotprakash.postscomments.device.utils
 
 import java.time.Instant
 

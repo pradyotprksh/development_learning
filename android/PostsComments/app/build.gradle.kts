@@ -1,5 +1,3 @@
-import com.android.build.gradle.internal.tasks.factory.dependsOn
-
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -8,9 +6,9 @@ plugins {
     kotlin("kapt")
 }
 
-tasks.register("updateTranslations") {
+/*tasks.register("updateTranslations") {
     Runtime.getRuntime().exec("python3 ./script/generate_translation_file.py")
-}
+}*/
 
 android {
     namespace = "com.pradyotprakash.postscomments"
@@ -71,7 +69,7 @@ android {
         }
     }
 
-    project.tasks.preBuild.dependsOn("updateTranslations")
+    /*project.tasks.preBuild.dependsOn("updateTranslations")*/
 }
 
 kapt {
