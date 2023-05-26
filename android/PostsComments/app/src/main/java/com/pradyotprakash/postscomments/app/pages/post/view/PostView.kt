@@ -30,7 +30,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.pradyotprakash.postscomments.app.composables.PageStateComposable
 import com.pradyotprakash.postscomments.app.localization.TR
 import com.pradyotprakash.postscomments.app.pages.post.viewmodel.PostViewModel
-import com.pradyotprakash.postscomments.app.pages.signUp.viewmodel.SignUpViewModel
 import com.pradyotprakash.postscomments.core.utils.PostArguments
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -76,12 +75,14 @@ fun PostView(
             },
         ) { paddingValues ->
             Column(
-                modifier = Modifier.padding(
-                    start = paddingValues.calculateStartPadding(LayoutDirection.Ltr) + 15.dp,
-                    top = paddingValues.calculateTopPadding() + 15.dp,
-                    bottom = paddingValues.calculateBottomPadding() + 15.dp,
-                    end = paddingValues.calculateRightPadding(LayoutDirection.Ltr) + 15.dp
-                ).fillMaxSize()
+                modifier = Modifier
+                    .padding(
+                        start = paddingValues.calculateStartPadding(LayoutDirection.Ltr) + 15.dp,
+                        top = paddingValues.calculateTopPadding() + 15.dp,
+                        bottom = paddingValues.calculateBottomPadding() + 15.dp,
+                        end = paddingValues.calculateRightPadding(LayoutDirection.Ltr) + 15.dp
+                    )
+                    .fillMaxSize()
             ) {
                 OutlinedTextField(
                     value = title,

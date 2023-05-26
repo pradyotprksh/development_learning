@@ -11,13 +11,14 @@ import kotlinx.coroutines.tasks.await
 
 class UserDataRepository(
     private val firestore: FirebaseFirestore,
-): UserService {
-    override suspend fun createUser(userDetails: UserDetails): PostsCommentsResponse<Boolean> = try {
-        firestore.collection(FirestoreKeys.Collection.user)
-            .document(userDetails.userId).set(userDetails).await()
-        PostsCommentsResponse.Success(true)
-    } catch (e: Exception) {
-        Logger.e(e.toString())
-        PostsCommentsResponse.Error(PostsCommentsException(message = e.localizedMessage ?: ""))
-    }
+) : UserService {
+    override suspend fun createUser(userDetails: UserDetails): PostsCommentsResponse<Boolean> =
+        try {
+            firestore.collection(FirestoreKeys.Collection.user)
+                .document(userDetails.userId).set(userDetails).await()
+            PostsCommentsResponse.Success(true)
+        } catch (e: Exception) {
+            Logger.e(e.toString())
+            PostsCommentsResponse.Error(PostsCommentsException(message = e.localizedMessage ?: ""))
+        }
 }

@@ -5,9 +5,8 @@ import com.pradyotprakash.postscomments.core.response.PostsCommentsException
 import com.pradyotprakash.postscomments.core.response.PostsCommentsResponse
 import com.pradyotprakash.postscomments.core.services.AuthenticationService
 import com.pradyotprakash.postscomments.core.services.PostService
-import com.pradyotprakash.postscomments.core.services.UserService
 import com.pradyotprakash.postscomments.device.DeviceUtils
-import com.pradyotprakash.postscomments.domain.models.Post
+import com.pradyotprakash.postscomments.domain.models.PostDetails
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
@@ -20,18 +19,22 @@ class PostUseCase @Inject constructor(
         val userId = authenticationService.currentUser()?.uid
 
         if (userId == null) {
-            emit(PostsCommentsResponse.Error(
-                PostsCommentsException(message = TR.noDataFoundError)
-            ))
+            emit(
+                PostsCommentsResponse.Error(
+                    PostsCommentsException(message = TR.noDataFoundError)
+                )
+            )
         } else {
-            val post = Post(
+            val postDetails = PostDetails(
                 title = title,
                 text = text,
                 createdBy = userId,
                 createdOn = DeviceUtils.getCurrentTimestamp()
             )
-            emit(postService.createPost(post))
+            emit(postService.createPost(postDetails))
         }
         emit(PostsCommentsResponse.Idle)
     }
+
+    suspend fun getPosts() = postService.getPosts()
 }

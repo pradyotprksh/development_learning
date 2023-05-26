@@ -13,4 +13,10 @@ object FirestoreKeys {
         const val user = "user"
         const val posts = "posts"
     }
+
+    object Keys {
+        object Post {
+            const val createdOn = "createdOn"
+        }
+    }
 }

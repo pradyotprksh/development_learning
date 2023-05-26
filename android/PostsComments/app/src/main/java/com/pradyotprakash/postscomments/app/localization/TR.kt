@@ -24,5 +24,6 @@ object TR {
     var text = Translation.getString("text")
     var send = Translation.getString("send")
     var name = Translation.getString("name")
+    var posts = Translation.getString("posts")
     
 }
