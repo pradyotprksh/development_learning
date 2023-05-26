@@ -6,17 +6,18 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.pradyotprakash.postscomments.app.localization.Translation
+import com.pradyotprakash.postscomments.app.pages.login.view.LoginView
+import com.pradyotprakash.postscomments.app.pages.signUp.view.SignUpView
 import com.pradyotprakash.postscomments.app.pages.splash.view.SplashView
 import com.pradyotprakash.postscomments.app.theme.PostsCommentsTheme
+import com.pradyotprakash.postscomments.core.auth.AuthState
+import com.pradyotprakash.postscomments.core.auth.AuthStateListener
 import com.pradyotprakash.postscomments.core.navigator.Navigator
 import com.pradyotprakash.postscomments.core.navigator.Routes
 import dagger.hilt.android.AndroidEntryPoint
@@ -26,6 +27,9 @@ import javax.inject.Inject
 class MainActivity : ComponentActivity() {
     @Inject
     lateinit var navigator: Navigator
+
+    @Inject
+    lateinit var authStateListener: AuthStateListener
 
     private lateinit var navController: NavHostController
 
@@ -44,6 +48,9 @@ class MainActivity : ComponentActivity() {
                 ) {
                     NavHost(navController = navController, startDestination = Routes.Splash.route) {
                         composable(Routes.Splash.route) { SplashView() }
+                        composable(Routes.Login.route) { LoginView() }
+                        composable(Routes.SignUp.route) { SignUpView() }
+                        composable(Routes.Posts.route) { }
                     }
                 }
             }
@@ -52,7 +59,37 @@ class MainActivity : ComponentActivity() {
 
     private fun setAppBasicRequirements() {
         Translation.updateLocalizationMap(context = this)
+
+        startAuthStateListener()
         navigationChangeListener()
+    }
+
+    private fun startAuthStateListener() {
+        authStateListener.authState.observe(this) {
+            when (it) {
+                AuthState.Authenticated -> {
+                    navigator.navigate { navController ->
+                        navController.navigate(Routes.Posts.route) {
+                            popUpTo(Routes.Splash.route) {
+                                inclusive = true
+                            }
+                        }
+                    }
+                }
+
+                AuthState.Unauthenticated -> {
+                    navigator.navigate { navController ->
+                        navController.navigate(Routes.Login.route) {
+                            popUpTo(Routes.Splash.route) {
+                                inclusive = true
+                            }
+                        }
+                    }
+                }
+
+                else -> {}
+            }
+        }
     }
 
     private fun navigationChangeListener() {

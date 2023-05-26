@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "617160397498",
+    "project_id": "postscomments",
+    "storage_bucket": "postscomments.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:617160397498:android:cd80a5f8a44e6a5adb6883",
+        "android_client_info": {
+          "package_name": "com.pradyotprakash.postscomments"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD3U13AmLgDUqRzXY3xk4knf2Nhom4PYJo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
