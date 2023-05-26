@@ -131,7 +131,8 @@ class PostCommentFormViewModel @Inject constructor(
         if (formAction == PostCommentFormArguments.edit) {
             viewModelScope.launch {
                 if (formType == PostCommentFormArguments.postForm
-                    && postId != PostCommentFormArguments.na) {
+                    && postId != PostCommentFormArguments.na
+                ) {
                     postUseCase.getPost(postId).collect {
                         when (it) {
                             is PostsCommentsResponse.Error -> updateErrorState(it.exception.message)
@@ -144,7 +145,8 @@ class PostCommentFormViewModel @Inject constructor(
                         }
                     }
                 } else if (formType == PostCommentFormArguments.commentForm
-                    && commentId != PostCommentFormArguments.na) {
+                    && commentId != PostCommentFormArguments.na
+                ) {
                     commentUseCase.getComment(commentId).collect {
                         when (it) {
                             is PostsCommentsResponse.Error -> updateErrorState(it.exception.message)

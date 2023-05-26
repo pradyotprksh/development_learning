@@ -104,12 +104,6 @@ fun LoginView(
             ) {
                 Text(text = TR.login)
             }
-            Box(modifier = Modifier.height(5.dp))
-            TextButton(
-                onClick = {}
-            ) {
-                Text(text = TR.forgotPassword)
-            }
             Box(modifier = Modifier.height(30.dp))
             TextButton(
                 onClick = loginViewModel::goToRegisterScreen,

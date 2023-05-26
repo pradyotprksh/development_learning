@@ -14,6 +14,7 @@ import com.pradyotprakash.postscomments.core.response.PostsCommentsResponse
 import com.pradyotprakash.postscomments.core.utils.PostCommentFormArguments
 import com.pradyotprakash.postscomments.domain.models.PostCompleteDetails
 import com.pradyotprakash.postscomments.domain.usecases.AuthenticationUseCase
+import com.pradyotprakash.postscomments.domain.usecases.CommentUseCase
 import com.pradyotprakash.postscomments.domain.usecases.PostUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -25,6 +26,7 @@ class PostsViewModel @Inject constructor(
     private val authStateListener: AuthStateListener,
     private val navigator: Navigator,
     private val postUseCase: PostUseCase,
+    private val commentUseCase: CommentUseCase,
 ) : ViewModel() {
     private val _loading = MutableLiveData(false)
     val loading: LiveData<Boolean>
@@ -89,11 +91,7 @@ class PostsViewModel @Inject constructor(
     fun openCreatePostScreen() {
         navigator.navigate {
             it.navigate(
-                Routes.PostForm.route +
-                        PostCommentFormArguments.postForm +
-                        "/${PostCommentFormArguments.create}" +
-                        "/${PostCommentFormArguments.na}" +
-                        "/${PostCommentFormArguments.na}"
+                Routes.PostForm.route + PostCommentFormArguments.postForm + "/${PostCommentFormArguments.create}" + "/${PostCommentFormArguments.na}" + "/${PostCommentFormArguments.na}"
             )
         }
     }
@@ -107,6 +105,7 @@ class PostsViewModel @Inject constructor(
                         _posts.value = emptyList()
                         _posts.value = it.data ?: emptyList()
                     }
+
                     else -> {}
                 }
             }
@@ -119,11 +118,7 @@ class PostsViewModel @Inject constructor(
     fun editPost(postId: String) {
         navigator.navigate {
             it.navigate(
-                Routes.PostForm.route +
-                        PostCommentFormArguments.postForm +
-                        "/${PostCommentFormArguments.edit}" +
-                        "/$postId" +
-                        "/${PostCommentFormArguments.na}"
+                Routes.PostForm.route + PostCommentFormArguments.postForm + "/${PostCommentFormArguments.edit}" + "/$postId" + "/${PostCommentFormArguments.na}"
             )
         }
     }

@@ -36,10 +36,10 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.pradyotprakash.postscomments.app.composables.ConfirmationDialog
 import com.pradyotprakash.postscomments.app.composables.PageStateComposable
+import com.pradyotprakash.postscomments.app.composables.PostDetailsComposable
 import com.pradyotprakash.postscomments.app.localization.TR
 import com.pradyotprakash.postscomments.app.pages.post.view.composables.CommentDetailsComposable
 import com.pradyotprakash.postscomments.app.pages.post.viewmodel.PostViewModel
-import com.pradyotprakash.postscomments.app.composables.PostDetailsComposable
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
@@ -138,7 +138,7 @@ fun PostView(
                         userName = comment.userDetails?.name,
                         isByCurrentUser = postViewModel.isCommentByCurrentUser(comment.createdBy),
                         deleteComment = {
-                                        postViewModel.confirmDeleteComment(comment.commentId)
+                            postViewModel.confirmDeleteComment(comment.commentId)
                         },
                         editComment = {
                             postViewModel.editComment(

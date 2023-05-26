@@ -71,15 +71,15 @@ fun PostFormView(
                     title = {
                         Text(
                             text = if (formType == PostCommentFormArguments.postForm)
-                                        if (formAction == PostCommentFormArguments.create)
-                                            TR.createPost
-                                        else
-                                            TR.postEditing
-                                    else
-                                        if (formAction == PostCommentFormArguments.create)
-                                            TR.createComment
-                                        else
-                                            TR.commentEditing
+                                if (formAction == PostCommentFormArguments.create)
+                                    TR.createPost
+                                else
+                                    TR.postEditing
+                            else
+                                if (formAction == PostCommentFormArguments.create)
+                                    TR.createComment
+                                else
+                                    TR.commentEditing
                         )
                     },
                     navigationIcon = {
@@ -106,24 +106,24 @@ fun PostFormView(
                     .fillMaxSize()
             ) {
                 if (formType == PostCommentFormArguments.postForm)
-                OutlinedTextField(
-                    value = title,
-                    onValueChange = {
-                        postCommentFormViewModel.updateValue(
-                            it,
-                            PostCommentFormViewModel.FiledType.Title,
-                            formType,
-                        )
-                    },
-                    modifier = Modifier.fillMaxWidth(),
-                    label = {
-                        Text(text = TR.title)
-                    },
-                    keyboardOptions = KeyboardOptions(
-                        keyboardType = KeyboardType.Text
-                    ),
-                    singleLine = true,
-                )
+                    OutlinedTextField(
+                        value = title,
+                        onValueChange = {
+                            postCommentFormViewModel.updateValue(
+                                it,
+                                PostCommentFormViewModel.FiledType.Title,
+                                formType,
+                            )
+                        },
+                        modifier = Modifier.fillMaxWidth(),
+                        label = {
+                            Text(text = TR.title)
+                        },
+                        keyboardOptions = KeyboardOptions(
+                            keyboardType = KeyboardType.Text
+                        ),
+                        singleLine = true,
+                    )
                 Box(modifier = Modifier.height(15.dp))
                 OutlinedTextField(
                     value = text,
