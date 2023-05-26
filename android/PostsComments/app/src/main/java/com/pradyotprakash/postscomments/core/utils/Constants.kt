@@ -17,6 +17,9 @@ object FirestoreKeys {
     object Keys {
         object Post {
             const val createdOn = "createdOn"
+            const val createdBy = "createdBy"
+            const val title = "title"
+            const val text = "text"
         }
     }
 }

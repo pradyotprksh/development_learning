@@ -63,7 +63,7 @@ class LoginViewModel @Inject constructor(
 
         _enableLogin.value =
             emailAddress.isValidEmailAddress() &&
-                    password.isNotEmpty()
+                    password.trim().isNotEmpty()
     }
 
     fun loginUser() {

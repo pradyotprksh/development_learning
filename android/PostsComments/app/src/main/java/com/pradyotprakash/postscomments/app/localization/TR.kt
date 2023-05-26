@@ -25,5 +25,6 @@ object TR {
     var send = Translation.getString("send")
     var name = Translation.getString("name")
     var posts = Translation.getString("posts")
+    var surePostDelete = Translation.getString("surePostDelete")
     
 }

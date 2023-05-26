@@ -115,7 +115,10 @@ fun PostsView(
                     PostDetailsComposable(
                         title = post.title,
                         text = post.text,
-                        isFromCurrentUser = postsViewModel.isFromCurrentUser(post.createdBy)
+                        isFromCurrentUser = postsViewModel.isFromCurrentUser(post.createdBy),
+                        deletePost = {
+                            postsViewModel.confirmDeletePosts(post.postId)
+                        }
                     )
                     Box(modifier = Modifier.height(10.dp))
                 }

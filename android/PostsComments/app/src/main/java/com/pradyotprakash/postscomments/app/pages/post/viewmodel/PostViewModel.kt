@@ -61,7 +61,7 @@ class PostViewModel @Inject constructor(
         val title = _title.value ?: ""
         val text = _text.value ?: ""
 
-        _enableSend.value = title.isNotEmpty() && text.isNotEmpty()
+        _enableSend.value = title.trim().isNotEmpty() && text.trim().isNotEmpty()
     }
 
     fun sendPost() {

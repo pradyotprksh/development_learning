@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -95,7 +96,8 @@ fun PostView(
                     },
                     keyboardOptions = KeyboardOptions(
                         keyboardType = KeyboardType.Text
-                    )
+                    ),
+                    singleLine = true,
                 )
                 Box(modifier = Modifier.height(15.dp))
                 OutlinedTextField(
@@ -109,7 +111,8 @@ fun PostView(
                     },
                     keyboardOptions = KeyboardOptions(
                         keyboardType = KeyboardType.Text
-                    )
+                    ),
+                    maxLines = 15
                 )
                 Spacer(modifier = Modifier.weight(1f))
                 Button(

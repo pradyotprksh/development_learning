@@ -12,10 +12,12 @@ import com.pradyotprakash.postscomments.core.navigator.Navigator
 import com.pradyotprakash.postscomments.core.navigator.Routes
 import com.pradyotprakash.postscomments.core.response.PostsCommentsResponse
 import com.pradyotprakash.postscomments.core.utils.PostArguments
+import com.pradyotprakash.postscomments.domain.models.PostCompleteDetails
 import com.pradyotprakash.postscomments.domain.models.PostDetails
 import com.pradyotprakash.postscomments.domain.usecases.AuthenticationUseCase
 import com.pradyotprakash.postscomments.domain.usecases.PostUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -35,8 +37,8 @@ class PostsViewModel @Inject constructor(
     private val _confirmationDialog = MutableLiveData(ConfirmationDialog())
     val confirmationDialog: LiveData<ConfirmationDialog>
         get() = _confirmationDialog
-    private val _posts = MutableLiveData<List<PostDetails>>(emptyList())
-    val posts: LiveData<List<PostDetails>>
+    private val _posts = MutableLiveData<List<PostCompleteDetails>>(emptyList())
+    val posts: LiveData<List<PostCompleteDetails>>
         get() = _posts
 
     fun updateErrorState(message: String? = "") {
@@ -55,6 +57,30 @@ class PostsViewModel @Inject constructor(
                 _confirmationDialog.value = ConfirmationDialog()
             },
         )
+    }
+
+    fun confirmDeletePosts(postId: String) {
+        _confirmationDialog.value = ConfirmationDialog(
+            text = TR.surePostDelete,
+            onConfirm = {
+                _confirmationDialog.value = ConfirmationDialog()
+                deletePost(postId)
+            },
+            onDismiss = {
+                _confirmationDialog.value = ConfirmationDialog()
+            },
+        )
+    }
+
+    private fun deletePost(postId: String) {
+        viewModelScope.launch {
+            postUseCase.deletePost(postId = postId).collect {
+                when (it) {
+                    is PostsCommentsResponse.Error -> updateErrorState(it.exception.message)
+                    else -> {}
+                }
+            }
+        }
     }
 
     private fun logoutUser() {
@@ -79,7 +105,7 @@ class PostsViewModel @Inject constructor(
                     PostsCommentsResponse.Loading -> _loading.value = true
                     is PostsCommentsResponse.Success -> {
                         _posts.value = emptyList()
-                        _posts.value = it.data ?: emptyList()
+                        _posts.value = it.data
                     }
                 }
             }

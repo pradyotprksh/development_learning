@@ -37,4 +37,10 @@ class PostUseCase @Inject constructor(
     }
 
     suspend fun getPosts() = postService.getPosts()
+
+    fun deletePost(postId: String) = flow {
+        emit(PostsCommentsResponse.Loading)
+        emit(postService.deletePost(postId))
+        emit(PostsCommentsResponse.Idle)
+    }
 }

@@ -25,7 +25,8 @@ import androidx.compose.ui.unit.dp
 fun PostDetailsComposable(
     title: String,
     text: String,
-    isFromCurrentUser: Boolean
+    isFromCurrentUser: Boolean,
+    deletePost: () -> Unit,
 ) {
     Box(
         modifier = Modifier
@@ -67,7 +68,7 @@ fun PostDetailsComposable(
                         horizontalArrangement = Arrangement.End,
                     ) {
                         IconButton(
-                            onClick = { }
+                            onClick = deletePost
                         ) {
                             Icon(
                                 imageVector = Icons.Default.Delete,

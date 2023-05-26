@@ -73,8 +73,9 @@ class SignUpViewModel @Inject constructor(
 
         _enableRegister.value =
             emailAddress.isValidEmailAddress() &&
-                    name.isNotEmpty() &&
-                    password.isNotEmpty() && confirmPassword.isNotEmpty() &&
+                    name.trim().isNotEmpty() &&
+                    password.trim().isNotEmpty() &&
+                    confirmPassword.trim().isNotEmpty() &&
                     password == confirmPassword
     }
 

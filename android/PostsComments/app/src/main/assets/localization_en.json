@@ -22,5 +22,6 @@
   "text": "Text",
   "send": "Send",
   "name": "Name",
-  "posts": "Posts"
+  "posts": "Posts",
+  "surePostDelete": "Are you sure, you want to delete the post?"
 }
