@@ -6,8 +6,10 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import com.pradyotprakash.postscomments.core.services.AuthenticationService
 import com.pradyotprakash.postscomments.core.services.PostService
+import com.pradyotprakash.postscomments.core.services.UserService
 import com.pradyotprakash.postscomments.data.repositories.AuthenticationDataRepository
 import com.pradyotprakash.postscomments.data.repositories.PostDataRepository
+import com.pradyotprakash.postscomments.data.repositories.UserDataRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -43,5 +45,12 @@ object FirebaseService {
             firestore: FirebaseFirestore,
         ): PostService =
             PostDataRepository(firestore)
+
+        @Singleton
+        @Provides
+        fun provideUserService(
+            firestore: FirebaseFirestore,
+        ): UserService =
+            UserDataRepository(firestore)
     }
 }

@@ -103,7 +103,7 @@ class MainActivity : ComponentActivity() {
                 AuthState.Unauthenticated -> {
                     navigator.navigate { navController ->
                         navController.popBackStack()
-                        navController.navigate(Routes.Splash.path())
+                        navController.navigate(Routes.Login.path())
                     }
                 }
 

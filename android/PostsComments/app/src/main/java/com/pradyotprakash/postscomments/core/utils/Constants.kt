@@ -10,6 +10,7 @@ object PostArguments {
 
 object FirestoreKeys {
     object Collection {
+        const val user = "user"
         const val posts = "posts"
     }
 }

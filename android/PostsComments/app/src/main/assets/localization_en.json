@@ -20,5 +20,6 @@
   "postEditing": "Post Editing",
   "title": "Title",
   "text": "Text",
-  "send": "Send"
+  "send": "Send",
+  "name": "Name"
 }

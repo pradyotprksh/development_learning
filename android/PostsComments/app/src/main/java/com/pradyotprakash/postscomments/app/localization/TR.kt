@@ -23,5 +23,6 @@ object TR {
     var title = Translation.getString("title")
     var text = Translation.getString("text")
     var send = Translation.getString("send")
+    var name = Translation.getString("name")
     
 }

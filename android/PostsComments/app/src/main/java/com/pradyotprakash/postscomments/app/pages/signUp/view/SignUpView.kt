@@ -44,6 +44,7 @@ fun SignUpView(
     val enableRegister by signUpViewModel.enableRegister.observeAsState(false)
     val error by signUpViewModel.error.observeAsState("")
     val emailAddress by signUpViewModel.emailAddress.observeAsState("")
+    val name by signUpViewModel.name.observeAsState("")
     val password by signUpViewModel.password.observeAsState("")
     val confirmPassword by signUpViewModel.confirmPassword.observeAsState("")
 
@@ -81,6 +82,20 @@ fun SignUpView(
                 style = MaterialTheme.typography.headlineMedium
             )
             Box(modifier = Modifier.height(30.dp))
+            OutlinedTextField(
+                value = name,
+                onValueChange = {
+                    signUpViewModel.updateValue(it, SignUpViewModel.FieldType.Name)
+                },
+                modifier = Modifier.fillMaxWidth(),
+                label = {
+                    Text(text = TR.name)
+                },
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Text
+                )
+            )
+            Box(modifier = Modifier.height(5.dp))
             OutlinedTextField(
                 value = emailAddress,
                 onValueChange = {

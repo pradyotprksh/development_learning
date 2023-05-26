@@ -11,6 +11,7 @@ import com.pradyotprakash.postscomments.core.navigator.Navigator
 import com.pradyotprakash.postscomments.core.response.PostsCommentsResponse
 import com.pradyotprakash.postscomments.domain.usecases.AuthenticationUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -24,6 +25,7 @@ class SignUpViewModel @Inject constructor(
         Email,
         Password,
         ConfirmPassword,
+        Name,
     }
 
     private val _loading = MutableLiveData(false)
@@ -32,6 +34,9 @@ class SignUpViewModel @Inject constructor(
     private val _errorText = MutableLiveData("")
     val error: LiveData<String>
         get() = _errorText
+    private val _name = MutableLiveData("")
+    val name: LiveData<String>
+        get() = _name
     private val _emailAddress = MutableLiveData("")
     val emailAddress: LiveData<String>
         get() = _emailAddress
@@ -55,6 +60,7 @@ class SignUpViewModel @Inject constructor(
             FieldType.Email -> _emailAddress.value = value
             FieldType.Password -> _password.value = value
             FieldType.ConfirmPassword -> _confirmPassword.value = value
+            FieldType.Name -> _name.value = value
         }
 
         areFieldsCorrect()
@@ -64,9 +70,11 @@ class SignUpViewModel @Inject constructor(
         val emailAddress = _emailAddress.value ?: ""
         val password = _password.value ?: ""
         val confirmPassword = _confirmPassword.value ?: ""
+        val name = _name.value ?: ""
 
         _enableRegister.value =
             emailAddress.isValidEmailAddress() &&
+                    name.isNotEmpty() &&
                     password.isNotEmpty() && confirmPassword.isNotEmpty() &&
                     password == confirmPassword
     }
@@ -75,12 +83,13 @@ class SignUpViewModel @Inject constructor(
         if (_enableRegister.value == true) {
             val emailAddress = _emailAddress.value ?: ""
             val password = _password.value ?: ""
+            val name = _name.value ?: ""
 
-            createAccount(emailAddress, password)
+            createAccount(emailAddress, password, name)
         }
     }
 
-    private fun createAccount(emailAddress: String, password: String) {
+    private fun createAccount(emailAddress: String, password: String, name: String) {
         viewModelScope.launch {
             authenticationUseCase.createUserWithEmailPassword(
                 email = emailAddress,
@@ -91,7 +100,17 @@ class SignUpViewModel @Inject constructor(
                     PostsCommentsResponse.Idle -> _loading.value = false
                     PostsCommentsResponse.Loading -> _loading.value = true
                     is PostsCommentsResponse.Success -> {
-                        goToPostsScreen()
+                        authenticationUseCase.createUserDocument(
+                            email = emailAddress,
+                            name = name,
+                        ).collect { user ->
+                            when (user) {
+                                is PostsCommentsResponse.Error -> updateErrorState(user.exception.message)
+                                PostsCommentsResponse.Idle -> _loading.value = false
+                                PostsCommentsResponse.Loading -> _loading.value = true
+                                is PostsCommentsResponse.Success -> goToPostsScreen()
+                            }
+                        }
                     }
                 }
             }
