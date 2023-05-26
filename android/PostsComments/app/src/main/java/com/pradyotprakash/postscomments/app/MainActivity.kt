@@ -15,7 +15,8 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.pradyotprakash.postscomments.app.localization.Translation
 import com.pradyotprakash.postscomments.app.pages.login.view.LoginView
-import com.pradyotprakash.postscomments.app.pages.postForm.view.PostFormView
+import com.pradyotprakash.postscomments.app.pages.post.view.PostView
+import com.pradyotprakash.postscomments.app.pages.postCommentForm.view.PostFormView
 import com.pradyotprakash.postscomments.app.pages.posts.view.PostsView
 import com.pradyotprakash.postscomments.app.pages.signUp.view.SignUpView
 import com.pradyotprakash.postscomments.app.pages.splash.view.SplashView
@@ -26,6 +27,7 @@ import com.pradyotprakash.postscomments.core.navigator.Navigator
 import com.pradyotprakash.postscomments.core.navigator.Routes
 import com.pradyotprakash.postscomments.core.navigator.path
 import com.pradyotprakash.postscomments.core.utils.PostArguments
+import com.pradyotprakash.postscomments.core.utils.PostCommentFormArguments
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -61,19 +63,43 @@ class MainActivity : ComponentActivity() {
                         composable(Routes.SignUp.path()) { SignUpView() }
                         composable(Routes.Posts.path()) { PostsView() }
                         composable(
+                            Routes.PostForm.path(),
+                            arguments = Routes.PostForm.arguments.map {
+                                navArgument(it) { type = NavType.StringType }
+                            }
+                        ) {
+                            val formType = it.arguments?.getString(
+                                PostCommentFormArguments.formType
+                            ) ?: PostCommentFormArguments.postForm
+
+                            val formAction = it.arguments?.getString(
+                                PostCommentFormArguments.formAction
+                            ) ?: PostCommentFormArguments.create
+
+                            val commentId = it.arguments?.getString(
+                                PostCommentFormArguments.commentId
+                            ) ?: PostCommentFormArguments.na
+                            val postId = it.arguments?.getString(
+                                PostCommentFormArguments.postId
+                            ) ?: PostCommentFormArguments.na
+
+                            PostFormView(
+                                formType = formType,
+                                formAction = formAction,
+                                commentId = commentId,
+                                postId = postId,
+                            )
+                        }
+                        composable(
                             Routes.Post.path(),
                             arguments = Routes.Post.arguments.map {
                                 navArgument(it) { type = NavType.StringType }
                             }
                         ) {
-                            val postType = it.arguments?.getString(
-                                PostArguments.postType
-                            ) ?: PostArguments.createPost
                             val postId = it.arguments?.getString(
                                 PostArguments.postId
-                            ) ?: PostArguments.defaultPostId
-                            PostFormView(
-                                postType = postType,
+                            ) ?: PostCommentFormArguments.na
+                            PostView(
                                 postId = postId,
                             )
                         }

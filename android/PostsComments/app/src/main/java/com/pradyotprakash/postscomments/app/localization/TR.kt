@@ -26,5 +26,9 @@ object TR {
     var name = Translation.getString("name")
     var posts = Translation.getString("posts")
     var surePostDelete = Translation.getString("surePostDelete")
+    var comments = Translation.getString("comments")
+    var add = Translation.getString("add")
+    var createComment = Translation.getString("createComment")
+    var commentEditing = Translation.getString("commentEditing")
     
 }

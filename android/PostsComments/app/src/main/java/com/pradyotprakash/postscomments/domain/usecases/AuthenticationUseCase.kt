@@ -55,14 +55,14 @@ class AuthenticationUseCase @Inject constructor(
         val userId = getCurrentUserId()
 
         if (userId != null) {
-            val user = UserDetails(
+            val userDetails = UserDetails(
                 emailAddress = email,
                 name = name,
                 createdOn = DeviceUtils.getCurrentTimestamp(),
                 userId = userId,
             )
             emit(
-                userService.createUser(user)
+                userService.createUser(userDetails)
             )
         } else {
             emit(

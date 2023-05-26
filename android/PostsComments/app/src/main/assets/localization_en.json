@@ -23,5 +23,9 @@
   "send": "Send",
   "name": "Name",
   "posts": "Posts",
-  "surePostDelete": "Are you sure, you want to delete the post?"
+  "surePostDelete": "Are you sure, you want to delete the post?",
+  "comments": "Comments",
+  "add": "Add",
+  "createComment": "Create Comment",
+  "commentEditing": "Comment Editing"
 }

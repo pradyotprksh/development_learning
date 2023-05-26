@@ -1,6 +1,7 @@
 package com.pradyotprakash.postscomments.core.navigator
 
 import com.pradyotprakash.postscomments.core.utils.PostArguments
+import com.pradyotprakash.postscomments.core.utils.PostCommentFormArguments
 
 fun Routes.path(): String {
     if (arguments.isEmpty()) return route
@@ -19,10 +20,18 @@ enum class Routes(
     Posts("posts/"),
     SignUp("sign-up/"),
     Login("login/"),
+    PostForm(
+        "post-form/",
+        arguments = listOf(
+            PostCommentFormArguments.formType,
+            PostCommentFormArguments.formAction,
+            PostCommentFormArguments.postId,
+            PostCommentFormArguments.commentId,
+        )
+    ),
     Post(
         "post/",
         arguments = listOf(
-            PostArguments.postType,
             PostArguments.postId
         )
     ),

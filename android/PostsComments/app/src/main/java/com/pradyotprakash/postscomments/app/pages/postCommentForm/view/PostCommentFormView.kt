@@ -1,4 +1,4 @@
-package com.pradyotprakash.postscomments.app.pages.postForm.view
+package com.pradyotprakash.postscomments.app.pages.postCommentForm.view
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -30,48 +30,58 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.pradyotprakash.postscomments.app.composables.PageStateComposable
 import com.pradyotprakash.postscomments.app.localization.TR
-import com.pradyotprakash.postscomments.app.pages.postForm.viewmodel.PostFormViewModel
-import com.pradyotprakash.postscomments.core.utils.PostArguments
+import com.pradyotprakash.postscomments.app.pages.postCommentForm.viewmodel.PostCommentFormViewModel
+import com.pradyotprakash.postscomments.core.utils.PostCommentFormArguments
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PostFormView(
-    postFormViewModel: PostFormViewModel = hiltViewModel(),
-    postType: String,
+    postCommentFormViewModel: PostCommentFormViewModel = hiltViewModel(),
+    formType: String,
+    formAction: String,
+    commentId: String,
     postId: String,
 ) {
     LaunchedEffect(key1 = true) {
-        postFormViewModel.getPostDetails(
+        postCommentFormViewModel.getPostCommentDetails(
+            formType,
+            formAction,
+            commentId,
             postId,
-            postType,
         )
     }
 
-    val loading by postFormViewModel.loading.observeAsState(false)
-    val enableSend by postFormViewModel.enableSend.observeAsState(false)
-    val error by postFormViewModel.error.observeAsState("")
-    val title by postFormViewModel.title.observeAsState("")
-    val text by postFormViewModel.text.observeAsState("")
+    val loading by postCommentFormViewModel.loading.observeAsState(false)
+    val enableSend by postCommentFormViewModel.enableSend.observeAsState(false)
+    val error by postCommentFormViewModel.error.observeAsState("")
+    val title by postCommentFormViewModel.title.observeAsState("")
+    val text by postCommentFormViewModel.text.observeAsState("")
 
     PageStateComposable(
         isLoading = loading,
         errorMessage = error,
-        dismissErrorAlert = postFormViewModel::updateErrorState,
+        dismissErrorAlert = postCommentFormViewModel::updateErrorState,
     ) {
         Scaffold(
             topBar = {
                 TopAppBar(
                     title = {
                         Text(
-                            text = if (postType == PostArguments.createPost)
-                                TR.createPost
-                            else
-                                TR.postEditing
+                            text = if (formType == PostCommentFormArguments.postForm)
+                                        if (formAction == PostCommentFormArguments.create)
+                                            TR.createPost
+                                        else
+                                            TR.postEditing
+                                    else
+                                        if (formAction == PostCommentFormArguments.create)
+                                            TR.createComment
+                                        else
+                                            TR.commentEditing
                         )
                     },
                     navigationIcon = {
                         IconButton(
-                            onClick = postFormViewModel::goToPostsScreen,
+                            onClick = postCommentFormViewModel::goBack,
                         ) {
                             Icon(
                                 imageVector = Icons.Default.ArrowBack,
@@ -92,10 +102,15 @@ fun PostFormView(
                     )
                     .fillMaxSize()
             ) {
+                if (formType == PostCommentFormArguments.postForm)
                 OutlinedTextField(
                     value = title,
                     onValueChange = {
-                        postFormViewModel.updateValue(it, PostFormViewModel.FiledType.Title)
+                        postCommentFormViewModel.updateValue(
+                            it,
+                            PostCommentFormViewModel.FiledType.Title,
+                            formType,
+                        )
                     },
                     modifier = Modifier.fillMaxWidth(),
                     label = {
@@ -110,7 +125,11 @@ fun PostFormView(
                 OutlinedTextField(
                     value = text,
                     onValueChange = {
-                        postFormViewModel.updateValue(it, PostFormViewModel.FiledType.Text)
+                        postCommentFormViewModel.updateValue(
+                            it,
+                            PostCommentFormViewModel.FiledType.Text,
+                            formType,
+                        )
                     },
                     modifier = Modifier.fillMaxWidth(),
                     label = {
@@ -124,7 +143,9 @@ fun PostFormView(
                 Spacer(modifier = Modifier.weight(1f))
                 Button(
                     onClick = {
-                        postFormViewModel.sendPost(postId)
+                        postCommentFormViewModel.sendPostComment(
+                            postId, commentId, formType
+                        )
                     },
                     modifier = Modifier.fillMaxWidth(),
                     enabled = enableSend

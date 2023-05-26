@@ -11,13 +11,11 @@ import com.pradyotprakash.postscomments.core.auth.AuthStateListener
 import com.pradyotprakash.postscomments.core.navigator.Navigator
 import com.pradyotprakash.postscomments.core.navigator.Routes
 import com.pradyotprakash.postscomments.core.response.PostsCommentsResponse
-import com.pradyotprakash.postscomments.core.utils.PostArguments
+import com.pradyotprakash.postscomments.core.utils.PostCommentFormArguments
 import com.pradyotprakash.postscomments.domain.models.PostCompleteDetails
-import com.pradyotprakash.postscomments.domain.models.PostDetails
 import com.pradyotprakash.postscomments.domain.usecases.AuthenticationUseCase
 import com.pradyotprakash.postscomments.domain.usecases.PostUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -91,7 +89,11 @@ class PostsViewModel @Inject constructor(
     fun openCreatePostScreen() {
         navigator.navigate {
             it.navigate(
-                "${Routes.Post.route}${PostArguments.createPost}/${PostArguments.defaultPostId}"
+                Routes.PostForm.route +
+                        PostCommentFormArguments.postForm +
+                        "/${PostCommentFormArguments.create}" +
+                        "/${PostCommentFormArguments.na}" +
+                        "/${PostCommentFormArguments.na}"
             )
         }
     }
@@ -105,7 +107,7 @@ class PostsViewModel @Inject constructor(
                     PostsCommentsResponse.Loading -> _loading.value = true
                     is PostsCommentsResponse.Success -> {
                         _posts.value = emptyList()
-                        _posts.value = it.data
+                        _posts.value = it.data ?: emptyList()
                     }
                 }
             }
@@ -118,7 +120,19 @@ class PostsViewModel @Inject constructor(
     fun editPost(postId: String) {
         navigator.navigate {
             it.navigate(
-                "${Routes.Post.route}${PostArguments.editPost}/$postId"
+                Routes.PostForm.route +
+                        PostCommentFormArguments.postForm +
+                        "/${PostCommentFormArguments.edit}" +
+                        "/$postId" +
+                        "/${PostCommentFormArguments.na}"
+            )
+        }
+    }
+
+    fun goToPostDetails(postId: String) {
+        navigator.navigate {
+            it.navigate(
+                "${Routes.Post.route}$postId"
             )
         }
     }

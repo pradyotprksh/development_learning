@@ -1,6 +1,7 @@
 package com.pradyotprakash.postscomments.app.pages.posts.view.composables
 
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -25,14 +26,16 @@ import androidx.compose.ui.unit.dp
 fun PostDetailsComposable(
     title: String,
     text: String,
-    isFromCurrentUser: Boolean,
-    deletePost: () -> Unit,
-    editPost: () -> Unit,
+    isFromCurrentUser: Boolean = false,
+    borderWidth: Int = 0,
+    deletePost: () -> Unit = {},
+    editPost: () -> Unit = {},
+    onClick: (() -> Unit)? = null,
 ) {
     Box(
         modifier = Modifier
             .border(
-                width = 1.dp,
+                width = borderWidth.dp,
                 color = MaterialTheme.colorScheme.primary,
                 shape = RoundedCornerShape(5)
             )
@@ -45,7 +48,9 @@ fun PostDetailsComposable(
             .fillMaxWidth()
     ) {
         Column(
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth().clickable {
+                onClick?.invoke()
+            }
         ) {
             Text(
                 text = title,
