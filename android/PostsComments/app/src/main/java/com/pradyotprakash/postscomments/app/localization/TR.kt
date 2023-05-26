@@ -20,5 +20,8 @@ object TR {
     var createPost = Translation.getString("createPost")
     var back = Translation.getString("back")
     var postEditing = Translation.getString("postEditing")
-
+    var title = Translation.getString("title")
+    var text = Translation.getString("text")
+    var send = Translation.getString("send")
+    
 }

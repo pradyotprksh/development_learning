@@ -2,9 +2,12 @@ package com.pradyotprakash.postscomments.di.services
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import com.pradyotprakash.postscomments.core.services.AuthenticationService
+import com.pradyotprakash.postscomments.core.services.PostService
 import com.pradyotprakash.postscomments.data.repositories.AuthenticationDataRepository
+import com.pradyotprakash.postscomments.data.repositories.PostDataRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -25,5 +28,20 @@ object FirebaseService {
             firebaseAuth: FirebaseAuth,
         ): AuthenticationService =
             AuthenticationDataRepository(firebaseAuth)
+    }
+
+    @Module
+    @InstallIn(SingletonComponent::class)
+    object Firestore {
+        @Singleton
+        @Provides
+        fun provideFirestore(): FirebaseFirestore = FirebaseFirestore.getInstance()
+
+        @Singleton
+        @Provides
+        fun providePostService(
+            firestore: FirebaseFirestore,
+        ): PostService =
+            PostDataRepository(firestore)
     }
 }

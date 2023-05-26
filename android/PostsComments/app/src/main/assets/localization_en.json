@@ -17,5 +17,8 @@
   "cancel": "Cancel",
   "createPost": "Create Post",
   "back": "Back",
-  "postEditing": "Post Editing"
+  "postEditing": "Post Editing",
+  "title": "Title",
+  "text": "Text",
+  "send": "Send"
 }

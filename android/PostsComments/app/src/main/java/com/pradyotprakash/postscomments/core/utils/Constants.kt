@@ -7,3 +7,9 @@ object PostArguments {
     const val editPost = "editPost"
     const val defaultPostId = "na"
 }
+
+object FirestoreKeys {
+    object Collection {
+        const val posts = "posts"
+    }
+}
