@@ -17,6 +17,7 @@ import com.pradyotprakash.postscomments.domain.usecases.AuthenticationUseCase
 import com.pradyotprakash.postscomments.domain.usecases.CommentUseCase
 import com.pradyotprakash.postscomments.domain.usecases.PostUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -77,8 +78,22 @@ class PostsViewModel @Inject constructor(
             postUseCase.deletePost(postId = postId).collect {
                 when (it) {
                     is PostsCommentsResponse.Error -> updateErrorState(it.exception.message)
+                    is PostsCommentsResponse.Success -> deleteComments(postId)
                     else -> {}
                 }
+            }
+        }
+    }
+
+    private suspend fun deleteComments(postId: String) {
+        commentUseCase.getComments(postId = postId).collect {
+            when (it) {
+                is PostsCommentsResponse.Success -> {
+                    it.data.forEach { comment ->
+                        commentUseCase.deleteComment(commentId = comment.commentId)
+                    }
+                }
+                else -> {}
             }
         }
     }
