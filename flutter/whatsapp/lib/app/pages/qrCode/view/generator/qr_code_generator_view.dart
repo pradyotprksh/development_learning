@@ -44,7 +44,7 @@ class QrCodeGeneratorView extends StatelessWidget {
                         ),
                         color: Colors.white,
                       ),
-                      child: QrImage(
+                      child: QrImageView(
                         data: qrData,
                         padding: ThemeEdgeInsets.all40,
                       ),
