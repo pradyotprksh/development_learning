@@ -3,18 +3,16 @@ package com.pradyotprakash.themoviedbkmm.android.app.pages.discover.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.pradyotprakash.themoviedbkmm.data.models.DiscoverMovies
 import com.pradyotprakash.themoviedbkmm.data.models.DiscoverTv
 import com.pradyotprakash.themoviedbkmm.di.DiFactory
 import com.pradyotprakash.themoviedbkmm.presenter.DiscoverPresenter
 import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.supervisorScope
 
 class DiscoverViewModel(
     private val discoverPresenter: DiscoverPresenter = DiFactory.discoverPresenter,
-): ViewModel() {
+) : ViewModel() {
     private val _loading = MutableLiveData(false)
     val loading: LiveData<Boolean>
         get() = _loading

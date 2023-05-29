@@ -13,6 +13,7 @@ sealed interface Query {
         vote_count_asc("vote_count.asc"),
         vote_count_desc("vote_count.desc"),
     }
+
     enum class Movie(name: String, defaultValue: Any?) {
         certification("certification", null),
         certification_gte("certification.gte", null),

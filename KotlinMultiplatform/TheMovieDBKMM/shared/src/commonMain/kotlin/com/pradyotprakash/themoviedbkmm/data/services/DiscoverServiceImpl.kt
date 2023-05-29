@@ -8,7 +8,7 @@ import com.pradyotprakash.themoviedbkmm.data.models.DiscoverTv
 
 class DiscoverServiceImpl(
     private val networkClient: NetworkClient,
-): DiscoverService {
+) : DiscoverService {
     override suspend fun getMovies(): Result<DiscoverMovies> {
         return networkClient.get(
             details = RequestDetails(

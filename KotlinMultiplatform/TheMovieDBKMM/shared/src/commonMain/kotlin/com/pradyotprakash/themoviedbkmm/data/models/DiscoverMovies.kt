@@ -6,12 +6,12 @@ package com.pradyotprakash.themoviedbkmm.data.models
 // val welcome = json.parse(Welcome.serializer(), jsonString)
 
 import kotlinx.serialization.*
-import kotlinx.serialization.json.*
 import kotlinx.serialization.descriptors.*
 import kotlinx.serialization.encoding.*
+import kotlinx.serialization.json.*
 
 @Serializable
-data class DiscoverMovies (
+data class DiscoverMovies(
     val page: Long,
     val results: List<MovieResult>,
 
@@ -23,7 +23,7 @@ data class DiscoverMovies (
 )
 
 @Serializable
-data class MovieResult (
+data class MovieResult(
     val adult: Boolean,
 
     @SerialName("backdrop_path")

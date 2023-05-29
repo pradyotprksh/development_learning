@@ -17,7 +17,8 @@ kotlin {
     cocoapods {
         version = "1.0.0"
         summary = "Shared module for iOS and Android"
-        homepage = "https://github.com/pradyotprksh/development_learning/tree/main/KotlinMultiplatform/TheMovieDBKMM"
+        homepage =
+            "https://github.com/pradyotprksh/development_learning/tree/main/KotlinMultiplatform/TheMovieDBKMM"
         authors = "Pradyot Prakash"
         ios.deploymentTarget = "14.1"
         podfile = project.file("../iosApp/Podfile")
@@ -25,7 +26,8 @@ kotlin {
             baseName = "shared"
             isStatic = true
         }
-        extraSpecAttributes["resources"] = "['src/commonMain/resources/**', 'src/iosMain/resources/**']"
+        extraSpecAttributes["resources"] =
+            "['src/commonMain/resources/**', 'src/iosMain/resources/**']"
     }
 
     sourceSets {
@@ -94,7 +96,6 @@ android {
 
     defaultConfig {
         minSdk = (findProperty("android.minSdk") as String).toInt()
-        targetSdk = (findProperty("android.targetSdk") as String).toInt()
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
