@@ -143,7 +143,7 @@ fun PostFormView(
                     ),
                     maxLines = 15
                 )
-                Spacer(modifier = Modifier.weight(1f))
+                Box(modifier = Modifier.height(25.dp))
                 Button(
                     onClick = {
                         postCommentFormViewModel.sendPostComment(

@@ -11,6 +11,7 @@ import com.pradyotprakash.postscomments.core.auth.AuthStateListener
 import com.pradyotprakash.postscomments.core.navigator.Navigator
 import com.pradyotprakash.postscomments.core.navigator.Routes
 import com.pradyotprakash.postscomments.core.response.PostsCommentsResponse
+import com.pradyotprakash.postscomments.core.toast.ToastListener
 import com.pradyotprakash.postscomments.core.utils.PostCommentFormArguments
 import com.pradyotprakash.postscomments.domain.models.PostCompleteDetails
 import com.pradyotprakash.postscomments.domain.usecases.AuthenticationUseCase
@@ -28,6 +29,7 @@ class PostsViewModel @Inject constructor(
     private val navigator: Navigator,
     private val postUseCase: PostUseCase,
     private val commentUseCase: CommentUseCase,
+    private val toastListener: ToastListener
 ) : ViewModel() {
     private val _loading = MutableLiveData(false)
     val loading: LiveData<Boolean>
@@ -78,7 +80,10 @@ class PostsViewModel @Inject constructor(
             postUseCase.deletePost(postId = postId).collect {
                 when (it) {
                     is PostsCommentsResponse.Error -> updateErrorState(it.exception.message)
-                    is PostsCommentsResponse.Success -> deleteComments(postId)
+                    is PostsCommentsResponse.Success -> {
+                        toastListener.showToast(TR.postDeleted)
+                        deleteComments(postId)
+                    }
                     else -> {}
                 }
             }

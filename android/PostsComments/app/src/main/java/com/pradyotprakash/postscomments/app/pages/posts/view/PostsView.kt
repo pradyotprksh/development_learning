@@ -1,18 +1,22 @@
 package com.pradyotprakash.postscomments.app.pages.posts.view
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.calculateEndPadding
 import androidx.compose.foundation.layout.calculateStartPadding
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.ExitToApp
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -31,6 +35,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -39,6 +45,7 @@ import com.pradyotprakash.postscomments.app.composables.PageStateComposable
 import com.pradyotprakash.postscomments.app.composables.PostDetailsComposable
 import com.pradyotprakash.postscomments.app.localization.TR
 import com.pradyotprakash.postscomments.app.pages.posts.viewmodel.PostsViewModel
+import com.pradyotprakash.postscomments.app.utils.Assets
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -67,7 +74,12 @@ fun PostsView(
             topBar = {
                 TopAppBar(
                     title = {
-                        Text(text = TR.appName)
+                        Text(
+                            text = TR.appName,
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier.fillMaxWidth(),
+                            color = MaterialTheme.colorScheme.primary
+                        )
                     },
                     actions = {
                         IconButton(
@@ -76,8 +88,17 @@ fun PostsView(
                             Icon(
                                 imageVector = Icons.Default.ExitToApp,
                                 contentDescription = Icons.Default.ExitToApp.name,
+                                tint = MaterialTheme.colorScheme.primary
                             )
                         }
+                    },
+                    navigationIcon = {
+                        Image(
+                            painter = painterResource(id = Assets.AppIcon.resourceId),
+                            contentDescription = Assets.AppIcon.imageDescription,
+                            modifier = Modifier
+                                .size(50.dp)
+                        )
                     }
                 )
             },
@@ -92,11 +113,9 @@ fun PostsView(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Icon(
-                            imageVector = Icons.Default.Edit,
-                            contentDescription = Icons.Default.Edit.name,
+                            imageVector = Icons.Default.Add,
+                            contentDescription = Icons.Default.Add.name,
                         )
-                        Box(modifier = Modifier.width(5.dp))
-                        Text(text = TR.createPost)
                     }
                 }
             }

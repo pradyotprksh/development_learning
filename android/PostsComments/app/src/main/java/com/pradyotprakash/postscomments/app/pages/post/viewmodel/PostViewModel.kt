@@ -9,6 +9,7 @@ import com.pradyotprakash.postscomments.app.localization.TR
 import com.pradyotprakash.postscomments.core.navigator.Navigator
 import com.pradyotprakash.postscomments.core.navigator.Routes
 import com.pradyotprakash.postscomments.core.response.PostsCommentsResponse
+import com.pradyotprakash.postscomments.core.toast.ToastListener
 import com.pradyotprakash.postscomments.core.utils.PostCommentFormArguments
 import com.pradyotprakash.postscomments.domain.models.CommentCompleteDetails
 import com.pradyotprakash.postscomments.domain.usecases.AuthenticationUseCase
@@ -24,6 +25,7 @@ class PostViewModel @Inject constructor(
     private val postUseCase: PostUseCase,
     private val commentUseCase: CommentUseCase,
     private val authenticationUseCase: AuthenticationUseCase,
+    private val toastListener: ToastListener,
 ) : ViewModel() {
     private val _loading = MutableLiveData(false)
     val loading: LiveData<Boolean>
@@ -107,6 +109,9 @@ class PostViewModel @Inject constructor(
             commentUseCase.deleteComment(commentId = commentId).collect {
                 when (it) {
                     is PostsCommentsResponse.Error -> updateErrorState(it.exception.message)
+                    is PostsCommentsResponse.Success -> {
+                        toastListener.showToast(TR.commentDeleted)
+                    }
                     else -> {}
                 }
             }

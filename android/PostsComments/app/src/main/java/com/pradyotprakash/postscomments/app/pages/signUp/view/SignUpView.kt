@@ -20,6 +20,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
@@ -28,6 +29,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.pradyotprakash.postscomments.app.composables.PageStateComposable
@@ -41,6 +43,8 @@ fun SignUpView(
     signUpViewModel: SignUpViewModel = hiltViewModel()
 ) {
     val loading by signUpViewModel.loading.observeAsState(false)
+    val isEmailWrong by signUpViewModel.isEmailWrong.observeAsState(false)
+    val isPasswordSame by signUpViewModel.isPasswordSame.observeAsState(true)
     val enableRegister by signUpViewModel.enableRegister.observeAsState(false)
     val error by signUpViewModel.error.observeAsState("")
     val emailAddress by signUpViewModel.emailAddress.observeAsState("")
@@ -58,28 +62,32 @@ fun SignUpView(
                 .fillMaxSize()
                 .padding(15.dp),
         ) {
-            Box(
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Icon(
-                    imageVector = Icons.Default.ArrowBack,
-                    contentDescription = Icons.Default.ArrowBack.name,
-                    modifier = Modifier.clickable {
-                        signUpViewModel.goToLoginScreen()
-                    }
-                )
-                Image(
-                    painter = painterResource(id = Assets.AppIcon.resourceId),
-                    contentDescription = Assets.AppIcon.imageDescription,
-                    modifier = Modifier
-                        .size(100.dp)
-                        .align(Alignment.Center)
-                )
-            }
+            TopAppBar(
+                title = {},
+                navigationIcon = {
+                    Icon(
+                        imageVector = Icons.Default.ArrowBack,
+                        contentDescription = Icons.Default.ArrowBack.name,
+                        modifier = Modifier.clickable {
+                            signUpViewModel.goToLoginScreen()
+                        }
+                    )
+                },
+            )
+            Image(
+                painter = painterResource(id = Assets.AppIcon.resourceId),
+                contentDescription = Assets.AppIcon.imageDescription,
+                modifier = Modifier
+                    .size(150.dp)
+                    .fillMaxWidth()
+                    .align(Alignment.CenterHorizontally)
+            )
             Box(modifier = Modifier.height(30.dp))
             Text(
                 text = TR.signingUp,
-                style = MaterialTheme.typography.headlineMedium
+                style = MaterialTheme.typography.headlineMedium,
+                textAlign = TextAlign.Center,
+                modifier = Modifier.fillMaxWidth()
             )
             Box(modifier = Modifier.height(30.dp))
             OutlinedTextField(
@@ -107,7 +115,16 @@ fun SignUpView(
                 },
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Email
-                )
+                ),
+                isError = isEmailWrong,
+                supportingText = {
+                    if (isEmailWrong) {
+                        Text(
+                            text = TR.validEmailAddress,
+                            color = MaterialTheme.colorScheme.error
+                        )
+                    }
+                }
             )
             Box(modifier = Modifier.height(5.dp))
             OutlinedTextField(
@@ -138,8 +155,17 @@ fun SignUpView(
                     keyboardType = KeyboardType.Password
                 ),
                 visualTransformation = PasswordVisualTransformation(),
+                isError = !isPasswordSame,
+                supportingText = {
+                    if (!isPasswordSame) {
+                        Text(
+                            text = TR.passwordNotMatch,
+                            color = MaterialTheme.colorScheme.error
+                        )
+                    }
+                }
             )
-            Box(modifier = Modifier.height(15.dp))
+            Box(modifier = Modifier.height(30.dp))
             Button(
                 onClick = signUpViewModel::registerUser,
                 modifier = Modifier.fillMaxWidth(),
@@ -147,10 +173,8 @@ fun SignUpView(
             ) {
                 Text(text = TR.register)
             }
-            Box(modifier = Modifier.height(30.dp))
             TextButton(
                 onClick = signUpViewModel::goToLoginScreen,
-                modifier = Modifier.fillMaxWidth()
             ) {
                 Text(text = TR.alreadyHaveAccount)
             }

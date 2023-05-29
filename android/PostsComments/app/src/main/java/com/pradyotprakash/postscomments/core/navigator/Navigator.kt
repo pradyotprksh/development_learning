@@ -17,10 +17,4 @@ class Navigator @Inject constructor() {
     fun navigate(navigationAction: NavigationAction) {
         _navigateActions.postValue(navigationAction)
     }
-
-    fun navigateBack() {
-        navigate {
-            it.popBackStack()
-        }
-    }
 }

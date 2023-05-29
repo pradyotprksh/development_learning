@@ -2,13 +2,13 @@
   "appName": "Post Comments",
   "okay": "Okay",
   "noDataFoundError": "We were not able to find any data, please try again.",
-  "welcomeToApp": "Welcome To App",
+  "welcomeToApp": "Welcome To %s",
   "email": "Email Address",
   "password": "Password",
   "confirmPassword": "Confirm Password",
   "login": "Login",
   "register": "Register",
-  "signUp": "Don't Have An Account? Create One.",
+  "signUp": "Create an account?",
   "signingUp": "Signing Up",
   "alreadyHaveAccount": "Already have an account?",
   "confirmLogout": "Are you sure you want to logout?",
@@ -25,5 +25,10 @@
   "comments": "Comments",
   "add": "Add",
   "createComment": "Create Comment",
-  "commentEditing": "Comment Editing"
+  "commentEditing": "Comment Editing",
+  "forgotPassword": "Forgot Password?",
+  "validEmailAddress": "Enter valid email address",
+  "passwordNotMatch": "Password doesn't match",
+  "postDeleted": "Post deleted successfully",
+  "commentDeleted": "Comment deleted successfully"
 }

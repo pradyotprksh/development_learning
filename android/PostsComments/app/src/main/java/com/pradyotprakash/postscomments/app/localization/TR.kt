@@ -28,5 +28,10 @@ object TR {
     var add = Translation.getString("add")
     var createComment = Translation.getString("createComment")
     var commentEditing = Translation.getString("commentEditing")
-
+    var forgotPassword = Translation.getString("forgotPassword")
+    var validEmailAddress = Translation.getString("validEmailAddress")
+    var passwordNotMatch = Translation.getString("passwordNotMatch")
+    var postDeleted = Translation.getString("postDeleted")
+    var commentDeleted = Translation.getString("commentDeleted")
+    
 }

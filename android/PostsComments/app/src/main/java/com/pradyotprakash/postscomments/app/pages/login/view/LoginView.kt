@@ -1,8 +1,10 @@
 package com.pradyotprakash.postscomments.app.pages.login.view
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -26,6 +28,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.pradyotprakash.postscomments.app.composables.PageStateComposable
@@ -39,6 +42,7 @@ fun LoginView(
     loginViewModel: LoginViewModel = hiltViewModel()
 ) {
     val loading by loginViewModel.loading.observeAsState(false)
+    val isEmailWrong by loginViewModel.isEmailWrong.observeAsState(false)
     val enableLogin by loginViewModel.enableLogin.observeAsState(false)
     val error by loginViewModel.error.observeAsState("")
     val emailAddress by loginViewModel.emailAddress.observeAsState("")
@@ -64,8 +68,13 @@ fun LoginView(
             )
             Box(modifier = Modifier.height(30.dp))
             Text(
-                text = TR.welcomeToApp,
-                style = MaterialTheme.typography.headlineMedium
+                text = String.format(
+                    TR.welcomeToApp,
+                    TR.appName
+                ),
+                style = MaterialTheme.typography.headlineMedium,
+                modifier = Modifier.fillMaxWidth(),
+                textAlign = TextAlign.Center
             )
             Box(modifier = Modifier.height(30.dp))
             OutlinedTextField(
@@ -79,7 +88,16 @@ fun LoginView(
                 },
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Email
-                )
+                ),
+                isError = isEmailWrong,
+                supportingText = {
+                    if (isEmailWrong) {
+                        Text(
+                            text = TR.validEmailAddress,
+                            color = MaterialTheme.colorScheme.error
+                        )
+                    }
+                }
             )
             Box(modifier = Modifier.height(5.dp))
             OutlinedTextField(
@@ -96,7 +114,7 @@ fun LoginView(
                 ),
                 visualTransformation = PasswordVisualTransformation(),
             )
-            Box(modifier = Modifier.height(15.dp))
+            Box(modifier = Modifier.height(25.dp))
             Button(
                 onClick = loginViewModel::loginUser,
                 modifier = Modifier.fillMaxWidth(),
@@ -104,12 +122,20 @@ fun LoginView(
             ) {
                 Text(text = TR.login)
             }
-            Box(modifier = Modifier.height(30.dp))
-            TextButton(
-                onClick = loginViewModel::goToRegisterScreen,
+            Row(
+                horizontalArrangement = Arrangement.SpaceBetween,
                 modifier = Modifier.fillMaxWidth()
             ) {
-                Text(text = TR.signUp)
+                TextButton(
+                    onClick = {},
+                ) {
+                    Text(text = TR.forgotPassword)
+                }
+                TextButton(
+                    onClick = loginViewModel::goToRegisterScreen,
+                ) {
+                    Text(text = TR.signUp)
+                }
             }
             Spacer(modifier = Modifier.weight(1f))
         }

@@ -42,6 +42,9 @@ class LoginViewModel @Inject constructor(
     private val _enableLogin = MutableLiveData(false)
     val enableLogin: LiveData<Boolean>
         get() = _enableLogin
+    private val _isEmailWrong = MutableLiveData(false)
+    val isEmailWrong: LiveData<Boolean>
+        get() = _isEmailWrong
 
     fun updateErrorState(message: String? = "") {
         _loading.value = false
@@ -50,7 +53,10 @@ class LoginViewModel @Inject constructor(
 
     fun updateValue(value: String, fieldType: FieldType) {
         when (fieldType) {
-            FieldType.Email -> _emailAddress.value = value
+            FieldType.Email -> {
+                _emailAddress.value = value
+                _isEmailWrong.value = !value.isValidEmailAddress()
+            }
             FieldType.Password -> _password.value = value
         }
 
@@ -58,11 +64,10 @@ class LoginViewModel @Inject constructor(
     }
 
     private fun areFieldsCorrect() {
-        val emailAddress = _emailAddress.value ?: ""
         val password = _password.value ?: ""
 
         _enableLogin.value =
-            emailAddress.isValidEmailAddress() &&
+            _isEmailWrong.value == false &&
                     password.trim().isNotEmpty()
     }
 

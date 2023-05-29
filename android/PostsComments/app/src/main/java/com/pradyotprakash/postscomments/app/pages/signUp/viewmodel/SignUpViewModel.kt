@@ -48,6 +48,12 @@ class SignUpViewModel @Inject constructor(
     private val _enableRegister = MutableLiveData(false)
     val enableRegister: LiveData<Boolean>
         get() = _enableRegister
+    private val _isEmailWrong = MutableLiveData(false)
+    val isEmailWrong: LiveData<Boolean>
+        get() = _isEmailWrong
+    private val _isPasswordSame = MutableLiveData(true)
+    val isPasswordSame: LiveData<Boolean>
+        get() = _isPasswordSame
 
     fun updateErrorState(message: String? = "") {
         _loading.value = false
@@ -56,9 +62,21 @@ class SignUpViewModel @Inject constructor(
 
     fun updateValue(value: String, fieldType: FieldType) {
         when (fieldType) {
-            FieldType.Email -> _emailAddress.value = value
-            FieldType.Password -> _password.value = value
-            FieldType.ConfirmPassword -> _confirmPassword.value = value
+            FieldType.Email -> {
+                _emailAddress.value = value
+                _isEmailWrong.value = !value.isValidEmailAddress()
+            }
+            FieldType.Password -> {
+                _password.value = value
+                val confirmPasswordValue = _confirmPassword.value ?: ""
+                if (confirmPasswordValue.isNotEmpty()) {
+                    _isPasswordSame.value = _confirmPassword.value == value
+                }
+            }
+            FieldType.ConfirmPassword -> {
+                _confirmPassword.value = value
+                _isPasswordSame.value = _password.value == value
+            }
             FieldType.Name -> _name.value = value
         }
 
@@ -66,17 +84,16 @@ class SignUpViewModel @Inject constructor(
     }
 
     private fun areFieldsCorrect() {
-        val emailAddress = _emailAddress.value ?: ""
         val password = _password.value ?: ""
         val confirmPassword = _confirmPassword.value ?: ""
         val name = _name.value ?: ""
 
         _enableRegister.value =
-            emailAddress.isValidEmailAddress() &&
+            _isEmailWrong.value != true &&
                     name.trim().isNotEmpty() &&
                     password.trim().isNotEmpty() &&
                     confirmPassword.trim().isNotEmpty() &&
-                    password == confirmPassword
+                    _isPasswordSame.value == true
     }
 
     fun registerUser() {

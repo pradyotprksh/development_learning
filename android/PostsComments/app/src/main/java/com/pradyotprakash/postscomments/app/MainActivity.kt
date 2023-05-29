@@ -1,6 +1,7 @@
 package com.pradyotprakash.postscomments.app
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
@@ -26,6 +27,7 @@ import com.pradyotprakash.postscomments.core.auth.AuthStateListener
 import com.pradyotprakash.postscomments.core.navigator.Navigator
 import com.pradyotprakash.postscomments.core.navigator.Routes
 import com.pradyotprakash.postscomments.core.navigator.path
+import com.pradyotprakash.postscomments.core.toast.ToastListener
 import com.pradyotprakash.postscomments.core.utils.PostArguments
 import com.pradyotprakash.postscomments.core.utils.PostCommentFormArguments
 import dagger.hilt.android.AndroidEntryPoint
@@ -35,9 +37,10 @@ import javax.inject.Inject
 class MainActivity : ComponentActivity() {
     @Inject
     lateinit var navigator: Navigator
-
     @Inject
     lateinit var authStateListener: AuthStateListener
+    @Inject
+    lateinit var toastListener: ToastListener
 
     private lateinit var navController: NavHostController
 
@@ -113,7 +116,14 @@ class MainActivity : ComponentActivity() {
         Translation.updateLocalizationMap(context = this)
 
         startAuthStateListener()
+        startToastListener()
         navigationChangeListener()
+    }
+
+    private fun startToastListener() {
+        toastListener.toastAction.observe(this) {
+            Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun startAuthStateListener() {

@@ -39,6 +39,8 @@ class PostCommentFormViewModel @Inject constructor(
     private val _enableSend = MutableLiveData(false)
     val enableSend: LiveData<Boolean>
         get() = _enableSend
+    private var actualTitle = ""
+    private var actualText = ""
 
     fun updateErrorState(message: String? = "") {
         _loading.value = false
@@ -61,12 +63,23 @@ class PostCommentFormViewModel @Inject constructor(
     }
 
     private fun areFieldsCorrect(formType: String) {
-        val title = _title.value ?: ""
-        val text = _text.value ?: ""
+        val title = (_title.value ?: "").trim()
+        val text = (_text.value ?: "").trim()
 
-        _enableSend.value = (
-                formType == PostCommentFormArguments.commentForm || title.trim().isNotEmpty()
-                ) && text.trim().isNotEmpty()
+        _enableSend.value =
+            (formType == PostCommentFormArguments.commentForm || title.isNotEmpty()) && text.isNotEmpty()
+
+        if (_enableSend.value == true) {
+            if (formType == PostCommentFormArguments.commentForm) {
+                if (actualText.isNotEmpty()) {
+                    _enableSend.value = actualText != text
+                }
+            } else {
+                if (actualTitle.isNotEmpty() && actualText.isNotEmpty()) {
+                    _enableSend.value = actualTitle != title || actualText != text
+                }
+            }
+        }
     }
 
     fun sendPostComment(postId: String, commentId: String, formType: String) {
@@ -139,6 +152,8 @@ class PostCommentFormViewModel @Inject constructor(
                             PostsCommentsResponse.Idle -> _loading.value = false
                             PostsCommentsResponse.Loading -> _loading.value = true
                             is PostsCommentsResponse.Success -> {
+                                actualTitle = it.data.title
+                                actualText = it.data.text
                                 _text.value = it.data.text
                                 _title.value = it.data.title
                             }
@@ -153,6 +168,7 @@ class PostCommentFormViewModel @Inject constructor(
                             PostsCommentsResponse.Idle -> _loading.value = false
                             PostsCommentsResponse.Loading -> _loading.value = true
                             is PostsCommentsResponse.Success -> {
+                                actualText = it.data.comment
                                 _text.value = it.data.comment
                             }
                         }
