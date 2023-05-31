@@ -436,6 +436,24 @@ Coroutines in Kotlin are lightweight because they are implemented on top of thre
 
 In summary, coroutines are lightweight because they allow for cooperative multitasking, which is implemented by suspending and resuming the execution of code without the need to allocate a new thread or call stack for each coroutine.
 
+## Why coroutines are called lightweight threads?
+
+Coroutines are often referred to as "lightweight threads" because they provide a way to perform concurrent or asynchronous programming in a more efficient and resource-friendly manner compared to traditional threads.
+
+Here are a few reasons why coroutines are considered lightweight:
+
+1. Concurrency without Thread Overhead: Unlike traditional threads, which are relatively expensive in terms of memory usage and context switching overhead, coroutines are much lighter. Coroutines are implemented as cooperative tasks that can be scheduled on a limited number of actual threads. Multiple coroutines can run on the same thread, allowing efficient concurrency without the overhead of creating and managing numerous threads.
+
+2. Scalability: Coroutines are designed to be highly scalable, allowing you to create and manage thousands of concurrent coroutines within an application without the resource limitations typically associated with creating an equivalent number of threads. Coroutines can efficiently utilize the available threads and automatically adjust the number of active coroutines based on the workload.
+
+3. Coroutine Suspension: Coroutines support suspension points where a coroutine can temporarily suspend its execution, releasing the underlying thread to perform other tasks. When a coroutine is suspended, it doesn't block the thread; instead, it frees up the thread to execute other coroutines or perform other tasks. This allows efficient utilization of system resources and prevents unnecessary thread blocking.
+
+4. Lightweight Context Switching: When a coroutine is suspended and later resumed, the context switch between coroutines is lightweight compared to the heavier context switching involved in traditional thread-based concurrency. This contributes to improved performance and responsiveness in coroutine-based applications.
+
+5. Simplified Synchronization: Coroutines provide built-in mechanisms for synchronization and coordination, such as `suspend` functions, `async/await` constructs, and coroutine scopes. These abstractions simplify the handling of shared mutable state and avoid the need for low-level synchronization primitives like locks and semaphores, reducing the complexity and potential for errors in concurrent programming.
+
+Overall, coroutines offer a lightweight and efficient approach to concurrent programming by utilizing cooperative multitasking, efficient context switching, and optimized resource utilization. This makes them well-suited for tasks that involve concurrent operations, asynchronous programming, and responsive user interfaces.
+
 ## What are Dispatchers()
 
 In Kotlin coroutines, a Dispatcher is an entity that controls the execution of coroutines. It determines which thread or threads a coroutine will run on and manages the switching of execution between different threads. 
