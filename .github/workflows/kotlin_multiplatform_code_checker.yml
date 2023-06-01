@@ -8,7 +8,7 @@ name: KotlinMultiplatform Projects
 jobs:
   TheMovieDBKMM:
     name: TheMovieDBKMM Code Checker
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     steps:
       - name: Cancel Previous Runs
         uses: styfle/cancel-workflow-action@0.9.1
@@ -34,7 +34,7 @@ jobs:
             GitHub Action for KotlinMultiplatform/TheMovieDBKMM is completed with status ${{ job.status }} for ${{ github.ref }}.
   KotlinMultiplatformSandbox:
     name: KotlinMultiplatformSandbox Code Checker
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     steps:
       - name: Cancel Previous Runs
         uses: styfle/cancel-workflow-action@0.9.1
@@ -48,6 +48,32 @@ jobs:
           cache: gradle
       - name: Checking KotlinMultiplatformSandbox
         working-directory: ./KotlinMultiplatform/KotlinMultiplatformSandbox
+        run: |
+          chmod +x ./gradlew
+          ./gradlew assemble
+      - name: Send Message
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+            GitHub Action for KotlinMultiplatform/KotlinMultiplatformSandbox is completed with status ${{ job.status }} for ${{ github.ref }}.
+  Jwitter:
+    name: Jwitter Code Checker
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cancel Previous Runs
+        uses: styfle/cancel-workflow-action@0.9.1
+        with:
+          access_token: ${{ github.token }}
+      - uses: actions/checkout@v2
+      - uses: actions/setup-java@v1
+        with:
+          java-version: '11'
+          distribution: 'adopt'
+          cache: gradle
+      - name: Checking Jwitter
+        working-directory: ./KotlinMultiplatform/Jwitter
         run: |
           chmod +x ./gradlew
           ./gradlew assemble
