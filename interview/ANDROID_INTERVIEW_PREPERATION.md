@@ -1037,3 +1037,26 @@ Design systems, in general, are a set of rules, principles, and guidelines that 
 
 In the context of Android development, Material Design is a design system that provides a set of guidelines and principles for designing visually appealing and intuitive user interfaces. Android developers can use Material Design themes and components to ensure that their apps are consistent with the overall Android ecosystem and provide a seamless and familiar experience for users.
 
+# What does minifyEnabled do?
+
+When `minifyEnabled` is set to `true` in an Android project's build configuration, it enables the code minification process during the build. Minification is a technique used to reduce the size of the compiled code and improve the app's performance and security.
+
+When `minifyEnabled` is enabled, the following actions are performed:
+
+1. Code shrinking: The code shrinker, such as ProGuard or R8, analyzes the code and removes unused classes, fields, and methods from the final APK. This helps reduce the size of the APK by removing unused code, which can lead to smaller download and installation sizes.
+
+2. Name obfuscation: The code shrinker also obfuscates the remaining code by renaming classes, methods, and fields to shorter, less descriptive names. This makes it harder for reverse engineering and protects sensitive information. It replaces the original names with meaningless names, such as single letters or numbers, but preserves the functionality and references within the code.
+
+3. Resource shrinking: The code shrinker also removes unused resources, such as layouts, drawables, or strings, from the APK. This helps further reduce the size of the APK by eliminating resources that are not referenced or used in the app.
+
+Enabling `minifyEnabled` is generally recommended for release builds to optimize the app size and protect the code from reverse engineering. However, it requires proper configuration and testing to ensure that the code and resources are not mistakenly removed or obfuscated, causing runtime issues or breaking functionality.
+
+Note that `minifyEnabled` does not affect the debugging experience or the behavior of the app during development. It only impacts the final APK generated for distribution.
+
+It is not mandatory for `minifyEnabled` to be set to `true`. The decision to enable or disable code minification depends on your specific requirements and considerations.
+
+Setting `minifyEnabled` to `true` is typically done for release builds to optimize the app size and protect the code from reverse engineering. It is recommended to enable code minification for production-ready APKs.
+
+However, during development or for certain debugging scenarios, you might want to disable code minification by setting `minifyEnabled` to `false`. This allows for easier debugging and inspection of the code, as the original class and method names are retained.
+
+Ultimately, the choice of whether to enable or disable `minifyEnabled` depends on factors such as the desired APK size, performance considerations, security requirements, and debugging needs. You can evaluate these factors and make an informed decision based on the specific needs of your project.
