@@ -1,13 +1,13 @@
 {
   "name": "shared",
-  "version": "1.0",
-  "homepage": "Link to the Shared Module homepage",
+  "version": "1.0.0",
+  "homepage": "https://github.com/pradyotprksh/development_learning/tree/main/KotlinMultiplatform/Jwitter",
   "source": {
     "http": ""
   },
-  "authors": "",
+  "authors": "Pradyot Prakash",
   "license": "",
-  "summary": "Some description for the Shared Module",
+  "summary": "Shared module for iOS and Android",
   "vendored_frameworks": "build/cocoapods/framework/shared.framework",
   "libraries": "c++",
   "platforms": {
@@ -24,5 +24,9 @@
       "shell_path": "/bin/sh",
       "script": "                if [ \"YES\" = \"$OVERRIDE_KOTLIN_BUILD_IDE_SUPPORTED\" ]; then\n                  echo \"Skipping Gradle build task invocation due to OVERRIDE_KOTLIN_BUILD_IDE_SUPPORTED environment variable set to \"YES\"\"\n                  exit 0\n                fi\n                set -ev\n                REPO_ROOT=\"$PODS_TARGET_SRCROOT\"\n                \"$REPO_ROOT/../gradlew\" -p \"$REPO_ROOT\" $KOTLIN_PROJECT_PATH:syncFramework                     -Pkotlin.native.cocoapods.platform=$PLATFORM_NAME                     -Pkotlin.native.cocoapods.archs=\"$ARCHS\"                     -Pkotlin.native.cocoapods.configuration=\"$CONFIGURATION\"\n"
     }
+  ],
+  "resources": [
+    "src/commonMain/resources/**",
+    "src/iosMain/resources/**"
   ]
 }
