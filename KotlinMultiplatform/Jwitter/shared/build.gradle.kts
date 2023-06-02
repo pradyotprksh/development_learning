@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.jetbrains.compose)
     kotlin("multiplatform")
     kotlin("native.cocoapods")
+    kotlin("plugin.serialization") version libs.versions.serialization
 }
 
 kotlin {
