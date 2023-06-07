@@ -1,0 +1,4 @@
+appwrite
+flask
+flask-restful
+validate_email
