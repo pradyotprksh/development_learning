@@ -370,7 +370,10 @@ Note that some of these methods may not be called in certain situations, dependi
 ## Services
 
 [Read more here](https://developer.android.com/guide/components/services)
+
 [`<service>` tag details](https://developer.android.com/guide/topics/manifest/service-element)
+
+[Details about Bound Service](https://developer.android.com/guide/components/bound-services)
 
 In Android, a Service is an application component that performs long-running operations in the background without a user interface. A Service runs in the background and can perform tasks even when the user is not interacting with the app. Services can be used for various purposes, such as playing music in the background, downloading data, or performing network operations.
 
@@ -407,10 +410,37 @@ To create a service in Android, you can follow these steps:
 Here's an example of how to create a basic service in Android:
 
 ```kotlin
-class MyService : Service() {
+class ExampleService : Service() {
+    private var startMode: Int = 0             // indicates how to behave if the service is killed
+    private var binder: IBinder? = null        // interface for clients that bind
+    private var allowRebind: Boolean = false   // indicates whether onRebind should be used
+
+    override fun onCreate() {
+        // The service is being created
+    }
+
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        // The service is starting, due to a call to startService()
+        return startMode
+    }
+
     override fun onBind(intent: Intent): IBinder? {
-        // Implement your service logic here
-        return null
+        // A client is binding to the service with bindService()
+        return binder
+    }
+
+    override fun onUnbind(intent: Intent): Boolean {
+        // All clients have unbound with unbindService()
+        return allowRebind
+    }
+
+    override fun onRebind(intent: Intent) {
+        // A client is binding to the service with bindService(),
+        // after onUnbind() has already been called
+    }
+
+    override fun onDestroy() {
+        // The service is no longer used and is being destroyed
     }
 }
 ```
@@ -1091,6 +1121,11 @@ However, during development or for certain debugging scenarios, you might want t
 
 Ultimately, the choice of whether to enable or disable `minifyEnabled` depends on factors such as the desired APK size, performance considerations, security requirements, and debugging needs. You can evaluate these factors and make an informed decision based on the specific needs of your project.
 
+# ConstraintLayout
+
+[Read here](https://developer.android.com/develop/ui/views/layout/constraint-layout)
+
 # Useful Articles
 
 * [things-that-cannot-change](https://android-developers.googleblog.com/2011/06/things-that-cannot-change.html)
+* [background](https://developer.android.com/guide/background)
