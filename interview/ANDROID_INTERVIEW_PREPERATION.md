@@ -2,7 +2,10 @@ Some topics that you should consider learning or refreshing your knowledge on:
 
 1. Architecture components: This includes understanding and implementing MVVM, LiveData, Room, and other components.
 
-2. Jetpack: Familiarize yourself with Jetpack components such as Navigation, Paging, WorkManager, and CameraX.
+2. Jetpack: Familiarize yourself with Jetpack components such as Navigation, Paging, 
+
+
+, and CameraX.
 
 3. Dependency Injection: Learn about frameworks such as Dagger, Hilt, or Koin.
 
@@ -39,6 +42,30 @@ The Architecture Components include:
 6. Navigation - Navigation is a library that simplifies the process of navigating between different screens in an app. It provides a visual editor that allows developers to create a navigation graph that defines the relationships between different screens in the app.
 
 Overall, the Architecture Components provide a set of tools and best practices that can help developers build high-quality Android apps with less boilerplate code and fewer bugs. By using these components, developers can focus on writing clean, concise, and testable code, which leads to more efficient and maintainable apps.
+
+### WorkManager
+
+[Learn more here](https://developer.android.com/topic/libraries/architecture/workmanager)
+
+WorkManager is a library in Android Jetpack that makes it easy to schedule deferrable, asynchronous tasks that must be run reliably. These tasks can be anything from syncing data with a server to sending analytics to a backend service. WorkManager ensures that these tasks are always run, even if the user navigates away from the app, the app is killed, or the device is rebooted.
+
+WorkManager uses a number of features to ensure that tasks are run reliably, including:
+
+* **Constraints:** You can specify constraints on when and where a task can be run. For example, you can specify that a task can only be run when the device is connected to Wi-Fi.
+* **Retry:** If a task fails, WorkManager will retry it a specified number of times.
+* **Backoff:** If a task fails repeatedly, WorkManager will increase the amount of time between retries.
+* **Wakeful:** WorkManager ensures that tasks are run even when the device is in Doze mode.
+
+WorkManager is a powerful tool that can help you ensure that your app's tasks are always run reliably. It is a great choice for any app that needs to perform background tasks.
+
+Here are some examples of how you can use WorkManager:
+
+* **Sync data with a server:** WorkManager can be used to sync data with a server, such as user data or app settings. This ensures that the user's data is always up-to-date, even if the app is not running.
+* **Send analytics to a backend service:** WorkManager can be used to send analytics to a backend service, such as Google Analytics. This allows you to track how users are using your app and identify areas where you can improve the user experience.
+* **Download files:** WorkManager can be used to download files, such as images or videos. This ensures that the files are downloaded even if the user is not actively using the app.
+* **Run tasks when the device boots up:** WorkManager can be used to run tasks when the device boots up. This is useful for tasks such as syncing data with a server or sending analytics to a backend service.
+
+WorkManager is a powerful tool that can help you make your app more reliable and efficient. If you need to perform background tasks in your app, I encourage you to use WorkManager.
 
 ## LiveData
 
@@ -341,6 +368,9 @@ Here is the sequence of the Activity lifecycle methods:
 Note that some of these methods may not be called in certain situations, depending on how the activity is being used. For example, if the activity is being destroyed due to a configuration change (such as a screen rotation), `onDestroy()` will not be called, but `onPause()` and `onResume()` will be called.
 
 ## Services
+
+[Read more here](https://developer.android.com/guide/components/services)
+[`<service>` tag details](https://developer.android.com/guide/topics/manifest/service-element)
 
 In Android, a Service is an application component that performs long-running operations in the background without a user interface. A Service runs in the background and can perform tasks even when the user is not interacting with the app. Services can be used for various purposes, such as playing music in the background, downloading data, or performing network operations.
 
@@ -1060,3 +1090,7 @@ Setting `minifyEnabled` to `true` is typically done for release builds to optimi
 However, during development or for certain debugging scenarios, you might want to disable code minification by setting `minifyEnabled` to `false`. This allows for easier debugging and inspection of the code, as the original class and method names are retained.
 
 Ultimately, the choice of whether to enable or disable `minifyEnabled` depends on factors such as the desired APK size, performance considerations, security requirements, and debugging needs. You can evaluate these factors and make an informed decision based on the specific needs of your project.
+
+# Useful Articles
+
+* [things-that-cannot-change](https://android-developers.googleblog.com/2011/06/things-that-cannot-change.html)
