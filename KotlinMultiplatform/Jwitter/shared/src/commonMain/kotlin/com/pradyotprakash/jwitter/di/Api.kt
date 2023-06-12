@@ -26,13 +26,7 @@ object Api {
         }
         install(Logging) {
             logger = Logger.DEFAULT
-            level = LogLevel.HEADERS
-            filter { request ->
-                request.url.host.contains("ktor.io")
-            }
-        }
-        defaultRequest {
-            header("accept", "application/json")
+            level = LogLevel.ALL
         }
     }.also { Napier.base(DebugAntilog()) }
 }
