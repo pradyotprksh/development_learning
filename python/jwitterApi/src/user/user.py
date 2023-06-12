@@ -7,6 +7,7 @@ get, update, etc.
 This will help in making the api file cleaner and making the refactoring easy.
 """
 from flask_restful import Resource
+
 from src.utils.constants import Endpoints
 
 

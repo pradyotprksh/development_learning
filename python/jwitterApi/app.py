@@ -7,6 +7,7 @@ Also helps in start the application and make it usable by external applications.
 """
 from flask import Flask
 from flask_restful import Api
+
 from src import User
 
 # Create flask app object
