@@ -1,7 +1,7 @@
 package com.pradyotprakash.jwitter.core.models
 
 data class RequestDetails(
-    val baseUrl: String = "http://192.168.1.35:5000",
+    val baseUrl: String = "http://192.168.1.34:5000",
     val appName: String = "jwitter",
     val version: String = "v1",
     val endpoint: String,

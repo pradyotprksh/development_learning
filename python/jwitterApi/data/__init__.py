@@ -1,1 +1,1 @@
-from confidential.app_write_details import ProjectDetails
+from .confidential.app_write_details import ProjectDetails

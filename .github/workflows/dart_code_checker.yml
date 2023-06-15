@@ -31,6 +31,32 @@ jobs:
           token: ${{ secrets.TELEGRAM_TOKEN }}
           message: |
             GitHub Action for dart/open_ai is completed with status ${{ job.status }} for ${{ github.ref }}.
+  ip_address:
+    name: ip_address Code Checker
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cancel Previous Runs
+        uses: styfle/cancel-workflow-action@0.9.1
+        with:
+          access_token: ${{ github.token }}
+      - uses: actions/checkout@v2
+      - uses: actions/setup-java@v1
+        with:
+          java-version: '12.x'
+      - uses: dart-lang/setup-dart@v1
+      - name: Checking ip_address
+        working-directory: ./dart/ip_address
+        run: |
+          dart pub get
+          dart analyze
+          dart test
+      - name: Send Message
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+            GitHub Action for dart/ip_address is completed with status ${{ job.status }} for ${{ github.ref }}.
   interview_preparation:
     name: interview_preparation Code Checker
     runs-on: ubuntu-latest
