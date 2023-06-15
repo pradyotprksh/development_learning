@@ -118,7 +118,7 @@ class _MessageFieldWithEmojiAttachmentsWidgetState
                 bgColor: context.themeData.colorScheme.background,
                 indicatorColor: context.themeData.primaryColor,
                 enableSkinTones: true,
-                showRecentsTab: true,
+                recentTabBehavior: RecentTabBehavior.RECENT,
                 recentsLimit: 10,
                 loadingIndicator: const SizedBox.shrink(),
                 tabIndicatorAnimDuration: kTabScrollDuration,

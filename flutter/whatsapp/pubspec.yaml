@@ -35,7 +35,7 @@ dependencies:
 
   email_validator: ^2.1.17
 
-  emoji_picker_flutter: ^1.5.4
+  emoji_picker_flutter: ^1.6.1
 
   enum_to_string: ^2.0.1
 
