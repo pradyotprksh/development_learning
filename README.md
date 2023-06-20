@@ -73,6 +73,7 @@ README will be only updated when the project/learning is completed. So make sure
 [<img src="https://img.shields.io/badge/Interview-FFD43B?style=for-the-badge&logo=go&logoColor=blue" />](https://github.com/pradyotprksh/development_learning/tree/main/interview)
   - [Android](https://github.com/pradyotprksh/development_learning/blob/main/interview/ANDROID_INTERVIEW_PREPERATION.md)
   - [Kotlin](https://github.com/pradyotprksh/development_learning/blob/main/interview/KOTLIN_INTERVIEW_PREPERATION.md)
+  - [Flutter](https://github.com/pradyotprksh/development_learning/blob/main/interview/FLUTTER_INTERVIEW_PREPERATION.md)
 
 ---
 
