@@ -1,5 +1,7 @@
 package leet_code
 
+import kotlin.math.abs
+
 class LeetCode {
     fun startLeetCode() {
         println("Starting problems from LeetCode")
@@ -16,6 +18,22 @@ class LeetCode {
         println(longestPalindrome("babad"))
         println(longestPalindrome("cbbd"))
         println(longestPalindrome("ab"))
+
+        println(reverse(123))
+        println(reverse(120))
+        println(reverse(-123))
+        println(reverse(1534236469))
+    }
+
+    private fun reverse(x: Int): Int {
+        if (x == Int.MIN_VALUE) return 0
+        if (abs(x) < 10) return x
+        var s = abs(x).toString().reversed()
+        while (s[0].toString() == "0")
+            s = s.substringAfter("0")
+        if (s.toLong() > Int.MAX_VALUE) return 0
+        if (x < 0) return -s.toInt()
+        return s.toInt()
     }
 
     private fun longestPalindrome(s: String): String {
