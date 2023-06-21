@@ -23,6 +23,51 @@ class LeetCode {
         println(reverse(120))
         println(reverse(-123))
         println(reverse(1534236469))
+
+        println(isPalindrome(121))
+        println(isPalindrome(-121))
+        println(isPalindrome(10))
+
+        println(isMatch("aa", "a"))
+        println(isMatch("aa", "a*"))
+        println(isMatch("ab", ".*"))
+
+        println(longestCommonPrefix(arrayOf("flower", "flow", "flight")))
+    }
+
+    private fun longestCommonPrefix(strs: Array<String>): String {
+        strs.sort()
+
+        val first = strs.first()
+        val last = strs.last()
+
+        var index = 0
+        while (index < first.length && index < last.length) {
+            if (first[index] == last[index]) {
+                ++index
+            } else {
+                break
+            }
+        }
+
+        return first.substring(0, index)
+    }
+
+    private fun isMatch(s: String, p: String): Boolean {
+        val regex = p.toRegex()
+        return regex.matches(s)
+    }
+
+    private fun isPalindrome(x: Int): Boolean {
+        val xStr = x.toString()
+
+        for (i in xStr.indices) {
+            if (xStr[i] != xStr[xStr.length - 1 - i]) {
+                return false
+            }
+        }
+
+        return true
     }
 
     private fun reverse(x: Int): Int {
@@ -54,7 +99,7 @@ class LeetCode {
     }
 
     private fun isPalindrom(s: String): Boolean {
-        for (i in 0 .. s.length / 2) {
+        for (i in 0..s.length / 2) {
             if (s[i] != s[s.length - 1 - i]) {
                 return false
             }
