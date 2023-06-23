@@ -12,6 +12,7 @@ class FewsApp extends StatelessWidget {
 
     return MaterialApp(
       title: AppConstants.applicationName,
+      debugShowCheckedModeBanner: !AppDetails.isReleaseMode,
       themeMode: ThemeMode.system,
       theme: _getThemeData(false),
       darkTheme: _getThemeData(true),

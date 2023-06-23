@@ -25,7 +25,7 @@ class HomeState extends Equatable {
       HomeState(
         pageState: pageState ?? this.pageState,
         errorMessage: errorMessage,
-        newsData: newsData ?? [],
+        newsData: newsData ?? this.newsData,
         pageNumber: pageNumber ?? this.pageNumber,
       );
 
@@ -39,5 +39,6 @@ class HomeState extends Equatable {
         pageState,
         errorMessage,
         newsData,
+        pageNumber,
       ];
 }

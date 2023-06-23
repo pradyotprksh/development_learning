@@ -43,6 +43,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
             ...state.newsData,
             ...value.data,
           ];
+
+          news = news.toSet().toList();
         }
 
         emit(

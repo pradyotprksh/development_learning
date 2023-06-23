@@ -16,6 +16,9 @@ class GetNews extends HomeEvent {
 
   final int pageNumber;
   final String language;
+
+  @override
+  List<Object?> get props => [pageNumber, language];
 }
 
 class UpdatePage extends HomeEvent {
@@ -24,4 +27,7 @@ class UpdatePage extends HomeEvent {
   });
 
   final String language;
+
+  @override
+  List<Object?> get props => [language];
 }

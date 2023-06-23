@@ -13,11 +13,4 @@ abstract class LocalizationsDetails {
   static List<Locale> getSupportedLocales() => const [
         Locale('en', ''),
       ];
-
-  static Map<String, String> getSupportedLanguage() => const {
-        'en': 'English',
-      };
-
-  static String getHumanReadableValue(String code) =>
-      getSupportedLanguage()[code] ?? '';
 }

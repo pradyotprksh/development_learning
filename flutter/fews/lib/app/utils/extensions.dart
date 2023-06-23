@@ -6,18 +6,11 @@ extension BuildContextExtenion on BuildContext {
 
   Locale get localizations => Localizations.localeOf(this);
 
-  MediaQueryData get mediaQuery => MediaQuery.of(this);
-
   ThemeData get themeData => Theme.of(this);
 
   NavigatorState get navigator => Navigator.of(this);
 
   RouteSettings? get routeSettings => ModalRoute.of(this)?.settings;
-
-  ModalRoute? get modalRoute => ModalRoute.of(this);
-
-  bool get isPhoneInDarkMode =>
-      MediaQuery.of(this).platformBrightness != Brightness.light;
 
   void clearSnackBars() {
     ScaffoldMessenger.of(this).clearSnackBars();
