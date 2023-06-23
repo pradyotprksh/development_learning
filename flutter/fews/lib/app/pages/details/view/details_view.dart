@@ -25,7 +25,7 @@ class DetailsView extends StatelessWidget {
           minScale: 0.1,
           maxScale: double.infinity,
           child: CachedNetworkImage(
-            imageUrl: imageUrl ?? '',
+            imageUrl: imageUrl,
             width: double.infinity,
             height: double.infinity,
             fit: BoxFit.contain,

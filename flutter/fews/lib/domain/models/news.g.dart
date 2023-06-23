@@ -27,9 +27,6 @@ NewsData _$NewsDataFromJson(Map<String, dynamic> json) => NewsData(
       url: json['url'] as String?,
       imageUrl: json['image_url'] as String?,
       language: json['language'] as String?,
-      publishedAt: json['published_at'] == null
-          ? null
-          : DateTime.parse(json['published_at'] as String),
       source: json['source'] as String?,
       categories: (json['categories'] as List<dynamic>?)
           ?.map((e) => e as String)
@@ -45,7 +42,6 @@ Map<String, dynamic> _$NewsDataToJson(NewsData instance) => <String, dynamic>{
       'url': instance.url,
       'image_url': instance.imageUrl,
       'language': instance.language,
-      'published_at': instance.publishedAt?.toIso8601String(),
       'source': instance.source,
       'categories': instance.categories,
     };

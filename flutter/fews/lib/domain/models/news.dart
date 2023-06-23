@@ -35,7 +35,6 @@ class NewsData extends Equatable {
     required this.url,
     required this.imageUrl,
     required this.language,
-    required this.publishedAt,
     required this.source,
     required this.categories,
   });
@@ -52,8 +51,6 @@ class NewsData extends Equatable {
   @JsonKey(name: 'image_url')
   final String? imageUrl;
   final String? language;
-  @JsonKey(name: 'published_at')
-  final DateTime? publishedAt;
   final String? source;
   final List<String>? categories;
 
@@ -69,7 +66,6 @@ class NewsData extends Equatable {
         url,
         imageUrl,
         language,
-        publishedAt,
         source,
         categories,
       ];
