@@ -65,7 +65,12 @@ class HomeView extends StatelessWidget {
                     return Padding(
                       padding: ThemeEdgeInsets.all10,
                       child: InkWell(
-                        onTap: () {},
+                        onTap: () {
+                          context.navigator.pushNamed(
+                            Routes.detailsRoute,
+                            arguments: newsDetails.imageUrl,
+                          );
+                        },
                         child: GridTile(
                           header: GridTileBar(
                             backgroundColor: Colors.black45,
