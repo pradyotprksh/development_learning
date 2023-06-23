@@ -15,7 +15,11 @@ class HomeView extends StatelessWidget {
               SnackBarAction(
                 label: context.translator.retry,
                 onPressed: () {
-                  context.read<HomeBloc>().add(const GetNews());
+                  context.read<HomeBloc>().add(
+                        GetNews(
+                          pageNumber: homeState.pageNumber,
+                        ),
+                      );
                 },
                 textColor: context.themeData.snackBarTheme.actionTextColor,
               ),
@@ -29,6 +33,17 @@ class HomeView extends StatelessWidget {
               context.translator.applicationName,
             ),
             backgroundColor: context.themeData.appBarTheme.backgroundColor,
+            actions: [
+              IconButton(
+                onPressed: () {
+                  context.read<HomeBloc>().add(const GetNews());
+                },
+                icon: Icon(
+                  Icons.refresh,
+                  color: context.themeData.appBarTheme.iconTheme?.color,
+                ),
+              ),
+            ],
           ),
           body: BlocBuilder<HomeBloc, HomeState>(
             builder: (_, homeState) => Stack(

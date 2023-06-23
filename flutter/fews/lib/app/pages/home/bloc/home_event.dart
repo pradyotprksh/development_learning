@@ -8,5 +8,11 @@ abstract class HomeEvent extends Equatable {
 }
 
 class GetNews extends HomeEvent {
-  const GetNews();
+  const GetNews({this.pageNumber = 1});
+
+  final int pageNumber;
+}
+
+class UpdatePage extends HomeEvent {
+  const UpdatePage();
 }

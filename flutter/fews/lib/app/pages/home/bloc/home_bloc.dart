@@ -10,18 +10,41 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           const HomeState(),
         ) {
     on<GetNews>(_getNews);
+    on<UpdatePage>(_updatePage);
   }
 
   final NewsService _newsService;
 
   void _getNews(GetNews event, Emitter<HomeState> emit) async {
-    emit(state.copyWith(pageState: PageState.loading));
-    await _newsService.getNews(1).then(
+    if (event.pageNumber == 1) {
+      emit(
+        state.copyWith(
+          pageState: PageState.loading,
+          newsData: null,
+        ),
+      );
+    } else {
+      emit(
+        state.copyWith(
+          pageState: PageState.loading,
+        ),
+      );
+    }
+    await _newsService.getNews(event.pageNumber).then(
       (value) {
+        var news = value.data;
+        if (event.pageNumber != 1) {
+          news = [
+            ...state.newsData,
+            ...value.data,
+          ];
+        }
+
         emit(
           state.copyWith(
             pageState: PageState.success,
-            newsData: value.data,
+            newsData: news,
+            pageNumber: event.pageNumber,
           ),
         );
       },
@@ -44,6 +67,17 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
             );
         }
       },
+    );
+  }
+
+  void _updatePage(
+    UpdatePage event,
+    Emitter<HomeState> emit,
+  ) {
+    add(
+      GetNews(
+        pageNumber: state.pageNumber + 1,
+      ),
     );
   }
 }
