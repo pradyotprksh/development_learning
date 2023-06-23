@@ -18,6 +18,8 @@ class FewsApp extends StatelessWidget {
       localizationsDelegates: LocalizationsDetails.getLocalizationDelegates(),
       supportedLocales: LocalizationsDetails.getSupportedLocales(),
       locale: const Locale(AppConstants.defaultLanguage, ''),
+      initialRoute: Routes.initialRoute,
+      routes: Routes.routes,
     );
   }
 

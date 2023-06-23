@@ -1,1 +1,1 @@
-export 'details.dart';
+export 'localizations_details.dart';
