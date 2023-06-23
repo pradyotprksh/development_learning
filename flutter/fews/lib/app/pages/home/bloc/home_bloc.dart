@@ -30,7 +30,12 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         ),
       );
     }
-    await _newsService.getNews(event.pageNumber).then(
+    await _newsService
+        .getNews(
+      event.pageNumber,
+      event.language,
+    )
+        .then(
       (value) {
         var news = value.data;
         if (event.pageNumber != 1) {

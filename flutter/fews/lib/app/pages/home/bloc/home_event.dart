@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:fews/app/app.dart';
 
 abstract class HomeEvent extends Equatable {
   const HomeEvent();
@@ -8,11 +9,19 @@ abstract class HomeEvent extends Equatable {
 }
 
 class GetNews extends HomeEvent {
-  const GetNews({this.pageNumber = 1});
+  const GetNews({
+    this.pageNumber = 1,
+    this.language = AppConstants.defaultLanguage,
+  });
 
   final int pageNumber;
+  final String language;
 }
 
 class UpdatePage extends HomeEvent {
-  const UpdatePage();
+  const UpdatePage({
+    this.language = AppConstants.defaultLanguage,
+  });
+
+  final String language;
 }

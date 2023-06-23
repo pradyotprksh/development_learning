@@ -22,15 +22,15 @@ class _RestClient implements RestClient {
 
   @override
   Future<News> getNews(
-    String apiKey, {
+    String apiKey,
+    String language, {
     int page = 1,
-    int limit = 10,
   }) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       r'api_token': apiKey,
+      r'language': language,
       r'page': page,
-      r'limit': limit,
     };
     final _headers = <String, dynamic>{};
     final Map<String, dynamic>? _data = null;

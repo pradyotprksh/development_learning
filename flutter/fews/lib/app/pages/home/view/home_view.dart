@@ -18,6 +18,7 @@ class HomeView extends StatelessWidget {
                   context.read<HomeBloc>().add(
                         GetNews(
                           pageNumber: homeState.pageNumber,
+                          language: context.localizations.languageCode,
                         ),
                       );
                 },
@@ -36,7 +37,11 @@ class HomeView extends StatelessWidget {
             actions: [
               IconButton(
                 onPressed: () {
-                  context.read<HomeBloc>().add(const GetNews());
+                  context.read<HomeBloc>().add(
+                        GetNews(
+                          language: context.localizations.languageCode,
+                        ),
+                      );
                 },
                 icon: Icon(
                   Icons.refresh,
@@ -48,31 +53,43 @@ class HomeView extends StatelessWidget {
           body: BlocBuilder<HomeBloc, HomeState>(
             builder: (_, homeState) => Stack(
               children: [
-                ListView.builder(
+                GridView.builder(
                   itemCount: homeState.newsData.length,
                   padding: ThemeEdgeInsets.top15Bottom15,
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                  ),
                   itemBuilder: (_, index) {
                     final newsDetails = homeState.newsData[index];
 
-                    return ListTile(
-                      onTap: () {},
-                      leading: CachedNetworkImage(
-                        imageUrl: newsDetails.imageUrl ?? '',
-                        height: 100,
-                        width: 100,
-                        fit: BoxFit.cover,
-                        errorWidget: (_, __, dynamic ___) => Icon(
-                          Icons.error,
-                          color: context.themeData.colorScheme.error,
+                    return Padding(
+                      padding: ThemeEdgeInsets.all10,
+                      child: InkWell(
+                        onTap: () {},
+                        child: GridTile(
+                          header: GridTileBar(
+                            backgroundColor: Colors.black45,
+                            title: Text(
+                              newsDetails.title ?? '',
+                            ),
+                          ),
+                          footer: GridTileBar(
+                            backgroundColor: Colors.black45,
+                            title: Text(
+                              newsDetails.description ?? '',
+                            ),
+                          ),
+                          child: CachedNetworkImage(
+                            imageUrl: newsDetails.imageUrl ?? '',
+                            height: 100,
+                            width: 100,
+                            fit: BoxFit.cover,
+                            errorWidget: (_, __, dynamic ___) => Icon(
+                              Icons.error,
+                              color: context.themeData.colorScheme.error,
+                            ),
+                          ),
                         ),
-                      ),
-                      title: Text(
-                        newsDetails.title ?? '',
-                        style: context.themeData.textTheme.headlineMedium,
-                      ),
-                      subtitle: Text(
-                        newsDetails.description ?? '',
-                        style: context.themeData.textTheme.bodyMedium,
                       ),
                     );
                   },

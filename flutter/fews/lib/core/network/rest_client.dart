@@ -11,7 +11,8 @@ abstract class RestClient {
 
   @GET('/all')
   Future<News> getNews(
-    @Query('api_token') String apiKey, {
+    @Query('api_token') String apiKey,
+    @Query('language') String language, {
     @Query('page') int page = 1,
   });
 }

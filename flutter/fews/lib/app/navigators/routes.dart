@@ -15,7 +15,9 @@ abstract class Routes {
           create: (_) => HomeBloc(
             NewsServiceImplementation(),
           )..add(
-              const GetNews(),
+              GetNews(
+                language: context.localizations.languageCode,
+              ),
             ),
           child: const HomeView(),
         ),

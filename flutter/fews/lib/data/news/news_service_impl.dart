@@ -6,8 +6,13 @@ class NewsServiceImplementation extends NewsService {
   final _client = RestClient(Dio());
 
   @override
-  Future<News> getNews(int page) => _client.getNews(
+  Future<News> getNews(
+    int page,
+    String language,
+  ) =>
+      _client.getNews(
         ConfidentialKeys.sitekey,
+        language,
         page: page,
       );
 }

@@ -4,6 +4,8 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 extension BuildContextExtenion on BuildContext {
   AppLocalizations get translator => AppLocalizations.of(this)!;
 
+  Locale get localizations => Localizations.localeOf(this);
+
   MediaQueryData get mediaQuery => MediaQuery.of(this);
 
   ThemeData get themeData => Theme.of(this);
