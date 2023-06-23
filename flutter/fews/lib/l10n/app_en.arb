@@ -1,3 +1,5 @@
 {
-  "applicationName": "Fews"
+  "applicationName": "Fews",
+  "unknownError": "Something went wrong. Please try again.",
+  "retry": "Retry"
 }

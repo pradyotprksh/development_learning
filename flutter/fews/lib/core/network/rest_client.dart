@@ -9,7 +9,7 @@ part 'rest_client.g.dart';
 abstract class RestClient {
   factory RestClient(Dio dio, {String baseUrl}) = _RestClient;
 
-  @GET('/news')
+  @GET('/all')
   Future<News> getNews(
     @Query('api_token') String apiKey, {
     @Query('page') int page = 1,
