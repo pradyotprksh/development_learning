@@ -47,7 +47,12 @@ class _SplashViewState extends State<SplashView> {
   void _initiateNavigation() {
     Future.delayed(
       const Duration(seconds: 1),
-      () {},
+      () {
+        context.navigator.pushNamedAndRemoveUntil(
+          Routes.homeRoute,
+          (route) => false,
+        );
+      },
     );
   }
 }
