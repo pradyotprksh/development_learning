@@ -303,6 +303,8 @@ Despite these potential disadvantages, ViewModels are still widely used and cons
 
 ### How ViewModel survive configuration changes?
 
+[Check here for more details](https://yadunath-narayanan.medium.com/how-viewmodel-survives-configuration-changes-ad9b71645e8c)
+
 In Android, configuration changes like screen rotation, keyboard availability, or language change, cause the current activity to be destroyed and recreated. This can lead to data loss and performance issues if not handled properly. 
 
 The ViewModel is designed to survive configuration changes by separating the UI data from the UI controller logic. It allows the data to survive across configuration changes by storing it in the ViewModel instance, which is not destroyed when the activity is recreated. 

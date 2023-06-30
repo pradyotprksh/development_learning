@@ -3,13 +3,13 @@ package com.project.pradyotprakash.rental.core.response
 /**
  * A common wrapper for the response
  */
-sealed class RenterResponse<out R> {
+sealed class RenterResponse<R> {
     /**
      * The success response type
      *
      * @param data Data got when got the success result
      * */
-    data class Success<out T>(val data: T) : RenterResponse<T>()
+    data class Success<T>(val data: T) : RenterResponse<T>()
 
     /**
      * The error response type
