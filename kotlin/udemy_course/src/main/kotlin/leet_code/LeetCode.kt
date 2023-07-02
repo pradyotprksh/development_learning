@@ -1,6 +1,6 @@
 package leet_code
 
-import data_structures.linked_lists.Node
+import data_structures.linked_lists.ListNode
 import java.util.Stack
 import kotlin.math.abs
 
@@ -38,15 +38,15 @@ class LeetCode {
 
         println(
             removeNthFromEnd(
-                Node(
+                ListNode(
                     data = 1,
-                    next = Node(data = 2, next = Node(3, next = Node(4, next = Node(data = 5))))
+                    next = ListNode(data = 2, next = ListNode(3, next = ListNode(4, next = ListNode(data = 5))))
                 ), 2
             )
         )
-        println(removeNthFromEnd(Node(data = 1, next = Node(data = 2)), 1))
-        println(removeNthFromEnd(Node(data = 1), 1))
-        println(removeNthFromEnd(Node(data = 1, next = Node(data = 2)), 2))
+        println(removeNthFromEnd(ListNode(data = 1, next = ListNode(data = 2)), 1))
+        println(removeNthFromEnd(ListNode(data = 1), 1))
+        println(removeNthFromEnd(ListNode(data = 1, next = ListNode(data = 2)), 2))
 
         println(isValid("()"))
         println(isValid("()[]{}"))
@@ -56,26 +56,79 @@ class LeetCode {
 
         println(
             mergeTwoLists(
-                Node(data = 1, next = Node(data = 2, Node(data = 4))),
-                Node(data = 1, next = Node(data = 3, Node(data = 4))),
+                ListNode(data = 1, next = ListNode(data = 2, ListNode(data = 4))),
+                ListNode(data = 1, next = ListNode(data = 3, ListNode(data = 4))),
             )
         )
-        println(mergeTwoLists(null, null,))
+        println(mergeTwoLists(null, null))
         println(
             mergeTwoLists(
                 null,
-                Node(data = 0),
+                ListNode(data = 0),
             )
         )
+
+        println(swapPairs(ListNode(data = 1, next = ListNode(data = 2, next = ListNode(3, next = ListNode(4))))))
+        println(swapPairs(ListNode(data = 1)))
+        println(swapPairs(null))
+        println(swapPairs(ListNode(data = 1, next = ListNode(data = 2, next = ListNode(3)))))
+
+        println(removeDuplicates(intArrayOf(1,1,2)))
+        println(removeDuplicates(intArrayOf(0,0,1,1,1,2,2,3,3,4)))
     }
 
-    private fun mergeTwoLists(list1: Node?, list2: Node?): Node? {
+    private fun removeDuplicates(nums: IntArray): Int {
+        var counter = 0
+
+        for (i in 1 until nums.size) {
+            if (nums[counter] != nums[i]) {
+                ++counter
+                nums[counter] = nums[i]
+            }
+        }
+
+        return counter + 1
+    }
+
+    private fun swapPairs(head: ListNode?): ListNode? {
+        if (head == null) return null
+
+        var newHead = head
+        var t1 = head
+        var t2 = head.next
+        var prev: ListNode? = null
+
+        var isFirst = true
+
+        while (t1 != null && t2 != null) {
+            t1.next = t2.next
+            t2.next = t1
+            prev = t1
+
+            if (isFirst) {
+                newHead = t2
+                isFirst = false
+            }
+
+            t1 = t1.next
+            t2 = t1?.next
+            prev.next = t2
+        }
+
+        if (t1 != null) {
+            prev?.next = t1
+        }
+
+        return newHead
+    }
+
+    private fun mergeTwoLists(list1: ListNode?, list2: ListNode?): ListNode? {
         if (list1 == null && list2 == null) return null
         else if (list1 == null) return list2
         else if (list2 == null) return list1
 
-        var head: Node? = null
-        var last: Node? = null
+        var head: ListNode? = null
+        var last: ListNode? = null
 
         var temp1 = list1
         var temp2 = list2
@@ -83,33 +136,33 @@ class LeetCode {
         while (temp1 != null && temp2 != null) {
             if (temp1.data < temp2.data) {
                 if (head == null) {
-                    head = Node(data = temp1.data)
+                    head = ListNode(data = temp1.data)
                     last = head
                 } else {
-                    last?.next = Node(data = temp1.data)
+                    last?.next = ListNode(data = temp1.data)
                     last = last?.next
                 }
 
                 temp1 = temp1.next
             } else if (temp1.data == temp2.data) {
                 if (head == null) {
-                    head = Node(data = temp1.data)
+                    head = ListNode(data = temp1.data)
                     last = head
                 } else {
-                    last?.next = Node(data = temp1.data)
+                    last?.next = ListNode(data = temp1.data)
                     last = last?.next
                 }
-                last?.next = Node(data = temp1.data)
+                last?.next = ListNode(data = temp1.data)
                 last = last?.next
 
                 temp1 = temp1.next
                 temp2 = temp2.next
             } else {
                 if (head == null) {
-                    head = Node(data = temp2.data)
+                    head = ListNode(data = temp2.data)
                     last = head
                 } else {
-                    last?.next = Node(data = temp2.data)
+                    last?.next = ListNode(data = temp2.data)
                     last = last?.next
                 }
 
@@ -118,13 +171,13 @@ class LeetCode {
         }
 
         while (temp1 != null) {
-            last?.next = Node(data = temp1.data)
+            last?.next = ListNode(data = temp1.data)
             last = last?.next
             temp1 = temp1.next
         }
 
         while (temp2 != null) {
-            last?.next = Node(data = temp2.data)
+            last?.next = ListNode(data = temp2.data)
             last = last?.next
             temp2 = temp2.next
         }
@@ -156,7 +209,7 @@ class LeetCode {
         return stacks.isEmpty()
     }
 
-    private fun removeNthFromEnd(head: Node?, n: Int): Node? {
+    private fun removeNthFromEnd(head: ListNode?, n: Int): ListNode? {
         var totalSize = 0
         var temp = head
 
@@ -166,7 +219,7 @@ class LeetCode {
         }
 
         temp = head
-        var prev: Node? = null
+        var prev: ListNode? = null
         var index = totalSize - n
 
         while (index > 0) {

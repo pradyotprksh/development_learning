@@ -1,6 +1,6 @@
 package data_structures.linked_lists
 
-data class Node(var data: Int, var next: Node? = null) {
+data class ListNode(var data: Int, var next: ListNode? = null) {
     override fun toString(): String {
         return "$data->$next"
     }

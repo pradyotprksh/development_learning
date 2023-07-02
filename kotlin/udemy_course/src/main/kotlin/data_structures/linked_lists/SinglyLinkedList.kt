@@ -1,21 +1,21 @@
 package data_structures.linked_lists
 
 class SinglyLinkedList {
-    var head: Node? = null
+    var head: ListNode? = null
         private set
-    var tail: Node? = null
+    var tail: ListNode? = null
         private set
     var length = 0
         private set
 
     fun push(data: Int) {
-        val node = Node(data = data)
+        val listNode = ListNode(data = data)
         if (head == null && tail == null) {
-            head = node
-            tail = node
+            head = listNode
+            tail = listNode
         } else {
-            tail?.next = node
-            tail = node
+            tail?.next = listNode
+            tail = listNode
         }
         ++length
     }
@@ -51,16 +51,16 @@ class SinglyLinkedList {
     }
 
     fun unshift(data: Int) {
-        val node = Node(data = data)
-        node.next = head
-        head = node
+        val listNode = ListNode(data = data)
+        listNode.next = head
+        head = listNode
         if (tail == null) {
             tail = head
         }
         ++length
     }
 
-    fun get(pos: Int): Node? {
+    fun get(pos: Int): ListNode? {
         if (head == null) {
             throw IllegalStateException("Linked List is Empty")
         }
@@ -114,11 +114,11 @@ class SinglyLinkedList {
             }
 
             else -> {
-                val node = Node(data = data)
+                val listNode = ListNode(data = data)
 
                 var tempPos = pos
                 var temp = head
-                var prev: Node? = null
+                var prev: ListNode? = null
 
                 while (tempPos > 0 && temp != null) {
                     prev = temp
@@ -126,8 +126,8 @@ class SinglyLinkedList {
                     --tempPos
                 }
 
-                node.next = temp
-                prev?.next = node
+                listNode.next = temp
+                prev?.next = listNode
                 ++length
             }
         }
@@ -153,7 +153,7 @@ class SinglyLinkedList {
             else -> {
                 var tempPos = pos
                 var temp = head
-                var prev: Node? = null
+                var prev: ListNode? = null
 
                 while (tempPos > 0 && temp != null) {
                     prev = temp
@@ -181,7 +181,7 @@ class SinglyLinkedList {
         tail = temp
 
         var next = temp?.next
-        var prev: Node? = null
+        var prev: ListNode? = null
 
         while (temp != null) {
             temp.next = prev

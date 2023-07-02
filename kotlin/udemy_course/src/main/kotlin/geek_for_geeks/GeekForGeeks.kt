@@ -60,10 +60,10 @@ class GeekForGeeks {
     }
 
     private fun getNthFromLastExampleTwo() {
-        val one = data_structures.linked_lists.Node(data = 1)
-        val two = data_structures.linked_lists.Node(data = 2)
-        val three = data_structures.linked_lists.Node(data = 3)
-        val four = data_structures.linked_lists.Node(data = 4)
+        val one = data_structures.linked_lists.ListNode(data = 1)
+        val two = data_structures.linked_lists.ListNode(data = 2)
+        val three = data_structures.linked_lists.ListNode(data = 3)
+        val four = data_structures.linked_lists.ListNode(data = 4)
 
         one.next = two
         two.next = three
@@ -75,15 +75,15 @@ class GeekForGeeks {
     }
 
     private fun getNthFromLastExampleOne() {
-        val one = data_structures.linked_lists.Node(data = 1)
-        val two = data_structures.linked_lists.Node(data = 2)
-        val three = data_structures.linked_lists.Node(data = 3)
-        val four = data_structures.linked_lists.Node(data = 4)
-        val five = data_structures.linked_lists.Node(data = 5)
-        val six = data_structures.linked_lists.Node(data = 6)
-        val seven = data_structures.linked_lists.Node(data = 7)
-        val eight = data_structures.linked_lists.Node(data = 8)
-        val nine = data_structures.linked_lists.Node(data = 9)
+        val one = data_structures.linked_lists.ListNode(data = 1)
+        val two = data_structures.linked_lists.ListNode(data = 2)
+        val three = data_structures.linked_lists.ListNode(data = 3)
+        val four = data_structures.linked_lists.ListNode(data = 4)
+        val five = data_structures.linked_lists.ListNode(data = 5)
+        val six = data_structures.linked_lists.ListNode(data = 6)
+        val seven = data_structures.linked_lists.ListNode(data = 7)
+        val eight = data_structures.linked_lists.ListNode(data = 8)
+        val nine = data_structures.linked_lists.ListNode(data = 9)
 
         one.next = two
         two.next = three
@@ -99,7 +99,7 @@ class GeekForGeeks {
         println(getNthFromLast(head = one, n = 2))
     }
 
-    private fun getNthFromLast(head: data_structures.linked_lists.Node?, n: Int): Int {
+    private fun getNthFromLast(head: data_structures.linked_lists.ListNode?, n: Int): Int {
         var size = 0
         var temp = head
 
@@ -121,22 +121,22 @@ class GeekForGeeks {
     }
 
     private fun detectLoopExampleOne() {
-        val one = data_structures.linked_lists.Node(data = 1)
-        val two = data_structures.linked_lists.Node(data = 2)
-        val three = data_structures.linked_lists.Node(data = 3)
-        val four = data_structures.linked_lists.Node(data = 4)
+        val one = data_structures.linked_lists.ListNode(data = 1)
+        val two = data_structures.linked_lists.ListNode(data = 2)
+        val three = data_structures.linked_lists.ListNode(data = 3)
+        val four = data_structures.linked_lists.ListNode(data = 4)
 
         one.next = two
         two.next = three
         three.next = four
         four.next = two
 
-        detectLoop(node = one)
+        detectLoop(listNode = one)
     }
 
-    private fun detectLoop(node: data_structures.linked_lists.Node?) {
-        var slow = node
-        var fast = node?.next?.next
+    private fun detectLoop(listNode: data_structures.linked_lists.ListNode?) {
+        var slow = listNode
+        var fast = listNode?.next?.next
 
         while (fast != null && slow != null) {
             if (fast == slow) {
@@ -150,49 +150,49 @@ class GeekForGeeks {
     }
 
     private fun removeLoopExampleThree() {
-        val one = data_structures.linked_lists.Node(data = 1)
-        val two = data_structures.linked_lists.Node(data = 2)
-        val three = data_structures.linked_lists.Node(data = 3)
-        val four = data_structures.linked_lists.Node(data = 4)
+        val one = data_structures.linked_lists.ListNode(data = 1)
+        val two = data_structures.linked_lists.ListNode(data = 2)
+        val three = data_structures.linked_lists.ListNode(data = 3)
+        val four = data_structures.linked_lists.ListNode(data = 4)
 
         one.next = two
         two.next = three
         three.next = four
         four.next = two
 
-        removeLoop(node = one)
+        removeLoop(listNode = one)
         println(one)
     }
 
     private fun removeLoopExampleTwo() {
-        val one = data_structures.linked_lists.Node(data = 1)
-        val eight = data_structures.linked_lists.Node(data = 8)
-        val three = data_structures.linked_lists.Node(data = 3)
-        val four = data_structures.linked_lists.Node(data = 4)
+        val one = data_structures.linked_lists.ListNode(data = 1)
+        val eight = data_structures.linked_lists.ListNode(data = 8)
+        val three = data_structures.linked_lists.ListNode(data = 3)
+        val four = data_structures.linked_lists.ListNode(data = 4)
 
         one.next = eight
         eight.next = three
         three.next = four
 
-        removeLoop(node = one)
+        removeLoop(listNode = one)
     }
 
     private fun removeLoopExampleOne() {
-        val one = data_structures.linked_lists.Node(data = 1)
-        val three = data_structures.linked_lists.Node(data = 3)
-        val four = data_structures.linked_lists.Node(data = 4)
+        val one = data_structures.linked_lists.ListNode(data = 1)
+        val three = data_structures.linked_lists.ListNode(data = 3)
+        val four = data_structures.linked_lists.ListNode(data = 4)
         one.next = three
         three.next = four
         four.next = three
 
-        removeLoop(node = one)
+        removeLoop(listNode = one)
 
         println(one)
     }
 
-    private fun removeLoop(node: data_structures.linked_lists.Node?) {
-        var slow = node
-        var fast = node?.next?.next
+    private fun removeLoop(listNode: data_structures.linked_lists.ListNode?) {
+        var slow = listNode
+        var fast = listNode?.next?.next
 
         while (fast != null && slow != null) {
             if (fast.next == slow || slow.next == fast) {
