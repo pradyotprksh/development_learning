@@ -111,10 +111,10 @@ dependencies {
 
     // Compose
     implementation("androidx.compose.ui:ui:1.4.3")
-    implementation("androidx.compose.material3:material3:1.1.0")
+    implementation("androidx.compose.material3:material3:1.1.1")
     implementation("androidx.compose.material:material:1.4.3")
-    implementation("androidx.compose.material3:material3-window-size-class:1.1.0")
-    implementation("androidx.navigation:navigation-compose:2.5.3")
+    implementation("androidx.compose.material3:material3-window-size-class:1.1.1")
+    implementation("androidx.navigation:navigation-compose:2.6.0")
     implementation("androidx.compose.runtime:runtime-livedata:1.4.3")
     debugImplementation("androidx.compose.ui:ui-tooling:1.4.3")
     debugImplementation("androidx.compose.ui:ui-test-manifest:1.4.3")
