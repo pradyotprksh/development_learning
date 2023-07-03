@@ -27,4 +27,10 @@ class DeviceModule {
     fun provideNoteDatabase(
         appDatabase: AppDatabase,
     ) = appDatabase.noteDao()
+
+    @Singleton
+    @Provides
+    fun provideUserDatabase(
+        appDatabase: AppDatabase,
+    ) = appDatabase.userDao()
 }

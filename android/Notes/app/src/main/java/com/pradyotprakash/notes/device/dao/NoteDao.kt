@@ -16,8 +16,8 @@ interface NoteDao {
     fun getNotesIf(isOnline: Boolean): List<Note>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAll(vararg users: Note)
+    fun insertAll(vararg notes: Note)
 
     @Delete
-    fun delete(user: Note)
+    fun delete(note: Note)
 }
