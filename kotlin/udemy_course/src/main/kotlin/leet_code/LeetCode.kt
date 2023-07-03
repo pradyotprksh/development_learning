@@ -3,6 +3,8 @@ package leet_code
 import data_structures.linked_lists.ListNode
 import java.util.Stack
 import kotlin.math.abs
+import kotlin.math.max
+import kotlin.math.min
 
 class LeetCode {
     fun startLeetCode() {
@@ -75,6 +77,61 @@ class LeetCode {
 
         println(removeDuplicates(intArrayOf(1,1,2)))
         println(removeDuplicates(intArrayOf(0,0,1,1,1,2,2,3,3,4)))
+
+        println(maxApples(1, listOf(1, 2, 3, 2, 4)))
+
+        println(removeElement(intArrayOf(3, 2, 2, 3), 3))
+        println(removeElement(intArrayOf(0,1,2,2,3,0,4,2), 2))
+
+        println(strStr("sadbutsad", "sad"))
+        println(strStr("leetcode", "leeto"))
+        println(strStr("hello", "ll"))
+    }
+
+    private fun strStr(haystack: String, needle: String): Int {
+        if (needle.length > haystack.length) return -1
+
+        for (i in haystack.indices) {
+            val endIndex = if (i + (needle.length) > haystack.length) haystack.length else i + (needle.length)
+            if (haystack.substring(i, endIndex) == needle) {
+                return i
+            }
+        }
+
+        return -1
+    }
+
+    private fun removeElement(nums: IntArray, `val`: Int): Int {
+        var counter = 0
+
+        for (i in nums.indices) {
+            if (nums[i] != `val`) {
+                nums[counter++] = nums[i]
+            }
+        }
+
+        return counter
+    }
+
+    private fun maxApples(target: Int, apples: List<Int>): Int {
+        var maxcount = 0
+        var tempcount = 0
+        var j = 0
+
+        apples.sorted()
+
+        for (a in apples) {
+            ++tempcount
+
+            while (a - apples[j] > target) {
+                ++j
+                --tempcount
+            }
+
+            maxcount = max(maxcount, tempcount)
+        }
+
+        return maxcount
     }
 
     private fun removeDuplicates(nums: IntArray): Int {
