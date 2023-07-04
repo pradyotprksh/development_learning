@@ -21,4 +21,6 @@ enum class Routes(
     val arguments: List<String> = emptyList()
 ) {
     Splash("splash/"),
+    SignUpUser("sign-up-user/"),
+    LoginUser("login-user/"),
 }

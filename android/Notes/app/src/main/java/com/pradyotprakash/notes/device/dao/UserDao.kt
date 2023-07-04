@@ -10,11 +10,14 @@ import com.pradyotprakash.notes.device.entity.User
 @Dao
 interface UserDao {
     @Insert(onConflict = OnConflictStrategy.ABORT)
-    fun insert(user: User)
+    suspend fun insert(user: User)
 
     @Delete
-    fun delete(user: User)
+    suspend fun delete(user: User)
 
     @Query("SELECT * FROM User WHERE username == :username")
-    fun getUserDetails(username: String): User
+    suspend fun getUserDetails(username: String): User
+
+    @Query("SELECT * FROM User")
+    suspend fun getUsers(): List<User>
 }

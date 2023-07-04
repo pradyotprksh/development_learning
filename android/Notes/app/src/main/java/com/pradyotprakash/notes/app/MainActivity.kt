@@ -8,6 +8,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.pradyotprakash.notes.app.localization.Translation
+import com.pradyotprakash.notes.app.pages.login.view.LoginView
+import com.pradyotprakash.notes.app.pages.signup.view.SignUpView
 import com.pradyotprakash.notes.app.pages.splash.view.SplashView
 import com.pradyotprakash.notes.app.theme.NotesTheme
 import com.pradyotprakash.notes.core.navigation.Navigator
@@ -34,6 +36,8 @@ class MainActivity : ComponentActivity() {
             NotesTheme {
                 NavHost(navController = navController, startDestination = Routes.Splash.route) {
                     composable(Routes.Splash.path()) { SplashView() }
+                    composable(Routes.SignUpUser.path()) { SignUpView() }
+                    composable(Routes.LoginUser.path()) { LoginView() }
                 }
             }
         }
