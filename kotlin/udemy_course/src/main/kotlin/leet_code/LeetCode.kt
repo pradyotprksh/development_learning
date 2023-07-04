@@ -1,6 +1,7 @@
 package leet_code
 
 import data_structures.linked_lists.ListNode
+import java.lang.Exception
 import java.util.Stack
 import kotlin.math.abs
 import kotlin.math.max
@@ -86,6 +87,35 @@ class LeetCode {
         println(strStr("sadbutsad", "sad"))
         println(strStr("leetcode", "leeto"))
         println(strStr("hello", "ll"))
+
+        println(findSubstring("barfoothefoobarman", arrayOf("foo","bar")))
+        println(findSubstring("wordgoodgoodgoodbestword", arrayOf("word","good","best","word")))
+        println(findSubstring("barfoofoobarthefoobarman", arrayOf("bar","foo","the")))
+        println(findSubstring("wordgoodgoodgoodbestword", arrayOf("word","good","best","good")))
+        println(findSubstring("abababab", arrayOf("ab","ba")))
+        println(findSubstring("abaababbaba", arrayOf("ab","ba","ab","ba")))
+    }
+
+    // Not passing - Time exceeds error
+    private fun findSubstring(s: String, words: Array<String>): List<Int> {
+        val indices = mutableListOf<Int>()
+        val concatWords = words.toList().joinToString("").toCharArray().sorted().joinToString("")
+        val maxLength = concatWords.length
+
+        for (i in s.indices) {
+            if (i + maxLength > s.length) break
+            val partString = s.substring(i, i + maxLength)
+            if (partString.toCharArray().sorted().joinToString("") == concatWords) {
+                val partsSorted = partString.chunked(words.first().length).sorted()
+                val wordsSorted = words.sorted()
+
+                if (partsSorted == wordsSorted) {
+                    indices.add(i)
+                }
+            }
+        }
+
+        return indices
     }
 
     private fun strStr(haystack: String, needle: String): Int {
