@@ -12,7 +12,7 @@ sealed class Assets(
     val imageDescription: String = ""
 ) {
     object AppIcon :
-        Assets(resourceId = R.drawable.ic_launcher_foreground, imageDescription = "Main application icon")
+        Assets(resourceId = R.drawable.ic_launcher, imageDescription = "Main application icon")
 
     data class Localization(val lanKey: String = defaultLanguage) :
         Assets(path = "localization_${lanKey}.json")

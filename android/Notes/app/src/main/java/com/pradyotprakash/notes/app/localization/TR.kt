@@ -6,5 +6,7 @@ package com.pradyotprakash.notes.app.localization
  */
 object TR {
     var appName = Translation.getString("appName")
+    var okay = Translation.getString("okay")
+    var cancel = Translation.getString("cancel")
     
 }
