@@ -1,11 +1,9 @@
 package leet_code
 
 import data_structures.linked_lists.ListNode
-import java.lang.Exception
-import java.util.Stack
+import java.util.*
 import kotlin.math.abs
 import kotlin.math.max
-import kotlin.math.min
 
 class LeetCode {
     fun startLeetCode() {
@@ -76,24 +74,52 @@ class LeetCode {
         println(swapPairs(null))
         println(swapPairs(ListNode(data = 1, next = ListNode(data = 2, next = ListNode(3)))))
 
-        println(removeDuplicates(intArrayOf(1,1,2)))
-        println(removeDuplicates(intArrayOf(0,0,1,1,1,2,2,3,3,4)))
+        println(removeDuplicates(intArrayOf(1, 1, 2)))
+        println(removeDuplicates(intArrayOf(0, 0, 1, 1, 1, 2, 2, 3, 3, 4)))
 
         println(maxApples(1, listOf(1, 2, 3, 2, 4)))
 
         println(removeElement(intArrayOf(3, 2, 2, 3), 3))
-        println(removeElement(intArrayOf(0,1,2,2,3,0,4,2), 2))
+        println(removeElement(intArrayOf(0, 1, 2, 2, 3, 0, 4, 2), 2))
 
         println(strStr("sadbutsad", "sad"))
         println(strStr("leetcode", "leeto"))
         println(strStr("hello", "ll"))
 
-        println(findSubstring("barfoothefoobarman", arrayOf("foo","bar")))
-        println(findSubstring("wordgoodgoodgoodbestword", arrayOf("word","good","best","word")))
-        println(findSubstring("barfoofoobarthefoobarman", arrayOf("bar","foo","the")))
-        println(findSubstring("wordgoodgoodgoodbestword", arrayOf("word","good","best","good")))
-        println(findSubstring("abababab", arrayOf("ab","ba")))
-        println(findSubstring("abaababbaba", arrayOf("ab","ba","ab","ba")))
+        println(findSubstring("barfoothefoobarman", arrayOf("foo", "bar")))
+        println(findSubstring("wordgoodgoodgoodbestword", arrayOf("word", "good", "best", "word")))
+        println(findSubstring("barfoofoobarthefoobarman", arrayOf("bar", "foo", "the")))
+        println(findSubstring("wordgoodgoodgoodbestword", arrayOf("word", "good", "best", "good")))
+        println(findSubstring("abababab", arrayOf("ab", "ba")))
+        println(findSubstring("abaababbaba", arrayOf("ab", "ba", "ab", "ba")))
+
+        println(searchRange(intArrayOf(5, 7, 7, 8, 8, 10), 8).toList())
+        println(searchRange(intArrayOf(5, 7, 7, 8, 8, 10), 6).toList())
+        println(searchRange(intArrayOf(), 0).toList())
+        println(searchRange(intArrayOf(1), 1).toList())
+        println(searchRange(intArrayOf(2, 2), 2).toList())
+    }
+
+    private fun searchRange(nums: IntArray, target: Int): IntArray {
+        var l = 0
+        var r = nums.size - 1
+
+        while (l <= r) {
+            if (nums[l] == target && nums[r] == target) {
+                return intArrayOf(l, r)
+            } else {
+                if (nums[l] == target && nums[r] != target) {
+                    --r
+                } else if (nums[l] != target && nums[r] == target) {
+                    ++l
+                } else if (nums[l] != target && nums[r] != target) {
+                    --r
+                    ++l
+                }
+            }
+        }
+
+        return intArrayOf(-1, -1)
     }
 
     // Not passing - Time exceeds error
