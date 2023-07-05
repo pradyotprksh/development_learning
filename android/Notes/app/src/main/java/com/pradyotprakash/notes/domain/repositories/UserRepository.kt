@@ -6,4 +6,10 @@ class UserRepository(
     private val userDao: UserDao,
 ) {
     suspend fun getAllUser() = userDao.getUsers()
+
+    suspend fun getUsersByUsername(username: String) =
+        userDao.getUsersByUsername(username = username)
+
+    suspend fun getUsersByEmailId(emailId: String) =
+        userDao.getUsersByEmailId(emailId = emailId)
 }

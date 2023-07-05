@@ -1,5 +1,10 @@
 {
   "appName": "Notes",
   "okay": "Okay",
-  "cancel": "Cancel"
+  "cancel": "Cancel",
+  "signUp": "Sign Up",
+  "username": "Username",
+  "emailId": "Email Address",
+  "password": "Password",
+  "usernameTaken": "Username is already taken"
 }

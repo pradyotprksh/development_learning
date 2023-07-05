@@ -32,7 +32,7 @@ class SplashViewModel @Inject constructor(
 
     private fun checkIfUserAvailable() {
         viewModelScope.launch {
-            delay(5000)
+            delay(2000)
             if (userUseCase.isUsersAvailable()) {
                 navigator.navigate {
                     it.navigate(Routes.LoginUser.path()) {

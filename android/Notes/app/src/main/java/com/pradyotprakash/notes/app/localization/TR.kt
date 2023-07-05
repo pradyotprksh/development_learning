@@ -8,5 +8,10 @@ object TR {
     var appName = Translation.getString("appName")
     var okay = Translation.getString("okay")
     var cancel = Translation.getString("cancel")
+    var signUp = Translation.getString("signUp")
+    var username = Translation.getString("username")
+    var emailId = Translation.getString("emailId")
+    var password = Translation.getString("password")
+    var usernameTaken = Translation.getString("usernameTaken")
     
 }
