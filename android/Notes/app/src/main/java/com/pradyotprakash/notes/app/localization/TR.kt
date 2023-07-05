@@ -13,5 +13,10 @@ object TR {
     var emailId = Translation.getString("emailId")
     var password = Translation.getString("password")
     var usernameTaken = Translation.getString("usernameTaken")
+    var emailIdTaken = Translation.getString("emailIdTaken")
+    var firstName = Translation.getString("firstName")
+    var lastName = Translation.getString("lastName")
+    var createAccount = Translation.getString("createAccount")
+    var signUpUserError = Translation.getString("signUpUserError")
     
 }

@@ -1,15 +1,20 @@
 package com.pradyotprakash.notes.domain.repositories
 
 import com.pradyotprakash.notes.device.dao.UserDao
+import com.pradyotprakash.notes.device.entity.User
 
 class UserRepository(
     private val userDao: UserDao,
 ) {
-    suspend fun getAllUser() = userDao.getUsers()
+    fun getAllUser() = userDao.getUsers()
 
-    suspend fun getUsersByUsername(username: String) =
+    fun getUsersByUsername(username: String) =
         userDao.getUsersByUsername(username = username)
 
-    suspend fun getUsersByEmailId(emailId: String) =
+    fun getUsersByEmailId(emailId: String) =
         userDao.getUsersByEmailId(emailId = emailId)
+
+    fun createUser(user: User) {
+        userDao.insert(user = user)
+    }
 }

@@ -9,6 +9,7 @@ import com.pradyotprakash.notes.core.navigation.Routes
 import com.pradyotprakash.notes.core.navigation.path
 import com.pradyotprakash.notes.domain.usecases.UserUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -31,7 +32,7 @@ class SplashViewModel @Inject constructor(
     }
 
     private fun checkIfUserAvailable() {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             delay(2000)
             if (userUseCase.isUsersAvailable()) {
                 navigator.navigate {

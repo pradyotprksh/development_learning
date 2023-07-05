@@ -12,13 +12,13 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.pradyotprakash.notes.app.composables.PageStateComposable
@@ -33,16 +33,27 @@ fun SignUpView(
 ) {
     val error = signUpViewModel.error.observeAsState("").value
     val username = signUpViewModel.username.observeAsState("").value
+    val firstName = signUpViewModel.firstName.observeAsState("").value
+    val lastName = signUpViewModel.lastName.observeAsState("").value
     val emailId = signUpViewModel.emailId.observeAsState("").value
     val password = signUpViewModel.password.observeAsState("").value
     val isInputValid = signUpViewModel.isInputValid.observeAsState(false).value
     val usernameTaken = signUpViewModel.usernameTaken.observeAsState(false).value
+    val emailIdTaken = signUpViewModel.emailIdTaken.observeAsState(false).value
 
     PageStateComposable(
         errorMessage = error,
         dismissErrorAlert = signUpViewModel::updateErrorState
     ) {
-        Scaffold { paddingValues ->
+        Scaffold(
+            topBar = {
+                TopAppBar(
+                    title = {
+                        Text(text = TR.signUp)
+                    }
+                )
+            }
+        ) { paddingValues ->
             Column(
                 modifier = Modifier
                     .padding(paddingValues)
@@ -53,7 +64,7 @@ fun SignUpView(
                 TextField(
                     value = username,
                     onValueChange = { value ->
-                        signUpViewModel.updateFormField(value, FieldType.username)
+                        signUpViewModel.updateFormField(value, FieldType.Username)
                     },
                     modifier = Modifier
                         .fillMaxWidth()
@@ -68,9 +79,31 @@ fun SignUpView(
                 )
                 Spacer(modifier = Modifier.height(10.dp))
                 TextField(
+                    value = firstName,
+                    onValueChange = { value ->
+                        signUpViewModel.updateFormField(value, FieldType.FirstName)
+                    },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(10.dp),
+                    label = { Text(text = TR.firstName) },
+                )
+                Spacer(modifier = Modifier.height(10.dp))
+                TextField(
+                    value = lastName,
+                    onValueChange = { value ->
+                        signUpViewModel.updateFormField(value, FieldType.LastName)
+                    },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(10.dp),
+                    label = { Text(text = TR.lastName) },
+                )
+                Spacer(modifier = Modifier.height(10.dp))
+                TextField(
                     value = emailId,
                     onValueChange = { value ->
-                        signUpViewModel.updateFormField(value, FieldType.emailId)
+                        signUpViewModel.updateFormField(value, FieldType.EmailId)
                     },
                     modifier = Modifier
                         .fillMaxWidth()
@@ -78,13 +111,19 @@ fun SignUpView(
                     label = { Text(text = TR.emailId) },
                     keyboardOptions = KeyboardOptions(
                         keyboardType = KeyboardType.Email,
-                    )
+                    ),
+                    isError = emailIdTaken,
+                    supportingText = {
+                        if (emailIdTaken) {
+                            Text(text = TR.emailIdTaken)
+                        }
+                    }
                 )
                 Spacer(modifier = Modifier.height(10.dp))
                 TextField(
                     value = password,
                     onValueChange = { value ->
-                        signUpViewModel.updateFormField(value, FieldType.password)
+                        signUpViewModel.updateFormField(value, FieldType.Password)
                     },
                     modifier = Modifier
                         .fillMaxWidth()
@@ -97,13 +136,13 @@ fun SignUpView(
                 )
                 Spacer(modifier = Modifier.height(20.dp))
                 Button(
-                    onClick = {},
+                    onClick = signUpViewModel::createAccount,
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(10.dp),
                     enabled = isInputValid,
                 ) {
-                    Text(text = TR.signUp)
+                    Text(text = TR.createAccount)
                 }
             }
         }

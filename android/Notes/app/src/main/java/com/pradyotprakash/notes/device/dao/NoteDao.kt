@@ -10,14 +10,14 @@ import com.pradyotprakash.notes.device.entity.Note
 @Dao
 interface NoteDao {
     @Query("SELECT * FROM Note")
-    suspend fun getAllNotes(): List<Note>
+    fun getAllNotes(): List<Note>
 
     @Query("SELECT * FROM Note WHERE is_online == :isOnline")
-    suspend fun getNotesIf(isOnline: Boolean): List<Note>
+    fun getNotesIf(isOnline: Boolean): List<Note>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAll(vararg notes: Note)
+    fun insertAll(vararg notes: Note)
 
     @Delete
-    suspend fun delete(note: Note)
+    fun delete(note: Note)
 }

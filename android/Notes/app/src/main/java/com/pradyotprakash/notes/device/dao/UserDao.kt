@@ -10,20 +10,17 @@ import com.pradyotprakash.notes.device.entity.User
 @Dao
 interface UserDao {
     @Insert(onConflict = OnConflictStrategy.ABORT)
-    suspend fun insert(user: User)
+    fun insert(user: User)
 
     @Delete
-    suspend fun delete(user: User)
-
-    @Query("SELECT * FROM User WHERE username == :username")
-    suspend fun getUserDetails(username: String): User
+    fun delete(user: User)
 
     @Query("SELECT * FROM User")
-    suspend fun getUsers(): List<User>
+    fun getUsers(): List<User>
 
     @Query("SELECT * FROM User WHERE username == :username")
-    suspend fun getUsersByUsername(username: String): List<User>
+    fun getUsersByUsername(username: String): List<User>
 
     @Query("SELECT * FROM User WHERE email_id == :emailId")
-    suspend fun getUsersByEmailId(emailId: String): List<User>
+    fun getUsersByEmailId(emailId: String): List<User>
 }

@@ -4,8 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.pradyotprakash.notes.app.localization.TR
 import com.pradyotprakash.notes.domain.usecases.UserUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -20,6 +22,14 @@ class SignUpViewModel @Inject constructor(
     private val _username = MutableLiveData("")
     val username: LiveData<String>
         get() = _username
+
+    private val _firstName = MutableLiveData("")
+    val firstName: LiveData<String>
+        get() = _firstName
+
+    private val _lastName = MutableLiveData("")
+    val lastName: LiveData<String>
+        get() = _lastName
 
     private val _emailId = MutableLiveData("")
     val emailId: LiveData<String>
@@ -37,28 +47,46 @@ class SignUpViewModel @Inject constructor(
     val usernameTaken: LiveData<Boolean>
         get() = _usernameTaken
 
-    fun updateErrorState() {
+    private val _emailIdTaken = MutableLiveData(false)
+    val emailIdTaken: LiveData<Boolean>
+        get() = _emailIdTaken
+
+    fun updateErrorState(message: String = "") {
         _errorText.value = ""
     }
 
     fun updateFormField(value: String, fieldType: FieldType) {
         when (fieldType) {
-            FieldType.emailId -> _emailId.value = value
-            FieldType.username -> {
+            FieldType.EmailId -> {
+                _emailId.value = value
+                checkForEmailIdAvailability()
+            }
+            FieldType.Username -> {
                 _username.value = value
                 checkForUsernameAvailability()
             }
 
-            FieldType.password -> _password.value = value
+            FieldType.Password -> _password.value = value
+            FieldType.FirstName -> _firstName.value = value
+            FieldType.LastName -> _lastName.value = value
         }
         checkForInputs()
+    }
+
+    private fun checkForEmailIdAvailability() {
+        val emailId = _emailId.value ?: ""
+        if (emailId.isNotEmpty()) {
+            viewModelScope.launch(Dispatchers.IO) {
+                _emailIdTaken.postValue(userUseCase.isEmailIdUsed(emailId = emailId))
+            }
+        }
     }
 
     private fun checkForUsernameAvailability() {
         val username = _username.value ?: ""
         if (username.isNotEmpty()) {
-            viewModelScope.launch {
-                _usernameTaken.value = userUseCase.isUsernameTaken(username = username)
+            viewModelScope.launch(Dispatchers.IO) {
+                _usernameTaken.postValue(userUseCase.isUsernameTaken(username = username))
             }
         }
     }
@@ -67,8 +95,40 @@ class SignUpViewModel @Inject constructor(
         val username = _username.value ?: ""
         val emailId = _emailId.value ?: ""
         val password = _password.value ?: ""
+        val firstName = _firstName.value ?: ""
+        val lastName = _lastName.value ?: ""
+        val usernameValid = !(_usernameTaken.value ?: true)
+        val emailIdValid = !(_emailIdTaken.value ?: true)
 
         _isInputsValid.value =
             username.isNotEmpty() && emailId.isNotEmpty() && password.isNotEmpty()
+                    && firstName.isNotEmpty() && lastName.isNotEmpty()
+                    && usernameValid && emailIdValid
+    }
+
+    fun createAccount() {
+        if (_isInputsValid.value == true) {
+            val username = _username.value ?: ""
+            val emailId = _emailId.value ?: ""
+            val password = _password.value ?: ""
+            val firstName = _firstName.value ?: ""
+            val lastName = _lastName.value ?: ""
+
+            viewModelScope.launch(Dispatchers.IO) {
+                val isAdded = userUseCase.createUser(
+                    username = username,
+                    emailId = emailId,
+                    password = password,
+                    firstName = firstName,
+                    lastName = lastName
+                )
+
+                if (isAdded) {
+
+                } else {
+                    updateErrorState(message = TR.signUpUserError)
+                }
+            }
+        }
     }
 }

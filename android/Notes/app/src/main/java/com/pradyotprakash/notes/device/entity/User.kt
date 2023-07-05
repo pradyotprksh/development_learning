@@ -11,5 +11,5 @@ data class User(
     @ColumnInfo(name = "last_name") val lastName: String,
     @ColumnInfo(name = "email_id") val emailId: String,
     @ColumnInfo(name = "password") val password: String,
-    @ColumnInfo(name = "created_on") val createdOn: Int,
+    @ColumnInfo(name = "created_on") val createdOn: Long,
 )

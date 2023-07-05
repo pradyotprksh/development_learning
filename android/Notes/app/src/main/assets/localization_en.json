@@ -6,5 +6,10 @@
   "username": "Username",
   "emailId": "Email Address",
   "password": "Password",
-  "usernameTaken": "Username is already taken"
+  "usernameTaken": "Username is already taken",
+  "emailIdTaken": "Email address already taken",
+  "firstName": "First Name",
+  "lastName": "Last Name",
+  "createAccount": "Create Account",
+  "signUpUserError": "Something went wrong while creating the user. Please try again."
 }
