@@ -31,7 +31,7 @@ fun PageStateComposable(
     errorMessage: String = "",
     dismissErrorAlert: () -> Unit = {},
     confirmationDialog: ConfirmationDialog = ConfirmationDialog(),
-    content: @Composable () -> Unit,
+    content: @Composable () -> Unit = {},
 ) {
     Box(
         modifier = Modifier.fillMaxSize()

@@ -38,12 +38,12 @@ class LeetCode {
         println(longestCommonPrefix(arrayOf("flower", "flow", "flight")))
 
         println(
-            removeNthFromEnd(
-                ListNode(
-                    data = 1,
-                    next = ListNode(data = 2, next = ListNode(3, next = ListNode(4, next = ListNode(data = 5))))
-                ), 2
-            )
+                removeNthFromEnd(
+                        ListNode(
+                                data = 1,
+                                next = ListNode(data = 2, next = ListNode(3, next = ListNode(4, next = ListNode(data = 5))))
+                        ), 2
+                )
         )
         println(removeNthFromEnd(ListNode(data = 1, next = ListNode(data = 2)), 1))
         println(removeNthFromEnd(ListNode(data = 1), 1))
@@ -56,17 +56,17 @@ class LeetCode {
         println(isValid("){"))
 
         println(
-            mergeTwoLists(
-                ListNode(data = 1, next = ListNode(data = 2, ListNode(data = 4))),
-                ListNode(data = 1, next = ListNode(data = 3, ListNode(data = 4))),
-            )
+                mergeTwoLists(
+                        ListNode(data = 1, next = ListNode(data = 2, ListNode(data = 4))),
+                        ListNode(data = 1, next = ListNode(data = 3, ListNode(data = 4))),
+                )
         )
         println(mergeTwoLists(null, null))
         println(
-            mergeTwoLists(
-                null,
-                ListNode(data = 0),
-            )
+                mergeTwoLists(
+                        null,
+                        ListNode(data = 0),
+                )
         )
 
         println(swapPairs(ListNode(data = 1, next = ListNode(data = 2, next = ListNode(3, next = ListNode(4))))))
@@ -98,6 +98,153 @@ class LeetCode {
         println(searchRange(intArrayOf(), 0).toList())
         println(searchRange(intArrayOf(1), 1).toList())
         println(searchRange(intArrayOf(2, 2), 2).toList())
+
+        println(searchInsert(intArrayOf(1, 3, 5, 6), 5))
+        println(searchInsert(intArrayOf(1, 3, 5, 6), 2))
+        println(searchInsert(intArrayOf(1, 3, 5, 6), 7))
+        println(searchInsert(intArrayOf(1), 1))
+
+        println(merge(intArrayOf(1, 2, 3, 0, 0, 0), 3, intArrayOf(2, 5, 6), 3))
+
+        println(removeDuplicates2(intArrayOf(1, 1, 1, 2, 2, 3)))
+
+        println(majorityElement(intArrayOf(3, 2, 3)))
+        println(majorityElement(intArrayOf(2, 2, 1, 1, 1, 2, 2)))
+        println(majorityElement(intArrayOf(3, 3, 4)))
+
+        val rotateArray1 = intArrayOf(1, 2, 3, 4, 5, 6, 7)
+        rotate(rotateArray1, 3)
+        println(rotateArray1.toList())
+        val rotateArray2 = intArrayOf(-1, -100, 3, 99)
+        rotate(rotateArray2, 2)
+        println(rotateArray2.toList())
+        val rotateArray3 = intArrayOf(-1)
+        rotate(rotateArray3, 2)
+        println(rotateArray3.toList())
+
+        println(maxProfit(intArrayOf(7, 1, 5, 3, 6, 4)))
+
+        println(maxProfit2(intArrayOf(7, 1, 5, 3, 6, 4)))
+        println(maxProfit2(intArrayOf(1, 2, 3, 4, 5)))
+    }
+
+    private fun maxProfit2(prices: IntArray): Int {
+        var minVal = prices.first()
+        var maxProfit = 0
+
+        for (i in 1 until prices.size) {
+            if (prices[i] < minVal) {
+                minVal = prices[i]
+            } else if (prices[i] - minVal > 0) {
+                maxProfit += prices[i] - minVal
+                minVal = prices[i]
+            }
+        }
+
+        return maxProfit
+    }
+
+    private fun maxProfit(prices: IntArray): Int {
+        var minVal = prices.first()
+        var maxDiff = 0
+
+        for (i in 1 until prices.size) {
+            if (prices[i] < minVal) {
+                minVal = prices[i]
+            } else if (prices[i] - minVal > maxDiff) {
+                maxDiff = prices[i] - minVal
+            }
+        }
+
+        return maxDiff
+    }
+
+    private fun reverse(nums: IntArray, start: Int, end: Int) {
+        var tempStart = start
+        var tempEnd = end
+        while (tempStart < tempEnd) {
+            val temp = nums[tempStart]
+            nums[tempStart++] = nums[tempEnd]
+            nums[tempEnd--] = temp
+        }
+    }
+
+    // https://betterprogramming.pub/3-ways-to-rotate-an-array-2a45b39f7bec
+    private fun rotate(nums: IntArray, k: Int) {
+        val tempK = k % nums.size
+        reverse(nums, 0, nums.size - 1)
+        reverse(nums, 0, tempK - 1)
+        reverse(nums, tempK, nums.size - 1)
+    }
+
+    private fun majorityElement(nums: IntArray): Int {
+        nums.sort()
+
+        var element = nums[0]
+        var tempElement = nums[0]
+        var maxcount = 0
+        var count = 0
+
+        for (i in nums.indices) {
+            if (nums[i] == tempElement) {
+                ++count
+            } else {
+                tempElement = nums[i]
+                count = 1
+            }
+
+            if (count > maxcount) {
+                maxcount = count
+                element = tempElement
+            }
+        }
+
+        return element
+    }
+
+    private fun removeDuplicates2(nums: IntArray): Int {
+        var counter = 1
+
+        for (i in 2 until nums.size) {
+            if (nums[i] != nums[counter] || nums[i] != nums[counter - 1]) {
+                nums[++counter] = nums[i]
+            }
+        }
+
+        return counter + 1
+    }
+
+    private fun merge(nums1: IntArray, m: Int, nums2: IntArray, n: Int) {
+        var i = m - 1
+        var j = n - 1
+        var k = m + n - 1
+        while (j >= 0) {
+            nums1[k--] = if (i < 0 || nums1[i] < nums2[j]) nums2[j--] else nums1[i--]
+        }
+    }
+
+    private fun searchInsert(nums: IntArray, target: Int): Int {
+        var l = 0
+        var r = nums.size - 1
+        var m: Int
+
+        while (l <= r) {
+            m = (l + r) / 2
+            if (nums[m] == target) return m
+            else if (nums[m] < target) {
+                l = m + 1
+            } else {
+                r = m - 1
+            }
+        }
+
+        m = (l + r) / 2
+        return if (nums[m] == target) m
+        else if (nums[m] < target) m + 1
+        else {
+            if (m - 1 < 0) 0
+            else m - 1
+        }
     }
 
     private fun searchRange(nums: IntArray, target: Int): IntArray {

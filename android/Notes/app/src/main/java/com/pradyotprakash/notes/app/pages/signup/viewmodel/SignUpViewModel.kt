@@ -52,7 +52,7 @@ class SignUpViewModel @Inject constructor(
         get() = _emailIdTaken
 
     fun updateErrorState(message: String = "") {
-        _errorText.value = ""
+        _errorText.value = message
     }
 
     fun updateFormField(value: String, fieldType: FieldType) {

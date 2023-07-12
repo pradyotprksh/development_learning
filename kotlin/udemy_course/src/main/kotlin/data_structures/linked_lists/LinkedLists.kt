@@ -7,9 +7,9 @@ data class ListNode(var data: Int, var next: ListNode? = null) {
 }
 
 data class DoublyNode(
-    var prev: DoublyNode? = null,
-    var data: Int,
-    var next: DoublyNode? = null
+        var prev: DoublyNode? = null,
+        var data: Int,
+        var next: DoublyNode? = null
 ) {
     override fun toString(): String {
         return "$data<->$next"

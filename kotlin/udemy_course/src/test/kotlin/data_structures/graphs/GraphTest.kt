@@ -80,8 +80,8 @@ class GraphTest : TestCase() {
         graph.addEdge("E", "F")
 
         assertEquals(
-            "[A, B, D, E, C, F]",
-            graph.dfsRecursiveTraversal("A").toString()
+                "[A, B, D, E, C, F]",
+                graph.dfsRecursiveTraversal("A").toString()
         )
 
         graph.dfsRecursiveTraversal("G")
@@ -98,13 +98,13 @@ class GraphTest : TestCase() {
         graph.addEdge("E", "F")
 
         assertEquals(
-            "[A, C, E, F, D, B]",
-            graph.dfsIterativeTraversal("A").toString()
+                "[A, C, E, F, D, B]",
+                graph.dfsIterativeTraversal("A").toString()
         )
 
         assertNotSame(
-            graph.dfsRecursiveTraversal("A").toString(),
-            graph.dfsIterativeTraversal("A").toString()
+                graph.dfsRecursiveTraversal("A").toString(),
+                graph.dfsIterativeTraversal("A").toString()
         )
 
         graph.dfsIterativeTraversal("G")
@@ -121,8 +121,8 @@ class GraphTest : TestCase() {
         graph.addEdge("E", "F")
 
         assertEquals(
-            "[A, B, C, D, E, F]",
-            graph.bfsTraversal("A").toString()
+                "[A, B, C, D, E, F]",
+                graph.bfsTraversal("A").toString()
         )
 
         graph.bfsTraversal("G")
