@@ -989,3 +989,54 @@ The `inline` keyword in Kotlin provides several advantages:
 6. Integration with Control Flow Constructs: Inlined functions can seamlessly integrate with control flow constructs like `return`, `break`, and `continue`. The inlined code can be inserted directly into the calling context, preserving the control flow behavior.
 
 It's important to note that the decision to use `inline` should be made carefully, considering the size and complexity of the code being inlined. Inlining larger functions or functions with complex logic may increase the code size and impact maintainability. It's best to use `inline` selectively for small, performance-critical functions or lambdas to maximize the benefits while maintaining code readability and maintainability.
+
+# Types of Constructor in Kotlin
+
+There are two types of constructors in Kotlin:
+
+* **Primary constructor**
+* **Secondary constructor**
+
+**Primary constructor**
+
+The primary constructor is the main constructor of a class. It is used to initialize the class properties. The primary constructor cannot contain any code. Initialization code can be placed in initializer blocks prefixed with the `init` keyword.
+
+For example, the following code shows a primary constructor that initializes the `name` property of a `Person` class:
+
+```kotlin
+class Person(val name: String) {
+    init {
+        println("Person created with name: $name")
+    }
+}
+```
+
+**Secondary constructor**
+
+The secondary constructor is used to add additional initialization logic to the class. The secondary constructor must always call the primary constructor, either explicitly or implicitly.
+
+For example, the following code shows a secondary constructor that adds an age property to the `Person` class:
+
+```kotlin
+class Person(val name: String) {
+    init {
+        println("Person created with name: $name")
+    }
+
+    constructor(name: String, age: Int) : this(name) {
+        println("Person created with name: $name and age: $age")
+    }
+}
+```
+
+In this example, the secondary constructor calls the primary constructor with the `name` property. The `age` property is then initialized in the secondary constructor.
+
+**Other types of constructors**
+
+In addition to the primary and secondary constructors, Kotlin also supports other types of constructors, such as:
+
+* **Delegating constructors**
+* **Factory constructors**
+* **Secondary constructors with named parameters**
+
+For more information on these types of constructors, please refer to the [Kotlin documentation](https://kotlinlang.org/docs/classes.html).
