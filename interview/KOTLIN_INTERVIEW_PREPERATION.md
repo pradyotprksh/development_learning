@@ -454,6 +454,24 @@ Here are a few reasons why coroutines are considered lightweight:
 
 Overall, coroutines offer a lightweight and efficient approach to concurrent programming by utilizing cooperative multitasking, efficient context switching, and optimized resource utilization. This makes them well-suited for tasks that involve concurrent operations, asynchronous programming, and responsive user interfaces.
 
+## Difference between Coroutines and Threads
+
+Coroutines and threads are both concurrency mechanisms but differ in several key aspects:
+
+1. Concurrency Model: Threads are part of the operating system's concurrency model and are managed by the operating system kernel. They are preemptively scheduled and can run in parallel on multiple processor cores. Coroutines, on the other hand, are part of a higher-level concurrency model provided by a programming language or framework. They are cooperatively scheduled and can be multiplexed onto a smaller number of actual threads.
+
+2. Resource Usage: Threads require a significant amount of system resources, such as memory and a separate stack, for each thread. Creating and switching between threads incurs overhead. In contrast, coroutines are lightweight and have a smaller memory footprint. Many coroutines can run concurrently on a single thread, making more efficient use of system resources.
+
+3. Synchronization and Communication: Threads share memory and can communicate with each other directly. However, shared memory access requires careful synchronization to avoid data races and other concurrency issues. Coroutines, especially when using structured concurrency, usually avoid the complexities of shared mutable state and provide safer communication mechanisms, such as message passing or channels.
+
+4. Blocking vs. Non-Blocking: Threads are generally used in a blocking manner, where a thread blocks and waits for a resource or I/O operation to complete. Blocking a thread consumes system resources. In contrast, coroutines are typically non-blocking. They can be suspended without blocking the underlying thread, allowing the thread to be used for other tasks while waiting for the coroutine to be resumed.
+
+5. Concurrency Control: With threads, concurrency control is often achieved using low-level primitives like locks, semaphores, or monitors. Coroutines, especially when combined with structured concurrency, provide higher-level abstractions like `async/await`, `withContext`, or `supervisorScope` to handle concurrency and handle errors in a more structured and composable way.
+
+6. Error Handling: Thread-based programming relies on exception handling mechanisms to handle errors. However, propagating exceptions between threads can be challenging. Coroutines offer structured error handling, where exceptions can be propagated across coroutine scopes and hierarchies, making error handling more straightforward.
+
+In summary, while threads are managed by the operating system and provide parallel execution, coroutines are managed by the programming language or framework and provide a lightweight, cooperative concurrency model. Coroutines allow for more efficient resource usage, safer communication, non-blocking operations, and higher-level abstractions for concurrency control and error handling.
+
 ## What are Dispatchers()
 
 In Kotlin coroutines, a Dispatcher is an entity that controls the execution of coroutines. It determines which thread or threads a coroutine will run on and manages the switching of execution between different threads. 
