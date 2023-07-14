@@ -1504,6 +1504,40 @@ In this example, `MockDependency` is a manually created subclass of `YourDepende
 
 While manual mocking can work, it can become cumbersome and time-consuming for complex scenarios. Mocking libraries like Mockito provide more convenient and expressive APIs for creating and configuring mock objects, defining behavior, and verifying interactions. They also offer additional features like argument matching, stubbing, and verification.
 
+# Coil
+
+Coil is an image loading library for Android that is designed for simplicity, speed, and efficiency. It provides a convenient way to load and display images in your Android app with minimal configuration and hassle.
+
+One of the key features of Coil is its efficient image caching mechanism. Coil uses an optimized disk caching strategy to store and retrieve images from the device's storage. When an image is loaded for the first time, Coil downloads it from the network and caches it on disk. Subsequent requests for the same image can then be served from the cache, reducing the need for repeated network requests and improving the loading performance.
+
+Coil uses an LRU (Least Recently Used) algorithm to manage the cache size and automatically evicts the least recently used images when the cache reaches its maximum capacity. This helps ensure that the most frequently accessed images are kept in the cache, while older or less frequently used images are removed to make room for new ones.
+
+Coil also supports memory caching, which helps to improve the loading speed of images that have already been decoded and are in memory. This reduces the need to decode images from disk, further enhancing the overall performance.
+
+In addition to efficient caching, Coil also provides features like placeholder and error handling, image transformations, request cancellation, and more, making it a versatile and user-friendly image loading library for Android developers.
+
+Overall, Coil's caching mechanism, combined with its simplicity and performance optimizations, helps to ensure smooth and efficient image loading in your Android app, enhancing the user experience and minimizing unnecessary network requests.
+
+When an image is loaded using Coil, it follows a caching mechanism that consists of memory caching and disk caching. Here's how it works:
+
+1. Memory Caching:
+   - Coil maintains an in-memory cache to store recently loaded and decoded images.
+   - When an image is loaded, Coil checks if it is available in the memory cache.
+   - If the image is found in the memory cache, Coil retrieves it from there without the need for additional network requests or disk access.
+
+2. Disk Caching:
+   - If the image is not found in the memory cache, Coil proceeds with the loading process.
+   - It first checks the disk cache to see if the image has been previously downloaded and cached.
+   - If the image is present in the disk cache, Coil retrieves it from there, stores it in the memory cache for faster access, and then displays it.
+
+3. Downloading if Not Cached:
+   - If the image is neither in the memory cache nor the disk cache, Coil initiates the download process.
+   - It makes network requests to fetch the image from the provided URL.
+   - Once the image is downloaded, it is stored in both the memory cache and the disk cache.
+   - Subsequent requests for the same image will be served from the cache, reducing the need for additional network requests.
+
+In summary, Coil checks the memory cache first to quickly retrieve and display images that have been previously loaded. If an image is not in the memory cache, it checks the disk cache, and if it's not there either, it downloads the image from the network. The downloaded image is then cached in both memory and disk for future use. This caching mechanism helps improve performance by reducing the need for repeated downloads and enabling faster image retrieval.
+
 # Useful Articles
 
 * [things-that-cannot-change](https://android-developers.googleblog.com/2011/06/things-that-cannot-change.html)
