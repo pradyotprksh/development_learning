@@ -1538,6 +1538,90 @@ When an image is loaded using Coil, it follows a caching mechanism that consists
 
 In summary, Coil checks the memory cache first to quickly retrieve and display images that have been previously loaded. If an image is not in the memory cache, it checks the disk cache, and if it's not there either, it downloads the image from the network. The downloaded image is then cached in both memory and disk for future use. This caching mechanism helps improve performance by reducing the need for repeated downloads and enabling faster image retrieval.
 
+# Retrofit retry mechanism
+
+The retry mechanism in Retrofit allows you to automatically retry failed network requests. When a request fails due to network issues or server errors, Retrofit can automatically retry the request a specified number of times before giving up.
+
+Here's a general overview of how the retry mechanism works in Retrofit:
+
+1. Define the Retry Policy: Decide on the retry policy that suits your needs. This includes determining the maximum number of retries, the backoff strategy (e.g., constant delay, exponential delay), and any conditions under which a retry should be attempted (e.g., specific HTTP error codes).
+
+2. Interceptor or CallAdapter: You can implement the retry mechanism either using an OkHttp Interceptor or a Retrofit CallAdapter.
+
+   - Interceptor Approach: With this approach, you can create a custom OkHttp Interceptor that intercepts the failed request and handles the retry logic. The interceptor can inspect the response or exception to determine if a retry should be attempted and then enqueue the request again with the OkHttp client.
+   
+   - CallAdapter Approach: Retrofit provides a CallAdapter interface that allows you to wrap the returned `Call` object with your own implementation. You can create a custom CallAdapter that automatically retries failed requests based on your retry policy. The custom CallAdapter can wrap the original `Call` object and delegate the request execution while handling retries.
+
+3. Implement Retry Logic: In your custom interceptor or CallAdapter implementation, you'll need to implement the retry logic based on your defined retry policy. This typically involves catching exceptions, inspecting response codes, and deciding whether to attempt a retry or not. You can use mechanisms like exponential backoff (increasing delay between retries) or constant delay between retries.
+
+4. Apply Retry Mechanism: Integrate your custom interceptor or CallAdapter into your Retrofit client configuration. This involves adding the interceptor to the OkHttp client's interceptor chain or using the custom CallAdapter when building the Retrofit service interface.
+
+By implementing the retry mechanism in Retrofit, failed requests can be automatically retried according to the defined policy. This helps handle transient network issues or temporary server errors, improving the reliability of your network requests.
+
+Here's an example of how you can implement a retry mechanism using an OkHttp Interceptor in Retrofit:
+
+```kotlin
+import okhttp3.Interceptor
+import okhttp3.Response
+import java.io.IOException
+
+class RetryInterceptor(private val maxRetries: Int) : Interceptor {
+    override fun intercept(chain: Interceptor.Chain): Response {
+        var request = chain.request()
+        var response: Response? = null
+        var retryCount = 0
+
+        while (retryCount < maxRetries) {
+            try {
+                response = chain.proceed(request)
+                // Check if the response is successful (e.g., HTTP status code 200-299)
+                if (response.isSuccessful) {
+                    return response
+                }
+            } catch (e: IOException) {
+                // Error occurred, retry the request
+                retryCount++
+                if (retryCount >= maxRetries) {
+                    // Reached maximum retries, propagate the exception
+                    throw e
+                }
+            }
+
+            // Delay before retrying (you can implement a backoff strategy here)
+            Thread.sleep(getDelay(retryCount))
+        }
+
+        // No successful response after all retries, propagate the last response or exception
+        return response ?: throw IOException("Request failed after $maxRetries retries")
+    }
+
+    private fun getDelay(retryCount: Int): Long {
+        // Implement your backoff strategy here (e.g., exponential delay)
+        return 1000L * retryCount
+    }
+}
+```
+
+To use this retry interceptor in your Retrofit client, you can configure it when building the OkHttp client and then assign the client to your Retrofit instance:
+
+```kotlin
+val okHttpClient = OkHttpClient.Builder()
+    .addInterceptor(RetryInterceptor(maxRetries = 3))
+    .build()
+
+val retrofit = Retrofit.Builder()
+    .baseUrl("https://api.example.com/")
+    .client(okHttpClient)
+    .addConverterFactory(GsonConverterFactory.create())
+    .build()
+
+val apiService = retrofit.create(ApiService::class.java)
+```
+
+In this example, the `RetryInterceptor` class implements the retry logic by intercepting the request and handling any `IOException` that occurs. It retries the request up to a specified maximum number of times (in this case, 3) with a delay between each retry. You can customize the retry count and the delay strategy to fit your specific requirements.
+
+Note that this is a basic example, and you can enhance it further by considering different error conditions, adding more sophisticated backoff strategies, and handling specific response codes for retry attempts.
+
 # Useful Articles
 
 * [things-that-cannot-change](https://android-developers.googleblog.com/2011/06/things-that-cannot-change.html)
