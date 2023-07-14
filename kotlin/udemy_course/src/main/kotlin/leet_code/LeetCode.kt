@@ -126,6 +126,53 @@ class LeetCode {
 
         println(maxProfit2(intArrayOf(7, 1, 5, 3, 6, 4)))
         println(maxProfit2(intArrayOf(1, 2, 3, 4, 5)))
+
+        println(lengthOfLastWord("Hello World"))
+        println(lengthOfLastWord("   fly me   to   the moon  "))
+
+        println(isPalindrome("A man, a plan, a canal: Panama"))
+        println(isPalindrome("race a car"))
+        println(isPalindrome(" "))
+    }
+
+    private fun isPalindrome(s: String): Boolean {
+//        val lowers = s.toLowerCase()
+        val lowers = s.lowercase()
+
+        var start = 0
+        var end = lowers.length - 1
+
+        while (start <= end) {
+            if (lowers[start] == lowers[end]) {
+                ++start
+                --end
+            } else {
+                if (!lowers[start].isLetterOrDigit()) {
+                    ++start
+                } else if (!lowers[end].isLetterOrDigit()) {
+                    --end
+                } else if (lowers[start] != lowers[end]) {
+                    return false
+                }
+            }
+        }
+
+        return true
+    }
+
+    private fun lengthOfLastWord(s: String): Int {
+//        return s.trimEnd().split(" ").last().length
+        var length = 0
+
+        for (i in s.length - 1 downTo 0) {
+            if (s[i] == ' ') {
+                if (length != 0) break
+                else continue
+            }
+            else ++length
+        }
+
+        return length
     }
 
     private fun maxProfit2(prices: IntArray): Int {
@@ -295,7 +342,7 @@ class LeetCode {
         if (needle.length > haystack.length) return -1
 
         for (i in haystack.indices) {
-            val endIndex = if (i + (needle.length) > haystack.length) haystack.length else i + (needle.length)
+            val endIndex = if (i + needle.length > haystack.length) haystack.length else i + needle.length
             if (haystack.substring(i, endIndex) == needle) {
                 return i
             }
