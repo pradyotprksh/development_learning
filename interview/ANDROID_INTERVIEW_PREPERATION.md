@@ -2,10 +2,7 @@ Some topics that you should consider learning or refreshing your knowledge on:
 
 1. Architecture components: This includes understanding and implementing MVVM, LiveData, Room, and other components.
 
-2. Jetpack: Familiarize yourself with Jetpack components such as Navigation, Paging, 
-
-
-, and CameraX.
+2. Jetpack: Familiarize yourself with Jetpack components such as Navigation, Paging, WorkManager, and CameraX.
 
 3. Dependency Injection: Learn about frameworks such as Dagger, Hilt, or Koin.
 
@@ -149,6 +146,26 @@ Jetpack is divided into four main categories:
 4. Behavior: This category includes libraries for handling common app behavior, such as WorkManager, CameraX, and Biometric.
 
 Jetpack libraries are backward-compatible, meaning that they work with older versions of Android and are designed to integrate seamlessly with existing Android code. By using Jetpack, developers can focus on writing their app's unique functionality, while Jetpack handles the heavy lifting of managing Android app development.
+
+## AppCompat
+
+AppCompat is a support library provided by Android that allows developers to use newer Android features and UI elements on older versions of Android. It provides backward compatibility for features introduced in newer versions of Android, allowing apps to have a consistent look and feel across different Android versions.
+
+The AppCompat library includes various components and utilities, such as the AppCompat theme, which provides a consistent material design appearance across different Android versions, and support for features like the Toolbar, RecyclerView, and ActionBar.
+
+By using AppCompat, developers can ensure that their apps work smoothly on a wide range of Android devices, including older versions, while still taking advantage of the latest features and design guidelines.
+
+## Android KTX
+
+Android KTX (Kotlin Extensions) is a set of Kotlin extensions provided by Google for Android development. It aims to simplify and streamline Android app development by providing concise and idiomatic Kotlin APIs for common Android tasks.
+
+Android KTX enhances the existing Android APIs with Kotlin-specific features, such as extension functions, lambda expressions, and null safety, to make the code more concise, readable, and expressive.
+
+With Android KTX, developers can write Android code in a more natural and idiomatic Kotlin style, reducing boilerplate code and improving productivity. It covers various areas of Android development, including views, fragments, resources, preferences, and more.
+
+Android KTX is designed to be backward compatible, so it can be used with both older and newer versions of Android. It is an optional library that can be added to an Android project by including the appropriate dependencies in the build.gradle file.
+
+By using Android KTX, developers can take advantage of the power of Kotlin and write more concise, readable, and efficient Android code.
 
 ### What is Multidex?
 
