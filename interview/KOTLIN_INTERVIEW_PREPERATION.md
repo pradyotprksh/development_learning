@@ -541,6 +541,34 @@ CPU-bound tasks are tasks that require a lot of computational power from the CPU
 
 These tasks typically require a lot of processing power from the CPU and can be time-consuming. In order to ensure that these tasks are executed efficiently, it is important to use appropriate concurrency techniques, such as coroutines, and to run them on threads or dispatchers optimized for CPU-bound tasks, such as `Dispatchers.Default` in Kotlin.
 
+## Scopes in coroutines
+
+In coroutines, scopes define the context and lifetime of coroutines, providing a structured way to manage and control their execution. Scopes help ensure that coroutines are properly started, executed, and completed within a well-defined scope. They also help handle cancellation and exception propagation.
+
+Here are some commonly used scopes in coroutines:
+
+1. GlobalScope:
+   - `GlobalScope` is a predefined top-level scope that is not bound to any specific lifecycle. It exists throughout the entire application lifecycle and can be used to launch long-running coroutines that are not tied to a specific scope. However, using `GlobalScope` is generally discouraged as it may lead to memory leaks if coroutines are not properly canceled or managed.
+
+2. CoroutineScope:
+   - `CoroutineScope` is a structured way to manage coroutines and define a specific scope for them. It is typically used to launch coroutines within a specific context, such as a specific lifecycle or a custom-defined scope.
+   - A `CoroutineScope` is created using the `CoroutineScope()` constructor or by using other functions like `MainScope()` or `viewModelScope`.
+   - Coroutines launched within a `CoroutineScope` are automatically canceled when the scope is canceled or completed.
+   - `CoroutineScope` provides coroutine builders like `launch`, `async`, and `runBlocking` to create and manage coroutines within the scope.
+
+3. SupervisorScope:
+   - `SupervisorScope` is a specialized `CoroutineScope` that provides supervision for child coroutines.
+   - If a child coroutine within a `SupervisorScope` fails with an exception, it does not cancel sibling coroutines. It allows the supervisor scope to handle and isolate failures without affecting the other coroutines.
+   - `SupervisorScope` is created using the `supervisorScope` coroutine builder.
+
+4. LifecycleScope:
+   - `LifecycleScope` is a `CoroutineScope` tied to the lifecycle of an Android component, such as an `Activity` or `Fragment`.
+   - It is typically created using the `lifecycleScope` extension property provided by the AndroidX lifecycle libraries.
+   - Coroutines launched within a `LifecycleScope` are automatically canceled when the associated component's lifecycle is destroyed or reaches a certain state, such as `ON_STOP` or `ON_DESTROY`.
+   - Using `LifecycleScope` helps manage coroutines within the lifecycle of the component and avoids potential memory leaks.
+
+By using different scopes, you can ensure that coroutines are properly managed, canceled, and tied to the appropriate context or lifecycle. Scopes help control the execution flow, exception handling, and cancellation propagation within the coroutine framework.
+
 ## lifecyclescope and viewmodelscope
 
 In Android development, a `LifecycleScope` and `ViewModelScope` are both used to manage the lifecycle of a coroutine. They ensure that coroutines launched from a specific component, such as an Activity or ViewModel, are cancelled when that component is destroyed or no longer needed. This helps prevent memory leaks and ensures that coroutines do not continue to run unnecessarily.
