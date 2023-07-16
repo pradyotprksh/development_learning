@@ -1,6 +1,7 @@
 package leet_code
 
 import data_structures.linked_lists.ListNode
+import java.lang.StringBuilder
 import java.util.*
 import kotlin.math.abs
 import kotlin.math.max
@@ -133,6 +134,56 @@ class LeetCode {
         println(isPalindrome("A man, a plan, a canal: Panama"))
         println(isPalindrome("race a car"))
         println(isPalindrome(" "))
+
+        println(isSubsequence("abc", "ahbgdc"))
+        println(isSubsequence("axc", "ahbgdc"))
+        println(isSubsequence("b", "abc"))
+
+        println(canConstruct("a", "b"))
+        println(canConstruct("aa", "ab"))
+        println(canConstruct("aa", "aab"))
+    }
+
+    // Can be improved more
+    private fun canConstruct(ransomNote: String, magazine: String): Boolean {
+//        var tempMagazine = magazine
+//        for (c in ransomNote) {
+//            if (tempMagazine.contains(c)) {
+//                tempMagazine = StringBuilder(tempMagazine).deleteCharAt(tempMagazine.indexOf(c)).toString()
+//            } else {
+//                return false
+//            }
+//        }
+//
+//        return true
+
+        val charMap = mutableMapOf<Char, Int>()
+
+        for (c in magazine) {
+            charMap[c] = charMap.getOrDefault(c, 0) + 1
+        }
+
+        for (c in ransomNote) {
+            if (!charMap.containsKey(c)) return false
+            if (charMap.getOrDefault(c, 0) <= 0) return false
+            charMap[c] = charMap.getOrDefault(c, 0) - 1
+        }
+
+        return true
+    }
+
+    private fun isSubsequence(s: String, t: String): Boolean {
+        var index = 0
+
+        for (c in t) {
+            if (index == s.length) break
+
+            if (c == s[index]) {
+                ++index
+            }
+        }
+
+        return index == s.length
     }
 
     private fun isPalindrome(s: String): Boolean {
