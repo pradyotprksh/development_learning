@@ -142,6 +142,39 @@ class LeetCode {
         println(canConstruct("a", "b"))
         println(canConstruct("aa", "ab"))
         println(canConstruct("aa", "aab"))
+
+        println(isIsomorphic("egg", "add"))
+        println(isIsomorphic("foo", "bar"))
+        println(isIsomorphic("paper", "title"))
+        println(isIsomorphic("badc", "baba"))
+
+        println(isAnagram("anagram", "nagaram"))
+        println(isAnagram("rat", "car"))
+    }
+
+    private fun isAnagram(s: String, t: String): Boolean {
+        if (s.length != t.length) return false
+        return s.toList().sorted().joinToString("") == t.toList().sorted().joinToString("")
+    }
+
+    private fun isIsomorphic(s: String, t: String): Boolean {
+        val characterMap = mutableMapOf<Char, Char>()
+
+        var i = 0
+        while (i < s.length) {
+            if (characterMap.containsKey(s[i])) {
+                if (characterMap[s[i]] != t[i]) {
+                    return false
+                }
+            } else if (characterMap.values.contains(t[i])) {
+                return false
+            } else {
+                characterMap[s[i]] = t[i]
+            }
+            ++i
+        }
+
+        return true
     }
 
     // Can be improved more
