@@ -1,7 +1,6 @@
 package leet_code
 
 import data_structures.linked_lists.ListNode
-import java.lang.StringBuilder
 import java.util.*
 import kotlin.math.abs
 import kotlin.math.max
@@ -150,6 +149,64 @@ class LeetCode {
 
         println(isAnagram("anagram", "nagaram"))
         println(isAnagram("rat", "car"))
+
+        println(twoSum(intArrayOf(2, 7, 11, 15), 9).toList())
+        println(twoSum(intArrayOf(3, 2, 4), 6).toList())
+        println(twoSum(intArrayOf(3, 3), 6).toList())
+
+        println(isHappy(19))
+        println(isHappy(2))
+        println(isHappy(7))
+
+        println(containsNearbyDuplicate(intArrayOf(1, 2, 3, 1), 3))
+        println(containsNearbyDuplicate(intArrayOf(1, 0, 1, 1), 1))
+        println(containsNearbyDuplicate(intArrayOf(1, 2, 3, 1, 2, 3), 2))
+    }
+
+    private fun containsNearbyDuplicate(nums: IntArray, k: Int): Boolean {
+        val map = mutableMapOf<Int, Int>()
+
+        for (i in nums.indices) {
+            val num = nums[i]
+
+            if (map.containsKey(num) && abs(i - map[num]!!) <= k) return true
+            map[num] = i
+        }
+
+        return false
+    }
+
+    // Can be improved more
+    private fun isHappy(n: Int): Boolean {
+        var nstr = n.toString()
+        val seenValues = mutableSetOf<String>()
+
+        while (nstr != "1" && !seenValues.contains(nstr)) {
+            var sum = 0
+            for (c in nstr) {
+                sum += c.toString().toInt() * c.toString().toInt()
+            }
+
+            seenValues.add(nstr)
+            nstr = sum.toString()
+        }
+
+        return nstr == "1"
+    }
+
+    private fun twoSum(nums: IntArray, target: Int): IntArray {
+        val difference = mutableMapOf<Int, Int>()
+
+        for (i in nums.indices) {
+            val num = nums[i]
+            if (difference.containsKey(target - num)) {
+                return intArrayOf(i, difference[target - num]!!)
+            } else {
+                difference[num] = i
+            }
+        }
+
+        return intArrayOf(-1, -1)
     }
 
     private fun isAnagram(s: String, t: String): Boolean {
@@ -252,8 +309,7 @@ class LeetCode {
             if (s[i] == ' ') {
                 if (length != 0) break
                 else continue
-            }
-            else ++length
+            } else ++length
         }
 
         return length
