@@ -24,6 +24,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <service android:name=".core.services.ToastService"/>
+        <service android:name=".core.services.AppStartService"/>
     </application>
 
 </manifest>
