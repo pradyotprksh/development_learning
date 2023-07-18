@@ -1,7 +1,7 @@
 package data_structures.trees
 
 class TreeTraversal {
-    fun breadthFirstSearch(root: Node): List<Int> {
+    fun breadthFirstSearch(root: TreeNode): List<Int> {
         val queue = arrayListOf(root)
         val visited = arrayListOf<Int>()
 
@@ -19,7 +19,7 @@ class TreeTraversal {
         return visited
     }
 
-    fun depthFirstSearchPreOrder(root: Node, order: ArrayList<Int> = ArrayList()): List<Int> {
+    fun depthFirstSearchPreOrder(root: TreeNode, order: ArrayList<Int> = ArrayList()): List<Int> {
         order.add(root.data)
         root.left?.let { left ->
             depthFirstSearchPreOrder(left, order)
@@ -30,7 +30,7 @@ class TreeTraversal {
         return order
     }
 
-    fun depthFirstSearchPostOrder(root: Node, order: ArrayList<Int> = ArrayList()): List<Int> {
+    fun depthFirstSearchPostOrder(root: TreeNode, order: ArrayList<Int> = ArrayList()): List<Int> {
         root.left?.let { left ->
             depthFirstSearchPostOrder(left, order)
         }
@@ -41,7 +41,7 @@ class TreeTraversal {
         return order
     }
 
-    fun depthFirstSearchInOrder(root: Node, order: ArrayList<Int> = ArrayList()): List<Int> {
+    fun depthFirstSearchInOrder(root: TreeNode, order: ArrayList<Int> = ArrayList()): List<Int> {
         root.left?.let { left ->
             depthFirstSearchInOrder(left, order)
         }

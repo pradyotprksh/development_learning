@@ -1,6 +1,7 @@
 package leet_code
 
 import data_structures.linked_lists.ListNode
+import data_structures.trees.TreeNode
 import java.util.*
 import kotlin.math.abs
 import kotlin.math.max
@@ -161,6 +162,81 @@ class LeetCode {
         println(containsNearbyDuplicate(intArrayOf(1, 2, 3, 1), 3))
         println(containsNearbyDuplicate(intArrayOf(1, 0, 1, 1), 1))
         println(containsNearbyDuplicate(intArrayOf(1, 2, 3, 1, 2, 3), 2))
+
+        val listNode3 = ListNode(3)
+        val listNode2 = ListNode(2)
+        val listNode0 = ListNode(0)
+        val listNode4 = ListNode(4)
+        listNode3.next = listNode2
+        listNode2.next = listNode0
+        listNode0.next = listNode4
+        listNode4.next = listNode2
+        println(hasCycle(listNode3))
+        val listNode1 = ListNode(1)
+        listNode1.next = listNode2
+        listNode2.next = listNode1
+        println(hasCycle(listNode1))
+        listNode1.next = null
+        println(hasCycle(listNode1))
+
+        println(maxDepth(TreeNode(data = 3, left = TreeNode(data = 9), right = TreeNode(data = 20, left = TreeNode(data = 15), right = TreeNode(data = 7)))))
+
+        println(isSameTree(TreeNode(data = 1, left = TreeNode(data = 2), right = TreeNode(data = 3)), TreeNode(data = 1, left = TreeNode(data = 2), right = TreeNode(data = 3))))
+        println(isSameTree(TreeNode(data = 1, left = TreeNode(data = 2)), TreeNode(data = 1, right = TreeNode(data = 2))))
+        println(isSameTree(TreeNode(data = 1, left = TreeNode(data = 2), right = TreeNode(data = 1)), TreeNode(data = 1, left = TreeNode(data = 1), right = TreeNode(data = 2))))
+    }
+
+    // Too slow
+    private fun isSameTree(p: TreeNode?, q: TreeNode?): Boolean {
+        if (p == null || q == null) {
+            return p == null && q == null
+        }
+
+        val pqueue = arrayListOf(p)
+        val qqueue = arrayListOf(q)
+
+        while (pqueue.isNotEmpty()) {
+            val ptop = pqueue.removeAt(0)!!
+            val qtop = qqueue.removeAt(0)!!
+
+            if (ptop.data != qtop.data) return false
+
+            ptop.left?.let { pqueue.add(it) }
+            qtop.left?.let { qqueue.add(it) }
+            if (pqueue.size != qqueue.size) return false
+            ptop.right?.let { pqueue.add(it) }
+            qtop.right?.let { qqueue.add(it) }
+            if (pqueue.size != qqueue.size) return false
+        }
+
+        return true
+    }
+
+    private fun maxDepth(root: TreeNode?): Int {
+        if (root == null) return 0
+
+        val leftDepth = maxDepth(root.left)
+        val rightDepth = maxDepth(root.right)
+
+        return if (leftDepth < rightDepth) {
+            rightDepth + 1
+        } else {
+            leftDepth + 1
+        }
+    }
+
+    private fun hasCycle(head: ListNode?): Boolean {
+        var slow = head?.next
+        var fast = head?.next?.next
+
+        while (fast != null) {
+            if (slow == fast) return true
+
+            slow = slow?.next
+            fast = fast.next?.next
+        }
+
+        return false
     }
 
     private fun containsNearbyDuplicate(nums: IntArray, k: Int): Boolean {

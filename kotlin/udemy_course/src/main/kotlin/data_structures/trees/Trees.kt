@@ -1,6 +1,6 @@
 package data_structures.trees
 
-data class Node(var left: Node? = null, val data: Int, var right: Node? = null) {
+data class TreeNode(var left: TreeNode? = null, val data: Int, var right: TreeNode? = null) {
     override fun toString(): String {
         return "$data -> {$left $right}"
     }

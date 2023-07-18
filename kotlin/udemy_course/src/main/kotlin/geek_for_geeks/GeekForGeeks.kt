@@ -2,7 +2,7 @@ package geek_for_geeks
 
 import data_structures.trees.BinarySearchTree
 import data_structures.trees.MaxBinaryHeap
-import data_structures.trees.Node
+import data_structures.trees.TreeNode
 
 class GeekForGeeks {
     fun startGeekForGeeks() {
@@ -227,10 +227,10 @@ class GeekForGeeks {
     }
 
     private fun preorderExampleOne() {
-        val node = Node(data = 1)
-        node.left = Node(data = 4)
-        node.left?.left = Node(data = 4)
-        node.left?.right = Node(data = 2)
+        val node = TreeNode(data = 1)
+        node.left = TreeNode(data = 4)
+        node.left?.left = TreeNode(data = 4)
+        node.left?.right = TreeNode(data = 2)
         preorder(node)
         println()
     }
@@ -264,7 +264,7 @@ class GeekForGeeks {
         println(maxBinaryHeap2.height())
     }
 
-    private fun preorder(root: Node?) {
+    private fun preorder(root: TreeNode?) {
         if (root == null) return
         print("${root.data} ")
         preorder(root.left)

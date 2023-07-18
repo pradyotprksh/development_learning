@@ -1,16 +1,16 @@
 package data_structures.trees
 
 class BinarySearchTree {
-    var root: Node? = null
+    var root: TreeNode? = null
         private set
 
     fun insert(data: Int) {
-        val node = Node(data = data)
+        val node = TreeNode(data = data)
         if (root == null) {
             root = node
         } else {
             var temp = root
-            var parent: Node? = null
+            var parent: TreeNode? = null
 
             while (temp != null) {
                 parent = temp
@@ -31,7 +31,7 @@ class BinarySearchTree {
         }
     }
 
-    fun find(data: Int): Node? {
+    fun find(data: Int): TreeNode? {
         if (root == null) {
             throw IllegalStateException("Tree is empty")
         }
