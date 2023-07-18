@@ -466,6 +466,35 @@ class ExampleService : Service() {
 
 In this example, `MyService` extends the `Service` class, which is a built-in class in Android that represents a long-running operation in the background. The `onBind` method is called when another component, such as an activity, binds to the service. Here, you would implement the logic for your service, such as performing a network request or playing audio in the background.
 
+The recommended method to start a service in an activity's lifecycle is `onStart()`. 
+
+The `onStart()` method is called when the activity becomes visible to the user and is about to start interacting with the user. It is an appropriate place to start a service if the service should be running while the activity is visible and interacting with the user.
+
+Here's an example of starting a service in the `onStart()` method of an activity:
+
+```kotlin
+class MyActivity : AppCompatActivity() {
+
+    override fun onStart() {
+        super.onStart()
+        val serviceIntent = Intent(this, MyService::class.java)
+        startService(serviceIntent)
+    }
+
+    // Other lifecycle methods and activity code...
+}
+```
+
+In the above example, `MyService` is the service you want to start, and `startService(serviceIntent)` is used to start the service by passing the intent with the service class.
+
+Remember to also handle the corresponding service lifecycle and ensure proper cleanup and resource management when the activity is stopped or destroyed.
+
+If you start a service in the `onCreate()` method of an activity, the service will be started as soon as the activity is created. However, keep in mind that the `onCreate()` method is called only once during the lifetime of the activity. So if the activity is destroyed and recreated (e.g., due to a configuration change), the service won't be automatically started again.
+
+Starting a service in the `onCreate()` method can be useful in certain scenarios, such as when you want the service to be running throughout the entire lifecycle of the activity, regardless of its visibility or interaction with the user. However, you need to be cautious about handling the service lifecycle and ensuring that it is properly stopped and cleaned up when the activity is no longer needed.
+
+In general, it's recommended to start services in the appropriate lifecycle method based on your specific requirements. If the service should be running only when the activity is visible and interacting with the user, starting it in `onStart()` is a suitable choice.
+
 ## Broadcast receivers
 
 Broadcast Receivers in Android are components that receive and handle system-wide broadcast announcements, allowing the application to respond to various system or application events like low battery, network state change, incoming SMS or phone call, device boot, and more.
