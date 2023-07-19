@@ -1651,6 +1651,33 @@ In this example, the `RetryInterceptor` class implements the retry logic by inte
 
 Note that this is a basic example, and you can enhance it further by considering different error conditions, adding more sophisticated backoff strategies, and handling specific response codes for retry attempts.
 
+## Interceptors
+
+[Read this for more details](https://amitshekhar.me/blog/okhttp-interceptor)
+
+In OkHttp, interceptors are not singletons, and a new interceptor instance is created for each request. When you create an OkHttpClient instance, you can add interceptors to it, and these interceptors will be applied to every HTTP request made using that client.
+
+Each interceptor in OkHttp has the opportunity to modify the request or response before it is sent or received. Interceptors are executed in the order they are added to the OkHttpClient, and they can be used for various purposes, such as adding headers, logging, caching, authentication, etc.
+
+Here's an example of how you can add an interceptor to an OkHttpClient:
+
+```kotlin
+val httpClient = OkHttpClient.Builder()
+    .addInterceptor { chain ->
+        // This is the interceptor logic
+        val request = chain.request()
+            .newBuilder()
+            .addHeader("Authorization", "Bearer YOUR_ACCESS_TOKEN")
+            .build()
+        chain.proceed(request)
+    }
+    .build()
+```
+
+In this example, we've added an interceptor that adds an Authorization header with a bearer token to every request made by the OkHttpClient.
+
+Remember that interceptors are per-client, so if you create multiple OkHttpClient instances, each instance will have its own set of interceptors. If you want a singleton behavior for interceptors, you can create a single instance of OkHttpClient and use it throughout your app.
+
 # Useful Articles
 
 * [things-that-cannot-change](https://android-developers.googleblog.com/2011/06/things-that-cannot-change.html)
