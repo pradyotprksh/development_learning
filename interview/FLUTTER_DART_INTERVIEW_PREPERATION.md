@@ -731,3 +731,380 @@ Mixins and `extends` (inheritance) serve different purposes and have distinct im
      ```
 
 In summary, inheritance (`extends`) is used to create hierarchical relationships between classes, where the subclass inherits the properties and methods of the superclass. On the other hand, mixins (`mixin` and `with`) are used to share functionality between unrelated classes without creating a hierarchical relationship. Mixins provide a way to add behavior to classes without the complexities of inheritance, making code reuse more flexible and manageable.
+
+# Extension in Dart
+
+Extensions in Dart allow you to add new functionality to existing classes, even to classes you don’t own, without modifying their original source code. This feature enables you to "extend" the capabilities of classes in a clean and modular way. Dart extensions are similar to Swift extensions and Kotlin extensions.
+
+Extensions are defined using the `extension` keyword, followed by the name of the extension and the type to be extended. Inside the extension, you can define new methods, getters, setters, and even new operators that are applicable to instances of the extended type.
+
+Here's the syntax for defining an extension:
+
+```dart
+extension MyExtension on SomeType {
+  // Define new methods, getters, setters, etc. for SomeType
+}
+```
+
+Here's an example of using an extension to add a new method to the `String` class:
+
+```dart
+extension StringExtension on String {
+  bool isValidEmail() {
+    final emailRegex = RegExp(r'^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$');
+    return emailRegex.hasMatch(this);
+  }
+}
+```
+
+In this example, we define an extension named `StringExtension` on the `String` class. It adds a new method `isValidEmail()` that checks if the given string is a valid email address.
+
+To use the extension, you need to import the file where the extension is defined and call the new method on a `String` instance:
+
+```dart
+import 'path/to/your/extension_file.dart';
+
+void main() {
+  String email = 'user@example.com';
+  print(email.isValidEmail()); // Output: true
+}
+```
+
+It's important to note that extensions only provide syntactic sugar for adding new methods and properties to existing classes. They cannot access private members or modify the internal state of the extended type. Also, extensions are not inheritance; they don't create a new class or change the behavior of the original class. Extensions are purely compile-time constructs and do not modify the original classes at runtime.
+
+Extensions are a powerful feature that allows you to enhance the functionality of existing classes in a clean and localized manner. They are particularly useful for adding utility methods or custom operators to built-in classes and third-party libraries, without having to modify their source code.
+
+There is a difference between `extension StringExtension on String` and `extension StringExtension on String?` in Dart. The difference lies in the nullability of the type being extended.
+
+1. **`extension StringExtension on String`**:
+   In this case, the extension is defined on the `String` type, which means it can be used with non-nullable `String` instances. It cannot be used with nullable `String?` instances. This extension will not be applicable to variables that might have a value of `null`.
+
+   ```dart
+   extension StringExtension on String {
+     // Extension methods for non-nullable String
+   }
+   ```
+
+   Example usage:
+   ```dart
+   String myString = 'Hello';
+   myString.extensionMethod(); // This is valid
+
+   String? nullableString = null;
+   nullableString.extensionMethod(); // Error: The method 'extensionMethod' isn't defined for the type 'String?'.
+   ```
+
+2. **`extension StringExtension on String?`**:
+   In this case, the extension is defined on the `String?` type, which means it can be used with both non-nullable `String` instances and nullable `String?` instances. This extension will be applicable to variables that can have either a value or `null`.
+
+   ```dart
+   extension StringExtension on String? {
+     // Extension methods for both non-nullable and nullable String
+   }
+   ```
+
+   Example usage:
+   ```dart
+   String myString = 'Hello';
+   myString.extensionMethod(); // This is valid
+
+   String? nullableString = null;
+   nullableString.extensionMethod(); // This is valid
+   ```
+
+Choosing between these two forms of extension depends on your use case and the behavior you want to achieve. If you only need the extension to work with non-nullable `String` instances, use `extension StringExtension on String`. If you want the extension to be applicable to both non-nullable and nullable `String`, use `extension StringExtension on String?`.
+
+Keep in mind that when using extensions with nullable types, you need to be cautious about handling null values appropriately inside the extension methods. Extensions do not automatically make the methods null-safe; it is the responsibility of the developer to handle null cases if necessary.
+
+# Future in Dart
+
+In Dart, `Future` is a core class used to represent a potential value or error that will be available at some point in the future. It is part of Dart's asynchronous programming model and is widely used for handling operations that may take time to complete, such as fetching data from a server, reading files, or performing computations asynchronously.
+
+A `Future` object represents the result of an asynchronous operation. When an asynchronous operation is initiated, it returns a `Future` immediately, and the associated code continues running without waiting for the operation to complete. When the operation finishes, the `Future` completes with either a value or an error, which allows the application to handle the result or handle the error gracefully.
+
+Here are the main concepts related to `Future` in Dart:
+
+1. **Creating a Future**:
+   You can create a `Future` using the `Future` constructor or using various utility methods like `Future.value()` or `Future.delayed()`:
+
+   ```dart
+   Future<int> fetchData() {
+     return Future<int>.value(42); // Create a Future with a value (42).
+   }
+
+   Future<String> fetchDelayedData() {
+     return Future<String>.delayed(Duration(seconds: 2), () => 'Data after 2 seconds');
+   }
+   ```
+
+2. **Handling the Result**:
+   You can use methods like `then()`, `catchError()`, and `whenComplete()` to handle the result or error of a `Future`:
+
+   ```dart
+   fetchData().then((value) {
+     print('Fetched data: $value');
+   }).catchError((error) {
+     print('Error: $error');
+   }).whenComplete(() {
+     print('Completed!');
+   });
+   ```
+
+3. **Async/Await**:
+   Dart also provides the `async` and `await` keywords to work with `Future`s in a more readable and synchronous-like manner. The `await` keyword allows you to pause the execution of a function until the `Future` completes:
+
+   ```dart
+   Future<void> fetchAndPrintData() async {
+     try {
+       int data = await fetchData();
+       print('Fetched data: $data');
+     } catch (error) {
+       print('Error: $error');
+     } finally {
+       print('Completed!');
+     }
+   }
+   ```
+
+4. **Chaining `Future`s**:
+   You can chain multiple asynchronous operations using `then()` or `async/await`, allowing you to perform sequential or parallel operations:
+
+   ```dart
+   Future<void> performMultipleTasks() async {
+     try {
+       int data = await fetchData();
+       String delayedData = await fetchDelayedData();
+       print('Fetched data: $data and delayed data: $delayedData');
+     } catch (error) {
+       print('Error: $error');
+     } finally {
+       print('Completed!');
+     }
+   }
+   ```
+
+`Future`s are fundamental to Dart's concurrency model and play a crucial role in writing asynchronous code efficiently and handling long-running tasks without blocking the application's main thread. By utilizing `Future`s and asynchronous programming, developers can create responsive and efficient Dart applications.
+
+To listen to a `Future` in Flutter and update the UI when the result returns, you can use the `FutureBuilder` widget. The `FutureBuilder` is a convenient widget that automatically rebuilds the UI whenever the `Future` completes with a result or an error. It allows you to handle different states of the `Future`, such as when the future is still loading, when it completes successfully, or when it encounters an error.
+
+Here's how you can use `FutureBuilder` to listen to a `Future` and update the UI:
+
+1. Import the necessary packages:
+
+```dart
+import 'package:flutter/material.dart';
+```
+
+2. Define your asynchronous function that returns a `Future`. For example:
+
+```dart
+Future<String> fetchData() async {
+  // Simulate an asynchronous operation (e.g., fetching data from a server).
+  await Future.delayed(Duration(seconds: 2));
+  return "Data from the Future";
+}
+```
+
+3. Inside your widget's `build` method, use the `FutureBuilder` widget:
+
+```dart
+class MyWidget extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder<String>(
+      future: fetchData(), // The Future to listen to.
+      builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          // Display a loading indicator while the future is still loading.
+          return CircularProgressIndicator();
+        } else if (snapshot.hasError) {
+          // Handle the case when the future completes with an error.
+          return Text('Error: ${snapshot.error}');
+        } else {
+          // Handle the case when the future completes successfully.
+          return Text('Data: ${snapshot.data}');
+        }
+      },
+    );
+  }
+}
+```
+
+In this example, the `FutureBuilder` takes a `Future` (in this case, `fetchData()`) and a `builder` function. The `builder` function receives an `AsyncSnapshot` that represents the state of the `Future`. The `AsyncSnapshot` contains information about the current state of the `Future`, such as whether it's still loading, completed with a value, or completed with an error.
+
+- If the `Future` is still loading (connectionState is `ConnectionState.waiting`), you can show a loading indicator or a placeholder widget.
+- If the `Future` completes with an error (`snapshot.hasError` is `true`), you can handle the error and display an appropriate message or widget.
+- If the `Future` completes successfully, you can access the result using `snapshot.data`.
+
+The `FutureBuilder` automatically handles updating the UI when the `Future` completes, making it a convenient way to listen to asynchronous operations and keep the UI responsive.
+
+# Stream in Dart
+
+In Flutter and Dart, a `Stream` is a way to handle asynchronous data, typically representing a sequence of events or data that are delivered over time. It is a fundamental part of Dart's asynchronous programming model and is widely used in Flutter for managing and reacting to data that is not available immediately but arrives over time.
+
+A `Stream` provides an interface for working with a sequence of data items. Instead of receiving the entire set of data at once, you can listen to a stream and react to individual data items as they become available. This allows you to process data incrementally and asynchronously.
+
+Here are the key concepts related to `Stream`:
+
+1. **Creating a Stream**:
+   You can create a `Stream` using a `StreamController` or using various utility methods like `Stream.fromIterable()` or `Stream.periodic()`.
+
+   ```dart
+   Stream<int> createStream() {
+     return Stream<int>.value(42); // Create a single-value Stream.
+   }
+
+   Stream<int> createIncrementalStream() async* {
+     for (int i = 0; i < 5; i++) {
+       await Future.delayed(Duration(seconds: 1));
+       yield i; // Create a Stream with incremental values (0, 1, 2, 3, 4).
+     }
+   }
+   ```
+
+2. **Listening to a Stream**:
+   You can listen to a stream using the `listen()` method, which takes a callback that will be invoked every time a new event (data item) is available on the stream.
+
+   ```dart
+   createIncrementalStream().listen((int data) {
+     print('Received data: $data');
+   });
+   ```
+
+3. **Processing Stream Events**:
+   Inside the `listen()` callback, you can handle the events (data items) received from the stream. You can perform actions based on the type of data received, handle errors, or complete the stream.
+
+4. **Stream Subscriptions**:
+   The `listen()` method returns a `StreamSubscription`, which you can use to control the subscription to the stream. You can pause, resume, or cancel the subscription when it is no longer needed.
+
+5. **Stream Transformers**:
+   Dart provides various stream transformers like `map()`, `where()`, `skip()`, `take()`, etc., which allow you to transform or filter the data emitted by the stream.
+
+Using `Stream`s in Flutter allows you to handle asynchronous data efficiently, making it easier to manage events, data fetching, and other asynchronous operations. Streams are commonly used for handling user interactions, network requests, animations, and more. When combined with Flutter's widgets and reactive programming paradigms, streams enable you to create responsive and interactive user interfaces.
+
+In Dart, `yield` is a keyword used in the context of generator functions, specifically in asynchronous generator functions and synchronous generator functions. Generators allow you to produce a sequence of values (or a stream of data) over time, rather than returning a single value like regular functions.
+
+1. **`yield` in Synchronous Generator Functions**:
+   - In a synchronous generator function, you can use `yield` to emit values one by one as the generator function is iterated. The generator function is paused at each `yield` statement, and the value following `yield` is emitted as the next value in the sequence.
+   - The generator function can be resumed from where it was paused by invoking the iterator's `next()` method.
+   - Here's an example of a synchronous generator function:
+
+   ```dart
+   Iterable<int> countUpTo(int n) sync* {
+     for (int i = 1; i <= n; i++) {
+       yield i; // Emit each value from 1 to n.
+     }
+   }
+   ```
+
+2. **`yield` in Asynchronous Generator Functions**:
+   - In an asynchronous generator function, you can use `yield` to emit values one by one as well, but the generator function is asynchronous and can pause without blocking the event loop, allowing other asynchronous operations to run.
+   - The generator function returns a `Stream` of values. Each `yield` statement emits a value, and the values are asynchronously delivered to listeners of the returned `Stream`.
+   - Here's an example of an asynchronous generator function:
+
+   ```dart
+   Stream<int> asyncCountUpTo(int n) async* {
+     for (int i = 1; i <= n; i++) {
+       await Future.delayed(Duration(seconds: 1));
+       yield i; // Emit each value from 1 to n with a delay of 1 second.
+     }
+   }
+   ```
+
+Now, let's discuss the difference between `yield` and `return`:
+
+- **`yield`**:
+  - Used in generator functions to produce a sequence of values one by one.
+  - Pauses the generator function at the `yield` statement and resumes from that point when the generator is iterated.
+  - Allows asynchronous generator functions to return a `Stream` of values or synchronous generator functions to return an `Iterable`.
+
+- **`return`**:
+  - Used in regular functions to return a single value and terminate the function's execution immediately.
+  - Does not allow a function to continue executing after the `return` statement.
+  - Can be used in both synchronous and asynchronous functions.
+
+In summary, `yield` is specific to generator functions and enables the production of sequences of values over time, while `return` is used in regular functions to return a single value and exit the function's execution. Generators are particularly useful for handling large datasets, infinite sequences, or any operation that benefits from producing values lazily over time.
+
+In Flutter, you can listen to a `Stream` and update the UI when new data becomes available by using various widgets that are designed to work with streams. Two commonly used widgets are `StreamBuilder` and `StreamProvider`.
+
+1. **StreamBuilder**:
+   The `StreamBuilder` widget rebuilds the UI whenever new data is emitted by the `Stream`. It takes a `Stream` and a builder function and automatically handles the various states of the `Stream`, such as when data is loading, when data is available, and when there's an error.
+
+   Here's an example of using `StreamBuilder`:
+
+   ```dart
+   Stream<int> countStream() async* {
+     for (int i = 1; i <= 5; i++) {
+       await Future.delayed(Duration(seconds: 1));
+       yield i;
+     }
+   }
+
+   // Inside a widget's build method:
+   StreamBuilder<int>(
+     stream: countStream(),
+     builder: (context, snapshot) {
+       if (snapshot.connectionState == ConnectionState.waiting) {
+         return CircularProgressIndicator(); // Display a loading indicator.
+       } else if (snapshot.hasError) {
+         return Text('Error: ${snapshot.error}');
+       } else {
+         return Text('Count: ${snapshot.data}');
+       }
+     },
+   );
+   ```
+
+   In this example, the `StreamBuilder` listens to the `countStream()` and rebuilds the UI whenever new data is emitted. It handles the different states of the stream and displays the count as it increases over time.
+
+2. **StreamProvider**:
+   If you're using the `provider` package, you can use `StreamProvider` to expose a stream to the widget tree. This allows you to consume the stream from anywhere within the subtree of the provider.
+
+   ```dart
+   class CountProvider extends StreamProvider<int> {
+     CountProvider() : super(countStream());
+   }
+
+   // Inside the main widget tree (e.g., in the `runApp` method):
+   MultiProvider(
+     providers: [
+       CountProvider(),
+       // Other providers, if any.
+     ],
+     child: MyApp(),
+   );
+
+   // Inside a widget:
+   final countStream = context.watch<Stream<int>>();
+   return StreamBuilder<int>(
+     stream: countStream,
+     builder: (context, snapshot) {
+       // Same as the StreamBuilder example above.
+     },
+   );
+   ```
+
+   In this example, `CountProvider` exposes the `countStream()` to the widget tree. Then, in any widget within the subtree of the provider, you can use `context.watch<Stream<int>>()` to access the stream and use `StreamBuilder` to listen to the stream and update the UI accordingly.
+
+Both `StreamBuilder` and `StreamProvider` are powerful tools for handling streams in Flutter. Choose the one that fits your use case and integrates well with your app's architecture and state management approach.
+
+`StreamBuilder` and `StreamProvider` are both widgets used to work with streams in Flutter, but they serve different purposes and are part of different packages:
+
+1. **StreamBuilder** (from `flutter` package):
+   - `StreamBuilder` is a widget provided by the core Flutter framework (in the `flutter` package). It allows you to listen to a `Stream` and automatically rebuild the UI whenever new data is available on the stream.
+   - It takes a `Stream` and a builder function as arguments. The builder function is called whenever a new event is emitted by the `Stream`, allowing you to update the UI based on the latest data.
+   - `StreamBuilder` is useful when you have a single `Stream` and want to respond to changes in its values or states in a specific part of the widget tree.
+
+2. **StreamProvider** (from `provider` package):
+   - `StreamProvider` is a widget provided by the `provider` package. It is part of the "provider" state management solution, which simplifies state management in Flutter.
+   - `StreamProvider` allows you to expose a `Stream` to the widget tree so that it can be accessed by multiple widgets within the subtree of the provider.
+   - It is typically used when you have a `Stream` that needs to be consumed by multiple widgets in different parts of the widget tree, and you don't want to pass the `Stream` down explicitly through widget constructors.
+   - `StreamProvider` is especially useful in combination with the "provider" package's `context.watch<T>()` or `context.select<T, R>()` functions, which allow you to listen to the provided `Stream` and automatically rebuild specific parts of the UI that depend on it.
+
+In summary:
+
+- **StreamBuilder**: Use `StreamBuilder` when you have a single `Stream` and you want to listen to changes in its values or states at a specific location in the widget tree.
+
+- **StreamProvider**: Use `StreamProvider` when you have a `Stream` that needs to be accessed by multiple widgets in different parts of the widget tree, and you want a convenient way to provide and consume the `Stream` without explicitly passing it down through widget constructors.
+
+Both widgets are powerful tools for handling streams in Flutter, and the choice between them depends on the complexity of your application's state management and the scope of the `Stream` you want to work with.
