@@ -244,6 +244,96 @@ Here are some key points to understand about `InheritedWidget`:
 
 By utilizing `InheritedWidget`, you can efficiently share and propagate data across the widget tree without manually passing it through constructor parameters. This can be particularly useful when sharing state or configuration data that needs to be accessible by multiple widgets in different parts of the tree.
 
+Here's an example of how to create and use an `InheritedWidget` in Flutter:
+
+Suppose we want to create a simple counter app where multiple widgets can access and update the same counter value using an `InheritedWidget`.
+
+1. First, let's define the `InheritedCounter` class, which extends `InheritedWidget`:
+
+```dart
+import 'package:flutter/material.dart';
+
+class InheritedCounter extends InheritedWidget {
+  final int counter;
+  final VoidCallback increment;
+
+  InheritedCounter({
+    required this.counter,
+    required this.increment,
+    required Widget child,
+  }) : super(child: child);
+
+  @override
+  bool updateShouldNotify(InheritedCounter oldWidget) {
+    // Always return true to notify dependents when the counter changes.
+    return true;
+  }
+
+  static InheritedCounter of(BuildContext context) {
+    return context.dependOnInheritedWidgetOfExactType<InheritedCounter>()!;
+  }
+}
+```
+
+2. Next, let's create a simple widget named `CounterButton` that displays a button to increment the counter:
+
+```dart
+class CounterButton extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final inheritedCounter = InheritedCounter.of(context);
+
+    return ElevatedButton(
+      onPressed: inheritedCounter.increment,
+      child: Text('Increment Counter'),
+    );
+  }
+}
+```
+
+3. Finally, let's create the main app widget that uses the `InheritedCounter` and `CounterButton`:
+
+```dart
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: InheritedCounter(
+        counter: 0,
+        increment: () {
+          // This function will be called when the button is pressed.
+          // We need to define how the counter should be incremented.
+          final inheritedCounter = InheritedCounter.of(context);
+          inheritedCounter.incrementCounter();
+        },
+        child: Scaffold(
+          appBar: AppBar(title: Text('InheritedWidget Example')),
+          body: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text('Counter Value:'),
+                Text(
+                  '${InheritedCounter.of(context).counter}',
+                  style: TextStyle(fontSize: 24),
+                ),
+                CounterButton(), // Use the CounterButton widget here.
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+```
+
+In this example, the `InheritedCounter` provides access to a shared `counter` value and a function named `incrementCounter` that increments the counter. The `CounterButton` widget can use the `increment` function to increment the counter, and the counter value can be accessed and displayed in other parts of the widget tree.
+
+When the `increment` function is called, the `InheritedCounter` will notify all its dependents to rebuild, so the displayed counter value will update automatically.
+
+`InheritedWidget` is a powerful way to manage shared state in Flutter and is commonly used for scenarios where multiple widgets in different parts of the widget tree need access to the same data.
+
 # External Library management in Flutter
 
 In Flutter, when you add a dependency to your project, only the files that are imported and used by your code will be included in the final build. The Flutter build system, along with tree-shaking and code optimization techniques, will analyze your code and determine which parts of the dependency are actually required based on your imports.
