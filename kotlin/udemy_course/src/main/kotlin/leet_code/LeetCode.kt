@@ -184,6 +184,41 @@ class LeetCode {
         println(isSameTree(TreeNode(data = 1, left = TreeNode(data = 2), right = TreeNode(data = 3)), TreeNode(data = 1, left = TreeNode(data = 2), right = TreeNode(data = 3))))
         println(isSameTree(TreeNode(data = 1, left = TreeNode(data = 2)), TreeNode(data = 1, right = TreeNode(data = 2))))
         println(isSameTree(TreeNode(data = 1, left = TreeNode(data = 2), right = TreeNode(data = 1)), TreeNode(data = 1, left = TreeNode(data = 1), right = TreeNode(data = 2))))
+
+        println(plusOne(intArrayOf(1, 2, 3)).toList())
+        println(plusOne(intArrayOf(4,3,2,1)).toList())
+        println(plusOne(intArrayOf(9)).toList())
+        println(plusOne(intArrayOf(9,8,7,6,5,4,3,2,1,0)).toList())
+
+        println(mySqrt(4))
+        println(mySqrt(8))
+    }
+
+    private fun mySqrt(x: Int): Int {
+        var start = 1
+        var end = x
+
+        while (start <= end) {
+            val mid = (start + end) / 2
+            if (x / mid == mid) return mid
+            else if (mid > x / mid) end = mid - 1
+            else start = mid + 1
+        }
+
+        return end
+    }
+
+    private fun plusOne(digits: IntArray): IntArray {
+        var carry = 1
+
+        for (i in digits.size - 1 downTo 0) {
+            digits[i] += carry
+            carry = digits[i] / 10
+            if (carry == 0) return digits
+            digits[i] %= 10
+        }
+
+        return intArrayOf(carry, *digits)
     }
 
     // Too slow
