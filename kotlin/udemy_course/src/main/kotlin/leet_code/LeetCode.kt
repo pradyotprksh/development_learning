@@ -186,12 +186,43 @@ class LeetCode {
         println(isSameTree(TreeNode(data = 1, left = TreeNode(data = 2), right = TreeNode(data = 1)), TreeNode(data = 1, left = TreeNode(data = 1), right = TreeNode(data = 2))))
 
         println(plusOne(intArrayOf(1, 2, 3)).toList())
-        println(plusOne(intArrayOf(4,3,2,1)).toList())
+        println(plusOne(intArrayOf(4, 3, 2, 1)).toList())
         println(plusOne(intArrayOf(9)).toList())
-        println(plusOne(intArrayOf(9,8,7,6,5,4,3,2,1,0)).toList())
+        println(plusOne(intArrayOf(9, 8, 7, 6, 5, 4, 3, 2, 1, 0)).toList())
 
         println(mySqrt(4))
         println(mySqrt(8))
+
+        println(twoSum2(intArrayOf(2, 7, 11, 15), 9).toList())
+        println(twoSum2(intArrayOf(2, 3, 4), 6).toList())
+        println(twoSum2(intArrayOf(-1, 0), -1).toList())
+    }
+
+    private fun twoSum2(numbers: IntArray, target: Int): IntArray {
+//        var start = 1
+//        var end = numbers.size
+//
+//        while (true) {
+//            val sum = numbers[start - 1] + numbers[end - 1]
+//            if (sum == target) break
+//            if (sum > target) --end
+//            else ++start
+//        }
+//
+//        return intArrayOf(start, end)
+
+        val difference = mutableMapOf<Int, Int>()
+
+        for (i in numbers.indices) {
+            val num = numbers[i]
+            if (difference.containsKey(target - num)) {
+                return intArrayOf(difference[target - num]!! + 1, i + 1)
+            } else {
+                difference[num] = i
+            }
+        }
+
+        return intArrayOf(-1, -1)
     }
 
     private fun mySqrt(x: Int): Int {
