@@ -213,26 +213,49 @@ class LeetCode {
 
         println(reverseBetween(ListNode(1, ListNode(2, ListNode(3, ListNode(4, ListNode(5))))), 2, 4))
         println(reverseBetween(ListNode(5), 1, 1))
+        println(reverseBetween(ListNode(3, ListNode(5)), 1, 2))
     }
 
     private fun reverseBetween(head: ListNode?, left: Int, right: Int): ListNode? {
-        var tempHead = head
-        var tempLast = tempHead
+        var prevStart: ListNode? = null
+        var start = head
+        var end = start
+        var nextEnd = end?.next
         var tempLeft = left - 1
         var tempRight = right - left
 
         while (tempLeft > 0 || tempRight > 0) {
             if (tempLeft > 0) {
-                tempHead = tempHead?.next
-                tempLast = tempHead
+                prevStart = start
+                start = start?.next
+                end = start
+                nextEnd = end?.next
                 --tempLeft
             } else {
-                tempLast = tempLast?.next
+                end = end?.next
+                nextEnd = end?.next
                 --tempRight
             }
         }
 
-        
+        println("prevStart $prevStart start $start end $end nextEnd $nextEnd")
+
+        var temp = start
+        var next = temp?.next
+        var prev = prevStart
+
+        while (temp != nextEnd) {
+            temp?.next = prev
+            prev = temp
+            temp = next
+            next = next?.next
+            println("prev $prev temp $temp next $next")
+        }
+
+        start?.next = nextEnd
+        prevStart?.next = end
+
+        if (start == head) return prev
 
         return head
     }
