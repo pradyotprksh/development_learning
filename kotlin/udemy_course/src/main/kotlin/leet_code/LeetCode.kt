@@ -196,6 +196,129 @@ class LeetCode {
         println(twoSum2(intArrayOf(2, 7, 11, 15), 9).toList())
         println(twoSum2(intArrayOf(2, 3, 4), 6).toList())
         println(twoSum2(intArrayOf(-1, 0), -1).toList())
+
+        println(wordPattern("abba", "dog cat cat dog"))
+        println(wordPattern("abba", "dog cat cat fish"))
+        println(wordPattern("aaaa", "dog cat cat dog"))
+
+        println(groupAnagrams(arrayOf("eat", "tea", "tan", "ate", "nat", "bat")))
+        println(groupAnagrams(arrayOf("ddddddddddg", "dgggggggggg")))
+
+        println(longestConsecutive(intArrayOf(100, 4, 200, 1, 3, 2)))
+        println(longestConsecutive(intArrayOf(0, 3, 7, 2, 5, 8, 4, 6, 0, 1)))
+
+        println(addTwoNumbers(ListNode(2, ListNode(4, ListNode(3))), ListNode(5, ListNode(6, ListNode(4)))))
+        println(addTwoNumbers(ListNode(0), ListNode(0)))
+        println(addTwoNumbers(ListNode(9, ListNode(9, ListNode(9, ListNode(9, ListNode(9, ListNode(9, ListNode(9))))))), ListNode(9, ListNode(9, ListNode(9, ListNode(9))))))
+
+        println(reverseBetween(ListNode(1, ListNode(2, ListNode(3, ListNode(4, ListNode(5))))), 2, 4))
+        println(reverseBetween(ListNode(5), 1, 1))
+    }
+
+    private fun reverseBetween(head: ListNode?, left: Int, right: Int): ListNode? {
+        var tempHead = head
+        var tempLast = tempHead
+        var tempLeft = left - 1
+        var tempRight = right - left
+
+        while (tempLeft > 0 || tempRight > 0) {
+            if (tempLeft > 0) {
+                tempHead = tempHead?.next
+                tempLast = tempHead
+                --tempLeft
+            } else {
+                tempLast = tempLast?.next
+                --tempRight
+            }
+        }
+
+        
+
+        return head
+    }
+
+    private fun addTwoNumbers(l1: ListNode?, l2: ListNode?): ListNode? {
+        var head: ListNode? = null
+        var last: ListNode? = null
+
+        var temp1 = l1
+        var temp2 = l2
+
+        var carry = 0
+
+        while (temp1 != null || temp2 != null) {
+            val sum = (temp1?.data ?: 0) + (temp2?.data ?: 0) + carry
+            carry = sum / 10
+            val data = sum % 10
+            if (head == null) {
+                head = ListNode(data = data)
+                last = head
+            } else {
+                last?.next = ListNode(data = data)
+                last = last?.next
+            }
+
+            temp1 = temp1?.next
+            temp2 = temp2?.next
+        }
+
+        if (carry != 0) {
+            last?.next = ListNode(data = carry)
+        }
+
+        return head
+    }
+
+    private fun longestConsecutive(nums: IntArray): Int {
+        var count = 0
+        val numsSet = nums.toSet()
+
+        for (n in nums) {
+            if (!numsSet.contains(n - 1)) {
+                var length = 0
+                while (numsSet.contains(n + length)) {
+                    ++length
+                }
+                count = max(count, length)
+            }
+        }
+
+        return count
+    }
+
+    private fun groupAnagrams(strs: Array<String>): List<List<String>> {
+        val mapAnagrams = mutableMapOf<String, List<String>>()
+
+        for (s in strs) {
+            val sorted = s.toList().sorted().joinToString("")
+            if (mapAnagrams.containsKey(sorted)) {
+                mapAnagrams[sorted] = listOf(s) + mapAnagrams[sorted]!!
+            } else {
+                mapAnagrams[sorted] = listOf(s)
+            }
+        }
+
+        return mapAnagrams.values.toList()
+    }
+
+    private fun wordPattern(pattern: String, s: String): Boolean {
+        val sList = s.split(" ")
+        if (pattern.length != sList.size) return false
+        val charStringMap = mutableMapOf<Char, String>()
+
+        var i = 0
+        while (i < pattern.length) {
+            if (charStringMap.containsKey(pattern[i]) || charStringMap.containsValue(sList[i])) {
+                if (charStringMap[pattern[i]] != sList[i]) {
+                    return false
+                }
+            } else {
+                charStringMap[pattern[i]] = sList[i]
+            }
+            ++i
+        }
+
+        return true
     }
 
     private fun twoSum2(numbers: IntArray, target: Int): IntArray {
@@ -262,8 +385,8 @@ class LeetCode {
         val qqueue = arrayListOf(q)
 
         while (pqueue.isNotEmpty()) {
-            val ptop = pqueue.removeAt(0)!!
-            val qtop = qqueue.removeAt(0)!!
+            val ptop = pqueue.removeAt(0)
+            val qtop = qqueue.removeAt(0)
 
             if (ptop.data != qtop.data) return false
 
