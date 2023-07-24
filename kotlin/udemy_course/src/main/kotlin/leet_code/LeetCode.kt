@@ -214,6 +214,66 @@ class LeetCode {
         println(reverseBetween(ListNode(1, ListNode(2, ListNode(3, ListNode(4, ListNode(5))))), 2, 4))
         println(reverseBetween(ListNode(5), 1, 1))
         println(reverseBetween(ListNode(3, ListNode(5)), 1, 2))
+
+        println(threeSum(intArrayOf(-1, 0, 1, 2, -1, -4)))
+        println(threeSum(intArrayOf(0, 1, 1)))
+        println(threeSum(intArrayOf(0, 0, 0)))
+
+        println(summaryRanges(intArrayOf(0, 1, 2, 4, 5, 7)))
+        println(summaryRanges(intArrayOf(0, 2, 3, 4, 6, 8, 9)))
+    }
+
+    private fun summaryRanges(nums: IntArray): List<String> {
+        if (nums.isEmpty()) return emptyList()
+
+        val result = mutableListOf<String>()
+
+        var first = nums.first()
+        var last = nums.first()
+        for (i in 1 until nums.size) {
+            if (nums[i] - 1 != last) {
+                if (first == last) {
+                    result.add("$first")
+                } else {
+                    result.add("$first->$last")
+                }
+                first = nums[i]
+            }
+            last = nums[i]
+        }
+
+        if (first == last) {
+            result.add("$first")
+        } else {
+            result.add("$first->$last")
+        }
+
+        return result
+    }
+
+    private fun threeSum(nums: IntArray): List<List<Int>> {
+        val result = mutableSetOf<List<Int>>()
+        nums.sort()
+
+        for (i in 0..nums.size - 2) {
+            var left = i + 1
+            var right = nums.size - 1
+
+            while (left < right) {
+                val sum = nums[i] + nums[left] + nums[right]
+                if (sum == 0) {
+                    result.add(listOf(nums[i], nums[left], nums[right]))
+                    ++left
+                    --right
+                } else if (sum < 0) {
+                    ++left
+                } else {
+                    --right
+                }
+            }
+        }
+
+        return result.toList()
     }
 
     private fun reverseBetween(head: ListNode?, left: Int, right: Int): ListNode? {
@@ -238,8 +298,6 @@ class LeetCode {
             }
         }
 
-        println("prevStart $prevStart start $start end $end nextEnd $nextEnd")
-
         var temp = start
         var next = temp?.next
         var prev = prevStart
@@ -249,7 +307,6 @@ class LeetCode {
             prev = temp
             temp = next
             next = next?.next
-            println("prev $prev temp $temp next $next")
         }
 
         start?.next = nextEnd
