@@ -223,6 +223,44 @@ class LeetCode {
         println(summaryRanges(intArrayOf(0, 2, 3, 4, 6, 8, 9)))
     }
 
+    // https://www.youtube.com/watch?v=auK3PSZoidc&t=2196s
+    // can be made faster, using only n^2
+    private fun isValidSudoku(board: Array<CharArray>): Boolean {
+        for (i in 0 until 9) {
+            for (j in 0 until 9) {
+                val rowItemSet = mutableSetOf<Char>()
+                for (x in 0 until 9) {
+                    if (board[i][x] == '.') continue
+                    if (!rowItemSet.add(board[i][x])) {
+                        return false
+                    }
+                }
+
+                val columnItemSet = mutableSetOf<Char>()
+                for (x in 0 until 9) {
+                    if (board[x][j] == '.') continue
+                    if (!columnItemSet.add(board[x][j])) {
+                        return false
+                    }
+                }
+
+                val boxX = 3 * (i / 3)
+                val boxY = 3 * (j / 3)
+                val boxItemSet = mutableSetOf<Char>()
+                for (x in boxX until boxX + 3) {
+                    for (y in boxY until boxY + 3) {
+                        if (board[x][y] == '.') continue
+                        if (!boxItemSet.add(board[x][y])) {
+                            return false
+                        }
+                    }
+                }
+            }
+        }
+
+        return true
+    }
+
     private fun summaryRanges(nums: IntArray): List<String> {
         if (nums.isEmpty()) return emptyList()
 
