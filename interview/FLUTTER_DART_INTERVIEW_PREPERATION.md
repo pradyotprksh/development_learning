@@ -1369,3 +1369,80 @@ In summary:
 - **BasicMessageChannel**: Used for sending and receiving simple messages or data between Flutter and the platform. It allows for asynchronous communication and is suitable for scenarios where you need more flexibility in sending and receiving data.
 
 Both `MethodChannel` and `BasicMessageChannel` serve different purposes and provide ways to establish communication between Flutter and the platform, allowing developers to integrate platform-specific features and services into their Flutter apps. The choice between them depends on the specific requirements and the nature of the communication needed in your app.
+
+# Lifecycle methods
+
+## Stateful Widgets
+
+Stateful widgets in Flutter have several lifecycle methods that allow you to perform actions at specific points in the widget's lifecycle. These methods are automatically called by the framework as the widget goes through different stages of its life. Here are the main lifecycle methods for stateful widgets:
+
+1. **createState()**:
+   - This is the first method called when the stateful widget is created.
+   - It is responsible for creating the associated state object that will hold the mutable state for the widget.
+
+2. **initState()**:
+   - This method is called after the state object is created via `createState()`.
+   - It is typically used to perform one-time initializations that are required for the stateful widget, such as setting up subscriptions, initializing variables, or fetching data from a server.
+
+3. **didChangeDependencies()**:
+   - This method is called immediately after `initState()` and whenever the dependencies of the widget change.
+   - It is used to handle cases where the widget depends on data that can change, such as inherited widget data or theme data.
+
+4. **build()**:
+   - This is one of the most important methods of a stateful widget and is called whenever the widget needs to be rebuilt due to changes in its state or when the parent widget rebuilds.
+   - It returns the `Widget` that the stateful widget represents.
+
+5. **setState()**:
+   - This method is called when you want to update the state of the widget.
+   - It schedules a rebuild of the widget, triggering a call to the `build()` method again with the updated state.
+
+6. **didUpdateWidget()**:
+   - This method is called when the parent widget rebuilds and supplies a new configuration to this widget.
+   - It allows you to compare the old widget's properties with the new ones and respond accordingly.
+
+7. **deactivate()**:
+   - This method is called when the widget is removed from the widget tree.
+   - It is used to perform cleanup tasks or unsubscribe from any data sources.
+
+8. **dispose()**:
+   - This method is called when the widget is removed from the widget tree permanently.
+   - It is used to perform final cleanup tasks, release resources, or unsubscribe from any data sources.
+
+These lifecycle methods allow you to manage the state and behavior of a stateful widget throughout its lifecycle. Understanding these methods is crucial for managing state effectively and avoiding memory leaks or unwanted side effects in your Flutter app.
+
+## Stateless Widgets
+
+Stateless widgets in Flutter do not have mutable state and are immutable once they are built. As a result, stateless widgets have a simpler lifecycle compared to stateful widgets. Stateless widgets only have one lifecycle method:
+
+1. **build()**:
+   - The `build()` method is the only lifecycle method available for stateless widgets.
+   - It is called whenever the widget needs to be built or rebuilt due to changes in its parent widget or when the parent widget rebuilds.
+   - The `build()` method returns the `Widget` that represents the stateless widget.
+
+Since stateless widgets do not have mutable state, they are typically used for UI components that only rely on their constructor arguments (immutable properties) to render their UI. Stateless widgets are straightforward to reason about since they don't change over time and are purely based on their input data.
+
+Example of a simple stateless widget:
+
+```dart
+import 'package:flutter/material.dart';
+
+class MyStatelessWidget extends StatelessWidget {
+  final String title;
+
+  MyStatelessWidget({required this.title});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(title),
+      ),
+      body: Center(
+        child: Text('This is a stateless widget.'),
+      ),
+    );
+  }
+}
+```
+
+In the example above, the `MyStatelessWidget` is a stateless widget that takes a `title` argument in its constructor and displays it in the app bar. The widget doesn't have any mutable state, and its UI is solely based on the input `title`. Whenever the parent widget rebuilds, the `build()` method of the `MyStatelessWidget` is called to build the UI with the updated data.
