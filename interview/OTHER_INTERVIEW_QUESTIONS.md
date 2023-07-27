@@ -20,6 +20,8 @@ Databases are software systems used for storing, managing, and retrieving data i
 
 The choice of the database type depends on the specific requirements of the application, such as data structure, query patterns, scalability, and performance needs. Different databases are better suited for different use cases, and it is essential to select the appropriate database type based on the application's needs and constraints.
 
+## RDBMS vs NoSQL
+
 The main difference between RDBMS (Relational Database Management System) and NoSQL (Not Only SQL) databases lies in their data models, data storage, and query languages. Here are the key differences between the two:
 
 1. Data Model:
@@ -47,3 +49,25 @@ The main difference between RDBMS (Relational Database Management System) and No
    - NoSQL: NoSQL databases are often used in applications where data structures may change frequently, or the data is unstructured or semi-structured. They are popular for use cases like big data analytics, real-time data processing, content management systems, and IoT applications.
 
 The choice between RDBMS and NoSQL depends on the specific requirements of your application, data model complexity, scalability needs, and the level of data consistency required. Many modern applications use a combination of both RDBMS and NoSQL databases based on different parts of the system or specific use cases.
+
+## Primary Key vs Foreign Key
+
+Primary Key and Foreign Key are both fundamental concepts in relational database management systems (RDBMS) that define relationships between tables and ensure data integrity. Here's a brief explanation of each:
+
+1. Primary Key:
+A Primary Key is a unique identifier for each row in a database table. It ensures that each record within the table is uniquely identifiable. It is used to enforce the integrity of the data and to provide a quick and efficient way to look up records in the table. Every table in an RDBMS must have a Primary Key, and it should be carefully chosen to avoid any duplicate or null values. Common examples of Primary Keys are auto-incrementing integers or unique identifiers like a user ID or product code.
+
+Key characteristics of a Primary Key:
+- Must be unique: No two rows in the table can have the same value for the Primary Key column.
+- Must be not null: The value of the Primary Key cannot be null or empty.
+- Provides fast data retrieval: Since the Primary Key is indexed, it allows for fast searching and retrieval of specific records.
+
+2. Foreign Key:
+A Foreign Key is a column in one table that refers to the Primary Key in another table. It establishes a link or relationship between two tables, representing a one-to-many or many-to-one relationship. The Foreign Key ensures referential integrity, meaning that it enforces the validity of data between related tables. It allows you to create relationships across tables and maintain data consistency and integrity throughout the database.
+
+Key characteristics of a Foreign Key:
+- References a Primary Key: The Foreign Key column in one table refers to the Primary Key column in another table.
+- Enforces referential integrity: The Foreign Key ensures that the values in the column match the values in the Primary Key column of the referenced table.
+- Allows for data retrieval across tables: With Foreign Keys, you can retrieve related data from multiple tables using JOIN operations.
+
+In summary, the Primary Key uniquely identifies each row in a table, while the Foreign Key establishes a relationship between tables by linking the Primary Key of one table to a column in another table. Together, they form the foundation for maintaining data consistency and integrity in relational databases.
