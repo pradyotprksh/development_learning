@@ -57,6 +57,52 @@ class GeekForGeeks {
         detectLoopExampleOne()
         getNthFromLastExampleOne()
         getNthFromLastExampleTwo()
+        pattern1()
+        pattern2()
+        pattern3()
+        pattern4()
+    }
+
+    private fun pattern4(n: Int = 5) {
+        for (row in 1 until 2 * n) {
+            val totalCol = if (row > n) 2 * n - row else row
+            for (space in 1 .. n - totalCol) {
+                print(" ")
+            }
+
+            for (col in 1 .. totalCol) {
+                print("* ")
+            }
+            println()
+        }
+    }
+
+    private fun pattern3(n: Int = 5) {
+        for (row in 1 until 2 * n) {
+            val totalCol = if (row > n) 2 * n - row else row
+            for (col in 1 .. totalCol) {
+                print("* ")
+            }
+            println()
+        }
+    }
+
+    private fun pattern2(n: Int = 5) {
+        for (row in 1 .. n) {
+            for (col in 1 .. row) {
+                print("$col ")
+            }
+            println()
+        }
+    }
+
+    private fun pattern1(n: Int = 5) {
+        for (row in 1 .. n) {
+            for (col in row .. n) {
+                print("* ")
+            }
+            println()
+        }
     }
 
     private fun getNthFromLastExampleTwo() {
