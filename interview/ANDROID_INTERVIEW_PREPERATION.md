@@ -2146,6 +2146,137 @@ Use cases are often presented in a textual format or through use case diagrams. 
 
 Use cases play a crucial role in the software development process, as they help communicate and document the functional requirements of the system. They serve as a basis for designing and developing the software, as well as for testing and validation. Use cases also provide a clear and unambiguous way to understand how the system should behave and what functionalities it should offer to its users.
 
+# Convert JSON to Data class
+
+To convert JSON data to Kotlin data classes, you can use various JSON parsing libraries available in Kotlin. One of the popular libraries is `Gson`, which is provided by Google. Gson allows you to serialize and deserialize JSON data to and from Kotlin objects.
+
+Here's how you can use Gson to convert JSON to Kotlin data classes:
+
+Step 1: Add the Gson dependency to your project's build.gradle file:
+
+```groovy
+dependencies {
+    implementation 'com.google.code.gson:gson:2.8.8'
+}
+```
+
+Step 2: Create your Kotlin data classes that represent the JSON structure:
+
+```kotlin
+data class Person(
+    val name: String,
+    val age: Int,
+    val email: String
+)
+```
+
+Step 3: Parse the JSON string using Gson:
+
+```kotlin
+import com.google.gson.Gson
+
+fun main() {
+    val jsonString = """
+        {
+            "name": "John Doe",
+            "age": 30,
+            "email": "john.doe@example.com"
+        }
+    """
+
+    val gson = Gson()
+    val person = gson.fromJson(jsonString, Person::class.java)
+
+    println("Name: ${person.name}")
+    println("Age: ${person.age}")
+    println("Email: ${person.email}")
+}
+```
+
+In this example, we first define the JSON string representing the person's data. Then, we create a Gson instance and use the `fromJson` method to parse the JSON string and convert it into a `Person` object.
+
+When you run this code, it will output:
+
+```
+Name: John Doe
+Age: 30
+Email: john.doe@example.com
+```
+
+Gson automatically maps the JSON keys to the corresponding properties of the `Person` class. Note that the property names in the data class must match the JSON keys for Gson to perform the mapping correctly.
+
+There are other JSON parsing libraries available as well, such as `Jackson` and `Moshi`. The basic concept of converting JSON to Kotlin data classes remains similar, but the syntax and usage may vary depending on the library you choose.
+
+To parse JSON data without using any third-party library, you can use the built-in `JSONObject` and `JSONArray` classes provided by Android's SDK. These classes allow you to parse and manipulate JSON data directly. Here's how you can do it:
+
+Step 1: Create your Kotlin data classes that represent the JSON structure:
+
+```kotlin
+data class Person(
+    val name: String,
+    val age: Int,
+    val email: String
+)
+```
+
+Step 2: Parse the JSON string using `JSONObject` and create the `Person` object:
+
+```kotlin
+import org.json.JSONObject
+
+fun main() {
+    val jsonString = """
+        {
+            "name": "John Doe",
+            "age": 30,
+            "email": "john.doe@example.com"
+        }
+    """
+
+    val json = JSONObject(jsonString)
+
+    val name = json.getString("name")
+    val age = json.getInt("age")
+    val email = json.getString("email")
+
+    val person = Person(name, age, email)
+
+    println("Name: ${person.name}")
+    println("Age: ${person.age}")
+    println("Email: ${person.email}")
+}
+```
+
+In this example, we first create a `JSONObject` from the JSON string. Then, we extract the values of the individual JSON fields using the `getString` and `getInt` methods and create a `Person` object manually.
+
+When you run this code, it will output the same result as the previous example:
+
+```
+Name: John Doe
+Age: 30
+Email: john.doe@examp
+```
+
+Note that using built-in classes like `JSONObject` and `JSONArray` can be more verbose and error-prone compared to using JSON parsing libraries like Gson or Jackson. These libraries provide more convenient and efficient ways to handle JSON data in Kotlin. If possible, it is recommended to use a JSON parsing library for better readability and maintainability of your code.
+
+# Difference between NavController and AnimatedNavController
+
+In Android, both `NavController` and `AnimatedNavController` are used for navigation within the Navigation component, but they have some differences in how they handle transitions and animations.
+
+1. NavController:
+   - `NavController` is the primary class responsible for navigating between destinations (fragments or activities) in the Navigation component.
+   - It provides methods like `navigate`, `popBackStack`, and `navigateUp` to perform navigation operations.
+   - By default, `NavController` uses the standard navigation transitions between destinations.
+   - It does not provide built-in support for custom animations or transitions between destinations.
+
+2. AnimatedNavController:
+   - `AnimatedNavController` is an extension of the `NavController` class that allows you to define custom animations and transitions between destinations.
+   - It provides additional methods like `navigateWithAnimation` and `setDestinationTransition` to specify custom animations.
+   - With `AnimatedNavController`, you can create more complex and customized navigation transitions, such as slide-in, fade, or shared element transitions.
+   - This class is not part of the official Android Navigation component and might be a custom implementation or a third-party library.
+
+In summary, `NavController` is the core class for handling navigation in the Navigation component, while `AnimatedNavController` is an extension that adds support for custom animations and transitions between destinations. If you need to implement complex or custom navigation animations, you may consider using `AnimatedNavController`. However, for most typical navigation needs, the standard `NavController` should be sufficient.
+
 # Useful Articles
 
 * [things-that-cannot-change](https://android-developers.googleblog.com/2011/06/things-that-cannot-change.html)
