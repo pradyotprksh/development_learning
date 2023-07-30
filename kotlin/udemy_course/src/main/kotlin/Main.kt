@@ -8,6 +8,6 @@ fun main() {
     DataStructures().startDataStructures()
     Algorithms().startAlgorithms()
     DynamicProgramming().startDynamicProgramming()
-    LeetCode().startLeetCode()
     GeekForGeeks().startGeekForGeeks()
+    LeetCode().startLeetCode()
 }

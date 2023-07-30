@@ -221,6 +221,82 @@ class LeetCode {
 
         println(summaryRanges(intArrayOf(0, 1, 2, 4, 5, 7)))
         println(summaryRanges(intArrayOf(0, 2, 3, 4, 6, 8, 9)))
+
+        println(simplifyPath("/home/"))
+        println(simplifyPath("/../"))
+        println(simplifyPath("/home//foo/"))
+        println(simplifyPath("/a//b////c/d//././/.."))
+        println(simplifyPath("/a/../../b/../c//.//"))
+
+        println(evalRPN(arrayOf("2", "1", "+", "3", "*")))
+        println(evalRPN(arrayOf("4", "13", "5", "/", "+")))
+        println(evalRPN(arrayOf("10", "6", "9", "3", "+", "-11", "*", "/", "*", "17", "+", "5", "+")))
+    }
+
+    private fun calculate(s: String): Int {
+        val stack = mutableListOf<Int>()
+
+        return stack.first()
+    }
+
+    private fun evalRPN(tokens: Array<String>): Int {
+        val stack = mutableListOf<Int>()
+        tokens.forEach { t ->
+            if (t == "*" || t == "-" || t == "+" || t == "/") {
+                val secondNum = stack.removeAt(stack.size - 1)
+                val firstNum = stack.removeAt(stack.size - 1)
+                when (t) {
+                    "*" -> {
+                        stack.add(firstNum * secondNum)
+                    }
+
+                    "-" -> {
+                        stack.add(firstNum - secondNum)
+                    }
+
+                    "+" -> {
+                        stack.add(firstNum + secondNum)
+                    }
+
+                    else -> {
+                        stack.add(firstNum / secondNum)
+                    }
+                }
+            } else {
+                stack.add(t.toInt())
+            }
+        }
+
+        return stack.first()
+    }
+
+    private fun simplifyPath(path: String): String {
+        val pathsList = path.split("/")
+        val pathStack = mutableListOf<String>()
+
+        pathsList.forEach { p ->
+            if (p == "..") {
+                if (pathStack.isNotEmpty()) {
+                    pathStack.removeAt(pathStack.size - 1)
+                }
+            } else {
+                if (p.isNotEmpty() && p != ".") {
+                    pathStack.add(p)
+                }
+            }
+        }
+
+        val finalPath = StringBuilder()
+        for (p in pathStack) {
+            finalPath.append("/")
+            finalPath.append(p)
+        }
+
+        return if (finalPath.isEmpty()) {
+            "/"
+        } else {
+            finalPath.toString()
+        }
     }
 
     // https://www.youtube.com/watch?v=auK3PSZoidc&t=2196s
