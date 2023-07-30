@@ -404,6 +404,23 @@ Here is the sequence of the Activity lifecycle methods:
 
 Note that some of these methods may not be called in certain situations, depending on how the activity is being used. For example, if the activity is being destroyed due to a configuration change (such as a screen rotation), `onDestroy()` will not be called, but `onPause()` and `onResume()` will be called.
 
+### Lifecycle methods called when a activity is opened on top of another activity
+
+Apologies for the confusion. In that scenario, when Activity A is already opened, and you tap a button to open Activity B:
+
+1. Activity A: `onPause()` (Activity A goes into the background)
+2. Activity B: `onCreate()`
+3. Activity B: `onStart()`
+4. Activity B: `onResume()` (Activity B is now in the foreground)
+5. Activity A: `onStop()` (Activity A is no longer visible)
+
+When you navigate back from Activity B to Activity A, the lifecycle methods will be called accordingly for each activity in the back stack:
+
+1. Activity B: `onPause()` (Activity B goes into the background)
+2. Activity A: `onRestart()` (Activity A is brought back to the foreground)
+3. Activity A: `onStart()` (Activity A is visible again)
+4. Activity A: `onResume()` (Activity A is in the foreground)
+
 ## Services
 
 [Read more here](https://developer.android.com/guide/components/services)
@@ -1905,6 +1922,49 @@ Key characteristics of MVVM pattern in Android development:
 
 By following the MVVM pattern, developers can create Android apps with a clear separation of concerns, making the codebase more maintainable, testable, and easier to understand.
 
+In addition to these three main layers, there may be additional components or layers in an MVVM-based application, such as:
+
+1. Repository:
+   - The Repository acts as a single source of truth for data.
+   - It abstracts the data sources (e.g., local database, remote server) from the ViewModel, providing a clean interface to fetch and store data.
+   - The ViewModel interacts with the Repository to get the required data, making it decoupled from the specific data sources.
+
+2. Data Binding (Optional):
+   - Data Binding is a library that allows you to bind UI components in the layout directly to the ViewModel.
+   - It simplifies the code by automatically updating the UI when the ViewModel data changes and vice versa.
+
+3. Dependency Injection (Optional):
+   - Dependency Injection is a technique used to provide objects (dependencies) that a class requires from external sources.
+   - It helps to keep the code modular and testable by allowing different components to be easily replaced or mocked during testing.
+
+The primary goal of MVVM is to separate concerns and make the codebase more maintainable, scalable, and testable. Each layer has its distinct responsibilities, making it easier to understand and modify different parts of the application independently.
+
+## Advantages of MVVM
+
+The Model-View-ViewModel (MVVM) architecture has several advantages, which make it a popular choice for building modern Android applications:
+
+1. Separation of Concerns: MVVM separates the UI logic (View) from the business logic (ViewModel) and the data (Model). This separation makes the codebase more organized, maintainable, and testable.
+
+2. Testability: MVVM improves testability by decoupling the View from the ViewModel. Unit testing becomes easier as the ViewModel can be tested independently of the UI components.
+
+3. Reusability: With MVVM, the ViewModel is independent of the View, allowing for better reusability of business logic across different UI components and even across different platforms (e.g., Android and iOS).
+
+4. Data Binding: MVVM integrates well with data binding libraries (e.g., Android Data Binding or Jetpack Compose) that allow you to bind data directly to the UI, reducing the boilerplate code and making UI updates more straightforward.
+
+5. Lifecycle Awareness: ViewModel is lifecycle-aware, meaning it can automatically handle configuration changes and other lifecycle events, preventing data loss and improving the user experience.
+
+6. Better Collaboration: MVVM promotes a clear separation of responsibilities, making it easier for different teams (e.g., UI designers, developers) to work together more effectively.
+
+7. Maintainability: MVVM's organization and separation of concerns make it easier to maintain and evolve the codebase over time, especially as the app grows larger and more complex.
+
+8. Readability: The structure of MVVM with clearly defined roles (View, ViewModel, Model) enhances code readability, making it easier for developers to understand and navigate the codebase.
+
+9. Reactive Programming: MVVM is well-suited for reactive programming paradigms, such as using LiveData or RxJava, which can improve responsiveness and provide better user experiences.
+
+10. Architecture Components: MVVM is natively supported by Android Architecture Components like ViewModel and LiveData, making it easier to implement and integrate in Android projects.
+
+Overall, MVVM offers a robust and scalable architecture that helps in building maintainable, testable, and responsive Android applications.
+
 ## Communication between View and ViewModel
 
 ViewModel communicates with the View using a mechanism called "LiveData" or "Observable." LiveData is a lifecycle-aware data holder class in Android, and it is a core component of the Android Architecture Components. LiveData allows the ViewModel to observe changes in the data it holds and notify the View whenever there is a change, ensuring that the UI is always up-to-date with the latest data.
@@ -2065,6 +2125,26 @@ Here's how LiveData becomes lifecycle-aware:
 By being lifecycle-aware, LiveData ensures that it only updates active observers that are in a valid lifecycle state. This behavior is essential for preventing issues like stale UI updates and memory leaks that could occur if the observer is not properly removed when the activity or fragment is destroyed.
 
 LiveData's lifecycle awareness makes it a powerful tool for managing UI updates in a lifecycle-safe manner, ensuring that your app's UI stays up to date with the latest data while avoiding unnecessary updates and potential crashes caused by accessing views in an inactive or destroyed state.
+
+# What are UseCases?
+
+In software development, a use case refers to a description of a specific interaction or flow of events that a user (or an external system) can have with a software system to achieve a particular goal. Use cases are an essential part of the requirements gathering and analysis phase, helping to capture and document the expected behavior of the system from the user's perspective.
+
+Each use case typically describes a single specific scenario, and it consists of the following components:
+
+1. Actors: The users or external systems that interact with the software system are known as actors. An actor can be an end-user, another software system, or any external entity.
+
+2. Preconditions: The conditions that must be met before the use case can be initiated. These conditions define the starting state of the system before the user begins interacting with it.
+
+3. Main Flow: The main flow represents the sequence of steps and interactions that the user takes to achieve their goal. It describes the normal, successful path of the use case.
+
+4. Alternative Flows: In addition to the main flow, a use case may have alternative flows that describe different paths the user can take if specific conditions are met or if exceptions occur during the main flow.
+
+5. Postconditions: The expected outcome or state of the system after the use case is completed successfully.
+
+Use cases are often presented in a textual format or through use case diagrams. Use case diagrams are a visual representation of the use cases, actors, and their relationships, making it easier to understand the interactions between the system and its users.
+
+Use cases play a crucial role in the software development process, as they help communicate and document the functional requirements of the system. They serve as a basis for designing and developing the software, as well as for testing and validation. Use cases also provide a clear and unambiguous way to understand how the system should behave and what functionalities it should offer to its users.
 
 # Useful Articles
 
