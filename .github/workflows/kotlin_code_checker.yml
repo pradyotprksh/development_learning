@@ -19,7 +19,7 @@ jobs:
         working-directory: ./kotlin/udemy_course
         run: |
           pwd
-          kotlinc /src/main/kotlin/Main.kt
+          kotlinc Main.kt
       - name: Send Message
         uses: appleboy/telegram-action@master
         with:
