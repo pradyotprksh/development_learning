@@ -5,8 +5,8 @@ import geek_for_geeks.GeekForGeeks
 import leet_code.LeetCode
 
 fun main() {
-    DataStructures().startDataStructures()
     Algorithms().startAlgorithms()
+    DataStructures().startDataStructures()
     DynamicProgramming().startDynamicProgramming()
     GeekForGeeks().startGeekForGeeks()
     LeetCode().startLeetCode()

@@ -6,7 +6,7 @@ on:
       - kotlin/**
 name: Kotlin Projects
 jobs:
-  open_ai:
+  udemy_course:
     name: udemy_course Code Checker
     runs-on: ubuntu-latest
     steps:
@@ -14,6 +14,7 @@ jobs:
         uses: styfle/cancel-workflow-action@0.9.1
         with:
           access_token: ${{ github.token }}
+      - uses: actions/checkout@v2
       - name: Checking udemy_course
         working-directory: ./kotlin/udemy_course
         run: kotlinc /src/main/kotlin/Main.kt
