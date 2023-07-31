@@ -17,7 +17,9 @@ jobs:
       - uses: actions/checkout@v2
       - name: Checking udemy_course
         working-directory: ./kotlin/udemy_course
-        run: kotlinc /src/main/kotlin/Main.kt -include-runtime -d Main.jar
+        run: |
+          pwd
+          kotlinc /src/main/kotlin/Main.kt
       - name: Send Message
         uses: appleboy/telegram-action@master
         with:
