@@ -1,0 +1,25 @@
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - kotlin/**
+name: Kotlin Projects
+jobs:
+  open_ai:
+    name: udemy_course Code Checker
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cancel Previous Runs
+        uses: styfle/cancel-workflow-action@0.9.1
+        with:
+      - name: Checking udemy_course
+        working-directory: ./kotlin/udemy_course
+        run: kotlinc /src/main/kotlin/Main.kt
+      - name: Send Message
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+            GitHub Action for kotlin/udemy_course is completed with status ${{ job.status }} for ${{ github.ref }}.
