@@ -231,12 +231,118 @@ class LeetCode {
         println(evalRPN(arrayOf("2", "1", "+", "3", "*")))
         println(evalRPN(arrayOf("4", "13", "5", "/", "+")))
         println(evalRPN(arrayOf("10", "6", "9", "3", "+", "-11", "*", "/", "*", "17", "+", "5", "+")))
+
+        println(reverseWords("the sky is blue"))
+        println(reverseWords("  hello world  "))
+        println(reverseWords("a good   example"))
+
+        println(rotate(arrayOf(intArrayOf(1, 2, 3), intArrayOf(4, 5, 6), intArrayOf(7, 8, 9))))
+
+        println(setZeroes(arrayOf(intArrayOf(1, 1, 1), intArrayOf(1, 0, 1), intArrayOf(1, 1, 1))))
+
+        println(deleteDuplicates(ListNode(1, ListNode(2, ListNode(3, ListNode(3, ListNode(4, ListNode(4, ListNode(5)))))))))
+        println(deleteDuplicates(ListNode(1, ListNode(1, ListNode(1, ListNode(2, ListNode(3)))))))
+        println(deleteDuplicates(ListNode(1, ListNode(1, ListNode(1)))))
     }
 
-    private fun calculate(s: String): Int {
-        val stack = mutableListOf<Int>()
+    private fun deleteDuplicates(head: ListNode?): ListNode? {
+        var temp1 = head
+        var temp2 = temp1?.next
+        var temp3 = temp2?.next
 
-        return stack.first()
+        if (temp1 == null) return null
+        else if (temp2 == null) return temp1
+        else if (temp3 == null) {
+            return if (temp1.data == temp2.data) null
+            else head
+        }
+
+        var newHead = head
+
+        while (temp1 != null && temp2 != null && temp3 != null) {
+            if (temp3.data == temp2.data) {
+                while (temp3 != null && temp3.data == temp2.data) {
+                    temp3 = temp3.next
+                }
+                temp2 = temp3
+                temp3 = temp3?.next
+
+                if (temp1 == newHead) {
+                    newHead = temp2
+                }
+
+                temp1.next = temp2
+            } else {
+                temp1 = temp2
+                temp2 = temp3
+                temp3 = temp3.next
+            }
+        }
+
+        return newHead
+    }
+
+    private fun setZeroes(matrix: Array<IntArray>) {
+        val rows = matrix.size
+        val cols = matrix.first().size
+        val foundZeros = mutableSetOf<String>()
+
+        for (row in 0 until rows) {
+            for (col in 0 until cols) {
+                if (matrix[row][col] == 0) {
+                    foundZeros.add("$row,$col")
+                }
+            }
+        }
+
+        foundZeros.forEach { index ->
+            val row = index.split(",").first().toInt()
+            val col = index.split(",").last().toInt()
+
+            for (i in 0 until cols) {
+                matrix[row][i] = 0
+            }
+
+            for (i in 0 until rows) {
+                matrix[i][col] = 0
+            }
+        }
+
+        println(matrix.toList().map { it.toList() })
+    }
+
+    private fun rotate(matrix: Array<IntArray>) {
+        var l = 0
+        var r = matrix.size - 1
+
+        while (l < r) {
+            for (i in 0 until r - l) {
+                val t = l
+                val b = r
+
+                val temp = matrix[t][l + i]
+                matrix[t][l + i] = matrix[b - i][l]
+                matrix[b - i][l] = matrix[b][r - i]
+                matrix[b][r - i] = matrix[t + i][r]
+                matrix[t + i][r] = temp
+            }
+
+            ++l
+            --r
+        }
+    }
+
+    private fun reverseWords(s: String): String {
+        val words = s.split(" ").reversed()
+
+        val finalReverse = StringBuilder()
+        words.forEach { word ->
+            if (word.trim().isNotEmpty()) {
+                finalReverse.append(word)
+                finalReverse.append(" ")
+            }
+        }
+        return finalReverse.toString().trim()
     }
 
     private fun evalRPN(tokens: Array<String>): Int {
