@@ -246,6 +246,41 @@ class LeetCode {
 
         println(spiralOrder(arrayOf(intArrayOf(1, 2, 3), intArrayOf(4, 5, 6), intArrayOf(7, 8, 9))))
         println(spiralOrder(arrayOf(intArrayOf(1, 2, 3, 4), intArrayOf(5, 6, 7, 8), intArrayOf(9, 10, 11, 12))))
+
+        println(invertTree(TreeNode(data = 4, left = TreeNode(data = 2, left = TreeNode(data = 1), right = TreeNode(data = 3)), right = TreeNode(data = 7, left = TreeNode(data = 6), right = TreeNode(data = 9)))))
+        println(invertTree(TreeNode(data = 3, left = TreeNode(data = 1, right = TreeNode(data = 2)))))
+
+        println(isSymmetric(TreeNode(data = 1, left = TreeNode(data = 2, right = TreeNode(data = 3)), right = TreeNode(data = 2, right = TreeNode(data = 3)))))
+    }
+
+    private fun isSymmetric(root: TreeNode?): Boolean {
+        return isMirror(root, root)
+    }
+
+    private fun isMirror(t1: TreeNode?, t2: TreeNode?): Boolean {
+        if (t1 == null && t2 == null) return true
+        if (t1 == null || t2 == null) return false
+        return (t1.data == t2.data) && isMirror(t1.left, t2.right) && isMirror(t1.right, t2.left)
+    }
+
+    private fun invertTree(root: TreeNode?): TreeNode? {
+        val queueRoots = mutableListOf(root)
+
+        while (queueRoots.isNotEmpty()) {
+            val tempRoot = queueRoots.removeFirst()
+            if (tempRoot != null) {
+                val left = tempRoot.left
+                val right = tempRoot.right
+
+                tempRoot.left = right
+                tempRoot.right = left
+
+                if (left != null) queueRoots.add(left)
+                if (right != null) queueRoots.add(right)
+            }
+        }
+
+        return root
     }
 
     // https://www.youtube.com/watch?v=3joo9yAZVh8
