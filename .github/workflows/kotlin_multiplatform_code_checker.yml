@@ -84,3 +84,29 @@ jobs:
           token: ${{ secrets.TELEGRAM_TOKEN }}
           message: |
             GitHub Action for KotlinMultiplatform/KotlinMultiplatformSandbox is completed with status ${{ job.status }} for ${{ github.ref }}.
+  PokedexKMP:
+    name: PokedexKMP Code Checker
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cancel Previous Runs
+        uses: styfle/cancel-workflow-action@0.9.1
+        with:
+          access_token: ${{ github.token }}
+      - uses: actions/checkout@v2
+      - uses: actions/setup-java@v1
+        with:
+          java-version: '11'
+          distribution: 'adopt'
+          cache: gradle
+      - name: Checking PokedexKMP
+        working-directory: ./KotlinMultiplatform/PokedexKMP
+        run: |
+          chmod +x ./gradlew
+          ./gradlew assemble
+      - name: Send Message
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+            GitHub Action for KotlinMultiplatform/PokedexKMP is completed with status ${{ job.status }} for ${{ github.ref }}.
