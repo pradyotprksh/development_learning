@@ -44,15 +44,22 @@ kotlin {
                 implementation("io.ktor:ktor-client-core:2.3.2")
                 implementation("io.ktor:ktor-client-content-negotiation:2.3.2")
                 implementation("io.ktor:ktor-serialization-kotlinx-json:2.3.2")
+                implementation("io.ktor:ktor-client-logging:2.3.2")
 
                 // Serialization
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
 
                 // Voyager
-                implementation("cafe.adriel.voyager:voyager-navigator:1.0.0-rc05")
-                implementation("cafe.adriel.voyager:voyager-androidx:1.0.0-rc05")
-                implementation("cafe.adriel.voyager:voyager-hilt:1.0.0-rc05")
-                implementation("cafe.adriel.voyager:voyager-livedata:1.0.0-rc05")
+                api("moe.tlaster:precompose:1.4.3")
+
+                // Moko
+                api("dev.icerock.moko:mvvm-core:0.16.1")
+                api("dev.icerock.moko:mvvm-compose:0.16.1")
+                api("dev.icerock.moko:mvvm-livedata:0.16.1")
+
+                // Kodien
+                implementation("org.kodein.di:kodein-di:7.19.0")
+                implementation("org.kodein.di:kodein-di-framework-compose:7.19.0")
             }
         }
 

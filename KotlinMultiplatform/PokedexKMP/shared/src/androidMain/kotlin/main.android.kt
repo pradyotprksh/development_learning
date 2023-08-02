@@ -1,4 +1,5 @@
 import androidx.compose.runtime.Composable
-import app.ui.App
+import app.App
 
-@Composable fun MainView() = App()
+@Composable
+fun MainView() = App()
