@@ -1,60 +1,41 @@
 plugins {
+    kotlin("multiplatform")
     id("com.android.application")
-    kotlin("android")
+    id("org.jetbrains.compose")
+}
+
+kotlin {
+    androidTarget()
+
+    sourceSets {
+        val androidMain by getting {
+            dependencies {
+                implementation(project(":shared"))
+            }
+        }
+    }
 }
 
 android {
-    namespace = "com.pradyotprakash.pokedexkmp.android"
+    compileSdk = (findProperty("android.compileSdk") as String).toInt()
+    namespace = "com.pradyotprakash.pokedexKMP"
 
-    compileSdk = 33
+    sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
 
     defaultConfig {
-        applicationId = "com.pradyotprakash.pokedexkmp.android"
-        minSdk = 24
-        targetSdk = 33
+        applicationId = "com.pradyotprakash.PokedexKMP"
+        minSdk = (findProperty("android.minSdk") as String).toInt()
+        targetSdk = (findProperty("android.targetSdk") as String).toInt()
         versionCode = 1
         versionName = "1.0"
     }
 
-    buildFeatures {
-        compose = true
-    }
-
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.4.7"
-    }
-
-    packaging {
-        resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
-        }
-    }
-
-    buildTypes {
-        getByName("release") {
-            isMinifyEnabled = false
-        }
-    }
-
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
-    
-    kotlinOptions {
-        jvmTarget = "1.8"
+
+    kotlin {
+        jvmToolchain(11)
     }
-}
-
-dependencies {
-    // External modules
-    implementation(project(":shared"))
-
-    // Compose
-    implementation(libs.androidx.ui)
-    implementation(libs.androidx.ui.tooling)
-    implementation(libs.androidx.ui.tooling.preview)
-    implementation(libs.androidx.foundation)
-    implementation(libs.androidx.material)
-    implementation(libs.androidx.activity.compose)
 }
