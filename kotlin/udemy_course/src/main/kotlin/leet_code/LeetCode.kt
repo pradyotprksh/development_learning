@@ -236,50 +236,55 @@ class LeetCode {
         println(reverseWords("  hello world  "))
         println(reverseWords("a good   example"))
 
-        println(rotate(arrayOf(intArrayOf(1, 2, 3), intArrayOf(4, 5, 6), intArrayOf(7, 8, 9))))
+        val m1 = arrayOf(intArrayOf(1, 2, 3), intArrayOf(4, 5, 6), intArrayOf(7, 8, 9))
+        rotate(m1)
+        println(m1.toList().map { it.toList() })
 
-        println(setZeroes(arrayOf(intArrayOf(1, 1, 1), intArrayOf(1, 0, 1), intArrayOf(1, 1, 1))))
+        val m2 = arrayOf(intArrayOf(1, 1, 1), intArrayOf(1, 0, 1), intArrayOf(1, 1, 1))
+        setZeroes(m2)
+        println(m2.toList().map { it.toList() })
 
-        println(deleteDuplicates(ListNode(1, ListNode(2, ListNode(3, ListNode(3, ListNode(4, ListNode(4, ListNode(5)))))))))
-        println(deleteDuplicates(ListNode(1, ListNode(1, ListNode(1, ListNode(2, ListNode(3)))))))
-        println(deleteDuplicates(ListNode(1, ListNode(1, ListNode(1)))))
+        println(spiralOrder(arrayOf(intArrayOf(1, 2, 3), intArrayOf(4, 5, 6), intArrayOf(7, 8, 9))))
+        println(spiralOrder(arrayOf(intArrayOf(1, 2, 3, 4), intArrayOf(5, 6, 7, 8), intArrayOf(9, 10, 11, 12))))
     }
 
-    private fun deleteDuplicates(head: ListNode?): ListNode? {
-        var temp1 = head
-        var temp2 = temp1?.next
-        var temp3 = temp2?.next
+    // https://www.youtube.com/watch?v=3joo9yAZVh8
+    private fun spiralOrder(matrix: Array<IntArray>): List<Int> {
+        val result = mutableListOf<Int>()
 
-        if (temp1 == null) return null
-        else if (temp2 == null) return temp1
-        else if (temp3 == null) {
-            return if (temp1.data == temp2.data) null
-            else head
-        }
+        var l = 0
+        var r = matrix.first().size - 1
+        val totalSize = matrix.size * matrix.first().size
 
-        var newHead = head
+        while (l <= r) {
+            val t = l
+            val b = (matrix.size - 1) - t
 
-        while (temp1 != null && temp2 != null && temp3 != null) {
-            if (temp3.data == temp2.data) {
-                while (temp3 != null && temp3.data == temp2.data) {
-                    temp3 = temp3.next
-                }
-                temp2 = temp3
-                temp3 = temp3?.next
-
-                if (temp1 == newHead) {
-                    newHead = temp2
-                }
-
-                temp1.next = temp2
-            } else {
-                temp1 = temp2
-                temp2 = temp3
-                temp3 = temp3.next
+            for (i in l..r) {
+                result.add(matrix[t][i])
             }
+            if (result.size == totalSize) break
+
+            for (i in t + 1..b) {
+                result.add(matrix[i][r])
+            }
+            if (result.size == totalSize) break
+
+            for (i in r - 1 downTo l) {
+                result.add(matrix[b][i])
+            }
+            if (result.size == totalSize) break
+
+            for (i in b - 1 downTo t + 1) {
+                result.add(matrix[i][l])
+            }
+            if (result.size == totalSize) break
+
+            ++l
+            --r
         }
 
-        return newHead
+        return result
     }
 
     private fun setZeroes(matrix: Array<IntArray>) {
@@ -307,8 +312,6 @@ class LeetCode {
                 matrix[i][col] = 0
             }
         }
-
-        println(matrix.toList().map { it.toList() })
     }
 
     private fun rotate(matrix: Array<IntArray>) {
