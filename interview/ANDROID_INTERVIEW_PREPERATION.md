@@ -2277,6 +2277,20 @@ In Android, both `NavController` and `AnimatedNavController` are used for naviga
 
 In summary, `NavController` is the core class for handling navigation in the Navigation component, while `AnimatedNavController` is an extension that adds support for custom animations and transitions between destinations. If you need to implement complex or custom navigation animations, you may consider using `AnimatedNavController`. However, for most typical navigation needs, the standard `NavController` should be sufficient.
 
+# Different SDK Version numbers in Android Gradle
+
+In an Android Gradle build file, various version numbers are used to specify different aspects of the Android application's compatibility and build configuration. Here are the meanings of some commonly used version numbers:
+
+1. `compileSdkVersion`: This is the version of the Android SDK against which your application is compiled. It specifies the version of the Android platform that your app is compatible with during the build process. For example, if you set `compileSdkVersion` to 30, your app will be compiled using the Android 11 (API level 30) SDK.
+
+2. `minSdkVersion`: This is the minimum API level required for your app to run on a device. Devices with an API level below this value will not be able to install or run your app. You should set this to the lowest API level that your app supports. For example, if you set `minSdkVersion` to 21, your app will support devices running Android 5.0 (Lollipop) and above.
+
+3. `targetSdkVersion`: This is the API level that your app is targeting. It specifies the highest API level that your app has been tested with and is expected to work correctly on. Setting `targetSdkVersion` to a higher level than `minSdkVersion` allows your app to take advantage of new features and optimizations on newer Android versions while still maintaining compatibility with older versions.
+
+4. `buildToolsVersion`: This is the version of the Android Build Tools that are used during the build process. The Build Tools are a set of tools used to build, test, and package Android apps. You should specify a version that is compatible with your `compileSdkVersion`.
+
+These version numbers are essential for defining the compatibility and build requirements of your Android application. Make sure to set them appropriately based on your app's target audience and the features you want to use.
+
 # Useful Articles
 
 * [things-that-cannot-change](https://android-developers.googleblog.com/2011/06/things-that-cannot-change.html)

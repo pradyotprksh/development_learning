@@ -3,6 +3,7 @@ plugins {
     kotlin("native.cocoapods")
     id("com.android.library")
     id("org.jetbrains.compose")
+    kotlin("plugin.serialization") version "1.8.21"
 }
 
 kotlin {
@@ -22,25 +23,48 @@ kotlin {
             baseName = "shared"
             isStatic = true
         }
-        extraSpecAttributes["resources"] = "['src/commonMain/resources/**', 'src/iosMain/resources/**']"
+        extraSpecAttributes["resources"] =
+            "['src/commonMain/resources/**', 'src/iosMain/resources/**']"
     }
 
     sourceSets {
         val commonMain by getting {
             dependencies {
+                // Compose
                 implementation(compose.runtime)
                 implementation(compose.foundation)
                 implementation(compose.material)
                 @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
                 implementation(compose.components.resources)
+
+                // Image processing
+                implementation("media.kamel:kamel-image:0.7.1")
+
+                // Ktor
+                implementation("io.ktor:ktor-client-core:2.3.2")
+                implementation("io.ktor:ktor-client-content-negotiation:2.3.2")
+                implementation("io.ktor:ktor-serialization-kotlinx-json:2.3.2")
+
+                // Serialization
+                implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
+
+                // Voyager
+                implementation("cafe.adriel.voyager:voyager-navigator:1.0.0-rc05")
+                implementation("cafe.adriel.voyager:voyager-androidx:1.0.0-rc05")
+                implementation("cafe.adriel.voyager:voyager-hilt:1.0.0-rc05")
+                implementation("cafe.adriel.voyager:voyager-livedata:1.0.0-rc05")
             }
         }
 
         val androidMain by getting {
             dependencies {
+                // Androidx
                 api("androidx.activity:activity-compose:1.7.2")
                 api("androidx.appcompat:appcompat:1.6.1")
                 api("androidx.core:core-ktx:1.10.1")
+
+                // Ktor
+                implementation("io.ktor:ktor-client-android:2.3.2")
             }
         }
 
@@ -53,6 +77,11 @@ kotlin {
             iosX64Main.dependsOn(this)
             iosArm64Main.dependsOn(this)
             iosSimulatorArm64Main.dependsOn(this)
+
+            dependencies {
+                // Ktor
+                implementation("io.ktor:ktor-client-darwin:2.3.2")
+            }
         }
     }
 }
