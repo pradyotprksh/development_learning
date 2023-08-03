@@ -1219,3 +1219,112 @@ In addition to the primary and secondary constructors, Kotlin also supports othe
 * **Secondary constructors with named parameters**
 
 For more information on these types of constructors, please refer to the [Kotlin documentation](https://kotlinlang.org/docs/classes.html).
+
+# DeepRecursiveFunctions
+
+In Kotlin, `DeepRecursiveFunction` is a specialized function type that is designed to enable writing recursive functions without causing stack overflow errors. It is part of the `kotlin.coroutines` package and is typically used with Kotlin coroutines.
+
+Recursive functions are functions that call themselves during their execution. While recursion is a powerful and elegant technique, it can lead to stack overflow errors when the depth of recursion becomes too large. This is because each function call consumes memory on the call stack, and if the stack size is exceeded, the program throws a stack overflow exception.
+
+To address this issue, Kotlin provides the `DeepRecursiveFunction` type, which allows recursive functions to be executed in a way that avoids consuming excessive stack space.
+
+Here's an example to demonstrate how to use `DeepRecursiveFunction`:
+
+```kotlin
+import kotlin.coroutines.experimental.*
+
+fun main() {
+    val factorial = DeepRecursiveFunction<Int, Int> { n ->
+        if (n == 0) {
+            1
+        } else {
+            n * callRecursive(n - 1)
+        }
+    }
+
+    // Calculate factorial of 5 using the DeepRecursiveFunction
+    val result = factorial(5)
+    println("Factorial of 5: $result") // Output: Factorial of 5: 120
+}
+```
+
+In this example, we define a `DeepRecursiveFunction` named `factorial`. The function takes an integer `n` as its input and returns an integer as the result.
+
+The function is defined using the lambda expression syntax, and it represents the recursive factorial function. If `n` is 0, the function returns 1 (the base case of the factorial). Otherwise, it calls itself recursively with `n - 1` and multiplies the result by `n`.
+
+To execute the `DeepRecursiveFunction`, we simply call it with an input value (in this case, 5) like a regular function. The function calculates the factorial of the given input using recursion, but thanks to `DeepRecursiveFunction`, it does so without causing a stack overflow error.
+
+By using `DeepRecursiveFunction`, you can write recursive functions without worrying about stack overflow issues, making it a powerful tool for writing elegant and efficient recursive algorithms in Kotlin.
+
+## Internal work of DeepRecursiveFunction
+
+Internally, `DeepRecursiveFunction` in Kotlin uses a technique called "trampolining" to avoid stack overflow errors that would typically occur with regular recursive functions. Trampolining is a form of tail-call optimization, a technique that allows recursive function calls to be executed without consuming additional stack space.
+
+When a `DeepRecursiveFunction` is invoked, it doesn't perform the recursive call directly but instead wraps the recursive call in a special object called a "trampoline." This trampoline allows the function calls to be deferred and executed in a loop, effectively transforming the recursion into an iterative process.
+
+Here's a simplified explanation of how it works:
+
+1. When a `DeepRecursiveFunction` is called with input arguments, it creates an instance of the trampoline and stores the initial function call and its arguments in the trampoline.
+
+2. Instead of directly executing the function call, the trampoline enters a loop that repeatedly takes the next function call and its arguments from the queue and executes them.
+
+3. When a recursive call is made within the function, the trampoline doesn't execute it immediately but rather adds it to the queue of pending function calls.
+
+4. The loop continues processing the pending function calls in a FIFO (First-In-First-Out) manner until the queue is empty, effectively emulating the function calls on the call stack.
+
+This mechanism ensures that the execution does not consume additional stack space for each recursive call, eliminating the risk of stack overflow for deep recursive calls.
+
+Here's a high-level representation of how the trampolining process works:
+
+```
+DeepRecursiveFunction Call:
+        Trampoline (Initial Function Call)
+          /         |         \
+Recursive Call 1  Recursive Call 2  Recursive Call 3
+       |            |             /
+  Trampoline   Trampoline      Trampoline
+ (Call 1 args) (Call 2 args)    (Call 3 args)
+```
+
+The trampoline processes the recursive calls one by one without consuming additional stack space. This allows deep recursion to be handled gracefully without causing stack overflow errors.
+
+Overall, the `DeepRecursiveFunction` and the trampolining mechanism provide a way to write recursive functions in Kotlin without the risk of stack overflow, making it a safe and efficient solution for handling deep recursion.
+
+## Trampoline
+
+A trampoline is a programming technique used to avoid stack overflow errors that can occur with deeply recursive functions. It is a form of tail-call optimization that transforms recursive function calls into a loop, allowing the recursion to be executed iteratively without consuming additional stack space for each recursive call.
+
+In functional programming languages, such as Kotlin, Scala, and Haskell, where tail-call optimization is not natively supported by the runtime, trampolining is often used as a workaround to achieve efficient recursion.
+
+Here's a simplified explanation of how trampolining works:
+
+1. When a function makes a recursive call, instead of directly executing the recursive call, the function returns a special object (the trampoline) that represents the pending computation.
+
+2. The trampoline then repeatedly takes the next computation from the queue and executes it until there are no more pending computations.
+
+3. Each computation in the trampoline represents a function call with its arguments. The result of the computation can either be another computation (representing a recursive call) or the final result of the function.
+
+By using a trampoline, the recursive calls are effectively transformed into a loop, which allows for a more efficient use of the call stack and prevents stack overflow errors.
+
+Here's a simple example of how a trampoline can be implemented in Kotlin:
+
+```kotlin
+sealed class Trampoline<out T>
+
+data class Done<T>(val result: T) : Trampoline<T>()
+data class More<T>(val thunk: () -> Trampoline<T>) : Trampoline<T>()
+
+fun <T> trampoline(trampoline: Trampoline<T>): T {
+    var currentTrampoline: Trampoline<T> = trampoline
+    while (currentTrampoline is More) {
+        currentTrampoline = currentTrampoline.thunk()
+    }
+    return (currentTrampoline as Done).result
+}
+```
+
+In this example, we define a `Trampoline` class with two subclasses: `Done` and `More`. `Done` represents the final result of the computation, and `More` represents a pending computation that needs to be evaluated further.
+
+The `trampoline` function takes a `Trampoline` as input and repeatedly evaluates pending computations until it reaches the final result (`Done`). It uses a loop to execute the computations one by one without consuming additional stack space.
+
+By using trampolining, recursive functions can be executed efficiently even with deep recursion, making it a valuable technique for functional programming languages that lack native tail-call optimization support.

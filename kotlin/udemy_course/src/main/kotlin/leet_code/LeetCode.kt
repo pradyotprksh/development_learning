@@ -251,23 +251,6 @@ class LeetCode {
         println(invertTree(TreeNode(data = 3, left = TreeNode(data = 1, right = TreeNode(data = 2)))))
 
         println(isSymmetric(TreeNode(data = 1, left = TreeNode(data = 2, right = TreeNode(data = 3)), right = TreeNode(data = 2, right = TreeNode(data = 3)))))
-
-        println(myPow(2.00000, 10))
-        println(myPow(2.10000, 3))
-        println(myPow(2.00000, -2))
-        println(myPow(1.00000, 2147483647))
-    }
-
-    // Too slow
-    private fun myPow(x: Double, n: Int): Double {
-        var ans = 1.0
-        val temp = if (n >= 0) x else 1 / x
-
-        for (i in 0 until abs(n)) {
-            ans *= temp
-        }
-
-        return ans
     }
 
     private fun isSymmetric(root: TreeNode?): Boolean {
