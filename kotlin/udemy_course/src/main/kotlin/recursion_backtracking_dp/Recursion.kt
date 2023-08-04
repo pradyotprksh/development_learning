@@ -1,5 +1,7 @@
 package recursion_backtracking_dp
 
+import kotlin.random.Random
+
 class Recursion {
     fun startRecursion() {
         println("Starting with recursion")
@@ -28,6 +30,8 @@ class Recursion {
         println(euclideanAlgorithmRecursion(24, 9))
         println(euclideanAlgorithmIterative(45, 10))
         println(euclideanAlgorithmIterative(24, 9))
+
+        SearchAlgorithms().startSearchAlgorithms()
     }
 
     private fun euclideanAlgorithmIterative(a: Int, b: Int): Int {
@@ -114,4 +118,44 @@ class Recursion {
         callRecursive(n - 1)
         println(n)
     }
+
+    class SearchAlgorithms {
+        fun startSearchAlgorithms() {
+            println("Starting with search algorithms")
+
+            val list = listOf(1, 2, 3, 4, 5, 6, 7, 8)
+
+            println(linearSearchIterative(list, 4))
+            println(linearSearchIterative(list, 10))
+
+            println(linearSearchRecursion(list, 4))
+            println(linearSearchRecursion(list, 10))
+
+            println(binarySearchRecursion(list, 4, 0, list.size - 1))
+            println(binarySearchRecursion(list, 10, 0, list.size - 1))
+        }
+
+        private fun binarySearchRecursion(container: List<Int>, item: Int, start: Int, end: Int): Int {
+            if (start > end) return -1
+            val middle = (start + end) / 2
+            return if (container[middle] == item) middle
+            else if (container[middle] > item) binarySearchRecursion(container, item, start, middle - 1)
+            else binarySearchRecursion(container, item, middle + 1, end)
+        }
+
+        private fun linearSearchRecursion(container: List<Int>, item: Int, index: Int = 0): Int {
+            if (index >= container.size) return -1
+            if (container[index] == item) return index
+            return linearSearchRecursion(container, item, index + 1)
+        }
+
+        private fun linearSearchIterative(container: List<Int>, item: Int): Int {
+            for (i in container.indices) {
+                if (container[i] == item) return i
+            }
+            return -1
+        }
+    }
+
+
 }
