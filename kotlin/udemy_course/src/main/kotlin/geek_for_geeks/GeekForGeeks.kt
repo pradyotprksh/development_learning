@@ -61,6 +61,33 @@ class GeekForGeeks {
         pattern2()
         pattern3()
         pattern4()
+
+        println(matrixDiagonal(arrayOf(intArrayOf(1, 2, 3), intArrayOf(4, 5, 6), intArrayOf(7, 8, 9))))
+        println(matrixDiagonal(arrayOf(intArrayOf(1, 2, 3, 4), intArrayOf(5, 6, 7, 8), intArrayOf(9, 10, 11, 12))))
+    }
+
+    private fun matrixDiagonal(matrix: Array<IntArray>) {
+        for (k in matrix.indices) {
+            var i = k
+            var j = 0
+
+            while (i >= 0) {
+                print("${matrix[i][j]} ")
+                --i
+                ++j
+            }
+        }
+
+        for (k in 1 until matrix.first().size) {
+            var i = k
+            var j = matrix.size - 1
+
+            while (i < matrix.first().size) {
+                print("${matrix[j][i]} ")
+                ++i
+                --j
+            }
+        }
     }
 
     private fun pattern4(n: Int = 5) {
