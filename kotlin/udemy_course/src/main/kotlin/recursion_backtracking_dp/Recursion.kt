@@ -160,19 +160,77 @@ class Recursion {
 
     class SelectionAlgorithms {
         enum class Type {
-            max,
-            min
+            Max,
+            Min
         }
 
         fun startSelectionAlgorithms() {
             println("Starting with selection algorithms")
 
             val items = intArrayOf(1, -2, 8, 7, 6, 5)
-            println(quickSelect(items, 0, items.size - 1, 1, Type.min))
-            println(quickSelect(items, 0, items.size - 1, 1, Type.max))
+            println(quickSelect(items, 0, items.size - 1, 1, Type.Min))
+            println(quickSelect(items, 0, items.size - 1, 1, Type.Max))
 
-            println(quickSort(intArrayOf(1, -2, 9, 100, 8, 7, 41, -874, 6, 5), Type.min).toList())
-            println(quickSort(intArrayOf(1, -2, 9, 100, 8, 7, 41, -874, 6, 5), Type.max).toList())
+            println(quickSort(intArrayOf(1, -2, 9, 100, 8, 7, 41, -874, 6, 5), Type.Min).toList())
+            println(quickSort(intArrayOf(1, -2, 9, 100, 8, 7, 41, -874, 6, 5), Type.Max).toList())
+
+            println(medianOfMediansAlgorithm(items, 1, Type.Min))
+            println(medianOfMediansAlgorithm(items, 1, Type.Max))
+        }
+
+        private fun medianOfMediansAlgorithm(container: IntArray, k: Int, type: Type): Int {
+            // Divide the items into multiple arrays with max 5 items each
+            val chunks = mutableListOf<List<Int>>()
+            val temp = mutableListOf<Int>()
+            for (i in container.indices) {
+                if (i > 0 && i % 5 == 0) {
+                    chunks.add(temp.toList())
+                    temp.clear()
+                    temp.add(container[i])
+                } else {
+                    temp.add(container[i])
+                }
+            }
+            if (temp.isNotEmpty()) {
+                chunks.add(temp)
+            }
+
+            // Find the median in all the chunks, sorted chunk
+            val medians = mutableListOf<Int>()
+            for (chunk in chunks) {
+                medians.add(chunk.sorted()[chunk.size / 2])
+            }
+
+            // Pivot
+            val pivotValue = medians.sorted()[medians.size / 2]
+
+            // Partition
+            val leftArray = mutableListOf<Int>()
+            val rightArray = mutableListOf<Int>()
+            for (n in container) {
+                if (n < pivotValue) {
+                    if (type == Type.Min) {
+                        leftArray.add(n)
+                    } else {
+                        rightArray.add(n)
+                    }
+                } else if (n > pivotValue) {
+                    if (type == Type.Min) {
+                        rightArray.add(n)
+                    } else {
+                        leftArray.add(n)
+                    }
+                }
+            }
+
+            // Selection
+            val pivotIndex = leftArray.size
+            if (pivotIndex > k - 1) {
+                return medianOfMediansAlgorithm(leftArray.toIntArray(), k, type)
+            } else if (pivotIndex < k - 1) {
+                return medianOfMediansAlgorithm(rightArray.toIntArray(), k - leftArray.size - 1, type)
+            }
+            return pivotValue
         }
 
         private fun quickSelect(container: IntArray, startIndex: Int, endIndex: Int, k: Int, type: Type): Int {
@@ -204,14 +262,14 @@ class Recursion {
 
             for (i in startIndex until endIndex) {
                 when (type) {
-                    Type.max -> {
+                    Type.Max -> {
                         if (container[i] > container[endIndex]) {
                             swap(container, indexFirst, i)
                             ++indexFirst
                         }
                     }
 
-                    Type.min -> {
+                    Type.Min -> {
                         if (container[i] < container[endIndex]) {
                             swap(container, indexFirst, i)
                             ++indexFirst
