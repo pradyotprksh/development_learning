@@ -32,6 +32,7 @@ class Recursion {
         println(euclideanAlgorithmIterative(24, 9))
 
         SearchAlgorithms().startSearchAlgorithms()
+        SelectionAlgorithms().startSelectionAlgorithms()
     }
 
     private fun euclideanAlgorithmIterative(a: Int, b: Int): Int {
@@ -157,5 +158,77 @@ class Recursion {
         }
     }
 
+    class SelectionAlgorithms {
+        enum class Type {
+            max,
+            min
+        }
 
+        fun startSelectionAlgorithms() {
+            println("Starting with selection algorithms")
+
+            val items = intArrayOf(1, -2, 8, 7, 6, 5)
+            println(quickSelect(items, 0, items.size - 1, 1, Type.min))
+            println(quickSelect(items, 0, items.size - 1, 1, Type.max))
+
+            println(quickSort(intArrayOf(1, -2, 9, 100, 8, 7, 41, -874, 6, 5), Type.min).toList())
+            println(quickSort(intArrayOf(1, -2, 9, 100, 8, 7, 41, -874, 6, 5), Type.max).toList())
+        }
+
+        private fun quickSelect(container: IntArray, startIndex: Int, endIndex: Int, k: Int, type: Type): Int {
+            val pivot = partitions(container, startIndex, endIndex, type)
+            if (pivot > k - 1) {
+                return quickSelect(container, startIndex, pivot - 1, k, type)
+            } else if (pivot < k - 1) {
+                return quickSelect(container, pivot + 1, endIndex, k, type)
+            }
+            return container[k - 1]
+        }
+
+        private fun quickSort(container: IntArray, type: Type): IntArray {
+            val newList = mutableListOf<Int>()
+
+            for (i in 1..container.size) {
+                newList.add(quickSelect(container, 0, container.size - 1, i, type))
+            }
+
+            return newList.toIntArray()
+        }
+
+        private fun partitions(container: IntArray, startIndex: Int, endIndex: Int, type: Type): Int {
+            val pivot = Random.nextInt(startIndex, endIndex + 1)
+
+            swap(container, pivot, endIndex)
+
+            var indexFirst = startIndex
+
+            for (i in startIndex until endIndex) {
+                when (type) {
+                    Type.max -> {
+                        if (container[i] > container[endIndex]) {
+                            swap(container, indexFirst, i)
+                            ++indexFirst
+                        }
+                    }
+
+                    Type.min -> {
+                        if (container[i] < container[endIndex]) {
+                            swap(container, indexFirst, i)
+                            ++indexFirst
+                        }
+                    }
+                }
+            }
+
+            swap(container, indexFirst, endIndex)
+
+            return indexFirst
+        }
+
+        private fun swap(container: IntArray, i: Int, j: Int) {
+            val temp = container[i]
+            container[i] = container[j]
+            container[j] = temp
+        }
+    }
 }
