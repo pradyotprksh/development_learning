@@ -1,5 +1,10 @@
 # Recent Activity :zap:
 <!--START_SECTION:activity-->
+1. 🎉 Merged PR [#8](https://github.com/pradyotprksh/PitGull/pull/8) in [pradyotprksh/PitGull](https://github.com/pradyotprksh/PitGull)
+2. 💪 Opened PR [#8](https://github.com/pradyotprksh/PitGull/pull/8) in [pradyotprksh/PitGull](https://github.com/pradyotprksh/PitGull)
+3. 🎉 Merged PR [#7](https://github.com/pradyotprksh/PitGull/pull/7) in [pradyotprksh/PitGull](https://github.com/pradyotprksh/PitGull)
+4. 💪 Opened PR [#7](https://github.com/pradyotprksh/PitGull/pull/7) in [pradyotprksh/PitGull](https://github.com/pradyotprksh/PitGull)
+5. 💪 Opened PR [#6](https://github.com/pradyotprksh/PitGull/pull/6) in [pradyotprksh/PitGull](https://github.com/pradyotprksh/PitGull)
 <!--END_SECTION:activity-->
 
 # Learnings
