@@ -1,20 +1,21 @@
 # Taken from https://blog.sachinchaurasiya.dev/how-to-show-recent-github-activities-on-your-profile-readme
-name: Update README.md
+name: Update README
 on:
-  push:
-    branches:
-      - main
   schedule:
-    - cron: "*/5 * * * *" # Runs every 5 minutes.
+    - cron: "*/5 * * * *"
+  workflow_dispatch:
 jobs:
   build:
+    name: Update README with recent activity
     runs-on: ubuntu-latest
-    name: Update this repo's README with recent activity
+    permissions:
+      contents: write
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: jamesgeorge007/github-activity-readme@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           COMMIT_MSG: "Updated README with recent activity"
           MAX_LINES: 5
+          COMMIT_NAME: GitHub Activity Readme
