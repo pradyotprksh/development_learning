@@ -33,6 +33,13 @@ class Recursion {
 
         SearchAlgorithms().startSearchAlgorithms()
         SelectionAlgorithms().startSelectionAlgorithms()
+
+        println(powerRecursive(2, 10))
+    }
+
+    private fun powerRecursive(n: Int, p: Int): Int {
+        if (p == 0) return 1
+        return n * powerRecursive(n, p - 1)
     }
 
     private fun euclideanAlgorithmIterative(a: Int, b: Int): Int {
