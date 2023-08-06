@@ -5,5 +5,6 @@ class RecursionBacktrackingDP {
         println("Starting with recursion, backtracking and dynamic programming")
         Recursion().startRecursion()
         BitManipulation().startBitManipulation()
+        Backtracking().startBacktracking()
     }
 }

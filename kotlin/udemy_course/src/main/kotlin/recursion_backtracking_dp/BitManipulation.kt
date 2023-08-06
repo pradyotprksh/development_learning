@@ -23,7 +23,7 @@ class BitManipulation {
 
     private fun multiplyRecursion(a: Int, b: Int): Int {
         if (b <= 1) return a
-        return if (b xor 1 == b - 1) a + multiplyRecursion(a shl 1, b shr  1)
+        return if (b xor 1 == b - 1) a + multiplyRecursion(a shl 1, b shr 1)
         else multiplyRecursion(a shl 1, b shr 1)
     }
 
