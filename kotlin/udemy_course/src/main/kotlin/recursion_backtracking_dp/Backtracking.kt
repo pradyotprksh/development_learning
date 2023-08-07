@@ -8,6 +8,74 @@ class Backtracking {
         Queens(4).solveNQueens()
         // To find all the solution place the queens on rows
         Queens(4).totalSolutions()
+
+        HamiltonianCycle(listOf(listOf(0, 1, 0, 0, 0, 1), listOf(1, 0, 1, 0, 0, 0), listOf(0, 1, 0, 0, 1, 0), listOf(0, 0, 0, 0, 1, 1), listOf(0, 0, 1, 1, 0, 1), listOf(1, 0, 0, 1, 1, 0))).solveHamiltonianCycle()
+        HamiltonianCycle(listOf(listOf(0, 1, 0, 0), listOf(0, 0, 0, 1), listOf(1, 0, 0, 0), listOf(0, 0, 1, 0))).solveHamiltonianCycle()
+    }
+
+    class HamiltonianCycle(private val graph: List<List<Int>>) {
+        private val alphabetMap = mapOf(
+                0 to "A",
+                1 to "B",
+                2 to "C",
+                3 to "D",
+                4 to "E",
+                5 to "F",
+        )
+        private val visitedNodes = mutableListOf(0)
+
+        fun solveHamiltonianCycle() {
+            if (solve(1)) {
+                println("Hamiltonian cycle for the graph")
+                printGraph()
+                println("is")
+                printHamiltonianCycle()
+            } else {
+                println("Hamiltonian cycle is not possible in the given graph")
+            }
+        }
+
+        private fun printHamiltonianCycle() {
+            for (i in visitedNodes) {
+                print("${alphabetMap[i]}->")
+            }
+        }
+
+        private fun solve(row: Int): Boolean {
+            if (row == graph.size) return true
+
+            for (col in 1 until graph[row].size) {
+                if (isConnected(row, col)) {
+                    visitedNodes.add(col)
+                    if (solve(row + 1)) {
+                        return true
+                    }
+                    visitedNodes.removeAt(visitedNodes.size - 1)
+                }
+            }
+
+            return false
+        }
+
+        private fun isConnected(row: Int, col: Int): Boolean {
+            if (graph[visitedNodes[row - 1]][col] == 0) return false
+
+            if (visitedNodes.contains(col)) return false
+//            for (i in 0 until row) {
+//                if (visitedNodes[i] == col) return false
+//            }
+
+            return true
+        }
+
+        private fun printGraph() {
+            for (i in graph.indices) {
+                for (j in graph[i].indices) {
+                    print("${graph[i][j]} ")
+                }
+                println()
+            }
+        }
     }
 
     class Queens(private val queens: Int) {
