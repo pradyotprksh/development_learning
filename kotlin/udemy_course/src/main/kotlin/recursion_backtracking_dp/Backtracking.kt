@@ -9,7 +9,7 @@ class Backtracking {
         // To find all the solution place the queens on rows
         Queens(4).totalSolutions()
 
-        HamiltonianCycle(listOf(listOf(0, 1, 0, 0, 0, 1), listOf(1, 0, 1, 0, 0, 0), listOf(0, 1, 0, 0, 1, 0), listOf(0, 0, 0, 0, 1, 1), listOf(0, 0, 1, 1, 0, 1), listOf(1, 0, 0, 1, 1, 0))).solveHamiltonianCycle()
+        HamiltonianCycle(listOf(listOf(0, 1, 0, 0, 0, 1), listOf(1, 0, 1, 0, 0, 0), listOf(0, 1, 0, 0, 1, 0), listOf(0, 0, 0, 0, 1, 1), listOf(0, 0, 1, 1, 0, 1), listOf(1, 0, 0, 1, 1, 0))).solveHamiltonianPath()
         HamiltonianCycle(listOf(listOf(0, 1, 0, 0), listOf(0, 0, 0, 1), listOf(1, 0, 0, 0), listOf(0, 0, 1, 0))).solveHamiltonianCycle()
     }
 
@@ -25,29 +25,51 @@ class Backtracking {
         private val visitedNodes = mutableListOf(0)
 
         fun solveHamiltonianCycle() {
-            if (solve(1)) {
+            if (solve(1, true)) {
                 println("Hamiltonian cycle for the graph")
                 printGraph()
                 println("is")
-                printHamiltonianCycle()
+                printHamiltonianPath()
             } else {
                 println("Hamiltonian cycle is not possible in the given graph")
             }
         }
 
-        private fun printHamiltonianCycle() {
-            for (i in visitedNodes) {
-                print("${alphabetMap[i]}->")
+        fun solveHamiltonianPath() {
+            if (solve(1)) {
+                println("Hamiltonian path for the graph")
+                printGraph()
+                println("is")
+                printHamiltonianPath()
+            } else {
+                println("Hamiltonian path is not possible in the given graph")
             }
         }
 
-        private fun solve(row: Int): Boolean {
-            if (row == graph.size) return true
+        private fun printHamiltonianPath() {
+            for (i in visitedNodes) {
+                print("${alphabetMap[i]}->")
+            }
+            println()
+        }
+
+        private fun solve(row: Int, isForCycle: Boolean = false): Boolean {
+            if (row == graph.size) {
+                return if (!isForCycle) true
+                else {
+                    val lastVertex = visitedNodes.last()
+                    if (graph[lastVertex][0] == 1) {
+                        visitedNodes.add(0)
+                        return true
+                    }
+                    return false
+                }
+            }
 
             for (col in 1 until graph[row].size) {
                 if (isConnected(row, col)) {
                     visitedNodes.add(col)
-                    if (solve(row + 1)) {
+                    if (solve(row + 1, isForCycle)) {
                         return true
                     }
                     visitedNodes.removeAt(visitedNodes.size - 1)
