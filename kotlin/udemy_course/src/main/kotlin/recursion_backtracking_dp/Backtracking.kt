@@ -11,6 +11,56 @@ class Backtracking {
 
         HamiltonianCycle(listOf(listOf(0, 1, 0, 0, 0, 1), listOf(1, 0, 1, 0, 0, 0), listOf(0, 1, 0, 0, 1, 0), listOf(0, 0, 0, 0, 1, 1), listOf(0, 0, 1, 1, 0, 1), listOf(1, 0, 0, 1, 1, 0))).solveHamiltonianPath()
         HamiltonianCycle(listOf(listOf(0, 1, 0, 0), listOf(0, 0, 0, 1), listOf(1, 0, 0, 0), listOf(0, 0, 1, 0))).solveHamiltonianCycle()
+
+        Coloring(listOf(listOf(0, 1, 0, 1), listOf(1, 0, 0, 1), listOf(1, 0, 0, 1), listOf(0, 1, 1, 0)), listOf("Red", "Green")).solveColoring()
+        Coloring(listOf(listOf(0, 1, 0, 0, 0, 1), listOf(1, 0, 1, 0, 0, 0), listOf(0, 1, 0, 0, 1, 0), listOf(0, 0, 0, 0, 1, 1), listOf(0, 0, 1, 1, 0, 1), listOf(1, 0, 0, 1, 1, 0)), listOf("Red", "Green", "Blue")).solveColoring()
+        Coloring(listOf(listOf(0, 1, 1, 1), listOf(1, 0, 1, 0), listOf(1, 1, 0, 1), listOf(1, 0, 1, 0)), listOf("Red", "Green", "Blue")).solveColoring()
+    }
+
+    class Coloring(private val graph: List<List<Int>>, private val colors: List<String>) {
+        private val selectedColors = mutableListOf<String>()
+
+        fun solveColoring() {
+            if (solve(0)) {
+                println("Found the solution")
+                printGraphWithColors()
+            } else {
+                println("No solution found for the given graph and colors")
+            }
+        }
+
+        private fun solve(row: Int): Boolean {
+            if (row == graph.size) return true
+
+            for (color in colors) {
+                if (isValidCombination(color, row)) {
+                    selectedColors.add(color)
+                    if (solve(row + 1)) {
+                        return true
+                    }
+                }
+            }
+
+            return false
+        }
+
+        private fun isValidCombination(color: String, row: Int): Boolean {
+            for (i in graph[row].indices) {
+                if (i >= selectedColors.size) break
+                if (graph[row][i] == 1) {
+                    if (selectedColors[i] != color) {
+                        continue
+                    }
+                    return false
+                }
+            }
+
+            return true
+        }
+
+        private fun printGraphWithColors() {
+            println(selectedColors)
+        }
     }
 
     class HamiltonianCycle(private val graph: List<List<Int>>) {
