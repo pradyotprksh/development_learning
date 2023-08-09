@@ -8,26 +8,22 @@ class RandomQuestions {
     }
 
     private fun youWillAllConform(caps: List<String>): Int {
+        val tempCaps = caps + listOf("END")
+
         val forwardCaps = mutableListOf<Pair<Int, Int>>()
         val backwardCaps = mutableListOf<Pair<Int, Int>>()
 
         var firstIndex = 0
 
-        for (i in 1 until caps.size) {
-            if (caps[i - 1] != caps[i]) {
-                if (caps[i - 1] == "F") {
+        for (i in 1 until tempCaps.size) {
+            if (tempCaps[i - 1] != tempCaps[i]) {
+                if (tempCaps[i - 1] == "F") {
                     forwardCaps.add(Pair(firstIndex, i - 1))
                 } else {
                     backwardCaps.add(Pair(firstIndex, i - 1))
                 }
                 firstIndex = i
             }
-        }
-
-        if (caps[firstIndex] == "F") {
-            forwardCaps.add(Pair(firstIndex, caps.size - 1))
-        } else {
-            backwardCaps.add(Pair(firstIndex, caps.size - 1))
         }
 
         println("Forward: $forwardCaps Backward: $backwardCaps")
