@@ -15,6 +15,89 @@ class Backtracking {
         Coloring(listOf(listOf(0, 1, 0, 1), listOf(1, 0, 0, 1), listOf(1, 0, 0, 1), listOf(0, 1, 1, 0)), listOf("Red", "Green")).solveColoring()
         Coloring(listOf(listOf(0, 1, 0, 0, 0, 1), listOf(1, 0, 1, 0, 0, 0), listOf(0, 1, 0, 0, 1, 0), listOf(0, 0, 0, 0, 1, 1), listOf(0, 0, 1, 1, 0, 1), listOf(1, 0, 0, 1, 1, 0)), listOf("Red", "Green", "Blue")).solveColoring()
         Coloring(listOf(listOf(0, 1, 1, 1), listOf(1, 0, 1, 0), listOf(1, 1, 0, 1), listOf(1, 0, 1, 0)), listOf("Red", "Green", "Blue")).solveColoring()
+
+        Sudoku(
+                listOf(
+                        mutableListOf(null, null, null, 2, 6, null, 7, null, 1),
+                        mutableListOf(6, 8, null, null, 7, null, null, 9, null),
+                        mutableListOf(1, 9, null, null, null, 4, 5, null, null),
+                        mutableListOf(8, 2, null, 1, null, null, null, 4, null),
+                        mutableListOf(null, null, 4, 6, null, 2, 9, null, null),
+                        mutableListOf(null, 5, null, null, null, 3, null, 2, 8),
+                        mutableListOf(null, null, 9, 3, null, null, null, 7, 4),
+                        mutableListOf(null, 4, null, null, 5, null, null, 3, 6),
+                        mutableListOf(7, null, 3, null, 1, 8, null, null, null),
+                )
+        ).solveSudoku()
+    }
+
+    class Sudoku(private val sudokuMatrix: List<MutableList<Int?>>) {
+        fun solveSudoku() {
+            if (solve()) {
+                println("Sudoku solved")
+            } else {
+                println("The given sudoku can't be solved")
+            }
+            printSudoku()
+        }
+
+        private fun solve(): Boolean {
+            val indices = getNextUnsolvedIndices()
+            if (indices.first == -1) return true
+
+            for (i in 1..9) {
+                if (isAValidChoice(i, indices.first, indices.second)) {
+                    sudokuMatrix[indices.first][indices.second] = i
+                    if (solve()) {
+                        return true
+                    }
+                    sudokuMatrix[indices.first][indices.second] = null
+                }
+            }
+
+            return false
+        }
+
+        private fun isAValidChoice(element: Int, row: Int, col: Int): Boolean {
+            for (i in sudokuMatrix[row].indices) {
+                if (sudokuMatrix[row][i] == element) return false
+            }
+
+            for (i in sudokuMatrix[col].indices) {
+                if (sudokuMatrix[i][col] == element) return false
+            }
+
+            val tempRow = 3 * (row / 3)
+            val tempCol = 3 * (col / 3)
+            for (i in tempRow until tempRow + 3) {
+                for (j in tempCol until tempCol + 3) {
+                    if (sudokuMatrix[i][j] == element) return false
+                }
+            }
+
+            return true
+        }
+
+        private fun getNextUnsolvedIndices(): Pair<Int, Int> {
+            for (i in sudokuMatrix.indices) {
+                for (j in sudokuMatrix[i].indices) {
+                    if (sudokuMatrix[i][j] == null) {
+                        return Pair(i, j)
+                    }
+                }
+            }
+
+            return Pair(-1, -1)
+        }
+
+        private fun printSudoku() {
+            for (i in sudokuMatrix.indices) {
+                for (j in sudokuMatrix[i].indices) {
+                    print("${sudokuMatrix[i][j]} ")
+                }
+                println()
+            }
+        }
     }
 
     class Coloring(private val graph: List<List<Int>>, private val colors: List<String>) {

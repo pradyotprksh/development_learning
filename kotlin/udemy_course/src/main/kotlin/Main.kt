@@ -2,6 +2,7 @@ import algorithms.Algorithms
 import data_structures.DataStructures
 import geek_for_geeks.GeekForGeeks
 import leet_code.LeetCode
+import random.RandomQuestions
 import recursion_backtracking_dp.RecursionBacktrackingDP
 
 fun main() {
@@ -10,4 +11,5 @@ fun main() {
     GeekForGeeks().startGeekForGeeks()
     LeetCode().startLeetCode()
     RecursionBacktrackingDP().startRecursionBacktrackingDP()
+    RandomQuestions().solveRandomQuestions()
 }
