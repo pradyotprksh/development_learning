@@ -16,19 +16,72 @@ class Backtracking {
         Coloring(listOf(listOf(0, 1, 0, 0, 0, 1), listOf(1, 0, 1, 0, 0, 0), listOf(0, 1, 0, 0, 1, 0), listOf(0, 0, 0, 0, 1, 1), listOf(0, 0, 1, 1, 0, 1), listOf(1, 0, 0, 1, 1, 0)), listOf("Red", "Green", "Blue")).solveColoring()
         Coloring(listOf(listOf(0, 1, 1, 1), listOf(1, 0, 1, 0), listOf(1, 1, 0, 1), listOf(1, 0, 1, 0)), listOf("Red", "Green", "Blue")).solveColoring()
 
-        Sudoku(
-                listOf(
-                        mutableListOf(null, null, null, 2, 6, null, 7, null, 1),
-                        mutableListOf(6, 8, null, null, 7, null, null, 9, null),
-                        mutableListOf(1, 9, null, null, null, 4, 5, null, null),
-                        mutableListOf(8, 2, null, 1, null, null, null, 4, null),
-                        mutableListOf(null, null, 4, 6, null, 2, 9, null, null),
-                        mutableListOf(null, 5, null, null, null, 3, null, 2, 8),
-                        mutableListOf(null, null, 9, 3, null, null, null, 7, 4),
-                        mutableListOf(null, 4, null, null, 5, null, null, 3, 6),
-                        mutableListOf(7, null, 3, null, 1, 8, null, null, null),
-                )
-        ).solveSudoku()
+        Sudoku(listOf(
+                mutableListOf(null, null, null, 2, 6, null, 7, null, 1),
+                mutableListOf(6, 8, null, null, 7, null, null, 9, null),
+                mutableListOf(1, 9, null, null, null, 4, 5, null, null),
+                mutableListOf(8, 2, null, 1, null, null, null, 4, null),
+                mutableListOf(null, null, 4, 6, null, 2, 9, null, null),
+                mutableListOf(null, 5, null, null, null, 3, null, 2, 8),
+                mutableListOf(null, null, 9, 3, null, null, null, 7, 4),
+                mutableListOf(null, 4, null, null, 5, null, null, 3, 6),
+                mutableListOf(7, null, 3, null, 1, 8, null, null, null),
+        )).solveSudoku()
+
+        KnightsTour(8).solveKnightsTour()
+    }
+
+    class KnightsTour(private val chessboardSize: Int) {
+        private val chessBoard = List(chessboardSize) { MutableList<Int?>(chessboardSize) { null } }
+        private val xJumps = listOf(2, 1, -1, -2, -2, -1, 1, 2)
+        private val yJumps = listOf(1, 2, 2, 1, -1, -2, -2, -1)
+
+        fun solveKnightsTour() {
+            chessBoard[0][0] = 1
+            if (solve(0, 0, 2)) {
+                println("Solved the problem")
+                printKnightChessboard()
+            } else {
+                println("Knight tour can't be solved")
+            }
+        }
+
+        private fun solve(row: Int, col: Int, position: Int): Boolean {
+            if (position == (chessboardSize * chessboardSize) + 1) return true
+
+            for (i in xJumps.indices) {
+                val nextRow = row + xJumps[i]
+                val nextCol = col + yJumps[i]
+                if (isValidPosition(nextRow, nextCol)) {
+                    chessBoard[nextRow][nextCol] = position
+                    if (solve(nextRow, nextCol, position + 1)) {
+                        return true
+                    }
+                    chessBoard[nextRow][nextCol] = null
+                }
+            }
+
+            return false
+        }
+
+        private fun isValidPosition(row: Int, col: Int): Boolean {
+            if (row !in 0 until chessboardSize) return false
+
+            if (col !in 0 until chessboardSize) return false
+
+            if (chessBoard[row][col] != null) return false
+
+            return true
+        }
+
+        private fun printKnightChessboard() {
+            for (i in 0 until chessboardSize) {
+                for (j in 0 until chessboardSize) {
+                    print("${chessBoard[i][j]} ")
+                }
+                println()
+            }
+        }
     }
 
     class Sudoku(private val sudokuMatrix: List<MutableList<Int?>>) {
