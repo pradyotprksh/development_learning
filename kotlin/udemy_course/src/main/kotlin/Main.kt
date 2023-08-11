@@ -10,6 +10,6 @@ fun main() {
     Algorithms().startAlgorithms()
     GeekForGeeks().startGeekForGeeks()
     LeetCode().startLeetCode()
-    RecursionBacktrackingDP().startRecursionBacktrackingDP()
     RandomQuestions().solveRandomQuestions()
+    RecursionBacktrackingDP().startRecursionBacktrackingDP()
 }

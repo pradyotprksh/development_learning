@@ -29,6 +29,82 @@ class Backtracking {
         )).solveSudoku()
 
         KnightsTour(8).solveKnightsTour()
+
+        MazeProblem(
+                listOf(
+                        listOf(1, 1, 1, 1, 1),
+                        listOf(0, 1, 1, 1, 1),
+                        listOf(0, 0, 0, 0, 1),
+                        listOf(1, 0, 1, 1, 1),
+                        listOf(0, 0, 0, 1, 1),
+                )
+        ).solveMaze(0, 0, 4, 4)
+    }
+
+    class MazeProblem(private val maze: List<List<Int>>) {
+        private val xJumps = listOf(1, 0, 0, -1)
+        private val yJumps = listOf(0, -1, 1, 0)
+        private val visited = List(maze.size) { MutableList(maze[0].size) { false } }
+
+        private data class QueueNode(val row: Int, val col: Int)
+
+        fun solveMaze(enterRow: Int, enterCol: Int, destinationRow: Int, destinationCol: Int) {
+            if (solve(enterRow, enterCol, destinationRow, destinationCol)) {
+                println("Problem solved")
+                printMaze()
+            } else {
+                println("Maze can't be solved")
+            }
+        }
+
+        private fun solve(row: Int, col: Int, destinationRow: Int, destinationCol: Int): Boolean {
+            visited[row][col] = true
+            val queue = mutableListOf(QueueNode(row, col))
+
+            while (queue.isNotEmpty()) {
+                val item = queue.removeAt(0)
+
+                if (item.row == destinationRow && item.col == destinationCol) {
+                    return true
+                }
+
+                for (i in xJumps.indices) {
+                    val newRow = item.row + xJumps[i]
+                    val newCol = item.col + yJumps[i]
+
+                    if (isValidPosition(newRow, newCol)) {
+                        visited[newRow][newCol] = true
+                        queue.add(QueueNode(newRow, newCol))
+                    }
+                }
+            }
+
+            return false
+        }
+
+        private fun isValidPosition(newRow: Int, newCol: Int): Boolean {
+            if (newRow !in maze.indices) return false
+
+            if (newCol !in maze[newRow].indices) return false
+
+            if (maze[newRow][newCol] == 0) return false
+
+            if (visited[newRow][newCol]) return false
+
+            return true
+        }
+
+        private fun printMaze() {
+            for (i in visited.indices) {
+                for (j in visited[i].indices) {
+                    if (visited[i][j])
+                        print("^ ")
+                    else
+                        print("  ")
+                }
+                println()
+            }
+        }
     }
 
     class KnightsTour(private val chessboardSize: Int) {
