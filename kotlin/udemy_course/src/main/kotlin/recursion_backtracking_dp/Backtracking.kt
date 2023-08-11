@@ -27,6 +27,17 @@ class Backtracking {
                 mutableListOf(null, 4, null, null, 5, null, null, 3, 6),
                 mutableListOf(7, null, 3, null, 1, 8, null, null, null),
         )).solveSudoku()
+        Sudoku(listOf(
+                mutableListOf(null, null, null, null, null, null, null, null, null),
+                mutableListOf(null, null, null, null, null, null, null, null, null),
+                mutableListOf(null, null, null, null, null, null, null, null, null),
+                mutableListOf(null, null, null, null, null, null, null, null, null),
+                mutableListOf(null, null, null, null, null, null, null, null, null),
+                mutableListOf(null, null, null, null, null, null, null, null, null),
+                mutableListOf(null, null, null, null, null, null, null, null, null),
+                mutableListOf(null, null, null, null, null, null, null, null, null),
+                mutableListOf(null, null, null, null, null, null, null, null, null),
+        )).solveSudoku()
 
         KnightsTour(8).solveKnightsTour()
 
