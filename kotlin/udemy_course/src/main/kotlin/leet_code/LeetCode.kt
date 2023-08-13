@@ -251,6 +251,81 @@ class LeetCode {
         println(invertTree(TreeNode(data = 3, left = TreeNode(data = 1, right = TreeNode(data = 2)))))
 
         println(isSymmetric(TreeNode(data = 1, left = TreeNode(data = 2, right = TreeNode(data = 3)), right = TreeNode(data = 2, right = TreeNode(data = 3)))))
+
+        println(letterCombinations("23"))
+        println(letterCombinations(""))
+        println(letterCombinations("2"))
+        println(letterCombinations("234"))
+
+        println(findKthLargest(intArrayOf(3, 2, 1, 5, 6, 4), 2))
+        println(findKthLargest(intArrayOf(3, 2, 3, 1, 2, 4, 5, 5, 6), 4))
+    }
+
+    private fun findKthLargest(nums: IntArray, k: Int): Int {
+        val chunks = mutableListOf<List<Int>>()
+        val temp = mutableListOf<Int>()
+        for (i in nums.indices) {
+            if (i > 0 && i % 5 == 0) {
+                chunks.add(temp.toList())
+                temp.clear()
+            }
+            temp.add(nums[i])
+        }
+        if (temp.isNotEmpty()) {
+            chunks.add(temp)
+        }
+
+        val medians = mutableListOf<Int>()
+        for (chunk in chunks) {
+            medians.add(chunk.sorted()[chunk.size / 2])
+        }
+
+        val pivotElement = medians.sorted()[medians.size / 2]
+
+        val leftArray = mutableListOf<Int>()
+        val rightArray = mutableListOf<Int>()
+        for (n in nums) {
+            if (n > pivotElement) {
+                leftArray.add(n)
+            } else if (n < pivotElement) {
+                rightArray.add(n)
+            }
+        }
+
+        val pivotIndex = leftArray.size
+        if (pivotIndex > k - 1) {
+            return findKthLargest(leftArray.toIntArray(), k)
+        } else if (pivotIndex < k - 1) {
+            return findKthLargest(rightArray.toIntArray(), k - leftArray.size - 1)
+        }
+        return pivotElement
+    }
+
+    private fun letterCombinations(digits: String): List<String> {
+        if (digits.isEmpty()) return emptyList()
+
+        val output = mutableListOf("")
+        val digitCharMap = mapOf(
+                "2" to listOf("a", "b", "c"),
+                "3" to listOf("d", "e", "f"),
+                "4" to listOf("g", "h", "i"),
+                "5" to listOf("j", "k", "l"),
+                "6" to listOf("m", "n", "o"),
+                "7" to listOf("p", "q", "r", "s"),
+                "8" to listOf("t", "u", "v"),
+                "9" to listOf("w", "x", "y", "z"),
+        )
+
+        for (d in digits.indices) {
+            while (output.first().length == d) {
+                val first = output.removeAt(0)
+                for (c in digitCharMap[digits[d].toString()]!!) {
+                    output.add("$first$c")
+                }
+            }
+        }
+
+        return output.toList()
     }
 
     private fun isSymmetric(root: TreeNode?): Boolean {

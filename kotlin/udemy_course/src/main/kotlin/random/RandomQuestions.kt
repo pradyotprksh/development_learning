@@ -12,6 +12,8 @@ class RandomQuestions {
         println(minimumWaiterRequired(listOf(Pair(8.0, 9.10), Pair(8.40, 12.0), Pair(8.50, 11.20), Pair(10.0, 11.30), Pair(16.0, 19.0), Pair(19.0, 20.0))))
     }
 
+    // https://www.youtube.com/watch?v=zDHhHPZm2rc
+
     private fun minimumWaiterRequired(intervals: List<Pair<Double, Double>>): Int {
         val times = mutableListOf<Pair<Double, String>>()
 

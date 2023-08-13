@@ -9,7 +9,7 @@ fun main() {
     DataStructures().startDataStructures()
     Algorithms().startAlgorithms()
     GeekForGeeks().startGeekForGeeks()
-    LeetCode().startLeetCode()
     RandomQuestions().solveRandomQuestions()
     RecursionBacktrackingDP().startRecursionBacktrackingDP()
+    LeetCode().startLeetCode()
 }
