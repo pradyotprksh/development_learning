@@ -259,6 +259,172 @@ class LeetCode {
 
         println(findKthLargest(intArrayOf(3, 2, 1, 5, 6, 4), 2))
         println(findKthLargest(intArrayOf(3, 2, 3, 1, 2, 4, 5, 5, 6), 4))
+
+        println(mergeAlternately("abc", "pqr"))
+        println(mergeAlternately("ab", "pqrs"))
+
+        println(gcdOfStrings("ABCABC", "ABC"))
+        println(gcdOfStrings("ABABAB", "ABAB"))
+        println(gcdOfStrings("LEET", "CODE"))
+        println(gcdOfStrings("ABCDEF", "ABC"))
+
+        println(kidsWithCandies(intArrayOf(2, 3, 5, 1, 3), 3))
+        println(kidsWithCandies(intArrayOf(4, 2, 1, 1, 2), 1))
+        println(kidsWithCandies(intArrayOf(12, 1, 12), 1))
+        println(kidsWithCandies(intArrayOf(2,8,7), 1))
+
+        println(canPlaceFlowers(intArrayOf(1,0,0,0,1), 1))
+        println(canPlaceFlowers(intArrayOf(1,0,0,0,1), 2))
+
+        println(reverseVowels("hello"))
+        println(reverseVowels("leetcode"))
+
+        println(productExceptSelf(intArrayOf(1,2,3,4)).toList())
+
+        println(increasingTriplet(intArrayOf(1,2,3,4,5)))
+        println(increasingTriplet(intArrayOf(5,4,3,2,1)))
+        println(increasingTriplet(intArrayOf(2,1,5,0,4,6)))
+        println(increasingTriplet(intArrayOf(20,100,10,12,5,13)))
+        println(increasingTriplet(intArrayOf(1,5,0,4,1,3)))
+    }
+
+    private fun increasingTriplet(nums: IntArray): Boolean {
+        var firstSmallest = Int.MAX_VALUE
+        var secondSmallest = Int.MAX_VALUE
+
+        for (n in nums) {
+            if (n <= firstSmallest) firstSmallest = n
+            else if (n <= secondSmallest) secondSmallest = n
+            else return true
+        }
+
+        return false
+    }
+
+    private fun productExceptSelf(nums: IntArray): IntArray {
+        val ans = IntArray(nums.size)
+        var n = 1
+        for (i in nums.indices) {
+            ans[i] = n
+            n *= nums[i]
+        }
+
+        n = 1
+        for (i in ans.size - 1 downTo 0) {
+            ans[i] = n * ans[i]
+            n *= nums[i]
+        }
+
+        return ans
+    }
+
+    private fun reverseVowels(s: String): String {
+        val vowles = listOf('a', 'A', 'e', 'E', 'i', 'I', 'o', 'O', 'u', 'U')
+        val tempS = StringBuilder(s)
+        var i = 0
+        var j = tempS.length - 1
+
+        while (i < j) {
+            if (vowles.contains(tempS[i]) && vowles.contains(tempS[j])) {
+                val temp = tempS[i]
+                tempS[i] = tempS[j]
+                tempS[j] = temp
+                ++i
+                --j
+            }
+            if (!vowles.contains(tempS[i])) {
+                ++i
+            }
+            if (!vowles.contains(tempS[j])) {
+                --j
+            }
+        }
+
+        return tempS.toString()
+    }
+
+    private fun canPlaceFlowers(flowerbed: IntArray, n: Int): Boolean {
+        var tempN = n
+        for (i in flowerbed.indices) {
+            if (tempN <= 0) return true
+            if (flowerbed[i] == 1) continue
+
+            val previous = i - 1
+            val next = i + 1
+
+            if (previous in flowerbed.indices && next in flowerbed.indices) {
+                if (flowerbed[previous] == 0 && flowerbed[next] == 0) {
+                    flowerbed[i] = 1
+                    --tempN
+                }
+            } else if (previous in flowerbed.indices) {
+                if (flowerbed[previous] == 0) {
+                    flowerbed[i] = 1
+                    --tempN
+                }
+            } else if (next in flowerbed.indices) {
+                if (flowerbed[next] == 0) {
+                    flowerbed[i] = 1
+                    --tempN
+                }
+            } else {
+                if (flowerbed[i] == 0) {
+                    flowerbed[i] = 1
+                    --tempN
+                }
+            }
+        }
+
+        return tempN == 0
+    }
+
+    private fun kidsWithCandies(candies: IntArray, extraCandies: Int): List<Boolean> {
+        var maxValue = candies.first()
+
+        for (i in 1 until candies.size) {
+            if (maxValue < candies[i]) {
+                maxValue = candies[i]
+            }
+        }
+
+        val result = mutableListOf<Boolean>()
+        for (candy in candies) {
+            result.add(candy + extraCandies >= maxValue)
+        }
+
+        return result
+    }
+
+    private fun gcdOfStrings(str1: String, str2: String): String {
+        return if (str1.length < str2.length) {
+            gcdOfStrings(str2, str1)
+        } else if (str1 == str2) {
+            str1
+        } else {
+            if (str1.startsWith(str2)) {
+                gcdOfStrings(str1.removePrefix(str2), str2)
+            } else {
+                ""
+            }
+        }
+    }
+
+    private fun mergeAlternately(word1: String, word2: String): String {
+        val output = StringBuilder("")
+
+        var i = 0
+
+        while (i < word1.length || i < word2.length) {
+            if (i < word1.length) {
+                output.append(word1[i])
+            }
+            if (i < word2.length) {
+                output.append(word2[i])
+            }
+            ++i
+        }
+
+        return output.toString()
     }
 
     private fun findKthLargest(nums: IntArray, k: Int): Int {
