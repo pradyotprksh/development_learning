@@ -286,6 +286,34 @@ class LeetCode {
         println(increasingTriplet(intArrayOf(2,1,5,0,4,6)))
         println(increasingTriplet(intArrayOf(20,100,10,12,5,13)))
         println(increasingTriplet(intArrayOf(1,5,0,4,1,3)))
+
+        val nums1 = intArrayOf(0,1,0,3,12)
+        moveZeroes(nums1)
+        println(nums1.toList())
+
+        val nums2 = intArrayOf(0)
+        moveZeroes(nums2)
+        println(nums2.toList())
+    }
+
+    private fun moveZeroes(nums: IntArray): Unit {
+        val zeroIndices = mutableListOf<Int>()
+
+        var i = 0
+        while (i < nums.size) {
+            if (nums[i] == 0) {
+                zeroIndices.add(i)
+            } else {
+                if (zeroIndices.isNotEmpty()) {
+                    val index = zeroIndices.removeAt(0)
+                    val temp = nums[i]
+                    nums[i] = nums[index]
+                    nums[index] = temp
+                    zeroIndices.add(i)
+                }
+            }
+            ++i
+        }
     }
 
     private fun increasingTriplet(nums: IntArray): Boolean {
