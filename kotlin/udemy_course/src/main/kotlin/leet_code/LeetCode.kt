@@ -271,29 +271,80 @@ class LeetCode {
         println(kidsWithCandies(intArrayOf(2, 3, 5, 1, 3), 3))
         println(kidsWithCandies(intArrayOf(4, 2, 1, 1, 2), 1))
         println(kidsWithCandies(intArrayOf(12, 1, 12), 1))
-        println(kidsWithCandies(intArrayOf(2,8,7), 1))
+        println(kidsWithCandies(intArrayOf(2, 8, 7), 1))
 
-        println(canPlaceFlowers(intArrayOf(1,0,0,0,1), 1))
-        println(canPlaceFlowers(intArrayOf(1,0,0,0,1), 2))
+        println(canPlaceFlowers(intArrayOf(1, 0, 0, 0, 1), 1))
+        println(canPlaceFlowers(intArrayOf(1, 0, 0, 0, 1), 2))
 
         println(reverseVowels("hello"))
         println(reverseVowels("leetcode"))
 
-        println(productExceptSelf(intArrayOf(1,2,3,4)).toList())
+        println(productExceptSelf(intArrayOf(1, 2, 3, 4)).toList())
 
-        println(increasingTriplet(intArrayOf(1,2,3,4,5)))
-        println(increasingTriplet(intArrayOf(5,4,3,2,1)))
-        println(increasingTriplet(intArrayOf(2,1,5,0,4,6)))
-        println(increasingTriplet(intArrayOf(20,100,10,12,5,13)))
-        println(increasingTriplet(intArrayOf(1,5,0,4,1,3)))
+        println(increasingTriplet(intArrayOf(1, 2, 3, 4, 5)))
+        println(increasingTriplet(intArrayOf(5, 4, 3, 2, 1)))
+        println(increasingTriplet(intArrayOf(2, 1, 5, 0, 4, 6)))
+        println(increasingTriplet(intArrayOf(20, 100, 10, 12, 5, 13)))
+        println(increasingTriplet(intArrayOf(1, 5, 0, 4, 1, 3)))
 
-        val nums1 = intArrayOf(0,1,0,3,12)
+        val nums1 = intArrayOf(0, 1, 0, 3, 12)
         moveZeroes(nums1)
         println(nums1.toList())
 
         val nums2 = intArrayOf(0)
         moveZeroes(nums2)
         println(nums2.toList())
+
+        println(maxOperations(intArrayOf(1, 2, 3, 4, 5), 5))
+        println(maxOperations(intArrayOf(3, 1, 3, 4, 3), 6))
+        println(maxOperations(intArrayOf(2, 5, 4, 4, 1, 3, 4, 4, 1, 4, 4, 1, 2, 1, 2, 2, 3, 2, 4, 2), 3))
+
+        println(findMaxAverage(intArrayOf(1, 12, -5, -6, 50, 3), 4))
+        println(findMaxAverage(intArrayOf(5), 1))
+        println(findMaxAverage(intArrayOf(0, 1, 1, 3, 3), 4))
+    }
+
+    private fun findMaxAverage(nums: IntArray, k: Int): Double {
+        var maxSum = 0.0
+
+        for (i in 0 until k) {
+            maxSum += nums[i]
+        }
+        var maxAvg = maxSum / k
+
+        for (i in k until nums.size) {
+            maxSum += nums[i]
+            maxSum -= nums[i - k]
+
+            maxAvg = maxOf(maxAvg, maxSum / k)
+        }
+
+        return maxAvg
+    }
+
+    private fun maxOperations(nums: IntArray, k: Int): Int {
+        val pariMap = mutableMapOf<Int, MutableList<Int>>()
+        var operation = 0
+        for (n in nums) {
+            if (pariMap.containsKey(n)) {
+                if (pariMap[n]!!.isNotEmpty()) {
+                    pariMap[n]!!.removeAt(0)
+                    ++operation
+                    if (pariMap[n]!!.isEmpty()) {
+                        pariMap.remove(n)
+                    }
+                } else {
+                    pariMap[n]!!.add(n)
+                }
+            } else {
+                if (pariMap.containsKey(k - n)) {
+                    pariMap[k - n]!!.add(n)
+                } else {
+                    pariMap[k - n] = mutableListOf(n)
+                }
+            }
+        }
+        return operation
     }
 
     private fun moveZeroes(nums: IntArray): Unit {
