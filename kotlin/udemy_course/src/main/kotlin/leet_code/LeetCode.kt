@@ -302,6 +302,104 @@ class LeetCode {
         println(findMaxAverage(intArrayOf(1, 12, -5, -6, 50, 3), 4))
         println(findMaxAverage(intArrayOf(5), 1))
         println(findMaxAverage(intArrayOf(0, 1, 1, 3, 3), 4))
+
+        println(maxVowels("abciiidef", 3))
+        println(maxVowels("aeiou", 2))
+        println(maxVowels("leetcode", 3))
+
+        println(findDifference(intArrayOf(1, 2, 3), intArrayOf(2, 4, 6)))
+        println(findDifference(intArrayOf(1, 2, 3, 3), intArrayOf(1, 1, 2, 2)))
+
+        println(uniqueOccurrences(intArrayOf(1, 2, 2, 1, 1, 3)))
+        println(uniqueOccurrences(intArrayOf(1, 2)))
+        println(uniqueOccurrences(intArrayOf(-3, 0, 1, -3, 1, 1, 1, -3, 10, 0)))
+
+        println(equalPairs(arrayOf(intArrayOf(3, 2, 1), intArrayOf(1, 7, 6), intArrayOf(2, 7, 7))))
+        println(equalPairs(arrayOf(intArrayOf(3, 1, 2, 2), intArrayOf(1, 4, 4, 5), intArrayOf(2, 4, 2, 2), intArrayOf(2, 4, 2, 2))))
+
+        println(removeStars("leet**cod*e"))
+        println(removeStars("erase*****"))
+    }
+
+    private fun removeStars(s: String): String {
+        val stack = mutableListOf<Char>()
+
+        for (c in s) {
+            if (c == '*') {
+                if (stack.isNotEmpty()) {
+                    stack.removeAt(stack.size - 1)
+                }
+            } else {
+                stack.add(c)
+            }
+        }
+
+        return stack.joinToString("")
+    }
+
+    private fun equalPairs(grid: Array<IntArray>): Int {
+        var count = 0
+
+        val rowList = mutableMapOf<List<Int>, Int>()
+        for (row in grid.indices) {
+            rowList[grid[row].toList()] = rowList.getOrDefault(grid[row].toList(), 0) + 1
+        }
+
+        for (col in grid.indices) {
+            val colList = mutableListOf<Int>()
+            for (row in grid.indices) {
+                colList.add(grid[row][col])
+            }
+            count += rowList.getOrDefault(colList, 0)
+        }
+
+        return count
+    }
+
+    private fun uniqueOccurrences(arr: IntArray): Boolean {
+        val occuranceMap = mutableMapOf<Int, Int>()
+
+        for (a in arr) {
+            occuranceMap[a] = occuranceMap.getOrDefault(a, 0) + 1
+        }
+
+        return occuranceMap.values.toMutableSet().size == arr.toSet().size
+    }
+
+    private fun findDifference(nums1: IntArray, nums2: IntArray): List<List<Int>> {
+        val mutableNums1 = nums1.toMutableSet()
+        val mutableNums2 = nums2.toMutableSet()
+
+        val distinct1 = mutableSetOf<Int>()
+
+        for (n in mutableNums1) {
+            if (mutableNums2.contains(n)) {
+                mutableNums2.remove(n)
+            } else {
+                distinct1.add(n)
+            }
+        }
+
+        return listOf(distinct1.toList(), mutableNums2.toList())
+    }
+
+    private fun maxVowels(s: String, k: Int): Int {
+        var value = 0
+        for (i in 0 until k) {
+            value += isVowel(s[i])
+        }
+        var maxVowels = value
+
+        for (i in k until s.length) {
+            value = value - isVowel(s[i - k]) + isVowel(s[i])
+            maxVowels = maxOf(maxVowels, value)
+        }
+
+        return maxVowels
+    }
+
+    private fun isVowel(c: Char): Int {
+        return if (c in listOf('a', 'e', 'i', 'o', 'u')) 1 else 0
     }
 
     private fun findMaxAverage(nums: IntArray, k: Int): Double {
