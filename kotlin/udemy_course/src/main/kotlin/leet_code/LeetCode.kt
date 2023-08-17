@@ -1,7 +1,9 @@
 package leet_code
 
+import com.sun.source.tree.Tree
 import data_structures.linked_lists.ListNode
 import data_structures.trees.TreeNode
+import data_structures.trees.TreeTraversal
 import java.util.*
 import kotlin.math.abs
 import kotlin.math.max
@@ -319,6 +321,133 @@ class LeetCode {
 
         println(removeStars("leet**cod*e"))
         println(removeStars("erase*****"))
+
+        println(decodeString("3[a]2[bc]"))
+        println(decodeString("3[a2[c]]"))
+        println(decodeString("2[abc]3[cd]ef"))
+
+        println(pivotIndex(intArrayOf(1,7,3,6,5,6)))
+        println(pivotIndex(intArrayOf(1,2,3)))
+        println(pivotIndex(intArrayOf(2,1,-1)))
+
+        println(deleteMiddle(ListNode(1, ListNode(3, ListNode(4, ListNode(7, ListNode(1, ListNode(2, ListNode(6)))))))))
+        println(deleteMiddle(ListNode(1, ListNode(3, ListNode(4, ListNode(7))))))
+        println(deleteMiddle(ListNode(1, ListNode(3))))
+
+        println(pairSum(ListNode(5, ListNode(4, ListNode(2, ListNode(1))))))
+        println(pairSum(ListNode(4, ListNode(2, ListNode(2, ListNode(3))))))
+        println(pairSum(ListNode(4, ListNode(100000))))
+
+        println(
+                leafSimilar(
+                        TreeNode(data = 3, left = TreeNode(data = 5, left = TreeNode(data = 6), right = TreeNode(data = 2, left = TreeNode(data = 7), right = TreeNode(data = 4))), right = TreeNode(data = 1, left = TreeNode(data = 9), right = TreeNode(data = 8))),
+                        TreeNode(data = 3, left = TreeNode(data = 5, left = TreeNode(data = 6), right = TreeNode(data = 7)), right = TreeNode(data = 1, left = TreeNode(data = 4), right = TreeNode(data = 2, left = TreeNode(data = 9), right = TreeNode(data = 8))))
+                )
+        )
+    }
+
+    private fun leafSimilar(root1: TreeNode?, root2: TreeNode?): Boolean {
+        val r1Leaves = getLeafNodes(root1)
+        val r2Leaves = getLeafNodes(root2)
+
+        return r1Leaves == r2Leaves
+    }
+
+    private fun getLeafNodes(root: TreeNode?, order: MutableList<Int> = mutableListOf()): List<Int> {
+        root?.left?.let { left ->
+            getLeafNodes(left, order)
+        }
+        root?.right?.let { right ->
+            getLeafNodes(right, order)
+        }
+        if (root != null) {
+            if (root.left == null && root.right == null) {
+                order.add(root.data)
+            }
+        }
+        return order
+    }
+
+    private fun pairSum(head: ListNode?): Int {
+        val twin1 = mutableListOf<ListNode?>()
+        val twin2 = mutableListOf<ListNode?>()
+        var addedInTwin1 = false
+        var temp = head
+
+        while (temp != null) {
+            if (addedInTwin1) {
+                twin2.add(temp)
+            } else {
+                twin1.add(temp)
+            }
+            addedInTwin1 = !addedInTwin1
+            temp = temp.next
+        }
+        twin2.reverse()
+
+        var maxSum = 0
+        while (twin1.isNotEmpty()) {
+            maxSum = maxOf((twin1.removeAt(twin1.size - 1)?.data ?: 0) + (twin2.removeAt(twin2.size - 1)?.data ?: 0), maxSum)
+        }
+
+        return maxSum
+    }
+
+    private fun deleteMiddle(head: ListNode?): ListNode? {
+        var prev: ListNode? = null
+        var slow = head
+        var fast = head
+
+        while (fast?.next != null) {
+            prev = slow
+            slow = slow?.next
+            fast = fast.next?.next
+        }
+        if (prev == null) return prev
+        prev.next = slow?.next
+        return head
+    }
+
+    private fun pivotIndex(nums: IntArray): Int {
+        var left = 0
+        var right = nums.sum()
+
+        for (i in nums.indices) {
+            right -= nums[i]
+            if (left == right) {
+                return i
+            }
+            left += nums[i]
+        }
+        return -1
+    }
+
+    private fun decodeString(s: String): String {
+        val stack = mutableListOf<Char>()
+        var index = 0
+        while (index < s.length) {
+            if (s[index] != ']') {
+                stack.add(s[index])
+            } else {
+                val string = StringBuilder()
+                while (stack.isNotEmpty() && stack.elementAt(stack.size - 1) != '[') {
+                    string.append(stack.removeAt(stack.size - 1))
+                }
+                string.reverse()
+                if (stack.isNotEmpty()) {
+                    stack.removeAt(stack.size - 1)
+                }
+                val count = StringBuilder()
+                while (stack.isNotEmpty() && stack.elementAt(stack.size - 1).toString().toIntOrNull() != null) {
+                    count.append(stack.removeAt(stack.size - 1))
+                }
+                count.reverse()
+                string.toString().repeat(count.toString().toInt()).toCharArray().forEach { stack.add(it) }
+            }
+            ++index
+        }
+
+        return stack.joinToString("")
     }
 
     private fun removeStars(s: String): String {
