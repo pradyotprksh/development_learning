@@ -1,9 +1,7 @@
 package leet_code
 
-import com.sun.source.tree.Tree
 import data_structures.linked_lists.ListNode
 import data_structures.trees.TreeNode
-import data_structures.trees.TreeTraversal
 import java.util.*
 import kotlin.math.abs
 import kotlin.math.max
@@ -344,6 +342,53 @@ class LeetCode {
                         TreeNode(data = 3, left = TreeNode(data = 5, left = TreeNode(data = 6), right = TreeNode(data = 7)), right = TreeNode(data = 1, left = TreeNode(data = 4), right = TreeNode(data = 2, left = TreeNode(data = 9), right = TreeNode(data = 8))))
                 )
         )
+
+        println(
+                goodNodes(TreeNode(data = 3, left = TreeNode(data = 1, left = TreeNode(data = 3)), right = TreeNode(data = 4, left = TreeNode(data = 1), right = TreeNode(data = 5))))
+        )
+        println(
+                goodNodes(TreeNode(data = 3, left = TreeNode(data = 3, left = TreeNode(data = 4), right = TreeNode(data = 2))))
+        )
+
+        println(guessNumber(10))
+        println(guessNumber(20))
+    }
+
+    private fun guessNumber(n:Int):Int {
+        return playResult(1, n)
+    }
+
+    private fun playResult(start: Int, end: Int): Int {
+        val middle = start + (end - start) / 2
+        val result = guess(middle)
+        return when (result) {
+            -1 -> playResult(start, middle - 1)
+            1 -> playResult(middle + 1, end)
+            else -> middle
+        }
+    }
+
+    // A method created just for calling purpose
+    private fun guess(middle: Int): Int {
+        return listOf(0, 1, -1).random()
+    }
+
+    private fun goodNodes(root: TreeNode?): Int {
+        return findGoodNodes(root, root?.data ?: Int.MIN_VALUE)
+    }
+
+    private fun findGoodNodes(node: TreeNode?, maxValue: Int): Int {
+        val leftAns = node?.left?.let { left ->
+            findGoodNodes(left, maxOf(left.data, maxValue))
+        } ?: 0
+        val rightAns = node?.right?.let { right ->
+            findGoodNodes(right, maxOf(right.data, maxValue))
+        } ?: 0
+        var ans = leftAns + rightAns
+        if ((node?.data ?: Int.MAX_VALUE) >= maxValue) {
+           ++ans
+        }
+        return ans
     }
 
     private fun leafSimilar(root1: TreeNode?, root2: TreeNode?): Boolean {
