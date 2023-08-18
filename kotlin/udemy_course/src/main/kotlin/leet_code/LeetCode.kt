@@ -324,9 +324,9 @@ class LeetCode {
         println(decodeString("3[a2[c]]"))
         println(decodeString("2[abc]3[cd]ef"))
 
-        println(pivotIndex(intArrayOf(1,7,3,6,5,6)))
-        println(pivotIndex(intArrayOf(1,2,3)))
-        println(pivotIndex(intArrayOf(2,1,-1)))
+        println(pivotIndex(intArrayOf(1, 7, 3, 6, 5, 6)))
+        println(pivotIndex(intArrayOf(1, 2, 3)))
+        println(pivotIndex(intArrayOf(2, 1, -1)))
 
         println(deleteMiddle(ListNode(1, ListNode(3, ListNode(4, ListNode(7, ListNode(1, ListNode(2, ListNode(6)))))))))
         println(deleteMiddle(ListNode(1, ListNode(3, ListNode(4, ListNode(7))))))
@@ -352,9 +352,57 @@ class LeetCode {
 
         println(guessNumber(10))
         println(guessNumber(20))
+
+        println(dailyTemperatures(intArrayOf(73, 74, 75, 71, 69, 72, 76, 73)).toList())
+        println(dailyTemperatures(intArrayOf(89, 62, 70, 58, 47, 47, 46, 76, 100, 70)).toList())
+
+        val stock = StockSpanner()
+        println(stock.next(100))
+        println(stock.next(80))
+        println(stock.next(60))
+        println(stock.next(70))
+        println(stock.next(60))
+        println(stock.next(75))
     }
 
-    private fun guessNumber(n:Int):Int {
+    class StockSpanner {
+        private val stack = mutableListOf<Pair<Int, Int>>()
+        fun next(price: Int): Int {
+            var ans = 1
+            while (stack.isNotEmpty() && stack.last().first <= price) {
+                ans += stack.removeAt(stack.size - 1).second
+            }
+            stack.add(Pair(price, ans))
+            return ans
+        }
+    }
+
+    // https://www.youtube.com/watch?v=ekFs9Nb2RNQ
+    private fun dailyTemperatures(temperatures: IntArray): IntArray {
+        val stack = mutableListOf<Int>()
+        val output = mutableListOf<Int>()
+
+        for (i in temperatures.indices.reversed()) {
+            if (stack.isEmpty()) {
+                stack.add(i)
+                output.add(0, 0)
+            } else {
+                while (stack.isNotEmpty() && temperatures[stack.last()] <= temperatures[i]) {
+                    stack.removeAt(stack.size - 1)
+                }
+                if (stack.isNotEmpty()) {
+                    output.add(0, stack.last() - i)
+                } else {
+                    output.add(0, 0)
+                }
+                stack.add(i)
+            }
+        }
+
+        return output.toIntArray()
+    }
+
+    private fun guessNumber(n: Int): Int {
         return playResult(1, n)
     }
 
@@ -386,7 +434,7 @@ class LeetCode {
         } ?: 0
         var ans = leftAns + rightAns
         if ((node?.data ?: Int.MAX_VALUE) >= maxValue) {
-           ++ans
+            ++ans
         }
         return ans
     }
@@ -432,7 +480,8 @@ class LeetCode {
 
         var maxSum = 0
         while (twin1.isNotEmpty()) {
-            maxSum = maxOf((twin1.removeAt(twin1.size - 1)?.data ?: 0) + (twin2.removeAt(twin2.size - 1)?.data ?: 0), maxSum)
+            maxSum = maxOf((twin1.removeAt(twin1.size - 1)?.data ?: 0) + (twin2.removeAt(twin2.size - 1)?.data
+                    ?: 0), maxSum)
         }
 
         return maxSum
