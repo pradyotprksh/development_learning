@@ -363,6 +363,54 @@ class LeetCode {
         println(stock.next(70))
         println(stock.next(60))
         println(stock.next(75))
+
+        println(combinationSum3(3, 7))
+        println(combinationSum3(3, 9))
+        println(combinationSum3(4, 1))
+    }
+
+    private fun combinationSum3(k: Int, n: Int): List<List<Int>> {
+        if (k > n) return emptyList()
+
+        return CombinationSum(k, n).solveCombination()
+    }
+
+    class CombinationSum(private val k: Int, private val n: Int) {
+        private val answer = mutableListOf<List<Int>>()
+
+        fun solveCombination(): List<List<Int>> {
+            solve(mutableListOf())
+            return answer
+        }
+
+        private fun solve(combination: MutableList<Int>) {
+            if (isValidCombination(combination)) {
+                val sortedCombination = combination.sorted()
+                if (!answer.contains(sortedCombination)) {
+                    answer.add(sortedCombination)
+                }
+                return
+            }
+
+            for (num in (combination.lastOrNull() ?: 0) + 1 .. 9) {
+                if (isValidEntry(num, combination)) {
+                    combination.add(num)
+                    solve(combination)
+                    combination.removeAt(combination.size - 1)
+                }
+            }
+        }
+
+        private fun isValidEntry(newNum: Int, currentCombination: List<Int>): Boolean {
+            if (currentCombination.contains(newNum)) return false
+            if (currentCombination.sum() + newNum > n) return false
+
+            return true
+        }
+
+        private fun isValidCombination(combination: List<Int>): Boolean {
+            return combination.size == k && combination.sum() == n
+        }
     }
 
     class StockSpanner {
