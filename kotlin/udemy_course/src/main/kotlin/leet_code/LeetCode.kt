@@ -367,6 +367,111 @@ class LeetCode {
         println(combinationSum3(3, 7))
         println(combinationSum3(3, 9))
         println(combinationSum3(4, 1))
+
+        val recentCounter = RecentCounter()
+        println(recentCounter.ping(1))
+        println(recentCounter.ping(100))
+        println(recentCounter.ping(3001))
+        println(recentCounter.ping(3002))
+
+        println(countBits(2).toList())
+        println(countBits(5).toList())
+
+        println(singleNumber(intArrayOf(2,2,1)))
+        println(singleNumber(intArrayOf(4,1,2,1,2)))
+        println(singleNumber(intArrayOf(1)))
+
+        println(addBinary("11", "1"))
+        println(addBinary("1010", "1011"))
+
+        println(deleteDuplicates(ListNode(1, ListNode(1, ListNode(2)))))
+    }
+
+    private fun deleteDuplicates(head: ListNode?): ListNode? {
+        var start = head
+        var end = start?.next
+
+        while (end != null) {
+            if (end.data != start?.data) {
+                start?.next = end
+                start = end
+            }
+            end = end.next
+        }
+
+        start?.next = end
+
+        return head
+    }
+
+    private fun addBinary(a: String, b: String): String {
+        val ans = StringBuilder()
+
+        var carry = '0'
+        var aL = a.length - 1
+        var bL = b.length - 1
+
+        while (aL >= 0 || bL >= 0) {
+            val bitA = if (aL >= 0) a[aL--] else '0'
+            val bitB = if (bL >= 0) b[bL--] else '0'
+
+            if (bitA == '1' && bitB == '1') {
+                if (carry == '0') ans.append('0') else ans.append('1')
+                carry = '1'
+            } else if (bitA == '0' && bitB == '0') {
+                if (carry == '0') ans.append('0') else ans.append('1')
+                carry = '0'
+            } else {
+                if (carry == '0') ans.append('1') else ans.append('0')
+            }
+        }
+
+        if (carry == '1') {
+            ans.append(carry)
+        }
+
+        return ans.reverse().toString()
+    }
+
+    private fun singleNumber(nums: IntArray): Int {
+        var ans = 0
+
+        for (n in nums) {
+            ans = ans xor n
+        }
+
+        return ans
+    }
+
+    private fun countBits(n: Int): IntArray {
+        val ans = mutableListOf<Int>()
+
+        for (i in 0 .. n) {
+            var count = 0
+            var temp = i
+            while (temp != 0) {
+                if (temp % 2 == 1) {
+                    ++count
+                }
+                temp /= 2
+            }
+            ans.add(count)
+        }
+
+        return ans.toIntArray()
+    }
+
+    private class RecentCounter {
+        val queue = mutableListOf<Int>()
+
+        fun ping(t: Int): Int {
+            while (queue.isNotEmpty() && queue.first() !in t - 3000 .. t) {
+                queue.removeAt(0)
+            }
+            queue.add(t)
+            return queue.size
+        }
+
     }
 
     private fun combinationSum3(k: Int, n: Int): List<List<Int>> {
@@ -375,7 +480,7 @@ class LeetCode {
         return CombinationSum(k, n).solveCombination()
     }
 
-    class CombinationSum(private val k: Int, private val n: Int) {
+    private class CombinationSum(private val k: Int, private val n: Int) {
         private val answer = mutableListOf<List<Int>>()
 
         fun solveCombination(): List<List<Int>> {
