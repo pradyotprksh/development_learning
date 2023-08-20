@@ -385,6 +385,34 @@ class LeetCode {
         println(addBinary("1010", "1011"))
 
         println(deleteDuplicates(ListNode(1, ListNode(1, ListNode(2)))))
+
+        println(generate(5))
+        println(generate(1))
+
+        println(getRow(1))
+        println(getRow(3))
+    }
+
+    private fun getRow(rowIndex: Int): List<Int> {
+        return generate(rowIndex + 1).last()
+    }
+
+    private fun generate(numRows: Int): List<List<Int>> {
+        val ans = mutableListOf<List<Int>>()
+
+        for (r in 0 until numRows) {
+            val rowList = mutableListOf<Int>()
+            for (i in 0 .. r) {
+                if (i == 0 || i == r) {
+                    rowList.add(1)
+                } else {
+                    rowList.add(ans[r - 1][i - 1] + ans[r - 1][i])
+                }
+            }
+            ans.add(rowList)
+        }
+
+        return ans
     }
 
     private fun deleteDuplicates(head: ListNode?): ListNode? {
