@@ -5,6 +5,7 @@ import data_structures.trees.TreeNode
 import java.util.*
 import kotlin.math.abs
 import kotlin.math.max
+import kotlin.math.pow
 
 class LeetCode {
     fun startLeetCode() {
@@ -377,8 +378,8 @@ class LeetCode {
         println(countBits(2).toList())
         println(countBits(5).toList())
 
-        println(singleNumber(intArrayOf(2,2,1)))
-        println(singleNumber(intArrayOf(4,1,2,1,2)))
+        println(singleNumber(intArrayOf(2, 2, 1)))
+        println(singleNumber(intArrayOf(4, 1, 2, 1, 2)))
         println(singleNumber(intArrayOf(1)))
 
         println(addBinary("11", "1"))
@@ -391,6 +392,83 @@ class LeetCode {
 
         println(getRow(1))
         println(getRow(3))
+
+        val intersectionNode = ListNode(2, ListNode(4))
+        println(getIntersectionNode(ListNode(1, ListNode(9, ListNode(1, intersectionNode))), ListNode(3, intersectionNode)))
+        println(getIntersectionNode(ListNode(1, ListNode(9, ListNode(1))), ListNode(3)))
+
+        println(convertToTitle(1))
+        println(convertToTitle(28))
+        println(convertToTitle(701))
+
+        println(titleToNumber("A"))
+        println(titleToNumber("AB"))
+        println(titleToNumber("ZY"))
+    }
+
+    private fun titleToNumber(columnTitle: String): Int {
+        var ans = 0
+
+        for (i in columnTitle.length - 1 downTo 0) {
+            val charCode = (columnTitle[i].code - 65) + 1
+            val powerValue = 26.toDouble().pow(((columnTitle.length - 1) - i).toDouble()).toInt()
+            ans += charCode * powerValue
+        }
+
+        return ans
+    }
+
+    private fun convertToTitle(columnNumber: Int): String {
+        val ans = StringBuilder()
+        var temp = columnNumber
+
+        while (temp > 0) {
+            ans.append(('A'.code + (temp - 1) % 26).toChar())
+            temp = (temp - 1) / 26
+        }
+
+        return ans.reverse().toString()
+    }
+
+    // https://stackoverflow.com/a/32751102/8244668
+    private fun getIntersectionNode(headA: ListNode?, headB: ListNode?): ListNode? {
+        var tempA = headA
+        var aCount = 0
+        while (tempA != null) {
+            ++aCount
+            tempA = tempA.next
+        }
+        tempA = headA
+
+        var tempB = headB
+        var bCount = 0
+        while (tempB != null) {
+            ++bCount
+            tempB = tempB.next
+        }
+        tempB = headB
+
+        if (aCount > bCount) {
+            while (aCount != bCount) {
+                --aCount
+                tempA = tempA?.next
+            }
+        } else if (bCount > aCount) {
+            while (bCount != aCount) {
+                --bCount
+                tempB = tempB?.next
+            }
+        }
+
+        while (tempA != null && tempB != null) {
+            if (tempA == tempB) {
+                return tempA
+            }
+            tempA = tempA.next
+            tempB = tempB.next
+        }
+
+        return null
     }
 
     private fun getRow(rowIndex: Int): List<Int> {
@@ -402,7 +480,7 @@ class LeetCode {
 
         for (r in 0 until numRows) {
             val rowList = mutableListOf<Int>()
-            for (i in 0 .. r) {
+            for (i in 0..r) {
                 if (i == 0 || i == r) {
                     rowList.add(1)
                 } else {
@@ -474,7 +552,7 @@ class LeetCode {
     private fun countBits(n: Int): IntArray {
         val ans = mutableListOf<Int>()
 
-        for (i in 0 .. n) {
+        for (i in 0..n) {
             var count = 0
             var temp = i
             while (temp != 0) {
@@ -493,7 +571,7 @@ class LeetCode {
         val queue = mutableListOf<Int>()
 
         fun ping(t: Int): Int {
-            while (queue.isNotEmpty() && queue.first() !in t - 3000 .. t) {
+            while (queue.isNotEmpty() && queue.first() !in t - 3000..t) {
                 queue.removeAt(0)
             }
             queue.add(t)
@@ -525,7 +603,7 @@ class LeetCode {
                 return
             }
 
-            for (num in (combination.lastOrNull() ?: 0) + 1 .. 9) {
+            for (num in (combination.lastOrNull() ?: 0) + 1..9) {
                 if (isValidEntry(num, combination)) {
                     combination.add(num)
                     solve(combination)
