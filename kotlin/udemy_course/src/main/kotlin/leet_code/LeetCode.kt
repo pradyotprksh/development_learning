@@ -433,6 +433,28 @@ class LeetCode {
         println(isPalindrome(ListNode(1, ListNode(2, ListNode(2, ListNode(1))))))
         println(isPalindrome(ListNode(1, ListNode(2))))
         println(isPalindrome(ListNode(1, ListNode(2, ListNode(1)))))
+
+        println(binaryTreePaths(TreeNode(data = 1, left = TreeNode(data = 2, right = TreeNode(data = 5)), right = TreeNode(data = 3))))
+        println(binaryTreePaths(TreeNode(data = 1)))
+    }
+
+    private fun binaryTreePaths(root: TreeNode?): List<String> {
+        return generatePath(root, null, mutableListOf(), "")
+    }
+
+    private fun generatePath(node: TreeNode?, prevNode: TreeNode?, ans: MutableList<String>, path: String): List<String> {
+        if (node == null) {
+            if (prevNode?.left == null && prevNode?.right == null) {
+                val foundPath = path.removeSuffix("->")
+                if (!ans.contains(foundPath)) {
+                    ans.add(foundPath)
+                }
+            }
+            return ans
+        }
+        generatePath(node.left, node, ans, path + "${node.data}->")
+        generatePath(node.right, node, ans, path + "${node.data}->")
+        return ans
     }
 
     private fun isPalindrome(head: ListNode?): Boolean {
