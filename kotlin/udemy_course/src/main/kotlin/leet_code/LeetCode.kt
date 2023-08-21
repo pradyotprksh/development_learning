@@ -404,6 +404,223 @@ class LeetCode {
         println(titleToNumber("A"))
         println(titleToNumber("AB"))
         println(titleToNumber("ZY"))
+
+        println(removeElements(ListNode(7, ListNode(7, ListNode(7, ListNode(7)))), 7))
+        println(removeElements(null, 7))
+        println(removeElements(ListNode(1, ListNode(2, ListNode(6, ListNode(3, ListNode(4, ListNode(5, ListNode(6))))))), 6))
+
+        println(countNodes(TreeNode(data = 1, left = TreeNode(data = 2, left = TreeNode(data = 4), right = TreeNode(data = 5)), right = TreeNode(data = 3, left = TreeNode(data = 6)))))
+
+        val myStack = MyStack()
+        myStack.push(1)
+        myStack.push(2)
+        println(myStack.top())
+        println(myStack.pop())
+        println(myStack.empty())
+
+        println(isPowerOfTwo(1))
+        println(isPowerOfTwo(2))
+        println(isPowerOfTwo(6))
+        println(isPowerOfTwo(256))
+
+        val myQueue = MyQueue()
+        myQueue.push(1)
+        myQueue.push(2)
+        println(myQueue.peek())
+        println(myQueue.pop())
+        println(myQueue.empty())
+
+        println(isPalindrome(ListNode(1, ListNode(2, ListNode(2, ListNode(1))))))
+        println(isPalindrome(ListNode(1, ListNode(2))))
+        println(isPalindrome(ListNode(1, ListNode(2, ListNode(1)))))
+    }
+
+    private fun isPalindrome(head: ListNode?): Boolean {
+        var prev: ListNode? = null
+        var midSlow = head
+        var fast = head
+        while (fast != null) {
+            prev = midSlow
+            midSlow = midSlow?.next
+            fast = fast.next?.next
+        }
+
+        prev?.next = reverseLLFromMiddle(midSlow)
+        midSlow = prev?.next
+        var temp = head
+
+        while (temp != null && midSlow != null) {
+            if (temp.data != midSlow.data) {
+                return false
+            }
+            midSlow = midSlow.next
+            temp = temp.next
+        }
+
+        return true
+    }
+
+    private fun reverseLLFromMiddle(node: ListNode?): ListNode? {
+        var prev: ListNode? = null
+        var mid = node
+        var next = node?.next
+
+        while (mid != null) {
+            mid.next = prev
+            prev = mid
+            mid = next
+            next = next?.next
+        }
+
+        return prev
+    }
+
+    private class MyQueue {
+        private val stack = mutableListOf<Int>()
+
+        fun push(x: Int) {
+            stack.add(x)
+        }
+
+        fun pop(): Int {
+            val tempStack = mutableListOf<Int>()
+            while (size() != 1) {
+                tempStack.add(stack.removeAt(size() - 1))
+            }
+            val item = stack.removeAt(size() - 1)
+            while (tempStack.isNotEmpty()) {
+                stack.add(tempStack.removeAt(tempStack.size - 1))
+            }
+            return item
+        }
+
+        fun peek(): Int {
+            val tempStack = mutableListOf<Int>()
+            while (size() != 1) {
+                tempStack.add(stack.removeAt(size() - 1))
+            }
+            val item = stack.removeAt(size() - 1)
+            tempStack.add(item)
+            while (tempStack.isNotEmpty()) {
+                stack.add(tempStack.removeAt(tempStack.size - 1))
+            }
+            return item
+        }
+
+        fun empty(): Boolean {
+            return stack.isEmpty()
+        }
+
+        fun size(): Int {
+            return stack.size
+        }
+
+    }
+
+    // https://www.baeldung.com/cs/verify-if-power-of-two
+    private fun isPowerOfTwo(n: Int): Boolean {
+        var tempN = n
+        while (tempN > 0 && tempN % 2 == 0) {
+            tempN /= 2
+        }
+
+        return tempN == 1
+    }
+
+    private class MyStack {
+        private val queue = mutableListOf<Int>()
+
+        fun push(x: Int) {
+            queue.add(x)
+        }
+
+        fun pop(): Int {
+            val tempQueue = mutableListOf<Int>()
+            while (size() != 1) {
+                tempQueue.add(queue.removeAt(0))
+            }
+            val item = queue.removeAt(0)
+
+            while (tempQueue.isNotEmpty()) {
+                queue.add(tempQueue.removeAt(0))
+            }
+            return item
+        }
+
+        fun top(): Int {
+            val tempQueue = mutableListOf<Int>()
+            while (size() != 1) {
+                tempQueue.add(queue.removeAt(0))
+            }
+            val top = queue.removeAt(0)
+            tempQueue.add(top)
+
+            while (tempQueue.isNotEmpty()) {
+                queue.add(tempQueue.removeAt(0))
+            }
+
+            return top
+        }
+
+        fun empty(): Boolean {
+            return queue.isEmpty()
+        }
+
+        fun size(): Int {
+            return queue.size
+        }
+
+    }
+
+    private fun countNodes(root: TreeNode?): Int {
+        if (root == null) return 0
+
+        val leftHeight = findLeftHeight(root)
+        val rightHeight = findRightHeight(root)
+
+        if (leftHeight == rightHeight) return 2.toDouble().pow(leftHeight).toInt() - 1
+
+        return 1 + countNodes(root.left) + countNodes(root.right)
+    }
+
+    private fun findRightHeight(node: TreeNode?): Int {
+        if (node == null) return 0
+        return 1 + findRightHeight(node.right)
+    }
+
+    private fun findLeftHeight(node: TreeNode?): Int {
+        if (node == null) return 0
+        return 1 + findLeftHeight(node.left)
+    }
+
+    private fun removeElements(head: ListNode?, `val`: Int): ListNode? {
+        var tempHead = head
+        var temp = tempHead
+        var prev: ListNode? = null
+
+        while (temp != null) {
+            if (tempHead?.data == `val`) {
+                while (tempHead?.data == `val`) {
+                    tempHead = tempHead?.next
+                }
+                prev = tempHead
+                temp = tempHead?.next
+            } else {
+                if (temp.data == `val`) {
+                    while (temp != null && temp.data == `val`) {
+                        temp = temp.next
+                    }
+                    prev?.next = temp
+                    prev = temp
+                    temp = temp?.next
+                } else {
+                    prev = temp
+                    temp = temp.next
+                }
+            }
+        }
+
+        return tempHead
     }
 
     private fun titleToNumber(columnTitle: String): Int {
