@@ -436,6 +436,66 @@ class LeetCode {
 
         println(binaryTreePaths(TreeNode(data = 1, left = TreeNode(data = 2, right = TreeNode(data = 5)), right = TreeNode(data = 3))))
         println(binaryTreePaths(TreeNode(data = 1)))
+
+        println(addDigits(38))
+        println(addDigits(0))
+
+        println(missingNumber(intArrayOf(3,0,1)))
+        println(missingNumber(intArrayOf(0,1)))
+        println(missingNumber(intArrayOf(9,6,4,2,3,5,7,0,1)))
+
+        println(canWinNim(4))
+        println(canWinNim(2))
+        println(canWinNim(1))
+        println(canWinNim(8))
+
+        println(isPowerOfThree(3))
+        println(isPowerOfThree(27))
+        println(isPowerOfThree(0))
+        println(isPowerOfThree(-1))
+    }
+
+    private fun isPowerOfThree(n: Int): Boolean {
+        var tempN = n
+        while (tempN > 0 && tempN % 3 == 0) {
+            tempN /= 3
+        }
+
+        return tempN == 1
+    }
+
+    private fun canWinNim(n: Int, dpMap: MutableMap<Int, Boolean> = mutableMapOf()): Boolean {
+        if (n <= 3) return true
+        val result = mutableListOf<Boolean>()
+        for (i in 1 .. 3) {
+            if (!dpMap.containsKey(n - i)) {
+                dpMap[n - i] = canWinNim(n - i, dpMap)
+            }
+            result.add(dpMap[n - i]!!)
+        }
+        return result.none { it }
+    }
+
+    private fun missingNumber(nums: IntArray): Int {
+        val sum = nums.sum()
+        val actualSum = ((nums.size + 1) * (nums.size)) / 2
+
+        return actualSum - sum
+    }
+
+    private fun addDigits(num: Int): Int {
+        return if (num == 0) 0
+        else if (num % 9 == 0) 9
+        else num % 9
+
+        /*var ans = num.toString().toCharArray().map { it.toString().toInt() }
+
+        while (ans.size != 1) {
+            val sum = ans.sum()
+            ans = sum .toString().toCharArray().map { it.toString().toInt() }
+        }
+
+        return ans.first()*/
     }
 
     private fun binaryTreePaths(root: TreeNode?): List<String> {
