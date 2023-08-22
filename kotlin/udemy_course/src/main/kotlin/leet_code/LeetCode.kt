@@ -453,6 +453,41 @@ class LeetCode {
         println(isPowerOfThree(27))
         println(isPowerOfThree(0))
         println(isPowerOfThree(-1))
+
+        println(intersection(intArrayOf(1,2,2,1), intArrayOf(2,2)).toList())
+
+        println(firstUniqChar("leetcode"))
+        println(firstUniqChar("loveleetcode"))
+        println(firstUniqChar("aabb"))
+    }
+
+    private fun firstUniqChar(s: String): Int {
+        val charMap = mutableMapOf<Char, Int>()
+        s.forEach { charMap[it] = charMap.getOrDefault(it, 0) + 1 }
+
+        for (i in s.indices) {
+            if (charMap[s[i]] == 1) {
+                return i
+            }
+        }
+
+        return -1
+    }
+
+    private fun intersection(nums1: IntArray, nums2: IntArray): IntArray {
+        val nums1Map = mutableSetOf<Int>()
+        for (n in nums1) {
+            nums1Map.add(n)
+        }
+
+        val ans = mutableSetOf<Int>()
+        for (n in nums2) {
+            if (nums1Map.contains(n)) {
+                ans.add(n)
+            }
+        }
+
+        return ans.toIntArray()
     }
 
     private fun isPowerOfThree(n: Int): Boolean {
