@@ -1328,3 +1328,91 @@ In this example, we define a `Trampoline` class with two subclasses: `Done` and 
 The `trampoline` function takes a `Trampoline` as input and repeatedly evaluates pending computations until it reaches the final result (`Done`). It uses a loop to execute the computations one by one without consuming additional stack space.
 
 By using trampolining, recursive functions can be executed efficiently even with deep recursion, making it a valuable technique for functional programming languages that lack native tail-call optimization support.
+
+# Sealed classes
+
+[Check this for more details](https://stackoverflow.com/a/65226315/8244668)
+
+A sealed class is a class in Kotlin that restricts the types that can be used as its subclasses. It's often used to represent a closed set of subclasses, ensuring that all possible subclasses are known and defined within the same file or module where the sealed class is declared.
+
+Key characteristics of sealed classes:
+
+1. **Limited Subclasses**: A sealed class can have a predefined and limited set of subclasses. These subclasses must be declared within the same file or module as the sealed class.
+
+2. **Use in When Expressions**: Sealed classes are particularly useful when used in conjunction with `when` expressions (similar to `switch` in other languages). The compiler can perform exhaustive checking, ensuring that all possible subclasses are handled.
+
+3. **Cannot be Instantiated Directly**: Sealed classes cannot be directly instantiated with their constructors. They are abstract by nature. You can only create instances of their subclasses.
+
+Here's a simple example to illustrate sealed classes:
+
+```kotlin
+sealed class Result
+data class Success(val data: String) : Result()
+data class Error(val message: String) : Result()
+object Loading : Result()
+
+fun processResult(result: Result) = when (result) {
+    is Success -> println("Success: ${result.data}")
+    is Error -> println("Error: ${result.message}")
+    Loading -> println("Loading...")
+}
+
+fun main() {
+    val successResult = Success("Data fetched successfully")
+    val errorResult = Error("An error occurred")
+    val loadingResult = Loading
+
+    processResult(successResult) // Output: Success: Data fetched successfully
+    processResult(errorResult)   // Output: Error: An error occurred
+    processResult(loadingResult) // Output: Loading...
+}
+```
+
+In this example, `Result` is a sealed class. It has three subclasses: `Success`, `Error`, and an `object` named `Loading`. These subclasses are limited to the ones defined within the same file or module. The `processResult` function uses a `when` expression to handle instances of these subclasses.
+
+Sealed classes are particularly useful when you have a fixed set of possible outcomes or states, such as representing the result of an operation as shown in the example. They help ensure that all possible cases are considered and handled, leading to more robust and maintainable code.
+
+Sealed classes, enums, and regular classes are all constructs in Kotlin that serve different purposes and have distinct characteristics:
+
+1. **Sealed Classes**:
+   - Sealed classes are used to represent a restricted hierarchy of classes where all subclasses are known and defined within the same file or module as the sealed class itself.
+   - Sealed classes are often used to represent a closed set of possible states, like the result of an operation, where all possible outcomes are predefined.
+   - Sealed classes can have multiple instances (subclasses) with their own properties and behavior.
+   - Sealed classes are abstract and cannot be directly instantiated. You can only create instances of their subclasses.
+   - They are useful in `when` expressions for exhaustive checking.
+
+2. **Enums**:
+   - Enums are used to represent a set of constant values. Each value is an instance of the enum class.
+   - Enums are primarily used for cases where you have a predefined and limited set of values that represent distinct cases.
+   - Enum values can't have their own properties or behavior.
+   - Enums are automatically ordered based on their declaration order, and you can iterate over enum values.
+   - Enums provide a simple and concise way to define a fixed set of related values.
+
+3. **Regular Classes**:
+   - Regular classes in Kotlin are used to define custom types that can have properties, methods, and behavior.
+   - Regular classes are versatile and can represent a wide range of entities and concepts in your program.
+   - Regular classes can be instantiated and used to create objects.
+   - They can be organized into class hierarchies using inheritance and interfaces, allowing for complex relationships and polymorphism.
+
+In summary:
+- Sealed classes are used for representing closed class hierarchies with distinct subclasses.
+- Enums are used for representing a fixed set of constant values.
+- Regular classes provide the flexibility to create custom types with properties, methods, and behavior.
+
+The choice between sealed classes, enums, and regular classes depends on the nature of the problem you're trying to solve and the characteristics you need for your types.
+
+In terms of compile time and runtime behavior, there are some differences between sealed classes, enums, and regular classes in Kotlin:
+
+1. **Sealed Classes**:
+   - Compile Time: Sealed classes are generally checked for exhaustiveness during compile time when used in `when` expressions. The compiler will warn you if you haven't handled all possible subclasses.
+   - Runtime: Sealed classes do not have any specific impact on runtime performance. They behave similarly to regular classes in terms of instantiation and method dispatch.
+
+2. **Enums**:
+   - Compile Time: Enums are also checked for exhaustiveness during compile time when used in `when` expressions. The compiler ensures that you handle all enum values.
+   - Runtime: Enums are efficient in terms of memory usage and method dispatch since they are often implemented as static final constants. Enum values are typically singletons, and method calls on enum values are resolved at compile time.
+
+3. **Regular Classes**:
+   - Compile Time: Regular classes are compiled like any other classes, and their methods and properties are resolved at compile time. There is no special compile-time behavior specific to regular classes.
+   - Runtime: Regular classes behave as expected, with instantiation, method dispatch, and memory usage based on their design. Polymorphism and inheritance can introduce some overhead during method dispatch, but modern runtime environments optimize these behaviors.
+
+Overall, the differences in compile time and runtime behavior between sealed classes, enums, and regular classes are generally related to how they are used and their specific features. However, the impact on performance or behavior is often minimal for most use cases, and the choice between these constructs is typically driven by design considerations and the problem you are solving rather than runtime performance considerations.
