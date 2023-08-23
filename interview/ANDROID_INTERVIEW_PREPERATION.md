@@ -865,6 +865,54 @@ A Column composable is used to arrange its child composables vertically from top
 
 You can specify the order, alignment, and other layout properties for the child composables in a Column or Row using modifiers. For example, you can use the `verticalArrangement` modifier to specify how the child composables should be spaced vertically in a Column, or the `horizontalArrangement` modifier to specify how the child composables should be spaced horizontally in a Row.
 
+## SideEffects
+
+In Jetpack Compose, "side effects" refer to actions or operations that have an impact beyond just rendering the UI. These side effects typically involve interactions with the outside world, such as data fetching, updating a database, making network requests, or interacting with other parts of the app that are not directly related to the UI.
+
+Side effects are usually performed within Composables using functions provided by the Compose framework. These functions ensure that the side effects are performed in a controlled manner that aligns with Compose's declarative and reactive nature. Some of the key functions for handling side effects in Jetpack Compose include:
+
+1. `LaunchedEffect`: This function is used to trigger side effects when a specific value or state changes. It's particularly useful for operations like making network requests or performing data updates.
+
+```kotlin
+LaunchedEffect(someValue) {
+    // Perform a side effect when someValue changes
+    // e.g., make a network request
+}
+```
+
+2. `DisposableEffect`: Similar to `LaunchedEffect`, this function allows you to perform a side effect when a Composable is initially created and when it's recomposed. It's commonly used for subscribing to data sources.
+
+```kotlin
+DisposableEffect(key1, key2) {
+    // Perform a side effect when the Composable is created
+    onDispose {
+        // Clean up when the Composable is disposed
+        // e.g., unsubscribe from a data source
+    }
+}
+```
+
+3. `rememberUpdatedState`: This function is used to remember a state and detect when it has been updated. It's useful for performing a side effect when a particular state changes.
+
+```kotlin
+val updatedState by rememberUpdatedState(someState)
+LaunchedEffect(updatedState) {
+    // Perform a side effect when someState changes
+}
+```
+
+4. `SideEffect`: This function allows you to execute a side effect without specifying a particular trigger like state changes. It can be useful for performing one-time initialization or other operations that should occur when the Composable is recomposed.
+
+```kotlin
+SideEffect {
+    // Perform a one-time side effect during composition
+}
+```
+
+It's important to note that Jetpack Compose encourages moving side-effect-related logic closer to the UI code, which can make it easier to reason about and test. However, it's also essential to manage the lifecycles of side effects properly to avoid memory leaks and unexpected behavior.
+
+By using these side effect functions, you can integrate non-UI operations seamlessly within your Composables while maintaining the principles of Compose's declarative UI framework.
+
 ## LaunchedEffect
 
 In Jetpack Compose, `LaunchedEffect` is a composable function that allows you to perform side effects or start asynchronous tasks in response to certain events or changes. It is similar to the `launch` coroutine builder in Kotlin coroutines.
@@ -942,6 +990,8 @@ fun ExampleScreen() {
 In the above example, the `executedOnce` variable is a `MutableState<Boolean>` that starts as `false`. When the composable is first recomposed, the `if` condition checks if `executedOnce.value` is `false`. If it is `false`, the block of code inside the `if` statement is executed, and then `executedOnce.value` is set to `true`. On subsequent recompositions, the `if` condition will be `false`, and the block of code will not be executed.
 
 Using `remember` in combination with a flag variable provides a way to control the one-time execution of a block of code in Jetpack Compose.
+
+## Compose communication
 
 # Android Performance Optimization
 
