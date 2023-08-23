@@ -991,8 +991,6 @@ In the above example, the `executedOnce` variable is a `MutableState<Boolean>` t
 
 Using `remember` in combination with a flag variable provides a way to control the one-time execution of a block of code in Jetpack Compose.
 
-## Compose communication
-
 # Android Performance Optimization
 
 Android performance optimization is the process of improving the overall performance of an Android application by identifying and eliminating bottlenecks and inefficiencies. Here are some steps you can take to optimize the performance of your Android app:
