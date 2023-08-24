@@ -478,6 +478,72 @@ class LeetCode {
 
         println(countSegments("Hello, my name is John"))
         println(countSegments("Hello"))
+
+        println(arrangeCoins(5))
+        println(arrangeCoins(8))
+
+        println(findDisappearedNumbers(intArrayOf(4,3,2,7,8,2,3,1)))
+        println(findDisappearedNumbers(intArrayOf(1,1)))
+
+        println(findContentChildren(intArrayOf(1,2,3), intArrayOf(1,1)))
+        println(findContentChildren(intArrayOf(1,2), intArrayOf(1,2,3)))
+        println(findContentChildren(intArrayOf(10,9,8,7), intArrayOf(5,6,7,8)))
+    }
+
+    private fun findContentChildren(g: IntArray, s: IntArray): Int {
+        g.sort()
+        s.sort()
+
+        var gI = 0
+        var sI = 0
+
+        var count = 0
+        while (gI < g.size && sI < s.size) {
+            val greed = g[gI]
+            val size = s[sI]
+            if (size >= greed) {
+                ++count
+                ++gI
+            }
+            ++sI
+        }
+
+        return count
+    }
+
+    private fun findDisappearedNumbers(nums: IntArray): List<Int> {
+        for (i in nums.indices) {
+            val index = abs(nums[i]) - 1
+            if (nums[index] > 0) {
+                nums[index] = nums[index] * -1
+            }
+        }
+
+        val output = mutableListOf<Int>()
+        for (i in nums.indices) {
+            if (nums[i] > 0) {
+                output.add(i + 1)
+            }
+        }
+        return output
+    }
+
+    private fun arrangeCoins(n: Int): Int {
+        val rows = mutableListOf<Int>()
+        var tempN = n
+        var row = 1
+
+        while (true) {
+            if (tempN >= row) {
+                rows.add(row)
+                tempN -= row
+                ++row
+            } else {
+                break
+            }
+        }
+
+        return rows.count()
     }
 
     private fun countSegments(s: String): Int {
