@@ -462,6 +462,123 @@ class LeetCode {
 
         println(findTheDifference("ymbgaraibkfmvocpizdydugvalagaivdbfsfbepeyccqfepzvtpyxtbadkhmwmoswrcxnargtlswqemafandgkmydtimuzvjwxvlfwlhvkrgcsithaqlcvrihrwqkpjdhgfgreqoxzfvhjzojhghfwbvpfzectwwhexthbsndovxejsntmjihchaotbgcysfdaojkjldprwyrnischrgmtvjcorypvopfmegizfkvudubnejzfqffvgdoxohuinkyygbdzmshvyqyhsozwvlhevfepdvafgkqpkmcsikfyxczcovrmwqxxbnhfzcjjcpgzjjfateajnnvlbwhyppdleahgaypxidkpwmfqwqyofwdqgxhjaxvyrzupfwesmxbjszolgwqvfiozofncbohduqgiswuiyddmwlwubetyaummenkdfptjczxemryuotrrymrfdxtrebpbjtpnuhsbnovhectpjhfhahbqrfbyxggobsweefcwxpqsspyssrmdhuelkkvyjxswjwofngpwfxvknkjviiavorwyfzlnktmfwxkvwkrwdcxjfzikdyswsuxegmhtnxjraqrdchaauazfhtklxsksbhwgjphgbasfnlwqwukprgvihntsyymdrfovaszjywuqygpvjtvlsvvqbvzsmgweiayhlubnbsitvfxawhfmfiatxvqrcwjshvovxknnxnyyfexqycrlyksderlqarqhkxyaqwlwoqcribumrqjtelhwdvaiysgjlvksrfvjlcaiwrirtkkxbwgicyhvakxgdjwnwmubkiazdjkfmotglclqndqjxethoutvjchjbkoasnnfbgrnycucfpeovruguzumgmgddqwjgdvaujhyqsqtoexmnfuluaqbxoofvotvfoiexbnprrxptchmlctzgqtkivsilwgwgvpidpvasurraqfkcmxhdapjrlrnkbklwkrvoaziznlpor", "qhxepbshlrhoecdaodgpousbzfcqjxulatciapuftffahhlmxbufgjuxstfjvljybfxnenlacmjqoymvamphpxnolwijwcecgwbcjhgdybfffwoygikvoecdggplfohemfypxfsvdrseyhmvkoovxhdvoavsqqbrsqrkqhbtmgwaurgisloqjixfwfvwtszcxwktkwesaxsmhsvlitegrlzkvfqoiiwxbzskzoewbkxtphapavbyvhzvgrrfriddnsrftfowhdanvhjvurhljmpxvpddxmzfgwwpkjrfgqptrmumoemhfpojnxzwlrxkcafvbhlwrapubhveattfifsmiounhqusvhywnxhwrgamgnesxmzliyzisqrwvkiyderyotxhwspqrrkeczjysfujvovsfcfouykcqyjoobfdgnlswfzjmyucaxuaslzwfnetekymrwbvponiaojdqnbmboldvvitamntwnyaeppjaohwkrisrlrgwcjqqgxeqerjrbapfzurcwxhcwzugcgnirkkrxdthtbmdqgvqxilllrsbwjhwqszrjtzyetwubdrlyakzxcveufvhqugyawvkivwonvmrgnchkzdysngqdibhkyboyftxcvvjoggecjsajbuqkjjxfvynrjsnvtfvgpgveycxidhhfauvjovmnbqgoxsafknluyimkczykwdgvqwlvvgdmufxdypwnajkncoynqticfetcdafvtqszuwfmrdggifokwmkgzuxnhncmnsstffqpqbplypapctctfhqpihavligbrutxmmygiyaklqtakdidvnvrjfteazeqmbgklrgrorudayokxptswwkcircwuhcavhdparjfkjypkyxhbgwxbkvpvrtzjaetahmxevmkhdfyidhrdeejapfbafwmdqjqszwnwzgclitdhlnkaiyldwkwwzvhyorgbysyjbxsspnjdewjxbhpsvj"))
         println(findTheDifference("abcd", "abcde"))
+
+        println(readBinaryWatch(1))
+        println(readBinaryWatch(2))
+
+        println(sumOfLeftLeaves(TreeNode(data = 3, left = TreeNode(data = 9), right = TreeNode(data = 20, left = TreeNode(data = 15), right = TreeNode(data = 7)))))
+
+        println(fizzBuzz(3))
+        println(fizzBuzz(5))
+        println(fizzBuzz(15))
+
+        println(addStrings("11", "123"))
+        println(addStrings("456", "77"))
+        println(addStrings("0", "0"))
+
+        println(countSegments("Hello, my name is John"))
+        println(countSegments("Hello"))
+    }
+
+    private fun countSegments(s: String): Int {
+        return s.split(" ").filter { it.isNotEmpty() }.size
+    }
+
+    private fun addStrings(num1: String, num2: String): String {
+        val ans = StringBuilder()
+
+        var a = num1.length - 1
+        var b = num2.length - 1
+        var carry = 0
+
+        while (a >= 0 && b >= 0) {
+            val first = num1[a--] - '0'
+            val second = num2[b--] - '0'
+            val sum = first + second + carry
+            carry = sum / 10
+            val data = sum % 10
+            ans.append(data)
+        }
+
+        while (a >= 0) {
+            val first = num1[a--] - '0'
+            val sum = first + carry
+            carry = sum / 10
+            val data = sum % 10
+            ans.append(data)
+        }
+
+        while (b >= 0) {
+            val second = num2[b--] - '0'
+            val sum = second + carry
+            carry = sum / 10
+            val data = sum % 10
+            ans.append(data)
+        }
+
+        if (carry != 0) {
+            ans.append(carry)
+        }
+
+        return ans.reverse().toString()
+    }
+
+    private fun fizzBuzz(n: Int): List<String> {
+        val output = mutableListOf<String>()
+
+        for (i in 0 until n) {
+            val index = i + 1
+            if (index % 3 == 0 && index % 5 == 0) {
+                output.add("FizzBuzz")
+            } else if (index % 3 == 0) {
+                output.add("Fizz")
+            } else if (index % 5 == 0) {
+                output.add("Buzz")
+            } else {
+                output.add("$index")
+            }
+        }
+
+        return output
+    }
+
+    private fun sumOfLeftLeaves(root: TreeNode?): Int {
+        var sum = 0
+
+        val queue = mutableListOf<TreeNode>()
+        if (root != null) queue.add(root)
+
+        while (queue.isNotEmpty()) {
+            val node = queue.removeAt(0)
+            node.left?.let { left ->
+                if (left.left == null && left.right == null) {
+                    sum += left.data
+                } else {
+                    queue.add(left)
+                }
+            }
+            node.right?.let { queue.add(it) }
+        }
+
+        return sum
+    }
+
+    private fun readBinaryWatch(turnedOn: Int): List<String> {
+        val output = mutableListOf<String>()
+
+        for (hr in 0 until 12) {
+            for (min in 0 until 60) {
+                if (Integer.bitCount(hr) + Integer.bitCount(min) == turnedOn) {
+                    if (min > 9) {
+                        output.add("$hr:$min")
+                    } else {
+                        output.add("$hr:0$min")
+                    }
+                }
+            }
+        }
+
+        return output
     }
 
     private fun findTheDifference(s: String, t: String): Char {
