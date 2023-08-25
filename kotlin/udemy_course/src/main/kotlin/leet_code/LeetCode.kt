@@ -488,6 +488,46 @@ class LeetCode {
         println(findContentChildren(intArrayOf(1,2,3), intArrayOf(1,1)))
         println(findContentChildren(intArrayOf(1,2), intArrayOf(1,2,3)))
         println(findContentChildren(intArrayOf(10,9,8,7), intArrayOf(5,6,7,8)))
+
+        println(findRestaurant(arrayOf("Shogun","Tapioca Express","Burger King","KFC"), arrayOf("Piatti","The Grill at Torrey Pines","Hungry Hunter Steakhouse","Shogun")).toList())
+        println(findRestaurant(arrayOf("Shogun","Tapioca Express","Burger King","KFC"), arrayOf("KFC","Shogun","Burger King")).toList())
+        println(findRestaurant(arrayOf("happy","sad","good"), arrayOf("sad","happy","good")).toList())
+    }
+
+    private fun findRestaurant(list1: Array<String>, list2: Array<String>): Array<String> {
+        val mapRestaurant = mutableMapOf<String, MutableList<Int>>()
+        var min = Int.MAX_VALUE
+        // The 2 for loops can be combined into 1, but the complexity remains the same
+        for (r in list1.indices) {
+            val res = mapRestaurant.getOrDefault(list1[r], mutableListOf())
+            res.add(r)
+            mapRestaurant[list1[r]] = res
+        }
+        for (r in list2.indices) {
+            if (mapRestaurant.containsKey(list2[r])) {
+                mapRestaurant.getOrDefault(list2[r], mutableListOf()).add(r)
+                // calculating the min value while mapping only
+                val sum = mapRestaurant.getOrDefault(list2[r], mutableListOf()).sum()
+                if (sum < min) {
+                    min = sum
+                }
+            } else {
+                val res = mapRestaurant.getOrDefault(list2[r], mutableListOf())
+                res.add(r)
+                mapRestaurant[list2[r]] = res
+            }
+        }
+
+        // remove the unique elements from the map, if value size is one then it only occurred in one of the list
+        // because both array contains unique elements, but one or more than is same in both
+        val endMap = mapRestaurant.filter { it.value.size > 1 }
+        val ans = mutableListOf<String>()
+        for (res in endMap.entries) {
+            if (res.value.sum() == min) {
+                ans.add(res.key)
+            }
+        }
+        return ans.toTypedArray()
     }
 
     private fun findContentChildren(g: IntArray, s: IntArray): Int {
