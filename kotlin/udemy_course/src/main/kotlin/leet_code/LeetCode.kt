@@ -492,28 +492,6 @@ class LeetCode {
         println(findRestaurant(arrayOf("Shogun","Tapioca Express","Burger King","KFC"), arrayOf("Piatti","The Grill at Torrey Pines","Hungry Hunter Steakhouse","Shogun")).toList())
         println(findRestaurant(arrayOf("Shogun","Tapioca Express","Burger King","KFC"), arrayOf("KFC","Shogun","Burger King")).toList())
         println(findRestaurant(arrayOf("happy","sad","good"), arrayOf("sad","happy","good")).toList())
-
-        println(findLHS(intArrayOf(1,3,2,2,5,2,3,7)))
-        println(findLHS(intArrayOf(1,2,3,4)))
-        println(findLHS(intArrayOf(1,1,1,1)))
-    }
-
-    private fun findLHS(nums: IntArray): Int {
-        nums.sort()
-        val queue = mutableListOf<Int>()
-        var maxSize = 0
-
-        for (n in nums) {
-            while (queue.isNotEmpty() && n - queue[0] != 1) {
-                queue.removeAt(0)
-            }
-            queue.add(n)
-            if (queue.size > 1) {
-                maxSize = maxOf(maxSize, queue.size)
-            }
-        }
-
-        return maxSize
     }
 
     private fun findRestaurant(list1: Array<String>, list2: Array<String>): Array<String> {
