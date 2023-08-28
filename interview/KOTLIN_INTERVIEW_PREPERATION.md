@@ -1416,3 +1416,192 @@ In terms of compile time and runtime behavior, there are some differences betwee
    - Runtime: Regular classes behave as expected, with instantiation, method dispatch, and memory usage based on their design. Polymorphism and inheritance can introduce some overhead during method dispatch, but modern runtime environments optimize these behaviors.
 
 Overall, the differences in compile time and runtime behavior between sealed classes, enums, and regular classes are generally related to how they are used and their specific features. However, the impact on performance or behavior is often minimal for most use cases, and the choice between these constructs is typically driven by design considerations and the problem you are solving rather than runtime performance considerations.
+
+# by
+
+In Kotlin, the `by` keyword is used to delegate the implementation of an interface or the behavior of a property to another object. This concept is known as "delegation" and is a powerful way to reuse and compose code.
+
+Here are two common uses of the `by` keyword in Kotlin:
+
+1. **Delegated Properties**:
+   The `by` keyword is often used with the `val` or `var` keyword to create properties that delegate their getter and setter methods to another object. This is useful when you want to customize the behavior of property access without directly implementing the getter and setter yourself. Some common delegated properties include `Lazy`, `Observable`, and `Vetoable`.
+
+   ```kotlin
+   val lazyValue: Int by lazy {
+       // Compute and return the value
+   }
+   ```
+
+2. **Delegated Classes**:
+   The `by` keyword is also used when implementing delegation for classes. This is particularly useful when you want to provide specific behavior for certain methods of an interface without implementing all methods yourself.
+
+   ```kotlin
+   class MyList<T>(private val myList: MutableList<T>) : List<T> by myList {
+       // Implement additional methods or properties
+   }
+   ```
+
+In both cases, the `by` keyword allows you to delegate the implementation of methods or properties to another object, reducing boilerplate code and promoting code reuse.
+
+Overall, the `by` keyword in Kotlin is a powerful tool for implementing delegation and promoting modular and reusable code.
+
+## Delegated Classes
+
+Delegated classes in Kotlin allow you to delegate the implementation of interface methods to another object. This is a form of composition that helps you reuse code and customize behavior without needing to implement all interface methods yourself. The `by` keyword is used to achieve this delegation.
+
+Here's how delegated classes work in more detail:
+
+1. **Delegated Interface**:
+   Let's say you have an interface with several methods:
+
+   ```kotlin
+   interface Printer {
+       fun print(text: String)
+       fun println(text: String)
+   }
+   ```
+
+2. **Delegate Class**:
+   You create a class that implements this interface. This class will serve as the delegate for the methods of the interface:
+
+   ```kotlin
+   class ConsolePrinter : Printer {
+       override fun print(text: String) {
+           kotlin.io.print(text)
+       }
+
+       override fun println(text: String) {
+           kotlin.io.println(text)
+       }
+   }
+   ```
+
+3. **Delegated Class**:
+   Now, you can create another class that implements the same interface but delegates the method implementations to an instance of the delegate class using the `by` keyword:
+
+   ```kotlin
+   class CustomPrinter(private val delegate: Printer) : Printer by delegate {
+       // Additional methods or properties if needed
+   }
+   ```
+
+4. **Using the Delegated Class**:
+   When you use the `CustomPrinter` class, it will delegate the `print` and `println` methods to the `ConsolePrinter` instance you provide during its instantiation:
+
+   ```kotlin
+   val consolePrinter = ConsolePrinter()
+   val customPrinter = CustomPrinter(consolePrinter)
+
+   customPrinter.print("Hello") // Delegated to ConsolePrinter
+   customPrinter.println("World") // Delegated to ConsolePrinter
+   ```
+
+By using delegated classes, you can customize or extend behavior without duplicating code. This is particularly useful when working with complex interfaces or when you want to add behavior to an existing class without modifying its code directly.
+
+Remember that the delegated class will only delegate the methods of the interface it implements. If you call a method not defined in the interface directly on the delegated class instance, it won't be delegated and will need to be implemented in the delegated class explicitly.
+
+### Delegation vs Inheritance
+
+Delegation and inheritance are both object-oriented programming concepts that allow one class to reuse or extend the behavior of another class. However, they achieve this in different ways and have distinct implications:
+
+**Inheritance**:
+
+1. **Type Relationship**: Inheritance represents an "is-a" relationship. A subclass is considered a specialized version of its superclass.
+
+2. **Code Reuse**: Inheritance allows you to reuse code by inheriting properties and methods from a superclass.
+
+3. **Method Overriding**: Subclasses can override methods of their superclass to provide specific implementations.
+
+4. **Access to Protected Members**: Subclasses have access to protected and public members of the superclass.
+
+5. **Limitations**: Inheritance can lead to tight coupling between classes and can sometimes result in issues like the diamond problem (when a class inherits from two classes with a common ancestor).
+
+**Delegation**:
+
+1. **Type Relationship**: Delegation represents a "has-a" relationship. Instead of inheriting behavior, a class delegates certain tasks to another object.
+
+2. **Code Reuse**: Delegation allows you to reuse code by composing objects and delegating tasks to those objects.
+
+3. **Method Forwarding**: Delegated methods are forwarded to the delegate object, which provides the actual implementation.
+
+4. **Access to Delegate's Members**: The delegating class doesn't have access to private members of the delegate object.
+
+5. **Flexibility**: Delegation is more flexible than inheritance. You can easily switch delegates or change behavior without affecting the delegating class's structure.
+
+**Key Differences**:
+
+- Inheritance creates a direct hierarchy of classes, while delegation creates a composition of objects.
+- Inheritance involves subclassing and overriding methods, which can lead to tight coupling. Delegation avoids this.
+- Delegation is generally considered more flexible and promotes looser coupling between classes.
+- Inheritance can be suitable when you want to create an "is-a" relationship with shared behavior. Delegation is more appropriate for customizing or extending behavior.
+
+In summary, inheritance is about reusing or specializing behavior in a hierarchy, while delegation is about composing objects and forwarding tasks to other objects. The choice between them depends on your design goals and the level of control and flexibility you need in your program's structure.
+
+Suppose you're designing a drawing application that involves different shapes (e.g., circles, rectangles) with the ability to change their colors. You have two options for implementing the color behavior: using inheritance or using delegation.
+
+**Inheritance Approach**:
+```kotlin
+open class Shape {
+    open fun draw() {
+        println("Drawing a shape")
+    }
+}
+
+class Circle : Shape() {
+    override fun draw() {
+        println("Drawing a circle")
+    }
+}
+
+class Rectangle : Shape() {
+    override fun draw() {
+        println("Drawing a rectangle")
+    }
+}
+```
+
+In this approach, you have a base class `Shape` and subclasses `Circle` and `Rectangle` that inherit from it. However, if you want to add color functionality, you might need to modify the class hierarchy and potentially create subclasses for each shape-color combination.
+
+**Delegation Approach**:
+```kotlin
+interface Drawable {
+    fun draw()
+}
+
+class Shape : Drawable {
+    override fun draw() {
+        println("Drawing a shape")
+    }
+}
+
+class Circle(private val drawable: Drawable) : Drawable by drawable {
+    // No need to override draw, it's delegated to the provided Drawable
+}
+
+class Rectangle(private val drawable: Drawable) : Drawable by drawable {
+    // No need to override draw, it's delegated to the provided Drawable
+}
+```
+
+In this approach, you use delegation by creating an interface `Drawable`. Each shape class (`Circle` and `Rectangle`) accepts an instance of a `Drawable` as a parameter. The `draw` method of each shape class is then delegated to the `Drawable` instance.
+
+**Flexibility of Delegation**:
+Now, let's say you want to change the color behavior without altering the shape classes' structure. With the delegation approach, you can easily switch delegates or change the behavior:
+
+```kotlin
+class RedDrawable : Drawable {
+    override fun draw() {
+        println("Drawing in red color")
+    }
+}
+
+val circle = Circle(RedDrawable())
+circle.draw() // Drawing in red color
+
+val rectangle = Rectangle(RedDrawable())
+rectangle.draw() // Drawing in red color
+```
+
+With the delegation approach, you can switch to a different color behavior by providing a different delegate to the shape classes, without modifying the shape classes themselves. This demonstrates the flexibility of delegation compared to inheritance, where changes to the superclass might affect all subclasses.
+
+In essence, delegation allows you to separate concerns more effectively and make changes to behavior without altering class hierarchies.
