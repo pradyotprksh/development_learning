@@ -492,6 +492,135 @@ class LeetCode {
         println(findRestaurant(arrayOf("Shogun","Tapioca Express","Burger King","KFC"), arrayOf("Piatti","The Grill at Torrey Pines","Hungry Hunter Steakhouse","Shogun")).toList())
         println(findRestaurant(arrayOf("Shogun","Tapioca Express","Burger King","KFC"), arrayOf("KFC","Shogun","Burger King")).toList())
         println(findRestaurant(arrayOf("happy","sad","good"), arrayOf("sad","happy","good")).toList())
+
+        println(repeatedSubstringPattern("aba"))
+
+        println(hammingDistance(1,4))
+        println(hammingDistance(3,1))
+        println(hammingDistance(93,73))
+
+        println(islandPerimeter(arrayOf(intArrayOf(0,1,0,0), intArrayOf(1,1,1,0), intArrayOf(0,1,0,0), intArrayOf(1,1,0,0))))
+
+        println(licenseKeyFormatting("5F3Z-2e-9-w", 4))
+        println(licenseKeyFormatting("2-5g-3-J", 2))
+
+        println(findMaxConsecutiveOnes(intArrayOf(1,1,0,1,1,1)))
+        println(findMaxConsecutiveOnes(intArrayOf(1,0,1,1,0,1)))
+    }
+
+    private fun findMaxConsecutiveOnes(nums: IntArray): Int {
+        var ans = 0
+        var temp = 0
+
+        for (n in nums) {
+            if (n == 1) {
+                ++temp
+                ans = maxOf(ans, temp)
+            } else {
+                temp = 0
+            }
+        }
+
+        return ans
+    }
+
+    private fun licenseKeyFormatting(s: String, k: Int): String {
+        val rS = s.reversed()
+
+        val queue = mutableListOf<Char>()
+        val ans = StringBuilder()
+
+        for (c in rS) {
+            if (c != '-') {
+                queue.add(c.uppercaseChar())
+            }
+
+            if (queue.size == k) {
+                ans.append('-')
+                while (queue.isNotEmpty()) {
+                    ans.append(queue.removeAt(0))
+                }
+            }
+        }
+
+        if (queue.isNotEmpty()) {
+            ans.append('-')
+            while (queue.isNotEmpty()) {
+                ans.append(queue.removeAt(0))
+            }
+        }
+
+        if (ans.isEmpty()) return ""
+
+        val lastAns = ans.reverse().deleteCharAt(ans.length - 1)
+        return lastAns.toString()
+    }
+
+    private fun islandPerimeter(grid: Array<IntArray>): Int {
+        var ans = 0
+
+        for (i in grid.indices) {
+            for (j in grid[i].indices) {
+                if (grid[i][j] == 1) {
+                    ans += 4
+
+                    print("$i,$j $ans")
+
+                    if (i - 1 in grid.indices) {
+                        if (grid[i - 1][j] == 1) {
+                            ans -= 2
+                            print(" | ${i - 1},$j $ans")
+                        }
+                    }
+
+                    if (j - 1 in grid[i].indices) {
+                        if (grid[i][j - 1] == 1) {
+                            ans -= 2
+                            print(" | $i,${j - 1} $ans")
+                        }
+                    }
+                }
+                println()
+            }
+        }
+
+        return ans
+    }
+
+    private fun hammingDistance(x: Int, y: Int): Int {
+        val xBits = Integer.toBinaryString(x)
+        val yBits = Integer.toBinaryString(y)
+
+        var xCount = xBits.length - 1
+        var yCount = yBits.length - 1
+        var ans = 0
+
+        while (xCount >= 0 || yCount >= 0) {
+            if (xCount >= 0 && yCount >= 0) {
+                if (xBits[xCount] != yBits[yCount]) {
+                    ++ans
+                }
+                --xCount
+                --yCount
+            } else if (xCount >= 0) {
+                if (xBits[xCount] == '1') {
+                    ++ans
+                }
+                --xCount
+            } else {
+                if (yBits[yCount] == '1') {
+                    ++ans
+                }
+                --yCount
+            }
+        }
+
+        return ans
+    }
+
+    private fun repeatedSubstringPattern(s: String): Boolean {
+        val t = (s + s).substring(1 until (2 * s.length) - 1)
+        return t.contains(s)
     }
 
     private fun findRestaurant(list1: Array<String>, list2: Array<String>): Array<String> {
