@@ -1676,3 +1676,72 @@ In Kotlin, both interfaces and abstract classes are used to define contracts for
 - Use an abstract class when you want to provide a base implementation for related classes and share common state, while still allowing subclasses to customize behavior.
 
 In general, the choice between an interface and an abstract class depends on your design goals and the relationship between the classes. If you need multiple inheritance-like behavior or want to define a contract for unrelated classes, use interfaces. If you want to provide common functionality and shared state for related classes, use abstract classes.
+
+# Functional (SAM) interfaces﻿
+
+Functional interfaces, also known as Single Abstract Method (SAM) interfaces, are a concept in Java and Kotlin that represent interfaces with only one abstract method. These interfaces are particularly significant in the context of functional programming and lambda expressions.
+
+In Java, functional interfaces were introduced as a way to support lambda expressions, which allow you to express instances of single-method interfaces (functional interfaces) more concisely. Java 8 introduced the `@FunctionalInterface` annotation to explicitly mark an interface as a functional interface.
+
+In Kotlin, all interfaces with a single abstract method can be used as functional interfaces by default. This means that any such interface can be used with lambda expressions without any special annotations.
+
+Here's an example of a functional interface in Kotlin:
+
+```kotlin
+interface MyFunction {
+    fun doSomething(value: Int): String
+}
+
+fun main() {
+    val myLambda: (Int) -> String = { value -> "Result: $value" }
+
+    val myFunction: MyFunction = myLambda::doSomething
+
+    println(myFunction.doSomething(42)) // Output: Result: 42
+}
+```
+
+In this example, the `MyFunction` interface has only one abstract method `doSomething`. This makes it a functional interface. You can then use a lambda expression to create an instance of this interface and call its method.
+
+Functional interfaces are essential in enabling more concise and expressive code when working with functional programming concepts like lambda expressions and higher-order functions. They play a crucial role in modern programming languages that support functional programming paradigms.
+
+## Functional (SAM) interfaces vs typealias
+
+[Read this](https://kotlinlang.org/docs/fun-interfaces.html#functional-interfaces-vs-type-aliases)
+
+# Extensions
+
+**Extensions** in programming, particularly in languages like Kotlin and C#, allow you to add new functionality to existing classes or types without modifying their source code. They provide a way to "extend" the behavior of classes you don't have control over. 
+
+**Advantages of Extensions**:
+
+1. **Code Organization**: Extensions allow you to keep related utility functions or methods together, even if those functions are not part of the original class.
+   
+2. **Readability**: Extensions can improve the readability of your code by making it more concise and expressive.
+
+3. **Avoiding Boilerplate**: You can add common methods to existing classes without duplicating code across different places in your application.
+
+4. **Interoperability**: Extensions can be particularly useful when working with libraries or frameworks. You can add new methods to existing classes without modifying their code.
+
+5. **Consistency**: Extensions can help achieve consistency across your codebase by providing a uniform way to work with similar objects.
+
+**Disadvantages of Extensions**:
+
+1. **Ambiguity**: Overuse of extensions can lead to method name clashes or ambiguity, especially if different extensions define methods with the same name but different behaviors.
+
+2. **Encapsulation**: Extensions can bypass encapsulation, allowing you to access private members of a class. This might violate the intended access control and hinder maintainability.
+
+3. **Complexity**: Extensions can make the code harder to understand, especially when you're dealing with multiple extensions and methods from different sources.
+
+4. **Hidden Behavior**: It might be less obvious where a particular method comes from, especially if it's not part of the original class definition.
+
+5. **Dependency on External Classes**: When extensions are used heavily, it can create dependencies on external classes that are not under your control. This might make your codebase more fragile to changes in those external classes.
+
+**Best Practices**:
+
+- Use extensions for small utility methods or methods that provide syntactic sugar for common operations.
+- Be mindful of naming conflicts and ensure that your extension methods have clear and specific names.
+- Avoid using extensions to override existing methods or to add methods with the same name but different behavior.
+- Use extensions with care for classes you don't own, and prefer to rely on official APIs when available.
+
+In summary, extensions are a powerful tool for enhancing the functionality of existing classes, but like any tool, they should be used thoughtfully to maintain code readability, consistency, and maintainability.
