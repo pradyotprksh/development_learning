@@ -506,6 +506,26 @@ class LeetCode {
 
         println(findMaxConsecutiveOnes(intArrayOf(1,1,0,1,1,1)))
         println(findMaxConsecutiveOnes(intArrayOf(1,0,1,1,0,1)))
+
+        println(findPoisonedDuration(intArrayOf(1,4), 2))
+        println(findPoisonedDuration(intArrayOf(1,2), 2))
+    }
+
+    private fun findPoisonedDuration(timeSeries: IntArray, duration: Int): Int {
+        val seconds = mutableListOf<Int>()
+
+        for (i in timeSeries.indices) {
+            for (j in timeSeries[i] .. (timeSeries[i] + (duration - 1))) {
+                if (i + 1 in timeSeries.indices) {
+                    if (timeSeries[i + 1] == j) {
+                        break
+                    }
+                }
+                seconds.add(j)
+            }
+        }
+
+        return seconds.size
     }
 
     private fun findMaxConsecutiveOnes(nums: IntArray): Int {
