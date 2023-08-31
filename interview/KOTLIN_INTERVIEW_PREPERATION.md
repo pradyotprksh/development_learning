@@ -662,6 +662,120 @@ Remember to include the `kotlinx-coroutines-core` dependency in your project to 
 
 Please note that using coroutines simplifies concurrency management compared to RxJava, as it provides a more structured and sequential way of working with asynchronous tasks.
 
+## Coroutines cancellation
+
+When a coroutine is cancelled, whether it's due to an explicit cancellation request or because of some exceptional condition, a few things happen:
+
+1. **Cancellation Exception:** The coroutine is interrupted, and a `CancellationException` is thrown in the coroutine's context. This exception is a special type of exception that inherits from `CancellationException` and is propagated through the coroutine's code. This allows the coroutine to handle its cleanup tasks.
+
+2. **Job State Change:** The state of the coroutine's associated `Job` changes. If the coroutine is still active, its state changes to `Cancelling`. If the coroutine has completed, its state remains `Completed`. This change can be observed by checking the job's `isActive` property.
+
+3. **Cancellation Handlers:** If the coroutine has any cancellation handlers specified using the `invokeOnCancellation` function, those handlers will be invoked. This is useful for performing cleanup tasks, releasing resources, or handling specific cancellation scenarios.
+
+4. **Coroutine Scope:** The coroutine's parent scope (if any) may be affected. If a parent coroutine is cancelled, it will cancel all its children.
+
+5. **Suspension Points:** If the coroutine is suspended at a suspension point (e.g., inside a `suspend` function), it will check for cancellation before resuming. If it's cancelled while suspended, the cancellation will be handled when it resumes execution.
+
+6. **Cancellation Propagation:** If the coroutine has other coroutines launched inside it (children coroutines), the cancellation will be propagated to those children. Depending on the coroutine builder used (e.g., `launch`, `async`), the children may or may not be cancelled immediately.
+
+Overall, coroutine cancellation is a mechanism to gracefully stop the execution of a coroutine and allow it to perform necessary cleanup tasks. It's important to design your coroutine code to handle cancellation appropriately, releasing any acquired resources and ensuring data integrity.
+
+Coroutines cancellation is a fundamental aspect of Kotlin Coroutines that ensures the graceful termination of coroutines when they are no longer needed or when an error occurs. Cancellation is a cooperative mechanism that requires the coroutine code to periodically check for cancellation and perform necessary cleanup tasks. Here's how coroutine cancellation works:
+
+1. **Cancellation Scope:** Every coroutine launched using a coroutine builder (like `launch`, `async`, etc.) is associated with a `Job` instance. This `Job` represents the running coroutine and provides a reference to its lifecycle.
+
+2. **Cancellable Operations:** Cancellation happens cooperatively, meaning that the coroutine code must check for cancellation and cancel itself when necessary. Coroutine builders offer suspension points like `delay`, `yield`, and other `suspend` functions that can be cancelled during their execution.
+
+3. **Cancellation Checks:** Inside a coroutine, you can use the `isActive` property of the `Job` to check if the coroutine has been cancelled. For example:
+
+   ```kotlin
+   while (isActive) {
+       // Perform some work
+   }
+   ```
+
+4. **Cancellation Exceptions:** When a coroutine is cancelled, a `CancellationException` is thrown in its context. This exception should be caught at appropriate points in the coroutine code and used to clean up resources and gracefully terminate the coroutine.
+
+5. **Cancellation of Child Coroutines:** When a parent coroutine is cancelled, its child coroutines are also cancelled. This propagation of cancellation helps ensure that all related coroutines are properly terminated.
+
+6. **Cancellation Scopes:** You can create custom cancellation scopes using the `CoroutineScope` builder, which provides its own `Job` that can be used for managing the lifecycle and cancellation of a group of related coroutines.
+
+Here's a simple example illustrating coroutine cancellation:
+
+```kotlin
+import kotlinx.coroutines.*
+
+fun main() = runBlocking {
+    val job = launch {
+        repeat(1000) { index ->
+            if (!isActive) return@launch // Check for cancellation
+            println("Job: $index")
+            delay(100)
+        }
+    }
+
+    delay(500) // Let the coroutine run for a while
+
+    job.cancel() // Cancel the coroutine
+
+    job.join() // Wait for the coroutine to finish
+}
+```
+
+In this example, the coroutine prints numbers repeatedly, but it checks for cancellation using `isActive` after each iteration. When the `job` is cancelled, the coroutine stops executing and the program proceeds.
+
+Remember that well-designed coroutine code should handle cancellation gracefully, releasing resources and ensuring that any cleanup operations are properly executed.
+
+When all the children of a coroutine are cancelled, the parent coroutine's cancellation state is also affected. If a parent coroutine's children are all cancelled, the parent coroutine's `Job` is also considered cancelled. This mechanism ensures that the cancellation state propagates up the hierarchy of coroutines.
+
+Here's how this works:
+
+1. **Propagation of Cancellation:** When a child coroutine is cancelled, it propagates its cancellation up the coroutine hierarchy to its parent coroutine. If the parent coroutine has no other active children, its cancellation state is updated to be cancelled as well.
+
+2. **Job's Cancellation State:** The `Job` instance associated with a coroutine maintains its own cancellation state. If all children of a `Job` are cancelled, the `Job` is automatically considered cancelled.
+
+3. **Cancellation Exception:** When a coroutine is cancelled, it throws a `CancellationException` in its context. This exception propagates through the coroutine hierarchy, notifying parent coroutines and allowing them to handle the cancellation gracefully.
+
+Here's a code example to demonstrate the propagation of cancellation from child to parent coroutine:
+
+```kotlin
+import kotlinx.coroutines.*
+
+fun main() = runBlocking {
+    val parentJob = launch {
+        val childJob1 = launch {
+            repeat(3) {
+                println("Child Job 1: $it")
+                delay(100)
+            }
+        }
+
+        val childJob2 = launch {
+            repeat(3) {
+                println("Child Job 2: $it")
+                delay(200)
+            }
+        }
+
+        // Wait for both child jobs to complete
+        childJob1.join()
+        childJob2.join()
+        
+        println("Parent Job completed")
+    }
+
+    delay(150) // Let the parent job run for a while
+
+    parentJob.cancel() // Cancel the parent job
+
+    parentJob.join() // Wait for the parent job to finish
+}
+```
+
+In this example, the `parentJob` launches two child coroutines, `childJob1` and `childJob2`. Both child jobs perform some work and then complete. When you cancel the `parentJob`, both child jobs are also cancelled. As a result, the parent job's cancellation state is set, and the "Parent Job completed" message won't be printed.
+
+Keep in mind that managing the cancellation flow correctly is important to ensure that resources are released and cleanup tasks are performed as needed.
+
 # HashMap
 
 A `HashMap` in Kotlin is a data structure that maps keys to values. It works by storing elements in an array and using a hashing function to determine the index at which to store and retrieve elements. The hashing function converts the key to an integer value, which is used as an index in the array. When a collision occurs (i.e., two or more keys are hashed to the same index), the elements are stored in a linked list.
