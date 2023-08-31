@@ -623,6 +623,45 @@ When a `suspend` function is called, it can be thought of as returning a `Contin
 
 `suspend` functions can be called from other `suspend` functions or from within a coroutine, using the `suspendCoroutine` function. They can also be called from regular functions, but in that case they are executed synchronously, without suspension.
 
+## Parallel calls
+
+Sure, here's a similar example using Kotlin coroutines to achieve parallel execution and combination of results:
+
+```kotlin
+import kotlinx.coroutines.async
+import kotlinx.coroutines.coroutineScope
+
+suspend fun main() {
+    val deferred1 = async { fetchStringFromApi("A") }
+    val deferred2 = async { fetchIntFromApi(1) }
+
+    coroutineScope {
+        val combinedResult = "${deferred1.await()}${deferred2.await()}"
+        println("Combined: $combinedResult")
+    }
+}
+
+suspend fun fetchStringFromApi(input: String): String {
+    // Simulate an API call
+    delay(1000)
+    return input
+}
+
+suspend fun fetchIntFromApi(input: Int): Int {
+    // Simulate an API call
+    delay(1500)
+    return input
+}
+```
+
+In this example, we're using the `async` function from the `kotlinx.coroutines` library to launch parallel coroutines that simulate API calls. The `coroutineScope` builder is used to ensure that the code inside it waits for all the parallel coroutines to complete before proceeding.
+
+The `await` function is used to retrieve the results of the parallel coroutines. The combined result is constructed by combining the fetched string and integer.
+
+Remember to include the `kotlinx-coroutines-core` dependency in your project to use coroutines.
+
+Please note that using coroutines simplifies concurrency management compared to RxJava, as it provides a more structured and sequential way of working with asynchronous tasks.
+
 # HashMap
 
 A `HashMap` in Kotlin is a data structure that maps keys to values. It works by storing elements in an array and using a hashing function to determine the index at which to store and retrieve elements. The hashing function converts the key to an integer value, which is used as an index in the array. When a collision occurs (i.e., two or more keys are hashed to the same index), the elements are stored in a linked list.
