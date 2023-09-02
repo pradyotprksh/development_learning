@@ -776,6 +776,205 @@ In this example, the `parentJob` launches two child coroutines, `childJob1` and 
 
 Keep in mind that managing the cancellation flow correctly is important to ensure that resources are released and cleanup tasks are performed as needed.
 
+## withContext
+
+`withContext` is a function in Kotlin's coroutine library that allows you to switch the context in which a block of code runs. It's often used in coroutine-based programming to change the thread or dispatcher on which a coroutine is executing.
+
+Here's how `withContext` works:
+
+1. **Switching Context**: When you call `withContext`, you specify a coroutine context (usually a dispatcher) as an argument. The coroutine will switch to that context for the duration of the block of code enclosed in `withContext`.
+
+2. **Block Execution**: The code inside the `withContext` block is executed with the specified context. This means that if you switch to a different dispatcher, the code inside the block will run on a different thread or thread pool associated with that dispatcher.
+
+3. **Return Value**: `withContext` returns the result of the last expression in the block. This is helpful for passing results between different contexts or for handling exceptions that might occur within the block.
+
+Here's an example that demonstrates the usage of `withContext`:
+
+```kotlin
+import kotlinx.coroutines.*
+
+fun main() = runBlocking {
+    val result = withContext(Dispatchers.IO) {
+        // This code runs on the IO dispatcher
+        delay(1000)
+        "Hello from IO!"
+    }
+
+    println("Result: $result")
+}
+```
+
+In this example:
+
+- We use `withContext(Dispatchers.IO)` to switch to the IO dispatcher.
+- Inside the `withContext` block, we delay for 1 second (simulating some IO-bound operation) and then return a string.
+- After the `withContext` block, we print the result.
+
+Common use cases for `withContext` include performing network requests, disk I/O, or any operation that should not block the main thread in Android or the UI thread in other GUI applications. It allows you to perform potentially time-consuming operations off the main thread while seamlessly switching back to the main thread when you need to update the user interface or perform other UI-related tasks.
+
+### withContext(NotCancellable)
+
+The `withContext(NonCancellable)` block runs on the current coroutine context, specifically, it doesn't change the coroutine context. Instead, it is a way to ensure that the code inside the block is not cancellable.
+
+Here's what happens when you use `withContext(NonCancellable)`:
+
+1. **Context Preservation**: The `NonCancellable` context is used to wrap the code inside the `withContext` block, but it doesn't change the coroutine's current context. This means that the code inside the block will execute in the same context it was running in before `withContext(NonCancellable)` was called.
+
+2. **Non-Cancellation Guarantee**: The primary purpose of `NonCancellable` is to ensure that the code inside the block continues to run even if the surrounding coroutine is cancelled. This can be important for cleanup tasks or for operations that should not be interrupted, such as releasing resources.
+
+Here's an example:
+
+```kotlin
+import kotlinx.coroutines.*
+
+fun main() = runBlocking {
+    val job = launch {
+        try {
+            withContext(NonCancellable) {
+                println("Performing a non-cancellable task...")
+                delay(2000) // Simulate some work
+                println("Task completed")
+            }
+        } catch (e: CancellationException) {
+            println("Task was cancelled, but still completed")
+        }
+    }
+
+    delay(1000) // Let the job run for a while
+    job.cancel()
+    job.join()
+    println("Main coroutine completed")
+}
+```
+
+In this example, the code inside the `withContext(NonCancellable)` block will continue to execute even if the `job` is cancelled. The "Task completed" message will always be printed, demonstrating that the task inside the block is non-cancellable. This is useful for ensuring that important cleanup or finalization tasks are always executed, even if the parent coroutine is cancelled.
+
+## launch vs withContext
+
+`withContext` and `launch` are both functions in Kotlin's coroutine library, but they serve different purposes and have distinct behaviors:
+
+1. **Purpose**:
+
+   - **`withContext`**: It is used to change the coroutine context (usually a dispatcher) for a specific block of code and then return the result of that block.
+   - **`launch`**: It is used to start a new coroutine in the background that runs concurrently with the current coroutine without blocking the current coroutine's execution.
+
+2. **Execution**:
+
+   - **`withContext`**: It runs code sequentially within the current coroutine. It switches the context for a block of code and then returns the result of that code execution.
+   - **`launch`**: It starts a new coroutine concurrently. The code inside the coroutine runs in the background, independently of the current coroutine. It doesn't return a result directly to the caller; you can use other mechanisms like channels or shared data structures to communicate between coroutines.
+
+3. **Return Value**:
+
+   - **`withContext`**: It returns the result of the last expression in the provided block.
+   - **`launch`**: It doesn't return a result directly. You typically use other mechanisms, such as communication channels, to pass data between the launched coroutine and the parent coroutine if needed.
+
+4. **Use Cases**:
+
+   - **`withContext`**: It's commonly used when you need to switch the context temporarily for a specific operation within the current coroutine. This is useful for IO-bound or CPU-bound tasks that should not block the main thread or the calling coroutine.
+   - **`launch`**: It's used when you want to start a new coroutine to perform some asynchronous task concurrently with the current coroutine. This is useful for parallel processing or long-running tasks that should not block the current coroutine's execution.
+
+Here's a basic example to illustrate the difference:
+
+```kotlin
+import kotlinx.coroutines.*
+
+fun main() = runBlocking {
+    // Using withContext to perform an IO operation
+    val result = withContext(Dispatchers.IO) {
+        delay(1000)
+        "Operation completed in IO dispatcher"
+    }
+    println(result)
+
+    // Using launch to start a concurrent coroutine
+    val job = launch(Dispatchers.Default) {
+        delay(1000)
+        println("Concurrent operation completed in Default dispatcher")
+    }
+
+    println("Main coroutine still executing")
+    job.join()
+}
+```
+
+In this example, `withContext` is used to switch the context for a specific IO operation within the current coroutine, and `launch` is used to start a new coroutine to perform a concurrent operation. The key difference is that `withContext` changes the context for a block of code within the current coroutine, while `launch` starts a new coroutine to run code concurrently.
+
+## Unconfined dispatchers
+
+The `Unconfined` dispatcher is a special dispatcher in Kotlin's coroutine library that provides a unique behavior when used as a coroutine context. Unlike other dispatchers like `Dispatchers.IO` or `Dispatchers.Main`, the `Unconfined` dispatcher does not confine the execution of a coroutine to a specific thread or thread pool. Instead, it allows the coroutine to resume execution in whatever thread or context called the coroutine's `resume` function. 
+
+Here are some key characteristics of the `Unconfined` dispatcher:
+
+1. **Thread-agnostic**: Coroutines launched with the `Unconfined` dispatcher are not tied to any specific thread. They can switch execution between threads during suspension and resumption.
+
+2. **Immediate Execution**: When a coroutine using `Unconfined` is resumed, it continues executing immediately in the current thread, which might be different from where it was initially launched. This is often used in cases where you want to avoid thread confinement, such as in certain testing scenarios.
+
+3. **Use Cases**:
+   - **Testing**: `Unconfined` can be useful for unit testing, allowing you to execute code synchronously within a test environment, even if the original coroutine was designed to be asynchronous.
+   - **Coroutine Builders**: It's occasionally used when defining custom coroutine builders to implement specific behaviors, but it should be used with caution.
+
+Here's a simple example to illustrate the behavior of the `Unconfined` dispatcher:
+
+```kotlin
+import kotlinx.coroutines.*
+
+fun main() = runBlocking {
+    val job = launch(Dispatchers.Unconfined) {
+        println("Started in ${Thread.currentThread().name}")
+        delay(100)
+        println("Resumed in ${Thread.currentThread().name}")
+    }
+
+    delay(50)
+    println("Main coroutine in ${Thread.currentThread().name}")
+    job.join()
+}
+```
+
+In this example, the `Unconfined` dispatcher is used for the `job`. You'll notice that the coroutine starts in the main thread, suspends for a short period, and then resumes in the main thread. The execution is not confined to any specific thread, and it can switch between threads if needed.
+
+It's important to use `Unconfined` with care because it can lead to thread-agnostic behavior, making it harder to reason about thread safety and concurrency. It's typically used in specialized scenarios where you have a specific reason to allow the coroutine to be thread-agnostic. In most cases, you'll want to use one of the standard dispatchers like `Dispatchers.IO` or `Dispatchers.Main` to manage the execution context of your coroutines.
+
+## yield()
+
+In Kotlin, `yield()` is a suspending function that is used within a coroutine to voluntarily suspend its execution and allow other coroutines to run. It is typically used within a coroutine to yield control back to the coroutine dispatcher temporarily. The coroutine that called `yield()` can later resume its execution.
+
+Here's how `yield()` works:
+
+1. **Suspend Execution**: When a coroutine encounters the `yield()` function, it temporarily suspends its execution. This means that it doesn't block the thread but frees it up for other coroutines to run.
+
+2. **Yield Control**: The `yield()` function yields control back to the coroutine dispatcher, allowing other coroutines that are ready to run to execute. This cooperative multitasking mechanism helps in achieving concurrency without the need for threads.
+
+3. **Resume Execution**: After other coroutines have had a chance to run, the coroutine that called `yield()` can be resumed by the coroutine dispatcher. The coroutine continues its execution from where it left off after the `yield()` call.
+
+`yield()` is often used in situations where a coroutine performs a time-consuming operation that doesn't need to block the entire thread. By yielding control, other coroutines can continue to execute in the same thread, leading to more efficient use of resources.
+
+Here's a simple example of `yield()` in action:
+
+```kotlin
+import kotlinx.coroutines.*
+
+fun main() = runBlocking {
+    val job = launch {
+        println("Start")
+
+        yield()
+
+        println("After yield")
+
+        yield()
+
+        println("End")
+    }
+
+    job.join()
+}
+```
+
+In this example, the `launch` coroutine is created and executed. Inside the coroutine, `yield()` is called twice. When the first `yield()` is encountered, the coroutine temporarily suspends, allowing other coroutines to run. After other coroutines have had a chance to execute, the original coroutine is resumed, and it prints "After yield." The process repeats for the second `yield()`. Finally, the coroutine prints "End."
+
+Keep in mind that `yield()` is a cooperative suspending function, meaning it depends on other coroutines yielding control back to it for the expected concurrency to occur. If other coroutines do not yield, the execution may not switch as expected.
+
 # HashMap
 
 A `HashMap` in Kotlin is a data structure that maps keys to values. It works by storing elements in an array and using a hashing function to determine the index at which to store and retrieve elements. The hashing function converts the key to an integer value, which is used as an index in the array. When a collision occurs (i.e., two or more keys are hashed to the same index), the elements are stored in a linked list.
