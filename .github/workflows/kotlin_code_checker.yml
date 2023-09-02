@@ -82,3 +82,22 @@ jobs:
           token: ${{ secrets.TELEGRAM_TOKEN }}
           message: |
             GitHub Action for kotlin/udemy_course is completed with status ${{ job.status }} for ${{ github.ref }}.
+  pokedex:
+    name: ktor/pokedex Code Checker
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cancel Previous Runs
+        uses: styfle/cancel-workflow-action@0.9.1
+        with:
+          access_token: ${{ github.token }}
+      - uses: actions/checkout@v2
+      - name: Checking ktor/pokedex
+        working-directory: ./kotlin/ktor/pokedex
+        run: ./gradlew build
+      - name: Send Message
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+            GitHub Action for kotlin/ktor/pokedex is completed with status ${{ job.status }} for ${{ github.ref }}.
