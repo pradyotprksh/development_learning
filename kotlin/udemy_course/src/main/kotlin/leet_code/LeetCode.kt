@@ -509,6 +509,78 @@ class LeetCode {
 
         println(findPoisonedDuration(intArrayOf(1,4), 2))
         println(findPoisonedDuration(intArrayOf(1,2), 2))
+
+        println(findWords(arrayOf("Hello","Alaska","Dad","Peace")).toList())
+
+        println(findRelativeRanks(intArrayOf(5,4,3,2,1)).toList())
+        println(findRelativeRanks(intArrayOf(10,3,8,9,4)).toList())
+
+        println(checkPerfectNumber(28))
+        println(checkPerfectNumber(7))
+    }
+
+    private fun checkPerfectNumber(num: Int): Boolean {
+        val divisors = mutableListOf<Int>()
+        for (i in 1 until num) {
+            if (num % i == 0) {
+                divisors.add(i)
+            }
+        }
+
+        return divisors.sum() == num
+    }
+
+    private fun findRelativeRanks(score: IntArray): Array<String> {
+        val topThreeScores = score.toMutableList().sortedDescending()
+
+        val ans = mutableListOf<String>()
+        for (s in score) {
+            when (val index = topThreeScores.indexOf(s)) {
+                0 -> ans.add("Gold Medal")
+                1 -> ans.add("Silver Medal")
+                2 -> ans.add("Bronze Medal")
+                else -> ans.add((index + 1).toString())
+            }
+        }
+
+        return ans.toTypedArray()
+    }
+
+    private fun findMode(root: TreeNode?): IntArray {
+        val nodesMap = mutableMapOf<Int, Int>()
+        val queue = mutableListOf<TreeNode>()
+        root?.let { queue.add(it) }
+        var max = 0
+
+        while (queue.isNotEmpty()) {
+            val node = queue.removeAt(0)
+
+            nodesMap[node.data] = nodesMap.getOrDefault(node.data, 0) + 1
+            max = maxOf(nodesMap.getOrDefault(node.data, 0), max)
+
+            node.left?.let { queue.add(it) }
+            node.right?.let { queue.add(it) }
+        }
+
+        return nodesMap.filter { it.value == max }.keys.toIntArray()
+    }
+
+    private fun findWords(words: Array<String>): Array<String> {
+        val firstRow = "qwertyuiop".toSet()
+        val secondRow = "asdfghjkl".toSet()
+        val thirdRow = "zxcvbnm".toSet()
+
+        val ans = mutableListOf<String>()
+
+        for (w in words) {
+            val word = w.lowercase().toSet()
+
+            if (firstRow.intersect(word).size == word.size || secondRow.intersect(word).size == word.size || thirdRow.intersect(word).size == word.size) {
+                ans.add(w)
+            }
+        }
+
+        return ans.toTypedArray()
     }
 
     private fun findPoisonedDuration(timeSeries: IntArray, duration: Int): Int {
