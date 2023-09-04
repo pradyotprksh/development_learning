@@ -6,6 +6,7 @@ object Paths {
     const val LIMIT = "limit"
 
     object Berries {
+        const val ALL_BERRIES = "/all-berries"
         const val BERRY = "/berry"
         const val BERRY_PAGINATION = "{${OFFSET}}/{${LIMIT}}"
         const val BERRY_ID = "{${ID}?}"

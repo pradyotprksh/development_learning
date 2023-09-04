@@ -31,6 +31,9 @@ dependencies {
     implementation("io.ktor:ktor-client-core:$ktor_version")
     implementation("io.ktor:ktor-client-cio:$ktor_version")
 
+    // Resources
+    implementation("io.ktor:ktor-server-resources:$ktor_version")
+
     // Koin
     implementation("org.kodein.di:kodein-di-generic-jvm:6.1.0")
 
