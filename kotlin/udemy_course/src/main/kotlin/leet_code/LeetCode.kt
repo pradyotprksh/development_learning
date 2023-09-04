@@ -2,6 +2,7 @@ package leet_code
 
 import data_structures.linked_lists.ListNode
 import data_structures.trees.TreeNode
+import java.lang.Exception
 import java.util.*
 import kotlin.math.abs
 import kotlin.math.max
@@ -517,6 +518,89 @@ class LeetCode {
 
         println(checkPerfectNumber(28))
         println(checkPerfectNumber(7))
+
+        println(convert("PAYPALISHIRING", 3))
+        println(convert("PAYPALISHIRING", 4))
+        println(convert("A", 1))
+        println(convert("ABC", 2))
+
+        println(myAtoi("42"))
+        println(myAtoi("   -42"))
+        println(myAtoi("4193 with words"))
+        println(myAtoi("-91283472332"))
+    }
+
+    private fun myAtoi(s: String): Int {
+        val ans = StringBuilder()
+
+        var found = false
+        var charFound = false
+        var digitsFound = false
+
+        for (c in s) {
+            if (c == '-' || c == '+' || c.code in 48 .. 57) {
+                if (charFound) {
+                    return 0
+                }
+                if (ans.isNotEmpty()) {
+                    if (ans.last() == '-' || ans.last() == '+') {
+                        if (c == '-' || c == '+') {
+                            return 0
+                        }
+                    }
+                    if (c == '-' || c == '+') {
+                        break
+                    }
+                }
+                if (c.code in 48 .. 57) {
+                    digitsFound = true
+                }
+
+                found = true
+                ans.append(c)
+                continue
+            }
+            if (c != ' ') {
+                charFound = true
+            }
+            if (found) {
+                break
+            }
+        }
+
+        if (ans.isEmpty()) return 0
+        if (!digitsFound) return 0
+
+        return try {
+            ans.toString().toInt()
+        } catch (_: Exception) {
+            if (ans.first() == '-') {
+                Int.MIN_VALUE
+            } else {
+                Int.MAX_VALUE
+            }
+        }
+    }
+
+    private fun convert(s: String, numRows: Int): String {
+        if (numRows == 1) return s
+
+        val ans = StringBuilder()
+
+        for (r in 0 until numRows) {
+            val increment = (numRows - 1) * 2
+            for (i in r until s.length step increment) {
+                ans.append(s[i])
+                if (r != 0 && r != numRows - 1) {
+                    val index = i + increment - 2 * r
+                    if (index < s.length) {
+                        ans.append(s[index])
+                    }
+                }
+            }
+        }
+
+        return ans.toString()
     }
 
     private fun checkPerfectNumber(num: Int): Boolean {
