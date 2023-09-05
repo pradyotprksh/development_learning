@@ -93,7 +93,10 @@ jobs:
       - uses: actions/checkout@v2
       - name: Checking ktor/pokedex
         working-directory: ./kotlin/ktor/pokedex
-        run: ./gradlew build
+        run: |
+          chmod +x ./gradlew
+          ./gradlew build
+          ./gradlew test
       - name: Send Message
         uses: appleboy/telegram-action@master
         with:
