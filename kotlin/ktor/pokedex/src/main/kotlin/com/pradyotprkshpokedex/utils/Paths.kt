@@ -2,14 +2,12 @@ package com.pradyotprkshpokedex.utils
 
 object Paths {
     const val ID = "id"
-    const val OFFSET = "offset"
-    const val LIMIT = "limit"
 
     object Berries {
         const val BERRY = "/berry"
         const val PAGINATION = "/all"
-        const val FIRMNESS = "/berry-firmness"
-        const val FLAVOR = "/berry-flavor"
+        const val FIRMNESS = "/firmness"
+        const val FLAVOR = "/flavor"
     }
 
     object Contests {}

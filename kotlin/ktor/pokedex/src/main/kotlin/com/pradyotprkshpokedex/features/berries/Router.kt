@@ -2,26 +2,19 @@ package com.pradyotprkshpokedex.features.berries
 
 import com.pradyotprkshpokedex.features.berries.controllers.BerriesController
 import com.pradyotprkshpokedex.features.berries.resource.Berry
-import com.pradyotprkshpokedex.utils.Paths
 import io.ktor.server.resources.*
 import io.ktor.server.routing.*
 
-/**
- * Berries are small fruits that can provide HP and status condition restoration, stat enhancement,
- * and even damage negation when eaten by Pokémon.
- */
 fun Routing.berries(berriesController: BerriesController) {
-    get<Berry> { berriesController.getAllBerries(this.context) }
-    get<Berry.Id> { berriesController.getBerryDetails(this.context) }
-    get<Berry.Pagination> { berriesController.getBerriesByPagination(this.context) }
+    get<Berry> { berriesController.getAllBerries(this.context, it) }
+    get<Berry.Id> { berriesController.getBerryDetails(this.context, it) }
+    get<Berry.Pagination> { berriesController.getBerriesByPagination(this.context, it) }
 
-    route(Paths.Berries.FIRMNESS) {
-        get { }
-        get(Paths.ID) { }
-    }
+    get<Berry.BerryFirmness> { berriesController.getAllBerryFirmness(this.context, it) }
+    get<Berry.BerryFirmness.Id> { berriesController.getBerryFirmnessDetails(this.context, it) }
+    get<Berry.BerryFirmness.Pagination> { berriesController.getBerryFirmnessByPagination(this.context, it) }
 
-    route(Paths.Berries.FLAVOR) {
-        get { }
-        get(Paths.ID) { }
-    }
+    get<Berry.BerryFlavor> { berriesController.getAllBerryFlavor(this.context, it) }
+    get<Berry.BerryFlavor.Id> { berriesController.getBerryFlavorDetails(this.context, it) }
+    get<Berry.BerryFlavor.Pagination> { berriesController.getBerryFlavorByPagination(this.context, it) }
 }

@@ -24,4 +24,40 @@ class BerriesRouterTest {
         val response = client.get("/berry/1")
         assertEquals(HttpStatusCode.OK, response.status)
     }
+
+    @Test
+    fun testAllBerryFirmness() = testBuilder {
+        val response = client.get("/berry/firmness")
+        assertEquals(HttpStatusCode.OK, response.status)
+    }
+
+    @Test
+    fun testBerryFirmnessPagination() = testBuilder {
+        val response = client.get("/berry/firmness/all?offset=1&limit=1")
+        assertEquals(HttpStatusCode.OK, response.status)
+    }
+
+    @Test
+    fun testBerryFirmnessId() = testBuilder {
+        val response = client.get("/berry/firmness/1")
+        assertEquals(HttpStatusCode.OK, response.status)
+    }
+
+    @Test
+    fun testAllBerryFlavor() = testBuilder {
+        val response = client.get("/berry/flavor")
+        assertEquals(HttpStatusCode.OK, response.status)
+    }
+
+    @Test
+    fun testBerryFlavorPagination() = testBuilder {
+        val response = client.get("/berry/flavor/all?offset=1&limit=1")
+        assertEquals(HttpStatusCode.OK, response.status)
+    }
+
+    @Test
+    fun testBerryFlavorId() = testBuilder {
+        val response = client.get("/berry/flavor/1")
+        assertEquals(HttpStatusCode.OK, response.status)
+    }
 }
