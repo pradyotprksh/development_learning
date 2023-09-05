@@ -8,9 +8,9 @@ import io.ktor.resources.*
  * and even damage negation when eaten by Pokémon.
  */
 @Resource(Paths.Berries.BERRY)
-class BerryResource {
+class BerriesResource {
     @Resource("{${Paths.Parameters.ID}}")
-    data class Id(val parent: BerryResource = BerryResource(), val id: Int) {
+    data class Id(val parent: BerriesResource = BerriesResource(), val id: Int) {
         val isValid: Boolean
             get() = id > 0
     }
@@ -20,7 +20,7 @@ class BerryResource {
      */
     @Resource(Paths.Berries.PAGINATION)
     data class Pagination(
-        val parent: BerryResource = BerryResource(),
+        val parent: BerriesResource = BerriesResource(),
         val offset: Int,
         val limit: Int,
         val withDetails: Boolean = false
@@ -33,7 +33,7 @@ class BerryResource {
      * Berries can be soft or hard.
      */
     @Resource(Paths.Berries.FIRMNESS)
-    class BerryFirmness(val parent: BerryResource = BerryResource()) {
+    class BerryFirmness(val parent: BerriesResource = BerriesResource()) {
         @Resource("{${Paths.Parameters.ID}}")
         data class Id(val parent: BerryFirmness = BerryFirmness(), val id: Int) {
             val isValid: Boolean
@@ -57,7 +57,7 @@ class BerryResource {
      * Flavors determine whether a Pokémon will benefit or suffer from eating a berry based on their nature.
      */
     @Resource(Paths.Berries.FLAVOR)
-    class BerryFlavor(val parent: BerryResource = BerryResource()) {
+    class BerryFlavor(val parent: BerriesResource = BerriesResource()) {
         @Resource("{${Paths.Parameters.ID}}")
         data class Id(val parent: BerryFlavor = BerryFlavor(), val id: Int) {
             val isValid: Boolean

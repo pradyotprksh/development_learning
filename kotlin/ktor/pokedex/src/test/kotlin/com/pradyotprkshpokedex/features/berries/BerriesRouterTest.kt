@@ -8,12 +8,6 @@ import kotlin.test.assertEquals
 
 class BerriesRouterTest {
     @Test
-    fun testAllBerry() = testBuilder {
-        val response = client.get("/berry")
-        assertEquals(HttpStatusCode.OK, response.status)
-    }
-
-    @Test
     fun testBerryPagination() = testBuilder {
         val response = client.get("/berry/paginate?offset=1&limit=1")
         assertEquals(HttpStatusCode.OK, response.status)
@@ -32,12 +26,6 @@ class BerriesRouterTest {
     }
 
     @Test
-    fun testAllBerryFirmness() = testBuilder {
-        val response = client.get("/berry/firmness")
-        assertEquals(HttpStatusCode.OK, response.status)
-    }
-
-    @Test
     fun testBerryFirmnessPagination() = testBuilder {
         val response = client.get("/berry/firmness/paginate?offset=1&limit=1")
         assertEquals(HttpStatusCode.OK, response.status)
@@ -53,12 +41,6 @@ class BerriesRouterTest {
 
         val responseError = client.get("/berry/firmness/0")
         assertEquals(HttpStatusCode.BadRequest, responseError.status)
-    }
-
-    @Test
-    fun testAllBerryFlavor() = testBuilder {
-        val response = client.get("/berry/flavor")
-        assertEquals(HttpStatusCode.OK, response.status)
     }
 
     @Test

@@ -1,10 +1,10 @@
 package com.pradyotprkshpokedex.features.berries.controllers
 
-import com.pradyotprkshpokedex.features.berries.resource.BerryResource
+import com.pradyotprkshpokedex.features.berries.resource.BerriesResource
 import io.ktor.server.application.*
 
 interface BerryController {
-    suspend fun getBerriesByPagination(context: ApplicationCall, berryResource: BerryResource.Pagination)
+    suspend fun getBerriesByPagination(context: ApplicationCall, berriesResource: BerriesResource.Pagination)
 
     /**
      * USE IT AT YOUR OWN RISK
@@ -14,5 +14,5 @@ interface BerryController {
      */
     suspend fun getAllBerries(context: ApplicationCall)
 
-    suspend fun getBerryDetails(context: ApplicationCall, berryResource: BerryResource.Id)
+    suspend fun getBerryDetails(context: ApplicationCall, berriesResource: BerriesResource.Id)
 }

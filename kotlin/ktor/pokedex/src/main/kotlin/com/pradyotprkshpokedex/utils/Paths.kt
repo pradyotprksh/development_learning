@@ -20,7 +20,11 @@ object Paths {
     object Games {}
     object Items {}
     object Locations {}
-    object Machines {}
+
+    object Machines {
+        const val MACHINE = "machine"
+    }
+
     object Moves {}
     object Pokemon {}
 }

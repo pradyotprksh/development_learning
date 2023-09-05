@@ -1,6 +1,6 @@
 package com.pradyotprkshpokedex.features.berries.controllers
 
-import com.pradyotprkshpokedex.features.berries.resource.BerryResource
+import com.pradyotprkshpokedex.features.berries.resource.BerriesResource
 import io.ktor.server.application.*
 
 interface BerryFirmnessController {
@@ -10,12 +10,12 @@ interface BerryFirmnessController {
      * Using this might leads to Connection Reset / Timeout error.
      * Better to use pagination route to get results in paginated format.
      */
-    suspend fun getAllBerryFirmness(context: ApplicationCall, firmnesses: BerryResource.BerryFirmness)
+    suspend fun getAllBerryFirmness(context: ApplicationCall, firmnesses: BerriesResource.BerryFirmness)
 
-    suspend fun getBerryFirmnessDetails(context: ApplicationCall, firmnesses: BerryResource.BerryFirmness.Id)
+    suspend fun getBerryFirmnessDetails(context: ApplicationCall, firmnesses: BerriesResource.BerryFirmness.Id)
 
     suspend fun getBerryFirmnessByPagination(
         context: ApplicationCall,
-        firmnesses: BerryResource.BerryFirmness.Pagination
+        firmnesses: BerriesResource.BerryFirmness.Pagination
     )
 }

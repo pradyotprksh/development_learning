@@ -11,6 +11,7 @@ import com.pradyotprkshpokedex.features.evolution.evolution
 import com.pradyotprkshpokedex.features.games.games
 import com.pradyotprkshpokedex.features.items.items
 import com.pradyotprkshpokedex.features.locations.locations
+import com.pradyotprkshpokedex.features.machines.controllers.MachinesController
 import com.pradyotprkshpokedex.features.machines.machines
 import com.pradyotprkshpokedex.features.moves.moves
 import com.pradyotprkshpokedex.features.pokemon.pokemon
@@ -72,13 +73,6 @@ fun Application.configureStatusPages() {
                 )
             }
         }
-
-        exception<Throwable> { call, cause ->
-            call.respondText(
-                text = "${HttpStatusCode.InternalServerError.value}: $cause",
-                status = HttpStatusCode.InternalServerError
-            )
-        }
     }
 }
 
@@ -88,6 +82,7 @@ fun Application.configureResource() {
 
 fun Application.configureRouting() {
     val berriesController by ModulesConfig.kodein.instance<BerriesController>()
+    val machinesController by ModulesConfig.kodein.instance<MachinesController>()
 
     routing {
         berries(berriesController = berriesController)
@@ -97,7 +92,7 @@ fun Application.configureRouting() {
         games()
         items()
         locations()
-        machines()
+        machines(machinesController = machinesController)
         moves()
         pokemon()
     }

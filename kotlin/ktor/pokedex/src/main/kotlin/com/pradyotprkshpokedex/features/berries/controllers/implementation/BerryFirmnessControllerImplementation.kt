@@ -2,11 +2,10 @@ package com.pradyotprkshpokedex.features.berries.controllers.implementation
 
 import com.pradyotprkshpokedex.core.exception.ParametersInvalidException
 import com.pradyotprkshpokedex.core.service.BerryService
-import com.pradyotprkshpokedex.domain.modal.Berry
 import com.pradyotprkshpokedex.domain.modal.BerryFirmness
 import com.pradyotprkshpokedex.domain.modal.BerryFirmnesses
 import com.pradyotprkshpokedex.features.berries.controllers.BerryFirmnessController
-import com.pradyotprkshpokedex.features.berries.resource.BerryResource
+import com.pradyotprkshpokedex.features.berries.resource.BerriesResource
 import com.pradyotprkshpokedex.utils.Paths
 import io.ktor.http.*
 import io.ktor.server.application.*
@@ -19,12 +18,15 @@ import kotlinx.coroutines.launch
 class BerryFirmnessControllerImplementation(
     private val berryService: BerryService,
 ) : BerryFirmnessController {
-    override suspend fun getAllBerryFirmness(context: ApplicationCall, firmnesses: BerryResource.BerryFirmness) {
+    override suspend fun getAllBerryFirmness(context: ApplicationCall, firmnesses: BerriesResource.BerryFirmness) {
         val allBerryFirmnesses = berryService.getBerriesFirmnessByPagination(offset = 0, limit = Int.MAX_VALUE)
         respondWithBerriesFirmnessesDetails(context, allBerryFirmnesses)
     }
 
-    override suspend fun getBerryFirmnessDetails(context: ApplicationCall, firmnesses: BerryResource.BerryFirmness.Id) {
+    override suspend fun getBerryFirmnessDetails(
+        context: ApplicationCall,
+        firmnesses: BerriesResource.BerryFirmness.Id
+    ) {
         if (firmnesses.isValid) {
             context.respond(status = HttpStatusCode.OK, berryService.getBerryFirmnessDetails(id = firmnesses.id))
         } else {
@@ -34,7 +36,7 @@ class BerryFirmnessControllerImplementation(
 
     override suspend fun getBerryFirmnessByPagination(
         context: ApplicationCall,
-        firmnesses: BerryResource.BerryFirmness.Pagination
+        firmnesses: BerriesResource.BerryFirmness.Pagination
     ) {
         if (firmnesses.isValid) {
             val berryFirmnesses =
@@ -48,11 +50,14 @@ class BerryFirmnessControllerImplementation(
                 )
             }
         } else {
-            throw ParametersInvalidException(invalidParameters = listOf(Paths.Parameters.ID))
+            throw ParametersInvalidException(invalidParameters = listOf(Paths.Parameters.OFFSET, Paths.Parameters.LIMIT))
         }
     }
 
-    private suspend fun respondWithBerriesFirmnessesDetails(context: ApplicationCall, berryFirmnesses: BerryFirmnesses) {
+    private suspend fun respondWithBerriesFirmnessesDetails(
+        context: ApplicationCall,
+        berryFirmnesses: BerryFirmnesses
+    ) {
         coroutineScope {
             val count = berryFirmnesses.results.size
             val channels = Channel<BerryFirmness>()

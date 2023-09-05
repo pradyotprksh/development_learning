@@ -1,6 +1,6 @@
 package com.pradyotprkshpokedex.features.berries.controllers
 
-import com.pradyotprkshpokedex.features.berries.resource.BerryResource
+import com.pradyotprkshpokedex.features.berries.resource.BerriesResource
 import io.ktor.server.application.*
 
 interface BerryFlavorController {
@@ -10,9 +10,9 @@ interface BerryFlavorController {
      * Using this might leads to Connection Reset / Timeout error.
      * Better to use pagination route to get results in paginated format.
      */
-    suspend fun getAllBerryFlavor(context: ApplicationCall, flavor: BerryResource.BerryFlavor)
+    suspend fun getAllBerryFlavor(context: ApplicationCall, flavor: BerriesResource.BerryFlavor)
 
-    suspend fun getBerryFlavorDetails(context: ApplicationCall, flavor: BerryResource.BerryFlavor.Id)
+    suspend fun getBerryFlavorDetails(context: ApplicationCall, flavor: BerriesResource.BerryFlavor.Id)
 
-    suspend fun getBerryFlavorByPagination(context: ApplicationCall, flavor: BerryResource.BerryFlavor.Pagination)
+    suspend fun getBerryFlavorByPagination(context: ApplicationCall, flavor: BerriesResource.BerryFlavor.Pagination)
 }

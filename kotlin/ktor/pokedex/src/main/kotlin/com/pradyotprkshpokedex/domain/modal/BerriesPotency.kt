@@ -4,9 +4,9 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class BerriesPotency (
+data class BerriesPotency(
 
-    @SerialName("berry"   ) val berry   : Results? = null,
-    @SerialName("potency" ) val potency : Int?   = null
+    @SerialName("berry") val berry: Results? = null,
+    @SerialName("potency") val potency: Int? = null
 
 )

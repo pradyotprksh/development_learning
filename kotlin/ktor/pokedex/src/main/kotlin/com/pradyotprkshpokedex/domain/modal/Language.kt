@@ -4,9 +4,9 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Language (
+data class Language(
 
-    @SerialName("name" ) val name : String? = null,
-    @SerialName("url"  ) val url  : String? = null
+    @SerialName("name") val name: String? = null,
+    @SerialName("url") val url: String? = null
 
 )

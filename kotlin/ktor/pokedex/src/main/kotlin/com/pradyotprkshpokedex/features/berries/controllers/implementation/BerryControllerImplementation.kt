@@ -5,7 +5,7 @@ import com.pradyotprkshpokedex.core.service.BerryService
 import com.pradyotprkshpokedex.domain.modal.Berries
 import com.pradyotprkshpokedex.domain.modal.Berry
 import com.pradyotprkshpokedex.features.berries.controllers.BerryController
-import com.pradyotprkshpokedex.features.berries.resource.BerryResource
+import com.pradyotprkshpokedex.features.berries.resource.BerriesResource
 import com.pradyotprkshpokedex.utils.Paths
 import io.ktor.http.*
 import io.ktor.server.application.*
@@ -18,11 +18,11 @@ import kotlinx.coroutines.launch
 class BerryControllerImplementation(
     private val berryService: BerryService,
 ) : BerryController {
-    override suspend fun getBerriesByPagination(context: ApplicationCall, berryResource: BerryResource.Pagination) {
-        if (berryResource.isValid) {
+    override suspend fun getBerriesByPagination(context: ApplicationCall, berriesResource: BerriesResource.Pagination) {
+        if (berriesResource.isValid) {
             val berries =
-                berryService.getBerriesByPagination(offset = berryResource.offset, limit = berryResource.limit)
-            if (berryResource.withDetails) {
+                berryService.getBerriesByPagination(offset = berriesResource.offset, limit = berriesResource.limit)
+            if (berriesResource.withDetails) {
                 respondWithBerriesDetails(context, berries)
             } else {
                 context.respond(
@@ -31,7 +31,7 @@ class BerryControllerImplementation(
                 )
             }
         } else {
-            throw ParametersInvalidException(invalidParameters = listOf(Paths.Parameters.ID))
+            throw ParametersInvalidException(invalidParameters = listOf(Paths.Parameters.OFFSET, Paths.Parameters.LIMIT))
         }
     }
 
@@ -40,9 +40,9 @@ class BerryControllerImplementation(
         respondWithBerriesDetails(context, allBerries)
     }
 
-    override suspend fun getBerryDetails(context: ApplicationCall, berryResource: BerryResource.Id) {
-        if (berryResource.isValid) {
-            context.respond(status = HttpStatusCode.OK, berryService.getBerryDetails(id = berryResource.id))
+    override suspend fun getBerryDetails(context: ApplicationCall, berriesResource: BerriesResource.Id) {
+        if (berriesResource.isValid) {
+            context.respond(status = HttpStatusCode.OK, berryService.getBerryDetails(id = berriesResource.id))
         } else {
             throw ParametersInvalidException(invalidParameters = listOf(Paths.Parameters.ID))
         }
