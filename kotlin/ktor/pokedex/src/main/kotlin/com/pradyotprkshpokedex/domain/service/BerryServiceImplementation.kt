@@ -6,13 +6,17 @@ import com.pradyotprkshpokedex.core.request.PokeApiRequestDetails
 import com.pradyotprkshpokedex.core.service.BerryService
 import com.pradyotprkshpokedex.domain.modal.Berries
 import com.pradyotprkshpokedex.domain.modal.Berry
+import com.pradyotprkshpokedex.utils.Paths
 
 class BerryServiceImplementation(private val networkClient: NetworkClient): BerryService {
-    override suspend fun getAllBerries(path: String?): Berries {
+    override suspend fun getBerriesByPagination(offset: Int, limit: Int): Berries {
         val berries = networkClient.get<Berries>(
             details = PokeApiRequestDetails(
-                endpoint = "berry",
-                fullPath = path,
+                endpoint = Paths.Berries.BERRY,
+                queries = mapOf(
+                    Paths.Parameters.OFFSET to offset,
+                    Paths.Parameters.LIMIT to limit
+                )
             )
         )
 
@@ -24,7 +28,7 @@ class BerryServiceImplementation(private val networkClient: NetworkClient): Berr
     override suspend fun getBerryDetails(id: Int, path: String?): Berry {
         val berryDetails = networkClient.get<Berry>(
             details = PokeApiRequestDetails(
-                endpoint = "berry/$id",
+                endpoint = "${Paths.Berries.BERRY}/$id",
                 fullPath = path,
             )
         )

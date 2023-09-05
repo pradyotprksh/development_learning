@@ -16,7 +16,10 @@ class BerryResource {
     }
 
     @Resource(Paths.Berries.PAGINATION)
-    data class Pagination(val parent: BerryResource = BerryResource(), val offset: Int, val limit: Int)
+    data class Pagination(val parent: BerryResource = BerryResource(), val offset: Int, val limit: Int, val withDetails: Boolean = false) {
+        val isValid: Boolean
+            get() = offset >= 0 && limit >= 0
+    }
 
     /**
      * Berries can be soft or hard.

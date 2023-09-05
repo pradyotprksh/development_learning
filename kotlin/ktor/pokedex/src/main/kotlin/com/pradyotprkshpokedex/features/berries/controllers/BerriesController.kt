@@ -2,6 +2,7 @@ package com.pradyotprkshpokedex.features.berries.controllers
 
 import com.pradyotprkshpokedex.core.exception.ParametersInvalidException
 import com.pradyotprkshpokedex.core.service.BerryService
+import com.pradyotprkshpokedex.domain.modal.Berries
 import com.pradyotprkshpokedex.domain.modal.Berry
 import com.pradyotprkshpokedex.features.berries.resource.BerryResource
 import com.pradyotprkshpokedex.utils.Paths
@@ -17,7 +18,42 @@ class BerriesController(
     private val berryService: BerryService,
 ) {
     suspend fun getBerriesByPagination(context: ApplicationCall, berryResource: BerryResource.Pagination) {
-        context.respond(status = HttpStatusCode.OK, "getBerriesByPagination")
+        if (berryResource.isValid) {
+            val berries = berryService.getBerriesByPagination(offset = berryResource.offset, limit = berryResource.limit)
+            if (berryResource.withDetails) {
+                respondWithBerriesDetails(context, berries)
+            } else {
+                context.respond(
+                    status = HttpStatusCode.OK,
+                    berries
+                )
+            }
+        } else {
+            throw ParametersInvalidException(invalidParameters = listOf(Paths.Parameters.ID))
+        }
+    }
+
+    private suspend fun respondWithBerriesDetails(context: ApplicationCall, berries: Berries) {
+        coroutineScope {
+            val count = berries.results.size
+            val channels = Channel<Berry>()
+            berries.results.forEach { result ->
+                result.url?.let { url ->
+                    launch {
+                        delay(1)
+                        channels.send(
+                            berryService.getBerryDetails(id = 0, path = url)
+                        )
+                    }
+                }
+            }
+            val berriesDetails = mutableListOf<Berry>()
+            repeat(count) {
+                berriesDetails.add(channels.receive())
+            }
+
+            context.respond(status = HttpStatusCode.OK, berriesDetails)
+        }
     }
 
     /**
@@ -28,33 +64,8 @@ class BerriesController(
      */
     suspend fun getAllBerries(context: ApplicationCall) {
         coroutineScope {
-            val channels = Channel<Berry>()
-            var count: Int
-            var next: String? = null
-            do {
-                val berries = berryService.getAllBerries(path = next)
-                count = berries.count ?: 0
-
-                berries.results.forEach { result ->
-                    result.url?.let { url ->
-                        launch {
-                            delay(1)
-                            channels.send(
-                                berryService.getBerryDetails(id = 0, path = url)
-                            )
-                        }
-                    }
-                }
-
-                next = berries.next
-            } while (next != null)
-
-            val berries = mutableListOf<Berry>()
-            repeat(count) {
-                berries.add(channels.receive())
-            }
-
-            context.respond(status = HttpStatusCode.OK, berries)
+            val allBerries = berryService.getBerriesByPagination(offset = 0, limit = Int.MAX_VALUE)
+            respondWithBerriesDetails(context, allBerries)
         }
     }
 

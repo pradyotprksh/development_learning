@@ -3,11 +3,13 @@ package com.pradyotprkshpokedex.utils
 object Paths {
     object Parameters {
         const val ID = "id"
+        const val OFFSET = "offset"
+        const val LIMIT = "limit"
     }
 
     object Berries {
         const val BERRY = "/berry"
-        const val PAGINATION = "/all"
+        const val PAGINATION = "/paginate"
         const val FIRMNESS = "/firmness"
         const val FLAVOR = "/flavor"
     }
