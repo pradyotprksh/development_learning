@@ -6,7 +6,10 @@ import com.pradyotprkshpokedex.core.service.BerryService
 import com.pradyotprkshpokedex.domain.service.BerryServiceImplementation
 import com.pradyotprkshpokedex.features.berries.controllers.BerriesController
 import org.kodein.di.Kodein
-import org.kodein.di.generic.*
+import org.kodein.di.generic.bind
+import org.kodein.di.generic.instance
+import org.kodein.di.generic.provider
+import org.kodein.di.generic.singleton
 
 object ModulesConfig {
     private val featuresModule = Kodein.Module("FEATURES") {

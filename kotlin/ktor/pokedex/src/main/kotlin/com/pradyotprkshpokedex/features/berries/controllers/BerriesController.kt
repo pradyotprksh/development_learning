@@ -19,7 +19,8 @@ class BerriesController(
 ) {
     suspend fun getBerriesByPagination(context: ApplicationCall, berryResource: BerryResource.Pagination) {
         if (berryResource.isValid) {
-            val berries = berryService.getBerriesByPagination(offset = berryResource.offset, limit = berryResource.limit)
+            val berries =
+                berryService.getBerriesByPagination(offset = berryResource.offset, limit = berryResource.limit)
             if (berryResource.withDetails) {
                 respondWithBerriesDetails(context, berries)
             } else {
@@ -85,7 +86,10 @@ class BerriesController(
         context.respond(status = HttpStatusCode.OK, "getBerryFirmnessDetails")
     }
 
-    suspend fun getBerryFirmnessByPagination(context: ApplicationCall, firmnesses: BerryResource.BerryFirmness.Pagination) {
+    suspend fun getBerryFirmnessByPagination(
+        context: ApplicationCall,
+        firmnesses: BerryResource.BerryFirmness.Pagination
+    ) {
         context.respond(status = HttpStatusCode.OK, "getBerryFirmnessByPagination")
     }
 

@@ -1,10 +1,7 @@
 package com.pradyotprkshpokedex.features.berries
 
-import com.pradyotprkshpokedex.domain.modal.Berry
 import com.pradyotprkshpokedex.utils.testBuilder
-import io.ktor.client.call.*
 import io.ktor.client.request.*
-import io.ktor.client.statement.*
 import io.ktor.http.*
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -18,7 +15,7 @@ class BerriesRouterTest {
 
     @Test
     fun testBerryPagination() = testBuilder {
-        val response = client.get("/berry/all?offset=1&limit=1")
+        val response = client.get("/berry/paginate?offset=1&limit=1")
         assertEquals(HttpStatusCode.OK, response.status)
     }
 

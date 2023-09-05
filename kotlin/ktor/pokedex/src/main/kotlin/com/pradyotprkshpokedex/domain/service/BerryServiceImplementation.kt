@@ -8,7 +8,7 @@ import com.pradyotprkshpokedex.domain.modal.Berries
 import com.pradyotprkshpokedex.domain.modal.Berry
 import com.pradyotprkshpokedex.utils.Paths
 
-class BerryServiceImplementation(private val networkClient: NetworkClient): BerryService {
+class BerryServiceImplementation(private val networkClient: NetworkClient) : BerryService {
     override suspend fun getBerriesByPagination(offset: Int, limit: Int): Berries {
         val berries = networkClient.get<Berries>(
             details = PokeApiRequestDetails(
