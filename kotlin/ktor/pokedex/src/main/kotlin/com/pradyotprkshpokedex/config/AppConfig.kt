@@ -1,6 +1,7 @@
 package com.pradyotprkshpokedex.config
 
 import com.pradyotprkshpokedex.core.exception.ParametersInvalidException
+import com.pradyotprkshpokedex.core.exception.PokeApiException
 import com.pradyotprkshpokedex.core.exception.PokedexException
 import com.pradyotprkshpokedex.features.berries.berries
 import com.pradyotprkshpokedex.features.berries.controllers.BerriesController
@@ -54,6 +55,11 @@ fun Application.configureStatusPages() {
                 is ParametersInvalidException -> call.respondText(
                     text = cause.message,
                     status = HttpStatusCode.BadRequest
+                )
+
+                is PokeApiException -> call.respondText(
+                    text = cause.message,
+                    status = HttpStatusCode.InternalServerError
                 )
             }
         }

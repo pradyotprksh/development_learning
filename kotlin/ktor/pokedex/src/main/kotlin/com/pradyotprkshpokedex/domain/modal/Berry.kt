@@ -1,7 +1,9 @@
 package com.pradyotprkshpokedex.domain.modal
 
 import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class Berry(
     @SerialName("firmness") var firmness: Firmness? = null,
     @SerialName("flavors") var flavors: List<Flavors> = emptyList(),

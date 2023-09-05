@@ -5,7 +5,8 @@ data class PokeApiRequestDetails(
     val version: String = "v2",
     val endpoint: String,
     val queries: Map<String, Any> = emptyMap(),
+    val fullPath: String? = null,
 ) {
     val path: String
-        get() = "$baseUrl/$version/$endpoint"
+        get() = fullPath ?: "$baseUrl/$version/$endpoint"
 }
