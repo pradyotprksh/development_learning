@@ -15,6 +15,9 @@ class BerryResource {
             get() = id > 0
     }
 
+    /**
+     * @param withDetails If true, and the size if large result might throw Connection Reset / Timeout error.
+     */
     @Resource(Paths.Berries.PAGINATION)
     data class Pagination(
         val parent: BerryResource = BerryResource(),
@@ -32,10 +35,22 @@ class BerryResource {
     @Resource(Paths.Berries.FIRMNESS)
     class BerryFirmness(val parent: BerryResource = BerryResource()) {
         @Resource("{${Paths.Parameters.ID}}")
-        data class Id(val parent: BerryFirmness = BerryFirmness(), val id: String)
+        data class Id(val parent: BerryFirmness = BerryFirmness(), val id: Int) {
+            val isValid: Boolean
+                get() = id > 0
+        }
 
+        /**
+         * @param withDetails If true, and the size if large result might throw Connection Reset / Timeout error.
+         */
         @Resource(Paths.Berries.PAGINATION)
-        data class Pagination(val parent: BerryFirmness = BerryFirmness(), val offset: Int, val limit: Int)
+        data class Pagination(
+            val parent: BerryFirmness = BerryFirmness(), val offset: Int, val limit: Int,
+            val withDetails: Boolean = false
+        ) {
+            val isValid: Boolean
+                get() = offset >= 0 && limit >= 0
+        }
     }
 
     /**
@@ -44,9 +59,21 @@ class BerryResource {
     @Resource(Paths.Berries.FLAVOR)
     class BerryFlavor(val parent: BerryResource = BerryResource()) {
         @Resource("{${Paths.Parameters.ID}}")
-        data class Id(val parent: BerryFlavor = BerryFlavor(), val id: String)
+        data class Id(val parent: BerryFlavor = BerryFlavor(), val id: Int) {
+            val isValid: Boolean
+                get() = id > 0
+        }
 
+        /**
+         * @param withDetails If true, and the size if large result might throw Connection Reset / Timeout error.
+         */
         @Resource(Paths.Berries.PAGINATION)
-        data class Pagination(val parent: BerryFlavor = BerryFlavor(), val offset: Int, val limit: Int)
+        data class Pagination(
+            val parent: BerryFlavor = BerryFlavor(), val offset: Int, val limit: Int,
+            val withDetails: Boolean = false
+        ) {
+            val isValid: Boolean
+                get() = offset >= 0 && limit >= 0
+        }
     }
 }

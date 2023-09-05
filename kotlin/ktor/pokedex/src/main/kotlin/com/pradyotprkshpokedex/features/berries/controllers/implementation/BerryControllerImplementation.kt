@@ -36,10 +36,8 @@ class BerryControllerImplementation(
     }
 
     override suspend fun getAllBerries(context: ApplicationCall) {
-        coroutineScope {
-            val allBerries = berryService.getBerriesByPagination(offset = 0, limit = Int.MAX_VALUE)
-            respondWithBerriesDetails(context, allBerries)
-        }
+        val allBerries = berryService.getBerriesByPagination(offset = 0, limit = Int.MAX_VALUE)
+        respondWithBerriesDetails(context, allBerries)
     }
 
     override suspend fun getBerryDetails(context: ApplicationCall, berryResource: BerryResource.Id) {

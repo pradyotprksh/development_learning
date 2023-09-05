@@ -4,7 +4,9 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Flavors(
-    @SerialName("flavor") var flavor: Flavor? = null,
-    @SerialName("potency") var potency: Int? = null
+data class Names (
+
+    @SerialName("language" ) var language : Language? = null,
+    @SerialName("name"     ) var name     : String?   = null
+
 )

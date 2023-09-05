@@ -8,10 +8,10 @@ object Paths {
     }
 
     object Berries {
-        const val BERRY = "/berry"
-        const val PAGINATION = "/paginate"
-        const val FIRMNESS = "/firmness"
-        const val FLAVOR = "/flavor"
+        const val BERRY = "berry"
+        const val PAGINATION = "paginate"
+        const val FIRMNESS = "firmness"
+        const val FLAVOR = "flavor"
     }
 
     object Contests {}

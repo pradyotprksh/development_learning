@@ -39,14 +39,20 @@ class BerriesRouterTest {
 
     @Test
     fun testBerryFirmnessPagination() = testBuilder {
-        val response = client.get("/berry/firmness/all?offset=1&limit=1")
+        val response = client.get("/berry/firmness/paginate?offset=1&limit=1")
         assertEquals(HttpStatusCode.OK, response.status)
+
+        val responseError = client.get("/berry/firmness/paginate?offset=-11&limit=1")
+        assertEquals(HttpStatusCode.BadRequest, responseError.status)
     }
 
     @Test
     fun testBerryFirmnessId() = testBuilder {
         val response = client.get("/berry/firmness/1")
         assertEquals(HttpStatusCode.OK, response.status)
+
+        val responseError = client.get("/berry/firmness/0")
+        assertEquals(HttpStatusCode.BadRequest, responseError.status)
     }
 
     @Test
@@ -57,13 +63,19 @@ class BerriesRouterTest {
 
     @Test
     fun testBerryFlavorPagination() = testBuilder {
-        val response = client.get("/berry/flavor/all?offset=1&limit=1")
+        val response = client.get("/berry/flavor/paginate?offset=1&limit=1")
         assertEquals(HttpStatusCode.OK, response.status)
+
+        val responseError = client.get("/berry/flavor/paginate?offset=-11&limit=1")
+        assertEquals(HttpStatusCode.BadRequest, responseError.status)
     }
 
     @Test
     fun testBerryFlavorId() = testBuilder {
         val response = client.get("/berry/flavor/1")
         assertEquals(HttpStatusCode.OK, response.status)
+
+        val responseError = client.get("/berry/flavor/0")
+        assertEquals(HttpStatusCode.BadRequest, responseError.status)
     }
 }
