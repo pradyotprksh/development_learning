@@ -5,6 +5,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Item(
-    @SerialName("name") var name: String? = null,
-    @SerialName("url") var url: String? = null
+    @SerialName("name") val name: String? = null,
+    @SerialName("url") val url: String? = null
 )

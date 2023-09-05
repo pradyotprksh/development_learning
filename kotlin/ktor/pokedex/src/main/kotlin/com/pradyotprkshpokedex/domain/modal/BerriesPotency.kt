@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class BerriesPotency (
 
-    @SerialName("berry"   ) var berry   : Results? = null,
-    @SerialName("potency" ) var potency : Int?   = null
+    @SerialName("berry"   ) val berry   : Results? = null,
+    @SerialName("potency" ) val potency : Int?   = null
 
 )

@@ -5,6 +5,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Flavors(
-    @SerialName("flavor") var flavor: Flavor? = null,
-    @SerialName("potency") var potency: Int? = null
+    @SerialName("flavor") val flavor: Flavor? = null,
+    @SerialName("potency") val potency: Int? = null
 )
