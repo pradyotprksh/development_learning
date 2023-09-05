@@ -17,6 +17,9 @@ class BerriesRouterTest {
     fun testBerryPagination() = testBuilder {
         val response = client.get("/berry/paginate?offset=1&limit=1")
         assertEquals(HttpStatusCode.OK, response.status)
+
+        val responseError = client.get("/berry/paginate?offset=-11&limit=1")
+        assertEquals(HttpStatusCode.BadRequest, responseError.status)
     }
 
     @Test

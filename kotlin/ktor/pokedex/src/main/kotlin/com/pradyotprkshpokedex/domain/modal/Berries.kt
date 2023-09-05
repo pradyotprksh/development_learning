@@ -10,9 +10,3 @@ data class Berries(
     @SerialName("previous") var previous: String? = null,
     @SerialName("results") var results: List<Results> = emptyList()
 )
-
-@Serializable
-data class Results(
-    @SerialName("name") var name: String? = null,
-    @SerialName("url") var url: String? = null
-)
