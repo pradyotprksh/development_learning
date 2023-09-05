@@ -23,6 +23,9 @@ class BerriesRouterTest {
     fun testBerryId() = testBuilder {
         val response = client.get("/berry/1")
         assertEquals(HttpStatusCode.OK, response.status)
+
+        val responseError = client.get("/berry/0")
+        assertEquals(HttpStatusCode.BadRequest, responseError.status)
     }
 
     @Test

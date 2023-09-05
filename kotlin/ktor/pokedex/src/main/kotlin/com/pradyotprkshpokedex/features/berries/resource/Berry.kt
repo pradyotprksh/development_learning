@@ -9,8 +9,11 @@ import io.ktor.resources.*
  */
 @Resource(Paths.Berries.BERRY)
 class Berry {
-    @Resource("{${Paths.ID}}")
-    data class Id(val parent: Berry = Berry(), val id: String)
+    @Resource("{${Paths.Parameters.ID}}")
+    data class Id(val parent: Berry = Berry(), val id: Int) {
+        val isValid: Boolean
+            get() = id > 0
+    }
 
     @Resource(Paths.Berries.PAGINATION)
     data class Pagination(val parent: Berry = Berry(), val offset: Int, val limit: Int)
@@ -20,7 +23,7 @@ class Berry {
      */
     @Resource(Paths.Berries.FIRMNESS)
     class BerryFirmness(val parent: Berry = Berry()) {
-        @Resource("{${Paths.ID}}")
+        @Resource("{${Paths.Parameters.ID}}")
         data class Id(val parent: BerryFirmness = BerryFirmness(), val id: String)
 
         @Resource(Paths.Berries.PAGINATION)
@@ -32,7 +35,7 @@ class Berry {
      */
     @Resource(Paths.Berries.FLAVOR)
     class BerryFlavor(val parent: Berry = Berry()) {
-        @Resource("{${Paths.ID}}")
+        @Resource("{${Paths.Parameters.ID}}")
         data class Id(val parent: BerryFlavor = BerryFlavor(), val id: String)
 
         @Resource(Paths.Berries.PAGINATION)

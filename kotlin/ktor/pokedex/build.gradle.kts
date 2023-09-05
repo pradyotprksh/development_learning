@@ -27,14 +27,20 @@ dependencies {
     implementation("io.ktor:ktor-server-core-jvm")
     implementation("io.ktor:ktor-server-netty-jvm")
 
+    // Status pages
+    implementation("io.ktor:ktor-server-status-pages:$ktor_version")
+
     // Ktor client
     implementation("io.ktor:ktor-client-core:$ktor_version")
     implementation("io.ktor:ktor-client-cio:$ktor_version")
+    implementation("io.ktor:ktor-client-content-negotiation:$ktor_version")
+    implementation("io.ktor:ktor-serialization-kotlinx-json:$ktor_version")
+    implementation("io.ktor:ktor-client-logging:$ktor_version")
 
     // Resources
     implementation("io.ktor:ktor-server-resources:$ktor_version")
 
-    // Koin
+    // Kodein
     implementation("org.kodein.di:kodein-di-generic-jvm:6.1.0")
 
     // Serilaization

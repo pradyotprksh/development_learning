@@ -1,7 +1,9 @@
 package com.pradyotprkshpokedex.utils
 
 object Paths {
-    const val ID = "id"
+    object Parameters {
+        const val ID = "id"
+    }
 
     object Berries {
         const val BERRY = "/berry"

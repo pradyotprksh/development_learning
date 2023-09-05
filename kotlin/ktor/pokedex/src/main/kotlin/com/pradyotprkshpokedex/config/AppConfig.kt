@@ -1,5 +1,7 @@
 package com.pradyotprkshpokedex.config
 
+import com.pradyotprkshpokedex.core.exception.ParametersInvalidException
+import com.pradyotprkshpokedex.core.exception.PokedexException
 import com.pradyotprkshpokedex.features.berries.berries
 import com.pradyotprkshpokedex.features.berries.controllers.BerriesController
 import com.pradyotprkshpokedex.features.contests.contests
@@ -11,12 +13,15 @@ import com.pradyotprkshpokedex.features.locations.locations
 import com.pradyotprkshpokedex.features.machines.machines
 import com.pradyotprkshpokedex.features.moves.moves
 import com.pradyotprkshpokedex.features.pokemon.pokemon
+import io.ktor.http.*
 import io.ktor.serialization.kotlinx.json.*
 import io.ktor.server.application.*
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
 import io.ktor.server.plugins.contentnegotiation.*
+import io.ktor.server.plugins.statuspages.*
 import io.ktor.server.resources.*
+import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import org.kodein.di.generic.instance
 
@@ -36,9 +41,30 @@ private fun server(
 }
 
 fun Application.mainModule() {
+    configureStatusPages()
     configureResource()
     configureRouting()
     configureSerialization()
+}
+
+fun Application.configureStatusPages() {
+    install(StatusPages) {
+        exception<PokedexException> { call, cause ->
+            when (cause) {
+                is ParametersInvalidException -> call.respondText(
+                    text = cause.message,
+                    status = HttpStatusCode.BadRequest
+                )
+            }
+        }
+
+        exception<Throwable> { call, cause ->
+            call.respondText(
+                text = "${HttpStatusCode.InternalServerError.value}: $cause",
+                status = HttpStatusCode.InternalServerError
+            )
+        }
+    }
 }
 
 fun Application.configureResource() {

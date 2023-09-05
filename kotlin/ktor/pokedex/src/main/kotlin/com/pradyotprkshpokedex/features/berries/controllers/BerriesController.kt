@@ -1,11 +1,14 @@
 package com.pradyotprkshpokedex.features.berries.controllers
 
+import com.pradyotprkshpokedex.core.exception.ParametersInvalidException
+import com.pradyotprkshpokedex.core.network.NetworkClient
 import com.pradyotprkshpokedex.features.berries.resource.Berry
+import com.pradyotprkshpokedex.utils.Paths
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.response.*
 
-class BerriesController {
+class BerriesController() {
     suspend fun getBerriesByPagination(context: ApplicationCall, berry: Berry.Pagination) {
         context.respond(status = HttpStatusCode.OK, "getBerriesByPagination")
     }
@@ -15,7 +18,12 @@ class BerriesController {
     }
 
     suspend fun getBerryDetails(context: ApplicationCall, berry: Berry.Id) {
-        context.respond(status = HttpStatusCode.OK, "getBerryDetails")
+        if (berry.isValid) {
+            val berryId = berry.id
+            context.respond(status = HttpStatusCode.OK, "getBerryDetails")
+        } else {
+            throw ParametersInvalidException(invalidParameters = listOf(Paths.Parameters.ID))
+        }
     }
 
     suspend fun getAllBerryFirmness(context: ApplicationCall, firmnesses: Berry.BerryFirmness) {
