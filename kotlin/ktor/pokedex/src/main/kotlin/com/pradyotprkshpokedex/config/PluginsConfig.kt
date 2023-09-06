@@ -7,6 +7,7 @@ import com.pradyotprkshpokedex.features.berries.berries
 import com.pradyotprkshpokedex.features.berries.controllers.BerriesController
 import com.pradyotprkshpokedex.features.contests.contests
 import com.pradyotprkshpokedex.features.encounters.encounters
+import com.pradyotprkshpokedex.features.evolution.controllers.EvolutionsController
 import com.pradyotprkshpokedex.features.evolution.evolution
 import com.pradyotprkshpokedex.features.games.games
 import com.pradyotprkshpokedex.features.items.items
@@ -83,12 +84,13 @@ fun Application.configureResource() {
 fun Application.configureRouting() {
     val berriesController by ModulesConfig.kodein.instance<BerriesController>()
     val machinesController by ModulesConfig.kodein.instance<MachinesController>()
+    val evolutionsController by ModulesConfig.kodein.instance<EvolutionsController>()
 
     routing {
         berries(berriesController = berriesController)
         contests()
         encounters()
-        evolution()
+        evolution(evolutionsController = evolutionsController)
         games()
         items()
         locations()

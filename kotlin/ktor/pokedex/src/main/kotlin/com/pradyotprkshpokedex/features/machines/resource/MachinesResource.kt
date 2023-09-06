@@ -18,7 +18,7 @@ class MachinesResource {
     /**
      * @param withDetails If true, and the size if large result might throw Connection Reset / Timeout error.
      */
-    @Resource(Paths.Berries.PAGINATION)
+    @Resource(Paths.Machines.PAGINATION)
     data class Pagination(
         val parent: MachinesResource = MachinesResource(),
         val offset: Int,

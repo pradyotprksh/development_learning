@@ -16,13 +16,21 @@ object Paths {
 
     object Contests {}
     object Encounters {}
-    object Evolution {}
+
+    object Evolution {
+        const val EVOLUTION = "evolution"
+        const val CHAINS = "chain"
+        const val TRIGGERS = "trigger"
+        const val PAGINATION = "paginate"
+    }
+
     object Games {}
     object Items {}
     object Locations {}
 
     object Machines {
         const val MACHINE = "machine"
+        const val PAGINATION = "paginate"
     }
 
     object Moves {}

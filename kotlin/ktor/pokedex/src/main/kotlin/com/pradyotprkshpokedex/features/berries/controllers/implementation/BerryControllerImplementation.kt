@@ -31,7 +31,12 @@ class BerryControllerImplementation(
                 )
             }
         } else {
-            throw ParametersInvalidException(invalidParameters = listOf(Paths.Parameters.OFFSET, Paths.Parameters.LIMIT))
+            throw ParametersInvalidException(
+                invalidParameters = listOf(
+                    Paths.Parameters.OFFSET,
+                    Paths.Parameters.LIMIT
+                )
+            )
         }
     }
 

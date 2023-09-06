@@ -2,7 +2,6 @@ package com.pradyotprkshpokedex.features.machines.controllers.implementation
 
 import com.pradyotprkshpokedex.core.exception.ParametersInvalidException
 import com.pradyotprkshpokedex.core.service.MachineService
-import com.pradyotprkshpokedex.domain.modal.Berry
 import com.pradyotprkshpokedex.domain.modal.Machine
 import com.pradyotprkshpokedex.domain.modal.Machines
 import com.pradyotprkshpokedex.features.machines.controllers.MachineController
@@ -35,7 +34,12 @@ class MachinesControllerImplementation(
                 )
             }
         } else {
-            throw ParametersInvalidException(invalidParameters = listOf(Paths.Parameters.OFFSET, Paths.Parameters.LIMIT))
+            throw ParametersInvalidException(
+                invalidParameters = listOf(
+                    Paths.Parameters.OFFSET,
+                    Paths.Parameters.LIMIT
+                )
+            )
         }
     }
 

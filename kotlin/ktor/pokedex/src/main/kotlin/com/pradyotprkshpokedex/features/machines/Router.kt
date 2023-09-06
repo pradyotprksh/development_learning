@@ -1,6 +1,5 @@
 package com.pradyotprkshpokedex.features.machines
 
-import com.pradyotprkshpokedex.features.berries.resource.BerriesResource
 import com.pradyotprkshpokedex.features.machines.controllers.MachinesController
 import com.pradyotprkshpokedex.features.machines.resource.MachinesResource
 import io.ktor.server.resources.*

@@ -4,8 +4,6 @@ import com.pradyotprkshpokedex.core.exception.PokeApiException
 import com.pradyotprkshpokedex.core.network.NetworkClient
 import com.pradyotprkshpokedex.core.request.PokeApiRequestDetails
 import com.pradyotprkshpokedex.core.service.MachineService
-import com.pradyotprkshpokedex.domain.modal.Berries
-import com.pradyotprkshpokedex.domain.modal.Berry
 import com.pradyotprkshpokedex.domain.modal.Machine
 import com.pradyotprkshpokedex.domain.modal.Machines
 import com.pradyotprkshpokedex.utils.Paths
