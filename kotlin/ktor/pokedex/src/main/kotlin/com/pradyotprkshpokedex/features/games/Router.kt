@@ -1,23 +1,26 @@
 package com.pradyotprkshpokedex.features.games
 
 import com.pradyotprkshpokedex.features.games.resource.GamesResource
+import io.ktor.http.*
+import io.ktor.server.application.*
 import io.ktor.server.resources.*
+import io.ktor.server.response.*
 import io.ktor.server.routing.*
 
 fun Routing.games() {
-    get<GamesResource.Generation> { }
-    get<GamesResource.Generation.Id> { }
-    get<GamesResource.Generation.Pagination> { }
+    get<GamesResource.Generation> { call.respond(status = HttpStatusCode.OK, "") }
+    get<GamesResource.Generation.Id> { call.respond(status = HttpStatusCode.OK, "") }
+    get<GamesResource.Generation.Pagination> { call.respond(status = HttpStatusCode.OK, "") }
 
-    get<GamesResource.Pokedex> { }
-    get<GamesResource.Pokedex.Id> { }
-    get<GamesResource.Pokedex.Pagination> { }
+    get<GamesResource.Pokedex> { call.respond(status = HttpStatusCode.OK, "") }
+    get<GamesResource.Pokedex.Id> { call.respond(status = HttpStatusCode.OK, "") }
+    get<GamesResource.Pokedex.Pagination> { call.respond(status = HttpStatusCode.OK, "") }
 
-    get<GamesResource.Version> { }
-    get<GamesResource.Version.Id> { }
-    get<GamesResource.Version.Pagination> { }
+    get<GamesResource.Version> { call.respond(status = HttpStatusCode.OK, "") }
+    get<GamesResource.Version.Id> { call.respond(status = HttpStatusCode.OK, "") }
+    get<GamesResource.Version.Pagination> { call.respond(status = HttpStatusCode.OK, "") }
 
-    get<GamesResource.VersionGroup> { }
-    get<GamesResource.VersionGroup.Id> { }
-    get<GamesResource.VersionGroup.Pagination> { }
+    get<GamesResource.VersionGroup> { call.respond(status = HttpStatusCode.OK, "") }
+    get<GamesResource.VersionGroup.Id> { call.respond(status = HttpStatusCode.OK, "") }
+    get<GamesResource.VersionGroup.Pagination> { call.respond(status = HttpStatusCode.OK, "") }
 }

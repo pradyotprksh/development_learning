@@ -1,27 +1,30 @@
 package com.pradyotprkshpokedex.features.items
 
 import com.pradyotprkshpokedex.features.items.resource.ItemsResource
+import io.ktor.http.*
+import io.ktor.server.application.*
 import io.ktor.server.resources.*
+import io.ktor.server.response.*
 import io.ktor.server.routing.*
 
 fun Routing.items() {
-    get<ItemsResource> { }
-    get<ItemsResource.Id> { }
-    get<ItemsResource.Pagination> { }
+    get<ItemsResource> { call.respond(status = HttpStatusCode.OK, "") }
+    get<ItemsResource.Id> { call.respond(status = HttpStatusCode.OK, "") }
+    get<ItemsResource.Pagination> { call.respond(status = HttpStatusCode.OK, "") }
 
-    get<ItemsResource.Attribute> { }
-    get<ItemsResource.Attribute.Id> { }
-    get<ItemsResource.Attribute.Pagination> { }
+    get<ItemsResource.Attribute> { call.respond(status = HttpStatusCode.OK, "") }
+    get<ItemsResource.Attribute.Id> { call.respond(status = HttpStatusCode.OK, "") }
+    get<ItemsResource.Attribute.Pagination> { call.respond(status = HttpStatusCode.OK, "") }
 
-    get<ItemsResource.Category> { }
-    get<ItemsResource.Category.Id> { }
-    get<ItemsResource.Category.Pagination> { }
+    get<ItemsResource.Category> { call.respond(status = HttpStatusCode.OK, "") }
+    get<ItemsResource.Category.Id> { call.respond(status = HttpStatusCode.OK, "") }
+    get<ItemsResource.Category.Pagination> { call.respond(status = HttpStatusCode.OK, "") }
 
-    get<ItemsResource.FilingEffect> { }
-    get<ItemsResource.FilingEffect.Id> { }
-    get<ItemsResource.FilingEffect.Pagination> { }
+    get<ItemsResource.FilingEffect> { call.respond(status = HttpStatusCode.OK, "") }
+    get<ItemsResource.FilingEffect.Id> { call.respond(status = HttpStatusCode.OK, "") }
+    get<ItemsResource.FilingEffect.Pagination> { call.respond(status = HttpStatusCode.OK, "") }
 
-    get<ItemsResource.Pockets> { }
-    get<ItemsResource.Pockets.Id> { }
-    get<ItemsResource.Pockets.Pagination> { }
+    get<ItemsResource.Pockets> { call.respond(status = HttpStatusCode.OK, "") }
+    get<ItemsResource.Pockets.Id> { call.respond(status = HttpStatusCode.OK, "") }
+    get<ItemsResource.Pockets.Pagination> { call.respond(status = HttpStatusCode.OK, "") }
 }
