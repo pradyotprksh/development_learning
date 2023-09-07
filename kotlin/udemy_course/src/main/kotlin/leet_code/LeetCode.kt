@@ -528,6 +528,125 @@ class LeetCode {
         println(myAtoi("   -42"))
         println(myAtoi("4193 with words"))
         println(myAtoi("-91283472332"))
+
+        println(generateParenthesis(3))
+        println(generateParenthesis(1))
+        println(generateParenthesis(4))
+
+        println(search(intArrayOf(4,5,6,7,0,1,2), 0))
+        println(search(intArrayOf(4,5,6,7,0,1,2), 3))
+        println(search(intArrayOf(1), 0))
+        println(search(intArrayOf(1), 1))
+
+        println(countAndSay(1))
+        println(countAndSay(4))
+        println(countAndSay(5))
+    }
+
+    private fun countAndSay(n: Int): String {
+        return findCountAndSay(n, "1")
+    }
+
+    private fun findCountAndSay(n: Int, value: String): String {
+        if (n <= 1) return value
+
+        val result = StringBuilder()
+        var i = 1
+        var count = 1
+        while (i <= value.length) {
+            if (i == value.length) {
+                result.append("$count${value[i - 1]}")
+            } else {
+                if (value[i - 1] == value[i]) {
+                    ++count
+                } else {
+                    result.append("$count${value[i - 1]}")
+                    count = 1
+                }
+            }
+            ++i
+        }
+
+        return findCountAndSay(n - 1, result.toString())
+    }
+
+    private fun search(nums: IntArray, target: Int): Int {
+        var left = 0
+        var right = nums.lastIndex
+
+        while (left < right) {
+            val middle = left + (right - left) / 2
+            if (nums[middle] > nums[right]) {
+                left = middle + 1
+            } else {
+                right = middle
+            }
+        }
+
+        val start = left
+        left = 0
+        right = nums.lastIndex
+
+        if (target >= nums[start] && target <= nums[right]) {
+            left = start
+        } else {
+            right = start
+        }
+
+        while (left <= right) {
+            val middle = left + (right - left) / 2
+
+            if (nums[middle] == target) return middle
+            else if (nums[middle] > target) right = middle - 1
+            else if (nums[middle] < target) left = middle + 1
+        }
+
+        return -1
+    }
+
+    data class ParenthesisNode(val par: String, var left: ParenthesisNode? = null, var right: ParenthesisNode? = null)
+
+    private fun generateParenthesis(n: Int): List<String> {
+        val ans = mutableListOf<String>()
+        val root = ParenthesisNode("(")
+        val queue = mutableListOf(root)
+
+        while (queue.isNotEmpty()) {
+            val node = queue.removeAt(0)
+
+            if (isCompleted(node, n)) {
+                ans.add(node.par)
+                continue
+            }
+
+            if (isOpenParenthesisCorrect(node, n)) {
+                val newNode1 = ParenthesisNode(par = "${node.par}(")
+                node.left = newNode1
+                queue.add(newNode1)
+            }
+
+            if (isCloseParenthesisCorrect(node, n)) {
+                val newNode2 = ParenthesisNode(par = "${node.par})")
+                node.right = newNode2
+                queue.add(newNode2)
+            }
+        }
+
+        return ans
+    }
+
+    private fun isCompleted(node: ParenthesisNode, n: Int): Boolean {
+        return node.par.filter { it == '(' }.length == n && node.par.filter { it == ')' }.length == n && isValid(node.par)
+    }
+
+    private fun isCloseParenthesisCorrect(node: ParenthesisNode, n: Int): Boolean {
+        val newPar = node.par + ")"
+        return newPar.filter { it == ')' }.length <= n
+    }
+
+    private fun isOpenParenthesisCorrect(node: ParenthesisNode, n: Int): Boolean {
+        val newPar = node.par + "("
+        return newPar.filter { it == '(' }.length <= n
     }
 
     private fun myAtoi(s: String): Int {
