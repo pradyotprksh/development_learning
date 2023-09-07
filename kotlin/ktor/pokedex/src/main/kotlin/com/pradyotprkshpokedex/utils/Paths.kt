@@ -23,6 +23,7 @@ object Paths {
     }
 
     object Encounters {
+        const val ENCOUNTERS = "encounter"
         const val METHODS = "method"
         const val CONDITION = "condition"
         const val CONDITION_VALUE = "condition-value"
@@ -37,6 +38,7 @@ object Paths {
     }
 
     object Games {
+        const val GAMES = "game"
         const val GENERATION = "generation"
         const val POKEDEX = "pokedex"
         const val VERSION = "version"
