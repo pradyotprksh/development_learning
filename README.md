@@ -59,6 +59,8 @@ README will be only updated when the project/learning is completed. So make sure
   - [basics](https://github.com/pradyotprksh/development_learning/tree/main/kotlin/basics)
   - [DS&Algo](https://github.com/pradyotprksh/development_learning/tree/main/kotlin/udemy_course)
   - [friends_tree](https://github.com/pradyotprksh/development_learning/tree/main/kotlin/friends_tree)
+  - [Ktor](https://github.com/pradyotprksh/development_learning/tree/main/kotlin/ktor)
+    - [Pokedex](https://github.com/pradyotprksh/development_learning/tree/main/kotlin/ktor/pokedex)
   
 [<img src="https://img.shields.io/badge/Python-FFD43B?style=for-the-badge&logo=python&logoColor=blue" />](https://github.com/pradyotprksh/development_learning/tree/main/python) [![Python Projects](https://github.com/pradyotprksh/development_learning/actions/workflows/python_code_checker.yml/badge.svg)](https://github.com/pradyotprksh/development_learning/actions/workflows/python_code_checker.yml)
   - [2022 Bootcamp Udemy Python Course](https://github.com/pradyotprksh/development_learning/tree/main/python/UdemyCourse/2022_Python_Bootcamp) 
