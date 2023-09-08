@@ -541,6 +541,54 @@ class LeetCode {
         println(countAndSay(1))
         println(countAndSay(4))
         println(countAndSay(5))
+
+        println(combinationSum(intArrayOf(2,3,6,7), 7))
+        println(combinationSum(intArrayOf(2), 1))
+        println(combinationSum(intArrayOf(2, 3, 5), 8))
+
+        println(combinationSum2(intArrayOf(10,1,2,7,6,1,5), 8))
+        println(combinationSum2(intArrayOf(2,5,2,1,2), 5))
+    }
+
+    // TLE error
+    private fun combinationSum2(candidates: IntArray, target: Int): List<List<Int>> {
+        val ans = mutableSetOf<List<Int>>()
+
+        fun dfs(index: Int, combination: List<Int>, total: Int) {
+            if (total == target) {
+                ans.add(combination.sorted())
+                return
+            }
+            if (index >= candidates.size || total > target) {
+                return
+            }
+            dfs(index + 1, combination + candidates[index], total + candidates[index])
+            dfs(index + 1, combination, total)
+        }
+
+        dfs(0, emptyList(), 0)
+
+        return ans.toList()
+    }
+
+    private fun combinationSum(candidates: IntArray, target: Int): List<List<Int>> {
+        val ans = mutableListOf<List<Int>>()
+
+        fun dfs(index: Int, combination: List<Int>, total: Int) {
+            if (total == target) {
+                ans.add(combination)
+                return
+            }
+            if (index >= candidates.size || total > target) {
+                return
+            }
+            dfs(index, combination + candidates[index], total + candidates[index])
+            dfs(index + 1, combination, total)
+        }
+
+        dfs(0, emptyList(), 0)
+
+        return ans
     }
 
     private fun countAndSay(n: Int): String {
