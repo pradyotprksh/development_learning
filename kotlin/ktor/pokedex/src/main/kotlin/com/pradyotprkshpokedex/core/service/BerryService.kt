@@ -1,6 +1,11 @@
 package com.pradyotprkshpokedex.core.service
 
-import com.pradyotprkshpokedex.domain.modal.*
+import com.pradyotprkshpokedex.domain.modal.Berries
+import com.pradyotprkshpokedex.domain.modal.Berry
+import com.pradyotprkshpokedex.domain.modal.BerryFirmness
+import com.pradyotprkshpokedex.domain.modal.BerryFirmnesses
+import com.pradyotprkshpokedex.domain.modal.BerryFlavor
+import com.pradyotprkshpokedex.domain.modal.BerryFlavors
 
 interface BerryService {
     suspend fun getBerriesByPagination(offset: Int, limit: Int): Berries

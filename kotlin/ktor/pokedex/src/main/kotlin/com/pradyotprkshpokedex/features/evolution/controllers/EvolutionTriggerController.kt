@@ -1,7 +1,7 @@
 package com.pradyotprkshpokedex.features.evolution.controllers
 
 import com.pradyotprkshpokedex.features.evolution.resource.EvolutionResource
-import io.ktor.server.application.*
+import io.ktor.server.application.ApplicationCall
 
 interface EvolutionTriggerController {
     /**

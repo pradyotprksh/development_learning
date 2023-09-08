@@ -2,8 +2,8 @@ package com.pradyotprkshpokedex.features.evolution
 
 import com.pradyotprkshpokedex.features.evolution.controllers.EvolutionsController
 import com.pradyotprkshpokedex.features.evolution.resource.EvolutionResource
-import io.ktor.server.resources.*
-import io.ktor.server.routing.*
+import io.ktor.server.resources.get
+import io.ktor.server.routing.Routing
 
 fun Routing.evolution(evolutionsController: EvolutionsController) {
     get<EvolutionResource.Chains> { evolutionsController.getAllEvolutionChain(this.context, it) }

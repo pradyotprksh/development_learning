@@ -1,7 +1,7 @@
 package com.pradyotprkshpokedex.features.locations.resource
 
 import com.pradyotprkshpokedex.utils.Paths
-import io.ktor.resources.*
+import io.ktor.resources.Resource
 
 /**
  * Locations that can be visited within the games. Locations make up sizable portions of regions,

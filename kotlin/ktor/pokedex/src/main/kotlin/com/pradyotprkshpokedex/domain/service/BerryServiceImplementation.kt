@@ -4,7 +4,12 @@ import com.pradyotprkshpokedex.core.exception.PokeApiException
 import com.pradyotprkshpokedex.core.network.NetworkClient
 import com.pradyotprkshpokedex.core.request.PokeApiRequestDetails
 import com.pradyotprkshpokedex.core.service.BerryService
-import com.pradyotprkshpokedex.domain.modal.*
+import com.pradyotprkshpokedex.domain.modal.Berries
+import com.pradyotprkshpokedex.domain.modal.Berry
+import com.pradyotprkshpokedex.domain.modal.BerryFirmness
+import com.pradyotprkshpokedex.domain.modal.BerryFirmnesses
+import com.pradyotprkshpokedex.domain.modal.BerryFlavor
+import com.pradyotprkshpokedex.domain.modal.BerryFlavors
 import com.pradyotprkshpokedex.utils.Paths
 
 class BerryServiceImplementation(private val networkClient: NetworkClient) : BerryService {

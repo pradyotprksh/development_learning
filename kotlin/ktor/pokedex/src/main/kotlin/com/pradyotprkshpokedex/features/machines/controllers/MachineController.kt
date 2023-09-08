@@ -1,7 +1,7 @@
 package com.pradyotprkshpokedex.features.machines.controllers
 
 import com.pradyotprkshpokedex.features.machines.resource.MachinesResource
-import io.ktor.server.application.*
+import io.ktor.server.application.ApplicationCall
 
 interface MachineController {
     suspend fun getMachinesByPagination(context: ApplicationCall, machinesResource: MachinesResource.Pagination)

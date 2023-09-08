@@ -1,8 +1,11 @@
 package com.pradyotprkshpokedex.config
 
-import io.ktor.server.application.*
-import io.ktor.server.engine.*
-import io.ktor.server.netty.*
+import io.ktor.server.application.Application
+import io.ktor.server.engine.ApplicationEngine
+import io.ktor.server.engine.ApplicationEngineFactory
+import io.ktor.server.engine.BaseApplicationEngine
+import io.ktor.server.engine.embeddedServer
+import io.ktor.server.netty.Netty
 
 const val SERVER_PORT = 8080
 

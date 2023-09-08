@@ -1,7 +1,7 @@
 package com.pradyotprkshpokedex.features.berries.resource
 
 import com.pradyotprkshpokedex.utils.Paths
-import io.ktor.resources.*
+import io.ktor.resources.Resource
 
 /**
  * Berries are small fruits that can provide HP and status condition restoration, stat enhancement,

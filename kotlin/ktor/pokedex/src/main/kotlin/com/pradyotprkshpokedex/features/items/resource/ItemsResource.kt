@@ -1,7 +1,7 @@
 package com.pradyotprkshpokedex.features.items.resource
 
 import com.pradyotprkshpokedex.utils.Paths
-import io.ktor.resources.*
+import io.ktor.resources.Resource
 
 /**
  * An item is an object in the games which the player can pick up, keep in their bag, and use in some manner. They

@@ -1,8 +1,8 @@
 package com.pradyotprkshpokedex.features.pokemon
 
 import com.pradyotprkshpokedex.utils.testBuilder
-import io.ktor.client.request.*
-import io.ktor.http.*
+import io.ktor.client.request.get
+import io.ktor.http.HttpStatusCode
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -160,7 +160,7 @@ class PokemonRouterTest {
             assertEquals(HttpStatusCode.BadRequest, get("/pokemon/species/0").status)
         }
     }
-    
+
     @Test
     fun testStatPagination() = testBuilder {
         client.apply {
@@ -182,6 +182,6 @@ class PokemonRouterTest {
             assertEquals(HttpStatusCode.BadRequest, get("/pokemon/type/0").status)
         }
     }
-    
-    
+
+
 }

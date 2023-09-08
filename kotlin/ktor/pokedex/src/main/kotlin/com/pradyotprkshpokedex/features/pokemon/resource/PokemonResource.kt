@@ -2,7 +2,7 @@ package com.pradyotprkshpokedex.features.pokemon.resource
 
 import com.pradyotprkshpokedex.features.moves.resource.MovesResource
 import com.pradyotprkshpokedex.utils.Paths
-import io.ktor.resources.*
+import io.ktor.resources.Resource
 
 @Resource(Paths.Pokemon.POKEMON)
 class PokemonResource {

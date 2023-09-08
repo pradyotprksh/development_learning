@@ -1,9 +1,10 @@
 package com.pradyotprkshpokedex.core.network
 
 import com.pradyotprkshpokedex.core.request.PokeApiRequestDetails
-import io.ktor.client.*
-import io.ktor.client.call.*
-import io.ktor.client.request.*
+import io.ktor.client.HttpClient
+import io.ktor.client.call.body
+import io.ktor.client.request.get
+import io.ktor.client.request.parameter
 
 class NetworkClient(val httpClient: HttpClient) {
     suspend inline fun <reified T> get(details: PokeApiRequestDetails): Result<T> {

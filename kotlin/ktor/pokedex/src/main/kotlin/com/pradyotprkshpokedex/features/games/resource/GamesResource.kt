@@ -1,7 +1,7 @@
 package com.pradyotprkshpokedex.features.games.resource
 
 import com.pradyotprkshpokedex.utils.Paths
-import io.ktor.resources.*
+import io.ktor.resources.Resource
 
 @Resource(Paths.Games.GAMES)
 class GamesResource {

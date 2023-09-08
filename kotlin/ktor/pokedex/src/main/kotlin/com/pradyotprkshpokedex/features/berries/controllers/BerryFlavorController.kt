@@ -1,7 +1,7 @@
 package com.pradyotprkshpokedex.features.berries.controllers
 
 import com.pradyotprkshpokedex.features.berries.resource.BerriesResource
-import io.ktor.server.application.*
+import io.ktor.server.application.ApplicationCall
 
 interface BerryFlavorController {
     /**

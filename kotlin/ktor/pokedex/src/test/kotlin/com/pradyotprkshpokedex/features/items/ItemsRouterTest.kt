@@ -1,8 +1,8 @@
 package com.pradyotprkshpokedex.features.items
 
 import com.pradyotprkshpokedex.utils.testBuilder
-import io.ktor.client.request.*
-import io.ktor.http.*
+import io.ktor.client.request.get
+import io.ktor.http.HttpStatusCode
 import kotlin.test.Test
 import kotlin.test.assertEquals
 

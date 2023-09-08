@@ -1,7 +1,7 @@
 package com.pradyotprkshpokedex.features.machines.resource
 
 import com.pradyotprkshpokedex.utils.Paths
-import io.ktor.resources.*
+import io.ktor.resources.Resource
 
 /**
  * Machines are the representation of items that teach moves to Pokémon. They vary from version to version, so it

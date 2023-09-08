@@ -1,11 +1,11 @@
 package com.pradyotprkshpokedex.features.pokemon
 
 import com.pradyotprkshpokedex.features.pokemon.resource.PokemonResource
-import io.ktor.http.*
-import io.ktor.server.application.*
-import io.ktor.server.resources.*
-import io.ktor.server.response.*
-import io.ktor.server.routing.*
+import io.ktor.http.HttpStatusCode
+import io.ktor.server.application.call
+import io.ktor.server.resources.get
+import io.ktor.server.response.respond
+import io.ktor.server.routing.Routing
 
 fun Routing.pokemon() {
     get<PokemonResource.Ability> { call.respond(status = HttpStatusCode.OK, "") }

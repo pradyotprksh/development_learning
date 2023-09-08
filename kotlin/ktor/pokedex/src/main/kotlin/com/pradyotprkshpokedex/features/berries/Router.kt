@@ -2,8 +2,8 @@ package com.pradyotprkshpokedex.features.berries
 
 import com.pradyotprkshpokedex.features.berries.controllers.BerriesController
 import com.pradyotprkshpokedex.features.berries.resource.BerriesResource
-import io.ktor.server.resources.*
-import io.ktor.server.routing.*
+import io.ktor.server.resources.get
+import io.ktor.server.routing.Routing
 
 fun Routing.berries(berriesController: BerriesController) {
     get<BerriesResource> { berriesController.getAllBerries(this.context) }

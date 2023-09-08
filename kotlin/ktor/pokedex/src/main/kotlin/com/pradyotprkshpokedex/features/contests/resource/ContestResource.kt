@@ -1,7 +1,7 @@
 package com.pradyotprkshpokedex.features.contests.resource
 
 import com.pradyotprkshpokedex.utils.Paths
-import io.ktor.resources.*
+import io.ktor.resources.Resource
 
 @Resource(Paths.Contests.CONTESTS)
 class ContestResource {
