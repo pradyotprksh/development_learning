@@ -22,7 +22,7 @@ data class EvolutionDetails(
     @SerialName("relative_physical_stats") var relativePhysicalStats: String? = null,
     @SerialName("time_of_day") var timeOfDay: String? = null,
     @SerialName("trade_species") var tradeSpecies: String? = null,
-    @SerialName("trigger") var trigger: Trigger? = null,
+    @SerialName("trigger") var trigger: NameUrl? = null,
     @SerialName("turn_upside_down") var turnUpsideDown: Boolean? = null
 
 )

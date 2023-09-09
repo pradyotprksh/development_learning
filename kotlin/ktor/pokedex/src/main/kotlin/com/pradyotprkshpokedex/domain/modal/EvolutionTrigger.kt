@@ -9,7 +9,7 @@ data class EvolutionTrigger(
     @SerialName("id") var id: Int? = null,
     @SerialName("name") var name: String? = null,
     @SerialName("names") var names: List<Names> = emptyList(),
-    @SerialName("pokemon_species") var pokemonSpecies: List<PokemonSpecies> = emptyList()
+    @SerialName("pokemon_species") var pokemonSpecies: List<NameUrl> = emptyList()
 
 )
 

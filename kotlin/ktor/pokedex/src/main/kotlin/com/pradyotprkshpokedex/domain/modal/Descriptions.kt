@@ -4,9 +4,9 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class FlavorTextEntries(
+data class Descriptions(
 
-    @SerialName("flavor_text") var flavorText: String? = null,
+    @SerialName("description") var description: String? = null,
     @SerialName("language") var language: NameUrl? = NameUrl()
 
 )

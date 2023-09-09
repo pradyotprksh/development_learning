@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class EvolutionChains(
+data class VersionGroups(
 
     @SerialName("count") var count: Int? = null,
     @SerialName("next") var next: String? = null,

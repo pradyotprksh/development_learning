@@ -7,9 +7,9 @@ import kotlinx.serialization.Serializable
 data class Machine(
 
     @SerialName("id") var id: Int? = null,
-    @SerialName("item") var item: Item? = null,
-    @SerialName("move") var move: Move? = null,
-    @SerialName("version_group") var versionGroup: VersionGroup? = null
+    @SerialName("item") var item: NameUrl? = NameUrl(),
+    @SerialName("move") var move: NameUrl? = NameUrl(),
+    @SerialName("version_group") var versionGroup: NameUrl? = NameUrl()
 
 )
 

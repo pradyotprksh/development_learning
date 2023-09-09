@@ -10,6 +10,6 @@ data class SuperContestEffect(
     @SerialName("appeal") var appeal: Int? = null,
     @SerialName("flavor_text_entries") var flavorTextEntries: List<FlavorTextEntries> = emptyList(),
     @SerialName("id") var id: Int? = null,
-    @SerialName("moves") var moves: List<Moves> = emptyList()
+    @SerialName("moves") var moves: List<NameUrl> = emptyList()
 
 )

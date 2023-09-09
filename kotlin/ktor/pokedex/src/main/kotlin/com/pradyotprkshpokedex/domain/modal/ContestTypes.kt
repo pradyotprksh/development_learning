@@ -9,7 +9,7 @@ data class ContestTypes(
     @SerialName("count") var count: Int? = null,
     @SerialName("next") var next: String? = null,
     @SerialName("previous") var previous: String? = null,
-    @SerialName("results") var results: List<Results> = emptyList()
+    @SerialName("results") var results: List<NameUrl> = emptyList()
 
 )
 

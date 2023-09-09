@@ -9,7 +9,7 @@ data class Condition(
     @SerialName("id") var id: Int? = null,
     @SerialName("name") var name: String? = null,
     @SerialName("names") var names: List<Names> = emptyList(),
-    @SerialName("values") var values: List<Values> = emptyList()
+    @SerialName("values") var values: List<NameUrl> = emptyList()
 
 )
 

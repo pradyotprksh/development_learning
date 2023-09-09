@@ -5,7 +5,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class BerryFirmness(
-    @SerialName("berries") val berries: List<Results> = emptyList(),
+    @SerialName("berries") val berries: List<NameUrl> = emptyList(),
     @SerialName("id") val id: Int? = null,
     @SerialName("name") val name: String? = null,
     @SerialName("names") val names: List<Names> = emptyList()
