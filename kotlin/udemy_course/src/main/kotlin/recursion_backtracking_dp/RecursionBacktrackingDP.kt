@@ -6,5 +6,6 @@ class RecursionBacktrackingDP {
         Recursion().startRecursion()
         BitManipulation().startBitManipulation()
         Backtracking().startBacktracking()
+        DynamicProgramming().startDynamicProgramming()
     }
 }
