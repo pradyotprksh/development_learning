@@ -11,9 +11,9 @@ data class VersionGroup(
     @SerialName("move_learn_methods") var moveLearnMethods: List<NameUrl> = emptyList(),
     @SerialName("name") var name: String? = null,
     @SerialName("order") var order: Int? = null,
-    @SerialName("pokedexes") var pokedexes: List<Pokedexes> = emptyList(),
+    @SerialName("pokedexes") var pokedexes: List<Pagination> = emptyList(),
     @SerialName("regions") var regions: List<NameUrl> = emptyList(),
-    @SerialName("versions") var versions: List<Versions> = emptyList()
+    @SerialName("versions") var versions: List<Pagination> = emptyList()
 
 )
 

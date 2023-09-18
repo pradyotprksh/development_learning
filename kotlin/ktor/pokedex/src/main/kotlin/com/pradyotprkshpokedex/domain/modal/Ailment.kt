@@ -4,11 +4,11 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Ailment (
+data class Ailment(
 
-    @SerialName("id"    ) var id    : Int?             = null,
-    @SerialName("moves" ) var moves : List<NameUrl> = emptyList(),
-    @SerialName("name"  ) var name  : String?          = null,
-    @SerialName("names" ) var names : List<Names> = emptyList()
+    @SerialName("id") var id: Int? = null,
+    @SerialName("moves") var moves: List<NameUrl> = emptyList(),
+    @SerialName("name") var name: String? = null,
+    @SerialName("names") var names: List<Names> = emptyList()
 
 )

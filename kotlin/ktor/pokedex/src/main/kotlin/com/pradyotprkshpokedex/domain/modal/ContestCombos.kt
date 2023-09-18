@@ -4,9 +4,9 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class ContestCombos (
+data class ContestCombos(
 
-    @SerialName("normal" ) var normal : Normal? = Normal(),
-    @SerialName("super"  ) var superKey  : Super?  = Super()
+    @SerialName("normal") var normal: Normal? = Normal(),
+    @SerialName("super") var superKey: Super? = Super()
 
 )

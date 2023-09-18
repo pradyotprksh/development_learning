@@ -2,8 +2,8 @@ package com.pradyotprkshpokedex.features.berries.controllers.implementation
 
 import com.pradyotprkshpokedex.core.exception.ParametersInvalidException
 import com.pradyotprkshpokedex.core.service.BerryService
-import com.pradyotprkshpokedex.domain.modal.Berries
 import com.pradyotprkshpokedex.domain.modal.Berry
+import com.pradyotprkshpokedex.domain.modal.Pagination
 import com.pradyotprkshpokedex.features.berries.controllers.BerryController
 import com.pradyotprkshpokedex.features.berries.resource.BerriesResource
 import com.pradyotprkshpokedex.utils.Paths
@@ -53,7 +53,7 @@ class BerryControllerImplementation(
         }
     }
 
-    private suspend fun respondWithBerriesDetails(context: ApplicationCall, berries: Berries) {
+    private suspend fun respondWithBerriesDetails(context: ApplicationCall, berries: Pagination) {
         coroutineScope {
             val count = berries.results.size
             val channels = Channel<Berry>()

@@ -5,10 +5,10 @@ import kotlinx.serialization.Serializable
 
 
 @Serializable
-data class BattleStyle (
+data class BattleStyle(
 
-    @SerialName("id"    ) var id    : Int?             = null,
-    @SerialName("name"  ) var name  : String?          = null,
-    @SerialName("names" ) var names : List<Names> = emptyList()
+    @SerialName("id") var id: Int? = null,
+    @SerialName("name") var name: String? = null,
+    @SerialName("names") var names: List<Names> = emptyList()
 
 )

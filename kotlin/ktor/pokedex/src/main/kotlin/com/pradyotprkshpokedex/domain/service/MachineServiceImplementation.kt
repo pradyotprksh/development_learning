@@ -5,14 +5,14 @@ import com.pradyotprkshpokedex.core.network.NetworkClient
 import com.pradyotprkshpokedex.core.request.PokeApiRequestDetails
 import com.pradyotprkshpokedex.core.service.MachineService
 import com.pradyotprkshpokedex.domain.modal.Machine
-import com.pradyotprkshpokedex.domain.modal.Machines
+import com.pradyotprkshpokedex.domain.modal.Pagination
 import com.pradyotprkshpokedex.utils.Paths
 
 class MachineServiceImplementation(
     private val networkClient: NetworkClient
 ) : MachineService {
-    override suspend fun getMachinesByPagination(offset: Int, limit: Int): Machines {
-        val machines = networkClient.get<Machines>(
+    override suspend fun getMachinesByPagination(offset: Int, limit: Int): Pagination {
+        val machines = networkClient.get<Pagination>(
             details = PokeApiRequestDetails(
                 endpoint = Paths.Machines.MACHINE,
                 queries = mapOf(

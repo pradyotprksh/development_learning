@@ -3,7 +3,7 @@ package com.pradyotprkshpokedex.features.berries.controllers.implementation
 import com.pradyotprkshpokedex.core.exception.ParametersInvalidException
 import com.pradyotprkshpokedex.core.service.BerryService
 import com.pradyotprkshpokedex.domain.modal.BerryFirmness
-import com.pradyotprkshpokedex.domain.modal.BerryFirmnesses
+import com.pradyotprkshpokedex.domain.modal.Pagination
 import com.pradyotprkshpokedex.features.berries.controllers.BerryFirmnessController
 import com.pradyotprkshpokedex.features.berries.resource.BerriesResource
 import com.pradyotprkshpokedex.utils.Paths
@@ -61,7 +61,7 @@ class BerryFirmnessControllerImplementation(
 
     private suspend fun respondWithBerriesFirmnessesDetails(
         context: ApplicationCall,
-        berryFirmnesses: BerryFirmnesses
+        berryFirmnesses: Pagination
     ) {
         coroutineScope {
             val count = berryFirmnesses.results.size

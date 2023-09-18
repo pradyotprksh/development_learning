@@ -8,7 +8,8 @@ data class EvolutionChain(
 
     @SerialName("baby_trigger_item") var babyTriggerItem: String? = null,
     @SerialName("chain") var chain: Chain? = Chain(),
-    @SerialName("id") var id: Int? = null
+    @SerialName("id") var id: Int? = null,
+    @SerialName("url") var url: String? = null
 
 )
 

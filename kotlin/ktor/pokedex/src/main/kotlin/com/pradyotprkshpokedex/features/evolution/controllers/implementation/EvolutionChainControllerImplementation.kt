@@ -3,7 +3,7 @@ package com.pradyotprkshpokedex.features.evolution.controllers.implementation
 import com.pradyotprkshpokedex.core.exception.ParametersInvalidException
 import com.pradyotprkshpokedex.core.service.EvolutionService
 import com.pradyotprkshpokedex.domain.modal.EvolutionChain
-import com.pradyotprkshpokedex.domain.modal.EvolutionChains
+import com.pradyotprkshpokedex.domain.modal.Pagination
 import com.pradyotprkshpokedex.features.evolution.controllers.EvolutionChainController
 import com.pradyotprkshpokedex.features.evolution.resource.EvolutionResource
 import com.pradyotprkshpokedex.utils.Paths
@@ -56,7 +56,7 @@ class EvolutionChainControllerImplementation(
         }
     }
 
-    private suspend fun respondWithEvolutionChainDetails(context: ApplicationCall, evolutionChain: EvolutionChains) {
+    private suspend fun respondWithEvolutionChainDetails(context: ApplicationCall, evolutionChain: Pagination) {
         coroutineScope {
             val count = evolutionChain.results.size
             val channels = Channel<EvolutionChain>()

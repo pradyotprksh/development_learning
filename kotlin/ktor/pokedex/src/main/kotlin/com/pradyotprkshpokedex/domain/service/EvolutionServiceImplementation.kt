@@ -5,9 +5,8 @@ import com.pradyotprkshpokedex.core.network.NetworkClient
 import com.pradyotprkshpokedex.core.request.PokeApiRequestDetails
 import com.pradyotprkshpokedex.core.service.EvolutionService
 import com.pradyotprkshpokedex.domain.modal.EvolutionChain
-import com.pradyotprkshpokedex.domain.modal.EvolutionChains
 import com.pradyotprkshpokedex.domain.modal.EvolutionTrigger
-import com.pradyotprkshpokedex.domain.modal.EvolutionTriggers
+import com.pradyotprkshpokedex.domain.modal.Pagination
 import com.pradyotprkshpokedex.utils.Paths
 
 class EvolutionServiceImplementation(
@@ -26,8 +25,8 @@ class EvolutionServiceImplementation(
         }
     }
 
-    override suspend fun getEvolutionChainByPagination(offset: Int, limit: Int): EvolutionChains {
-        val evolutionChains = networkClient.get<EvolutionChains>(
+    override suspend fun getEvolutionChainByPagination(offset: Int, limit: Int): Pagination {
+        val evolutionChains = networkClient.get<Pagination>(
             details = PokeApiRequestDetails(
                 endpoint = "${Paths.Evolution.EVOLUTION}-${Paths.Evolution.CHAINS}",
                 queries = mapOf(
@@ -55,8 +54,8 @@ class EvolutionServiceImplementation(
         }
     }
 
-    override suspend fun getEvolutionTriggerByPagination(offset: Int, limit: Int): EvolutionTriggers {
-        val evolutionTriggers = networkClient.get<EvolutionTriggers>(
+    override suspend fun getEvolutionTriggerByPagination(offset: Int, limit: Int): Pagination {
+        val evolutionTriggers = networkClient.get<Pagination>(
             details = PokeApiRequestDetails(
                 endpoint = "${Paths.Evolution.EVOLUTION}-${Paths.Evolution.TRIGGERS}",
                 queries = mapOf(

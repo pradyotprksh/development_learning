@@ -3,7 +3,7 @@ package com.pradyotprkshpokedex.features.evolution.controllers.implementation
 import com.pradyotprkshpokedex.core.exception.ParametersInvalidException
 import com.pradyotprkshpokedex.core.service.EvolutionService
 import com.pradyotprkshpokedex.domain.modal.EvolutionTrigger
-import com.pradyotprkshpokedex.domain.modal.EvolutionTriggers
+import com.pradyotprkshpokedex.domain.modal.Pagination
 import com.pradyotprkshpokedex.features.evolution.controllers.EvolutionTriggerController
 import com.pradyotprkshpokedex.features.evolution.resource.EvolutionResource
 import com.pradyotprkshpokedex.utils.Paths
@@ -58,7 +58,7 @@ class EvolutionTriggerControllerImplementation(
 
     private suspend fun respondWithEvolutionTriggerDetails(
         context: ApplicationCall,
-        evolutionTrigger: EvolutionTriggers
+        evolutionTrigger: Pagination
     ) {
         coroutineScope {
             val count = evolutionTrigger.results.size

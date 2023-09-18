@@ -4,17 +4,15 @@ import com.pradyotprkshpokedex.core.exception.PokeApiException
 import com.pradyotprkshpokedex.core.network.NetworkClient
 import com.pradyotprkshpokedex.core.request.PokeApiRequestDetails
 import com.pradyotprkshpokedex.core.service.BerryService
-import com.pradyotprkshpokedex.domain.modal.Berries
 import com.pradyotprkshpokedex.domain.modal.Berry
 import com.pradyotprkshpokedex.domain.modal.BerryFirmness
-import com.pradyotprkshpokedex.domain.modal.BerryFirmnesses
 import com.pradyotprkshpokedex.domain.modal.BerryFlavor
-import com.pradyotprkshpokedex.domain.modal.BerryFlavors
+import com.pradyotprkshpokedex.domain.modal.Pagination
 import com.pradyotprkshpokedex.utils.Paths
 
 class BerryServiceImplementation(private val networkClient: NetworkClient) : BerryService {
-    override suspend fun getBerriesByPagination(offset: Int, limit: Int): Berries {
-        val berries = networkClient.get<Berries>(
+    override suspend fun getBerriesByPagination(offset: Int, limit: Int): Pagination {
+        val berries = networkClient.get<Pagination>(
             details = PokeApiRequestDetails(
                 endpoint = Paths.Berries.BERRY,
                 queries = mapOf(
@@ -55,8 +53,8 @@ class BerryServiceImplementation(private val networkClient: NetworkClient) : Ber
         }
     }
 
-    override suspend fun getBerriesFirmnessByPagination(offset: Int, limit: Int): BerryFirmnesses {
-        val berryFirmnesses = networkClient.get<BerryFirmnesses>(
+    override suspend fun getBerriesFirmnessByPagination(offset: Int, limit: Int): Pagination {
+        val berryFirmnesses = networkClient.get<Pagination>(
             details = PokeApiRequestDetails(
                 endpoint = "${Paths.Berries.BERRY}-${Paths.Berries.FIRMNESS}",
                 queries = mapOf(
@@ -84,8 +82,8 @@ class BerryServiceImplementation(private val networkClient: NetworkClient) : Ber
         }
     }
 
-    override suspend fun getBerriesFlavorByPagination(offset: Int, limit: Int): BerryFlavors {
-        val berryFlavors = networkClient.get<BerryFlavors>(
+    override suspend fun getBerriesFlavorByPagination(offset: Int, limit: Int): Pagination {
+        val berryFlavors = networkClient.get<Pagination>(
             details = PokeApiRequestDetails(
                 endpoint = "${Paths.Berries.BERRY}-${Paths.Berries.FIRMNESS}",
                 queries = mapOf(

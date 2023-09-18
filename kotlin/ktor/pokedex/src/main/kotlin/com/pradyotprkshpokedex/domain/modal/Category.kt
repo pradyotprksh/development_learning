@@ -7,7 +7,7 @@ import kotlinx.serialization.Serializable
 data class Category(
 
     @SerialName("id") var id: Int? = null,
-    @SerialName("items") var items: List<Items> = emptyList(),
+    @SerialName("items") var items: List<Pagination> = emptyList(),
     @SerialName("name") var name: String? = null,
     @SerialName("names") var names: List<Names> = emptyList(),
     @SerialName("pocket") var pocket: NameUrl? = NameUrl()

@@ -3,7 +3,7 @@ package com.pradyotprkshpokedex.features.machines.controllers.implementation
 import com.pradyotprkshpokedex.core.exception.ParametersInvalidException
 import com.pradyotprkshpokedex.core.service.MachineService
 import com.pradyotprkshpokedex.domain.modal.Machine
-import com.pradyotprkshpokedex.domain.modal.Machines
+import com.pradyotprkshpokedex.domain.modal.Pagination
 import com.pradyotprkshpokedex.features.machines.controllers.MachineController
 import com.pradyotprkshpokedex.features.machines.resource.MachinesResource
 import com.pradyotprkshpokedex.utils.Paths
@@ -56,7 +56,7 @@ class MachinesControllerImplementation(
         }
     }
 
-    private suspend fun respondWithMachinesDetails(context: ApplicationCall, machines: Machines) {
+    private suspend fun respondWithMachinesDetails(context: ApplicationCall, machines: Pagination) {
         coroutineScope {
             val count = machines.results.size
             val channels = Channel<Machine>()
