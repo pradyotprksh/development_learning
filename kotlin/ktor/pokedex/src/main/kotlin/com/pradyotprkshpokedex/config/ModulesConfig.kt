@@ -3,11 +3,25 @@ package com.pradyotprkshpokedex.config
 import com.pradyotprkshpokedex.core.network.Api
 import com.pradyotprkshpokedex.core.network.NetworkClient
 import com.pradyotprkshpokedex.core.service.BerryService
+import com.pradyotprkshpokedex.core.service.ContestService
+import com.pradyotprkshpokedex.core.service.EncounterService
 import com.pradyotprkshpokedex.core.service.EvolutionService
+import com.pradyotprkshpokedex.core.service.GameService
+import com.pradyotprkshpokedex.core.service.ItemService
+import com.pradyotprkshpokedex.core.service.LocationService
 import com.pradyotprkshpokedex.core.service.MachineService
+import com.pradyotprkshpokedex.core.service.MoveService
+import com.pradyotprkshpokedex.core.service.PokemonService
 import com.pradyotprkshpokedex.domain.service.BerryServiceImplementation
+import com.pradyotprkshpokedex.domain.service.ContestServiceImplementation
+import com.pradyotprkshpokedex.domain.service.EncounterServiceImplementation
 import com.pradyotprkshpokedex.domain.service.EvolutionServiceImplementation
+import com.pradyotprkshpokedex.domain.service.GameServiceImplementation
+import com.pradyotprkshpokedex.domain.service.ItemServiceImplementation
+import com.pradyotprkshpokedex.domain.service.LocationServiceImplementation
 import com.pradyotprkshpokedex.domain.service.MachineServiceImplementation
+import com.pradyotprkshpokedex.domain.service.MoveServiceImplementation
+import com.pradyotprkshpokedex.domain.service.PokemonServiceImplementation
 import com.pradyotprkshpokedex.features.berries.controllers.BerriesController
 import com.pradyotprkshpokedex.features.berries.controllers.BerryController
 import com.pradyotprkshpokedex.features.berries.controllers.BerryFirmnessController
@@ -51,8 +65,15 @@ object ModulesConfig {
 
     private val servicesModule = Kodein.Module("SERVICES") {
         bind<BerryService>() with provider { BerryServiceImplementation(instance()) }
-        bind<MachineService>() with provider { MachineServiceImplementation(instance()) }
+        bind<ContestService>() with provider { ContestServiceImplementation(instance()) }
+        bind<EncounterService>() with provider { EncounterServiceImplementation(instance()) }
         bind<EvolutionService>() with provider { EvolutionServiceImplementation(instance()) }
+        bind<GameService>() with provider { GameServiceImplementation(instance()) }
+        bind<ItemService>() with provider { ItemServiceImplementation(instance()) }
+        bind<LocationService>() with provider { LocationServiceImplementation(instance()) }
+        bind<MachineService>() with provider { MachineServiceImplementation(instance()) }
+        bind<MoveService>() with provider { MoveServiceImplementation(instance()) }
+        bind<PokemonService>() with provider { PokemonServiceImplementation(instance()) }
     }
 
     internal val kodein = Kodein {
