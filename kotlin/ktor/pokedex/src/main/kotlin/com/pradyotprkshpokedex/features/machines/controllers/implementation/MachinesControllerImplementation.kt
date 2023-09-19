@@ -1,22 +1,19 @@
 package com.pradyotprkshpokedex.features.machines.controllers.implementation
 
+import com.pradyotprkshpokedex.core.controller.DefaultController
 import com.pradyotprkshpokedex.core.exception.ParametersInvalidException
 import com.pradyotprkshpokedex.core.service.MachineService
 import com.pradyotprkshpokedex.domain.modal.Machine
-import com.pradyotprkshpokedex.domain.modal.Pagination
 import com.pradyotprkshpokedex.features.machines.controllers.MachineController
 import com.pradyotprkshpokedex.features.machines.resource.MachinesResource
 import com.pradyotprkshpokedex.utils.Paths
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.ApplicationCall
 import io.ktor.server.response.respond
-import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
 class MachinesControllerImplementation(
-    private val machineService: MachineService
+    private val machineService: MachineService,
+    private val defaultController: DefaultController,
 ) : MachineController {
     override suspend fun getMachinesByPagination(
         context: ApplicationCall,
@@ -26,7 +23,7 @@ class MachinesControllerImplementation(
             val machines =
                 machineService.getMachinesByPagination(offset = machinesResource.offset, limit = machinesResource.limit)
             if (machinesResource.withDetails) {
-                respondWithMachinesDetails(context, machines)
+                defaultController.respondWithDetails<Machine>(context, machines)
             } else {
                 context.respond(
                     status = HttpStatusCode.OK,
@@ -45,7 +42,7 @@ class MachinesControllerImplementation(
 
     override suspend fun getAllMachines(context: ApplicationCall) {
         val allMachines = machineService.getMachinesByPagination(offset = 0, limit = Int.MAX_VALUE)
-        respondWithMachinesDetails(context, allMachines)
+        defaultController.respondWithDetails<Machine>(context, allMachines)
     }
 
     override suspend fun getMachineDetails(context: ApplicationCall, machinesResource: MachinesResource.Id) {
@@ -53,29 +50,6 @@ class MachinesControllerImplementation(
             context.respond(status = HttpStatusCode.OK, machineService.getMachineDetails(id = machinesResource.id))
         } else {
             throw ParametersInvalidException(invalidParameters = listOf(Paths.Parameters.ID))
-        }
-    }
-
-    private suspend fun respondWithMachinesDetails(context: ApplicationCall, machines: Pagination) {
-        coroutineScope {
-            val count = machines.results.size
-            val channels = Channel<Machine>()
-            machines.results.forEach { result ->
-                result.url?.let { url ->
-                    launch {
-                        delay(1)
-                        channels.send(
-                            machineService.getMachineDetails(id = 0, path = url)
-                        )
-                    }
-                }
-            }
-            val machinesDetails = mutableListOf<Machine>()
-            repeat(count) {
-                machinesDetails.add(channels.receive())
-            }
-
-            context.respond(status = HttpStatusCode.OK, machinesDetails)
         }
     }
 }

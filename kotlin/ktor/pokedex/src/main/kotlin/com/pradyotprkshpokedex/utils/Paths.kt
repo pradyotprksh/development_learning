@@ -15,7 +15,7 @@ object Paths {
     }
 
     object Contests {
-        const val CONTESTS = "contests"
+        const val CONTESTS = "contest"
         const val TYPE = "type"
         const val EFFECT = "effect"
         const val SUPER_CONTEST_EFFECT = "super-contest-effect"

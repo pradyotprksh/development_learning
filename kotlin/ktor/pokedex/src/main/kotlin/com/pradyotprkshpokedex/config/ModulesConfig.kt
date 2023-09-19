@@ -1,5 +1,6 @@
 package com.pradyotprkshpokedex.config
 
+import com.pradyotprkshpokedex.core.controller.DefaultController
 import com.pradyotprkshpokedex.core.network.Api
 import com.pradyotprkshpokedex.core.network.NetworkClient
 import com.pradyotprkshpokedex.core.service.BerryService
@@ -14,6 +15,7 @@ import com.pradyotprkshpokedex.core.service.MoveService
 import com.pradyotprkshpokedex.core.service.PokemonService
 import com.pradyotprkshpokedex.domain.service.BerryServiceImplementation
 import com.pradyotprkshpokedex.domain.service.ContestServiceImplementation
+import com.pradyotprkshpokedex.domain.service.DefaultServiceImplementation
 import com.pradyotprkshpokedex.domain.service.EncounterServiceImplementation
 import com.pradyotprkshpokedex.domain.service.EvolutionServiceImplementation
 import com.pradyotprkshpokedex.domain.service.GameServiceImplementation
@@ -44,17 +46,22 @@ import org.kodein.di.generic.provider
 import org.kodein.di.generic.singleton
 
 object ModulesConfig {
+    private val controllerModule = Kodein.Module("CONTROLLER") {
+        bind<BerryController>() with provider { BerryControllerImplementation(instance(), instance()) }
+        bind<BerryFirmnessController>() with provider { BerryFirmnessControllerImplementation(instance(), instance()) }
+        bind<BerryFlavorController>() with provider { BerryFlavorControllerImplementation(instance(), instance()) }
+
+        bind<MachineController>() with provider { MachinesControllerImplementation(instance(), instance()) }
+
+        bind<EvolutionChainController>() with provider { EvolutionChainControllerImplementation(instance(), instance()) }
+        bind<EvolutionTriggerController>() with provider { EvolutionTriggerControllerImplementation(instance(), instance()) }
+
+        bind() from singleton { DefaultController(instance()) }
+    }
+
     private val featuresModule = Kodein.Module("FEATURES") {
-        bind<BerryController>() with provider { BerryControllerImplementation(instance()) }
-        bind<BerryFirmnessController>() with provider { BerryFirmnessControllerImplementation(instance()) }
-        bind<BerryFlavorController>() with provider { BerryFlavorControllerImplementation(instance()) }
         bind() from provider { BerriesController(instance(), instance(), instance()) }
-
-        bind<MachineController>() with provider { MachinesControllerImplementation(instance()) }
         bind() from provider { MachinesController(instance()) }
-
-        bind<EvolutionChainController>() with provider { EvolutionChainControllerImplementation(instance()) }
-        bind<EvolutionTriggerController>() with provider { EvolutionTriggerControllerImplementation(instance()) }
         bind() from provider { EvolutionsController(instance(), instance()) }
     }
 
@@ -74,9 +81,11 @@ object ModulesConfig {
         bind<MachineService>() with provider { MachineServiceImplementation(instance()) }
         bind<MoveService>() with provider { MoveServiceImplementation(instance()) }
         bind<PokemonService>() with provider { PokemonServiceImplementation(instance()) }
+        bind() from provider { DefaultServiceImplementation(instance()) }
     }
 
     internal val kodein = Kodein {
+        import(controllerModule)
         import(featuresModule)
         import(networkModule)
         import(servicesModule)
