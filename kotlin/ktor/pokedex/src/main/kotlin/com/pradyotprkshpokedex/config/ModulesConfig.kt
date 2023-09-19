@@ -53,8 +53,18 @@ object ModulesConfig {
 
         bind<MachineController>() with provider { MachinesControllerImplementation(instance(), instance()) }
 
-        bind<EvolutionChainController>() with provider { EvolutionChainControllerImplementation(instance(), instance()) }
-        bind<EvolutionTriggerController>() with provider { EvolutionTriggerControllerImplementation(instance(), instance()) }
+        bind<EvolutionChainController>() with provider {
+            EvolutionChainControllerImplementation(
+                instance(),
+                instance()
+            )
+        }
+        bind<EvolutionTriggerController>() with provider {
+            EvolutionTriggerControllerImplementation(
+                instance(),
+                instance()
+            )
+        }
 
         bind() from singleton { DefaultController(instance()) }
     }
