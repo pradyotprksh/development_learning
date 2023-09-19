@@ -31,6 +31,13 @@ import com.pradyotprkshpokedex.features.berries.controllers.BerryFlavorControlle
 import com.pradyotprkshpokedex.features.berries.controllers.implementation.BerryControllerImplementation
 import com.pradyotprkshpokedex.features.berries.controllers.implementation.BerryFirmnessControllerImplementation
 import com.pradyotprkshpokedex.features.berries.controllers.implementation.BerryFlavorControllerImplementation
+import com.pradyotprkshpokedex.features.contests.controllers.ContestEffectController
+import com.pradyotprkshpokedex.features.contests.controllers.ContestTypeController
+import com.pradyotprkshpokedex.features.contests.controllers.ContestsController
+import com.pradyotprkshpokedex.features.contests.controllers.SuperContestEffectController
+import com.pradyotprkshpokedex.features.contests.controllers.implementation.ContestEffectControllerImplementation
+import com.pradyotprkshpokedex.features.contests.controllers.implementation.ContestTypeControllerImplementation
+import com.pradyotprkshpokedex.features.contests.controllers.implementation.SuperContestEffectControllerImplementation
 import com.pradyotprkshpokedex.features.evolution.controllers.EvolutionChainController
 import com.pradyotprkshpokedex.features.evolution.controllers.EvolutionTriggerController
 import com.pradyotprkshpokedex.features.evolution.controllers.EvolutionsController
@@ -50,6 +57,10 @@ object ModulesConfig {
         bind<BerryController>() with provider { BerryControllerImplementation(instance(), instance()) }
         bind<BerryFirmnessController>() with provider { BerryFirmnessControllerImplementation(instance(), instance()) }
         bind<BerryFlavorController>() with provider { BerryFlavorControllerImplementation(instance(), instance()) }
+
+        bind<ContestEffectController>() with provider { ContestEffectControllerImplementation() }
+        bind<ContestTypeController>() with provider { ContestTypeControllerImplementation() }
+        bind<SuperContestEffectController>() with provider { SuperContestEffectControllerImplementation() }
 
         bind<MachineController>() with provider { MachinesControllerImplementation(instance(), instance()) }
 
@@ -71,6 +82,7 @@ object ModulesConfig {
 
     private val featuresModule = Kodein.Module("FEATURES") {
         bind() from provider { BerriesController(instance(), instance(), instance()) }
+        bind() from provider { ContestsController(instance(), instance(), instance()) }
         bind() from provider { MachinesController(instance()) }
         bind() from provider { EvolutionsController(instance(), instance()) }
     }

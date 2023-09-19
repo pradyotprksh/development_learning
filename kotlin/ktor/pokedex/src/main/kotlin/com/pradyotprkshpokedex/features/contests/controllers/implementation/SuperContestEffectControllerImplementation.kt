@@ -1,0 +1,6 @@
+package com.pradyotprkshpokedex.features.contests.controllers.implementation
+
+import com.pradyotprkshpokedex.features.contests.controllers.SuperContestEffectController
+
+class SuperContestEffectControllerImplementation : SuperContestEffectController {
+}
