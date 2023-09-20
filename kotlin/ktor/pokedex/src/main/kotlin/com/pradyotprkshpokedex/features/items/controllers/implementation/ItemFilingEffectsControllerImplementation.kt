@@ -14,10 +14,13 @@ import io.ktor.server.response.respond
 class ItemFilingEffectsControllerImplementation(
     private val itemService: ItemService,
     private val defaultController: DefaultController,
-): ItemFilingEffectsController {
+) : ItemFilingEffectsController {
     override suspend fun getAll(context: ApplicationCall, resource: ItemsResource.FilingEffect) {
         val allFilingEffects = itemService.getFilingEffectByPagination(offset = 0, limit = Int.MAX_VALUE)
-        context.respond(status = HttpStatusCode.OK, defaultController.respondWithDetails<FilingEffect>(allFilingEffects))
+        context.respond(
+            status = HttpStatusCode.OK,
+            defaultController.respondWithDetails<FilingEffect>(allFilingEffects)
+        )
     }
 
     override suspend fun getDetails(context: ApplicationCall, resource: ItemsResource.FilingEffect.Id) {
@@ -33,7 +36,10 @@ class ItemFilingEffectsControllerImplementation(
             val filingEffects =
                 itemService.getFilingEffectByPagination(offset = resource.offset, limit = resource.limit)
             if (resource.withDetails) {
-                context.respond(status = HttpStatusCode.OK, defaultController.respondWithDetails<FilingEffect>(filingEffects))
+                context.respond(
+                    status = HttpStatusCode.OK,
+                    defaultController.respondWithDetails<FilingEffect>(filingEffects)
+                )
             } else {
                 context.respond(
                     status = HttpStatusCode.OK,

@@ -14,7 +14,7 @@ import io.ktor.server.response.respond
 class ItemAttributesControllerImplementation(
     private val itemService: ItemService,
     private val defaultController: DefaultController,
-): ItemAttributesController {
+) : ItemAttributesController {
     override suspend fun getAll(context: ApplicationCall, resource: ItemsResource.Attribute) {
         val allAttributes = itemService.getAttributeByPagination(offset = 0, limit = Int.MAX_VALUE)
         context.respond(status = HttpStatusCode.OK, defaultController.respondWithDetails<Attribute>(allAttributes))

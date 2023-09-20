@@ -14,10 +14,13 @@ import io.ktor.server.response.respond
 class GameVersionGroupControllerImplementation(
     private val gameService: GameService,
     private val defaultController: DefaultController,
-): GameVersionGroupController {
+) : GameVersionGroupController {
     override suspend fun getAll(context: ApplicationCall, resource: GamesResource.VersionGroup) {
         val allVersionGroups = gameService.getVersionByPagination(offset = 0, limit = Int.MAX_VALUE)
-        context.respond(status = HttpStatusCode.OK, defaultController.respondWithDetails<VersionGroup>(allVersionGroups))
+        context.respond(
+            status = HttpStatusCode.OK,
+            defaultController.respondWithDetails<VersionGroup>(allVersionGroups)
+        )
     }
 
     override suspend fun getDetails(context: ApplicationCall, resource: GamesResource.VersionGroup.Id) {
@@ -33,7 +36,10 @@ class GameVersionGroupControllerImplementation(
             val versionGroups =
                 gameService.getVersionGroupByPagination(offset = resource.offset, limit = resource.limit)
             if (resource.withDetails) {
-                context.respond(status = HttpStatusCode.OK, defaultController.respondWithDetails<VersionGroup>(versionGroups))
+                context.respond(
+                    status = HttpStatusCode.OK,
+                    defaultController.respondWithDetails<VersionGroup>(versionGroups)
+                )
             } else {
                 context.respond(
                     status = HttpStatusCode.OK,
