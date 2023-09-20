@@ -1,22 +1,20 @@
 package com.pradyotprkshpokedex.features.encounters
 
+import com.pradyotprkshpokedex.features.encounters.controllers.EncountersController
 import com.pradyotprkshpokedex.features.encounters.resource.EncountersResource
-import io.ktor.http.HttpStatusCode
-import io.ktor.server.application.call
 import io.ktor.server.resources.get
-import io.ktor.server.response.respond
 import io.ktor.server.routing.Routing
 
-fun Routing.encounters() {
-    get<EncountersResource.Methods> { call.respond(status = HttpStatusCode.OK, "") }
-    get<EncountersResource.Methods.Id> { call.respond(status = HttpStatusCode.OK, "") }
-    get<EncountersResource.Methods.Pagination> { call.respond(status = HttpStatusCode.OK, "") }
+fun Routing.encounters(encountersController: EncountersController) {
+    get<EncountersResource.Methods> { encountersController.getAll(this.context, it) }
+    get<EncountersResource.Methods.Id> { encountersController.getDetails(this.context, it) }
+    get<EncountersResource.Methods.Pagination> { encountersController.getByPagination(this.context, it) }
 
-    get<EncountersResource.Condition> { call.respond(status = HttpStatusCode.OK, "") }
-    get<EncountersResource.Condition.Id> { call.respond(status = HttpStatusCode.OK, "") }
-    get<EncountersResource.Condition.Pagination> { call.respond(status = HttpStatusCode.OK, "") }
+    get<EncountersResource.Condition> { encountersController.getAll(this.context, it) }
+    get<EncountersResource.Condition.Id> { encountersController.getDetails(this.context, it) }
+    get<EncountersResource.Condition.Pagination> { encountersController.getByPagination(this.context, it) }
 
-    get<EncountersResource.ConditionValue> { call.respond(status = HttpStatusCode.OK, "") }
-    get<EncountersResource.ConditionValue.Id> { call.respond(status = HttpStatusCode.OK, "") }
-    get<EncountersResource.ConditionValue.Pagination> { call.respond(status = HttpStatusCode.OK, "") }
+    get<EncountersResource.ConditionValue> { encountersController.getAll(this.context, it) }
+    get<EncountersResource.ConditionValue.Id> { encountersController.getDetails(this.context, it) }
+    get<EncountersResource.ConditionValue.Pagination> { encountersController.getByPagination(this.context, it) }
 }

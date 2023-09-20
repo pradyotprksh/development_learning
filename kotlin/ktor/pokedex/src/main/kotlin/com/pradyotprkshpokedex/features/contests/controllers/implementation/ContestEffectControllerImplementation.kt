@@ -34,7 +34,10 @@ class ContestEffectControllerImplementation(
             val effects =
                 contestService.getEffectByPagination(offset = resource.offset, limit = resource.limit)
             if (resource.withDetails) {
-                context.respond(status = HttpStatusCode.OK, defaultController.respondWithDetails<ContestEffect>(effects))
+                context.respond(
+                    status = HttpStatusCode.OK,
+                    defaultController.respondWithDetails<ContestEffect>(effects)
+                )
             } else {
                 context.respond(
                     status = HttpStatusCode.OK,

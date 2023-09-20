@@ -38,6 +38,13 @@ import com.pradyotprkshpokedex.features.contests.controllers.SuperContestEffectC
 import com.pradyotprkshpokedex.features.contests.controllers.implementation.ContestEffectControllerImplementation
 import com.pradyotprkshpokedex.features.contests.controllers.implementation.ContestTypeControllerImplementation
 import com.pradyotprkshpokedex.features.contests.controllers.implementation.SuperContestEffectControllerImplementation
+import com.pradyotprkshpokedex.features.encounters.controllers.EncounterConditionValuesController
+import com.pradyotprkshpokedex.features.encounters.controllers.EncounterConditionsController
+import com.pradyotprkshpokedex.features.encounters.controllers.EncounterMethodsController
+import com.pradyotprkshpokedex.features.encounters.controllers.EncountersController
+import com.pradyotprkshpokedex.features.encounters.controllers.implementation.EncounterConditionValuesControllerImplementation
+import com.pradyotprkshpokedex.features.encounters.controllers.implementation.EncounterConditionsControllerImplementation
+import com.pradyotprkshpokedex.features.encounters.controllers.implementation.EncounterMethodsControllerImplementation
 import com.pradyotprkshpokedex.features.evolution.controllers.EvolutionChainController
 import com.pradyotprkshpokedex.features.evolution.controllers.EvolutionTriggerController
 import com.pradyotprkshpokedex.features.evolution.controllers.EvolutionsController
@@ -60,7 +67,31 @@ object ModulesConfig {
 
         bind<ContestEffectController>() with provider { ContestEffectControllerImplementation(instance(), instance()) }
         bind<ContestTypeController>() with provider { ContestTypeControllerImplementation(instance(), instance()) }
-        bind<SuperContestEffectController>() with provider { SuperContestEffectControllerImplementation(instance(), instance()) }
+        bind<SuperContestEffectController>() with provider {
+            SuperContestEffectControllerImplementation(
+                instance(),
+                instance()
+            )
+        }
+
+        bind<EncounterMethodsController>() with provider {
+            EncounterMethodsControllerImplementation(
+                instance(),
+                instance()
+            )
+        }
+        bind<EncounterConditionsController>() with provider {
+            EncounterConditionsControllerImplementation(
+                instance(),
+                instance()
+            )
+        }
+        bind<EncounterConditionValuesController>() with provider {
+            EncounterConditionValuesControllerImplementation(
+                instance(),
+                instance()
+            )
+        }
 
         bind<MachineController>() with provider { MachinesControllerImplementation(instance(), instance()) }
 
@@ -83,6 +114,7 @@ object ModulesConfig {
     private val featuresModule = Kodein.Module("FEATURES") {
         bind() from provider { BerriesController(instance(), instance(), instance()) }
         bind() from provider { ContestsController(instance(), instance(), instance()) }
+        bind() from provider { EncountersController(instance(), instance(), instance()) }
         bind() from provider { MachinesController(instance()) }
         bind() from provider { EvolutionsController(instance(), instance()) }
     }

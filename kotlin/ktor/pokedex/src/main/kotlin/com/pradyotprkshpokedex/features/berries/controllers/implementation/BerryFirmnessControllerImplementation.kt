@@ -16,7 +16,10 @@ class BerryFirmnessControllerImplementation(
 ) : BerryFirmnessController {
     override suspend fun getAll(context: ApplicationCall, resource: BerriesResource.BerryFirmness) {
         val allBerryFirmnesses = berryService.getBerriesFirmnessByPagination(offset = 0, limit = Int.MAX_VALUE)
-        context.respond(status = HttpStatusCode.OK, defaultController.respondWithDetails<BerryFirmness>(allBerryFirmnesses))
+        context.respond(
+            status = HttpStatusCode.OK,
+            defaultController.respondWithDetails<BerryFirmness>(allBerryFirmnesses)
+        )
     }
 
     override suspend fun getDetails(
@@ -38,7 +41,10 @@ class BerryFirmnessControllerImplementation(
             val berryFirmnesses =
                 berryService.getBerriesFirmnessByPagination(offset = resource.offset, limit = resource.limit)
             if (resource.withDetails) {
-                context.respond(status = HttpStatusCode.OK, defaultController.respondWithDetails<BerryFirmness>(berryFirmnesses))
+                context.respond(
+                    status = HttpStatusCode.OK,
+                    defaultController.respondWithDetails<BerryFirmness>(berryFirmnesses)
+                )
             } else {
                 context.respond(
                     status = HttpStatusCode.OK,

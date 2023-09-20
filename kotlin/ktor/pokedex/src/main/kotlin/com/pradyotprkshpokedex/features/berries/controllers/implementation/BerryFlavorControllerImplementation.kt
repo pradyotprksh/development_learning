@@ -35,7 +35,10 @@ class BerryFlavorControllerImplementation(
             val berryFlavor =
                 berryService.getBerriesFlavorByPagination(offset = resource.offset, limit = resource.limit)
             if (resource.withDetails) {
-                context.respond(status = HttpStatusCode.OK, defaultController.respondWithDetails<BerryFlavor>(berryFlavor))
+                context.respond(
+                    status = HttpStatusCode.OK,
+                    defaultController.respondWithDetails<BerryFlavor>(berryFlavor)
+                )
             } else {
                 context.respond(
                     status = HttpStatusCode.OK,
