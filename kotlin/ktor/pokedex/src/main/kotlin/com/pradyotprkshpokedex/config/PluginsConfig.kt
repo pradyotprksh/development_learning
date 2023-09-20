@@ -90,8 +90,8 @@ fun Application.configureRouting() {
     val berriesController by ModulesConfig.kodein.instance<BerriesController>()
     val contestsController by ModulesConfig.kodein.instance<ContestsController>()
     val encountersController by ModulesConfig.kodein.instance<EncountersController>()
-    val machinesController by ModulesConfig.kodein.instance<MachinesController>()
     val evolutionsController by ModulesConfig.kodein.instance<EvolutionsController>()
+    val machinesController by ModulesConfig.kodein.instance<MachinesController>()
 
     routing {
         berries(berriesController = berriesController)

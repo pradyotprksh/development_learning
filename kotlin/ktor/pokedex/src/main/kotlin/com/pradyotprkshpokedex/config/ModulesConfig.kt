@@ -93,8 +93,6 @@ object ModulesConfig {
             )
         }
 
-        bind<MachineController>() with provider { MachinesControllerImplementation(instance(), instance()) }
-
         bind<EvolutionChainController>() with provider {
             EvolutionChainControllerImplementation(
                 instance(),
@@ -108,6 +106,8 @@ object ModulesConfig {
             )
         }
 
+        bind<MachineController>() with provider { MachinesControllerImplementation(instance(), instance()) }
+
         bind() from singleton { DefaultController(instance()) }
     }
 
@@ -115,8 +115,8 @@ object ModulesConfig {
         bind() from provider { BerriesController(instance(), instance(), instance()) }
         bind() from provider { ContestsController(instance(), instance(), instance()) }
         bind() from provider { EncountersController(instance(), instance(), instance()) }
-        bind() from provider { MachinesController(instance()) }
         bind() from provider { EvolutionsController(instance(), instance()) }
+        bind() from provider { MachinesController(instance()) }
     }
 
     private val networkModule = Kodein.Module("NETWORK") {
