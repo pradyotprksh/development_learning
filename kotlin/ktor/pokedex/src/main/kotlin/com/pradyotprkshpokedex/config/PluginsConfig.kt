@@ -11,6 +11,7 @@ import com.pradyotprkshpokedex.features.encounters.controllers.EncountersControl
 import com.pradyotprkshpokedex.features.encounters.encounters
 import com.pradyotprkshpokedex.features.evolution.controllers.EvolutionsController
 import com.pradyotprkshpokedex.features.evolution.evolution
+import com.pradyotprkshpokedex.features.games.controllers.GamesController
 import com.pradyotprkshpokedex.features.games.games
 import com.pradyotprkshpokedex.features.items.items
 import com.pradyotprkshpokedex.features.locations.locations
@@ -91,6 +92,7 @@ fun Application.configureRouting() {
     val contestsController by ModulesConfig.kodein.instance<ContestsController>()
     val encountersController by ModulesConfig.kodein.instance<EncountersController>()
     val evolutionsController by ModulesConfig.kodein.instance<EvolutionsController>()
+    val gamesController by ModulesConfig.kodein.instance<GamesController>()
     val machinesController by ModulesConfig.kodein.instance<MachinesController>()
 
     routing {
@@ -98,7 +100,7 @@ fun Application.configureRouting() {
         contests(contestsController = contestsController)
         encounters(encountersController = encountersController)
         evolution(evolutionsController = evolutionsController)
-        games()
+        games(gamesController = gamesController)
         items()
         locations()
         machines(machinesController = machinesController)

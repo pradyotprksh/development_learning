@@ -1,26 +1,24 @@
 package com.pradyotprkshpokedex.features.games
 
+import com.pradyotprkshpokedex.features.games.controllers.GamesController
 import com.pradyotprkshpokedex.features.games.resource.GamesResource
-import io.ktor.http.HttpStatusCode
-import io.ktor.server.application.call
 import io.ktor.server.resources.get
-import io.ktor.server.response.respond
 import io.ktor.server.routing.Routing
 
-fun Routing.games() {
-    get<GamesResource.Generation> { call.respond(status = HttpStatusCode.OK, "") }
-    get<GamesResource.Generation.Id> { call.respond(status = HttpStatusCode.OK, "") }
-    get<GamesResource.Generation.Pagination> { call.respond(status = HttpStatusCode.OK, "") }
+fun Routing.games(gamesController: GamesController) {
+    get<GamesResource.Generation> { gamesController.getAll(this.context, it) }
+    get<GamesResource.Generation.Id> { gamesController.getDetails(this.context, it) }
+    get<GamesResource.Generation.Pagination> { gamesController.getByPagination(this.context, it) }
 
-    get<GamesResource.Pokedex> { call.respond(status = HttpStatusCode.OK, "") }
-    get<GamesResource.Pokedex.Id> { call.respond(status = HttpStatusCode.OK, "") }
-    get<GamesResource.Pokedex.Pagination> { call.respond(status = HttpStatusCode.OK, "") }
+    get<GamesResource.Pokedex> { gamesController.getAll(this.context, it) }
+    get<GamesResource.Pokedex.Id> { gamesController.getDetails(this.context, it) }
+    get<GamesResource.Pokedex.Pagination> { gamesController.getByPagination(this.context, it) }
 
-    get<GamesResource.Version> { call.respond(status = HttpStatusCode.OK, "") }
-    get<GamesResource.Version.Id> { call.respond(status = HttpStatusCode.OK, "") }
-    get<GamesResource.Version.Pagination> { call.respond(status = HttpStatusCode.OK, "") }
+    get<GamesResource.Version> { gamesController.getAll(this.context, it) }
+    get<GamesResource.Version.Id> { gamesController.getDetails(this.context, it) }
+    get<GamesResource.Version.Pagination> { gamesController.getByPagination(this.context, it) }
 
-    get<GamesResource.VersionGroup> { call.respond(status = HttpStatusCode.OK, "") }
-    get<GamesResource.VersionGroup.Id> { call.respond(status = HttpStatusCode.OK, "") }
-    get<GamesResource.VersionGroup.Pagination> { call.respond(status = HttpStatusCode.OK, "") }
+    get<GamesResource.VersionGroup> { gamesController.getAll(this.context, it) }
+    get<GamesResource.VersionGroup.Id> { gamesController.getDetails(this.context, it) }
+    get<GamesResource.VersionGroup.Pagination> { gamesController.getByPagination(this.context, it) }
 }

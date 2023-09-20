@@ -50,6 +50,15 @@ import com.pradyotprkshpokedex.features.evolution.controllers.EvolutionTriggerCo
 import com.pradyotprkshpokedex.features.evolution.controllers.EvolutionsController
 import com.pradyotprkshpokedex.features.evolution.controllers.implementation.EvolutionChainControllerImplementation
 import com.pradyotprkshpokedex.features.evolution.controllers.implementation.EvolutionTriggerControllerImplementation
+import com.pradyotprkshpokedex.features.games.controllers.GameGenerationsController
+import com.pradyotprkshpokedex.features.games.controllers.GamePokedexesController
+import com.pradyotprkshpokedex.features.games.controllers.GameVersionController
+import com.pradyotprkshpokedex.features.games.controllers.GameVersionGroupController
+import com.pradyotprkshpokedex.features.games.controllers.GamesController
+import com.pradyotprkshpokedex.features.games.controllers.implementation.GameGenerationsControllerImplementation
+import com.pradyotprkshpokedex.features.games.controllers.implementation.GamePokedexesControllerImplementation
+import com.pradyotprkshpokedex.features.games.controllers.implementation.GameVersionControllerImplementation
+import com.pradyotprkshpokedex.features.games.controllers.implementation.GameVersionGroupControllerImplementation
 import com.pradyotprkshpokedex.features.machines.controllers.MachineController
 import com.pradyotprkshpokedex.features.machines.controllers.MachinesController
 import com.pradyotprkshpokedex.features.machines.controllers.implementation.MachinesControllerImplementation
@@ -106,6 +115,19 @@ object ModulesConfig {
             )
         }
 
+        bind<GameGenerationsController>() with provider {
+            GameGenerationsControllerImplementation(instance(), instance())
+        }
+        bind<GamePokedexesController>() with provider {
+            GamePokedexesControllerImplementation(instance(), instance())
+        }
+        bind<GameVersionController>() with provider {
+            GameVersionControllerImplementation(instance(), instance())
+        }
+        bind<GameVersionGroupController>() with provider {
+            GameVersionGroupControllerImplementation(instance(), instance())
+        }
+
         bind<MachineController>() with provider { MachinesControllerImplementation(instance(), instance()) }
 
         bind() from singleton { DefaultController(instance()) }
@@ -116,6 +138,7 @@ object ModulesConfig {
         bind() from provider { ContestsController(instance(), instance(), instance()) }
         bind() from provider { EncountersController(instance(), instance(), instance()) }
         bind() from provider { EvolutionsController(instance(), instance()) }
+        bind() from provider { GamesController(instance(), instance(), instance(), instance()) }
         bind() from provider { MachinesController(instance()) }
     }
 
