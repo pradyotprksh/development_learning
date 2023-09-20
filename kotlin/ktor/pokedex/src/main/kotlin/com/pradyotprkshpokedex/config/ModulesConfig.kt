@@ -59,6 +59,17 @@ import com.pradyotprkshpokedex.features.games.controllers.implementation.GameGen
 import com.pradyotprkshpokedex.features.games.controllers.implementation.GamePokedexesControllerImplementation
 import com.pradyotprkshpokedex.features.games.controllers.implementation.GameVersionControllerImplementation
 import com.pradyotprkshpokedex.features.games.controllers.implementation.GameVersionGroupControllerImplementation
+import com.pradyotprkshpokedex.features.items.controllers.ItemAttributesController
+import com.pradyotprkshpokedex.features.items.controllers.ItemCategoriesController
+import com.pradyotprkshpokedex.features.items.controllers.ItemController
+import com.pradyotprkshpokedex.features.items.controllers.ItemFilingEffectsController
+import com.pradyotprkshpokedex.features.items.controllers.ItemPocketsController
+import com.pradyotprkshpokedex.features.items.controllers.ItemsController
+import com.pradyotprkshpokedex.features.items.controllers.implementation.ItemAttributesControllerImplementation
+import com.pradyotprkshpokedex.features.items.controllers.implementation.ItemCategoriesControllerImplementation
+import com.pradyotprkshpokedex.features.items.controllers.implementation.ItemControllerImplementation
+import com.pradyotprkshpokedex.features.items.controllers.implementation.ItemFilingEffectsControllerImplementation
+import com.pradyotprkshpokedex.features.items.controllers.implementation.ItemPocketsControllerImplementation
 import com.pradyotprkshpokedex.features.machines.controllers.MachineController
 import com.pradyotprkshpokedex.features.machines.controllers.MachinesController
 import com.pradyotprkshpokedex.features.machines.controllers.implementation.MachinesControllerImplementation
@@ -128,6 +139,22 @@ object ModulesConfig {
             GameVersionGroupControllerImplementation(instance(), instance())
         }
 
+        bind<ItemAttributesController>() with provider {
+            ItemAttributesControllerImplementation(instance(), instance())
+        }
+        bind<ItemCategoriesController>() with provider {
+            ItemCategoriesControllerImplementation(instance(), instance())
+        }
+        bind<ItemController>() with provider {
+            ItemControllerImplementation(instance(), instance())
+        }
+        bind<ItemFilingEffectsController>() with provider {
+            ItemFilingEffectsControllerImplementation(instance(), instance())
+        }
+        bind<ItemPocketsController>() with provider {
+            ItemPocketsControllerImplementation(instance(), instance())
+        }
+
         bind<MachineController>() with provider { MachinesControllerImplementation(instance(), instance()) }
 
         bind() from singleton { DefaultController(instance()) }
@@ -139,6 +166,7 @@ object ModulesConfig {
         bind() from provider { EncountersController(instance(), instance(), instance()) }
         bind() from provider { EvolutionsController(instance(), instance()) }
         bind() from provider { GamesController(instance(), instance(), instance(), instance()) }
+        bind() from provider { ItemsController(instance(), instance(), instance(), instance(), instance()) }
         bind() from provider { MachinesController(instance()) }
     }
 

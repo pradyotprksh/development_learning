@@ -8,7 +8,7 @@ import kotlin.test.assertEquals
 
 class MovesRouterTest {
     @Test
-    fun testMovePagination() = testBuilder {
+    fun testMoveRoutes() = testBuilder {
         client.apply {
             assertEquals(HttpStatusCode.OK, get("/move/paginate?offset=1&limit=1").status)
             assertEquals(HttpStatusCode.BadRequest, get("/move/paginate?offset=-11&limit=1").status)
@@ -19,7 +19,7 @@ class MovesRouterTest {
     }
 
     @Test
-    fun testAlinmentPagination() = testBuilder {
+    fun testAlinmentRoutes() = testBuilder {
         client.apply {
             assertEquals(HttpStatusCode.OK, get("/move/ailment/paginate?offset=1&limit=1").status)
             assertEquals(HttpStatusCode.BadRequest, get("/move/ailment/paginate?offset=-11&limit=1").status)
@@ -30,7 +30,7 @@ class MovesRouterTest {
     }
 
     @Test
-    fun testBattleStylePagination() = testBuilder {
+    fun testBattleStyleRoutes() = testBuilder {
         client.apply {
             assertEquals(HttpStatusCode.OK, get("/move/battle-style/paginate?offset=1&limit=1").status)
             assertEquals(HttpStatusCode.BadRequest, get("/move/battle-style/paginate?offset=-11&limit=1").status)
@@ -41,7 +41,7 @@ class MovesRouterTest {
     }
 
     @Test
-    fun testCategoryPagination() = testBuilder {
+    fun testCategoryRoutes() = testBuilder {
         client.apply {
             assertEquals(HttpStatusCode.OK, get("/move/category/paginate?offset=1&limit=1").status)
             assertEquals(HttpStatusCode.BadRequest, get("/move/category/paginate?offset=-11&limit=1").status)
@@ -52,7 +52,7 @@ class MovesRouterTest {
     }
 
     @Test
-    fun testDamageClassPagination() = testBuilder {
+    fun testDamageClassRoutes() = testBuilder {
         client.apply {
             assertEquals(HttpStatusCode.OK, get("/move/damage-class/paginate?offset=1&limit=1").status)
             assertEquals(HttpStatusCode.BadRequest, get("/move/damage-class/paginate?offset=-11&limit=1").status)
@@ -63,7 +63,7 @@ class MovesRouterTest {
     }
 
     @Test
-    fun testLearnMethodPagination() = testBuilder {
+    fun testLearnMethodRoutes() = testBuilder {
         client.apply {
             assertEquals(HttpStatusCode.OK, get("/move/learn-method/paginate?offset=1&limit=1").status)
             assertEquals(HttpStatusCode.BadRequest, get("/move/learn-method/paginate?offset=-11&limit=1").status)
@@ -74,7 +74,7 @@ class MovesRouterTest {
     }
 
     @Test
-    fun testTargetPagination() = testBuilder {
+    fun testTargetRoutes() = testBuilder {
         client.apply {
             assertEquals(HttpStatusCode.OK, get("/move/target/paginate?offset=1&limit=1").status)
             assertEquals(HttpStatusCode.BadRequest, get("/move/target/paginate?offset=-11&limit=1").status)

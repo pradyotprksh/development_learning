@@ -8,7 +8,7 @@ import kotlin.test.assertEquals
 
 class GamesRouterTest {
     @Test
-    fun testGenerationPagination() = testBuilder {
+    fun testGenerationRoutes() = testBuilder {
         client.apply {
             assertEquals(HttpStatusCode.OK, get("/game/generation/paginate?offset=1&limit=1").status)
             assertEquals(HttpStatusCode.BadRequest, get("/game/generation/paginate?offset=-11&limit=1").status)
@@ -19,7 +19,7 @@ class GamesRouterTest {
     }
 
     @Test
-    fun testPokedexPagination() = testBuilder {
+    fun testPokedexRoutes() = testBuilder {
         client.apply {
             assertEquals(HttpStatusCode.OK, get("/game/pokedex/paginate?offset=1&limit=1").status)
             assertEquals(HttpStatusCode.BadRequest, get("/game/pokedex/paginate?offset=-11&limit=1").status)
@@ -30,7 +30,7 @@ class GamesRouterTest {
     }
 
     @Test
-    fun testVersionPagination() = testBuilder {
+    fun testVersionRoutes() = testBuilder {
         client.apply {
             assertEquals(HttpStatusCode.OK, get("/game/version/paginate?offset=1&limit=1").status)
             assertEquals(HttpStatusCode.BadRequest, get("/game/version/paginate?offset=-11&limit=1").status)
@@ -41,7 +41,7 @@ class GamesRouterTest {
     }
 
     @Test
-    fun testVersionGroupPagination() = testBuilder {
+    fun testVersionGroupRoutes() = testBuilder {
         client.apply {
             assertEquals(HttpStatusCode.OK, get("/game/version-group/paginate?offset=1&limit=1").status)
             assertEquals(HttpStatusCode.BadRequest, get("/game/version-group/paginate?offset=-11&limit=1").status)

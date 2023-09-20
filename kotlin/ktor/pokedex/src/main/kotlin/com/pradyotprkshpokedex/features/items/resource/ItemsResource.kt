@@ -31,7 +31,7 @@ class ItemsResource {
      * Item attributes define particular aspects of items, e.g. "usable in battle" or "consumable".
      */
     @Resource(Paths.Items.ATTRIBUTE)
-    class Attribute {
+    class Attribute(val parent: ItemsResource = ItemsResource()) {
         @Resource("{${Paths.Parameters.ID}}")
         data class Id(val parent: Attribute = Attribute(), val id: Int) {
             val isValid: Boolean
@@ -55,7 +55,7 @@ class ItemsResource {
      * Item categories determine where items will be placed in the players bag.
      */
     @Resource(Paths.Items.CATEGORY)
-    class Category {
+    class Category(val parent: ItemsResource = ItemsResource()) {
         @Resource("{${Paths.Parameters.ID}}")
         data class Id(val parent: Category = Category(), val id: Int) {
             val isValid: Boolean
@@ -79,7 +79,7 @@ class ItemsResource {
      * The various effects of the move "Fling" when used with different items.
      */
     @Resource(Paths.Items.FILING_EFFECT)
-    class FilingEffect {
+    class FilingEffect(val parent: ItemsResource = ItemsResource()) {
         @Resource("{${Paths.Parameters.ID}}")
         data class Id(val parent: FilingEffect = FilingEffect(), val id: Int) {
             val isValid: Boolean
@@ -103,7 +103,7 @@ class ItemsResource {
      * Pockets within the players bag used for storing items by category.
      */
     @Resource(Paths.Items.POCKETS)
-    class Pockets {
+    class Pockets(val parent: ItemsResource = ItemsResource()) {
         @Resource("{${Paths.Parameters.ID}}")
         data class Id(val parent: Pockets = Pockets(), val id: Int) {
             val isValid: Boolean

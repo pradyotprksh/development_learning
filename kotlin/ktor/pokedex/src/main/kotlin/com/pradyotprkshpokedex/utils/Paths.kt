@@ -51,7 +51,7 @@ object Paths {
         const val ATTRIBUTE = "attribute"
         const val CATEGORY = "category"
         const val FILING_EFFECT = "fling-effect"
-        const val POCKETS = "pockets"
+        const val POCKETS = "pocket"
         const val PAGINATION = "paginate"
     }
 

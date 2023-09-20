@@ -8,7 +8,7 @@ import kotlin.test.assertEquals
 
 class LocationsRouterTest {
     @Test
-    fun testLocationPagination() = testBuilder {
+    fun testLocationRoutes() = testBuilder {
         client.apply {
             assertEquals(HttpStatusCode.OK, get("/location/paginate?offset=1&limit=1").status)
             assertEquals(HttpStatusCode.BadRequest, get("/location/paginate?offset=-11&limit=1").status)
@@ -19,7 +19,7 @@ class LocationsRouterTest {
     }
 
     @Test
-    fun testAreaPagination() = testBuilder {
+    fun testAreaRoutes() = testBuilder {
         client.apply {
             assertEquals(HttpStatusCode.OK, get("/location/region/paginate?offset=1&limit=1").status)
             assertEquals(HttpStatusCode.BadRequest, get("/location/region/paginate?offset=-11&limit=1").status)
@@ -30,7 +30,7 @@ class LocationsRouterTest {
     }
 
     @Test
-    fun testPalPakAreaPagination() = testBuilder {
+    fun testPalPakAreaRoutes() = testBuilder {
         client.apply {
             assertEquals(HttpStatusCode.OK, get("/location/pal-park-area/paginate?offset=1&limit=1").status)
             assertEquals(HttpStatusCode.BadRequest, get("/location/pal-park-area/paginate?offset=-11&limit=1").status)
@@ -41,7 +41,7 @@ class LocationsRouterTest {
     }
 
     @Test
-    fun testRegionPagination() = testBuilder {
+    fun testRegionRoutes() = testBuilder {
         client.apply {
             assertEquals(HttpStatusCode.OK, get("/location/region/paginate?offset=1&limit=1").status)
             assertEquals(HttpStatusCode.BadRequest, get("/location/region/paginate?offset=-11&limit=1").status)

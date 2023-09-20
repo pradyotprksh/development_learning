@@ -8,7 +8,7 @@ import kotlin.test.assertEquals
 
 class PokemonRouterTest {
     @Test
-    fun testAbilityPagination() = testBuilder {
+    fun testAbilityRoutes() = testBuilder {
         client.apply {
             assertEquals(HttpStatusCode.OK, get("/pokemon/ability/paginate?offset=1&limit=1").status)
             assertEquals(HttpStatusCode.BadRequest, get("/pokemon/ability/paginate?offset=-11&limit=1").status)
@@ -19,7 +19,7 @@ class PokemonRouterTest {
     }
 
     @Test
-    fun testCharacteristicsPagination() = testBuilder {
+    fun testCharacteristicsRoutes() = testBuilder {
         client.apply {
             assertEquals(HttpStatusCode.OK, get("/pokemon/characteristic/paginate?offset=1&limit=1").status)
             assertEquals(HttpStatusCode.BadRequest, get("/pokemon/characteristic/paginate?offset=-11&limit=1").status)
@@ -30,7 +30,7 @@ class PokemonRouterTest {
     }
 
     @Test
-    fun testEggGroupPagination() = testBuilder {
+    fun testEggGroupRoutes() = testBuilder {
         client.apply {
             assertEquals(HttpStatusCode.OK, get("/pokemon/egg-group/paginate?offset=1&limit=1").status)
             assertEquals(HttpStatusCode.BadRequest, get("/pokemon/egg-group/paginate?offset=11&limit=1").status)
@@ -41,7 +41,7 @@ class PokemonRouterTest {
     }
 
     @Test
-    fun testGenderPagination() = testBuilder {
+    fun testGenderRoutes() = testBuilder {
         client.apply {
             assertEquals(HttpStatusCode.OK, get("/pokemon/gender/paginate?offset=1&limit=1").status)
             assertEquals(HttpStatusCode.BadRequest, get("/pokemon/gender/paginate?offset=11&limit=1").status)
@@ -52,7 +52,7 @@ class PokemonRouterTest {
     }
 
     @Test
-    fun testGrowthRatePagination() = testBuilder {
+    fun testGrowthRateRoutes() = testBuilder {
         client.apply {
             assertEquals(HttpStatusCode.OK, get("/pokemon/growth-rate/paginate?offset=1&limit=1").status)
             assertEquals(HttpStatusCode.BadRequest, get("/pokemon/growth-rate/paginate?offset=11&limit=1").status)
@@ -63,7 +63,7 @@ class PokemonRouterTest {
     }
 
     @Test
-    fun testNaturePagination() = testBuilder {
+    fun testNatureRoutes() = testBuilder {
         client.apply {
             assertEquals(HttpStatusCode.OK, get("/pokemon/nature/paginate?offset=1&limit=1").status)
             assertEquals(HttpStatusCode.BadRequest, get("/pokemon/nature/paginate?offset=11&limit=1").status)
@@ -74,7 +74,7 @@ class PokemonRouterTest {
     }
 
     @Test
-    fun testPokemonStatPagination() = testBuilder {
+    fun testPokemonStatRoutes() = testBuilder {
         client.apply {
             assertEquals(HttpStatusCode.OK, get("/pokemon/pokeathlon-stat/paginate?offset=1&limit=1").status)
             assertEquals(HttpStatusCode.BadRequest, get("/pokemon/pokeathlon-stat/paginate?offset=11&limit=1").status)
@@ -85,7 +85,7 @@ class PokemonRouterTest {
     }
 
     @Test
-    fun testPokemonPagination() = testBuilder {
+    fun testPokemonRoutes() = testBuilder {
         client.apply {
             assertEquals(HttpStatusCode.OK, get("/pokemon/paginate?offset=1&limit=1").status)
             assertEquals(HttpStatusCode.BadRequest, get("/pokemon/paginate?offset=11&limit=1").status)
@@ -96,7 +96,7 @@ class PokemonRouterTest {
     }
 
     @Test
-    fun testEncountersPagination() = testBuilder {
+    fun testEncountersRoutes() = testBuilder {
         client.apply {
             assertEquals(HttpStatusCode.OK, get("/pokemon/encounters/paginate?offset=1&limit=1").status)
             assertEquals(HttpStatusCode.BadRequest, get("/pokemon/encounters/paginate?offset=11&limit=1").status)
@@ -107,7 +107,7 @@ class PokemonRouterTest {
     }
 
     @Test
-    fun testColorPagination() = testBuilder {
+    fun testColorRoutes() = testBuilder {
         client.apply {
             assertEquals(HttpStatusCode.OK, get("/pokemon/color/paginate?offset=1&limit=1").status)
             assertEquals(HttpStatusCode.BadRequest, get("/pokemon/color/paginate?offset=11&limit=1").status)
@@ -118,7 +118,7 @@ class PokemonRouterTest {
     }
 
     @Test
-    fun testFormPagination() = testBuilder {
+    fun testFormRoutes() = testBuilder {
         client.apply {
             assertEquals(HttpStatusCode.OK, get("/pokemon/form/paginate?offset=1&limit=1").status)
             assertEquals(HttpStatusCode.BadRequest, get("/pokemon/form/paginate?offset=11&limit=1").status)
@@ -129,7 +129,7 @@ class PokemonRouterTest {
     }
 
     @Test
-    fun testHabitatClassPagination() = testBuilder {
+    fun testHabitatClassRoutes() = testBuilder {
         client.apply {
             assertEquals(HttpStatusCode.OK, get("/pokemon/habitat/paginate?offset=1&limit=1").status)
             assertEquals(HttpStatusCode.BadRequest, get("/pokemon/habitat/paginate?offset=11&limit=1").status)
@@ -140,7 +140,7 @@ class PokemonRouterTest {
     }
 
     @Test
-    fun testShapePagination() = testBuilder {
+    fun testShapeRoutes() = testBuilder {
         client.apply {
             assertEquals(HttpStatusCode.OK, get("/pokemon/shape/paginate?offset=1&limit=1").status)
             assertEquals(HttpStatusCode.BadRequest, get("/pokemon/shape/paginate?offset=11&limit=1").status)
@@ -151,7 +151,7 @@ class PokemonRouterTest {
     }
 
     @Test
-    fun testSpeciesPagination() = testBuilder {
+    fun testSpeciesRoutes() = testBuilder {
         client.apply {
             assertEquals(HttpStatusCode.OK, get("/pokemon/species/paginate?offset=1&limit=1").status)
             assertEquals(HttpStatusCode.BadRequest, get("/pokemon/species/paginate?offset=11&limit=1").status)
@@ -162,7 +162,7 @@ class PokemonRouterTest {
     }
 
     @Test
-    fun testStatPagination() = testBuilder {
+    fun testStatRoutes() = testBuilder {
         client.apply {
             assertEquals(HttpStatusCode.OK, get("/pokemon/stat/paginate?offset=1&limit=1").status)
             assertEquals(HttpStatusCode.BadRequest, get("/pokemon/stat/paginate?offset=11&limit=1").status)
@@ -173,7 +173,7 @@ class PokemonRouterTest {
     }
 
     @Test
-    fun testTypePagination() = testBuilder {
+    fun testTypeRoutes() = testBuilder {
         client.apply {
             assertEquals(HttpStatusCode.OK, get("/pokemon/type/paginate?offset=1&limit=1").status)
             assertEquals(HttpStatusCode.BadRequest, get("/pokemon/type/paginate?offset=11&limit=1").status)
