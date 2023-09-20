@@ -13,7 +13,7 @@ class EvolutionResource {
     @Resource(Paths.Evolution.CHAINS)
     class Chains(private val parent: EvolutionResource = EvolutionResource()) {
         @Resource("{${Paths.Parameters.ID}}")
-        data class Id(val parent: Chains = Chains(), val id: Int) {
+        data class Id(private val parent: Chains = Chains(), val id: Int) {
             val isValid: Boolean
                 get() = id > 0
         }
@@ -23,7 +23,7 @@ class EvolutionResource {
          */
         @Resource(Paths.Evolution.PAGINATION)
         data class Pagination(
-            val parent: Chains = Chains(), val offset: Int, val limit: Int,
+            private val parent: Chains = Chains(), val offset: Int, val limit: Int,
             val withDetails: Boolean = false
         ) {
             val isValid: Boolean
@@ -37,7 +37,7 @@ class EvolutionResource {
     @Resource(Paths.Evolution.TRIGGERS)
     class Triggers(private val parent: EvolutionResource = EvolutionResource()) {
         @Resource("{${Paths.Parameters.ID}}")
-        data class Id(val parent: Triggers = Triggers(), val id: Int) {
+        data class Id(private val parent: Triggers = Triggers(), val id: Int) {
             val isValid: Boolean
                 get() = id > 0
         }
@@ -47,7 +47,7 @@ class EvolutionResource {
          */
         @Resource(Paths.Evolution.PAGINATION)
         data class Pagination(
-            val parent: Triggers = Triggers(), val offset: Int, val limit: Int,
+            private val parent: Triggers = Triggers(), val offset: Int, val limit: Int,
             val withDetails: Boolean = false
         ) {
             val isValid: Boolean

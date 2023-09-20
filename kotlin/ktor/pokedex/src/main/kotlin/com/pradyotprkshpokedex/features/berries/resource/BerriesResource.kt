@@ -20,7 +20,7 @@ class BerriesResource {
      */
     @Resource(Paths.Berries.PAGINATION)
     data class Pagination(
-        val parent: BerriesResource = BerriesResource(),
+        private val parent: BerriesResource = BerriesResource(),
         val offset: Int,
         val limit: Int,
         val withDetails: Boolean = false
@@ -33,9 +33,9 @@ class BerriesResource {
      * Berries can be soft or hard.
      */
     @Resource(Paths.Berries.FIRMNESS)
-    class BerryFirmness(val parent: BerriesResource = BerriesResource()) {
+    class BerryFirmness(private val parent: BerriesResource = BerriesResource()) {
         @Resource("{${Paths.Parameters.ID}}")
-        data class Id(val parent: BerryFirmness = BerryFirmness(), val id: Int) {
+        data class Id(private val parent: BerryFirmness = BerryFirmness(), val id: Int) {
             val isValid: Boolean
                 get() = id > 0
         }
@@ -45,7 +45,7 @@ class BerriesResource {
          */
         @Resource(Paths.Berries.PAGINATION)
         data class Pagination(
-            val parent: BerryFirmness = BerryFirmness(), val offset: Int, val limit: Int,
+            private val parent: BerryFirmness = BerryFirmness(), val offset: Int, val limit: Int,
             val withDetails: Boolean = false
         ) {
             val isValid: Boolean
@@ -57,9 +57,9 @@ class BerriesResource {
      * Flavors determine whether a Pokémon will benefit or suffer from eating a berry based on their nature.
      */
     @Resource(Paths.Berries.FLAVOR)
-    class BerryFlavor(val parent: BerriesResource = BerriesResource()) {
+    class BerryFlavor(private val parent: BerriesResource = BerriesResource()) {
         @Resource("{${Paths.Parameters.ID}}")
-        data class Id(val parent: BerryFlavor = BerryFlavor(), val id: Int) {
+        data class Id(private val parent: BerryFlavor = BerryFlavor(), val id: Int) {
             val isValid: Boolean
                 get() = id > 0
         }
@@ -69,7 +69,7 @@ class BerriesResource {
          */
         @Resource(Paths.Berries.PAGINATION)
         data class Pagination(
-            val parent: BerryFlavor = BerryFlavor(), val offset: Int, val limit: Int,
+            private val parent: BerryFlavor = BerryFlavor(), val offset: Int, val limit: Int,
             val withDetails: Boolean = false
         ) {
             val isValid: Boolean

@@ -11,7 +11,7 @@ class EncountersResource {
     @Resource(Paths.Encounters.METHODS)
     class Methods(private val parent: EncountersResource = EncountersResource()) {
         @Resource("{${Paths.Parameters.ID}}")
-        data class Id(val parent: Methods = Methods(), val id: Int) {
+        data class Id(private val parent: Methods = Methods(), val id: Int) {
             val isValid: Boolean
                 get() = id > 0
         }
@@ -21,7 +21,7 @@ class EncountersResource {
          */
         @Resource(Paths.Encounters.PAGINATION)
         data class Pagination(
-            val parent: Methods = Methods(), val offset: Int, val limit: Int,
+            private val parent: Methods = Methods(), val offset: Int, val limit: Int,
             val withDetails: Boolean = false
         ) {
             val isValid: Boolean
@@ -35,7 +35,7 @@ class EncountersResource {
     @Resource(Paths.Encounters.CONDITION)
     class Condition(private val parent: EncountersResource = EncountersResource()) {
         @Resource("{${Paths.Parameters.ID}}")
-        data class Id(val parent: Condition = Condition(), val id: Int) {
+        data class Id(private val parent: Condition = Condition(), val id: Int) {
             val isValid: Boolean
                 get() = id > 0
         }
@@ -45,7 +45,7 @@ class EncountersResource {
          */
         @Resource(Paths.Encounters.PAGINATION)
         data class Pagination(
-            val parent: Condition = Condition(), val offset: Int, val limit: Int,
+            private val parent: Condition = Condition(), val offset: Int, val limit: Int,
             val withDetails: Boolean = false
         ) {
             val isValid: Boolean
@@ -60,7 +60,7 @@ class EncountersResource {
     @Resource(Paths.Encounters.CONDITION_VALUE)
     class ConditionValue(private val parent: EncountersResource = EncountersResource()) {
         @Resource("{${Paths.Parameters.ID}}")
-        data class Id(val parent: ConditionValue = ConditionValue(), val id: Int) {
+        data class Id(private val parent: ConditionValue = ConditionValue(), val id: Int) {
             val isValid: Boolean
                 get() = id > 0
         }
@@ -70,7 +70,7 @@ class EncountersResource {
          */
         @Resource(Paths.Encounters.PAGINATION)
         data class Pagination(
-            val parent: ConditionValue = ConditionValue(), val offset: Int, val limit: Int,
+            private val parent: ConditionValue = ConditionValue(), val offset: Int, val limit: Int,
             val withDetails: Boolean = false
         ) {
             val isValid: Boolean

@@ -13,7 +13,7 @@ class GamesResource {
     @Resource(Paths.Games.GENERATION)
     class Generation(private val parent: GamesResource = GamesResource()) {
         @Resource("{${Paths.Parameters.ID}}")
-        data class Id(val parent: Generation = Generation(), val id: Int) {
+        data class Id(private val parent: Generation = Generation(), val id: Int) {
             val isValid: Boolean
                 get() = id > 0
         }
@@ -23,7 +23,7 @@ class GamesResource {
          */
         @Resource(Paths.Games.PAGINATION)
         data class Pagination(
-            val parent: Generation = Generation(), val offset: Int, val limit: Int,
+            private val parent: Generation = Generation(), val offset: Int, val limit: Int,
             val withDetails: Boolean = false
         ) {
             val isValid: Boolean
@@ -39,7 +39,7 @@ class GamesResource {
     @Resource(Paths.Games.POKEDEX)
     class Pokedex(private val parent: GamesResource = GamesResource()) {
         @Resource("{${Paths.Parameters.ID}}")
-        data class Id(val parent: Pokedex = Pokedex(), val id: Int) {
+        data class Id(private val parent: Pokedex = Pokedex(), val id: Int) {
             val isValid: Boolean
                 get() = id > 0
         }
@@ -49,7 +49,7 @@ class GamesResource {
          */
         @Resource(Paths.Games.PAGINATION)
         data class Pagination(
-            val parent: Pokedex = Pokedex(), val offset: Int, val limit: Int,
+            private val parent: Pokedex = Pokedex(), val offset: Int, val limit: Int,
             val withDetails: Boolean = false
         ) {
             val isValid: Boolean
@@ -63,7 +63,7 @@ class GamesResource {
     @Resource(Paths.Games.VERSION)
     class Version(private val parent: GamesResource = GamesResource()) {
         @Resource("{${Paths.Parameters.ID}}")
-        data class Id(val parent: Version = Version(), val id: Int) {
+        data class Id(private val parent: Version = Version(), val id: Int) {
             val isValid: Boolean
                 get() = id > 0
         }
@@ -73,7 +73,7 @@ class GamesResource {
          */
         @Resource(Paths.Games.PAGINATION)
         data class Pagination(
-            val parent: Version = Version(), val offset: Int, val limit: Int,
+            private val parent: Version = Version(), val offset: Int, val limit: Int,
             val withDetails: Boolean = false
         ) {
             val isValid: Boolean
@@ -87,7 +87,7 @@ class GamesResource {
     @Resource(Paths.Games.VERSION_GROUP)
     class VersionGroup(private val parent: GamesResource = GamesResource()) {
         @Resource("{${Paths.Parameters.ID}}")
-        data class Id(val parent: VersionGroup = VersionGroup(), val id: Int) {
+        data class Id(private val parent: VersionGroup = VersionGroup(), val id: Int) {
             val isValid: Boolean
                 get() = id > 0
         }
@@ -97,7 +97,7 @@ class GamesResource {
          */
         @Resource(Paths.Games.PAGINATION)
         data class Pagination(
-            val parent: VersionGroup = VersionGroup(), val offset: Int, val limit: Int,
+            private val parent: VersionGroup = VersionGroup(), val offset: Int, val limit: Int,
             val withDetails: Boolean = false
         ) {
             val isValid: Boolean

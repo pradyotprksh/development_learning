@@ -10,7 +10,7 @@ import io.ktor.resources.Resource
 @Resource(Paths.Locations.LOCATION)
 class LocationsResource {
     @Resource("{${Paths.Parameters.ID}}")
-    data class Id(val parent: LocationsResource = LocationsResource(), val id: Int) {
+    data class Id(private val parent: LocationsResource = LocationsResource(), val id: Int) {
         val isValid: Boolean
             get() = id > 0
     }
@@ -20,7 +20,7 @@ class LocationsResource {
      */
     @Resource(Paths.Locations.PAGINATION)
     data class Pagination(
-        val parent: LocationsResource = LocationsResource(), val offset: Int, val limit: Int,
+        private val parent: LocationsResource = LocationsResource(), val offset: Int, val limit: Int,
         val withDetails: Boolean = false
     ) {
         val isValid: Boolean
@@ -34,7 +34,7 @@ class LocationsResource {
     @Resource(Paths.Locations.AREA)
     class Area(private val parent: LocationsResource = LocationsResource()) {
         @Resource("{${Paths.Parameters.ID}}")
-        data class Id(val parent: Area = Area(), val id: Int) {
+        data class Id(private val parent: Area = Area(), val id: Int) {
             val isValid: Boolean
                 get() = id > 0
         }
@@ -44,7 +44,7 @@ class LocationsResource {
          */
         @Resource(Paths.Locations.PAGINATION)
         data class Pagination(
-            val parent: Area = Area(), val offset: Int, val limit: Int,
+            private val parent: Area = Area(), val offset: Int, val limit: Int,
             val withDetails: Boolean = false
         ) {
             val isValid: Boolean
@@ -58,7 +58,7 @@ class LocationsResource {
     @Resource(Paths.Locations.PAL_PAK_AREA)
     class PalPakArea(private val parent: LocationsResource = LocationsResource()) {
         @Resource("{${Paths.Parameters.ID}}")
-        data class Id(val parent: PalPakArea = PalPakArea(), val id: Int) {
+        data class Id(private val parent: PalPakArea = PalPakArea(), val id: Int) {
             val isValid: Boolean
                 get() = id > 0
         }
@@ -68,7 +68,7 @@ class LocationsResource {
          */
         @Resource(Paths.Locations.PAGINATION)
         data class Pagination(
-            val parent: PalPakArea = PalPakArea(), val offset: Int, val limit: Int,
+            private val parent: PalPakArea = PalPakArea(), val offset: Int, val limit: Int,
             val withDetails: Boolean = false
         ) {
             val isValid: Boolean
@@ -83,7 +83,7 @@ class LocationsResource {
     @Resource(Paths.Locations.REGION)
     class Region(private val parent: LocationsResource = LocationsResource()) {
         @Resource("{${Paths.Parameters.ID}}")
-        data class Id(val parent: Region = Region(), val id: Int) {
+        data class Id(private val parent: Region = Region(), val id: Int) {
             val isValid: Boolean
                 get() = id > 0
         }
@@ -93,7 +93,7 @@ class LocationsResource {
          */
         @Resource(Paths.Locations.PAGINATION)
         data class Pagination(
-            val parent: Region = Region(), val offset: Int, val limit: Int,
+            private val parent: Region = Region(), val offset: Int, val limit: Int,
             val withDetails: Boolean = false
         ) {
             val isValid: Boolean

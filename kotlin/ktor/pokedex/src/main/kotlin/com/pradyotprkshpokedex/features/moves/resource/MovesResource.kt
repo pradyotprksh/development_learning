@@ -11,7 +11,7 @@ import io.ktor.resources.Resource
 @Resource(Paths.Moves.MOVE)
 class MovesResource {
     @Resource("{${Paths.Parameters.ID}}")
-    data class Id(val parent: MovesResource = MovesResource(), val id: Int) {
+    data class Id(private val parent: MovesResource = MovesResource(), val id: Int) {
         val isValid: Boolean
             get() = id > 0
     }
@@ -21,7 +21,7 @@ class MovesResource {
      */
     @Resource(Paths.Moves.PAGINATION)
     data class Pagination(
-        val parent: MovesResource = MovesResource(), val offset: Int, val limit: Int,
+        private val parent: MovesResource = MovesResource(), val offset: Int, val limit: Int,
         val withDetails: Boolean = false
     ) {
         val isValid: Boolean
@@ -34,7 +34,7 @@ class MovesResource {
     @Resource(Paths.Moves.AILMENT)
     class Ailment(private val parent: MovesResource = MovesResource()) {
         @Resource("{${Paths.Parameters.ID}}")
-        data class Id(val parent: Ailment = Ailment(), val id: Int) {
+        data class Id(private val parent: Ailment = Ailment(), val id: Int) {
             val isValid: Boolean
                 get() = id > 0
         }
@@ -44,7 +44,7 @@ class MovesResource {
          */
         @Resource(Paths.Moves.PAGINATION)
         data class Pagination(
-            val parent: Ailment = Ailment(), val offset: Int, val limit: Int,
+            private val parent: Ailment = Ailment(), val offset: Int, val limit: Int,
             val withDetails: Boolean = false
         ) {
             val isValid: Boolean
@@ -58,7 +58,7 @@ class MovesResource {
     @Resource(Paths.Moves.BATTLE_STYLE)
     class BattleStyle(private val parent: MovesResource = MovesResource()) {
         @Resource("{${Paths.Parameters.ID}}")
-        data class Id(val parent: BattleStyle = BattleStyle(), val id: Int) {
+        data class Id(private val parent: BattleStyle = BattleStyle(), val id: Int) {
             val isValid: Boolean
                 get() = id > 0
         }
@@ -68,7 +68,7 @@ class MovesResource {
          */
         @Resource(Paths.Moves.PAGINATION)
         data class Pagination(
-            val parent: BattleStyle = BattleStyle(), val offset: Int, val limit: Int,
+            private val parent: BattleStyle = BattleStyle(), val offset: Int, val limit: Int,
             val withDetails: Boolean = false
         ) {
             val isValid: Boolean
@@ -82,7 +82,7 @@ class MovesResource {
     @Resource(Paths.Moves.CATEGORY)
     class Category(private val parent: MovesResource = MovesResource()) {
         @Resource("{${Paths.Parameters.ID}}")
-        data class Id(val parent: Category = Category(), val id: Int) {
+        data class Id(private val parent: Category = Category(), val id: Int) {
             val isValid: Boolean
                 get() = id > 0
         }
@@ -92,7 +92,7 @@ class MovesResource {
          */
         @Resource(Paths.Moves.PAGINATION)
         data class Pagination(
-            val parent: Category = Category(), val offset: Int, val limit: Int,
+            private val parent: Category = Category(), val offset: Int, val limit: Int,
             val withDetails: Boolean = false
         ) {
             val isValid: Boolean
@@ -106,7 +106,7 @@ class MovesResource {
     @Resource(Paths.Moves.DAMAGE_CLASS)
     class DamageClass(private val parent: MovesResource = MovesResource()) {
         @Resource("{${Paths.Parameters.ID}}")
-        data class Id(val parent: DamageClass = DamageClass(), val id: Int) {
+        data class Id(private val parent: DamageClass = DamageClass(), val id: Int) {
             val isValid: Boolean
                 get() = id > 0
         }
@@ -116,7 +116,7 @@ class MovesResource {
          */
         @Resource(Paths.Moves.PAGINATION)
         data class Pagination(
-            val parent: DamageClass = DamageClass(), val offset: Int, val limit: Int,
+            private val parent: DamageClass = DamageClass(), val offset: Int, val limit: Int,
             val withDetails: Boolean = false
         ) {
             val isValid: Boolean
@@ -130,7 +130,7 @@ class MovesResource {
     @Resource(Paths.Moves.LEARN_METHOD)
     class LearnMethod(private val parent: MovesResource = MovesResource()) {
         @Resource("{${Paths.Parameters.ID}}")
-        data class Id(val parent: LearnMethod = LearnMethod(), val id: Int) {
+        data class Id(private val parent: LearnMethod = LearnMethod(), val id: Int) {
             val isValid: Boolean
                 get() = id > 0
         }
@@ -140,7 +140,7 @@ class MovesResource {
          */
         @Resource(Paths.Moves.PAGINATION)
         data class Pagination(
-            val parent: LearnMethod = LearnMethod(), val offset: Int, val limit: Int,
+            private val parent: LearnMethod = LearnMethod(), val offset: Int, val limit: Int,
             val withDetails: Boolean = false
         ) {
             val isValid: Boolean
@@ -154,7 +154,7 @@ class MovesResource {
     @Resource(Paths.Moves.TARGET)
     class Target(private val parent: MovesResource = MovesResource()) {
         @Resource("{${Paths.Parameters.ID}}")
-        data class Id(val parent: Target = Target(), val id: Int) {
+        data class Id(private val parent: Target = Target(), val id: Int) {
             val isValid: Boolean
                 get() = id > 0
         }
@@ -164,7 +164,7 @@ class MovesResource {
          */
         @Resource(Paths.Moves.PAGINATION)
         data class Pagination(
-            val parent: Target = Target(), val offset: Int, val limit: Int,
+            private val parent: Target = Target(), val offset: Int, val limit: Int,
             val withDetails: Boolean = false
         ) {
             val isValid: Boolean

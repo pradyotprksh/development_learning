@@ -20,7 +20,7 @@ interface MoveService {
     suspend fun getCategoryByPagination(offset: Int, limit: Int): Pagination
     suspend fun getDamageClassDetails(id: Int, path: String? = null): DamageClass
     suspend fun getDamageClassByPagination(offset: Int, limit: Int): Pagination
-    suspend fun getLearnMethodClassDetails(id: Int, path: String? = null): LearnMethod
+    suspend fun getLearnMethodDetails(id: Int, path: String? = null): LearnMethod
     suspend fun getLearnMethodByPagination(offset: Int, limit: Int): Pagination
     suspend fun getTargetDetails(id: Int, path: String? = null): Target
     suspend fun getTargetByPagination(offset: Int, limit: Int): Pagination

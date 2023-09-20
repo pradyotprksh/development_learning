@@ -11,7 +11,7 @@ class ContestResource {
     @Resource(Paths.Contests.TYPE)
     class Type(private val parent: ContestResource = ContestResource()) {
         @Resource("{${Paths.Parameters.ID}}")
-        data class Id(val parent: Type = Type(), val id: Int) {
+        data class Id(private val parent: Type = Type(), val id: Int) {
             val isValid: Boolean
                 get() = id > 0
         }
@@ -21,7 +21,7 @@ class ContestResource {
          */
         @Resource(Paths.Contests.PAGINATION)
         data class Pagination(
-            val parent: Type = Type(), val offset: Int, val limit: Int,
+            private val parent: Type = Type(), val offset: Int, val limit: Int,
             val withDetails: Boolean = false
         ) {
             val isValid: Boolean
@@ -35,7 +35,7 @@ class ContestResource {
     @Resource(Paths.Contests.EFFECT)
     class Effect(private val parent: ContestResource = ContestResource()) {
         @Resource("{${Paths.Parameters.ID}}")
-        data class Id(val parent: Effect = Effect(), val id: Int) {
+        data class Id(private val parent: Effect = Effect(), val id: Int) {
             val isValid: Boolean
                 get() = id > 0
         }
@@ -45,7 +45,7 @@ class ContestResource {
          */
         @Resource(Paths.Contests.PAGINATION)
         data class Pagination(
-            val parent: Effect = Effect(), val offset: Int, val limit: Int,
+            private val parent: Effect = Effect(), val offset: Int, val limit: Int,
             val withDetails: Boolean = false
         ) {
             val isValid: Boolean
@@ -59,7 +59,7 @@ class ContestResource {
     @Resource(Paths.Contests.SUPER_CONTEST_EFFECT)
     class SupperContestEffect(private val parent: ContestResource = ContestResource()) {
         @Resource("{${Paths.Parameters.ID}}")
-        data class Id(val parent: SupperContestEffect = SupperContestEffect(), val id: Int) {
+        data class Id(private val parent: SupperContestEffect = SupperContestEffect(), val id: Int) {
             val isValid: Boolean
                 get() = id > 0
         }
@@ -69,7 +69,7 @@ class ContestResource {
          */
         @Resource(Paths.Contests.PAGINATION)
         data class Pagination(
-            val parent: SupperContestEffect = SupperContestEffect(), val offset: Int, val limit: Int,
+            private val parent: SupperContestEffect = SupperContestEffect(), val offset: Int, val limit: Int,
             val withDetails: Boolean = false
         ) {
             val isValid: Boolean

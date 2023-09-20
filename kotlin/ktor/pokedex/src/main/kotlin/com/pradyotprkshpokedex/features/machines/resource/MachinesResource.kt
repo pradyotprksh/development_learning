@@ -10,7 +10,7 @@ import io.ktor.resources.Resource
 @Resource(Paths.Machines.MACHINE)
 class MachinesResource {
     @Resource("{${Paths.Parameters.ID}}")
-    data class Id(val parent: MachinesResource = MachinesResource(), val id: Int) {
+    data class Id(private val parent: MachinesResource = MachinesResource(), val id: Int) {
         val isValid: Boolean
             get() = id > 0
     }
@@ -20,7 +20,7 @@ class MachinesResource {
      */
     @Resource(Paths.Machines.PAGINATION)
     data class Pagination(
-        val parent: MachinesResource = MachinesResource(),
+        private val parent: MachinesResource = MachinesResource(),
         val offset: Int,
         val limit: Int,
         val withDetails: Boolean = false

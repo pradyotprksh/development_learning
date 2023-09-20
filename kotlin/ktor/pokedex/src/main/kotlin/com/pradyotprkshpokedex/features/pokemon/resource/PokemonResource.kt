@@ -1,6 +1,5 @@
 package com.pradyotprkshpokedex.features.pokemon.resource
 
-import com.pradyotprkshpokedex.features.moves.resource.MovesResource
 import com.pradyotprkshpokedex.utils.Paths
 import io.ktor.resources.Resource
 
@@ -9,7 +8,7 @@ class PokemonResource {
     @Resource(Paths.Pokemon.ABILITY)
     class Ability(private val parent: PokemonResource = PokemonResource()) {
         @Resource("{${Paths.Parameters.ID}}")
-        data class Id(val parent: Ability = Ability(), val id: Int) {
+        data class Id(private val parent: Ability = Ability(), val id: Int) {
             val isValid: Boolean
                 get() = id > 0
         }
@@ -19,7 +18,7 @@ class PokemonResource {
          */
         @Resource(Paths.Pokemon.PAGINATION)
         data class Pagination(
-            val parent: Ability = Ability(), val offset: Int, val limit: Int,
+            private val parent: Ability = Ability(), val offset: Int, val limit: Int,
             val withDetails: Boolean = false
         ) {
             val isValid: Boolean
@@ -30,7 +29,7 @@ class PokemonResource {
     @Resource(Paths.Pokemon.CHARACTERISTICS)
     class Characteristics(private val parent: PokemonResource = PokemonResource()) {
         @Resource("{${Paths.Parameters.ID}}")
-        data class Id(val parent: Characteristics = Characteristics(), val id: Int) {
+        data class Id(private val parent: Characteristics = Characteristics(), val id: Int) {
             val isValid: Boolean
                 get() = id > 0
         }
@@ -40,7 +39,7 @@ class PokemonResource {
          */
         @Resource(Paths.Pokemon.PAGINATION)
         data class Pagination(
-            val parent: Characteristics = Characteristics(), val offset: Int, val limit: Int,
+            private val parent: Characteristics = Characteristics(), val offset: Int, val limit: Int,
             val withDetails: Boolean = false
         ) {
             val isValid: Boolean
@@ -51,7 +50,7 @@ class PokemonResource {
     @Resource(Paths.Pokemon.EGG_GROUP)
     class EggGroup(private val parent: PokemonResource = PokemonResource()) {
         @Resource("{${Paths.Parameters.ID}}")
-        data class Id(val parent: EggGroup = EggGroup(), val id: Int) {
+        data class Id(private val parent: EggGroup = EggGroup(), val id: Int) {
             val isValid: Boolean
                 get() = id > 0
         }
@@ -61,7 +60,7 @@ class PokemonResource {
          */
         @Resource(Paths.Pokemon.PAGINATION)
         data class Pagination(
-            val parent: EggGroup = EggGroup(), val offset: Int, val limit: Int,
+            private val parent: EggGroup = EggGroup(), val offset: Int, val limit: Int,
             val withDetails: Boolean = false
         ) {
             val isValid: Boolean
@@ -72,7 +71,7 @@ class PokemonResource {
     @Resource(Paths.Pokemon.GENDER)
     class Gender(private val parent: PokemonResource = PokemonResource()) {
         @Resource("{${Paths.Parameters.ID}}")
-        data class Id(val parent: Gender = Gender(), val id: Int) {
+        data class Id(private val parent: Gender = Gender(), val id: Int) {
             val isValid: Boolean
                 get() = id > 0
         }
@@ -82,7 +81,7 @@ class PokemonResource {
          */
         @Resource(Paths.Pokemon.PAGINATION)
         data class Pagination(
-            val parent: Gender = Gender(), val offset: Int, val limit: Int,
+            private val parent: Gender = Gender(), val offset: Int, val limit: Int,
             val withDetails: Boolean = false
         ) {
             val isValid: Boolean
@@ -93,7 +92,7 @@ class PokemonResource {
     @Resource(Paths.Pokemon.GROWTH_RATE)
     class GrowthRate(private val parent: PokemonResource = PokemonResource()) {
         @Resource("{${Paths.Parameters.ID}}")
-        data class Id(val parent: GrowthRate = GrowthRate(), val id: Int) {
+        data class Id(private val parent: GrowthRate = GrowthRate(), val id: Int) {
             val isValid: Boolean
                 get() = id > 0
         }
@@ -103,7 +102,7 @@ class PokemonResource {
          */
         @Resource(Paths.Pokemon.PAGINATION)
         data class Pagination(
-            val parent: GrowthRate = GrowthRate(), val offset: Int, val limit: Int,
+            private val parent: GrowthRate = GrowthRate(), val offset: Int, val limit: Int,
             val withDetails: Boolean = false
         ) {
             val isValid: Boolean
@@ -114,7 +113,7 @@ class PokemonResource {
     @Resource(Paths.Pokemon.NATURE)
     class Nature(private val parent: PokemonResource = PokemonResource()) {
         @Resource("{${Paths.Parameters.ID}}")
-        data class Id(val parent: Nature = Nature(), val id: Int) {
+        data class Id(private val parent: Nature = Nature(), val id: Int) {
             val isValid: Boolean
                 get() = id > 0
         }
@@ -124,7 +123,7 @@ class PokemonResource {
          */
         @Resource(Paths.Pokemon.PAGINATION)
         data class Pagination(
-            val parent: Nature = Nature(), val offset: Int, val limit: Int,
+            private val parent: Nature = Nature(), val offset: Int, val limit: Int,
             val withDetails: Boolean = false
         ) {
             val isValid: Boolean
@@ -135,7 +134,7 @@ class PokemonResource {
     @Resource(Paths.Pokemon.POKEATHLON_STAT)
     class PokeathlonStat(private val parent: PokemonResource = PokemonResource()) {
         @Resource("{${Paths.Parameters.ID}}")
-        data class Id(val parent: PokeathlonStat = PokeathlonStat(), val id: Int) {
+        data class Id(private val parent: PokeathlonStat = PokeathlonStat(), val id: Int) {
             val isValid: Boolean
                 get() = id > 0
         }
@@ -145,7 +144,7 @@ class PokemonResource {
          */
         @Resource(Paths.Pokemon.PAGINATION)
         data class Pagination(
-            val parent: PokeathlonStat = PokeathlonStat(), val offset: Int, val limit: Int,
+            private val parent: PokeathlonStat = PokeathlonStat(), val offset: Int, val limit: Int,
             val withDetails: Boolean = false
         ) {
             val isValid: Boolean
@@ -154,7 +153,7 @@ class PokemonResource {
     }
 
     @Resource("{${Paths.Parameters.ID}}")
-    data class Id(val parent: MovesResource = MovesResource(), val id: Int) {
+    data class Id(private val parent: PokemonResource = PokemonResource(), val id: Int) {
         val isValid: Boolean
             get() = id > 0
     }
@@ -164,7 +163,7 @@ class PokemonResource {
      */
     @Resource(Paths.Pokemon.PAGINATION)
     data class Pagination(
-        val parent: MovesResource = MovesResource(), val offset: Int, val limit: Int,
+        private val parent: PokemonResource = PokemonResource(), val offset: Int, val limit: Int,
         val withDetails: Boolean = false
     ) {
         val isValid: Boolean
@@ -174,7 +173,7 @@ class PokemonResource {
     @Resource(Paths.Pokemon.ENCOUNTERS)
     class Encounters(private val parent: PokemonResource = PokemonResource()) {
         @Resource("{${Paths.Parameters.ID}}")
-        data class Id(val parent: Encounters = Encounters(), val id: Int) {
+        data class Id(private val parent: Encounters = Encounters(), val id: Int) {
             val isValid: Boolean
                 get() = id > 0
         }
@@ -184,7 +183,7 @@ class PokemonResource {
          */
         @Resource(Paths.Pokemon.PAGINATION)
         data class Pagination(
-            val parent: Encounters = Encounters(), val offset: Int, val limit: Int,
+            private val parent: Encounters = Encounters(), val offset: Int, val limit: Int,
             val withDetails: Boolean = false
         ) {
             val isValid: Boolean
@@ -195,7 +194,7 @@ class PokemonResource {
     @Resource(Paths.Pokemon.COLOR)
     class Color(private val parent: PokemonResource = PokemonResource()) {
         @Resource("{${Paths.Parameters.ID}}")
-        data class Id(val parent: Color = Color(), val id: Int) {
+        data class Id(private val parent: Color = Color(), val id: Int) {
             val isValid: Boolean
                 get() = id > 0
         }
@@ -205,7 +204,7 @@ class PokemonResource {
          */
         @Resource(Paths.Pokemon.PAGINATION)
         data class Pagination(
-            val parent: Color = Color(), val offset: Int, val limit: Int,
+            private val parent: Color = Color(), val offset: Int, val limit: Int,
             val withDetails: Boolean = false
         ) {
             val isValid: Boolean
@@ -216,7 +215,7 @@ class PokemonResource {
     @Resource(Paths.Pokemon.FORM)
     class Form(private val parent: PokemonResource = PokemonResource()) {
         @Resource("{${Paths.Parameters.ID}}")
-        data class Id(val parent: Form = Form(), val id: Int) {
+        data class Id(private val parent: Form = Form(), val id: Int) {
             val isValid: Boolean
                 get() = id > 0
         }
@@ -226,7 +225,7 @@ class PokemonResource {
          */
         @Resource(Paths.Pokemon.PAGINATION)
         data class Pagination(
-            val parent: Form = Form(), val offset: Int, val limit: Int,
+            private val parent: Form = Form(), val offset: Int, val limit: Int,
             val withDetails: Boolean = false
         ) {
             val isValid: Boolean
@@ -237,7 +236,7 @@ class PokemonResource {
     @Resource(Paths.Pokemon.HABITAT)
     class Habitat(private val parent: PokemonResource = PokemonResource()) {
         @Resource("{${Paths.Parameters.ID}}")
-        data class Id(val parent: Habitat = Habitat(), val id: Int) {
+        data class Id(private val parent: Habitat = Habitat(), val id: Int) {
             val isValid: Boolean
                 get() = id > 0
         }
@@ -247,7 +246,7 @@ class PokemonResource {
          */
         @Resource(Paths.Pokemon.PAGINATION)
         data class Pagination(
-            val parent: Habitat = Habitat(), val offset: Int, val limit: Int,
+            private val parent: Habitat = Habitat(), val offset: Int, val limit: Int,
             val withDetails: Boolean = false
         ) {
             val isValid: Boolean
@@ -258,7 +257,7 @@ class PokemonResource {
     @Resource(Paths.Pokemon.SHAPE)
     class Shape(private val parent: PokemonResource = PokemonResource()) {
         @Resource("{${Paths.Parameters.ID}}")
-        data class Id(val parent: Shape = Shape(), val id: Int) {
+        data class Id(private val parent: Shape = Shape(), val id: Int) {
             val isValid: Boolean
                 get() = id > 0
         }
@@ -268,7 +267,7 @@ class PokemonResource {
          */
         @Resource(Paths.Pokemon.PAGINATION)
         data class Pagination(
-            val parent: Shape = Shape(), val offset: Int, val limit: Int,
+            private val parent: Shape = Shape(), val offset: Int, val limit: Int,
             val withDetails: Boolean = false
         ) {
             val isValid: Boolean
@@ -279,7 +278,7 @@ class PokemonResource {
     @Resource(Paths.Pokemon.SPECIES)
     class Species(private val parent: PokemonResource = PokemonResource()) {
         @Resource("{${Paths.Parameters.ID}}")
-        data class Id(val parent: Species = Species(), val id: Int) {
+        data class Id(private val parent: Species = Species(), val id: Int) {
             val isValid: Boolean
                 get() = id > 0
         }
@@ -289,7 +288,7 @@ class PokemonResource {
          */
         @Resource(Paths.Pokemon.PAGINATION)
         data class Pagination(
-            val parent: Species = Species(), val offset: Int, val limit: Int,
+            private val parent: Species = Species(), val offset: Int, val limit: Int,
             val withDetails: Boolean = false
         ) {
             val isValid: Boolean
@@ -300,7 +299,7 @@ class PokemonResource {
     @Resource(Paths.Pokemon.STAT)
     class Stat(private val parent: PokemonResource = PokemonResource()) {
         @Resource("{${Paths.Parameters.ID}}")
-        data class Id(val parent: Stat = Stat(), val id: Int) {
+        data class Id(private val parent: Stat = Stat(), val id: Int) {
             val isValid: Boolean
                 get() = id > 0
         }
@@ -310,7 +309,7 @@ class PokemonResource {
          */
         @Resource(Paths.Pokemon.PAGINATION)
         data class Pagination(
-            val parent: Stat = Stat(), val offset: Int, val limit: Int,
+            private val parent: Stat = Stat(), val offset: Int, val limit: Int,
             val withDetails: Boolean = false
         ) {
             val isValid: Boolean
@@ -321,7 +320,7 @@ class PokemonResource {
     @Resource(Paths.Pokemon.TYPE)
     class Type(private val parent: PokemonResource = PokemonResource()) {
         @Resource("{${Paths.Parameters.ID}}")
-        data class Id(val parent: Type = Type(), val id: Int) {
+        data class Id(private val parent: Type = Type(), val id: Int) {
             val isValid: Boolean
                 get() = id > 0
         }
@@ -331,7 +330,7 @@ class PokemonResource {
          */
         @Resource(Paths.Pokemon.PAGINATION)
         data class Pagination(
-            val parent: Type = Type(), val offset: Int, val limit: Int,
+            private val parent: Type = Type(), val offset: Int, val limit: Int,
             val withDetails: Boolean = false
         ) {
             val isValid: Boolean

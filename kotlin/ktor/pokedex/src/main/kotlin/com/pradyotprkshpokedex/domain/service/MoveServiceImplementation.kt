@@ -160,7 +160,7 @@ class MoveServiceImplementation(private val networkClient: NetworkClient) : Move
         }
     }
 
-    override suspend fun getLearnMethodClassDetails(id: Int, path: String?): LearnMethod {
+    override suspend fun getLearnMethodDetails(id: Int, path: String?): LearnMethod {
         val learnMethod = networkClient.get<LearnMethod>(
             details = PokeApiRequestDetails(
                 endpoint = "${Paths.Moves.MOVE}-${Paths.Moves.LEARN_METHOD}/$id",

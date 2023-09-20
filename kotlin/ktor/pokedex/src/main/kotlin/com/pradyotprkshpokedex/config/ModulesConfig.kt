@@ -82,6 +82,21 @@ import com.pradyotprkshpokedex.features.locations.controllers.implementation.Reg
 import com.pradyotprkshpokedex.features.machines.controllers.MachineController
 import com.pradyotprkshpokedex.features.machines.controllers.MachinesController
 import com.pradyotprkshpokedex.features.machines.controllers.implementation.MachinesControllerImplementation
+import com.pradyotprkshpokedex.features.moves.controllers.MoveAilmentsController
+import com.pradyotprkshpokedex.features.moves.controllers.MoveBattleStylesController
+import com.pradyotprkshpokedex.features.moves.controllers.MoveCategoriesController
+import com.pradyotprkshpokedex.features.moves.controllers.MoveController
+import com.pradyotprkshpokedex.features.moves.controllers.MoveDamageClassesController
+import com.pradyotprkshpokedex.features.moves.controllers.MoveLearnMethodsController
+import com.pradyotprkshpokedex.features.moves.controllers.MoveTargetsController
+import com.pradyotprkshpokedex.features.moves.controllers.MovesController
+import com.pradyotprkshpokedex.features.moves.controllers.implementation.MoveAilmentsControllerImplementation
+import com.pradyotprkshpokedex.features.moves.controllers.implementation.MoveBattleStylesControllerImplementation
+import com.pradyotprkshpokedex.features.moves.controllers.implementation.MoveCategoriesControllerImplementation
+import com.pradyotprkshpokedex.features.moves.controllers.implementation.MoveControllerImplementation
+import com.pradyotprkshpokedex.features.moves.controllers.implementation.MoveDamageClassesControllerImplementation
+import com.pradyotprkshpokedex.features.moves.controllers.implementation.MoveLearnMethodsControllerImplementation
+import com.pradyotprkshpokedex.features.moves.controllers.implementation.MoveTargetsControllerImplementation
 import org.kodein.di.Kodein
 import org.kodein.di.generic.bind
 import org.kodein.di.generic.instance
@@ -179,6 +194,28 @@ object ModulesConfig {
 
         bind<MachineController>() with provider { MachinesControllerImplementation(instance(), instance()) }
 
+        bind<MoveAilmentsController>() with provider {
+            MoveAilmentsControllerImplementation(instance(), instance())
+        }
+        bind<MoveBattleStylesController>() with provider {
+            MoveBattleStylesControllerImplementation(instance(), instance())
+        }
+        bind<MoveCategoriesController>() with provider {
+            MoveCategoriesControllerImplementation(instance(), instance())
+        }
+        bind<MoveController>() with provider {
+            MoveControllerImplementation(instance(), instance())
+        }
+        bind<MoveDamageClassesController>() with provider {
+            MoveDamageClassesControllerImplementation(instance(), instance())
+        }
+        bind<MoveLearnMethodsController>() with provider {
+            MoveLearnMethodsControllerImplementation(instance(), instance())
+        }
+        bind<MoveTargetsController>() with provider {
+            MoveTargetsControllerImplementation(instance(), instance())
+        }
+
         bind() from singleton { DefaultController(instance()) }
     }
 
@@ -191,6 +228,7 @@ object ModulesConfig {
         bind() from provider { ItemsController(instance(), instance(), instance(), instance(), instance()) }
         bind() from provider { LocationsController(instance(), instance(), instance(), instance()) }
         bind() from provider { MachinesController(instance()) }
+        bind() from provider { MovesController(instance(), instance(), instance(), instance(), instance(), instance(), instance()) }
     }
 
     private val networkModule = Kodein.Module("NETWORK") {
