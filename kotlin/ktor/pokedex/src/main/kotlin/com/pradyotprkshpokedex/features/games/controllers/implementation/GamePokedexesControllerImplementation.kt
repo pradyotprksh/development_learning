@@ -14,7 +14,7 @@ import io.ktor.server.response.respond
 class GamePokedexesControllerImplementation(
     private val gameService: GameService,
     private val defaultController: DefaultController,
-): GamePokedexesController {
+) : GamePokedexesController {
     override suspend fun getAll(context: ApplicationCall, resource: GamesResource.Pokedex) {
         val allPokedexes = gameService.getPokedexByPagination(offset = 0, limit = Int.MAX_VALUE)
         context.respond(status = HttpStatusCode.OK, defaultController.respondWithDetails<Pokedex>(allPokedexes))

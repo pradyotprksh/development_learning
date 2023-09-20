@@ -14,7 +14,7 @@ import io.ktor.server.response.respond
 class GameVersionControllerImplementation(
     private val gameService: GameService,
     private val defaultController: DefaultController,
-): GameVersionController {
+) : GameVersionController {
     override suspend fun getAll(context: ApplicationCall, resource: GamesResource.Version) {
         val allVersions = gameService.getVersionByPagination(offset = 0, limit = Int.MAX_VALUE)
         context.respond(status = HttpStatusCode.OK, defaultController.respondWithDetails<Version>(allVersions))

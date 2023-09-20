@@ -5,5 +5,6 @@ class GamesController(
     private val gamePokedexesController: GamePokedexesController,
     private val gameVersionController: GameVersionController,
     private val gameVersionGroupController: GameVersionGroupController,
-): GameGenerationsController by gameGenerationsController, GamePokedexesController by gamePokedexesController, GameVersionController by gameVersionController, GameVersionGroupController by gameVersionGroupController {
+) : GameGenerationsController by gameGenerationsController, GamePokedexesController by gamePokedexesController,
+    GameVersionController by gameVersionController, GameVersionGroupController by gameVersionGroupController {
 }

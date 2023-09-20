@@ -14,7 +14,7 @@ import io.ktor.server.response.respond
 class ItemPocketsControllerImplementation(
     private val itemService: ItemService,
     private val defaultController: DefaultController,
-): ItemPocketsController {
+) : ItemPocketsController {
     override suspend fun getAll(context: ApplicationCall, resource: ItemsResource.Pockets) {
         val allPockets = itemService.getPocketByPagination(offset = 0, limit = Int.MAX_VALUE)
         context.respond(status = HttpStatusCode.OK, defaultController.respondWithDetails<Pocket>(allPockets))
