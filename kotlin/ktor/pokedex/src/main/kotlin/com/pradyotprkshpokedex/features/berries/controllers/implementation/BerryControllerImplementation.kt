@@ -20,7 +20,7 @@ class BerryControllerImplementation(
             val berries =
                 berryService.getBerriesByPagination(offset = resource.offset, limit = resource.limit)
             if (resource.withDetails) {
-                defaultController.respondWithDetails<Berry>(context, berries)
+                context.respond(status = HttpStatusCode.OK, defaultController.respondWithDetails<Berry>(berries))
             } else {
                 context.respond(
                     status = HttpStatusCode.OK,
@@ -39,7 +39,7 @@ class BerryControllerImplementation(
 
     override suspend fun getAll(context: ApplicationCall) {
         val allBerries = berryService.getBerriesByPagination(offset = 0, limit = Int.MAX_VALUE)
-        defaultController.respondWithDetails<Berry>(context, allBerries)
+        context.respond(status = HttpStatusCode.OK, defaultController.respondWithDetails<Berry>(allBerries))
     }
 
     override suspend fun getDetails(context: ApplicationCall, resource: BerriesResource.Id) {

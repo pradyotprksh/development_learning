@@ -23,7 +23,7 @@ class MachinesControllerImplementation(
             val machines =
                 machineService.getMachinesByPagination(offset = resource.offset, limit = resource.limit)
             if (resource.withDetails) {
-                defaultController.respondWithDetails<Machine>(context, machines)
+                context.respond(status = HttpStatusCode.OK, defaultController.respondWithDetails<Machine>(machines))
             } else {
                 context.respond(
                     status = HttpStatusCode.OK,
@@ -42,7 +42,7 @@ class MachinesControllerImplementation(
 
     override suspend fun getAll(context: ApplicationCall) {
         val allMachines = machineService.getMachinesByPagination(offset = 0, limit = Int.MAX_VALUE)
-        defaultController.respondWithDetails<Machine>(context, allMachines)
+        context.respond(status = HttpStatusCode.OK, defaultController.respondWithDetails<Machine>(allMachines))
     }
 
     override suspend fun getDetails(context: ApplicationCall, resource: MachinesResource.Id) {

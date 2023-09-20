@@ -17,7 +17,7 @@ class SuperContestEffectControllerImplementation(
 ) : SuperContestEffectController {
     override suspend fun getAll(context: ApplicationCall, resource: ContestResource.SupperContestEffect) {
         val allSuperContestEffects = contestService.getSuperContestEffectByPagination(offset = 0, limit = Int.MAX_VALUE)
-        defaultController.respondWithDetails<SuperContestEffect>(context, allSuperContestEffects)
+        context.respond(status = HttpStatusCode.OK, defaultController.respondWithDetails<SuperContestEffect>(allSuperContestEffects))
     }
 
     override suspend fun getDetails(context: ApplicationCall, resource: ContestResource.SupperContestEffect.Id) {
@@ -36,7 +36,7 @@ class SuperContestEffectControllerImplementation(
             val superContestEffects =
                 contestService.getSuperContestEffectByPagination(offset = resource.offset, limit = resource.limit)
             if (resource.withDetails) {
-                defaultController.respondWithDetails<SuperContestEffect>(context, superContestEffects)
+                context.respond(status = HttpStatusCode.OK, defaultController.respondWithDetails<SuperContestEffect>(superContestEffects))
             } else {
                 context.respond(
                     status = HttpStatusCode.OK,
