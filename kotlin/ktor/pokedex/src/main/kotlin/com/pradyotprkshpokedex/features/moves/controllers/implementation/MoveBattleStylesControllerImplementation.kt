@@ -14,7 +14,7 @@ import io.ktor.server.response.respond
 class MoveBattleStylesControllerImplementation(
     private val moveService: MoveService,
     private val defaultController: DefaultController,
-): MoveBattleStylesController {
+) : MoveBattleStylesController {
     override suspend fun getAll(context: ApplicationCall, resource: MovesResource.BattleStyle) {
         val allBattleStyles = moveService.getBattleStyleByPagination(offset = 0, limit = Int.MAX_VALUE)
         context.respond(status = HttpStatusCode.OK, defaultController.respondWithDetails<BattleStyle>(allBattleStyles))
@@ -33,7 +33,10 @@ class MoveBattleStylesControllerImplementation(
             val battleStyles =
                 moveService.getBattleStyleByPagination(offset = resource.offset, limit = resource.limit)
             if (resource.withDetails) {
-                context.respond(status = HttpStatusCode.OK, defaultController.respondWithDetails<BattleStyle>(battleStyles))
+                context.respond(
+                    status = HttpStatusCode.OK,
+                    defaultController.respondWithDetails<BattleStyle>(battleStyles)
+                )
             } else {
                 context.respond(
                     status = HttpStatusCode.OK,

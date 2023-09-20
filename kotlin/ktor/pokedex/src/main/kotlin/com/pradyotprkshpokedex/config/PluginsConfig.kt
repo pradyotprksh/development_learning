@@ -21,6 +21,7 @@ import com.pradyotprkshpokedex.features.machines.controllers.MachinesController
 import com.pradyotprkshpokedex.features.machines.machines
 import com.pradyotprkshpokedex.features.moves.controllers.MovesController
 import com.pradyotprkshpokedex.features.moves.moves
+import com.pradyotprkshpokedex.features.pokemon.controllers.PokemonsController
 import com.pradyotprkshpokedex.features.pokemon.pokemon
 import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpStatusCode
@@ -100,6 +101,7 @@ fun Application.configureRouting() {
     val locationsController by ModulesConfig.kodein.instance<LocationsController>()
     val machinesController by ModulesConfig.kodein.instance<MachinesController>()
     val movesController by ModulesConfig.kodein.instance<MovesController>()
+    val pokemonsController by ModulesConfig.kodein.instance<PokemonsController>()
 
     routing {
         berries(berriesController = berriesController)
@@ -111,7 +113,7 @@ fun Application.configureRouting() {
         locations(locationsController = locationsController)
         machines(machinesController = machinesController)
         moves(movesController = movesController)
-        pokemon()
+        pokemon(pokemonsController = pokemonsController)
     }
 }
 

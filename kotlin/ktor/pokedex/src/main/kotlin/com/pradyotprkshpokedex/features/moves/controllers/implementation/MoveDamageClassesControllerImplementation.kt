@@ -14,7 +14,7 @@ import io.ktor.server.response.respond
 class MoveDamageClassesControllerImplementation(
     private val moveService: MoveService,
     private val defaultController: DefaultController,
-): MoveDamageClassesController {
+) : MoveDamageClassesController {
     override suspend fun getAll(context: ApplicationCall, resource: MovesResource.DamageClass) {
         val allDamageClasses = moveService.getDamageClassByPagination(offset = 0, limit = Int.MAX_VALUE)
         context.respond(status = HttpStatusCode.OK, defaultController.respondWithDetails<DamageClass>(allDamageClasses))
@@ -33,7 +33,10 @@ class MoveDamageClassesControllerImplementation(
             val damageClasses =
                 moveService.getDamageClassByPagination(offset = resource.offset, limit = resource.limit)
             if (resource.withDetails) {
-                context.respond(status = HttpStatusCode.OK, defaultController.respondWithDetails<DamageClass>(damageClasses))
+                context.respond(
+                    status = HttpStatusCode.OK,
+                    defaultController.respondWithDetails<DamageClass>(damageClasses)
+                )
             } else {
                 context.respond(
                     status = HttpStatusCode.OK,

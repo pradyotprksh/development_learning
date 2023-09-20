@@ -177,18 +177,6 @@ class PokemonResource {
             val isValid: Boolean
                 get() = id > 0
         }
-
-        /**
-         * @param withDetails If true, and the size if large result might throw Connection Reset / Timeout error.
-         */
-        @Resource(Paths.Pokemon.PAGINATION)
-        data class Pagination(
-            private val parent: Encounters = Encounters(), val offset: Int, val limit: Int,
-            val withDetails: Boolean = false
-        ) {
-            val isValid: Boolean
-                get() = offset >= 0 && limit >= 0
-        }
     }
 
     @Resource(Paths.Pokemon.COLOR)

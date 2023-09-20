@@ -14,7 +14,7 @@ import io.ktor.server.response.respond
 class MoveControllerImplementation(
     private val moveService: MoveService,
     private val defaultController: DefaultController,
-): MoveController {
+) : MoveController {
     override suspend fun getAll(context: ApplicationCall, resource: MovesResource) {
         val allMoves = moveService.getMoveByPagination(offset = 0, limit = Int.MAX_VALUE)
         context.respond(status = HttpStatusCode.OK, defaultController.respondWithDetails<Move>(allMoves))

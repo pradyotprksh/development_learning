@@ -14,7 +14,7 @@ import io.ktor.server.response.respond
 class MoveAilmentsControllerImplementation(
     private val moveService: MoveService,
     private val defaultController: DefaultController,
-): MoveAilmentsController {
+) : MoveAilmentsController {
     override suspend fun getAll(context: ApplicationCall, resource: MovesResource.Ailment) {
         val allAilments = moveService.getAilmentByPagination(offset = 0, limit = Int.MAX_VALUE)
         context.respond(status = HttpStatusCode.OK, defaultController.respondWithDetails<Ailment>(allAilments))

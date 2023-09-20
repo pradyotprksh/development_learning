@@ -9,10 +9,10 @@ class MovesController(
     private val moveLearnMethodsController: MoveLearnMethodsController,
     private val moveTargetsController: MoveTargetsController
 ) : MoveAilmentsController by moveAilmentsController,
- MoveBattleStylesController by moveBattleStylesController,
-  MoveCategoriesController by moveCategoriesController,
-  MoveController by moveController,
-  MoveDamageClassesController by moveDamageClassesController,
+    MoveBattleStylesController by moveBattleStylesController,
+    MoveCategoriesController by moveCategoriesController,
+    MoveController by moveController,
+    MoveDamageClassesController by moveDamageClassesController,
     MoveLearnMethodsController by moveLearnMethodsController,
-  MoveTargetsController by moveTargetsController {
+    MoveTargetsController by moveTargetsController {
 }

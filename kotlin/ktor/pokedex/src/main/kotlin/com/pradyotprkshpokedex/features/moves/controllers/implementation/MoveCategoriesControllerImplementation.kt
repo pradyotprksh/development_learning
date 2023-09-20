@@ -14,7 +14,7 @@ import io.ktor.server.response.respond
 class MoveCategoriesControllerImplementation(
     private val moveService: MoveService,
     private val defaultController: DefaultController,
-): MoveCategoriesController {
+) : MoveCategoriesController {
     override suspend fun getAll(context: ApplicationCall, resource: MovesResource.Category) {
         val allCategories = moveService.getCategoryByPagination(offset = 0, limit = Int.MAX_VALUE)
         context.respond(status = HttpStatusCode.OK, defaultController.respondWithDetails<MoveCategory>(allCategories))
@@ -33,7 +33,10 @@ class MoveCategoriesControllerImplementation(
             val categories =
                 moveService.getCategoryByPagination(offset = resource.offset, limit = resource.limit)
             if (resource.withDetails) {
-                context.respond(status = HttpStatusCode.OK, defaultController.respondWithDetails<MoveCategory>(categories))
+                context.respond(
+                    status = HttpStatusCode.OK,
+                    defaultController.respondWithDetails<MoveCategory>(categories)
+                )
             } else {
                 context.respond(
                     status = HttpStatusCode.OK,

@@ -97,6 +97,39 @@ import com.pradyotprkshpokedex.features.moves.controllers.implementation.MoveCon
 import com.pradyotprkshpokedex.features.moves.controllers.implementation.MoveDamageClassesControllerImplementation
 import com.pradyotprkshpokedex.features.moves.controllers.implementation.MoveLearnMethodsControllerImplementation
 import com.pradyotprkshpokedex.features.moves.controllers.implementation.MoveTargetsControllerImplementation
+import com.pradyotprkshpokedex.features.pokemon.controllers.AbilitiesController
+import com.pradyotprkshpokedex.features.pokemon.controllers.CharacteristicsController
+import com.pradyotprkshpokedex.features.pokemon.controllers.EggGroupsController
+import com.pradyotprkshpokedex.features.pokemon.controllers.GendersController
+import com.pradyotprkshpokedex.features.pokemon.controllers.GrowthRatesController
+import com.pradyotprkshpokedex.features.pokemon.controllers.NaturesController
+import com.pradyotprkshpokedex.features.pokemon.controllers.PokeathlonStatController
+import com.pradyotprkshpokedex.features.pokemon.controllers.PokemonColorsController
+import com.pradyotprkshpokedex.features.pokemon.controllers.PokemonController
+import com.pradyotprkshpokedex.features.pokemon.controllers.PokemonFormsController
+import com.pradyotprkshpokedex.features.pokemon.controllers.PokemonHabitatsController
+import com.pradyotprkshpokedex.features.pokemon.controllers.PokemonLocationAreasController
+import com.pradyotprkshpokedex.features.pokemon.controllers.PokemonShapesController
+import com.pradyotprkshpokedex.features.pokemon.controllers.PokemonSpeciesController
+import com.pradyotprkshpokedex.features.pokemon.controllers.PokemonsController
+import com.pradyotprkshpokedex.features.pokemon.controllers.StatsController
+import com.pradyotprkshpokedex.features.pokemon.controllers.TypesController
+import com.pradyotprkshpokedex.features.pokemon.controllers.implementation.AbilitiesControllerImplementation
+import com.pradyotprkshpokedex.features.pokemon.controllers.implementation.CharacteristicsControllerImplementation
+import com.pradyotprkshpokedex.features.pokemon.controllers.implementation.EggGroupsControllerImplementation
+import com.pradyotprkshpokedex.features.pokemon.controllers.implementation.GendersControllerImplementation
+import com.pradyotprkshpokedex.features.pokemon.controllers.implementation.GrowthRatesControllerImplementation
+import com.pradyotprkshpokedex.features.pokemon.controllers.implementation.NaturesControllerImplementation
+import com.pradyotprkshpokedex.features.pokemon.controllers.implementation.PokeathlonStatControllerImplementation
+import com.pradyotprkshpokedex.features.pokemon.controllers.implementation.PokemonColorsControllerImplementation
+import com.pradyotprkshpokedex.features.pokemon.controllers.implementation.PokemonControllerImplementation
+import com.pradyotprkshpokedex.features.pokemon.controllers.implementation.PokemonFormsControllerImplementation
+import com.pradyotprkshpokedex.features.pokemon.controllers.implementation.PokemonHabitatsControllerImplementation
+import com.pradyotprkshpokedex.features.pokemon.controllers.implementation.PokemonLocationAreasControllerImplementation
+import com.pradyotprkshpokedex.features.pokemon.controllers.implementation.PokemonShapesControllerImplementation
+import com.pradyotprkshpokedex.features.pokemon.controllers.implementation.PokemonSpeciesControllerImplementation
+import com.pradyotprkshpokedex.features.pokemon.controllers.implementation.StatsControllerImplementation
+import com.pradyotprkshpokedex.features.pokemon.controllers.implementation.TypesControllerImplementation
 import org.kodein.di.Kodein
 import org.kodein.di.generic.bind
 import org.kodein.di.generic.instance
@@ -216,6 +249,55 @@ object ModulesConfig {
             MoveTargetsControllerImplementation(instance(), instance())
         }
 
+        bind<AbilitiesController>() with provider {
+            AbilitiesControllerImplementation(instance(), instance())
+        }
+        bind<CharacteristicsController>() with provider {
+            CharacteristicsControllerImplementation(instance(), instance())
+        }
+        bind<EggGroupsController>() with provider {
+            EggGroupsControllerImplementation(instance(), instance())
+        }
+        bind<GendersController>() with provider {
+            GendersControllerImplementation(instance(), instance())
+        }
+        bind<GrowthRatesController>() with provider {
+            GrowthRatesControllerImplementation(instance(), instance())
+        }
+        bind<NaturesController>() with provider {
+            NaturesControllerImplementation(instance(), instance())
+        }
+        bind<PokeathlonStatController>() with provider {
+            PokeathlonStatControllerImplementation(instance(), instance())
+        }
+        bind<PokemonColorsController>() with provider {
+            PokemonColorsControllerImplementation(instance(), instance())
+        }
+        bind<PokemonController>() with provider {
+            PokemonControllerImplementation(instance(), instance())
+        }
+        bind<PokemonFormsController>() with provider {
+            PokemonFormsControllerImplementation(instance(), instance())
+        }
+        bind<PokemonHabitatsController>() with provider {
+            PokemonHabitatsControllerImplementation(instance(), instance())
+        }
+        bind<PokemonLocationAreasController>() with provider {
+            PokemonLocationAreasControllerImplementation(instance())
+        }
+        bind<PokemonShapesController>() with provider {
+            PokemonShapesControllerImplementation(instance(), instance())
+        }
+        bind<PokemonSpeciesController>() with provider {
+            PokemonSpeciesControllerImplementation(instance(), instance())
+        }
+        bind<StatsController>() with provider {
+            StatsControllerImplementation(instance(), instance())
+        }
+        bind<TypesController>() with provider {
+            TypesControllerImplementation(instance(), instance())
+        }
+
         bind() from singleton { DefaultController(instance()) }
     }
 
@@ -228,7 +310,37 @@ object ModulesConfig {
         bind() from provider { ItemsController(instance(), instance(), instance(), instance(), instance()) }
         bind() from provider { LocationsController(instance(), instance(), instance(), instance()) }
         bind() from provider { MachinesController(instance()) }
-        bind() from provider { MovesController(instance(), instance(), instance(), instance(), instance(), instance(), instance()) }
+        bind() from provider {
+            MovesController(
+                instance(),
+                instance(),
+                instance(),
+                instance(),
+                instance(),
+                instance(),
+                instance()
+            )
+        }
+        bind() from provider {
+            PokemonsController(
+                instance(),
+                instance(),
+                instance(),
+                instance(),
+                instance(),
+                instance(),
+                instance(),
+                instance(),
+                instance(),
+                instance(),
+                instance(),
+                instance(),
+                instance(),
+                instance(),
+                instance(),
+                instance(),
+            )
+        }
     }
 
     private val networkModule = Kodein.Module("NETWORK") {

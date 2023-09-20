@@ -1,7 +1,9 @@
 package com.pradyotprkshpokedex.domain.modal
 
 import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class Species(
 
     @SerialName("id") val id: Int? = null,
@@ -23,7 +25,7 @@ data class Species(
     @SerialName("shape") val shape: NameUrl? = NameUrl(),
     @SerialName("evolves_from_species") val evolvesFromSpecies: NameUrl? = NameUrl(),
     @SerialName("evolution_chain") val evolutionChain: EvolutionChain? = EvolutionChain(),
-    @SerialName("habitat") val habitat: String? = null,
+    @SerialName("habitat") val habitat: NameUrl? = null,
     @SerialName("generation") val generation: NameUrl? = NameUrl(),
     @SerialName("names") val names: List<Names> = emptyList(),
     @SerialName("flavor_text_entries") val flavorTextEntries: List<FlavorTextEntries> = emptyList(),
