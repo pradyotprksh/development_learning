@@ -14,7 +14,7 @@ import io.ktor.server.response.respond
 class LocationAreasControllerImplementation(
     private val locationService: LocationService,
     private val defaultController: DefaultController,
-): LocationAreasController {
+) : LocationAreasController {
     override suspend fun getAll(context: ApplicationCall, resource: LocationsResource.Area) {
         val allAreas = locationService.getAreaByPagination(offset = 0, limit = Int.MAX_VALUE)
         context.respond(status = HttpStatusCode.OK, defaultController.respondWithDetails<Area>(allAreas))

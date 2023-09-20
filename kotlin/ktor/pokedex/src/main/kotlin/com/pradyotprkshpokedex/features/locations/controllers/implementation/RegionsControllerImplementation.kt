@@ -15,7 +15,7 @@ import io.ktor.server.response.respond
 class RegionsControllerImplementation(
     private val locationService: LocationService,
     private val defaultController: DefaultController,
-): RegionsController {
+) : RegionsController {
     override suspend fun getAll(context: ApplicationCall, resource: LocationsResource.Region) {
         val allRegions = locationService.getRegionEffectByPagination(offset = 0, limit = Int.MAX_VALUE)
         context.respond(status = HttpStatusCode.OK, defaultController.respondWithDetails<Location>(allRegions))

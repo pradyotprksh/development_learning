@@ -5,8 +5,8 @@ class LocationsController(
     private val locationController: LocationController,
     private val palPakAreasController: PalPakAreasController,
     private val regionsController: RegionsController,
-): LocationAreasController by locationAreasController,
-LocationController by locationController,
-PalPakAreasController by palPakAreasController,
-RegionsController by regionsController {
+) : LocationAreasController by locationAreasController,
+    LocationController by locationController,
+    PalPakAreasController by palPakAreasController,
+    RegionsController by regionsController {
 }

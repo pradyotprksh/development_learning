@@ -14,7 +14,7 @@ import io.ktor.server.response.respond
 class PalPakAreasControllerImplementation(
     private val locationService: LocationService,
     private val defaultController: DefaultController,
-): PalPakAreasController {
+) : PalPakAreasController {
     override suspend fun getAll(context: ApplicationCall, resource: LocationsResource.PalPakArea) {
         val allPalPakAreas = locationService.getPalPakAreaByPagination(offset = 0, limit = Int.MAX_VALUE)
         context.respond(status = HttpStatusCode.OK, defaultController.respondWithDetails<PalPakArea>(allPalPakAreas))
@@ -33,7 +33,10 @@ class PalPakAreasControllerImplementation(
             val palPakAreas =
                 locationService.getPalPakAreaByPagination(offset = resource.offset, limit = resource.limit)
             if (resource.withDetails) {
-                context.respond(status = HttpStatusCode.OK, defaultController.respondWithDetails<PalPakArea>(palPakAreas))
+                context.respond(
+                    status = HttpStatusCode.OK,
+                    defaultController.respondWithDetails<PalPakArea>(palPakAreas)
+                )
             } else {
                 context.respond(
                     status = HttpStatusCode.OK,

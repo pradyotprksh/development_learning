@@ -14,7 +14,7 @@ import io.ktor.server.response.respond
 class LocationControllerImplementation(
     private val locationService: LocationService,
     private val defaultController: DefaultController,
-): LocationController {
+) : LocationController {
     override suspend fun getAll(context: ApplicationCall, resource: LocationsResource) {
         val allLocations = locationService.getLocationByPagination(offset = 0, limit = Int.MAX_VALUE)
         context.respond(status = HttpStatusCode.OK, defaultController.respondWithDetails<Location>(allLocations))
