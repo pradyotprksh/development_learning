@@ -1,26 +1,24 @@
 package com.pradyotprkshpokedex.features.locations
 
+import com.pradyotprkshpokedex.features.locations.controllers.LocationsController
 import com.pradyotprkshpokedex.features.locations.resource.LocationsResource
-import io.ktor.http.HttpStatusCode
-import io.ktor.server.application.call
 import io.ktor.server.resources.get
-import io.ktor.server.response.respond
 import io.ktor.server.routing.Routing
 
-fun Routing.locations() {
-    get<LocationsResource> { call.respond(status = HttpStatusCode.OK, "") }
-    get<LocationsResource.Id> { call.respond(status = HttpStatusCode.OK, "") }
-    get<LocationsResource.Pagination> { call.respond(status = HttpStatusCode.OK, "") }
+fun Routing.locations(locationsController: LocationsController) {
+    get<LocationsResource> { locationsController.getAll(this.context, it) }
+    get<LocationsResource.Id> { locationsController.getDetails(this.context, it) }
+    get<LocationsResource.Pagination> { locationsController.getByPagination(this.context, it) }
 
-    get<LocationsResource.Area> { call.respond(status = HttpStatusCode.OK, "") }
-    get<LocationsResource.Area.Id> { call.respond(status = HttpStatusCode.OK, "") }
-    get<LocationsResource.Area.Pagination> { call.respond(status = HttpStatusCode.OK, "") }
+    get<LocationsResource.Area> { locationsController.getAll(this.context, it) }
+    get<LocationsResource.Area.Id> { locationsController.getDetails(this.context, it) }
+    get<LocationsResource.Area.Pagination> { locationsController.getByPagination(this.context, it) }
 
-    get<LocationsResource.PalPakArea> { call.respond(status = HttpStatusCode.OK, "") }
-    get<LocationsResource.PalPakArea.Id> { call.respond(status = HttpStatusCode.OK, "") }
-    get<LocationsResource.PalPakArea.Pagination> { call.respond(status = HttpStatusCode.OK, "") }
+    get<LocationsResource.PalPakArea> { locationsController.getAll(this.context, it) }
+    get<LocationsResource.PalPakArea.Id> { locationsController.getDetails(this.context, it) }
+    get<LocationsResource.PalPakArea.Pagination> { locationsController.getByPagination(this.context, it) }
 
-    get<LocationsResource.Region> { call.respond(status = HttpStatusCode.OK, "") }
-    get<LocationsResource.Region.Id> { call.respond(status = HttpStatusCode.OK, "") }
-    get<LocationsResource.Region.Pagination> { call.respond(status = HttpStatusCode.OK, "") }
+    get<LocationsResource.Region> { locationsController.getAll(this.context, it) }
+    get<LocationsResource.Region.Id> { locationsController.getDetails(this.context, it) }
+    get<LocationsResource.Region.Pagination> { locationsController.getByPagination(this.context, it) }
 }

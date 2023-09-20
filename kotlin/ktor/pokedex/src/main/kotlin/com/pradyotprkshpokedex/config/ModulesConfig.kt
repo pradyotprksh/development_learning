@@ -70,6 +70,15 @@ import com.pradyotprkshpokedex.features.items.controllers.implementation.ItemCat
 import com.pradyotprkshpokedex.features.items.controllers.implementation.ItemControllerImplementation
 import com.pradyotprkshpokedex.features.items.controllers.implementation.ItemFilingEffectsControllerImplementation
 import com.pradyotprkshpokedex.features.items.controllers.implementation.ItemPocketsControllerImplementation
+import com.pradyotprkshpokedex.features.locations.controllers.LocationAreasController
+import com.pradyotprkshpokedex.features.locations.controllers.LocationController
+import com.pradyotprkshpokedex.features.locations.controllers.LocationsController
+import com.pradyotprkshpokedex.features.locations.controllers.PalPakAreasController
+import com.pradyotprkshpokedex.features.locations.controllers.RegionsController
+import com.pradyotprkshpokedex.features.locations.controllers.implementation.LocationAreasControllerImplementation
+import com.pradyotprkshpokedex.features.locations.controllers.implementation.LocationControllerImplementation
+import com.pradyotprkshpokedex.features.locations.controllers.implementation.PalPakAreasControllerImplementation
+import com.pradyotprkshpokedex.features.locations.controllers.implementation.RegionsControllerImplementation
 import com.pradyotprkshpokedex.features.machines.controllers.MachineController
 import com.pradyotprkshpokedex.features.machines.controllers.MachinesController
 import com.pradyotprkshpokedex.features.machines.controllers.implementation.MachinesControllerImplementation
@@ -155,6 +164,19 @@ object ModulesConfig {
             ItemPocketsControllerImplementation(instance(), instance())
         }
 
+        bind<LocationAreasController>() with provider {
+            LocationAreasControllerImplementation(instance(), instance())
+        }
+        bind<LocationController>() with provider {
+            LocationControllerImplementation(instance(), instance())
+        }
+        bind<PalPakAreasController>() with provider {
+            PalPakAreasControllerImplementation(instance(), instance())
+        }
+        bind<RegionsController>() with provider {
+            RegionsControllerImplementation(instance(), instance())
+        }
+
         bind<MachineController>() with provider { MachinesControllerImplementation(instance(), instance()) }
 
         bind() from singleton { DefaultController(instance()) }
@@ -167,6 +189,7 @@ object ModulesConfig {
         bind() from provider { EvolutionsController(instance(), instance()) }
         bind() from provider { GamesController(instance(), instance(), instance(), instance()) }
         bind() from provider { ItemsController(instance(), instance(), instance(), instance(), instance()) }
+        bind() from provider { LocationsController(instance(), instance(), instance(), instance()) }
         bind() from provider { MachinesController(instance()) }
     }
 
