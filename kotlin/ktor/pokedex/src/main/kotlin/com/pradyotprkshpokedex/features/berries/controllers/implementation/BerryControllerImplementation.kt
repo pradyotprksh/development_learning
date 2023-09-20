@@ -15,11 +15,11 @@ class BerryControllerImplementation(
     private val berryService: BerryService,
     private val defaultController: DefaultController,
 ) : BerryController {
-    override suspend fun getBerriesByPagination(context: ApplicationCall, berriesResource: BerriesResource.Pagination) {
-        if (berriesResource.isValid) {
+    override suspend fun getByPagination(context: ApplicationCall, resource: BerriesResource.Pagination) {
+        if (resource.isValid) {
             val berries =
-                berryService.getBerriesByPagination(offset = berriesResource.offset, limit = berriesResource.limit)
-            if (berriesResource.withDetails) {
+                berryService.getBerriesByPagination(offset = resource.offset, limit = resource.limit)
+            if (resource.withDetails) {
                 defaultController.respondWithDetails<Berry>(context, berries)
             } else {
                 context.respond(
@@ -37,14 +37,14 @@ class BerryControllerImplementation(
         }
     }
 
-    override suspend fun getAllBerries(context: ApplicationCall) {
+    override suspend fun getAll(context: ApplicationCall) {
         val allBerries = berryService.getBerriesByPagination(offset = 0, limit = Int.MAX_VALUE)
         defaultController.respondWithDetails<Berry>(context, allBerries)
     }
 
-    override suspend fun getBerryDetails(context: ApplicationCall, berriesResource: BerriesResource.Id) {
-        if (berriesResource.isValid) {
-            context.respond(status = HttpStatusCode.OK, berryService.getBerryDetails(id = berriesResource.id))
+    override suspend fun getDetails(context: ApplicationCall, resource: BerriesResource.Id) {
+        if (resource.isValid) {
+            context.respond(status = HttpStatusCode.OK, berryService.getBerryDetails(id = resource.id))
         } else {
             throw ParametersInvalidException(invalidParameters = listOf(Paths.Parameters.ID))
         }

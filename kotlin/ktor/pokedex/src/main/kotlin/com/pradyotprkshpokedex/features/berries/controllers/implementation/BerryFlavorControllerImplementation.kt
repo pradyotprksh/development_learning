@@ -14,27 +14,27 @@ import io.ktor.server.response.respond
 class BerryFlavorControllerImplementation(
     private val berryService: BerryService, private val defaultController: DefaultController,
 ) : BerryFlavorController {
-    override suspend fun getAllBerryFlavor(context: ApplicationCall, flavor: BerriesResource.BerryFlavor) {
+    override suspend fun getAll(context: ApplicationCall, resource: BerriesResource.BerryFlavor) {
         val allBerryFlavor = berryService.getBerriesFlavorByPagination(offset = 0, limit = Int.MAX_VALUE)
         defaultController.respondWithDetails<BerryFlavor>(context, allBerryFlavor)
     }
 
-    override suspend fun getBerryFlavorDetails(context: ApplicationCall, flavor: BerriesResource.BerryFlavor.Id) {
-        if (flavor.isValid) {
-            context.respond(status = HttpStatusCode.OK, berryService.getBerryFlavorDetails(id = flavor.id))
+    override suspend fun getDetails(context: ApplicationCall, resource: BerriesResource.BerryFlavor.Id) {
+        if (resource.isValid) {
+            context.respond(status = HttpStatusCode.OK, berryService.getBerryFlavorDetails(id = resource.id))
         } else {
             throw ParametersInvalidException(invalidParameters = listOf(Paths.Parameters.ID))
         }
     }
 
-    override suspend fun getBerryFlavorByPagination(
+    override suspend fun getByPagination(
         context: ApplicationCall,
-        flavor: BerriesResource.BerryFlavor.Pagination
+        resource: BerriesResource.BerryFlavor.Pagination
     ) {
-        if (flavor.isValid) {
+        if (resource.isValid) {
             val berryFlavor =
-                berryService.getBerriesFlavorByPagination(offset = flavor.offset, limit = flavor.limit)
-            if (flavor.withDetails) {
+                berryService.getBerriesFlavorByPagination(offset = resource.offset, limit = resource.limit)
+            if (resource.withDetails) {
                 defaultController.respondWithDetails<BerryFlavor>(context, berryFlavor)
             } else {
                 context.respond(

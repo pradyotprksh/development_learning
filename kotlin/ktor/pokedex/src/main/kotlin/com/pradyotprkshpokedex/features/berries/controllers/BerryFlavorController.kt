@@ -10,9 +10,9 @@ interface BerryFlavorController {
      * Using this might leads to Connection Reset / Timeout error.
      * Better to use pagination route to get results in paginated format.
      */
-    suspend fun getAllBerryFlavor(context: ApplicationCall, flavor: BerriesResource.BerryFlavor)
+    suspend fun getAll(context: ApplicationCall, resource: BerriesResource.BerryFlavor)
 
-    suspend fun getBerryFlavorDetails(context: ApplicationCall, flavor: BerriesResource.BerryFlavor.Id)
+    suspend fun getDetails(context: ApplicationCall, resource: BerriesResource.BerryFlavor.Id)
 
-    suspend fun getBerryFlavorByPagination(context: ApplicationCall, flavor: BerriesResource.BerryFlavor.Pagination)
+    suspend fun getByPagination(context: ApplicationCall, resource: BerriesResource.BerryFlavor.Pagination)
 }

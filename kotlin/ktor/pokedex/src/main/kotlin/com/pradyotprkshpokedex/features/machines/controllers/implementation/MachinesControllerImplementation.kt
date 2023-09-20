@@ -15,14 +15,14 @@ class MachinesControllerImplementation(
     private val machineService: MachineService,
     private val defaultController: DefaultController,
 ) : MachineController {
-    override suspend fun getMachinesByPagination(
+    override suspend fun getByPagination(
         context: ApplicationCall,
-        machinesResource: MachinesResource.Pagination
+        resource: MachinesResource.Pagination
     ) {
-        if (machinesResource.isValid) {
+        if (resource.isValid) {
             val machines =
-                machineService.getMachinesByPagination(offset = machinesResource.offset, limit = machinesResource.limit)
-            if (machinesResource.withDetails) {
+                machineService.getMachinesByPagination(offset = resource.offset, limit = resource.limit)
+            if (resource.withDetails) {
                 defaultController.respondWithDetails<Machine>(context, machines)
             } else {
                 context.respond(
@@ -40,14 +40,14 @@ class MachinesControllerImplementation(
         }
     }
 
-    override suspend fun getAllMachines(context: ApplicationCall) {
+    override suspend fun getAll(context: ApplicationCall) {
         val allMachines = machineService.getMachinesByPagination(offset = 0, limit = Int.MAX_VALUE)
         defaultController.respondWithDetails<Machine>(context, allMachines)
     }
 
-    override suspend fun getMachineDetails(context: ApplicationCall, machinesResource: MachinesResource.Id) {
-        if (machinesResource.isValid) {
-            context.respond(status = HttpStatusCode.OK, machineService.getMachineDetails(id = machinesResource.id))
+    override suspend fun getDetails(context: ApplicationCall, resource: MachinesResource.Id) {
+        if (resource.isValid) {
+            context.respond(status = HttpStatusCode.OK, machineService.getMachineDetails(id = resource.id))
         } else {
             throw ParametersInvalidException(invalidParameters = listOf(Paths.Parameters.ID))
         }

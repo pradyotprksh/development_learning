@@ -10,12 +10,12 @@ interface BerryFirmnessController {
      * Using this might leads to Connection Reset / Timeout error.
      * Better to use pagination route to get results in paginated format.
      */
-    suspend fun getAllBerryFirmness(context: ApplicationCall, firmnesses: BerriesResource.BerryFirmness)
+    suspend fun getAll(context: ApplicationCall, resource: BerriesResource.BerryFirmness)
 
-    suspend fun getBerryFirmnessDetails(context: ApplicationCall, firmnesses: BerriesResource.BerryFirmness.Id)
+    suspend fun getDetails(context: ApplicationCall, resource: BerriesResource.BerryFirmness.Id)
 
-    suspend fun getBerryFirmnessByPagination(
+    suspend fun getByPagination(
         context: ApplicationCall,
-        firmnesses: BerriesResource.BerryFirmness.Pagination
+        resource: BerriesResource.BerryFirmness.Pagination
     )
 }

@@ -10,12 +10,12 @@ interface EvolutionChainController {
      * Using this might leads to Connection Reset / Timeout error.
      * Better to use pagination route to get results in paginated format.
      */
-    suspend fun getAllEvolutionChain(context: ApplicationCall, chains: EvolutionResource.Chains)
+    suspend fun getAll(context: ApplicationCall, resource: EvolutionResource.Chains)
 
-    suspend fun getEvolutionChainDetails(context: ApplicationCall, chains: EvolutionResource.Chains.Id)
+    suspend fun getDetails(context: ApplicationCall, resource: EvolutionResource.Chains.Id)
 
-    suspend fun getEvolutionChainByPagination(
+    suspend fun getByPagination(
         context: ApplicationCall,
-        chains: EvolutionResource.Chains.Pagination
+        resource: EvolutionResource.Chains.Pagination
     )
 }

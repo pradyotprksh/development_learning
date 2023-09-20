@@ -4,7 +4,7 @@ import com.pradyotprkshpokedex.features.machines.resource.MachinesResource
 import io.ktor.server.application.ApplicationCall
 
 interface MachineController {
-    suspend fun getMachinesByPagination(context: ApplicationCall, machinesResource: MachinesResource.Pagination)
+    suspend fun getByPagination(context: ApplicationCall, resource: MachinesResource.Pagination)
 
     /**
      * USE IT AT YOUR OWN RISK
@@ -12,7 +12,7 @@ interface MachineController {
      * Using this might leads to Connection Reset / Timeout error.
      * Better to use pagination route to get results in paginated format.
      */
-    suspend fun getAllMachines(context: ApplicationCall)
+    suspend fun getAll(context: ApplicationCall)
 
-    suspend fun getMachineDetails(context: ApplicationCall, machinesResource: MachinesResource.Id)
+    suspend fun getDetails(context: ApplicationCall, resource: MachinesResource.Id)
 }

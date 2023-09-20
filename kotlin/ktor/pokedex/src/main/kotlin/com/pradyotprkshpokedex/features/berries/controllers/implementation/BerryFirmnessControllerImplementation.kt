@@ -14,30 +14,30 @@ import io.ktor.server.response.respond
 class BerryFirmnessControllerImplementation(
     private val berryService: BerryService, private val defaultController: DefaultController,
 ) : BerryFirmnessController {
-    override suspend fun getAllBerryFirmness(context: ApplicationCall, firmnesses: BerriesResource.BerryFirmness) {
+    override suspend fun getAll(context: ApplicationCall, resource: BerriesResource.BerryFirmness) {
         val allBerryFirmnesses = berryService.getBerriesFirmnessByPagination(offset = 0, limit = Int.MAX_VALUE)
         defaultController.respondWithDetails<BerryFirmness>(context, allBerryFirmnesses)
     }
 
-    override suspend fun getBerryFirmnessDetails(
+    override suspend fun getDetails(
         context: ApplicationCall,
-        firmnesses: BerriesResource.BerryFirmness.Id
+        resource: BerriesResource.BerryFirmness.Id
     ) {
-        if (firmnesses.isValid) {
-            context.respond(status = HttpStatusCode.OK, berryService.getBerryFirmnessDetails(id = firmnesses.id))
+        if (resource.isValid) {
+            context.respond(status = HttpStatusCode.OK, berryService.getBerryFirmnessDetails(id = resource.id))
         } else {
             throw ParametersInvalidException(invalidParameters = listOf(Paths.Parameters.ID))
         }
     }
 
-    override suspend fun getBerryFirmnessByPagination(
+    override suspend fun getByPagination(
         context: ApplicationCall,
-        firmnesses: BerriesResource.BerryFirmness.Pagination
+        resource: BerriesResource.BerryFirmness.Pagination
     ) {
-        if (firmnesses.isValid) {
+        if (resource.isValid) {
             val berryFirmnesses =
-                berryService.getBerriesFirmnessByPagination(offset = firmnesses.offset, limit = firmnesses.limit)
-            if (firmnesses.withDetails) {
+                berryService.getBerriesFirmnessByPagination(offset = resource.offset, limit = resource.limit)
+            if (resource.withDetails) {
                 defaultController.respondWithDetails<BerryFirmness>(context, berryFirmnesses)
             } else {
                 context.respond(

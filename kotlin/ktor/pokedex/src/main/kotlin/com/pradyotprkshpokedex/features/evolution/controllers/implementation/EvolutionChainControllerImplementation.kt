@@ -14,27 +14,27 @@ import io.ktor.server.response.respond
 class EvolutionChainControllerImplementation(
     private val evolutionService: EvolutionService, private val defaultController: DefaultController,
 ) : EvolutionChainController {
-    override suspend fun getAllEvolutionChain(context: ApplicationCall, chains: EvolutionResource.Chains) {
+    override suspend fun getAll(context: ApplicationCall, resource: EvolutionResource.Chains) {
         val allEvolutionChain = evolutionService.getEvolutionChainByPagination(offset = 0, limit = Int.MAX_VALUE)
         defaultController.respondWithDetails<EvolutionChain>(context, allEvolutionChain)
     }
 
-    override suspend fun getEvolutionChainDetails(context: ApplicationCall, chains: EvolutionResource.Chains.Id) {
-        if (chains.isValid) {
-            context.respond(status = HttpStatusCode.OK, evolutionService.getEvolutionChainDetails(id = chains.id))
+    override suspend fun getDetails(context: ApplicationCall, resource: EvolutionResource.Chains.Id) {
+        if (resource.isValid) {
+            context.respond(status = HttpStatusCode.OK, evolutionService.getEvolutionChainDetails(id = resource.id))
         } else {
             throw ParametersInvalidException(invalidParameters = listOf(Paths.Parameters.ID))
         }
     }
 
-    override suspend fun getEvolutionChainByPagination(
+    override suspend fun getByPagination(
         context: ApplicationCall,
-        chains: EvolutionResource.Chains.Pagination
+        resource: EvolutionResource.Chains.Pagination
     ) {
-        if (chains.isValid) {
+        if (resource.isValid) {
             val evolutionChain =
-                evolutionService.getEvolutionChainByPagination(offset = chains.offset, limit = chains.limit)
-            if (chains.withDetails) {
+                evolutionService.getEvolutionChainByPagination(offset = resource.offset, limit = resource.limit)
+            if (resource.withDetails) {
                 defaultController.respondWithDetails<EvolutionChain>(context, evolutionChain)
             } else {
                 context.respond(
