@@ -6,6 +6,7 @@ import com.pradyotprkshpokedex.core.exception.PokedexException
 import com.pradyotprkshpokedex.features.berries.berries
 import com.pradyotprkshpokedex.features.berries.controllers.BerriesController
 import com.pradyotprkshpokedex.features.contests.contests
+import com.pradyotprkshpokedex.features.contests.controllers.ContestsController
 import com.pradyotprkshpokedex.features.encounters.encounters
 import com.pradyotprkshpokedex.features.evolution.controllers.EvolutionsController
 import com.pradyotprkshpokedex.features.evolution.evolution
@@ -86,12 +87,13 @@ fun Application.configureResource() {
 
 fun Application.configureRouting() {
     val berriesController by ModulesConfig.kodein.instance<BerriesController>()
+    val contestsController by ModulesConfig.kodein.instance<ContestsController>()
     val machinesController by ModulesConfig.kodein.instance<MachinesController>()
     val evolutionsController by ModulesConfig.kodein.instance<EvolutionsController>()
 
     routing {
         berries(berriesController = berriesController)
-        contests()
+        contests(contestsController = contestsController)
         encounters()
         evolution(evolutionsController = evolutionsController)
         games()

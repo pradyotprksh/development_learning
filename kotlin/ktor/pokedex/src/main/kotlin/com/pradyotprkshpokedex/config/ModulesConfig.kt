@@ -58,9 +58,9 @@ object ModulesConfig {
         bind<BerryFirmnessController>() with provider { BerryFirmnessControllerImplementation(instance(), instance()) }
         bind<BerryFlavorController>() with provider { BerryFlavorControllerImplementation(instance(), instance()) }
 
-        bind<ContestEffectController>() with provider { ContestEffectControllerImplementation() }
-        bind<ContestTypeController>() with provider { ContestTypeControllerImplementation() }
-        bind<SuperContestEffectController>() with provider { SuperContestEffectControllerImplementation() }
+        bind<ContestEffectController>() with provider { ContestEffectControllerImplementation(instance(), instance()) }
+        bind<ContestTypeController>() with provider { ContestTypeControllerImplementation(instance(), instance()) }
+        bind<SuperContestEffectController>() with provider { SuperContestEffectControllerImplementation(instance(), instance()) }
 
         bind<MachineController>() with provider { MachinesControllerImplementation(instance(), instance()) }
 
