@@ -6,7 +6,8 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class Names(
 
-    @SerialName("language") val language: NameUrl? = NameUrl(),
-    @SerialName("name") val name: String? = null
+    @SerialName("name") val name: String? = null,
+    @SerialName("color") val color: String? = null,
+    @SerialName("language") val language: NameUrl? = NameUrl()
 
 )

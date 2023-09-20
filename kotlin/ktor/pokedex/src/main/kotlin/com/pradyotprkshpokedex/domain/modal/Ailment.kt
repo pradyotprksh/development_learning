@@ -6,9 +6,9 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class Ailment(
 
-    @SerialName("id") var id: Int? = null,
-    @SerialName("moves") var moves: List<NameUrl> = emptyList(),
-    @SerialName("name") var name: String? = null,
-    @SerialName("names") var names: List<Names> = emptyList()
+    @SerialName("id") val id: Int? = null,
+    @SerialName("name") val name: String? = null,
+    @SerialName("moves") val moves: List<NameUrl> = emptyList(),
+    @SerialName("names") val names: List<Names> = emptyList()
 
 )

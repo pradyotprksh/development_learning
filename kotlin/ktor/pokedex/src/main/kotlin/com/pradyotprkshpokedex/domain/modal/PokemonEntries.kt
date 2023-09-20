@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class PokemonEntries(
 
-    @SerialName("entry_number") var entryNumber: Int? = null,
-    @SerialName("pokemon_species") var pokemonSpecies: NameUrl? = NameUrl()
+    @SerialName("entry_number") val entryNumber: Int? = null,
+    @SerialName("pokemon_species") val pokemonSpecies: NameUrl? = NameUrl()
 
 )

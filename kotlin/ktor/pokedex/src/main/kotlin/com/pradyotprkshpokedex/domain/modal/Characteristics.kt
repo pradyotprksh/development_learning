@@ -6,6 +6,6 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class Characteristics(
 
-    @SerialName("url") var url: String? = null
+    @SerialName("url") val url: String? = null
 
 )

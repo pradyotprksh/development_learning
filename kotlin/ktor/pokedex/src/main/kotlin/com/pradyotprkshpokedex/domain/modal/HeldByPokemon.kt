@@ -4,9 +4,9 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class EncounterMethodRates(
+data class HeldByPokemon(
 
-    @SerialName("encounter_method") val encounterMethod: NameUrl? = NameUrl(),
+    @SerialName("pokemon") val pokemon: NameUrl? = NameUrl(),
     @SerialName("version_details") val versionDetails: List<VersionDetails> = emptyList()
 
 )

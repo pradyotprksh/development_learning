@@ -6,14 +6,13 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class Pokedex(
 
-    @SerialName("descriptions") var descriptions: List<Descriptions> = emptyList(),
-    @SerialName("id") var id: Int? = null,
-    @SerialName("is_main_series") var isMainSeries: Boolean? = null,
-    @SerialName("name") var name: String? = null,
-    @SerialName("names") var names: List<Names> = emptyList(),
-    @SerialName("pokemon_entries") var pokemonEntries: List<PokemonEntries> = emptyList(),
-    @SerialName("region") var region: String? = null,
-    @SerialName("version_groups") var versionGroups: List<String> = emptyList()
+    @SerialName("id") val id: Int? = null,
+    @SerialName("name") val name: String? = null,
+    @SerialName("is_main_series") val isMainSeries: Boolean? = null,
+    @SerialName("descriptions") val descriptions: List<Descriptions> = emptyList(),
+    @SerialName("names") val names: List<Names> = emptyList(),
+    @SerialName("pokemon_entries") val pokemonEntries: List<PokemonEntries> = emptyList(),
+    @SerialName("region") val region: NameUrl? = NameUrl(),
+    @SerialName("version_groups") val versionGroups: List<NameUrl> = emptyList()
 
 )
-

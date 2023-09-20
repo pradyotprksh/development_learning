@@ -6,8 +6,10 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class PokemonEncounters(
 
-    @SerialName("base_score") var baseScore: Int? = null,
-    @SerialName("pokemon_species") var pokemonSpecies: NameUrl? = NameUrl(),
-    @SerialName("rate") var rate: Int? = null
+    @SerialName("pokemon") val pokemon: NameUrl? = NameUrl(),
+    @SerialName("version_details") val versionDetails: List<VersionDetails> = emptyList(),
+    @SerialName("base_score") val baseScore: Int? = null,
+    @SerialName("rate") val rate: Int? = null,
+    @SerialName("pokemon_species") val pokemonSpecies: NameUrl? = NameUrl()
 
 )

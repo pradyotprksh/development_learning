@@ -6,10 +6,9 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class EvolutionChain(
 
-    @SerialName("baby_trigger_item") var babyTriggerItem: String? = null,
-    @SerialName("chain") var chain: Chain? = Chain(),
-    @SerialName("id") var id: Int? = null,
-    @SerialName("url") var url: String? = null
+    @SerialName("id") val id: Int? = null,
+    @SerialName("baby_trigger_item") val babyTriggerItem: String? = null,
+    @SerialName("chain") val chain: Chain? = Chain()
 
 )
 

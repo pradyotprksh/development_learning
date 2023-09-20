@@ -6,8 +6,8 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class Abilities(
 
-    @SerialName("is_hidden") var isHidden: Boolean? = null,
-    @SerialName("slot") var slot: Int? = null,
-    @SerialName("ability") var ability: Ability? = Ability()
+    @SerialName("is_hidden") val isHidden: Boolean? = null,
+    @SerialName("slot") val slot: Int? = null,
+    @SerialName("ability") val ability: NameUrl? = NameUrl()
 
 )

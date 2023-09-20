@@ -6,8 +6,8 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class GenerationIII(
 
-    @SerialName("emerald") var emerald: Emerald? = Emerald(),
-    @SerialName("firered-leafgreen") var fireredLeafgreen: FireredLeafgreen? = FireredLeafgreen(),
-    @SerialName("ruby-sapphire") var rubySapphire: RubySapphire? = RubySapphire()
+    @SerialName("emerald") val emerald: Emerald? = Emerald(),
+    @SerialName("firered-leafgreen") val fireredLeafgreen: FireredLeafgreen? = FireredLeafgreen(),
+    @SerialName("ruby-sapphire") val rubySapphire: RubySapphire? = RubySapphire()
 
 )

@@ -6,10 +6,10 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class PokeathlonStat(
 
-    @SerialName("affecting_natures") var affectingNatures: AffectingNatures? = AffectingNatures(),
-    @SerialName("id") var id: Int? = null,
-    @SerialName("name") var name: String? = null,
-    @SerialName("names") var names: List<Names> = emptyList()
+    @SerialName("affecting_natures") val affectingNatures: AffectingNatures? = AffectingNatures(),
+    @SerialName("id") val id: Int? = null,
+    @SerialName("name") val name: String? = null,
+    @SerialName("names") val names: List<Names> = emptyList()
 
 )
 

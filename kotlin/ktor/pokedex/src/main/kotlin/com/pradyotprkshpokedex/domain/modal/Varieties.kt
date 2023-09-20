@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class Varieties(
 
-    @SerialName("is_default") var isDefault: Boolean? = null,
-    @SerialName("pokemon") var pokemon: NameUrl? = NameUrl()
+    @SerialName("is_default") val isDefault: Boolean? = null,
+    @SerialName("pokemon") val pokemon: NameUrl? = NameUrl()
 
 )

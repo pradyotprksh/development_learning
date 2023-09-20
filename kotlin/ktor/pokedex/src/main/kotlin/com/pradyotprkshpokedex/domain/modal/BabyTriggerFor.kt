@@ -4,9 +4,8 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class BerriesPotency(
+data class BabyTriggerFor(
 
-    @SerialName("berry") val berry: NameUrl? = NameUrl(),
-    @SerialName("potency") val potency: Int? = null
+    @SerialName("url") val url: String? = null
 
 )

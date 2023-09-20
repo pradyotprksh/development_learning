@@ -4,8 +4,9 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class GenerationVIII(
+data class Berries(
 
-    @SerialName("icons") val icons: Icons? = Icons()
+    @SerialName("potency") val potency: Int? = null,
+    @SerialName("berry") val berry: NameUrl? = NameUrl()
 
 )

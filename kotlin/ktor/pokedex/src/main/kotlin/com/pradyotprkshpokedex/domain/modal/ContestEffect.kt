@@ -6,11 +6,12 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class ContestEffect(
 
-    @SerialName("appeal") var appeal: Int? = null,
-    @SerialName("effect_entries") var effectEntries: List<EffectEntries> = emptyList(),
-    @SerialName("flavor_text_entries") var flavorTextEntries: List<FlavorTextEntries> = emptyList(),
-    @SerialName("id") var id: Int? = null,
-    @SerialName("jam") var jam: Int? = null
+    @SerialName("id") val id: Int? = null,
+    @SerialName("appeal") val appeal: Int? = null,
+    @SerialName("jam") val jam: Int? = null,
+    @SerialName("effect_entries") val effectEntries: List<EffectEntries> = emptyList(),
+    @SerialName("flavor_text_entries") val flavorTextEntries: List<FlavorTextEntries> = emptyList(),
+    @SerialName("url") val url: String? = null
 
 )
 

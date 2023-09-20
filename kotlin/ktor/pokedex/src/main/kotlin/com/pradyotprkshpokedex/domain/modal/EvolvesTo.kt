@@ -6,9 +6,9 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class EvolvesTo(
 
-    @SerialName("evolution_details") var evolutionDetails: List<EvolutionDetails> = emptyList(),
-    @SerialName("evolves_to") var evolvesTo: List<EvolvesTo> = emptyList(),
-    @SerialName("is_baby") var isBaby: Boolean? = null,
-    @SerialName("species") var species: NameUrl? = NameUrl()
+    @SerialName("is_baby") val isBaby: Boolean? = null,
+    @SerialName("species") val species: NameUrl? = NameUrl(),
+    @SerialName("evolution_details") val evolutionDetails: List<EvolutionDetails> = emptyList(),
+    @SerialName("evolves_to") val evolvesTo: List<EvolvesTo> = emptyList()
 
 )

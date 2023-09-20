@@ -6,9 +6,9 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class ConditionValue(
 
-    @SerialName("condition") var condition: Condition? = Condition(),
-    @SerialName("id") var id: Int? = null,
-    @SerialName("name") var name: String? = null,
-    @SerialName("names") var names: List<Names> = emptyList()
+    @SerialName("id") val id: Int? = null,
+    @SerialName("name") val name: String? = null,
+    @SerialName("condition") val condition: NameUrl? = NameUrl(),
+    @SerialName("names") val names: List<Names> = emptyList()
 
 )

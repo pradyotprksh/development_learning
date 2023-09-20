@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class PastDamageRelations(
 
-    @SerialName("generation") var generation: Generation? = Generation(),
-    @SerialName("damage_relations") var damageRelations: DamageRelations? = DamageRelations()
+    @SerialName("generation") val generation: Generation? = Generation(),
+    @SerialName("damage_relations") val damageRelations: DamageRelations? = DamageRelations()
 
 )

@@ -6,9 +6,9 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class FilingEffect(
 
-    @SerialName("effect_entries") var effectEntries: List<EffectEntries> = emptyList(),
-    @SerialName("id") var id: Int? = null,
-    @SerialName("items") var items: List<NameUrl> = emptyList(),
-    @SerialName("name") var name: String? = null
+    @SerialName("id") val id: Int? = null,
+    @SerialName("name") val name: String? = null,
+    @SerialName("effect_entries") val effectEntries: List<EffectEntries> = emptyList(),
+    @SerialName("items") val items: List<NameUrl> = emptyList()
 
 )

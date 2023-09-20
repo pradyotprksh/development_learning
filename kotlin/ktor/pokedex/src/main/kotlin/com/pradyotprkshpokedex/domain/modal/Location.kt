@@ -6,11 +6,11 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class Location(
 
-    @SerialName("areas") var areas: List<Pagination> = emptyList(),
-    @SerialName("game_indices") var gameIndices: List<GameIndices> = emptyList(),
-    @SerialName("id") var id: Int? = null,
-    @SerialName("name") var name: String? = null,
-    @SerialName("names") var names: List<Names> = emptyList(),
-    @SerialName("region") var region: NameUrl? = NameUrl()
+    @SerialName("id") val id: Int? = null,
+    @SerialName("name") val name: String? = null,
+    @SerialName("region") val region: NameUrl? = NameUrl(),
+    @SerialName("names") val names: List<Names> = emptyList(),
+    @SerialName("game_indices") val gameIndices: List<GameIndices> = emptyList(),
+    @SerialName("areas") val areas: List<NameUrl> = emptyList()
 
 )

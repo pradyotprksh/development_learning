@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class Moves(
 
-    @SerialName("move") var move: Move? = Move(),
-    @SerialName("version_group_details") var versionGroupDetails: List<VersionGroupDetails> = emptyList()
+    @SerialName("move") val move: NameUrl? = NameUrl(),
+    @SerialName("version_group_details") val versionGroupDetails: List<VersionGroupDetails> = emptyList()
 
 )

@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class GenerationI(
 
-    @SerialName("red-blue") var redBlue: RedBlue? = RedBlue(),
-    @SerialName("yellow") var yellow: Yellow? = Yellow()
+    @SerialName("red-blue") val redBlue: RedBlue? = RedBlue(),
+    @SerialName("yellow") val yellow: Yellow? = Yellow()
 
 )

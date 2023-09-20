@@ -6,12 +6,12 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class GrowthRate(
 
-    @SerialName("descriptions") var descriptions: List<Descriptions> = emptyList(),
-    @SerialName("formula") var formula: String? = null,
-    @SerialName("id") var id: Int? = null,
-    @SerialName("levels") var levels: List<Levels> = emptyList(),
-    @SerialName("name") var name: String? = null,
-    @SerialName("pokemon_species") var pokemonSpecies: List<NameUrl> = emptyList()
+    @SerialName("descriptions") val descriptions: List<Descriptions> = emptyList(),
+    @SerialName("formula") val formula: String? = null,
+    @SerialName("id") val id: Int? = null,
+    @SerialName("levels") val levels: List<Levels> = emptyList(),
+    @SerialName("name") val name: String? = null,
+    @SerialName("pokemon_species") val pokemonSpecies: List<NameUrl> = emptyList()
 
 )
 

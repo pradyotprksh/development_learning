@@ -6,9 +6,9 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class Method(
 
-    @SerialName("id") var id: Int? = null,
-    @SerialName("name") var name: String? = null,
-    @SerialName("names") var names: List<Names> = emptyList(),
-    @SerialName("order") var order: Int? = null
+    @SerialName("id") val id: Int? = null,
+    @SerialName("name") val name: String? = null,
+    @SerialName("order") val order: Int? = null,
+    @SerialName("names") val names: List<Names> = emptyList()
 
 )

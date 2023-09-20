@@ -6,8 +6,8 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class PokemonDetails(
 
-    @SerialName("is_hidden") var isHidden: Boolean? = null,
-    @SerialName("pokemon") var pokemon: NameUrl? = NameUrl(),
-    @SerialName("slot") var slot: Int? = null
+    @SerialName("is_hidden") val isHidden: Boolean? = null,
+    @SerialName("pokemon") val pokemon: NameUrl? = NameUrl(),
+    @SerialName("slot") val slot: Int? = null
 
 )

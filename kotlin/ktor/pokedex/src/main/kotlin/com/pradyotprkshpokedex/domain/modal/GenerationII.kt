@@ -6,8 +6,8 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class GenerationII(
 
-    @SerialName("crystal") var crystal: Crystal? = Crystal(),
-    @SerialName("gold") var gold: Gold? = Gold(),
-    @SerialName("silver") var silver: Silver? = Silver()
+    @SerialName("crystal") val crystal: Crystal? = Crystal(),
+    @SerialName("gold") val gold: Gold? = Gold(),
+    @SerialName("silver") val silver: Silver? = Silver()
 
 )

@@ -6,7 +6,8 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class EffectEntries(
 
-    @SerialName("effect") var effect: String? = null,
-    @SerialName("language") var language: NameUrl? = NameUrl(),
-    @SerialName("short_effect") var shortEffect: String? = null
+    @SerialName("effect") val effect: String? = null,
+    @SerialName("short_effect") val shortEffect: String? = null,
+    @SerialName("language") val language: NameUrl? = NameUrl()
+
 )

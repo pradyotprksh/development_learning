@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class PastTypes(
 
-    @SerialName("generation") var generation: Generation? = Generation(),
-    @SerialName("types") var types: List<Types> = emptyList()
+    @SerialName("generation") val generation: NameUrl? = NameUrl(),
+    @SerialName("types") val types: List<Types> = emptyList()
 
 )

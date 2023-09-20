@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class Types(
 
-    @SerialName("slot") var slot: Int? = null,
-    @SerialName("type") var type: NameUrl? = NameUrl()
+    @SerialName("slot") val slot: Int? = null,
+    @SerialName("type") val type: NameUrl? = NameUrl()
 
 )

@@ -6,17 +6,17 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class Meta(
 
-    @SerialName("ailment") var ailment: Ailment? = Ailment(),
-    @SerialName("ailment_chance") var ailmentChance: Int? = null,
-    @SerialName("category") var category: Category? = Category(),
-    @SerialName("crit_rate") var critRate: Int? = null,
-    @SerialName("drain") var drain: Int? = null,
-    @SerialName("flinch_chance") var flinchChance: Int? = null,
-    @SerialName("healing") var healing: Int? = null,
-    @SerialName("max_hits") var maxHits: String? = null,
-    @SerialName("max_turns") var maxTurns: String? = null,
-    @SerialName("min_hits") var minHits: String? = null,
-    @SerialName("min_turns") var minTurns: String? = null,
-    @SerialName("stat_chance") var statChance: Int? = null
+    @SerialName("ailment") val ailment: NameUrl? = NameUrl(),
+    @SerialName("category") val category: NameUrl? = NameUrl(),
+    @SerialName("min_hits") val minHits: String? = null,
+    @SerialName("max_hits") val maxHits: String? = null,
+    @SerialName("min_turns") val minTurns: String? = null,
+    @SerialName("max_turns") val maxTurns: String? = null,
+    @SerialName("drain") val drain: Int? = null,
+    @SerialName("healing") val healing: Int? = null,
+    @SerialName("crit_rate") val critRate: Int? = null,
+    @SerialName("ailment_chance") val ailmentChance: Int? = null,
+    @SerialName("flinch_chance") val flinchChance: Int? = null,
+    @SerialName("stat_chance") val statChance: Int? = null
 
 )

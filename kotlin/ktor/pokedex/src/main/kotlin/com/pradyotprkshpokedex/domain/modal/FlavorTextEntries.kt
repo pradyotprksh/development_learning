@@ -6,10 +6,9 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class FlavorTextEntries(
 
-    @SerialName("flavor_text") var flavorText: String? = null,
-    @SerialName("language") var language: NameUrl? = NameUrl(),
-    @SerialName("text") var text: String? = null,
-    @SerialName("version_group") var versionGroup: VersionGroup? = VersionGroup(),
-    @SerialName("version") var version: Version? = Version()
+    @SerialName("flavor_text") val flavorText: String? = null,
+    @SerialName("language") val language: NameUrl? = NameUrl(),
+    @SerialName("text") val text: String? = null,
+    @SerialName("version_group") val versionGroup: NameUrl? = NameUrl(),
 
-)
+    )

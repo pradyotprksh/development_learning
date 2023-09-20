@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class HeldItems(
 
-    @SerialName("item") var item: NameUrl? = NameUrl(),
-    @SerialName("version_details") var versionDetails: List<NameUrl> = emptyList()
+    @SerialName("item") val item: NameUrl? = NameUrl(),
+    @SerialName("version_details") val versionDetails: List<VersionDetails> = emptyList()
 
 )

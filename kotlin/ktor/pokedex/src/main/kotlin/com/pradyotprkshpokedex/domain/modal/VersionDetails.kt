@@ -6,10 +6,10 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class VersionDetails(
 
-    @SerialName("rate") var rate: Int? = null,
-    @SerialName("version") var version: Version? = Version(),
-    @SerialName("max_chance") var maxChance: Int? = null,
-    @SerialName("encounter_details") var encounterDetails: List<EncounterDetails> = emptyList(),
-    @SerialName("rarity") var rarity: Int? = null
+    @SerialName("rarity") val rarity: Int? = null,
+    @SerialName("version") val version: NameUrl? = NameUrl(),
+    @SerialName("rate") val rate: Int? = null,
+    @SerialName("max_chance") val maxChance: Int? = null,
+    @SerialName("encounter_details") val encounterDetails: List<EncounterDetails> = emptyList()
 
 )

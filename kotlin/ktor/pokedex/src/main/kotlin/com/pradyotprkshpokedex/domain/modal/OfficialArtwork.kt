@@ -6,6 +6,6 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class OfficialArtwork(
 
-    @SerialName("front_default") var frontDefault: String? = null
+    @SerialName("front_default") val frontDefault: String? = null
 
 )

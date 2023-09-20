@@ -6,14 +6,13 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class VersionGroup(
 
-    @SerialName("generation") var generation: Generation? = null,
-    @SerialName("id") var id: Int? = null,
-    @SerialName("move_learn_methods") var moveLearnMethods: List<NameUrl> = emptyList(),
-    @SerialName("name") var name: String? = null,
-    @SerialName("order") var order: Int? = null,
-    @SerialName("pokedexes") var pokedexes: List<Pagination> = emptyList(),
-    @SerialName("regions") var regions: List<NameUrl> = emptyList(),
-    @SerialName("versions") var versions: List<Pagination> = emptyList()
+    @SerialName("id") val id: Int? = null,
+    @SerialName("name") val name: String? = null,
+    @SerialName("order") val order: Int? = null,
+    @SerialName("generation") val generation: NameUrl? = NameUrl(),
+    @SerialName("move_learn_methods") val moveLearnMethods: List<NameUrl> = emptyList(),
+    @SerialName("pokedexes") val pokedexes: List<NameUrl> = emptyList(),
+    @SerialName("regions") val regions: List<NameUrl> = emptyList(),
+    @SerialName("versions") val versions: List<NameUrl> = emptyList()
 
 )
-

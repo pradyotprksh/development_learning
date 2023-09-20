@@ -5,7 +5,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class EffectChanges(
-    @SerialName("effect_entries") var effectEntries: List<EffectEntries> = emptyList(),
-    @SerialName("version_group") var versionGroup: VersionGroup? = VersionGroup()
+    @SerialName("effect_entries") val effectEntries: List<EffectEntries> = emptyList(),
+    @SerialName("version_group") val versionGroup: VersionGroup? = VersionGroup()
 
 )

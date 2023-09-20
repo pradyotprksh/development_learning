@@ -6,9 +6,9 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class Pocket(
 
-    @SerialName("categories") var categories: List<NameUrl> = emptyList(),
-    @SerialName("id") var id: Int? = null,
-    @SerialName("name") var name: String? = null,
-    @SerialName("names") var names: List<Names> = emptyList()
+    @SerialName("id") val id: Int? = null,
+    @SerialName("name") val name: String? = null,
+    @SerialName("categories") val categories: List<NameUrl> = emptyList(),
+    @SerialName("names") val names: List<Names> = emptyList()
 
 )

@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class PokeathlonStatChanges(
 
-    @SerialName("max_change") var maxChange: Int? = null,
-    @SerialName("pokeathlon_stat") var pokeathlonStat: NameUrl? = NameUrl()
+    @SerialName("max_change") val maxChange: Int? = null,
+    @SerialName("pokeathlon_stat") val pokeathlonStat: NameUrl? = NameUrl()
 
 )

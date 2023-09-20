@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class Normal(
 
-    @SerialName("use_after") var useAfter: String? = null,
-    @SerialName("use_before") var useBefore: List<NameUrl> = emptyList()
+    @SerialName("use_before") val useBefore: List<NameUrl> = emptyList(),
+    @SerialName("use_after") val useAfter: String? = null
 
 )

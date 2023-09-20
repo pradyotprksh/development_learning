@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class FormDescriptions(
 
-    @SerialName("description") var description: String? = null,
-    @SerialName("language") var language: NameUrl? = NameUrl()
+    @SerialName("description") val description: String? = null,
+    @SerialName("language") val language: NameUrl? = NameUrl()
 
 )

@@ -6,8 +6,8 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class Other(
 
-    @SerialName("dream_world") var dreamWorld: NameUrl? = NameUrl(),
-    @SerialName("home") var home: Home? = Home(),
-    @SerialName("official-artwork") var officialArtwork: OfficialArtwork? = OfficialArtwork()
+    @SerialName("dream_world") val dreamWorld: DreamWorld? = DreamWorld(),
+    @SerialName("home") val home: Home? = Home(),
+    @SerialName("official-artwork") val officialArtwork: OfficialArtwork? = OfficialArtwork()
 
 )

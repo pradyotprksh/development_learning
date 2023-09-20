@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class Super(
 
-    @SerialName("use_after") var useAfter: String? = null,
-    @SerialName("use_before") var useBefore: String? = null
+    @SerialName("use_before") val useBefore: String? = null,
+    @SerialName("use_after") val useAfter: String? = null
 
 )

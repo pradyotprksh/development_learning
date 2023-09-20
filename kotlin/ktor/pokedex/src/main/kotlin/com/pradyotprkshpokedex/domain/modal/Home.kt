@@ -6,9 +6,9 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class Home(
 
-    @SerialName("front_default") var frontDefault: String? = null,
-    @SerialName("front_female") var frontFemale: String? = null,
-    @SerialName("front_shiny") var frontShiny: String? = null,
-    @SerialName("front_shiny_female") var frontShinyFemale: String? = null
+    @SerialName("front_default") val frontDefault: String? = null,
+    @SerialName("front_female") val frontFemale: String? = null,
+    @SerialName("front_shiny") val frontShiny: String? = null,
+    @SerialName("front_shiny_female") val frontShinyFemale: String? = null
 
 )

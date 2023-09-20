@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class AffectingNatures(
 
-    @SerialName("decrease") var decrease: List<Decrease> = emptyList(),
-    @SerialName("increase") var increase: List<Increase> = emptyList()
+    @SerialName("decrease") val decrease: List<Decrease> = emptyList(),
+    @SerialName("increase") val increase: List<Increase> = emptyList()
 
 )

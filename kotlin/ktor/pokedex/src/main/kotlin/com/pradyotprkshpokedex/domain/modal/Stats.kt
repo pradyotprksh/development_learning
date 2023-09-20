@@ -6,8 +6,8 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class Stats(
 
-    @SerialName("base_stat") var baseStat: Int? = null,
-    @SerialName("effort") var effort: Int? = null,
-    @SerialName("stat") var stat: NameUrl? = NameUrl()
+    @SerialName("base_stat") val baseStat: Int? = null,
+    @SerialName("effort") val effort: Int? = null,
+    @SerialName("stat") val stat: NameUrl? = NameUrl()
 
 )

@@ -6,9 +6,9 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class ContestType(
 
-    @SerialName("appeal") var appeal: Int? = null,
-    @SerialName("flavor_text_entries") var flavorTextEntries: List<FlavorTextEntries> = emptyList(),
-    @SerialName("id") var id: Int? = null,
-    @SerialName("moves") var moves: List<NameUrl> = emptyList()
+    @SerialName("id") val id: Int? = null,
+    @SerialName("name") val name: String? = null,
+    @SerialName("berry_flavor") val berryFlavor: NameUrl? = NameUrl(),
+    @SerialName("names") val names: List<Names> = emptyList()
 
 )

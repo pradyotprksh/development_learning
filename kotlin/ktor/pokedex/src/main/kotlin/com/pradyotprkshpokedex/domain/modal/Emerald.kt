@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class Emerald(
 
-    @SerialName("front_default") var frontDefault: String? = null,
-    @SerialName("front_shiny") var frontShiny: String? = null
+    @SerialName("front_default") val frontDefault: String? = null,
+    @SerialName("front_shiny") val frontShiny: String? = null
 
 )

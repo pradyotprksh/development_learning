@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class GenerationVII(
 
-    @SerialName("icons") var icons: Icons? = Icons(),
-    @SerialName("ultra-sun-ultra-moon") var ultraSunUltraMoon: UltraSunUltraMoon? = UltraSunUltraMoon()
+    @SerialName("icons") val icons: Icons? = Icons(),
+    @SerialName("ultra-sun-ultra-moon") val ultraSunUltraMoon: UltraSunUltraMoon? = UltraSunUltraMoon()
 
 )

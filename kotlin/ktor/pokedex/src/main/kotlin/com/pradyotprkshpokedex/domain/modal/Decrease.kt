@@ -6,9 +6,9 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class Decrease(
 
-    @SerialName("max_change") var maxChange: Int? = null,
-    @SerialName("nature") var nature: Nature? = Nature(),
-    @SerialName("change") var change: Int? = null,
-    @SerialName("move") var move: NameUrl? = NameUrl()
+    @SerialName("max_change") val maxChange: Int? = null,
+    @SerialName("nature") val nature: Nature? = Nature(),
+    @SerialName("change") val change: Int? = null,
+    @SerialName("move") val move: NameUrl? = NameUrl()
 
 )

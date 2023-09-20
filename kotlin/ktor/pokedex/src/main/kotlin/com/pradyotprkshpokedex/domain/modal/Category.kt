@@ -6,10 +6,10 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class Category(
 
-    @SerialName("id") var id: Int? = null,
-    @SerialName("items") var items: List<Pagination> = emptyList(),
-    @SerialName("name") var name: String? = null,
-    @SerialName("names") var names: List<Names> = emptyList(),
-    @SerialName("pocket") var pocket: NameUrl? = NameUrl()
+    @SerialName("id") val id: Int? = null,
+    @SerialName("name") val name: String? = null,
+    @SerialName("items") val items: List<NameUrl> = emptyList(),
+    @SerialName("names") val names: List<Names> = emptyList(),
+    @SerialName("pocket") val pocket: NameUrl? = NameUrl()
 
 )

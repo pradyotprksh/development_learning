@@ -6,10 +6,10 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class EncounterDetails(
 
-    @SerialName("chance") var chance: Int? = null,
-    @SerialName("condition_values") var conditionValues: List<String> = emptyList(),
-    @SerialName("max_level") var maxLevel: Int? = null,
-    @SerialName("method") var method: Method? = Method(),
-    @SerialName("min_level") var minLevel: Int? = null
+    @SerialName("min_level") val minLevel: Int? = null,
+    @SerialName("max_level") val maxLevel: Int? = null,
+    @SerialName("condition_values") val conditionValues: List<String> = emptyList(),
+    @SerialName("chance") val chance: Int? = null,
+    @SerialName("method") val method: Method? = Method()
 
 )

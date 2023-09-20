@@ -6,15 +6,15 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class Nature(
 
-    @SerialName("decreased_stat") var decreasedStat: String? = null,
-    @SerialName("hates_flavor") var hatesFlavor: String? = null,
-    @SerialName("id") var id: Int? = null,
-    @SerialName("increased_stat") var increasedStat: String? = null,
-    @SerialName("likes_flavor") var likesFlavor: String? = null,
-    @SerialName("move_battle_style_preferences") var moveBattleStylePreferences: List<MoveBattleStylePreferences> = emptyList(),
-    @SerialName("name") var name: String? = null,
-    @SerialName("names") var names: List<Names> = emptyList(),
-    @SerialName("pokeathlon_stat_changes") var pokeathlonStatChanges: List<PokeathlonStatChanges> = emptyList()
+    @SerialName("decreased_stat") val decreasedStat: String? = null,
+    @SerialName("hates_flavor") val hatesFlavor: String? = null,
+    @SerialName("id") val id: Int? = null,
+    @SerialName("increased_stat") val increasedStat: String? = null,
+    @SerialName("likes_flavor") val likesFlavor: String? = null,
+    @SerialName("move_battle_style_preferences") val moveBattleStylePreferences: List<MoveBattleStylePreferences> = emptyList(),
+    @SerialName("name") val name: String? = null,
+    @SerialName("names") val names: List<Names> = emptyList(),
+    @SerialName("pokeathlon_stat_changes") val pokeathlonStatChanges: List<PokeathlonStatChanges> = emptyList()
 
 )
 

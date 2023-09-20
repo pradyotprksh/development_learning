@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class Levels(
 
-    @SerialName("experience") var experience: Int? = null,
-    @SerialName("level") var level: Int? = null
+    @SerialName("experience") val experience: Int? = null,
+    @SerialName("level") val level: Int? = null
 
 )

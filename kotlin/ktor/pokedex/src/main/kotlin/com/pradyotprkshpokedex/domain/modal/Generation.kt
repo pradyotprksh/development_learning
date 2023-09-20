@@ -6,15 +6,14 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class Generation(
 
-    @SerialName("abilities") var abilities: List<String> = emptyList(),
-    @SerialName("id") var id: Int? = null,
-    @SerialName("main_region") var mainRegion: NameUrl? = NameUrl(),
-    @SerialName("moves") var moves: List<NameUrl> = emptyList(),
-    @SerialName("name") var name: String? = null,
-    @SerialName("names") var names: List<Names> = emptyList(),
-    @SerialName("pokemon_species") var pokemonSpecies: List<NameUrl> = emptyList(),
-    @SerialName("types") var types: List<NameUrl> = emptyList(),
-    @SerialName("version_groups") var versionGroups: List<NameUrl> = emptyList()
+    @SerialName("id") val id: Int? = null,
+    @SerialName("name") val name: String? = null,
+    @SerialName("abilities") val abilities: List<String> = emptyList(),
+    @SerialName("main_region") val mainRegion: NameUrl? = NameUrl(),
+    @SerialName("moves") val moves: List<NameUrl> = emptyList(),
+    @SerialName("names") val names: List<Names> = emptyList(),
+    @SerialName("pokemon_species") val pokemonSpecies: List<NameUrl> = emptyList(),
+    @SerialName("types") val types: List<NameUrl> = emptyList(),
+    @SerialName("version_groups") val versionGroups: List<NameUrl> = emptyList()
 
 )
-

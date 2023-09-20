@@ -3,13 +3,13 @@ package com.pradyotprkshpokedex.domain.modal
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
-
 @Serializable
 data class SuperContestEffect(
 
-    @SerialName("appeal") var appeal: Int? = null,
-    @SerialName("flavor_text_entries") var flavorTextEntries: List<FlavorTextEntries> = emptyList(),
-    @SerialName("id") var id: Int? = null,
-    @SerialName("moves") var moves: List<NameUrl> = emptyList()
+    @SerialName("id") val id: Int? = null,
+    @SerialName("appeal") val appeal: Int? = null,
+    @SerialName("flavor_text_entries") val flavorTextEntries: List<FlavorTextEntries> = emptyList(),
+    @SerialName("moves") val moves: List<NameUrl> = emptyList(),
+    @SerialName("url") val url: String? = null
 
 )

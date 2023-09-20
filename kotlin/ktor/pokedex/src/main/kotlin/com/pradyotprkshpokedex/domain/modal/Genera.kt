@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class Genera(
 
-    @SerialName("genus") var genus: String? = null,
-    @SerialName("language") var language: NameUrl? = NameUrl()
+    @SerialName("genus") val genus: String? = null,
+    @SerialName("language") val language: NameUrl? = NameUrl()
 
 )

@@ -6,9 +6,10 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class Version(
 
-    @SerialName("id") var id: Int? = null,
-    @SerialName("name") var name: String? = null,
-    @SerialName("names") var names: List<Names> = emptyList(),
-    @SerialName("version_group") var versionGroup: NameUrl? = null
+    @SerialName("id") val id: Int? = null,
+    @SerialName("name") val name: String? = null,
+    @SerialName("names") val names: List<Names> = emptyList(),
+    @SerialName("version_group") val versionGroup: NameUrl? = NameUrl()
 
 )
+

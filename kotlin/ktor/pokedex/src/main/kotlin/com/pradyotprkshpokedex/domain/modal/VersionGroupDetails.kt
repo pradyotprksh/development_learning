@@ -6,8 +6,8 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class VersionGroupDetails(
 
-    @SerialName("level_learned_at") var levelLearnedAt: Int? = null,
-    @SerialName("version_group") var versionGroup: NameUrl? = NameUrl(),
-    @SerialName("move_learn_method") var moveLearnMethod: NameUrl? = NameUrl()
+    @SerialName("level_learned_at") val levelLearnedAt: Int? = null,
+    @SerialName("version_group") val versionGroup: NameUrl? = NameUrl(),
+    @SerialName("move_learn_method") val moveLearnMethod: NameUrl? = NameUrl()
 
 )
