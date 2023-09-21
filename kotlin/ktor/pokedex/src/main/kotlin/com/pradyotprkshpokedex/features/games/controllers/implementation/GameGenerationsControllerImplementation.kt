@@ -17,7 +17,7 @@ class GameGenerationsControllerImplementation(
 ) : GameGenerationsController {
     override suspend fun getAll(context: ApplicationCall, resource: GamesResource.Generation) {
         val allGenerations = gameService.getGenerationByPagination(offset = 0, limit = Int.MAX_VALUE)
-        context.respond(status = HttpStatusCode.OK, defaultController.respondWithDetails<Generation>(allGenerations))
+        defaultController.respondWithDetails<Generation>(context, allGenerations)
     }
 
     override suspend fun getDetails(context: ApplicationCall, resource: GamesResource.Generation.Id) {
@@ -33,10 +33,8 @@ class GameGenerationsControllerImplementation(
             val generations =
                 gameService.getGenerationByPagination(offset = resource.offset, limit = resource.limit)
             if (resource.withDetails) {
-                context.respond(
-                    status = HttpStatusCode.OK,
-                    defaultController.respondWithDetails<Generation>(generations)
-                )
+
+                    defaultController.respondWithDetails<Generation>(context, generations)
             } else {
                 context.respond(
                     status = HttpStatusCode.OK,

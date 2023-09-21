@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class LocationArea(
 
-    @SerialName("location_area") val locationArea: LocationArea? = LocationArea(),
+    @SerialName("location_area") val locationArea: NameUrl? = NameUrl(),
     @SerialName("version_details") val versionDetails: List<VersionDetails> = emptyList()
 
 )

@@ -17,7 +17,7 @@ class TypesControllerImplementation(
 ): TypesController {
     override suspend fun getAll(context: ApplicationCall, resource: PokemonResource.Type) {
         val all = pokemonService.getTypeByPagination(offset = 0, limit = Int.MAX_VALUE)
-        context.respond(status = HttpStatusCode.OK, defaultController.respondWithDetails<Type>(all))
+        defaultController.respondWithDetails<Type>(context, all)
     }
 
     override suspend fun getDetails(context: ApplicationCall, resource: PokemonResource.Type.Id) {
@@ -33,7 +33,7 @@ class TypesControllerImplementation(
             val details =
                 pokemonService.getTypeByPagination(offset = resource.offset, limit = resource.limit)
             if (resource.withDetails) {
-                context.respond(status = HttpStatusCode.OK, defaultController.respondWithDetails<Type>(details))
+                defaultController.respondWithDetails<Type>(context, details)
             } else {
                 context.respond(
                     status = HttpStatusCode.OK,

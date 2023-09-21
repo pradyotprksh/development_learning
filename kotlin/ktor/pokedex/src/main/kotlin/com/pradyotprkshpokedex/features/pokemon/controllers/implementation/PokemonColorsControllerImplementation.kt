@@ -17,7 +17,7 @@ class PokemonColorsControllerImplementation(
 ): PokemonColorsController {
     override suspend fun getAll(context: ApplicationCall, resource: PokemonResource.Color) {
         val all = pokemonService.getColorByPagination(offset = 0, limit = Int.MAX_VALUE)
-        context.respond(status = HttpStatusCode.OK, defaultController.respondWithDetails<Color>(all))
+        defaultController.respondWithDetails<Color>(context, all)
     }
 
     override suspend fun getDetails(context: ApplicationCall, resource: PokemonResource.Color.Id) {
@@ -33,7 +33,7 @@ class PokemonColorsControllerImplementation(
             val details =
                 pokemonService.getColorByPagination(offset = resource.offset, limit = resource.limit)
             if (resource.withDetails) {
-                context.respond(status = HttpStatusCode.OK, defaultController.respondWithDetails<Color>(details))
+                defaultController.respondWithDetails<Color>(context, details)
             } else {
                 context.respond(
                     status = HttpStatusCode.OK,

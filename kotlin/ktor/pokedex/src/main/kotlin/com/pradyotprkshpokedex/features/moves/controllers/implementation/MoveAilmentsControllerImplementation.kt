@@ -17,7 +17,7 @@ class MoveAilmentsControllerImplementation(
 ) : MoveAilmentsController {
     override suspend fun getAll(context: ApplicationCall, resource: MovesResource.Ailment) {
         val allAilments = moveService.getAilmentByPagination(offset = 0, limit = Int.MAX_VALUE)
-        context.respond(status = HttpStatusCode.OK, defaultController.respondWithDetails<Ailment>(allAilments))
+        defaultController.respondWithDetails<Ailment>(context, allAilments)
     }
 
     override suspend fun getDetails(context: ApplicationCall, resource: MovesResource.Ailment.Id) {
@@ -33,7 +33,7 @@ class MoveAilmentsControllerImplementation(
             val ailments =
                 moveService.getAilmentByPagination(offset = resource.offset, limit = resource.limit)
             if (resource.withDetails) {
-                context.respond(status = HttpStatusCode.OK, defaultController.respondWithDetails<Ailment>(ailments))
+                defaultController.respondWithDetails<Ailment>(context, ailments)
             } else {
                 context.respond(
                     status = HttpStatusCode.OK,

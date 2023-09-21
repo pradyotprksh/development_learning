@@ -17,7 +17,7 @@ class LocationAreasControllerImplementation(
 ) : LocationAreasController {
     override suspend fun getAll(context: ApplicationCall, resource: LocationsResource.Area) {
         val allAreas = locationService.getAreaByPagination(offset = 0, limit = Int.MAX_VALUE)
-        context.respond(status = HttpStatusCode.OK, defaultController.respondWithDetails<Area>(allAreas))
+        defaultController.respondWithDetails<Area>(context, allAreas)
     }
 
     override suspend fun getDetails(context: ApplicationCall, resource: LocationsResource.Area.Id) {
@@ -33,7 +33,7 @@ class LocationAreasControllerImplementation(
             val areas =
                 locationService.getAreaByPagination(offset = resource.offset, limit = resource.limit)
             if (resource.withDetails) {
-                context.respond(status = HttpStatusCode.OK, defaultController.respondWithDetails<Area>(areas))
+                defaultController.respondWithDetails<Area>(context, areas)
             } else {
                 context.respond(
                     status = HttpStatusCode.OK,

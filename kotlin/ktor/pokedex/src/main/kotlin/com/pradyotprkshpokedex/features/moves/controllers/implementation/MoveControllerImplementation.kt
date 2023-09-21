@@ -17,7 +17,7 @@ class MoveControllerImplementation(
 ) : MoveController {
     override suspend fun getAll(context: ApplicationCall, resource: MovesResource) {
         val allMoves = moveService.getMoveByPagination(offset = 0, limit = Int.MAX_VALUE)
-        context.respond(status = HttpStatusCode.OK, defaultController.respondWithDetails<Move>(allMoves))
+        defaultController.respondWithDetails<Move>(context, allMoves)
     }
 
     override suspend fun getDetails(context: ApplicationCall, resource: MovesResource.Id) {
@@ -33,7 +33,7 @@ class MoveControllerImplementation(
             val moves =
                 moveService.getMoveByPagination(offset = resource.offset, limit = resource.limit)
             if (resource.withDetails) {
-                context.respond(status = HttpStatusCode.OK, defaultController.respondWithDetails<Move>(moves))
+                defaultController.respondWithDetails<Move>(context, moves)
             } else {
                 context.respond(
                     status = HttpStatusCode.OK,

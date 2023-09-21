@@ -17,7 +17,7 @@ class PokemonFormsControllerImplementation(
 ): PokemonFormsController {
     override suspend fun getAll(context: ApplicationCall, resource: PokemonResource.Form) {
         val all = pokemonService.getFormByPagination(offset = 0, limit = Int.MAX_VALUE)
-        context.respond(status = HttpStatusCode.OK, defaultController.respondWithDetails<Form>(all))
+        defaultController.respondWithDetails<Form>(context, all)
     }
 
     override suspend fun getDetails(context: ApplicationCall, resource: PokemonResource.Form.Id) {
@@ -33,7 +33,7 @@ class PokemonFormsControllerImplementation(
             val details =
                 pokemonService.getFormByPagination(offset = resource.offset, limit = resource.limit)
             if (resource.withDetails) {
-                context.respond(status = HttpStatusCode.OK, defaultController.respondWithDetails<Form>(details))
+                defaultController.respondWithDetails<Form>(context, details)
             } else {
                 context.respond(
                     status = HttpStatusCode.OK,

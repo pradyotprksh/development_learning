@@ -17,7 +17,7 @@ class ContestTypeControllerImplementation(
 ) : ContestTypeController {
     override suspend fun getAll(context: ApplicationCall, resource: ContestResource.Type) {
         val allTypes = contestService.getTypeByPagination(offset = 0, limit = Int.MAX_VALUE)
-        context.respond(status = HttpStatusCode.OK, defaultController.respondWithDetails<ContestType>(allTypes))
+        defaultController.respondWithDetails<ContestType>(context, allTypes)
     }
 
     override suspend fun getDetails(context: ApplicationCall, resource: ContestResource.Type.Id) {
@@ -33,7 +33,7 @@ class ContestTypeControllerImplementation(
             val types =
                 contestService.getTypeByPagination(offset = resource.offset, limit = resource.limit)
             if (resource.withDetails) {
-                context.respond(status = HttpStatusCode.OK, defaultController.respondWithDetails<ContestType>(types))
+                defaultController.respondWithDetails<ContestType>(context, types)
             } else {
                 context.respond(
                     status = HttpStatusCode.OK,

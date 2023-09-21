@@ -17,7 +17,7 @@ class PalPakAreasControllerImplementation(
 ) : PalPakAreasController {
     override suspend fun getAll(context: ApplicationCall, resource: LocationsResource.PalPakArea) {
         val allPalPakAreas = locationService.getPalPakAreaByPagination(offset = 0, limit = Int.MAX_VALUE)
-        context.respond(status = HttpStatusCode.OK, defaultController.respondWithDetails<PalPakArea>(allPalPakAreas))
+        defaultController.respondWithDetails<PalPakArea>(context, allPalPakAreas)
     }
 
     override suspend fun getDetails(context: ApplicationCall, resource: LocationsResource.PalPakArea.Id) {
@@ -33,10 +33,8 @@ class PalPakAreasControllerImplementation(
             val palPakAreas =
                 locationService.getPalPakAreaByPagination(offset = resource.offset, limit = resource.limit)
             if (resource.withDetails) {
-                context.respond(
-                    status = HttpStatusCode.OK,
-                    defaultController.respondWithDetails<PalPakArea>(palPakAreas)
-                )
+
+                    defaultController.respondWithDetails<PalPakArea>(context, palPakAreas)
             } else {
                 context.respond(
                     status = HttpStatusCode.OK,

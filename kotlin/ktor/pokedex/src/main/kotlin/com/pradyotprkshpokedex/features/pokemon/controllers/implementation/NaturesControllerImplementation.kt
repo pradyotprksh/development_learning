@@ -17,7 +17,7 @@ class NaturesControllerImplementation(
 ): NaturesController {
     override suspend fun getAll(context: ApplicationCall, resource: PokemonResource.Nature) {
         val all = pokemonService.getNatureByPagination(offset = 0, limit = Int.MAX_VALUE)
-        context.respond(status = HttpStatusCode.OK, defaultController.respondWithDetails<Nature>(all))
+        defaultController.respondWithDetails<Nature>(context, all)
     }
 
     override suspend fun getDetails(context: ApplicationCall, resource: PokemonResource.Nature.Id) {
@@ -33,7 +33,7 @@ class NaturesControllerImplementation(
             val details =
                 pokemonService.getNatureByPagination(offset = resource.offset, limit = resource.limit)
             if (resource.withDetails) {
-                context.respond(status = HttpStatusCode.OK, defaultController.respondWithDetails<Nature>(details))
+                defaultController.respondWithDetails<Nature>(context, details)
             } else {
                 context.respond(
                     status = HttpStatusCode.OK,

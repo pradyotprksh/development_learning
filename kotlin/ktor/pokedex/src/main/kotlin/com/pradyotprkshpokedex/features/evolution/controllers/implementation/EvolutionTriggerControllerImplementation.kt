@@ -16,10 +16,8 @@ class EvolutionTriggerControllerImplementation(
 ) : EvolutionTriggerController {
     override suspend fun getAllEvolutionTrigger(context: ApplicationCall, triggers: EvolutionResource.Triggers) {
         val allEvolutionTrigger = evolutionService.getEvolutionTriggerByPagination(offset = 0, limit = Int.MAX_VALUE)
-        context.respond(
-            status = HttpStatusCode.OK,
-            defaultController.respondWithDetails<EvolutionTrigger>(allEvolutionTrigger)
-        )
+
+            defaultController.respondWithDetails<EvolutionTrigger>(context, allEvolutionTrigger)
     }
 
     override suspend fun getEvolutionTriggerDetails(context: ApplicationCall, triggers: EvolutionResource.Triggers.Id) {
@@ -38,10 +36,8 @@ class EvolutionTriggerControllerImplementation(
             val evolutionTrigger =
                 evolutionService.getEvolutionTriggerByPagination(offset = triggers.offset, limit = triggers.limit)
             if (triggers.withDetails) {
-                context.respond(
-                    status = HttpStatusCode.OK,
-                    defaultController.respondWithDetails<EvolutionTrigger>(evolutionTrigger)
-                )
+
+                    defaultController.respondWithDetails<EvolutionTrigger>(context, evolutionTrigger)
             } else {
                 context.respond(
                     status = HttpStatusCode.OK,

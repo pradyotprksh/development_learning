@@ -17,7 +17,7 @@ class GamePokedexesControllerImplementation(
 ) : GamePokedexesController {
     override suspend fun getAll(context: ApplicationCall, resource: GamesResource.Pokedex) {
         val allPokedexes = gameService.getPokedexByPagination(offset = 0, limit = Int.MAX_VALUE)
-        context.respond(status = HttpStatusCode.OK, defaultController.respondWithDetails<Pokedex>(allPokedexes))
+        defaultController.respondWithDetails<Pokedex>(context, allPokedexes)
     }
 
     override suspend fun getDetails(context: ApplicationCall, resource: GamesResource.Pokedex.Id) {
@@ -33,7 +33,7 @@ class GamePokedexesControllerImplementation(
             val pokedexes =
                 gameService.getPokedexByPagination(offset = resource.offset, limit = resource.limit)
             if (resource.withDetails) {
-                context.respond(status = HttpStatusCode.OK, defaultController.respondWithDetails<Pokedex>(pokedexes))
+                defaultController.respondWithDetails<Pokedex>(context, pokedexes)
             } else {
                 context.respond(
                     status = HttpStatusCode.OK,

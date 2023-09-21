@@ -35,7 +35,7 @@ interface PokemonService {
     suspend fun getPokeathlonStatByPagination(offset: Int, limit: Int): Pagination
     suspend fun getPokemonDetails(id: Int, path: String? = null): Pokemon
     suspend fun getPokemonByPagination(offset: Int, limit: Int): Pagination
-    suspend fun getLocationAreaDetails(id: Int, path: String? = null): LocationArea
+    suspend fun getLocationAreaDetails(id: Int, path: String? = null): List<LocationArea>
     suspend fun getColorDetails(id: Int, path: String? = null): Color
     suspend fun getColorByPagination(offset: Int, limit: Int): Pagination
     suspend fun getFormDetails(id: Int, path: String? = null): Form

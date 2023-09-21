@@ -17,7 +17,7 @@ class ItemPocketsControllerImplementation(
 ) : ItemPocketsController {
     override suspend fun getAll(context: ApplicationCall, resource: ItemsResource.Pockets) {
         val allPockets = itemService.getPocketByPagination(offset = 0, limit = Int.MAX_VALUE)
-        context.respond(status = HttpStatusCode.OK, defaultController.respondWithDetails<Pocket>(allPockets))
+        defaultController.respondWithDetails<Pocket>(context, allPockets)
     }
 
     override suspend fun getDetails(context: ApplicationCall, resource: ItemsResource.Pockets.Id) {
@@ -33,7 +33,7 @@ class ItemPocketsControllerImplementation(
             val pockets =
                 itemService.getPocketByPagination(offset = resource.offset, limit = resource.limit)
             if (resource.withDetails) {
-                context.respond(status = HttpStatusCode.OK, defaultController.respondWithDetails<Pocket>(pockets))
+                defaultController.respondWithDetails<Pocket>(context, pockets)
             } else {
                 context.respond(
                     status = HttpStatusCode.OK,

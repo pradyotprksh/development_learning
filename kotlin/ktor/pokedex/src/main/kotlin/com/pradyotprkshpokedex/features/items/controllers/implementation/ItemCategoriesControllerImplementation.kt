@@ -17,7 +17,7 @@ class ItemCategoriesControllerImplementation(
 ) : ItemCategoriesController {
     override suspend fun getAll(context: ApplicationCall, resource: ItemsResource.Category) {
         val allCategories = itemService.getCategoryByPagination(offset = 0, limit = Int.MAX_VALUE)
-        context.respond(status = HttpStatusCode.OK, defaultController.respondWithDetails<Category>(allCategories))
+        defaultController.respondWithDetails<Category>(context, allCategories)
     }
 
     override suspend fun getDetails(context: ApplicationCall, resource: ItemsResource.Category.Id) {
@@ -33,7 +33,7 @@ class ItemCategoriesControllerImplementation(
             val categories =
                 itemService.getCategoryByPagination(offset = resource.offset, limit = resource.limit)
             if (resource.withDetails) {
-                context.respond(status = HttpStatusCode.OK, defaultController.respondWithDetails<Category>(categories))
+                defaultController.respondWithDetails<Category>(context, categories)
             } else {
                 context.respond(
                     status = HttpStatusCode.OK,

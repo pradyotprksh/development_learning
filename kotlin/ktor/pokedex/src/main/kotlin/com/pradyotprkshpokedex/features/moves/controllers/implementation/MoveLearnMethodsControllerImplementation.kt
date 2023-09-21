@@ -17,7 +17,7 @@ class MoveLearnMethodsControllerImplementation(
 ) : MoveLearnMethodsController {
     override suspend fun getAll(context: ApplicationCall, resource: MovesResource.LearnMethod) {
         val allLearnMethods = moveService.getLearnMethodByPagination(offset = 0, limit = Int.MAX_VALUE)
-        context.respond(status = HttpStatusCode.OK, defaultController.respondWithDetails<LearnMethod>(allLearnMethods))
+        defaultController.respondWithDetails<LearnMethod>(context, allLearnMethods)
     }
 
     override suspend fun getDetails(context: ApplicationCall, resource: MovesResource.LearnMethod.Id) {
@@ -33,10 +33,8 @@ class MoveLearnMethodsControllerImplementation(
             val learnMethods =
                 moveService.getLearnMethodByPagination(offset = resource.offset, limit = resource.limit)
             if (resource.withDetails) {
-                context.respond(
-                    status = HttpStatusCode.OK,
-                    defaultController.respondWithDetails<LearnMethod>(learnMethods)
-                )
+
+                    defaultController.respondWithDetails<LearnMethod>(context, learnMethods)
             } else {
                 context.respond(
                     status = HttpStatusCode.OK,

@@ -17,7 +17,7 @@ class PokemonControllerImplementation(
 ): PokemonController {
     override suspend fun getAll(context: ApplicationCall, resource: PokemonResource) {
         val all = pokemonService.getPokemonByPagination(offset = 0, limit = Int.MAX_VALUE)
-        context.respond(status = HttpStatusCode.OK, defaultController.respondWithDetails<Pokemon>(all))
+        defaultController.respondWithDetails<Pokemon>(context, all)
     }
 
     override suspend fun getDetails(context: ApplicationCall, resource: PokemonResource.Id) {
@@ -33,7 +33,7 @@ class PokemonControllerImplementation(
             val details =
                 pokemonService.getPokemonByPagination(offset = resource.offset, limit = resource.limit)
             if (resource.withDetails) {
-                context.respond(status = HttpStatusCode.OK, defaultController.respondWithDetails<Pokemon>(details))
+                defaultController.respondWithDetails<Pokemon>(context, details)
             } else {
                 context.respond(
                     status = HttpStatusCode.OK,

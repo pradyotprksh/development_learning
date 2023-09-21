@@ -17,7 +17,7 @@ class GendersControllerImplementation(
 ): GendersController {
     override suspend fun getAll(context: ApplicationCall, resource: PokemonResource.Gender) {
         val all = pokemonService.getGenderByPagination(offset = 0, limit = Int.MAX_VALUE)
-        context.respond(status = HttpStatusCode.OK, defaultController.respondWithDetails<Gender>(all))
+        defaultController.respondWithDetails<Gender>(context, all)
     }
 
     override suspend fun getDetails(context: ApplicationCall, resource: PokemonResource.Gender.Id) {
@@ -33,7 +33,7 @@ class GendersControllerImplementation(
             val details =
                 pokemonService.getGenderByPagination(offset = resource.offset, limit = resource.limit)
             if (resource.withDetails) {
-                context.respond(status = HttpStatusCode.OK, defaultController.respondWithDetails<Gender>(details))
+                defaultController.respondWithDetails<Gender>(context, details)
             } else {
                 context.respond(
                     status = HttpStatusCode.OK,

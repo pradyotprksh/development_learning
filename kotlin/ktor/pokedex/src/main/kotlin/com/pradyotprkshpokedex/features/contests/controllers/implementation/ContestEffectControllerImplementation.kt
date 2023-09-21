@@ -18,7 +18,7 @@ class ContestEffectControllerImplementation(
 ) : ContestEffectController {
     override suspend fun getAll(context: ApplicationCall, resource: ContestResource.Effect) {
         val allEffects = contestService.getEffectByPagination(offset = 0, limit = Int.MAX_VALUE)
-        context.respond(status = HttpStatusCode.OK, defaultController.respondWithDetails<Berry>(allEffects))
+        defaultController.respondWithDetails<Berry>(context, allEffects)
     }
 
     override suspend fun getDetails(context: ApplicationCall, resource: ContestResource.Effect.Id) {
@@ -34,10 +34,7 @@ class ContestEffectControllerImplementation(
             val effects =
                 contestService.getEffectByPagination(offset = resource.offset, limit = resource.limit)
             if (resource.withDetails) {
-                context.respond(
-                    status = HttpStatusCode.OK,
-                    defaultController.respondWithDetails<ContestEffect>(effects)
-                )
+                defaultController.respondWithDetails<ContestEffect>(context, effects)
             } else {
                 context.respond(
                     status = HttpStatusCode.OK,

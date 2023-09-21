@@ -17,7 +17,7 @@ class GrowthRatesControllerImplementation(
 ): GrowthRatesController {
     override suspend fun getAll(context: ApplicationCall, resource: PokemonResource.GrowthRate) {
         val all = pokemonService.getGrowthRateByPagination(offset = 0, limit = Int.MAX_VALUE)
-        context.respond(status = HttpStatusCode.OK, defaultController.respondWithDetails<GrowthRate>(all))
+        defaultController.respondWithDetails<GrowthRate>(context, all)
     }
 
     override suspend fun getDetails(context: ApplicationCall, resource: PokemonResource.GrowthRate.Id) {
@@ -33,7 +33,7 @@ class GrowthRatesControllerImplementation(
             val details =
                 pokemonService.getGrowthRateByPagination(offset = resource.offset, limit = resource.limit)
             if (resource.withDetails) {
-                context.respond(status = HttpStatusCode.OK, defaultController.respondWithDetails<GrowthRate>(details))
+                defaultController.respondWithDetails<GrowthRate>(context, details)
             } else {
                 context.respond(
                     status = HttpStatusCode.OK,

@@ -17,7 +17,7 @@ class MoveTargetsControllerImplementation(
 ) : MoveTargetsController {
     override suspend fun getAll(context: ApplicationCall, resource: MovesResource.Target) {
         val allTargets = moveService.getTargetByPagination(offset = 0, limit = Int.MAX_VALUE)
-        context.respond(status = HttpStatusCode.OK, defaultController.respondWithDetails<Target>(allTargets))
+        defaultController.respondWithDetails<Target>(context, allTargets)
     }
 
     override suspend fun getDetails(context: ApplicationCall, resource: MovesResource.Target.Id) {
@@ -33,7 +33,7 @@ class MoveTargetsControllerImplementation(
             val targets =
                 moveService.getTargetByPagination(offset = resource.offset, limit = resource.limit)
             if (resource.withDetails) {
-                context.respond(status = HttpStatusCode.OK, defaultController.respondWithDetails<Target>(targets))
+                defaultController.respondWithDetails<Target>(context, targets)
             } else {
                 context.respond(
                     status = HttpStatusCode.OK,

@@ -17,7 +17,7 @@ class GameVersionControllerImplementation(
 ) : GameVersionController {
     override suspend fun getAll(context: ApplicationCall, resource: GamesResource.Version) {
         val allVersions = gameService.getVersionByPagination(offset = 0, limit = Int.MAX_VALUE)
-        context.respond(status = HttpStatusCode.OK, defaultController.respondWithDetails<Version>(allVersions))
+        defaultController.respondWithDetails<Version>(context, allVersions)
     }
 
     override suspend fun getDetails(context: ApplicationCall, resource: GamesResource.Version.Id) {
@@ -33,7 +33,7 @@ class GameVersionControllerImplementation(
             val versions =
                 gameService.getVersionByPagination(offset = resource.offset, limit = resource.limit)
             if (resource.withDetails) {
-                context.respond(status = HttpStatusCode.OK, defaultController.respondWithDetails<Version>(versions))
+                defaultController.respondWithDetails<Version>(context, versions)
             } else {
                 context.respond(
                     status = HttpStatusCode.OK,

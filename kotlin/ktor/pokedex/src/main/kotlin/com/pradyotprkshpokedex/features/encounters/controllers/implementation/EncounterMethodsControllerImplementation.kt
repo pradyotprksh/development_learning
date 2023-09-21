@@ -17,7 +17,7 @@ class EncounterMethodsControllerImplementation(
 ) : EncounterMethodsController {
     override suspend fun getAll(context: ApplicationCall, resource: EncountersResource.Methods) {
         val allMethods = encounterService.getMethodByPagination(offset = 0, limit = Int.MAX_VALUE)
-        context.respond(status = HttpStatusCode.OK, defaultController.respondWithDetails<Method>(allMethods))
+        defaultController.respondWithDetails<Method>(context, allMethods)
     }
 
     override suspend fun getDetails(context: ApplicationCall, resource: EncountersResource.Methods.Id) {
@@ -33,7 +33,7 @@ class EncounterMethodsControllerImplementation(
             val methods =
                 encounterService.getMethodByPagination(offset = resource.offset, limit = resource.limit)
             if (resource.withDetails) {
-                context.respond(status = HttpStatusCode.OK, defaultController.respondWithDetails<Method>(methods))
+                defaultController.respondWithDetails<Method>(context, methods)
             } else {
                 context.respond(
                     status = HttpStatusCode.OK,

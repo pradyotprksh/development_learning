@@ -17,7 +17,7 @@ class ItemAttributesControllerImplementation(
 ) : ItemAttributesController {
     override suspend fun getAll(context: ApplicationCall, resource: ItemsResource.Attribute) {
         val allAttributes = itemService.getAttributeByPagination(offset = 0, limit = Int.MAX_VALUE)
-        context.respond(status = HttpStatusCode.OK, defaultController.respondWithDetails<Attribute>(allAttributes))
+        defaultController.respondWithDetails<Attribute>(context, allAttributes)
     }
 
     override suspend fun getDetails(context: ApplicationCall, resource: ItemsResource.Attribute.Id) {
@@ -33,7 +33,7 @@ class ItemAttributesControllerImplementation(
             val attributes =
                 itemService.getAttributeByPagination(offset = resource.offset, limit = resource.limit)
             if (resource.withDetails) {
-                context.respond(status = HttpStatusCode.OK, defaultController.respondWithDetails<Attribute>(attributes))
+                defaultController.respondWithDetails<Attribute>(context, attributes)
             } else {
                 context.respond(
                     status = HttpStatusCode.OK,

@@ -17,7 +17,7 @@ class MoveDamageClassesControllerImplementation(
 ) : MoveDamageClassesController {
     override suspend fun getAll(context: ApplicationCall, resource: MovesResource.DamageClass) {
         val allDamageClasses = moveService.getDamageClassByPagination(offset = 0, limit = Int.MAX_VALUE)
-        context.respond(status = HttpStatusCode.OK, defaultController.respondWithDetails<DamageClass>(allDamageClasses))
+        defaultController.respondWithDetails<DamageClass>(context, allDamageClasses)
     }
 
     override suspend fun getDetails(context: ApplicationCall, resource: MovesResource.DamageClass.Id) {
@@ -33,10 +33,8 @@ class MoveDamageClassesControllerImplementation(
             val damageClasses =
                 moveService.getDamageClassByPagination(offset = resource.offset, limit = resource.limit)
             if (resource.withDetails) {
-                context.respond(
-                    status = HttpStatusCode.OK,
-                    defaultController.respondWithDetails<DamageClass>(damageClasses)
-                )
+
+                    defaultController.respondWithDetails<DamageClass>(context, damageClasses)
             } else {
                 context.respond(
                     status = HttpStatusCode.OK,

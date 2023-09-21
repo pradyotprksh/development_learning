@@ -17,7 +17,7 @@ class MoveBattleStylesControllerImplementation(
 ) : MoveBattleStylesController {
     override suspend fun getAll(context: ApplicationCall, resource: MovesResource.BattleStyle) {
         val allBattleStyles = moveService.getBattleStyleByPagination(offset = 0, limit = Int.MAX_VALUE)
-        context.respond(status = HttpStatusCode.OK, defaultController.respondWithDetails<BattleStyle>(allBattleStyles))
+        defaultController.respondWithDetails<BattleStyle>(context, allBattleStyles)
     }
 
     override suspend fun getDetails(context: ApplicationCall, resource: MovesResource.BattleStyle.Id) {
@@ -33,10 +33,8 @@ class MoveBattleStylesControllerImplementation(
             val battleStyles =
                 moveService.getBattleStyleByPagination(offset = resource.offset, limit = resource.limit)
             if (resource.withDetails) {
-                context.respond(
-                    status = HttpStatusCode.OK,
-                    defaultController.respondWithDetails<BattleStyle>(battleStyles)
-                )
+
+                    defaultController.respondWithDetails<BattleStyle>(context, battleStyles)
             } else {
                 context.respond(
                     status = HttpStatusCode.OK,

@@ -256,13 +256,16 @@ class PokemonServiceImplementation(private val networkClient: NetworkClient) : P
         }
     }
 
-    override suspend fun getLocationAreaDetails(id: Int, path: String?): LocationArea {
-        val locationArea = networkClient.get<LocationArea>(
+    override suspend fun getLocationAreaDetails(id: Int, path: String?): List<LocationArea> {
+        val locationArea = networkClient.get<List<LocationArea>>(
             details = PokeApiRequestDetails(
                 endpoint = "${Paths.Pokemon.POKEMON}/$id/${Paths.Pokemon.ENCOUNTERS}",
                 fullPath = path
             )
         )
+
+        // Failure(io.ktor.serialization.JsonConvertException: Expected start of the object '{', but had 'EOF' instead at path: $
+        // JSON input: .....name":"y","url":"https://pokeapi.co/api/v2/version/24/"}}]}])
 
         return locationArea.getOrElse { exception ->
             throw PokeApiException(error = exception.message ?: "Error while connecting to PokeApi. Please try again.")

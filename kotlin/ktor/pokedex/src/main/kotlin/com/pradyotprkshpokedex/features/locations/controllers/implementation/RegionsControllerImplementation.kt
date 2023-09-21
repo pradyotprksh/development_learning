@@ -18,7 +18,7 @@ class RegionsControllerImplementation(
 ) : RegionsController {
     override suspend fun getAll(context: ApplicationCall, resource: LocationsResource.Region) {
         val allRegions = locationService.getRegionEffectByPagination(offset = 0, limit = Int.MAX_VALUE)
-        context.respond(status = HttpStatusCode.OK, defaultController.respondWithDetails<Location>(allRegions))
+        defaultController.respondWithDetails<Location>(context, allRegions)
     }
 
     override suspend fun getDetails(context: ApplicationCall, resource: LocationsResource.Region.Id) {
@@ -34,7 +34,7 @@ class RegionsControllerImplementation(
             val regions =
                 locationService.getRegionEffectByPagination(offset = resource.offset, limit = resource.limit)
             if (resource.withDetails) {
-                context.respond(status = HttpStatusCode.OK, defaultController.respondWithDetails<Region>(regions))
+                defaultController.respondWithDetails<Region>(context, regions)
             } else {
                 context.respond(
                     status = HttpStatusCode.OK,

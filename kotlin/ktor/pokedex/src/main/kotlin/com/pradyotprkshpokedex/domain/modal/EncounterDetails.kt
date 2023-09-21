@@ -8,7 +8,7 @@ data class EncounterDetails(
 
     @SerialName("min_level") val minLevel: Int? = null,
     @SerialName("max_level") val maxLevel: Int? = null,
-    @SerialName("condition_values") val conditionValues: List<String> = emptyList(),
+    @SerialName("condition_values") val conditionValues: List<NameUrl> = emptyList(),
     @SerialName("chance") val chance: Int? = null,
     @SerialName("method") val method: Method? = Method()
 

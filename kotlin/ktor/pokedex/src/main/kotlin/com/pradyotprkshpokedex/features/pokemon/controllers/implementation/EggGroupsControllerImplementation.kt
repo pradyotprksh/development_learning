@@ -17,7 +17,7 @@ class EggGroupsControllerImplementation(
 ): EggGroupsController {
     override suspend fun getAll(context: ApplicationCall, resource: PokemonResource.EggGroup) {
         val all = pokemonService.getEggGroupByPagination(offset = 0, limit = Int.MAX_VALUE)
-        context.respond(status = HttpStatusCode.OK, defaultController.respondWithDetails<EggGroup>(all))
+        defaultController.respondWithDetails<EggGroup>(context, all)
     }
 
     override suspend fun getDetails(context: ApplicationCall, resource: PokemonResource.EggGroup.Id) {
@@ -33,7 +33,7 @@ class EggGroupsControllerImplementation(
             val details =
                 pokemonService.getEggGroupByPagination(offset = resource.offset, limit = resource.limit)
             if (resource.withDetails) {
-                context.respond(status = HttpStatusCode.OK, defaultController.respondWithDetails<EggGroup>(details))
+                defaultController.respondWithDetails<EggGroup>(context, details)
             } else {
                 context.respond(
                     status = HttpStatusCode.OK,

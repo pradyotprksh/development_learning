@@ -17,7 +17,7 @@ class AbilitiesControllerImplementation(
 ): AbilitiesController {
     override suspend fun getAll(context: ApplicationCall, resource: PokemonResource.Ability) {
         val all = pokemonService.getAbilityByPagination(offset = 0, limit = Int.MAX_VALUE)
-        context.respond(status = HttpStatusCode.OK, defaultController.respondWithDetails<Ability>(all))
+        defaultController.respondWithDetails<Ability>(context, all)
     }
 
     override suspend fun getDetails(context: ApplicationCall, resource: PokemonResource.Ability.Id) {
@@ -33,7 +33,7 @@ class AbilitiesControllerImplementation(
             val details =
                 pokemonService.getAbilityByPagination(offset = resource.offset, limit = resource.limit)
             if (resource.withDetails) {
-                context.respond(status = HttpStatusCode.OK, defaultController.respondWithDetails<Ability>(details))
+                defaultController.respondWithDetails<Ability>(context, details)
             } else {
                 context.respond(
                     status = HttpStatusCode.OK,

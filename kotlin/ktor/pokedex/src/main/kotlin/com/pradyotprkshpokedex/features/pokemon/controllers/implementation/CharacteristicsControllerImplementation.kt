@@ -17,7 +17,7 @@ class CharacteristicsControllerImplementation(
 ): CharacteristicsController {
     override suspend fun getAll(context: ApplicationCall, resource: PokemonResource.Characteristics) {
         val all = pokemonService.getCharacteristicByPagination(offset = 0, limit = Int.MAX_VALUE)
-        context.respond(status = HttpStatusCode.OK, defaultController.respondWithDetails<Characteristic>(all))
+        defaultController.respondWithDetails<Characteristic>(context, all)
     }
 
     override suspend fun getDetails(context: ApplicationCall, resource: PokemonResource.Characteristics.Id) {
@@ -36,7 +36,7 @@ class CharacteristicsControllerImplementation(
             val details =
                 pokemonService.getCharacteristicByPagination(offset = resource.offset, limit = resource.limit)
             if (resource.withDetails) {
-                context.respond(status = HttpStatusCode.OK, defaultController.respondWithDetails<Characteristic>(details))
+                defaultController.respondWithDetails<Characteristic>(context, details)
             } else {
                 context.respond(
                     status = HttpStatusCode.OK,
