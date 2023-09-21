@@ -14,7 +14,7 @@ import io.ktor.server.response.respond
 class CharacteristicsControllerImplementation(
     private val pokemonService: PokemonService,
     private val defaultController: DefaultController,
-): CharacteristicsController {
+) : CharacteristicsController {
     override suspend fun getAll(context: ApplicationCall, resource: PokemonResource.Characteristics) {
         val all = pokemonService.getCharacteristicByPagination(offset = 0, limit = Int.MAX_VALUE)
         defaultController.respondWithDetails<Characteristic>(context, all)

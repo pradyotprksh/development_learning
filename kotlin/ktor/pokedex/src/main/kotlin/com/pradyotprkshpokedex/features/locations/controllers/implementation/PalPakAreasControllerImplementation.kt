@@ -34,7 +34,7 @@ class PalPakAreasControllerImplementation(
                 locationService.getPalPakAreaByPagination(offset = resource.offset, limit = resource.limit)
             if (resource.withDetails) {
 
-                    defaultController.respondWithDetails<PalPakArea>(context, palPakAreas)
+                defaultController.respondWithDetails<PalPakArea>(context, palPakAreas)
             } else {
                 context.respond(
                     status = HttpStatusCode.OK,

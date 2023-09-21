@@ -14,7 +14,7 @@ import io.ktor.server.response.respond
 class GendersControllerImplementation(
     private val pokemonService: PokemonService,
     private val defaultController: DefaultController,
-): GendersController {
+) : GendersController {
     override suspend fun getAll(context: ApplicationCall, resource: PokemonResource.Gender) {
         val all = pokemonService.getGenderByPagination(offset = 0, limit = Int.MAX_VALUE)
         defaultController.respondWithDetails<Gender>(context, all)

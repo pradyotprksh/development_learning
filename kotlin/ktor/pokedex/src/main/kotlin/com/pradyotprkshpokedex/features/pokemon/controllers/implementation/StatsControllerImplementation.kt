@@ -14,7 +14,7 @@ import io.ktor.server.response.respond
 class StatsControllerImplementation(
     private val pokemonService: PokemonService,
     private val defaultController: DefaultController,
-): StatsController {
+) : StatsController {
     override suspend fun getAll(context: ApplicationCall, resource: PokemonResource.Stat) {
         val all = pokemonService.getStatByPagination(offset = 0, limit = Int.MAX_VALUE)
         defaultController.respondWithDetails<Stat>(context, all)

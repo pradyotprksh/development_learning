@@ -11,7 +11,7 @@ import io.ktor.server.response.respond
 
 class PokemonLocationAreasControllerImplementation(
     private val pokemonService: PokemonService,
-): PokemonLocationAreasController {
+) : PokemonLocationAreasController {
     override suspend fun getDetails(context: ApplicationCall, resource: PokemonResource.Encounters.Id) {
         if (resource.isValid) {
             context.respond(status = HttpStatusCode.OK, pokemonService.getLocationAreaDetails(id = resource.id))

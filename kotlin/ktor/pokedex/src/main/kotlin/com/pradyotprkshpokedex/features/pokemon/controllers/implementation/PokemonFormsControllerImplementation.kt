@@ -14,7 +14,7 @@ import io.ktor.server.response.respond
 class PokemonFormsControllerImplementation(
     private val pokemonService: PokemonService,
     private val defaultController: DefaultController,
-): PokemonFormsController {
+) : PokemonFormsController {
     override suspend fun getAll(context: ApplicationCall, resource: PokemonResource.Form) {
         val all = pokemonService.getFormByPagination(offset = 0, limit = Int.MAX_VALUE)
         defaultController.respondWithDetails<Form>(context, all)

@@ -17,7 +17,7 @@ class EvolutionChainControllerImplementation(
     override suspend fun getAll(context: ApplicationCall, resource: EvolutionResource.Chains) {
         val allEvolutionChain = evolutionService.getEvolutionChainByPagination(offset = 0, limit = Int.MAX_VALUE)
 
-            defaultController.respondWithDetails<EvolutionChain>(context, allEvolutionChain)
+        defaultController.respondWithDetails<EvolutionChain>(context, allEvolutionChain)
     }
 
     override suspend fun getDetails(context: ApplicationCall, resource: EvolutionResource.Chains.Id) {
@@ -37,7 +37,7 @@ class EvolutionChainControllerImplementation(
                 evolutionService.getEvolutionChainByPagination(offset = resource.offset, limit = resource.limit)
             if (resource.withDetails) {
 
-                    defaultController.respondWithDetails<EvolutionChain>(context, evolutionChain)
+                defaultController.respondWithDetails<EvolutionChain>(context, evolutionChain)
             } else {
                 context.respond(
                     status = HttpStatusCode.OK,

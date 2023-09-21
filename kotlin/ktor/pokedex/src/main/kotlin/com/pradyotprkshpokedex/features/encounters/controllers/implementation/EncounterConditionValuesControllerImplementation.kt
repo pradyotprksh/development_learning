@@ -18,7 +18,7 @@ class EncounterConditionValuesControllerImplementation(
     override suspend fun getAll(context: ApplicationCall, resource: EncountersResource.ConditionValue) {
         val allConditionValues = encounterService.getConditionValueByPagination(offset = 0, limit = Int.MAX_VALUE)
 
-            defaultController.respondWithDetails<ConditionValue>(context, allConditionValues)
+        defaultController.respondWithDetails<ConditionValue>(context, allConditionValues)
     }
 
     override suspend fun getDetails(context: ApplicationCall, resource: EncountersResource.ConditionValue.Id) {
@@ -38,7 +38,7 @@ class EncounterConditionValuesControllerImplementation(
                 encounterService.getConditionValueByPagination(offset = resource.offset, limit = resource.limit)
             if (resource.withDetails) {
 
-                    defaultController.respondWithDetails<ConditionValue>(context, conditionValues)
+                defaultController.respondWithDetails<ConditionValue>(context, conditionValues)
             } else {
                 context.respond(
                     status = HttpStatusCode.OK,

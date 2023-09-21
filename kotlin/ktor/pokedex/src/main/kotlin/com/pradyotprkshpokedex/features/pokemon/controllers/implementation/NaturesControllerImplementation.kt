@@ -14,7 +14,7 @@ import io.ktor.server.response.respond
 class NaturesControllerImplementation(
     private val pokemonService: PokemonService,
     private val defaultController: DefaultController,
-): NaturesController {
+) : NaturesController {
     override suspend fun getAll(context: ApplicationCall, resource: PokemonResource.Nature) {
         val all = pokemonService.getNatureByPagination(offset = 0, limit = Int.MAX_VALUE)
         defaultController.respondWithDetails<Nature>(context, all)

@@ -14,7 +14,7 @@ import io.ktor.server.response.respond
 class AbilitiesControllerImplementation(
     private val pokemonService: PokemonService,
     private val defaultController: DefaultController,
-): AbilitiesController {
+) : AbilitiesController {
     override suspend fun getAll(context: ApplicationCall, resource: PokemonResource.Ability) {
         val all = pokemonService.getAbilityByPagination(offset = 0, limit = Int.MAX_VALUE)
         defaultController.respondWithDetails<Ability>(context, all)

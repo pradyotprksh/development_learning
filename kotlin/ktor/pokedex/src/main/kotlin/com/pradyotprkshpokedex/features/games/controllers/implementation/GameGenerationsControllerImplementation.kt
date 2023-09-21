@@ -34,7 +34,7 @@ class GameGenerationsControllerImplementation(
                 gameService.getGenerationByPagination(offset = resource.offset, limit = resource.limit)
             if (resource.withDetails) {
 
-                    defaultController.respondWithDetails<Generation>(context, generations)
+                defaultController.respondWithDetails<Generation>(context, generations)
             } else {
                 context.respond(
                     status = HttpStatusCode.OK,

@@ -14,7 +14,7 @@ import io.ktor.server.response.respond
 class PokemonHabitatsControllerImplementation(
     private val pokemonService: PokemonService,
     private val defaultController: DefaultController,
-): PokemonHabitatsController {
+) : PokemonHabitatsController {
     override suspend fun getAll(context: ApplicationCall, resource: PokemonResource.Habitat) {
         val all = pokemonService.getHabitatByPagination(offset = 0, limit = Int.MAX_VALUE)
         defaultController.respondWithDetails<Habitat>(context, all)

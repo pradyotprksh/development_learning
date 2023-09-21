@@ -34,7 +34,7 @@ class MoveDamageClassesControllerImplementation(
                 moveService.getDamageClassByPagination(offset = resource.offset, limit = resource.limit)
             if (resource.withDetails) {
 
-                    defaultController.respondWithDetails<DamageClass>(context, damageClasses)
+                defaultController.respondWithDetails<DamageClass>(context, damageClasses)
             } else {
                 context.respond(
                     status = HttpStatusCode.OK,
