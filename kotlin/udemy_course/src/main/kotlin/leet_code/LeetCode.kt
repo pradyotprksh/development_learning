@@ -548,6 +548,80 @@ class LeetCode {
 
         println(combinationSum2(intArrayOf(10,1,2,7,6,1,5), 8))
         println(combinationSum2(intArrayOf(2,5,2,1,2), 5))
+
+        println(generateMatrix(3).toList().map { it.toList() })
+        println(generateMatrix(1).toList().map { it.toList() })
+
+        println(uniquePaths(3, 2))
+        println(uniquePaths(3, 7))
+    }
+
+    // TLE
+    private fun uniquePaths(m: Int, n: Int): Int {
+        var count = 0
+
+        val maze = MutableList(size = m) { MutableList(size = n) { "0" } }
+        maze[0][0] = "Start"
+        maze[m - 1][n - 1] = "End"
+        fun solve(i: Int, j: Int) {
+            if (maze[i][j] == "End") {
+                println("Found")
+                count++
+                return
+            }
+
+            if (j + 1 < n) {
+                solve(i, j + 1)
+            }
+
+            if (i + 1 < m) {
+                solve(i + 1, j)
+            }
+        }
+
+        solve(0, 0)
+
+        return count
+    }
+
+    private fun generateMatrix(n: Int): Array<IntArray> {
+        val matrix = List(size = n) { MutableList(size = n) { 0 } }
+
+        var l = 0
+        var r = matrix.size - 1
+        var count = 1
+
+        while (l <= r) {
+            val t = l
+            val b = (matrix.size - 1) - t
+
+            if (count > n * n) break
+
+            for (i in l .. r) {
+                matrix[t][i] = count++
+            }
+            if (count > n * n) break
+
+            for (i in t + 1 .. b) {
+                matrix[i][r] = count++
+            }
+            if (count > n * n) break
+
+            for (i in r - 1 downTo l) {
+                matrix[b][i] = count++
+            }
+            if (count > n * n) break
+
+            for (i in b - 1 downTo t + 1) {
+                matrix[i][l] = count++
+            }
+            if (count > n * n) break
+
+            ++l
+            --r
+        }
+
+        return matrix.map { it.toIntArray() }.toTypedArray()
     }
 
     // TLE error
