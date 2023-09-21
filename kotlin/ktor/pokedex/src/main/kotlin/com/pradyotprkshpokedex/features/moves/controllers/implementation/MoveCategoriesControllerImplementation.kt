@@ -34,7 +34,7 @@ class MoveCategoriesControllerImplementation(
                 moveService.getCategoryByPagination(offset = resource.offset, limit = resource.limit)
             if (resource.withDetails) {
 
-                    defaultController.respondWithDetails<MoveCategory>(context, categories)
+                defaultController.respondWithDetails<MoveCategory>(context, categories)
             } else {
                 context.respond(
                     status = HttpStatusCode.OK,

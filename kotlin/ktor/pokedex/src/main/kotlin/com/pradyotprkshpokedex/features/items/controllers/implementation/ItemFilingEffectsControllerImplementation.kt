@@ -18,7 +18,7 @@ class ItemFilingEffectsControllerImplementation(
     override suspend fun getAll(context: ApplicationCall, resource: ItemsResource.FilingEffect) {
         val allFilingEffects = itemService.getFilingEffectByPagination(offset = 0, limit = Int.MAX_VALUE)
 
-            defaultController.respondWithDetails<FilingEffect>(context, allFilingEffects)
+        defaultController.respondWithDetails<FilingEffect>(context, allFilingEffects)
     }
 
     override suspend fun getDetails(context: ApplicationCall, resource: ItemsResource.FilingEffect.Id) {
@@ -35,7 +35,7 @@ class ItemFilingEffectsControllerImplementation(
                 itemService.getFilingEffectByPagination(offset = resource.offset, limit = resource.limit)
             if (resource.withDetails) {
 
-                    defaultController.respondWithDetails<FilingEffect>(context, filingEffects)
+                defaultController.respondWithDetails<FilingEffect>(context, filingEffects)
             } else {
                 context.respond(
                     status = HttpStatusCode.OK,

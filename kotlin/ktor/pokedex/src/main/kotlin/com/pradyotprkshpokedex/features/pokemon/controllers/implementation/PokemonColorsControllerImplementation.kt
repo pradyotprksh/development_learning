@@ -14,7 +14,7 @@ import io.ktor.server.response.respond
 class PokemonColorsControllerImplementation(
     private val pokemonService: PokemonService,
     private val defaultController: DefaultController,
-): PokemonColorsController {
+) : PokemonColorsController {
     override suspend fun getAll(context: ApplicationCall, resource: PokemonResource.Color) {
         val all = pokemonService.getColorByPagination(offset = 0, limit = Int.MAX_VALUE)
         defaultController.respondWithDetails<Color>(context, all)

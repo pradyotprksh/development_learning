@@ -34,7 +34,7 @@ class MoveBattleStylesControllerImplementation(
                 moveService.getBattleStyleByPagination(offset = resource.offset, limit = resource.limit)
             if (resource.withDetails) {
 
-                    defaultController.respondWithDetails<BattleStyle>(context, battleStyles)
+                defaultController.respondWithDetails<BattleStyle>(context, battleStyles)
             } else {
                 context.respond(
                     status = HttpStatusCode.OK,

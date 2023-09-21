@@ -34,7 +34,7 @@ class MoveLearnMethodsControllerImplementation(
                 moveService.getLearnMethodByPagination(offset = resource.offset, limit = resource.limit)
             if (resource.withDetails) {
 
-                    defaultController.respondWithDetails<LearnMethod>(context, learnMethods)
+                defaultController.respondWithDetails<LearnMethod>(context, learnMethods)
             } else {
                 context.respond(
                     status = HttpStatusCode.OK,

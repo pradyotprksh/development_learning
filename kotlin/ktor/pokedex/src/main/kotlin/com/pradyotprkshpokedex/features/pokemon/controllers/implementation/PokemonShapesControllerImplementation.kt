@@ -14,7 +14,7 @@ import io.ktor.server.response.respond
 class PokemonShapesControllerImplementation(
     private val pokemonService: PokemonService,
     private val defaultController: DefaultController,
-): PokemonShapesController {
+) : PokemonShapesController {
     override suspend fun getAll(context: ApplicationCall, resource: PokemonResource.Shape) {
         val all = pokemonService.getShapeByPagination(offset = 0, limit = Int.MAX_VALUE)
         defaultController.respondWithDetails<Shape>(context, all)

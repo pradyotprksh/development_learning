@@ -14,7 +14,7 @@ import io.ktor.server.response.respond
 class GrowthRatesControllerImplementation(
     private val pokemonService: PokemonService,
     private val defaultController: DefaultController,
-): GrowthRatesController {
+) : GrowthRatesController {
     override suspend fun getAll(context: ApplicationCall, resource: PokemonResource.GrowthRate) {
         val all = pokemonService.getGrowthRateByPagination(offset = 0, limit = Int.MAX_VALUE)
         defaultController.respondWithDetails<GrowthRate>(context, all)

@@ -14,7 +14,7 @@ import io.ktor.server.response.respond
 class EggGroupsControllerImplementation(
     private val pokemonService: PokemonService,
     private val defaultController: DefaultController,
-): EggGroupsController {
+) : EggGroupsController {
     override suspend fun getAll(context: ApplicationCall, resource: PokemonResource.EggGroup) {
         val all = pokemonService.getEggGroupByPagination(offset = 0, limit = Int.MAX_VALUE)
         defaultController.respondWithDetails<EggGroup>(context, all)
