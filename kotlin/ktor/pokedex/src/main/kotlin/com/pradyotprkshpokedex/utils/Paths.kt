@@ -98,4 +98,9 @@ object Paths {
         const val TYPE = "type"
         const val PAGINATION = "paginate"
     }
+
+    object Utility {
+        const val UTILITY = "utility"
+        const val ALL_POKEMON_IMAGES = "all-pokemon-images"
+    }
 }

@@ -13,6 +13,7 @@ import com.pradyotprkshpokedex.core.service.LocationService
 import com.pradyotprkshpokedex.core.service.MachineService
 import com.pradyotprkshpokedex.core.service.MoveService
 import com.pradyotprkshpokedex.core.service.PokemonService
+import com.pradyotprkshpokedex.core.service.UtilityService
 import com.pradyotprkshpokedex.domain.service.BerryServiceImplementation
 import com.pradyotprkshpokedex.domain.service.ContestServiceImplementation
 import com.pradyotprkshpokedex.domain.service.DefaultServiceImplementation
@@ -24,6 +25,7 @@ import com.pradyotprkshpokedex.domain.service.LocationServiceImplementation
 import com.pradyotprkshpokedex.domain.service.MachineServiceImplementation
 import com.pradyotprkshpokedex.domain.service.MoveServiceImplementation
 import com.pradyotprkshpokedex.domain.service.PokemonServiceImplementation
+import com.pradyotprkshpokedex.domain.service.UtilityServiceImplementation
 import com.pradyotprkshpokedex.features.berries.controllers.BerriesController
 import com.pradyotprkshpokedex.features.berries.controllers.BerryController
 import com.pradyotprkshpokedex.features.berries.controllers.BerryFirmnessController
@@ -130,6 +132,7 @@ import com.pradyotprkshpokedex.features.pokemon.controllers.implementation.Pokem
 import com.pradyotprkshpokedex.features.pokemon.controllers.implementation.PokemonSpeciesControllerImplementation
 import com.pradyotprkshpokedex.features.pokemon.controllers.implementation.StatsControllerImplementation
 import com.pradyotprkshpokedex.features.pokemon.controllers.implementation.TypesControllerImplementation
+import com.pradyotprkshpokedex.features.utility.controllers.UtilityController
 import org.kodein.di.Kodein
 import org.kodein.di.generic.bind
 import org.kodein.di.generic.instance
@@ -341,6 +344,9 @@ object ModulesConfig {
                 instance(),
             )
         }
+        bind() from provider {
+            UtilityController(instance())
+        }
     }
 
     private val networkModule = Kodein.Module("NETWORK") {
@@ -359,6 +365,7 @@ object ModulesConfig {
         bind<MachineService>() with provider { MachineServiceImplementation(instance()) }
         bind<MoveService>() with provider { MoveServiceImplementation(instance()) }
         bind<PokemonService>() with provider { PokemonServiceImplementation(instance()) }
+        bind<UtilityService>() with provider { UtilityServiceImplementation(instance()) }
         bind() from provider { DefaultServiceImplementation(instance()) }
     }
 
