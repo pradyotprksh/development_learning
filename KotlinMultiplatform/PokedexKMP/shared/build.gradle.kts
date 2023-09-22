@@ -27,6 +27,9 @@ kotlin {
     }
 
     sourceSets {
+        val ktorVersion = "2.3.4"
+        val voyagerVersion = "1.0.0-rc05"
+
         val commonMain by getting {
             dependencies {
                 // Compose - UI rendering
@@ -37,19 +40,26 @@ kotlin {
                 implementation(compose.components.resources)
 
                 // Kamel - Image loader
-                implementation("media.kamel:kamel-image:0.7.1")
+                implementation("media.kamel:kamel-image:0.7.3")
 
                 // Ktor - HTTP requests
-                implementation("io.ktor:ktor-client-core:2.3.4")
-                implementation("io.ktor:ktor-client-content-negotiation:2.3.4")
-                implementation("io.ktor:ktor-serialization-kotlinx-json:2.3.4")
-                implementation("io.ktor:ktor-client-logging:2.3.4")
+                implementation("io.ktor:ktor-client-core:$ktorVersion")
+                implementation("io.ktor:ktor-client-content-negotiation:$ktorVersion")
+                implementation("io.ktor:ktor-serialization-kotlinx-json:$ktorVersion")
+                implementation("io.ktor:ktor-client-logging:$ktorVersion")
 
                 // Serialization
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
 
+                // Voyager
+                implementation("cafe.adriel.voyager:voyager-navigator:$voyagerVersion")
+                implementation("cafe.adriel.voyager:voyager-transitions:$voyagerVersion")
+                implementation("cafe.adriel.voyager:voyager-androidx:$voyagerVersion")
+                implementation("cafe.adriel.voyager:voyager-livedata:$voyagerVersion")
+                implementation("cafe.adriel.voyager:voyager-kodein:$voyagerVersion")
+
                 // Kodein
-                implementation("org.kodein.di:kodein-di:7.19.0")
+                implementation("org.kodein.di:kodein-di:7.20.1")
             }
         }
 
@@ -58,10 +68,10 @@ kotlin {
                 // AndroidX
                 api("androidx.activity:activity-compose:1.7.2")
                 api("androidx.appcompat:appcompat:1.6.1")
-                api("androidx.core:core-ktx:1.10.1")
+                api("androidx.core:core-ktx:1.12.0")
 
                 // Ktor - HTTP requests
-                implementation("io.ktor:ktor-client-android:2.3.3")
+                implementation("io.ktor:ktor-client-android:$ktorVersion")
             }
         }
 
@@ -76,7 +86,7 @@ kotlin {
 
             dependencies {
                 // Ktor - HTTP requests
-                implementation("io.ktor:ktor-client-darwin:2.3.3")
+                implementation("io.ktor:ktor-client-darwin:$ktorVersion")
             }
         }
     }
