@@ -17,6 +17,7 @@ private fun server(
 ): BaseApplicationEngine {
     return embeddedServer(
         engine,
+        host = "192.168.1.37",
         port = SERVER_PORT,
         module = Application::mainModule
     )

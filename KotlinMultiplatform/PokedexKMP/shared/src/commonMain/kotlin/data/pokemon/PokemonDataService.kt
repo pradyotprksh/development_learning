@@ -12,7 +12,7 @@ class PokemonDataService(
     override suspend fun getPokemonImages(): List<NameUrl> {
         val images = networkClient.get<List<NameUrl>>(
             details = PokeApiRequestDetails(
-                endpoint = Endpoints.ALL_POKEMON_IMAGES
+                endpoint = Endpoints.Utility.ALL_POKEMON_IMAGES
             )
         )
 

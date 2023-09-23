@@ -51,13 +51,6 @@ kotlin {
                 // Serialization
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
 
-                // Voyager
-                implementation("cafe.adriel.voyager:voyager-navigator:$voyagerVersion")
-                implementation("cafe.adriel.voyager:voyager-transitions:$voyagerVersion")
-                implementation("cafe.adriel.voyager:voyager-androidx:$voyagerVersion")
-                implementation("cafe.adriel.voyager:voyager-livedata:$voyagerVersion")
-                implementation("cafe.adriel.voyager:voyager-kodein:$voyagerVersion")
-
                 // Kodein
                 implementation("org.kodein.di:kodein-di:7.20.1")
             }
