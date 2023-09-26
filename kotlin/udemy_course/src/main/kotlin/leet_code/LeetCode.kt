@@ -554,6 +554,86 @@ class LeetCode {
 
         println(uniquePaths(3, 2))
         println(uniquePaths(3, 7))
+
+        println(searchMatrix(arrayOf(intArrayOf(1,3,5,7),intArrayOf(10,11,16,20),intArrayOf(23,30,34,60)), 3))
+        println(searchMatrix(arrayOf(intArrayOf(1,3,5,7),intArrayOf(10,11,16,20),intArrayOf(23,30,34,60)), 13))
+
+        intArrayOf(2,0,2,1,1,0).apply {
+            sortColors(this)
+            println(this.toList())
+        }
+        intArrayOf(2,0,1).apply {
+            sortColors(this)
+            println(this.toList())
+        }
+        intArrayOf(1,2,0).apply {
+            sortColors(this)
+            println(this.toList())
+        }
+    }
+
+    private fun sortColors(nums: IntArray): Unit {
+        var l = 0
+        var h = nums.lastIndex
+        var i = 0
+
+        while (i <= h) {
+            if (nums[i] == 0) {
+                val temp = nums[l]
+                nums[l] = nums[i]
+                nums[i] = temp
+                ++l
+                ++i
+            } else if (nums[i] == 2) {
+                val temp = nums[h]
+                nums[h] = nums[i]
+                nums[i] = temp
+                --h
+            } else {
+                ++i
+            }
+        }
+    }
+
+    private fun searchMatrix(matrix: Array<IntArray>, target: Int): Boolean {
+        var start = 0
+        var end = matrix.lastIndex
+
+        while (start <= end) {
+            val mid = (start + end) / 2
+
+            if (target in matrix[mid].first() .. matrix[mid].last()) {
+                for (c in matrix[mid]) {
+                    if (c == target) {
+                        return true
+                    }
+                }
+                break
+            } else if (target > matrix[mid].first()) {
+                start = mid + 1
+            } else {
+                end = mid - 1
+            }
+        }
+
+        return false
+
+        /*
+        for (r in matrix) {
+            if (target in r.first() .. r.last()) {
+                for (c in r) {
+                    if (c == target) {
+                        return true
+                    }
+                }
+                break
+            } else {
+                continue
+            }
+        }
+
+        return false
+         */
     }
 
     // TLE
