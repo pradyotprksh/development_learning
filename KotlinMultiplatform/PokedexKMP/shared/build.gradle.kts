@@ -53,6 +53,10 @@ kotlin {
 
                 // Kodein
                 implementation("org.kodein.di:kodein-di:7.20.1")
+
+                // Moko
+                api("dev.icerock.moko:mvvm-core:0.16.1")
+                api("dev.icerock.moko:mvvm-compose:0.16.1")
             }
         }
 

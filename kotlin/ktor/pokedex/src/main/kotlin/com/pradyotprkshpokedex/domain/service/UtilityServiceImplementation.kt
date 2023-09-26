@@ -13,7 +13,7 @@ class UtilityServiceImplementation(
         val images = networkClient.get<List<GithubPokemonImages>>(
             details = PokeApiRequestDetails(
                 endpoint = "",
-                fullPath = "https://api.github.com/repositories/65623828/contents/sprites/pokemon"
+                fullPath = "https://api.github.com/repos/PokeAPI/sprites/contents/sprites/pokemon"
             )
         )
 
