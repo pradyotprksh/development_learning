@@ -1,6 +1,7 @@
 package app.ui.splash.viewmodel
 
 import core.repository.PokemonRepository
+import core.response.PokeApiResponse
 import dev.icerock.moko.mvvm.viewmodel.ViewModel
 import di.KodeinDI
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -22,9 +23,13 @@ class SplashViewModel: ViewModel() {
     private fun getPokemonImages() {
         viewModelScope.launch {
             _uiState.update { SplashState.Loading }
-            _uiState.update {
-                val images = pokemonRepository.getAllPokemonImages().filter { it.url != null && it.name != null }
-                SplashState.PokemonImages(images = images)
+            pokemonRepository.getAllPokemonImages().collect { res ->
+                when (res) {
+                    is PokeApiResponse.Error -> _uiState.update { SplashState.Error(message = res.exception.message) }
+                    is PokeApiResponse.Loading -> _uiState.update { SplashState.Loading }
+                    is PokeApiResponse.Success -> _uiState.update { SplashState.PokemonImages(images = res.data) }
+                    else -> {}
+                }
             }
         }
     }

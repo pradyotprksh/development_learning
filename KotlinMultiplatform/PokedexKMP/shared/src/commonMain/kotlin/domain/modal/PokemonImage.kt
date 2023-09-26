@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class NameUrl(
-    @SerialName("name") val name: String? = null,
-    @SerialName("url") val url: String? = null
+data class PokemonImage(
+    @SerialName("id") val id: Int,
+    @SerialName("url") val url: String? = null,
 )

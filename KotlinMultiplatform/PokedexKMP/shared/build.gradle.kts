@@ -28,14 +28,13 @@ kotlin {
 
     sourceSets {
         val ktorVersion = "2.3.4"
-        val voyagerVersion = "1.0.0-rc05"
 
         val commonMain by getting {
             dependencies {
                 // Compose - UI rendering
                 implementation(compose.runtime)
                 implementation(compose.foundation)
-                implementation(compose.material)
+                implementation(compose.material3)
                 @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
                 implementation(compose.components.resources)
 

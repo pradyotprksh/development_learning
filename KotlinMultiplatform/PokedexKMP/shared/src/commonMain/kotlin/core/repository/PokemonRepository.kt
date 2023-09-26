@@ -1,7 +1,9 @@
 package core.repository
 
-import domain.modal.NameUrl
+import core.response.PokeApiResponse
+import domain.modal.PokemonImage
+import kotlinx.coroutines.flow.Flow
 
 interface PokemonRepository {
-    suspend fun getAllPokemonImages(): List<NameUrl>
+    suspend fun getAllPokemonImages(): Flow<PokeApiResponse<out List<PokemonImage>>>
 }

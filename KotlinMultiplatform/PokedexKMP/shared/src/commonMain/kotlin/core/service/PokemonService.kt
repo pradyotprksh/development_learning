@@ -1,7 +1,7 @@
 package core.service
 
-import domain.modal.NameUrl
+import domain.modal.PokemonImage
 
 interface PokemonService {
-    suspend fun getPokemonImages(): List<NameUrl>
+    suspend fun getPokemonImages(): List<PokemonImage>
 }
