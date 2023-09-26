@@ -1,8 +1,8 @@
 rootProject.name = "PokedexKMP"
 
 include(":androidApp")
-
 include(":shared")
+include(":desktopApp")
 
 pluginManagement {
     repositories {

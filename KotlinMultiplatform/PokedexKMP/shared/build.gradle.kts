@@ -9,6 +9,8 @@ plugins {
 kotlin {
     androidTarget()
 
+    jvm("desktop")
+
     iosX64()
     iosArm64()
     iosSimulatorArm64()
@@ -83,6 +85,12 @@ kotlin {
             dependencies {
                 // Ktor - HTTP requests
                 implementation("io.ktor:ktor-client-darwin:$ktorVersion")
+            }
+        }
+
+        val desktopMain by getting {
+            dependencies {
+                implementation(compose.desktop.common)
             }
         }
     }
