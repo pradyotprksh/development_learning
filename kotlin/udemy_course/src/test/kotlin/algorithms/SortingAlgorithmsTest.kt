@@ -12,16 +12,16 @@ class SortingAlgorithmsTest : TestCase() {
     @Test
     fun bubbleSort() {
         assertEquals(
-                "[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]",
-                sortingAlgorithms.bubbleSort(a = listOf(3, 4, 1, 2, 5, 8, 9, 7, 11, 10, 6)).toString()
+            "[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]",
+            sortingAlgorithms.bubbleSort(a = listOf(3, 4, 1, 2, 5, 8, 9, 7, 11, 10, 6)).toString()
         )
     }
 
     @Test
     fun selectionSort() {
         assertEquals(
-                "[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]",
-                sortingAlgorithms.selectionSort(a = listOf(3, 4, 1, 2, 5, 8, 9, 7, 11, 10, 6)).toString()
+            "[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]",
+            sortingAlgorithms.selectionSort(a = listOf(3, 4, 1, 2, 5, 8, 9, 7, 11, 10, 6)).toString()
         )
     }
 }

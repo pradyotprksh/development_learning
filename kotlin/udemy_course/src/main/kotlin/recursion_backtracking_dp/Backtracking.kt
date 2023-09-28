@@ -9,14 +9,46 @@ class Backtracking {
         // To find all the solution place the queens on rows
         Queens(4).totalSolutions()
 
-        HamiltonianCycle(listOf(listOf(0, 1, 0, 0, 0, 1), listOf(1, 0, 1, 0, 0, 0), listOf(0, 1, 0, 0, 1, 0), listOf(0, 0, 0, 0, 1, 1), listOf(0, 0, 1, 1, 0, 1), listOf(1, 0, 0, 1, 1, 0))).solveHamiltonianPath()
-        HamiltonianCycle(listOf(listOf(0, 1, 0, 0), listOf(0, 0, 0, 1), listOf(1, 0, 0, 0), listOf(0, 0, 1, 0))).solveHamiltonianCycle()
+        HamiltonianCycle(
+            listOf(
+                listOf(0, 1, 0, 0, 0, 1),
+                listOf(1, 0, 1, 0, 0, 0),
+                listOf(0, 1, 0, 0, 1, 0),
+                listOf(0, 0, 0, 0, 1, 1),
+                listOf(0, 0, 1, 1, 0, 1),
+                listOf(1, 0, 0, 1, 1, 0)
+            )
+        ).solveHamiltonianPath()
+        HamiltonianCycle(
+            listOf(
+                listOf(0, 1, 0, 0),
+                listOf(0, 0, 0, 1),
+                listOf(1, 0, 0, 0),
+                listOf(0, 0, 1, 0)
+            )
+        ).solveHamiltonianCycle()
 
-        Coloring(listOf(listOf(0, 1, 0, 1), listOf(1, 0, 0, 1), listOf(1, 0, 0, 1), listOf(0, 1, 1, 0)), listOf("Red", "Green")).solveColoring()
-        Coloring(listOf(listOf(0, 1, 0, 0, 0, 1), listOf(1, 0, 1, 0, 0, 0), listOf(0, 1, 0, 0, 1, 0), listOf(0, 0, 0, 0, 1, 1), listOf(0, 0, 1, 1, 0, 1), listOf(1, 0, 0, 1, 1, 0)), listOf("Red", "Green", "Blue")).solveColoring()
-        Coloring(listOf(listOf(0, 1, 1, 1), listOf(1, 0, 1, 0), listOf(1, 1, 0, 1), listOf(1, 0, 1, 0)), listOf("Red", "Green", "Blue")).solveColoring()
+        Coloring(
+            listOf(listOf(0, 1, 0, 1), listOf(1, 0, 0, 1), listOf(1, 0, 0, 1), listOf(0, 1, 1, 0)),
+            listOf("Red", "Green")
+        ).solveColoring()
+        Coloring(
+            listOf(
+                listOf(0, 1, 0, 0, 0, 1),
+                listOf(1, 0, 1, 0, 0, 0),
+                listOf(0, 1, 0, 0, 1, 0),
+                listOf(0, 0, 0, 0, 1, 1),
+                listOf(0, 0, 1, 1, 0, 1),
+                listOf(1, 0, 0, 1, 1, 0)
+            ), listOf("Red", "Green", "Blue")
+        ).solveColoring()
+        Coloring(
+            listOf(listOf(0, 1, 1, 1), listOf(1, 0, 1, 0), listOf(1, 1, 0, 1), listOf(1, 0, 1, 0)),
+            listOf("Red", "Green", "Blue")
+        ).solveColoring()
 
-        Sudoku(listOf(
+        Sudoku(
+            listOf(
                 mutableListOf(null, null, null, 2, 6, null, 7, null, 1),
                 mutableListOf(6, 8, null, null, 7, null, null, 9, null),
                 mutableListOf(1, 9, null, null, null, 4, 5, null, null),
@@ -26,8 +58,10 @@ class Backtracking {
                 mutableListOf(null, null, 9, 3, null, null, null, 7, 4),
                 mutableListOf(null, 4, null, null, 5, null, null, 3, 6),
                 mutableListOf(7, null, 3, null, 1, 8, null, null, null),
-        )).solveSudoku()
-        Sudoku(listOf(
+            )
+        ).solveSudoku()
+        Sudoku(
+            listOf(
                 mutableListOf(null, null, null, null, null, null, null, null, null),
                 mutableListOf(null, null, null, null, null, null, null, null, null),
                 mutableListOf(null, null, null, null, null, null, null, null, null),
@@ -37,18 +71,19 @@ class Backtracking {
                 mutableListOf(null, null, null, null, null, null, null, null, null),
                 mutableListOf(null, null, null, null, null, null, null, null, null),
                 mutableListOf(null, null, null, null, null, null, null, null, null),
-        )).solveSudoku()
+            )
+        ).solveSudoku()
 
         KnightsTour(8).solveKnightsTour()
 
         MazeProblem(
-                listOf(
-                        listOf(1, 1, 1, 1, 1),
-                        listOf(0, 1, 1, 1, 1),
-                        listOf(0, 0, 0, 0, 1),
-                        listOf(1, 0, 1, 1, 1),
-                        listOf(0, 0, 0, 1, 1),
-                )
+            listOf(
+                listOf(1, 1, 1, 1, 1),
+                listOf(0, 1, 1, 1, 1),
+                listOf(0, 0, 0, 0, 1),
+                listOf(1, 0, 1, 1, 1),
+                listOf(0, 0, 0, 1, 1),
+            )
         ).solveMaze(0, 0, 4, 4)
     }
 
@@ -288,12 +323,12 @@ class Backtracking {
 
     class HamiltonianCycle(private val graph: List<List<Int>>) {
         private val alphabetMap = mapOf(
-                0 to "A",
-                1 to "B",
-                2 to "C",
-                3 to "D",
-                4 to "E",
-                5 to "F",
+            0 to "A",
+            1 to "B",
+            2 to "C",
+            3 to "D",
+            4 to "E",
+            5 to "F",
         )
         private val visitedNodes = mutableListOf(0)
 

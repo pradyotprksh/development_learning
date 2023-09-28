@@ -20,8 +20,8 @@ class TreeTraversalTest : TestCase() {
         binarySearchTree.insert(20)
 
         assertEquals(
-                "[10, 6, 15, 3, 8, 20]",
-                treeTraversal.breadthFirstSearch(binarySearchTree.root!!).toString()
+            "[10, 6, 15, 3, 8, 20]",
+            treeTraversal.breadthFirstSearch(binarySearchTree.root!!).toString()
         )
     }
 
@@ -36,8 +36,8 @@ class TreeTraversalTest : TestCase() {
         binarySearchTree.insert(20)
 
         assertEquals(
-                "[10, 6, 3, 8, 15, 20]",
-                treeTraversal.depthFirstSearchPreOrder(binarySearchTree.root!!).toString()
+            "[10, 6, 3, 8, 15, 20]",
+            treeTraversal.depthFirstSearchPreOrder(binarySearchTree.root!!).toString()
         )
     }
 
@@ -52,8 +52,8 @@ class TreeTraversalTest : TestCase() {
         binarySearchTree.insert(20)
 
         assertEquals(
-                "[3, 8, 6, 20, 15, 10]",
-                treeTraversal.depthFirstSearchPostOrder(binarySearchTree.root!!).toString()
+            "[3, 8, 6, 20, 15, 10]",
+            treeTraversal.depthFirstSearchPostOrder(binarySearchTree.root!!).toString()
         )
     }
 
@@ -68,8 +68,8 @@ class TreeTraversalTest : TestCase() {
         binarySearchTree.insert(20)
 
         assertEquals(
-                "[3, 6, 8, 10, 15, 20]",
-                treeTraversal.depthFirstSearchInOrder(binarySearchTree.root!!).toString()
+            "[3, 6, 8, 10, 15, 20]",
+            treeTraversal.depthFirstSearchInOrder(binarySearchTree.root!!).toString()
         )
     }
 }
