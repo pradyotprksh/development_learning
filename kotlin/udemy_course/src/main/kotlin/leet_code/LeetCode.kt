@@ -570,6 +570,41 @@ class LeetCode {
             sortColors(this)
             println(this.toList())
         }
+
+        println(exist(arrayOf(charArrayOf('A','B','C','E'),charArrayOf('S','F','C','S'),charArrayOf('A','D','E','E')), "ABCCED"))
+        println(exist(arrayOf(charArrayOf('A','B','C','E'),charArrayOf('S','F','C','S'),charArrayOf('A','D','E','E')), "SEE"))
+        println(exist(arrayOf(charArrayOf('A','B','C','E'),charArrayOf('S','F','C','S'),charArrayOf('A','D','E','E')), "ABCB"))
+        println(exist(arrayOf(charArrayOf('a','b'),charArrayOf('c','d')), "abcd"))
+        println(exist(arrayOf(charArrayOf('A','B','C','E'),charArrayOf('S','F','E','S'),charArrayOf('A','D','E','E')), "ABCESEEEFS"))
+    }
+
+    private fun exist(board: Array<CharArray>, word: String): Boolean {
+        val r = board.size
+        val c = board.first().size
+
+        fun dfs(i: Int, j: Int, w: Int): Boolean {
+            if (w >= word.length) return true
+            if (i >= r || j >= c || i < 0 || j < 0) return false
+
+            if (board[i][j] == word[w]) {
+                board[i][j] = board[i][j] + 100
+                if (dfs(i, j - 1, w + 1) || dfs(i, j + 1, w + 1) || dfs(i - 1, j, w + 1) || dfs(i + 1, j, w + 1)) {
+                    return true
+                }
+                board[i][j] = board[i][j] - 100
+            }
+            return false
+        }
+
+        for (i in board.indices) {
+            for (j in board[i].indices) {
+                if (dfs(i, j, 0)) {
+                    return true
+                }
+            }
+        }
+
+        return false
     }
 
     private fun sortColors(nums: IntArray): Unit {
