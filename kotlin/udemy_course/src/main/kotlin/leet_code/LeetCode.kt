@@ -2,7 +2,6 @@ package leet_code
 
 import data_structures.linked_lists.ListNode
 import data_structures.trees.TreeNode
-import java.lang.Exception
 import java.util.*
 import kotlin.math.abs
 import kotlin.math.max
@@ -41,12 +40,12 @@ class LeetCode {
         println(longestCommonPrefix(arrayOf("flower", "flow", "flight")))
 
         println(
-                removeNthFromEnd(
-                        ListNode(
-                                data = 1,
-                                next = ListNode(data = 2, next = ListNode(3, next = ListNode(4, next = ListNode(data = 5))))
-                        ), 2
-                )
+            removeNthFromEnd(
+                ListNode(
+                    data = 1,
+                    next = ListNode(data = 2, next = ListNode(3, next = ListNode(4, next = ListNode(data = 5))))
+                ), 2
+            )
         )
         println(removeNthFromEnd(ListNode(data = 1, next = ListNode(data = 2)), 1))
         println(removeNthFromEnd(ListNode(data = 1), 1))
@@ -59,17 +58,17 @@ class LeetCode {
         println(isValid("){"))
 
         println(
-                mergeTwoLists(
-                        ListNode(data = 1, next = ListNode(data = 2, ListNode(data = 4))),
-                        ListNode(data = 1, next = ListNode(data = 3, ListNode(data = 4))),
-                )
+            mergeTwoLists(
+                ListNode(data = 1, next = ListNode(data = 2, ListNode(data = 4))),
+                ListNode(data = 1, next = ListNode(data = 3, ListNode(data = 4))),
+            )
         )
         println(mergeTwoLists(null, null))
         println(
-                mergeTwoLists(
-                        null,
-                        ListNode(data = 0),
-                )
+            mergeTwoLists(
+                null,
+                ListNode(data = 0),
+            )
         )
 
         println(swapPairs(ListNode(data = 1, next = ListNode(data = 2, next = ListNode(3, next = ListNode(4))))))
@@ -181,11 +180,34 @@ class LeetCode {
         listNode1.next = null
         println(hasCycle(listNode1))
 
-        println(maxDepth(TreeNode(data = 3, left = TreeNode(data = 9), right = TreeNode(data = 20, left = TreeNode(data = 15), right = TreeNode(data = 7)))))
+        println(
+            maxDepth(
+                TreeNode(
+                    data = 3,
+                    left = TreeNode(data = 9),
+                    right = TreeNode(data = 20, left = TreeNode(data = 15), right = TreeNode(data = 7))
+                )
+            )
+        )
 
-        println(isSameTree(TreeNode(data = 1, left = TreeNode(data = 2), right = TreeNode(data = 3)), TreeNode(data = 1, left = TreeNode(data = 2), right = TreeNode(data = 3))))
-        println(isSameTree(TreeNode(data = 1, left = TreeNode(data = 2)), TreeNode(data = 1, right = TreeNode(data = 2))))
-        println(isSameTree(TreeNode(data = 1, left = TreeNode(data = 2), right = TreeNode(data = 1)), TreeNode(data = 1, left = TreeNode(data = 1), right = TreeNode(data = 2))))
+        println(
+            isSameTree(
+                TreeNode(data = 1, left = TreeNode(data = 2), right = TreeNode(data = 3)),
+                TreeNode(data = 1, left = TreeNode(data = 2), right = TreeNode(data = 3))
+            )
+        )
+        println(
+            isSameTree(
+                TreeNode(data = 1, left = TreeNode(data = 2)),
+                TreeNode(data = 1, right = TreeNode(data = 2))
+            )
+        )
+        println(
+            isSameTree(
+                TreeNode(data = 1, left = TreeNode(data = 2), right = TreeNode(data = 1)),
+                TreeNode(data = 1, left = TreeNode(data = 1), right = TreeNode(data = 2))
+            )
+        )
 
         println(plusOne(intArrayOf(1, 2, 3)).toList())
         println(plusOne(intArrayOf(4, 3, 2, 1)).toList())
@@ -211,7 +233,12 @@ class LeetCode {
 
         println(addTwoNumbers(ListNode(2, ListNode(4, ListNode(3))), ListNode(5, ListNode(6, ListNode(4)))))
         println(addTwoNumbers(ListNode(0), ListNode(0)))
-        println(addTwoNumbers(ListNode(9, ListNode(9, ListNode(9, ListNode(9, ListNode(9, ListNode(9, ListNode(9))))))), ListNode(9, ListNode(9, ListNode(9, ListNode(9))))))
+        println(
+            addTwoNumbers(
+                ListNode(9, ListNode(9, ListNode(9, ListNode(9, ListNode(9, ListNode(9, ListNode(9))))))),
+                ListNode(9, ListNode(9, ListNode(9, ListNode(9))))
+            )
+        )
 
         println(reverseBetween(ListNode(1, ListNode(2, ListNode(3, ListNode(4, ListNode(5))))), 2, 4))
         println(reverseBetween(ListNode(5), 1, 1))
@@ -249,10 +276,26 @@ class LeetCode {
         println(spiralOrder(arrayOf(intArrayOf(1, 2, 3), intArrayOf(4, 5, 6), intArrayOf(7, 8, 9))))
         println(spiralOrder(arrayOf(intArrayOf(1, 2, 3, 4), intArrayOf(5, 6, 7, 8), intArrayOf(9, 10, 11, 12))))
 
-        println(invertTree(TreeNode(data = 4, left = TreeNode(data = 2, left = TreeNode(data = 1), right = TreeNode(data = 3)), right = TreeNode(data = 7, left = TreeNode(data = 6), right = TreeNode(data = 9)))))
+        println(
+            invertTree(
+                TreeNode(
+                    data = 4,
+                    left = TreeNode(data = 2, left = TreeNode(data = 1), right = TreeNode(data = 3)),
+                    right = TreeNode(data = 7, left = TreeNode(data = 6), right = TreeNode(data = 9))
+                )
+            )
+        )
         println(invertTree(TreeNode(data = 3, left = TreeNode(data = 1, right = TreeNode(data = 2)))))
 
-        println(isSymmetric(TreeNode(data = 1, left = TreeNode(data = 2, right = TreeNode(data = 3)), right = TreeNode(data = 2, right = TreeNode(data = 3)))))
+        println(
+            isSymmetric(
+                TreeNode(
+                    data = 1,
+                    left = TreeNode(data = 2, right = TreeNode(data = 3)),
+                    right = TreeNode(data = 2, right = TreeNode(data = 3))
+                )
+            )
+        )
 
         println(letterCombinations("23"))
         println(letterCombinations(""))
@@ -317,7 +360,16 @@ class LeetCode {
         println(uniqueOccurrences(intArrayOf(-3, 0, 1, -3, 1, 1, 1, -3, 10, 0)))
 
         println(equalPairs(arrayOf(intArrayOf(3, 2, 1), intArrayOf(1, 7, 6), intArrayOf(2, 7, 7))))
-        println(equalPairs(arrayOf(intArrayOf(3, 1, 2, 2), intArrayOf(1, 4, 4, 5), intArrayOf(2, 4, 2, 2), intArrayOf(2, 4, 2, 2))))
+        println(
+            equalPairs(
+                arrayOf(
+                    intArrayOf(3, 1, 2, 2),
+                    intArrayOf(1, 4, 4, 5),
+                    intArrayOf(2, 4, 2, 2),
+                    intArrayOf(2, 4, 2, 2)
+                )
+            )
+        )
 
         println(removeStars("leet**cod*e"))
         println(removeStars("erase*****"))
@@ -339,17 +391,44 @@ class LeetCode {
         println(pairSum(ListNode(4, ListNode(100000))))
 
         println(
-                leafSimilar(
-                        TreeNode(data = 3, left = TreeNode(data = 5, left = TreeNode(data = 6), right = TreeNode(data = 2, left = TreeNode(data = 7), right = TreeNode(data = 4))), right = TreeNode(data = 1, left = TreeNode(data = 9), right = TreeNode(data = 8))),
-                        TreeNode(data = 3, left = TreeNode(data = 5, left = TreeNode(data = 6), right = TreeNode(data = 7)), right = TreeNode(data = 1, left = TreeNode(data = 4), right = TreeNode(data = 2, left = TreeNode(data = 9), right = TreeNode(data = 8))))
+            leafSimilar(
+                TreeNode(
+                    data = 3,
+                    left = TreeNode(
+                        data = 5,
+                        left = TreeNode(data = 6),
+                        right = TreeNode(data = 2, left = TreeNode(data = 7), right = TreeNode(data = 4))
+                    ),
+                    right = TreeNode(data = 1, left = TreeNode(data = 9), right = TreeNode(data = 8))
+                ),
+                TreeNode(
+                    data = 3,
+                    left = TreeNode(data = 5, left = TreeNode(data = 6), right = TreeNode(data = 7)),
+                    right = TreeNode(
+                        data = 1,
+                        left = TreeNode(data = 4),
+                        right = TreeNode(data = 2, left = TreeNode(data = 9), right = TreeNode(data = 8))
+                    )
                 )
+            )
         )
 
         println(
-                goodNodes(TreeNode(data = 3, left = TreeNode(data = 1, left = TreeNode(data = 3)), right = TreeNode(data = 4, left = TreeNode(data = 1), right = TreeNode(data = 5))))
+            goodNodes(
+                TreeNode(
+                    data = 3,
+                    left = TreeNode(data = 1, left = TreeNode(data = 3)),
+                    right = TreeNode(data = 4, left = TreeNode(data = 1), right = TreeNode(data = 5))
+                )
+            )
         )
         println(
-                goodNodes(TreeNode(data = 3, left = TreeNode(data = 3, left = TreeNode(data = 4), right = TreeNode(data = 2))))
+            goodNodes(
+                TreeNode(
+                    data = 3,
+                    left = TreeNode(data = 3, left = TreeNode(data = 4), right = TreeNode(data = 2))
+                )
+            )
         )
 
         println(guessNumber(10))
@@ -395,7 +474,12 @@ class LeetCode {
         println(getRow(3))
 
         val intersectionNode = ListNode(2, ListNode(4))
-        println(getIntersectionNode(ListNode(1, ListNode(9, ListNode(1, intersectionNode))), ListNode(3, intersectionNode)))
+        println(
+            getIntersectionNode(
+                ListNode(1, ListNode(9, ListNode(1, intersectionNode))),
+                ListNode(3, intersectionNode)
+            )
+        )
         println(getIntersectionNode(ListNode(1, ListNode(9, ListNode(1))), ListNode(3)))
 
         println(convertToTitle(1))
@@ -408,9 +492,24 @@ class LeetCode {
 
         println(removeElements(ListNode(7, ListNode(7, ListNode(7, ListNode(7)))), 7))
         println(removeElements(null, 7))
-        println(removeElements(ListNode(1, ListNode(2, ListNode(6, ListNode(3, ListNode(4, ListNode(5, ListNode(6))))))), 6))
+        println(
+            removeElements(
+                ListNode(
+                    1,
+                    ListNode(2, ListNode(6, ListNode(3, ListNode(4, ListNode(5, ListNode(6))))))
+                ), 6
+            )
+        )
 
-        println(countNodes(TreeNode(data = 1, left = TreeNode(data = 2, left = TreeNode(data = 4), right = TreeNode(data = 5)), right = TreeNode(data = 3, left = TreeNode(data = 6)))))
+        println(
+            countNodes(
+                TreeNode(
+                    data = 1,
+                    left = TreeNode(data = 2, left = TreeNode(data = 4), right = TreeNode(data = 5)),
+                    right = TreeNode(data = 3, left = TreeNode(data = 6))
+                )
+            )
+        )
 
         val myStack = MyStack()
         myStack.push(1)
@@ -435,15 +534,23 @@ class LeetCode {
         println(isPalindrome(ListNode(1, ListNode(2))))
         println(isPalindrome(ListNode(1, ListNode(2, ListNode(1)))))
 
-        println(binaryTreePaths(TreeNode(data = 1, left = TreeNode(data = 2, right = TreeNode(data = 5)), right = TreeNode(data = 3))))
+        println(
+            binaryTreePaths(
+                TreeNode(
+                    data = 1,
+                    left = TreeNode(data = 2, right = TreeNode(data = 5)),
+                    right = TreeNode(data = 3)
+                )
+            )
+        )
         println(binaryTreePaths(TreeNode(data = 1)))
 
         println(addDigits(38))
         println(addDigits(0))
 
-        println(missingNumber(intArrayOf(3,0,1)))
-        println(missingNumber(intArrayOf(0,1)))
-        println(missingNumber(intArrayOf(9,6,4,2,3,5,7,0,1)))
+        println(missingNumber(intArrayOf(3, 0, 1)))
+        println(missingNumber(intArrayOf(0, 1)))
+        println(missingNumber(intArrayOf(9, 6, 4, 2, 3, 5, 7, 0, 1)))
 
         println(canWinNim(4))
         println(canWinNim(2))
@@ -455,19 +562,32 @@ class LeetCode {
         println(isPowerOfThree(0))
         println(isPowerOfThree(-1))
 
-        println(intersection(intArrayOf(1,2,2,1), intArrayOf(2,2)).toList())
+        println(intersection(intArrayOf(1, 2, 2, 1), intArrayOf(2, 2)).toList())
 
         println(firstUniqChar("leetcode"))
         println(firstUniqChar("loveleetcode"))
         println(firstUniqChar("aabb"))
 
-        println(findTheDifference("ymbgaraibkfmvocpizdydugvalagaivdbfsfbepeyccqfepzvtpyxtbadkhmwmoswrcxnargtlswqemafandgkmydtimuzvjwxvlfwlhvkrgcsithaqlcvrihrwqkpjdhgfgreqoxzfvhjzojhghfwbvpfzectwwhexthbsndovxejsntmjihchaotbgcysfdaojkjldprwyrnischrgmtvjcorypvopfmegizfkvudubnejzfqffvgdoxohuinkyygbdzmshvyqyhsozwvlhevfepdvafgkqpkmcsikfyxczcovrmwqxxbnhfzcjjcpgzjjfateajnnvlbwhyppdleahgaypxidkpwmfqwqyofwdqgxhjaxvyrzupfwesmxbjszolgwqvfiozofncbohduqgiswuiyddmwlwubetyaummenkdfptjczxemryuotrrymrfdxtrebpbjtpnuhsbnovhectpjhfhahbqrfbyxggobsweefcwxpqsspyssrmdhuelkkvyjxswjwofngpwfxvknkjviiavorwyfzlnktmfwxkvwkrwdcxjfzikdyswsuxegmhtnxjraqrdchaauazfhtklxsksbhwgjphgbasfnlwqwukprgvihntsyymdrfovaszjywuqygpvjtvlsvvqbvzsmgweiayhlubnbsitvfxawhfmfiatxvqrcwjshvovxknnxnyyfexqycrlyksderlqarqhkxyaqwlwoqcribumrqjtelhwdvaiysgjlvksrfvjlcaiwrirtkkxbwgicyhvakxgdjwnwmubkiazdjkfmotglclqndqjxethoutvjchjbkoasnnfbgrnycucfpeovruguzumgmgddqwjgdvaujhyqsqtoexmnfuluaqbxoofvotvfoiexbnprrxptchmlctzgqtkivsilwgwgvpidpvasurraqfkcmxhdapjrlrnkbklwkrvoaziznlpor", "qhxepbshlrhoecdaodgpousbzfcqjxulatciapuftffahhlmxbufgjuxstfjvljybfxnenlacmjqoymvamphpxnolwijwcecgwbcjhgdybfffwoygikvoecdggplfohemfypxfsvdrseyhmvkoovxhdvoavsqqbrsqrkqhbtmgwaurgisloqjixfwfvwtszcxwktkwesaxsmhsvlitegrlzkvfqoiiwxbzskzoewbkxtphapavbyvhzvgrrfriddnsrftfowhdanvhjvurhljmpxvpddxmzfgwwpkjrfgqptrmumoemhfpojnxzwlrxkcafvbhlwrapubhveattfifsmiounhqusvhywnxhwrgamgnesxmzliyzisqrwvkiyderyotxhwspqrrkeczjysfujvovsfcfouykcqyjoobfdgnlswfzjmyucaxuaslzwfnetekymrwbvponiaojdqnbmboldvvitamntwnyaeppjaohwkrisrlrgwcjqqgxeqerjrbapfzurcwxhcwzugcgnirkkrxdthtbmdqgvqxilllrsbwjhwqszrjtzyetwubdrlyakzxcveufvhqugyawvkivwonvmrgnchkzdysngqdibhkyboyftxcvvjoggecjsajbuqkjjxfvynrjsnvtfvgpgveycxidhhfauvjovmnbqgoxsafknluyimkczykwdgvqwlvvgdmufxdypwnajkncoynqticfetcdafvtqszuwfmrdggifokwmkgzuxnhncmnsstffqpqbplypapctctfhqpihavligbrutxmmygiyaklqtakdidvnvrjfteazeqmbgklrgrorudayokxptswwkcircwuhcavhdparjfkjypkyxhbgwxbkvpvrtzjaetahmxevmkhdfyidhrdeejapfbafwmdqjqszwnwzgclitdhlnkaiyldwkwwzvhyorgbysyjbxsspnjdewjxbhpsvj"))
+        println(
+            findTheDifference(
+                "ymbgaraibkfmvocpizdydugvalagaivdbfsfbepeyccqfepzvtpyxtbadkhmwmoswrcxnargtlswqemafandgkmydtimuzvjwxvlfwlhvkrgcsithaqlcvrihrwqkpjdhgfgreqoxzfvhjzojhghfwbvpfzectwwhexthbsndovxejsntmjihchaotbgcysfdaojkjldprwyrnischrgmtvjcorypvopfmegizfkvudubnejzfqffvgdoxohuinkyygbdzmshvyqyhsozwvlhevfepdvafgkqpkmcsikfyxczcovrmwqxxbnhfzcjjcpgzjjfateajnnvlbwhyppdleahgaypxidkpwmfqwqyofwdqgxhjaxvyrzupfwesmxbjszolgwqvfiozofncbohduqgiswuiyddmwlwubetyaummenkdfptjczxemryuotrrymrfdxtrebpbjtpnuhsbnovhectpjhfhahbqrfbyxggobsweefcwxpqsspyssrmdhuelkkvyjxswjwofngpwfxvknkjviiavorwyfzlnktmfwxkvwkrwdcxjfzikdyswsuxegmhtnxjraqrdchaauazfhtklxsksbhwgjphgbasfnlwqwukprgvihntsyymdrfovaszjywuqygpvjtvlsvvqbvzsmgweiayhlubnbsitvfxawhfmfiatxvqrcwjshvovxknnxnyyfexqycrlyksderlqarqhkxyaqwlwoqcribumrqjtelhwdvaiysgjlvksrfvjlcaiwrirtkkxbwgicyhvakxgdjwnwmubkiazdjkfmotglclqndqjxethoutvjchjbkoasnnfbgrnycucfpeovruguzumgmgddqwjgdvaujhyqsqtoexmnfuluaqbxoofvotvfoiexbnprrxptchmlctzgqtkivsilwgwgvpidpvasurraqfkcmxhdapjrlrnkbklwkrvoaziznlpor",
+                "qhxepbshlrhoecdaodgpousbzfcqjxulatciapuftffahhlmxbufgjuxstfjvljybfxnenlacmjqoymvamphpxnolwijwcecgwbcjhgdybfffwoygikvoecdggplfohemfypxfsvdrseyhmvkoovxhdvoavsqqbrsqrkqhbtmgwaurgisloqjixfwfvwtszcxwktkwesaxsmhsvlitegrlzkvfqoiiwxbzskzoewbkxtphapavbyvhzvgrrfriddnsrftfowhdanvhjvurhljmpxvpddxmzfgwwpkjrfgqptrmumoemhfpojnxzwlrxkcafvbhlwrapubhveattfifsmiounhqusvhywnxhwrgamgnesxmzliyzisqrwvkiyderyotxhwspqrrkeczjysfujvovsfcfouykcqyjoobfdgnlswfzjmyucaxuaslzwfnetekymrwbvponiaojdqnbmboldvvitamntwnyaeppjaohwkrisrlrgwcjqqgxeqerjrbapfzurcwxhcwzugcgnirkkrxdthtbmdqgvqxilllrsbwjhwqszrjtzyetwubdrlyakzxcveufvhqugyawvkivwonvmrgnchkzdysngqdibhkyboyftxcvvjoggecjsajbuqkjjxfvynrjsnvtfvgpgveycxidhhfauvjovmnbqgoxsafknluyimkczykwdgvqwlvvgdmufxdypwnajkncoynqticfetcdafvtqszuwfmrdggifokwmkgzuxnhncmnsstffqpqbplypapctctfhqpihavligbrutxmmygiyaklqtakdidvnvrjfteazeqmbgklrgrorudayokxptswwkcircwuhcavhdparjfkjypkyxhbgwxbkvpvrtzjaetahmxevmkhdfyidhrdeejapfbafwmdqjqszwnwzgclitdhlnkaiyldwkwwzvhyorgbysyjbxsspnjdewjxbhpsvj"
+            )
+        )
         println(findTheDifference("abcd", "abcde"))
 
         println(readBinaryWatch(1))
         println(readBinaryWatch(2))
 
-        println(sumOfLeftLeaves(TreeNode(data = 3, left = TreeNode(data = 9), right = TreeNode(data = 20, left = TreeNode(data = 15), right = TreeNode(data = 7)))))
+        println(
+            sumOfLeftLeaves(
+                TreeNode(
+                    data = 3,
+                    left = TreeNode(data = 9),
+                    right = TreeNode(data = 20, left = TreeNode(data = 15), right = TreeNode(data = 7))
+                )
+            )
+        )
 
         println(fizzBuzz(3))
         println(fizzBuzz(5))
@@ -483,38 +603,57 @@ class LeetCode {
         println(arrangeCoins(5))
         println(arrangeCoins(8))
 
-        println(findDisappearedNumbers(intArrayOf(4,3,2,7,8,2,3,1)))
-        println(findDisappearedNumbers(intArrayOf(1,1)))
+        println(findDisappearedNumbers(intArrayOf(4, 3, 2, 7, 8, 2, 3, 1)))
+        println(findDisappearedNumbers(intArrayOf(1, 1)))
 
-        println(findContentChildren(intArrayOf(1,2,3), intArrayOf(1,1)))
-        println(findContentChildren(intArrayOf(1,2), intArrayOf(1,2,3)))
-        println(findContentChildren(intArrayOf(10,9,8,7), intArrayOf(5,6,7,8)))
+        println(findContentChildren(intArrayOf(1, 2, 3), intArrayOf(1, 1)))
+        println(findContentChildren(intArrayOf(1, 2), intArrayOf(1, 2, 3)))
+        println(findContentChildren(intArrayOf(10, 9, 8, 7), intArrayOf(5, 6, 7, 8)))
 
-        println(findRestaurant(arrayOf("Shogun","Tapioca Express","Burger King","KFC"), arrayOf("Piatti","The Grill at Torrey Pines","Hungry Hunter Steakhouse","Shogun")).toList())
-        println(findRestaurant(arrayOf("Shogun","Tapioca Express","Burger King","KFC"), arrayOf("KFC","Shogun","Burger King")).toList())
-        println(findRestaurant(arrayOf("happy","sad","good"), arrayOf("sad","happy","good")).toList())
+        println(
+            findRestaurant(
+                arrayOf("Shogun", "Tapioca Express", "Burger King", "KFC"),
+                arrayOf("Piatti", "The Grill at Torrey Pines", "Hungry Hunter Steakhouse", "Shogun")
+            ).toList()
+        )
+        println(
+            findRestaurant(
+                arrayOf("Shogun", "Tapioca Express", "Burger King", "KFC"),
+                arrayOf("KFC", "Shogun", "Burger King")
+            ).toList()
+        )
+        println(findRestaurant(arrayOf("happy", "sad", "good"), arrayOf("sad", "happy", "good")).toList())
 
         println(repeatedSubstringPattern("aba"))
 
-        println(hammingDistance(1,4))
-        println(hammingDistance(3,1))
-        println(hammingDistance(93,73))
+        println(hammingDistance(1, 4))
+        println(hammingDistance(3, 1))
+        println(hammingDistance(93, 73))
 
-        println(islandPerimeter(arrayOf(intArrayOf(0,1,0,0), intArrayOf(1,1,1,0), intArrayOf(0,1,0,0), intArrayOf(1,1,0,0))))
+        println(
+            islandPerimeter(
+                arrayOf(
+                    intArrayOf(0, 1, 0, 0),
+                    intArrayOf(1, 1, 1, 0),
+                    intArrayOf(0, 1, 0, 0),
+                    intArrayOf(1, 1, 0, 0)
+                )
+            )
+        )
 
         println(licenseKeyFormatting("5F3Z-2e-9-w", 4))
         println(licenseKeyFormatting("2-5g-3-J", 2))
 
-        println(findMaxConsecutiveOnes(intArrayOf(1,1,0,1,1,1)))
-        println(findMaxConsecutiveOnes(intArrayOf(1,0,1,1,0,1)))
+        println(findMaxConsecutiveOnes(intArrayOf(1, 1, 0, 1, 1, 1)))
+        println(findMaxConsecutiveOnes(intArrayOf(1, 0, 1, 1, 0, 1)))
 
-        println(findPoisonedDuration(intArrayOf(1,4), 2))
-        println(findPoisonedDuration(intArrayOf(1,2), 2))
+        println(findPoisonedDuration(intArrayOf(1, 4), 2))
+        println(findPoisonedDuration(intArrayOf(1, 2), 2))
 
-        println(findWords(arrayOf("Hello","Alaska","Dad","Peace")).toList())
+        println(findWords(arrayOf("Hello", "Alaska", "Dad", "Peace")).toList())
 
-        println(findRelativeRanks(intArrayOf(5,4,3,2,1)).toList())
-        println(findRelativeRanks(intArrayOf(10,3,8,9,4)).toList())
+        println(findRelativeRanks(intArrayOf(5, 4, 3, 2, 1)).toList())
+        println(findRelativeRanks(intArrayOf(10, 3, 8, 9, 4)).toList())
 
         println(checkPerfectNumber(28))
         println(checkPerfectNumber(7))
@@ -533,8 +672,8 @@ class LeetCode {
         println(generateParenthesis(1))
         println(generateParenthesis(4))
 
-        println(search(intArrayOf(4,5,6,7,0,1,2), 0))
-        println(search(intArrayOf(4,5,6,7,0,1,2), 3))
+        println(search(intArrayOf(4, 5, 6, 7, 0, 1, 2), 0))
+        println(search(intArrayOf(4, 5, 6, 7, 0, 1, 2), 3))
         println(search(intArrayOf(1), 0))
         println(search(intArrayOf(1), 1))
 
@@ -542,12 +681,12 @@ class LeetCode {
         println(countAndSay(4))
         println(countAndSay(5))
 
-        println(combinationSum(intArrayOf(2,3,6,7), 7))
+        println(combinationSum(intArrayOf(2, 3, 6, 7), 7))
         println(combinationSum(intArrayOf(2), 1))
         println(combinationSum(intArrayOf(2, 3, 5), 8))
 
-        println(combinationSum2(intArrayOf(10,1,2,7,6,1,5), 8))
-        println(combinationSum2(intArrayOf(2,5,2,1,2), 5))
+        println(combinationSum2(intArrayOf(10, 1, 2, 7, 6, 1, 5), 8))
+        println(combinationSum2(intArrayOf(2, 5, 2, 1, 2), 5))
 
         println(generateMatrix(3).toList().map { it.toList() })
         println(generateMatrix(1).toList().map { it.toList() })
@@ -555,27 +694,69 @@ class LeetCode {
         println(uniquePaths(3, 2))
         println(uniquePaths(3, 7))
 
-        println(searchMatrix(arrayOf(intArrayOf(1,3,5,7),intArrayOf(10,11,16,20),intArrayOf(23,30,34,60)), 3))
-        println(searchMatrix(arrayOf(intArrayOf(1,3,5,7),intArrayOf(10,11,16,20),intArrayOf(23,30,34,60)), 13))
+        println(
+            searchMatrix(
+                arrayOf(intArrayOf(1, 3, 5, 7), intArrayOf(10, 11, 16, 20), intArrayOf(23, 30, 34, 60)),
+                3
+            )
+        )
+        println(
+            searchMatrix(
+                arrayOf(intArrayOf(1, 3, 5, 7), intArrayOf(10, 11, 16, 20), intArrayOf(23, 30, 34, 60)),
+                13
+            )
+        )
 
-        intArrayOf(2,0,2,1,1,0).apply {
+        intArrayOf(2, 0, 2, 1, 1, 0).apply {
             sortColors(this)
             println(this.toList())
         }
-        intArrayOf(2,0,1).apply {
+        intArrayOf(2, 0, 1).apply {
             sortColors(this)
             println(this.toList())
         }
-        intArrayOf(1,2,0).apply {
+        intArrayOf(1, 2, 0).apply {
             sortColors(this)
             println(this.toList())
         }
 
-        println(exist(arrayOf(charArrayOf('A','B','C','E'),charArrayOf('S','F','C','S'),charArrayOf('A','D','E','E')), "ABCCED"))
-        println(exist(arrayOf(charArrayOf('A','B','C','E'),charArrayOf('S','F','C','S'),charArrayOf('A','D','E','E')), "SEE"))
-        println(exist(arrayOf(charArrayOf('A','B','C','E'),charArrayOf('S','F','C','S'),charArrayOf('A','D','E','E')), "ABCB"))
-        println(exist(arrayOf(charArrayOf('a','b'),charArrayOf('c','d')), "abcd"))
-        println(exist(arrayOf(charArrayOf('A','B','C','E'),charArrayOf('S','F','E','S'),charArrayOf('A','D','E','E')), "ABCESEEEFS"))
+        println(
+            exist(
+                arrayOf(
+                    charArrayOf('A', 'B', 'C', 'E'),
+                    charArrayOf('S', 'F', 'C', 'S'),
+                    charArrayOf('A', 'D', 'E', 'E')
+                ), "ABCCED"
+            )
+        )
+        println(
+            exist(
+                arrayOf(
+                    charArrayOf('A', 'B', 'C', 'E'),
+                    charArrayOf('S', 'F', 'C', 'S'),
+                    charArrayOf('A', 'D', 'E', 'E')
+                ), "SEE"
+            )
+        )
+        println(
+            exist(
+                arrayOf(
+                    charArrayOf('A', 'B', 'C', 'E'),
+                    charArrayOf('S', 'F', 'C', 'S'),
+                    charArrayOf('A', 'D', 'E', 'E')
+                ), "ABCB"
+            )
+        )
+        println(exist(arrayOf(charArrayOf('a', 'b'), charArrayOf('c', 'd')), "abcd"))
+        println(
+            exist(
+                arrayOf(
+                    charArrayOf('A', 'B', 'C', 'E'),
+                    charArrayOf('S', 'F', 'E', 'S'),
+                    charArrayOf('A', 'D', 'E', 'E')
+                ), "ABCESEEEFS"
+            )
+        )
     }
 
     private fun exist(board: Array<CharArray>, word: String): Boolean {
@@ -637,7 +818,7 @@ class LeetCode {
         while (start <= end) {
             val mid = (start + end) / 2
 
-            if (target in matrix[mid].first() .. matrix[mid].last()) {
+            if (target in matrix[mid].first()..matrix[mid].last()) {
                 for (c in matrix[mid]) {
                     if (c == target) {
                         return true
@@ -712,12 +893,12 @@ class LeetCode {
 
             if (count > n * n) break
 
-            for (i in l .. r) {
+            for (i in l..r) {
                 matrix[t][i] = count++
             }
             if (count > n * n) break
 
-            for (i in t + 1 .. b) {
+            for (i in t + 1..b) {
                 matrix[i][r] = count++
             }
             if (count > n * n) break
@@ -894,7 +1075,7 @@ class LeetCode {
         var digitsFound = false
 
         for (c in s) {
-            if (c == '-' || c == '+' || c.code in 48 .. 57) {
+            if (c == '-' || c == '+' || c.code in 48..57) {
                 if (charFound) {
                     return 0
                 }
@@ -908,7 +1089,7 @@ class LeetCode {
                         break
                     }
                 }
-                if (c.code in 48 .. 57) {
+                if (c.code in 48..57) {
                     digitsFound = true
                 }
 
@@ -1015,7 +1196,10 @@ class LeetCode {
         for (w in words) {
             val word = w.lowercase().toSet()
 
-            if (firstRow.intersect(word).size == word.size || secondRow.intersect(word).size == word.size || thirdRow.intersect(word).size == word.size) {
+            if (firstRow.intersect(word).size == word.size || secondRow.intersect(word).size == word.size || thirdRow.intersect(
+                    word
+                ).size == word.size
+            ) {
                 ans.add(w)
             }
         }
@@ -1027,7 +1211,7 @@ class LeetCode {
         val seconds = mutableListOf<Int>()
 
         for (i in timeSeries.indices) {
-            for (j in timeSeries[i] .. (timeSeries[i] + (duration - 1))) {
+            for (j in timeSeries[i]..(timeSeries[i] + (duration - 1))) {
                 if (i + 1 in timeSeries.indices) {
                     if (timeSeries[i + 1] == j) {
                         break
@@ -1412,7 +1596,7 @@ class LeetCode {
     private fun canWinNim(n: Int, dpMap: MutableMap<Int, Boolean> = mutableMapOf()): Boolean {
         if (n <= 3) return true
         val result = mutableListOf<Boolean>()
-        for (i in 1 .. 3) {
+        for (i in 1..3) {
             if (!dpMap.containsKey(n - i)) {
                 dpMap[n - i] = canWinNim(n - i, dpMap)
             }
@@ -1447,7 +1631,12 @@ class LeetCode {
         return generatePath(root, null, mutableListOf(), "")
     }
 
-    private fun generatePath(node: TreeNode?, prevNode: TreeNode?, ans: MutableList<String>, path: String): List<String> {
+    private fun generatePath(
+        node: TreeNode?,
+        prevNode: TreeNode?,
+        ans: MutableList<String>,
+        path: String
+    ): List<String> {
         if (node == null) {
             if (prevNode?.left == null && prevNode?.right == null) {
                 val foundPath = path.removeSuffix("->")
@@ -1983,8 +2172,10 @@ class LeetCode {
 
         var maxSum = 0
         while (twin1.isNotEmpty()) {
-            maxSum = maxOf((twin1.removeAt(twin1.size - 1)?.data ?: 0) + (twin2.removeAt(twin2.size - 1)?.data
-                    ?: 0), maxSum)
+            maxSum = maxOf(
+                (twin1.removeAt(twin1.size - 1)?.data ?: 0) + (twin2.removeAt(twin2.size - 1)?.data
+                    ?: 0), maxSum
+            )
         }
 
         return maxSum
@@ -2375,14 +2566,14 @@ class LeetCode {
 
         val output = mutableListOf("")
         val digitCharMap = mapOf(
-                "2" to listOf("a", "b", "c"),
-                "3" to listOf("d", "e", "f"),
-                "4" to listOf("g", "h", "i"),
-                "5" to listOf("j", "k", "l"),
-                "6" to listOf("m", "n", "o"),
-                "7" to listOf("p", "q", "r", "s"),
-                "8" to listOf("t", "u", "v"),
-                "9" to listOf("w", "x", "y", "z"),
+            "2" to listOf("a", "b", "c"),
+            "3" to listOf("d", "e", "f"),
+            "4" to listOf("g", "h", "i"),
+            "5" to listOf("j", "k", "l"),
+            "6" to listOf("m", "n", "o"),
+            "7" to listOf("p", "q", "r", "s"),
+            "8" to listOf("t", "u", "v"),
+            "9" to listOf("w", "x", "y", "z"),
         )
 
         for (d in digits.indices) {

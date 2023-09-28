@@ -48,9 +48,9 @@ class Graph {
     }
 
     fun dfsRecursiveTraversal(
-            start: String,
-            result: ArrayList<String> = ArrayList(),
-            visited: HashMap<String, Boolean> = HashMap(),
+        start: String,
+        result: ArrayList<String> = ArrayList(),
+        visited: HashMap<String, Boolean> = HashMap(),
     ): List<String> {
         if (adjacencyList.isEmpty()) {
             throw IllegalStateException("Graph is empty")

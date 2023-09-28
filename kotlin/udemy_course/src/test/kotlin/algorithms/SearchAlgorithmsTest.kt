@@ -29,19 +29,19 @@ class SearchAlgorithmsTest : TestCase() {
     @Test
     fun naiveStringSearch() {
         assertEquals(
-                1,
-                searchAlgorithms.naiveStringSearch(
-                        str = "Pradyot Prakash is learning DS & Algo so that he can clear technical interview",
-                        key = "t Prakash"
-                )
+            1,
+            searchAlgorithms.naiveStringSearch(
+                str = "Pradyot Prakash is learning DS & Algo so that he can clear technical interview",
+                key = "t Prakash"
+            )
         )
 
         assertEquals(
-                0,
-                searchAlgorithms.naiveStringSearch(
-                        str = "Pradyot Prakash is learning DS & Algo so that he can clear technical interview",
-                        key = "Algorithm"
-                )
+            0,
+            searchAlgorithms.naiveStringSearch(
+                str = "Pradyot Prakash is learning DS & Algo so that he can clear technical interview",
+                key = "Algorithm"
+            )
         )
     }
 }

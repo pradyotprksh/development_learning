@@ -7,9 +7,32 @@ class RandomQuestions {
         println(youWillAllConform(listOf("F", "B", "B", "F", "B", "F", "F", "B", "B", "B", "F")))
 
         println(theBestTimeToParty(listOf(6, 7, 10, 10, 8, 9, 6), listOf(7, 9, 11, 12, 10, 11, 8)))
-        println(theBestTimeToPartyFast(listOf(Pair(6, 7), Pair(7, 9), Pair(10, 11), Pair(10, 12), Pair(8, 10), Pair(9, 11), Pair(6, 8))))
+        println(
+            theBestTimeToPartyFast(
+                listOf(
+                    Pair(6, 7),
+                    Pair(7, 9),
+                    Pair(10, 11),
+                    Pair(10, 12),
+                    Pair(8, 10),
+                    Pair(9, 11),
+                    Pair(6, 8)
+                )
+            )
+        )
 
-        println(minimumWaiterRequired(listOf(Pair(8.0, 9.10), Pair(8.40, 12.0), Pair(8.50, 11.20), Pair(10.0, 11.30), Pair(16.0, 19.0), Pair(19.0, 20.0))))
+        println(
+            minimumWaiterRequired(
+                listOf(
+                    Pair(8.0, 9.10),
+                    Pair(8.40, 12.0),
+                    Pair(8.50, 11.20),
+                    Pair(10.0, 11.30),
+                    Pair(16.0, 19.0),
+                    Pair(19.0, 20.0)
+                )
+            )
+        )
     }
 
     // https://www.youtube.com/watch?v=zDHhHPZm2rc
