@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.LibraryOwner"
-        tools:targetApi="31">
+        tools:targetApi="31"
+        android:name=".di.OwnerApplication">
         <activity
             android:name=".app.MainActivity"
             android:exported="true"
