@@ -6,12 +6,12 @@ plugins {
 
 android {
     namespace = "com.pradyotprakash.libraryowner"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.pradyotprakash.libraryowner"
         minSdk = 24
-        targetSdk = 33
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
@@ -59,6 +59,7 @@ dependencies {
     // AndroidX
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
+    implementation("androidx.compose.material3:material3:1.1.2")
 
     // Compose
     implementation("androidx.activity:activity-compose:1.7.2")
