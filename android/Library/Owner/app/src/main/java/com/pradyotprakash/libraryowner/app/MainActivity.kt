@@ -9,7 +9,9 @@ import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.pradyotprakash.libraryowner.app.pages.splash.view.SplashView
 import com.pradyotprakash.libraryowner.app.routes.Routes
 import com.pradyotprakash.libraryowner.app.routes.path
 import com.pradyotprakash.libraryowner.app.theme.LibraryOwnerTheme
@@ -38,7 +40,9 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    NavHost(navController = navController, startDestination = Routes.Splash.path()) {}
+                    NavHost(navController = navController, startDestination = Routes.Splash.path()) {
+                        composable(Routes.Splash.path()) { SplashView() }
+                    }
                 }
             }
         }
