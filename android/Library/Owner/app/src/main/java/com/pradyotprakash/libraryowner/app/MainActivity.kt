@@ -11,6 +11,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.pradyotprakash.libraryowner.app.localization.Translation
 import com.pradyotprakash.libraryowner.app.pages.splash.view.SplashView
 import com.pradyotprakash.libraryowner.app.routes.Routes
 import com.pradyotprakash.libraryowner.app.routes.path
@@ -49,6 +50,8 @@ class MainActivity : ComponentActivity() {
     }
 
     private fun setAppBasicRequirements() {
+        Translation.updateLocalizationMap(context = this)
+
         navigationChangeListener()
     }
 

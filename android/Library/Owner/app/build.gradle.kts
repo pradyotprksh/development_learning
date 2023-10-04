@@ -1,9 +1,15 @@
+import com.android.build.gradle.internal.tasks.factory.dependsOn
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("com.google.gms.google-services")
     kotlin("kapt")
     id("com.google.dagger.hilt.android")
+}
+
+tasks.register("updateTranslations") {
+    Runtime.getRuntime().exec("python3 ./script/generate_translation_file.py")
 }
 
 android {
@@ -55,6 +61,8 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+
+    project.tasks.preBuild.dependsOn("updateTranslations")
 }
 
 dependencies {
@@ -84,6 +92,12 @@ dependencies {
     implementation("com.google.dagger:hilt-android:2.44")
     kapt("com.google.dagger:hilt-android-compiler:2.44")
     implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
+
+    // Logger
+    implementation("com.orhanobut:logger:2.2.0")
+
+    // Leak Canary
+    debugImplementation("com.squareup.leakcanary:leakcanary-android:2.9.1")
 
     // Testing
     testImplementation("junit:junit:4.13.2")
