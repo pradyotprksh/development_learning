@@ -1,0 +1,7 @@
+{
+  "appName": "Exchange Rate",
+  "appDescription": "Find the exchange rate of your favourite currency into different currencies all around the world.",
+  "noDataFoundError": "We were not able to find any data, please try again.",
+  "cancel": "Cancel",
+  "okay": "Okay"
+}

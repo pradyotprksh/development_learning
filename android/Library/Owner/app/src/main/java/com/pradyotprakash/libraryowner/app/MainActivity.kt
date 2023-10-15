@@ -35,7 +35,7 @@ class MainActivity : ComponentActivity() {
             navController = rememberNavController()
 
             LibraryOwnerTheme(
-                dynamicColor = false
+                dynamicColor = true
             ) {
                 Surface(
                     modifier = Modifier.fillMaxSize(),

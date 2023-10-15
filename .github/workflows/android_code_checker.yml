@@ -330,3 +330,31 @@ jobs:
           token: ${{ secrets.TELEGRAM_TOKEN }}
           message: |
             GitHub Action for android/LibraryOwner is completed with status ${{ job.status }} for ${{ github.ref }}.
+  ExchangeRate:
+    name: ExchangeRate Code Checker
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cancel Previous Runs
+        uses: styfle/cancel-workflow-action@0.9.1
+        with:
+          access_token: ${{ github.token }}
+      - uses: actions/checkout@v2
+      - uses: actions/setup-java@v1
+        with:
+          java-version: '12.x'
+          distribution: 'adopt'
+          cache: gradle
+      - name: Checking ExchangeRate
+        working-directory: ./android/ExchangeRate
+        run: |
+          chmod +x ./gradlew
+          ./gradlew lint
+          .gradlew testDebugUnitTest
+          ./gradlew build
+      - name: Send Message
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+            GitHub Action for android/ExchangeRate is completed with status ${{ job.status }} for ${{ github.ref }}.
