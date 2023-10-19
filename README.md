@@ -55,6 +55,7 @@ README will be only updated when the project/learning is completed. So make sure
 
 [<img src="https://img.shields.io/badge/KotlinMulitplatform-3DDC84?style=for-the-badge&logo=android&logoColor=white" />](https://github.com/pradyotprksh/development_learning/tree/main/KotlinMultiplatform) [![Kotlin Mulitplatform](https://github.com/pradyotprksh/development_learning/actions/workflows/kotlin_multiplatform_code_checker.yml/badge.svg)](https://github.com/pradyotprksh/development_learning/actions/workflows/kotlin_multiplatform_code_checker.yml)
   - [TheMovieDBKMM](https://github.com/pradyotprksh/development_learning/tree/main/KotlinMultiplatform/TheMovieDBKMM)
+  - [PokedexKMP](https://github.com/pradyotprksh/development_learning/tree/main/KotlinMultiplatform/PokedexKMP)
 
 [<img src="https://img.shields.io/badge/Kotlin-0095D5?&style=for-the-badge&logo=kotlin&logoColor=white" />](https://github.com/pradyotprksh/development_learning/tree/main/kotlin)
   - [basics](https://github.com/pradyotprksh/development_learning/tree/main/kotlin/basics)
