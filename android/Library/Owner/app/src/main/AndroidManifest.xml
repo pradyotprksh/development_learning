@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <application
+        android:name=".di.OwnerApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -11,8 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/Theme.LibraryOwner"
-        tools:targetApi="31"
-        android:name=".di.OwnerApplication">
+        tools:targetApi="31">
         <activity
             android:name=".app.MainActivity"
             android:exported="true"

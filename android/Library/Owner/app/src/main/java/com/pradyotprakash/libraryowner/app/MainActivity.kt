@@ -41,7 +41,10 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    NavHost(navController = navController, startDestination = Routes.Splash.path()) {
+                    NavHost(
+                        navController = navController,
+                        startDestination = Routes.Splash.path()
+                    ) {
                         composable(Routes.Splash.path()) { SplashView() }
                     }
                 }
