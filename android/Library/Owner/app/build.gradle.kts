@@ -80,14 +80,15 @@ dependencies {
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3")
     implementation("androidx.navigation:navigation-compose:2.7.4")
+    implementation("androidx.compose.runtime:runtime-livedata:1.5.4")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
 
     // Firebase
     implementation(platform("com.google.firebase:firebase-bom:32.4.0"))
-    implementation("com.google.firebase:firebase-analytics-ktx")
+    implementation("com.google.firebase:firebase-analytics")
     implementation("com.google.firebase:firebase-appcheck-playintegrity")
-    implementation("com.google.firebase:firebase-appcheck-ktx")
+    implementation("com.google.firebase:firebase-appcheck")
 
     // Hilt
     implementation("com.google.dagger:hilt-android:2.48.1")
@@ -106,6 +107,9 @@ dependencies {
     implementation("com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.10")
     debugImplementation("com.github.chuckerteam.chucker:library:3.5.2")
     releaseImplementation("com.github.chuckerteam.chucker:library-no-op:3.5.2")
+
+    // Landscapist
+    implementation("com.github.skydoves:landscapist-coil:2.2.10")
 
     // Testing
     testImplementation("junit:junit:4.13.2")

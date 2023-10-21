@@ -1,3 +1,4 @@
 {
-  "appName": "Library Owner"
+  "appName": "Library Owner",
+  "noDataFoundError": "No data was found. Please try again after sometime."
 }

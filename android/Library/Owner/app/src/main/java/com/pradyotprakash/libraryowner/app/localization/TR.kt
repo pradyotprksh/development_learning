@@ -6,5 +6,6 @@ package com.pradyotprakash.libraryowner.app.localization
  */
 object TR {
     var appName = Translation.getString("appName")
+    var noDataFoundError = Translation.getString("noDataFoundError")
     
 }
