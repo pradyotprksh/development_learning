@@ -111,6 +111,9 @@ dependencies {
     // Landscapist
     implementation("com.github.skydoves:landscapist-coil:2.2.10")
 
+    // Accompanist
+    implementation("com.google.accompanist:accompanist-insets:0.14.0")
+
     // Testing
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")

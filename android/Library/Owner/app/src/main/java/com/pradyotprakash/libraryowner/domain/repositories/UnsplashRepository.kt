@@ -4,7 +4,7 @@ import com.pradyotprakash.libraryowner.core.models.UnsplashImage
 import com.pradyotprakash.libraryowner.core.response.OwnerResponse
 
 interface UnsplashRepository {
-    fun getImageFromUnsplash(
+    suspend fun getImageFromUnsplash(
         query: String,
         perPage: Int,
         orientation: String
