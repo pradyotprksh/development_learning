@@ -8,7 +8,7 @@ import com.pradyotprakash.libraryowner.app.utils.BuildDetails
 import com.pradyotprakash.libraryowner.core.response.OwnerResponse
 import com.pradyotprakash.libraryowner.domain.usecases.UnsplashUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -36,8 +36,18 @@ class SplashViewModel @Inject constructor(
 
                         else -> {}
                     }
+
+                    goToNextScreen()
                 }
             }
+        } else {
+            goToNextScreen()
+        }
+    }
+
+    private fun goToNextScreen() {
+        viewModelScope.launch {
+            delay(5000)
         }
     }
 }

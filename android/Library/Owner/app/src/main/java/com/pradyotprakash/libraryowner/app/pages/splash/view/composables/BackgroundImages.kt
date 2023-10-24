@@ -25,7 +25,9 @@ fun BackgroundImages(
                 contentScale = ContentScale.FillBounds,
                 alignment = Alignment.Center
             ),
-            modifier = Modifier.weight(1/3f).fillMaxSize()
+            modifier = Modifier
+                .weight(1 / 3f)
+                .fillMaxSize()
         )
         CoilImage(
             imageModel = { backgroundImage[1] },
@@ -33,7 +35,9 @@ fun BackgroundImages(
                 contentScale = ContentScale.FillBounds,
                 alignment = Alignment.Center
             ),
-            modifier = Modifier.weight(1/3f).fillMaxSize()
+            modifier = Modifier
+                .weight(1 / 3f)
+                .fillMaxSize()
         )
         CoilImage(
             imageModel = { backgroundImage[2] },
@@ -41,7 +45,9 @@ fun BackgroundImages(
                 contentScale = ContentScale.FillBounds,
                 alignment = Alignment.Center
             ),
-            modifier = Modifier.weight(1/3f).fillMaxSize()
+            modifier = Modifier
+                .weight(1 / 3f)
+                .fillMaxSize()
         )
     }
 }

@@ -1,4 +1,6 @@
 {
   "appName": "Library Owner",
-  "noDataFoundError": "No data was found. Please try again after sometime."
+  "noDataFoundError": "No data was found. Please try again after sometime.",
+  "noInternet": "Looks like you are not connected to internet.",
+  "internetAvailable": "Hello, we are connected."
 }

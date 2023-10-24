@@ -7,5 +7,7 @@ package com.pradyotprakash.libraryowner.app.localization
 object TR {
     var appName = Translation.getString("appName")
     var noDataFoundError = Translation.getString("noDataFoundError")
+    var noInternet = Translation.getString("noInternet")
+    var internetAvailable = Translation.getString("internetAvailable")
     
 }
