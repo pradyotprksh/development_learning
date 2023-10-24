@@ -45,7 +45,7 @@ class MainActivity : ComponentActivity(), InternetConnectionCallback {
             navController = rememberNavController()
 
             LibraryOwnerTheme(
-                dynamicColor = true
+                dynamicColor = false
             ) {
                 Surface(
                     modifier = Modifier.fillMaxSize(),

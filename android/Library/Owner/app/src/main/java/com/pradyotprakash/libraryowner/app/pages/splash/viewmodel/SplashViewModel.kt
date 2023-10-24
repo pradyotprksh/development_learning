@@ -4,7 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.pradyotprakash.libraryowner.app.routes.Routes
+import com.pradyotprakash.libraryowner.app.routes.path
 import com.pradyotprakash.libraryowner.app.utils.BuildDetails
+import com.pradyotprakash.libraryowner.core.navigation.Navigator
 import com.pradyotprakash.libraryowner.core.response.OwnerResponse
 import com.pradyotprakash.libraryowner.domain.usecases.AuthenticationUseCase
 import com.pradyotprakash.libraryowner.domain.usecases.UnsplashUseCase
@@ -17,6 +20,7 @@ import javax.inject.Inject
 class SplashViewModel @Inject constructor(
     private val unsplashUseCase: UnsplashUseCase,
     private val authenticationUseCase: AuthenticationUseCase,
+    private val navigator: Navigator,
 ) : ViewModel() {
     private val _backgroundImageUrls = MutableLiveData(emptyList<String>())
     val backgroundImageUrls: LiveData<List<String>>
@@ -49,9 +53,11 @@ class SplashViewModel @Inject constructor(
 
     private fun goToNextScreen() {
         viewModelScope.launch {
-            delay(5000)
+            delay(2500)
 
-            if (authenticationUseCase.isUserLoggedIn()) {} else {}
+            if (authenticationUseCase.isUserLoggedIn()) {} else {
+                navigator.navigate { it.navigate(Routes.Welcome.path()) }
+            }
         }
     }
 }

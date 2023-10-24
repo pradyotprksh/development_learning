@@ -2,5 +2,9 @@
   "appName": "Library Owner",
   "noDataFoundError": "No data was found. Please try again after sometime.",
   "noInternet": "Looks like you are not connected to internet.",
-  "internetAvailable": "Hello, we are connected."
+  "internetAvailable": "Hello, we are connected.",
+  "cancel": "Cancel",
+  "okay": "Okay",
+  "welcomeMessage": "Hello Librarian,\n\nCreate an account to start taking care of your library from your phone.\nA convenient way to manage your books and customers.",
+  "joinUs": "Join Us"
 }
