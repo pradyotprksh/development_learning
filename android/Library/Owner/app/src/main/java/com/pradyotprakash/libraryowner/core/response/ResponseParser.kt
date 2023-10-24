@@ -2,11 +2,12 @@ package com.pradyotprakash.libraryowner.core.response
 
 import com.orhanobut.logger.Logger
 import com.pradyotprakash.libraryowner.app.localization.TR
+import com.pradyotprakash.libraryowner.data.services.crashlytics.CrashlyticsService
 import org.json.JSONArray
 import org.json.JSONObject
 import retrofit2.Response
 
-fun <T> Response<T>.parseResponse() =
+fun <T> Response<T>.parseResponse(crashlyticsService: CrashlyticsService) =
     try {
         val responseBody = body()
         if (isSuccessful && responseBody != null) {
@@ -20,6 +21,7 @@ fun <T> Response<T>.parseResponse() =
                 val jsonArray = try {
                     jsonError.getJSONArray("errors")
                 } catch (e: Exception) {
+                    crashlyticsService.submitCaughtException(e)
                     Logger.e(e.toString())
                     JSONArray()
                 }
@@ -49,6 +51,7 @@ fun <T> Response<T>.parseResponse() =
             }
         }
     } catch (e: Exception) {
+        crashlyticsService.submitCaughtException(e)
         Logger.e(e.toString())
         OwnerResponse.Error(
             OwnerException(

@@ -16,6 +16,7 @@ import androidx.navigation.compose.rememberNavController
 import com.pradyotprakash.libraryowner.app.localization.TR
 import com.pradyotprakash.libraryowner.app.localization.Translation
 import com.pradyotprakash.libraryowner.app.pages.splash.view.SplashView
+import com.pradyotprakash.libraryowner.app.pages.welcome.view.WelcomeView
 import com.pradyotprakash.libraryowner.app.routes.Routes
 import com.pradyotprakash.libraryowner.app.routes.path
 import com.pradyotprakash.libraryowner.app.theme.LibraryOwnerTheme
@@ -55,6 +56,7 @@ class MainActivity : ComponentActivity(), InternetConnectionCallback {
                         startDestination = Routes.Splash.path()
                     ) {
                         composable(Routes.Splash.path()) { SplashView() }
+                        composable(Routes.Welcome.path()) { WelcomeView() }
                     }
                 }
             }

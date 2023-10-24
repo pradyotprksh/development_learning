@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.pradyotprakash.libraryowner.app.utils.BuildDetails
 import com.pradyotprakash.libraryowner.core.response.OwnerResponse
+import com.pradyotprakash.libraryowner.domain.usecases.AuthenticationUseCase
 import com.pradyotprakash.libraryowner.domain.usecases.UnsplashUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
@@ -15,6 +16,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SplashViewModel @Inject constructor(
     private val unsplashUseCase: UnsplashUseCase,
+    private val authenticationUseCase: AuthenticationUseCase,
 ) : ViewModel() {
     private val _backgroundImageUrls = MutableLiveData(emptyList<String>())
     val backgroundImageUrls: LiveData<List<String>>
@@ -48,6 +50,8 @@ class SplashViewModel @Inject constructor(
     private fun goToNextScreen() {
         viewModelScope.launch {
             delay(5000)
+
+            if (authenticationUseCase.isUserLoggedIn()) {} else {}
         }
     }
 }

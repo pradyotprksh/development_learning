@@ -14,4 +14,5 @@ enum class Routes(
     val arguments: List<String> = emptyList()
 ) {
     Splash("splash/"),
+    Welcome("welcome/")
 }

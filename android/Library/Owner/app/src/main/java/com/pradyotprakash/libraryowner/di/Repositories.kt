@@ -2,6 +2,10 @@ package com.pradyotprakash.libraryowner.di
 
 import com.pradyotprakash.libraryowner.data.repositories.UnsplashRepositoryImplementation
 import com.pradyotprakash.libraryowner.data.services.UnsplashService
+import com.pradyotprakash.libraryowner.data.services.auth.AuthenticationRepositoryImplementation
+import com.pradyotprakash.libraryowner.data.services.auth.FirebaseAuthenticationService
+import com.pradyotprakash.libraryowner.data.services.crashlytics.CrashlyticsService
+import com.pradyotprakash.libraryowner.domain.repositories.AuthenticationRepository
 import com.pradyotprakash.libraryowner.domain.repositories.UnsplashRepository
 import dagger.Module
 import dagger.Provides
@@ -15,6 +19,13 @@ object Repositories {
     @Singleton
     @Provides
     fun providesUnsplashRepository(
-        unsplashService: UnsplashService
-    ): UnsplashRepository = UnsplashRepositoryImplementation(unsplashService)
+        unsplashService: UnsplashService,
+        crashlyticsService: CrashlyticsService,
+    ): UnsplashRepository = UnsplashRepositoryImplementation(unsplashService, crashlyticsService)
+
+    @Singleton
+    @Provides
+    fun providesAuthenticationRepository(
+        firebaseAuthenticationService: FirebaseAuthenticationService,
+    ): AuthenticationRepository = AuthenticationRepositoryImplementation(firebaseAuthenticationService)
 }
