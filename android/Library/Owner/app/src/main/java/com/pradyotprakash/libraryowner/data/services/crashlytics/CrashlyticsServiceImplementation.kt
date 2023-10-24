@@ -4,7 +4,7 @@ import com.google.firebase.crashlytics.FirebaseCrashlytics
 
 class CrashlyticsServiceImplementation(
     private val crashlytics: FirebaseCrashlytics,
-): CrashlyticsService {
+) : CrashlyticsService {
     override fun setUserId(userId: String) {
         crashlytics.setUserId(userId)
     }

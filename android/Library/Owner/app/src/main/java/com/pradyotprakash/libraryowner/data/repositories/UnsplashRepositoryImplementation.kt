@@ -14,7 +14,8 @@ class UnsplashRepositoryImplementation(
 ) : UnsplashRepository {
     override suspend fun getImageFromUnsplash(query: String, perPage: Int, orientation: String) =
         try {
-            unsplashService.searchPhotos(query, perPage, orientation).parseResponse(crashlyticsService)
+            unsplashService.searchPhotos(query, perPage, orientation)
+                .parseResponse(crashlyticsService)
         } catch (e: Exception) {
             crashlyticsService.submitCaughtException(e)
             OwnerResponse.Error(

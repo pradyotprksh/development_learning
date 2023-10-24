@@ -7,7 +7,7 @@ import com.pradyotprakash.libraryowner.data.services.crashlytics.CrashlyticsServ
 class FirebaseAuthenticationServiceImplementation(
     private val firebaseAuth: FirebaseAuth,
     private val crashlyticsService: CrashlyticsService,
-): FirebaseAuthenticationService {
+) : FirebaseAuthenticationService {
     override fun currentUser(): FirebaseUser? = firebaseAuth.currentUser
 
     override fun isUserLoggedIn(): Boolean = currentUser() != null

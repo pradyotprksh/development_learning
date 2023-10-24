@@ -120,6 +120,9 @@ dependencies {
     // Accompanist
     implementation("com.google.accompanist:accompanist-insets:0.14.0")
 
+    // Data store
+    implementation("androidx.datastore:datastore-preferences:1.0.0")
+
     // Testing
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")

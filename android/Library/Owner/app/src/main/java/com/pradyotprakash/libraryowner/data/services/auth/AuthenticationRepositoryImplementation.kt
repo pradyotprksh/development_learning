@@ -4,6 +4,6 @@ import com.pradyotprakash.libraryowner.domain.repositories.AuthenticationReposit
 
 class AuthenticationRepositoryImplementation(
     private val firebaseAuthenticationService: FirebaseAuthenticationService,
-): AuthenticationRepository {
+) : AuthenticationRepository {
     override fun isUserLoggedIn() = firebaseAuthenticationService.isUserLoggedIn()
 }

@@ -55,7 +55,8 @@ class SplashViewModel @Inject constructor(
         viewModelScope.launch {
             delay(2500)
 
-            if (authenticationUseCase.isUserLoggedIn()) {} else {
+            if (authenticationUseCase.isUserLoggedIn()) {
+            } else {
                 navigator.navigate { it.navigate(Routes.Welcome.path()) }
             }
         }

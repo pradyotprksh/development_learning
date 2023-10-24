@@ -4,11 +4,14 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.core.view.WindowCompat
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -25,14 +28,19 @@ import com.pradyotprakash.libraryowner.core.toast.Toaster
 import com.pradyotprakash.libraryowner.device.network.InternetConnectionCallback
 import com.pradyotprakash.libraryowner.device.network.InternetConnectionObserver
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity(), InternetConnectionCallback {
     @Inject
     lateinit var navigator: Navigator
+
     @Inject
     lateinit var toaster: Toaster
+
+    private val mainViewModel: MainViewModel by viewModels()
     private lateinit var navController: NavHostController
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -64,7 +72,11 @@ class MainActivity : ComponentActivity(), InternetConnectionCallback {
     }
 
     private fun setAppBasicRequirements() {
-        Translation.updateLocalizationMap(context = this)
+        lifecycleScope.launch {
+            mainViewModel.currentLanguage.collect {
+                Translation.updateLocalizationMap(lan_key = it, context = this@MainActivity)
+            }
+        }
 
         setupNetworkListener()
         navigationChangeListener()
