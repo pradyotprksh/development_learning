@@ -2,11 +2,14 @@ package com.pradyotprakash.libraryowner.di
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.crashlytics.FirebaseCrashlytics
+import com.google.firebase.firestore.FirebaseFirestore
 import com.pradyotprakash.libraryowner.data.services.UnsplashService
 import com.pradyotprakash.libraryowner.data.services.auth.FirebaseAuthenticationService
 import com.pradyotprakash.libraryowner.data.services.auth.FirebaseAuthenticationServiceImplementation
 import com.pradyotprakash.libraryowner.data.services.crashlytics.CrashlyticsService
 import com.pradyotprakash.libraryowner.data.services.crashlytics.CrashlyticsServiceImplementation
+import com.pradyotprakash.libraryowner.data.services.firestore.UserFirestoreService
+import com.pradyotprakash.libraryowner.data.services.firestore.UserFirestoreServiceImplementation
 import com.pradyotprakash.libraryowner.di.utils.UnsplashRetrofit
 import dagger.Module
 import dagger.Provides
@@ -31,8 +34,12 @@ object Services {
     @Singleton
     @Provides
     fun provideAuthenticationService(
-        firebaseAuth: FirebaseAuth,
-        crashlyticsService: CrashlyticsService,
-    ): FirebaseAuthenticationService =
-        FirebaseAuthenticationServiceImplementation(firebaseAuth, crashlyticsService)
+        firebaseAuth: FirebaseAuth
+    ): FirebaseAuthenticationService = FirebaseAuthenticationServiceImplementation(firebaseAuth)
+
+    @Singleton
+    @Provides
+    fun provideUserFirestoreService(
+        firestore: FirebaseFirestore
+    ): UserFirestoreService = UserFirestoreServiceImplementation(firestore)
 }

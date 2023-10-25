@@ -5,11 +5,14 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
+import com.pradyotprakash.libraryowner.domain.usecases.UserFirestoreUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class WelcomeViewModel @Inject constructor() : ViewModel() {
+class WelcomeViewModel @Inject constructor(
+    private val userFirestoreUseCase: UserFirestoreUseCase,
+) : ViewModel() {
     private val _loading = MutableLiveData(false)
     val loading: LiveData<Boolean>
         get() = _loading

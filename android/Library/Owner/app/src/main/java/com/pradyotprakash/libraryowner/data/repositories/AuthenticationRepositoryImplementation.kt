@@ -1,5 +1,6 @@
-package com.pradyotprakash.libraryowner.data.services.auth
+package com.pradyotprakash.libraryowner.data.repositories
 
+import com.pradyotprakash.libraryowner.data.services.auth.FirebaseAuthenticationService
 import com.pradyotprakash.libraryowner.domain.repositories.AuthenticationRepository
 
 class AuthenticationRepositoryImplementation(

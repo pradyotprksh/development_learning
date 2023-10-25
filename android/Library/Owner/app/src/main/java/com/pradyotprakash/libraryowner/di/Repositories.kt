@@ -4,12 +4,15 @@ import com.pradyotprakash.libraryowner.data.repositories.AppConfigRepositoryImpl
 import com.pradyotprakash.libraryowner.data.repositories.UnsplashRepositoryImplementation
 import com.pradyotprakash.libraryowner.data.services.UnsplashService
 import com.pradyotprakash.libraryowner.data.services.appconfig.AppConfigService
-import com.pradyotprakash.libraryowner.data.services.auth.AuthenticationRepositoryImplementation
+import com.pradyotprakash.libraryowner.data.repositories.AuthenticationRepositoryImplementation
+import com.pradyotprakash.libraryowner.data.repositories.UserFirestoreRepositoryImplementation
 import com.pradyotprakash.libraryowner.data.services.auth.FirebaseAuthenticationService
 import com.pradyotprakash.libraryowner.data.services.crashlytics.CrashlyticsService
+import com.pradyotprakash.libraryowner.data.services.firestore.UserFirestoreService
 import com.pradyotprakash.libraryowner.domain.repositories.AppConfigRepository
 import com.pradyotprakash.libraryowner.domain.repositories.AuthenticationRepository
 import com.pradyotprakash.libraryowner.domain.repositories.UnsplashRepository
+import com.pradyotprakash.libraryowner.domain.repositories.UserFirestoreRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -38,4 +41,10 @@ object Repositories {
     fun providesAppConfigRepository(
         appConfigService: AppConfigService,
     ): AppConfigRepository = AppConfigRepositoryImplementation(appConfigService)
+
+    @Singleton
+    @Provides
+    fun providesUserFirestoreRepository(
+        userFirestoreService: UserFirestoreService,
+    ): UserFirestoreRepository = UserFirestoreRepositoryImplementation(userFirestoreService)
 }

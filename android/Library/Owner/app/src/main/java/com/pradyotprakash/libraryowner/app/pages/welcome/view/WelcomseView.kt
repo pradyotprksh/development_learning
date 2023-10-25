@@ -66,6 +66,11 @@ fun WelcomeView(welcomeViewModel: WelcomeViewModel = hiltViewModel()) {
                             .createSignInIntentBuilder()
                             .setAvailableProviders(providers)
                             .setLogo(R.drawable.app_icon)
+                            .setTheme(R.style.Theme_LibraryOwner)
+                            .setTosAndPrivacyPolicyUrls(
+                                "",
+                                ""
+                            )
                             .build()
                         signInLauncher.launch(signInIntent)
                     },
