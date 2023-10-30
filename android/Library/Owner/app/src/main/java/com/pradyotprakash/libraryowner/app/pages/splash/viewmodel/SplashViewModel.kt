@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.pradyotprakash.libraryowner.app.localization.TR
 import com.pradyotprakash.libraryowner.app.routes.Routes
 import com.pradyotprakash.libraryowner.app.routes.path
 import com.pradyotprakash.libraryowner.app.utils.BuildDetails
@@ -80,7 +79,8 @@ class SplashViewModel @Inject constructor(
         authenticationUseCase.getCurrentUserId()?.let { userId ->
             viewModelScope.launch {
                 val isUserDetailsAvailable = userFirestoreUseCase.isUserDetailsAvailable(userId)
-                if (isUserDetailsAvailable) {} else {
+                if (isUserDetailsAvailable) {
+                } else {
                     navigator.navigate { navController ->
                         navController.navigate(Routes.Details.path()) {
                             popUpTo(Routes.Welcome.path()) {

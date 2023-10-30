@@ -1,6 +1,5 @@
 package com.pradyotprakash.libraryowner.app.pages.welcome.view
 
-import android.content.res.Resources.Theme
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer

@@ -7,6 +7,8 @@ import kotlinx.coroutines.tasks.await
 
 class UserFirestoreServiceImplementation(
     private val firestore: FirebaseFirestore,
-): UserFirestoreService {
-    override suspend fun getUserDetails(userId: String) = firestore.collection(Keys.Collections.USERS).document(userId).get().await().toObject(User::class.java)
+) : UserFirestoreService {
+    override suspend fun getUserDetails(userId: String) =
+        firestore.collection(Keys.Collections.USERS).document(userId).get().await()
+            .toObject(User::class.java)
 }

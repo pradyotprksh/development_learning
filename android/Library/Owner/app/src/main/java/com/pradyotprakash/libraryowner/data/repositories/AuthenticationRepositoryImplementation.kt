@@ -1,6 +1,5 @@
 package com.pradyotprakash.libraryowner.data.repositories
 
-import com.google.firebase.auth.FirebaseUser
 import com.pradyotprakash.libraryowner.data.services.auth.FirebaseAuthenticationService
 import com.pradyotprakash.libraryowner.domain.repositories.AuthenticationRepository
 

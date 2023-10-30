@@ -14,5 +14,5 @@ object TR {
     var welcomeMessage = Translation.getString("welcomeMessage")
     var joinUs = Translation.getString("joinUs")
     var loginError = Translation.getString("loginError")
-    
+
 }

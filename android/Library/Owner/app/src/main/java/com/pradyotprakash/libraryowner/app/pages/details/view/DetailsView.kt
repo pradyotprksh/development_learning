@@ -16,6 +16,6 @@ fun DetailsView(detailsViewModel: DetailsViewModel = hiltViewModel()) {
         errorMessage = error.value,
         dismissErrorAlert = detailsViewModel::updateErrorState
     ) {
-        
+
     }
 }

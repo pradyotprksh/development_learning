@@ -51,7 +51,8 @@ class WelcomeViewModel @Inject constructor(
             viewModelScope.launch {
                 val isUserDetailsAvailable = userFirestoreUseCase.isUserDetailsAvailable(userId)
                 _loading.value = false
-                if (isUserDetailsAvailable) {} else {
+                if (isUserDetailsAvailable) {
+                } else {
                     navigator.navigate { navController ->
                         navController.navigate(Routes.Details.path()) {
                             popUpTo(Routes.Welcome.path()) {

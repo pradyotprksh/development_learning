@@ -1,11 +1,11 @@
 package com.pradyotprakash.libraryowner.di
 
 import com.pradyotprakash.libraryowner.data.repositories.AppConfigRepositoryImplementation
+import com.pradyotprakash.libraryowner.data.repositories.AuthenticationRepositoryImplementation
 import com.pradyotprakash.libraryowner.data.repositories.UnsplashRepositoryImplementation
+import com.pradyotprakash.libraryowner.data.repositories.UserFirestoreRepositoryImplementation
 import com.pradyotprakash.libraryowner.data.services.UnsplashService
 import com.pradyotprakash.libraryowner.data.services.appconfig.AppConfigService
-import com.pradyotprakash.libraryowner.data.repositories.AuthenticationRepositoryImplementation
-import com.pradyotprakash.libraryowner.data.repositories.UserFirestoreRepositoryImplementation
 import com.pradyotprakash.libraryowner.data.services.auth.FirebaseAuthenticationService
 import com.pradyotprakash.libraryowner.data.services.crashlytics.CrashlyticsService
 import com.pradyotprakash.libraryowner.data.services.firestore.UserFirestoreService
