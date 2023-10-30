@@ -1,6 +1,5 @@
 package com.pradyotprakash.libraryowner.domain.usecases
 
-import com.pradyotprakash.libraryowner.domain.repositories.AuthenticationRepository
 import com.pradyotprakash.libraryowner.domain.repositories.UserFirestoreRepository
 import javax.inject.Inject
 

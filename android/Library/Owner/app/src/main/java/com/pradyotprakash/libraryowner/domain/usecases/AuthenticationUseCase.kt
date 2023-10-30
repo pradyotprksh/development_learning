@@ -6,5 +6,7 @@ import javax.inject.Inject
 class AuthenticationUseCase @Inject constructor(
     private val authenticationRepository: AuthenticationRepository,
 ) {
-    suspend fun isUserLoggedIn() = authenticationRepository.isUserLoggedIn()
+    fun isUserLoggedIn() = authenticationRepository.isUserLoggedIn()
+
+    fun getCurrentUserId() = authenticationRepository.currentUser()?.uid
 }

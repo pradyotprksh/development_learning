@@ -1,5 +1,6 @@
 package com.pradyotprakash.libraryowner.app.pages.welcome.view
 
+import android.content.res.Resources.Theme
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -66,7 +67,6 @@ fun WelcomeView(welcomeViewModel: WelcomeViewModel = hiltViewModel()) {
                             .createSignInIntentBuilder()
                             .setAvailableProviders(providers)
                             .setLogo(R.drawable.app_icon)
-                            .setTheme(R.style.Theme_LibraryOwner)
                             .setTosAndPrivacyPolicyUrls(
                                 "",
                                 ""
