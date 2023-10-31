@@ -5,19 +5,22 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.pradyotprakash.libraryowner.domain.usecases.AuthenticationUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import javax.inject.Inject
 
 @HiltViewModel
 class DetailsViewModel @Inject constructor(
     private val authenticationUseCase: AuthenticationUseCase,
 ) : ViewModel() {
-    private val _detailsState = MutableStateFlow<DetailsState>(DetailsState.Idle)
-    val detailsState = _detailsState.asStateFlow()
+    private val _loading = MutableLiveData(false)
+    val loading: LiveData<Boolean>
+        get() = _loading
+    private val _errorText = MutableLiveData("")
+    val error: LiveData<String>
+        get() = _errorText
 
     fun updateErrorState(message: String? = "") {
-        _detailsState.value = DetailsState.Error(message ?: "")
+        _loading.value = false
+        _errorText.value = message
     }
 
     fun getAuthenticationUserDetails() {

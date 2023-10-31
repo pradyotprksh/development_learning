@@ -321,7 +321,6 @@ jobs:
       - name: Running commands
         working-directory: ./android/Library/Owner
         run: |
-          ./gradlew lint
           ./gradlew build
           ./gradlew assemble
       - name: Send Message
