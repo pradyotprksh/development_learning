@@ -315,21 +315,13 @@ jobs:
       - uses: actions/setup-java@v1.4.3
         with:
           java-version: 1.8
-      - name: Build all artifacts
-        id: buildAllApks
-        uses: eskatos/gradle-command-action@v1.3.3
-        working-directory: ./android/Library/Owner
-        with:
-          gradle-version: current
-          wrapper-cache-enabled: true
-          dependencies-cache-enabled: true
-          configuration-cache-enabled: true
-          arguments: assembleDebug
       - name: Checking LibraryOwner
         working-directory: ./android/Library/Owner
         run: |
+          chmod +x ./gradlew
           ./gradlew lint
           ./gradlew build
+          ./gradlew assemble
       - name: Send Message
         uses: appleboy/telegram-action@master
         with:
