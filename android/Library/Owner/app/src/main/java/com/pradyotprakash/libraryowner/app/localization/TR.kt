@@ -15,5 +15,9 @@ object TR {
     var joinUs = Translation.getString("joinUs")
     var loginError = Translation.getString("loginError")
     var detailsTitle = Translation.getString("detailsTitle")
-    
+    var yourDetailsTitle = Translation.getString("yourDetailsTitle")
+    var yourDetailsSubtitle = Translation.getString("yourDetailsSubtitle")
+    var libraryDetailsTitle = Translation.getString("libraryDetailsTitle")
+    var libraryDetailsSubtitle = Translation.getString("libraryDetailsSubtitle")
+
 }
