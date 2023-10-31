@@ -320,9 +320,9 @@ jobs:
       - name: Checking LibraryOwner
         working-directory: ./android/Library/Owner
         run: |
-          chmod +x ./gradlew
-          ./gradlew lint
-          ./gradlew build
+          chmod +x ./android/Library/Owner/gradlew
+          ./android/Library/Owner/gradlew lint
+          ./android/Library/Owner/gradlew build
       - name: Send Message
         uses: appleboy/telegram-action@master
         with:

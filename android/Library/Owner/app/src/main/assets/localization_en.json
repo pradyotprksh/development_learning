@@ -8,5 +8,9 @@
   "welcomeMessage": "Hello Librarian,\n\nCreate an account to start taking care of your library from your phone.\nA convenient way to manage your books and customers.",
   "joinUs": "Join Us",
   "loginError": "There was an error while login you in. Please try again.",
-  "detailsTitle": "Details"
+  "detailsTitle": "Details",
+  "yourDetailsTitle": "Your Details",
+  "yourDetailsSubtitle": "Fill in your details",
+  "libraryDetailsTitle": "Library Details",
+  "libraryDetailsSubtitle": "Fill in the details for your Library"
 }
