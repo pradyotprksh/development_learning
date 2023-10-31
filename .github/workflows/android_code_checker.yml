@@ -315,10 +315,12 @@ jobs:
       - uses: actions/setup-java@v1.4.3
         with:
           java-version: 17
-      - name: Checking LibraryOwner
+      - name: Giving permissions
+        working-directory: ./android/Library/Owner
+        run: chmod +x ./gradlew
+      - name: Running commands
         working-directory: ./android/Library/Owner
         run: |
-          chmod +x ./gradlew
           ./gradlew lint
           ./gradlew build
           ./gradlew assemble
