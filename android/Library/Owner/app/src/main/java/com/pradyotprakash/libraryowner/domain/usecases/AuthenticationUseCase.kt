@@ -12,11 +12,11 @@ class AuthenticationUseCase @Inject constructor(
     fun getCurrentUserId() = authenticationRepository.currentUser()?.uid
 
     fun getCurrentUserDetails() = authenticationRepository.currentUser()?.let { user ->
-            return@let AuthUser(
-                username = user.displayName ?: "",
-                emailId = user.email ?: "",
-                phoneNumber = user.phoneNumber ?: "",
-                userId = user.uid,
-            )
-        }
+        return@let AuthUser(
+            username = user.displayName ?: "",
+            emailId = user.email ?: "",
+            phoneNumber = user.phoneNumber ?: "",
+            userId = user.uid,
+        )
+    }
 }
