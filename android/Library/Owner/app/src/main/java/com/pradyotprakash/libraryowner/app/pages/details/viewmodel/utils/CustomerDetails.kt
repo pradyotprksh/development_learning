@@ -1,4 +1,4 @@
-package com.pradyotprakash.libraryowner.app.pages.details.viewmodel
+package com.pradyotprakash.libraryowner.app.pages.details.viewmodel.utils
 
 data class CustomerDetails(
     val name: String = "",

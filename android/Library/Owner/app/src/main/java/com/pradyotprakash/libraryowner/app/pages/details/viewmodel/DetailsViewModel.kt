@@ -3,6 +3,9 @@ package com.pradyotprakash.libraryowner.app.pages.details.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.pradyotprakash.libraryowner.app.pages.details.viewmodel.utils.CustomerDetails
+import com.pradyotprakash.libraryowner.app.pages.details.viewmodel.utils.DetailsTextField
+import com.pradyotprakash.libraryowner.app.pages.details.viewmodel.utils.LibraryDetails
 import com.pradyotprakash.libraryowner.app.routes.Routes
 import com.pradyotprakash.libraryowner.app.routes.path
 import com.pradyotprakash.libraryowner.core.navigation.Navigator
@@ -24,6 +27,13 @@ class DetailsViewModel @Inject constructor(
     private val _customerDetails = MutableLiveData(CustomerDetails())
     val customerDetails: LiveData<CustomerDetails>
         get() = _customerDetails
+    private val _libraryDetails = MutableLiveData(listOf<LibraryDetails>())
+    val libraryDetails: LiveData<List<LibraryDetails>>
+        get() = _libraryDetails
+
+    init {
+        addNewLibraryInformation()
+    }
 
     fun updateErrorState(message: String? = "") {
         _loading.value = false
@@ -49,5 +59,17 @@ class DetailsViewModel @Inject constructor(
 
     fun openImagePicker() {
         navigator.navigate { it.navigate(Routes.ImagePicker.path()) }
+    }
+
+    fun addNewLibraryInformation() {
+        _libraryDetails.value = ((_libraryDetails.value ?: emptyList()) + listOf(LibraryDetails())).toList()
+    }
+
+    fun deleteLibraryInformation(index: Int) {
+        _libraryDetails.value?.let { details ->
+            val mutableDetails = details.toMutableList()
+            mutableDetails.removeAt(index)
+            _libraryDetails.value = mutableDetails.toList()
+        }
     }
 }

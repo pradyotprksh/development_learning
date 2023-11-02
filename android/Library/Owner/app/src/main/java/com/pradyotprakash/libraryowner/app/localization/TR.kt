@@ -30,5 +30,7 @@ object TR {
     var phoneNumberSupportingText = Translation.getString("phoneNumberSupportingText")
     var saveDetails = Translation.getString("saveDetails")
     var profileImagePickerHelper = Translation.getString("profileImagePickerHelper")
+    var addNewLibrary = Translation.getString("addNewLibrary")
+    var delete = Translation.getString("delete")
     
 }

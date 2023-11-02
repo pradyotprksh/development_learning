@@ -101,6 +101,7 @@ dependencies {
     implementation("com.google.firebase:firebase-auth-ktx")
     implementation("com.firebaseui:firebase-ui-auth:8.0.2")
     implementation("com.google.firebase:firebase-firestore-ktx")
+    implementation("com.google.firebase:firebase-config")
 
     // Hilt
     implementation("com.google.dagger:hilt-android:2.48.1")
