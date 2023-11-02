@@ -29,5 +29,5 @@ object TR {
     var phoneNumberPlaceholder = Translation.getString("phoneNumberPlaceholder")
     var phoneNumberSupportingText = Translation.getString("phoneNumberSupportingText")
     var saveDetails = Translation.getString("saveDetails")
-    
+
 }
