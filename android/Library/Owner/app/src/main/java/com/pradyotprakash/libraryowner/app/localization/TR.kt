@@ -19,5 +19,15 @@ object TR {
     var yourDetailsSubtitle = Translation.getString("yourDetailsSubtitle")
     var libraryDetailsTitle = Translation.getString("libraryDetailsTitle")
     var libraryDetailsSubtitle = Translation.getString("libraryDetailsSubtitle")
-
+    var name = Translation.getString("name")
+    var yourNamePlaceholder = Translation.getString("yourNamePlaceholder")
+    var yourNameSupportingText = Translation.getString("yourNameSupportingText")
+    var emailId = Translation.getString("emailId")
+    var emailIdPlaceholder = Translation.getString("emailIdPlaceholder")
+    var emailIdSupportingText = Translation.getString("emailIdSupportingText")
+    var phoneNumber = Translation.getString("phoneNumber")
+    var phoneNumberPlaceholder = Translation.getString("phoneNumberPlaceholder")
+    var phoneNumberSupportingText = Translation.getString("phoneNumberSupportingText")
+    var saveDetails = Translation.getString("saveDetails")
+    
 }

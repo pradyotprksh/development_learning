@@ -92,7 +92,7 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-test-manifest")
 
     // Firebase
-    implementation(platform("com.google.firebase:firebase-bom:32.4.0"))
+    implementation(platform("com.google.firebase:firebase-bom:32.5.0"))
     implementation("com.google.firebase:firebase-analytics")
     implementation("com.google.firebase:firebase-appcheck-playintegrity")
     implementation("com.google.firebase:firebase-appcheck")
@@ -128,6 +128,9 @@ dependencies {
 
     // Data store
     implementation("androidx.datastore:datastore-preferences:1.0.0")
+
+    // Libphonenumber
+    implementation("com.googlecode.libphonenumber:libphonenumber:8.13.24")
 
     // Testing
     testImplementation("junit:junit:4.13.2")

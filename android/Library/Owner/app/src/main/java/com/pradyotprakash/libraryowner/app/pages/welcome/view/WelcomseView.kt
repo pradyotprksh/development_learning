@@ -18,6 +18,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
 import com.pradyotprakash.libraryowner.R
+import com.pradyotprakash.libraryowner.app.composables.CustomButton
 import com.pradyotprakash.libraryowner.app.composables.PageStateComposable
 import com.pradyotprakash.libraryowner.app.localization.TR
 import com.pradyotprakash.libraryowner.app.pages.welcome.viewmodel.WelcomeViewModel
@@ -55,7 +56,7 @@ fun WelcomeView(welcomeViewModel: WelcomeViewModel = hiltViewModel()) {
                     textAlign = TextAlign.Center,
                 )
                 Spacer(modifier = Modifier.weight(1f))
-                Button(
+                CustomButton(
                     onClick = {
                         val providers = arrayListOf(
                             AuthUI.IdpConfig.EmailBuilder().build(),
@@ -72,8 +73,7 @@ fun WelcomeView(welcomeViewModel: WelcomeViewModel = hiltViewModel()) {
                             )
                             .build()
                         signInLauncher.launch(signInIntent)
-                    },
-                    modifier = Modifier.fillMaxWidth()
+                    }
                 ) {
                     Text(TR.joinUs)
                 }

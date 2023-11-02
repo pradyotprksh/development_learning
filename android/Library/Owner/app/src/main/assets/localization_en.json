@@ -12,5 +12,15 @@
   "yourDetailsTitle": "Your Details",
   "yourDetailsSubtitle": "Fill in your details",
   "libraryDetailsTitle": "Library Details",
-  "libraryDetailsSubtitle": "Fill in the details for your Library"
+  "libraryDetailsSubtitle": "Fill in the details for your Library",
+  "name": "Name",
+  "yourNamePlaceholder": "Enter your name",
+  "yourNameSupportingText": "This will be used by customers to search for you.",
+  "emailId": "Email Id",
+  "emailIdPlaceholder": "Enter your email id",
+  "emailIdSupportingText": "Your email address which helps customer to connect with you",
+  "phoneNumber": "Phone number",
+  "phoneNumberPlaceholder": "Enter your phone number",
+  "phoneNumberSupportingText": "Your phone number which helps customer to connect with you",
+  "saveDetails": "Save details"
 }

@@ -26,7 +26,7 @@ fun SectionComposable(
         modifier = Modifier
             .fillMaxWidth()
             .background(
-                color = MaterialTheme.colorScheme.primaryContainer,
+                color = MaterialTheme.colorScheme.surface,
                 shape = RoundedCornerShape(10.dp)
             )
             .border(

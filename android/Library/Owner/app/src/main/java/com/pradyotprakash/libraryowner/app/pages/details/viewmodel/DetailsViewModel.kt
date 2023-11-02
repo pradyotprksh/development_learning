@@ -17,6 +17,9 @@ class DetailsViewModel @Inject constructor(
     private val _errorText = MutableLiveData("")
     val error: LiveData<String>
         get() = _errorText
+    private val _customerDetails = MutableLiveData(CustomerDetails())
+    val customerDetails: LiveData<CustomerDetails>
+        get() = _customerDetails
 
     fun updateErrorState(message: String? = "") {
         _loading.value = false
@@ -25,5 +28,18 @@ class DetailsViewModel @Inject constructor(
 
     fun getAuthenticationUserDetails() {
         authenticationUseCase.getCurrentUserDetails()?.let { details -> }
+    }
+
+    fun updateTextFieldValue(value: String, type: DetailsTextField) {
+        when (type) {
+            DetailsTextField.CustomerName -> _customerDetails.value =
+                _customerDetails.value?.copyWith(name = value)
+
+            DetailsTextField.CustomerEmailId -> _customerDetails.value =
+                _customerDetails.value?.copyWith(emailId = value)
+
+            DetailsTextField.CustomerPhoneNumber -> _customerDetails.value =
+                _customerDetails.value?.copyWith(phoneNumber = value)
+        }
     }
 }
