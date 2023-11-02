@@ -11,6 +11,9 @@ sealed class Assets(
     object AppIcon :
         Assets(resourceId = R.drawable.app_icon, imageDescription = "Main application icon")
 
+    object DefaultProfileImage :
+        Assets(resourceId = R.drawable.default_profile_image, imageDescription = "Default profile image")
+
     data class Localization(val lanKey: String = defaultLanguage) :
         Assets(path = "localization_${lanKey}.json")
 }

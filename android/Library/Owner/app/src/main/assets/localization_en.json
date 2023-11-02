@@ -22,5 +22,6 @@
   "phoneNumber": "Phone number",
   "phoneNumberPlaceholder": "Enter your phone number",
   "phoneNumberSupportingText": "Your phone number which helps customer to connect with you",
-  "saveDetails": "Save details"
+  "saveDetails": "Save details",
+  "profileImagePickerHelper": "Please select an image of yours, which makes it easier to find you."
 }

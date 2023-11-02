@@ -1,29 +1,95 @@
 package com.pradyotprakash.libraryowner.app.pages.details.view.composables
 
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.pradyotprakash.libraryowner.app.composables.CustomOutlinedTextField
 import com.pradyotprakash.libraryowner.app.localization.TR
 import com.pradyotprakash.libraryowner.app.pages.details.viewmodel.DetailsTextField
+import com.pradyotprakash.libraryowner.app.utils.Assets
+import com.skydoves.landscapist.ImageOptions
+import com.skydoves.landscapist.coil.CoilImage
 
 @Composable
 fun YourDetailsItemComposable(
     name: String,
     emailId: String,
     phoneNumber: String,
-    updateTextFieldValue: (String, DetailsTextField) -> Unit
+    profileImage: String,
+    updateTextFieldValue: (String, DetailsTextField) -> Unit,
+    imageSelector: () -> Unit,
 ) {
     SectionComposable(
         title = TR.yourDetailsTitle,
         subtitle = TR.yourDetailsSubtitle
     ) {
+        Row(
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.clickable { imageSelector() }
+        ) {
+            CoilImage(
+                imageModel = { profileImage },
+                imageOptions = ImageOptions(
+                    contentScale = ContentScale.FillBounds,
+                    alignment = Alignment.Center
+                ),
+                failure = {
+                    Image(
+                        painter = painterResource(id = Assets.DefaultProfileImage.resourceId),
+                        contentDescription = Assets.DefaultProfileImage.imageDescription,
+                        modifier = Modifier
+                            .align(Alignment.Center)
+                            .fillMaxSize()
+                    )
+                },
+                loading = {
+                    Image(
+                        painter = painterResource(id = Assets.DefaultProfileImage.resourceId),
+                        contentDescription = Assets.DefaultProfileImage.imageDescription,
+                        modifier = Modifier
+                            .align(Alignment.Center)
+                            .fillMaxSize()
+                    )
+                },
+                modifier = Modifier
+                    .size(100.dp)
+                    .border(
+                        width = 1.dp,
+                        color = MaterialTheme.colorScheme.primary,
+                        shape = CircleShape
+                    ),
+            )
+            Spacer(modifier = Modifier.width(10.dp))
+            Text(
+                text = TR.profileImagePickerHelper,
+                style = MaterialTheme.typography.bodySmall,
+                modifier = Modifier.fillMaxWidth()
+            )
+        }
+        Spacer(modifier = Modifier.height(5.dp))
         CustomOutlinedTextField(
             value = name,
             onValueChange = { value ->

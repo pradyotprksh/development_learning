@@ -20,7 +20,7 @@ android {
 
     defaultConfig {
         applicationId = "com.pradyotprakash.libraryowner"
-        minSdk = 24
+        minSdk = 26
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -131,6 +131,9 @@ dependencies {
 
     // Libphonenumber
     implementation("com.googlecode.libphonenumber:libphonenumber:8.13.24")
+
+    // Image picker
+    implementation("io.github.huhx:compose-image-picker:1.0.8")
 
     // Testing
     testImplementation("junit:junit:4.13.2")

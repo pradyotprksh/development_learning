@@ -3,6 +3,9 @@ package com.pradyotprakash.libraryowner.app.pages.details.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.pradyotprakash.libraryowner.app.routes.Routes
+import com.pradyotprakash.libraryowner.app.routes.path
+import com.pradyotprakash.libraryowner.core.navigation.Navigator
 import com.pradyotprakash.libraryowner.domain.usecases.AuthenticationUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -10,6 +13,7 @@ import javax.inject.Inject
 @HiltViewModel
 class DetailsViewModel @Inject constructor(
     private val authenticationUseCase: AuthenticationUseCase,
+    private val navigator: Navigator,
 ) : ViewModel() {
     private val _loading = MutableLiveData(false)
     val loading: LiveData<Boolean>
@@ -41,5 +45,9 @@ class DetailsViewModel @Inject constructor(
             DetailsTextField.CustomerPhoneNumber -> _customerDetails.value =
                 _customerDetails.value?.copyWith(phoneNumber = value)
         }
+    }
+
+    fun openImagePicker() {
+        navigator.navigate { it.navigate(Routes.ImagePicker.path()) }
     }
 }

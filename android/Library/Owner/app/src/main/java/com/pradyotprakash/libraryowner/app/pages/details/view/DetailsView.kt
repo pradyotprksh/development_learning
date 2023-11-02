@@ -56,7 +56,9 @@ fun DetailsView(detailsViewModel: DetailsViewModel = hiltViewModel()) {
                         name = customerDetails.value.name,
                         emailId = customerDetails.value.emailId,
                         phoneNumber = customerDetails.value.phoneNumber,
-                        updateTextFieldValue = detailsViewModel::updateTextFieldValue
+                        profileImage = customerDetails.value.profileImage,
+                        updateTextFieldValue = detailsViewModel::updateTextFieldValue,
+                        imageSelector = detailsViewModel::openImagePicker
                     )
                 }
 
