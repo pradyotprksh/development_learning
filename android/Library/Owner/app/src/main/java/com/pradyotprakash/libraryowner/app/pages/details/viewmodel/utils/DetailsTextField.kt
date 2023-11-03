@@ -4,4 +4,8 @@ enum class DetailsTextField {
     CustomerName,
     CustomerEmailId,
     CustomerPhoneNumber,
+    LibraryName,
+    LibraryEmailId,
+    LibraryPhoneNumber,
+    LibraryAddress,
 }

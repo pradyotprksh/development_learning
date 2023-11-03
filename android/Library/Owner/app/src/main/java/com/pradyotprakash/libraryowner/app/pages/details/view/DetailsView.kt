@@ -21,12 +21,12 @@ import com.pradyotprakash.libraryowner.app.composables.CustomButton
 import com.pradyotprakash.libraryowner.app.composables.CustomOutlinedTextField
 import com.pradyotprakash.libraryowner.app.composables.PageStateComposable
 import com.pradyotprakash.libraryowner.app.localization.TR
+import com.pradyotprakash.libraryowner.app.pages.details.view.composables.LibraryDetailsItemComposable
 import com.pradyotprakash.libraryowner.app.pages.details.view.composables.SectionComposable
 import com.pradyotprakash.libraryowner.app.pages.details.view.composables.YourDetailsItemComposable
 import com.pradyotprakash.libraryowner.app.pages.details.viewmodel.utils.CustomerDetails
 import com.pradyotprakash.libraryowner.app.pages.details.viewmodel.DetailsViewModel
 import com.pradyotprakash.libraryowner.app.pages.details.viewmodel.utils.DetailsTextField
-import com.pradyotprakash.libraryowner.app.pages.details.viewmodel.utils.LibraryDetails
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -70,41 +70,21 @@ fun DetailsView(detailsViewModel: DetailsViewModel = hiltViewModel()) {
                     )
                 }
 
-                items(libraryDetailList.value.size) {
-                    val details = libraryDetailList.value[it]
+                items(libraryDetailList.value.size) { index ->
+                    val details = libraryDetailList.value[index]
 
-                    SectionComposable(
-                        title = "${it + 1}. ${TR.libraryDetailsTitle}",
-                        subtitle = TR.libraryDetailsSubtitle
-                    ) {
-                        CustomOutlinedTextField(
-                            value = details.name,
-                            onValueChange = { value -> },
-                            label = { },
-                            placeholder = { },
-                            supportingText = { },
-                            keyboardOptions = KeyboardOptions(
-                                capitalization = KeyboardCapitalization.Words,
-                                keyboardType = KeyboardType.Text
-                            )
-                        )
-                        if (libraryDetailList.value.size > 1) {
-                            CustomButton(
-                                color = MaterialTheme.colorScheme.error,
-                                onClick = { detailsViewModel.deleteLibraryInformation(it) },
-                            ) {
-                                Text(text = TR.delete)
-                            }
-                        }
-                        if (it == libraryDetailList.value.lastIndex) {
-                            CustomButton(
-                                onClick = detailsViewModel::addNewLibraryInformation,
-                            ) {
-                                Text(text = TR.addNewLibrary)
-                            }
-                        }
-                    }
-                    Spacer(modifier = Modifier.height(5.dp))
+                    LibraryDetailsItemComposable(
+                        index = index,
+                        name = details.name,
+                        emailId = details.emailId,
+                        phoneNumber = details.phoneNumber,
+                        address = details.address,
+                        showAddNewLibrary = index == libraryDetailList.value.lastIndex,
+                        showDeleteLibrary = libraryDetailList.value.size > 1,
+                        deleteLibraryInformation = detailsViewModel::deleteLibraryInformation,
+                        addNewLibraryInformation = detailsViewModel::addNewLibraryInformation,
+                        updateTextFieldValue = detailsViewModel::updateTextFieldValue
+                    )
                 }
 
                 item {

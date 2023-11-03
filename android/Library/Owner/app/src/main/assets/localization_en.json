@@ -25,5 +25,17 @@
   "saveDetails": "Save details",
   "profileImagePickerHelper": "Please select an image of yours, which makes it easier to find you. (Optional)",
   "addNewLibrary": "Add new library",
-  "delete": "Delete"
+  "delete": "Delete",
+  "libraryName": "Name",
+  "libraryNamePlaceholder": "Enter the library name",
+  "libraryNameSupportingText": "This will be used by customers to search your library",
+  "libraryEmailId": "Email Id",
+  "libraryEmailIdPlaceholder": "Enter the library email id",
+  "libraryEmailIdSupportingText": "Library email address which helps customer for communication",
+  "libraryPhoneNumber": "Library phone number",
+  "libraryPhoneNumberPlaceholder": "Enter the library phone number",
+  "libraryPhoneNumberSupportingText": "Library phone number which helps customer for communication",
+  "libraryAddress": "Library Address",
+  "libraryAddressPlaceholder": "Enter the google map url of the library",
+  "libraryAddressSupportingText": "Copy the share url of the location from google map of your library"
 }

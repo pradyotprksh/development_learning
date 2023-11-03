@@ -44,7 +44,7 @@ class DetailsViewModel @Inject constructor(
         authenticationUseCase.getCurrentUserDetails()?.let { details -> }
     }
 
-    fun updateTextFieldValue(value: String, type: DetailsTextField) {
+    fun updateTextFieldValue(value: String, type: DetailsTextField, index: Int = -1) {
         when (type) {
             DetailsTextField.CustomerName -> _customerDetails.value =
                 _customerDetails.value?.copyWith(name = value)
@@ -54,6 +54,38 @@ class DetailsViewModel @Inject constructor(
 
             DetailsTextField.CustomerPhoneNumber -> _customerDetails.value =
                 _customerDetails.value?.copyWith(phoneNumber = value)
+
+            DetailsTextField.LibraryName -> {
+                _libraryDetails.value?.let { details ->
+                    val mutableDetails = details.toMutableList()
+                    mutableDetails[index] = mutableDetails[index].copyWith(name = value)
+                    _libraryDetails.value = mutableDetails.toList()
+                }
+            }
+
+            DetailsTextField.LibraryEmailId -> {
+                _libraryDetails.value?.let { details ->
+                    val mutableDetails = details.toMutableList()
+                    mutableDetails[index] = mutableDetails[index].copyWith(emailId = value)
+                    _libraryDetails.value = mutableDetails.toList()
+                }
+            }
+
+            DetailsTextField.LibraryPhoneNumber -> {
+                _libraryDetails.value?.let { details ->
+                    val mutableDetails = details.toMutableList()
+                    mutableDetails[index] = mutableDetails[index].copyWith(phoneNumber = value)
+                    _libraryDetails.value = mutableDetails.toList()
+                }
+            }
+
+            DetailsTextField.LibraryAddress -> {
+                _libraryDetails.value?.let { details ->
+                    val mutableDetails = details.toMutableList()
+                    mutableDetails[index] = mutableDetails[index].copyWith(address = value)
+                    _libraryDetails.value = mutableDetails.toList()
+                }
+            }
         }
     }
 

@@ -32,5 +32,17 @@ object TR {
     var profileImagePickerHelper = Translation.getString("profileImagePickerHelper")
     var addNewLibrary = Translation.getString("addNewLibrary")
     var delete = Translation.getString("delete")
+    var libraryName = Translation.getString("libraryName")
+    var libraryNamePlaceholder = Translation.getString("libraryNamePlaceholder")
+    var libraryNameSupportingText = Translation.getString("libraryNameSupportingText")
+    var libraryEmailId = Translation.getString("libraryEmailId")
+    var libraryEmailIdPlaceholder = Translation.getString("libraryEmailIdPlaceholder")
+    var libraryEmailIdSupportingText = Translation.getString("libraryEmailIdSupportingText")
+    var libraryPhoneNumber = Translation.getString("libraryPhoneNumber")
+    var libraryPhoneNumberPlaceholder = Translation.getString("libraryPhoneNumberPlaceholder")
+    var libraryPhoneNumberSupportingText = Translation.getString("libraryPhoneNumberSupportingText")
+    var libraryAddress = Translation.getString("libraryAddress")
+    var libraryAddressPlaceholder = Translation.getString("libraryAddressPlaceholder")
+    var libraryAddressSupportingText = Translation.getString("libraryAddressSupportingText")
     
 }
