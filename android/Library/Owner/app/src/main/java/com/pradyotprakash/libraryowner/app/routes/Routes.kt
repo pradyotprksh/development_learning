@@ -15,6 +15,5 @@ enum class Routes(
 ) {
     Splash("splash/"),
     Welcome("welcome/"),
-    Details("details/"),
-    ImagePicker("image-picker/")
+    Details("details/")
 }

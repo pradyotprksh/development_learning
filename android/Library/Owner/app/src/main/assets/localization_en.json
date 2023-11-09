@@ -37,5 +37,9 @@
   "libraryPhoneNumberSupportingText": "Library phone number which helps customer for communication",
   "libraryAddress": "Library Address",
   "libraryAddressPlaceholder": "Enter the google map url of the library",
-  "libraryAddressSupportingText": "Copy the share url of the location from google map of your library"
+  "libraryAddressSupportingText": "Copy the share url of the location from google map of your library",
+  "emailIdSameTitle": "Email Id same as customer",
+  "emailIdSameSubTitle": "Enable this to make the email id of library same as in customer details",
+  "phoneNumberSameTitle": "Phone number same as customer",
+  "phoneNumberSameSubTitle": "Enable this to make the phone number of library same as in customer details"
 }

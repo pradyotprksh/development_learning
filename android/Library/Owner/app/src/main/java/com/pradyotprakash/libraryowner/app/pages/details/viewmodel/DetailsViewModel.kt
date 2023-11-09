@@ -4,10 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.pradyotprakash.libraryowner.app.pages.details.viewmodel.utils.CustomerDetails
+import com.pradyotprakash.libraryowner.app.pages.details.viewmodel.utils.DetailsSwitchField
 import com.pradyotprakash.libraryowner.app.pages.details.viewmodel.utils.DetailsTextField
 import com.pradyotprakash.libraryowner.app.pages.details.viewmodel.utils.LibraryDetails
-import com.pradyotprakash.libraryowner.app.routes.Routes
-import com.pradyotprakash.libraryowner.app.routes.path
+import com.pradyotprakash.libraryowner.core.geolocation.IpGeolocator
 import com.pradyotprakash.libraryowner.core.navigation.Navigator
 import com.pradyotprakash.libraryowner.domain.usecases.AuthenticationUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,6 +17,7 @@ import javax.inject.Inject
 class DetailsViewModel @Inject constructor(
     private val authenticationUseCase: AuthenticationUseCase,
     private val navigator: Navigator,
+    private val ipGeolocator: IpGeolocator,
 ) : ViewModel() {
     private val _loading = MutableLiveData(false)
     val loading: LiveData<Boolean>
@@ -89,12 +90,11 @@ class DetailsViewModel @Inject constructor(
         }
     }
 
-    fun openImagePicker() {
-        navigator.navigate { it.navigate(Routes.ImagePicker.path()) }
-    }
+    fun openImagePicker() {}
 
     fun addNewLibraryInformation() {
-        _libraryDetails.value = ((_libraryDetails.value ?: emptyList()) + listOf(LibraryDetails())).toList()
+        _libraryDetails.value =
+            ((_libraryDetails.value ?: emptyList()) + listOf(LibraryDetails())).toList()
     }
 
     fun deleteLibraryInformation(index: Int) {
@@ -103,5 +103,47 @@ class DetailsViewModel @Inject constructor(
             mutableDetails.removeAt(index)
             _libraryDetails.value = mutableDetails.toList()
         }
+    }
+
+    fun onCheckedChange(value: Boolean, detailsSwitchField: DetailsSwitchField, index: Int) {
+        when (detailsSwitchField) {
+            DetailsSwitchField.EmailIdSame -> {
+                _libraryDetails.value?.let { details ->
+                    val mutableDetails = details.toMutableList()
+                    mutableDetails[index] =
+                        mutableDetails[index].copyWith(emailIdSameAsCustomer = value)
+                    _libraryDetails.value = mutableDetails.toList()
+                }
+            }
+
+            DetailsSwitchField.PhoneNumberSame -> {
+                _libraryDetails.value?.let { details ->
+                    val mutableDetails = details.toMutableList()
+                    mutableDetails[index] =
+                        mutableDetails[index].copyWith(phoneNumberSameAsCustomer = value)
+                    _libraryDetails.value = mutableDetails.toList()
+                }
+            }
+        }
+    }
+
+    fun saveDetails() {
+        val userDetails = _customerDetails.value
+        val libraryDetails = _libraryDetails.value
+        if (userDetails != null) {
+            if (!libraryDetails.isNullOrEmpty()) {
+                checkUserDetails(userDetails)
+                checkForLibraryDetails(libraryDetails)
+            }
+        }
+    }
+
+    private fun checkForLibraryDetails(libraryDetails: List<LibraryDetails>) {
+        TODO("Not yet implemented")
+    }
+
+    private fun checkUserDetails(userDetails: CustomerDetails): Boolean {
+        val region = ipGeolocator.ipGeolocation.value?.countryCode2 ?: ""
+        return userDetails.isValid(region = region)
     }
 }

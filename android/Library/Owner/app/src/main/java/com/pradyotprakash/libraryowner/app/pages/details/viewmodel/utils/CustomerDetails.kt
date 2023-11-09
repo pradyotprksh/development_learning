@@ -1,5 +1,9 @@
 package com.pradyotprakash.libraryowner.app.pages.details.viewmodel.utils
 
+import com.pradyotprakash.libraryowner.app.utils.isValidEmailId
+import com.pradyotprakash.libraryowner.app.utils.isValidName
+import com.pradyotprakash.libraryowner.app.utils.isValidPhoneNumber
+
 data class CustomerDetails(
     val name: String = "",
     val emailId: String = "",
@@ -26,4 +30,8 @@ data class CustomerDetails(
         emailIdError = emailIdError ?: this.emailIdError,
         phoneNumberError = phoneNumberError ?: this.phoneNumberError,
     )
+
+    fun isValid(region: String) = name.isValidName() &&
+            emailId.isValidEmailId() &&
+            phoneNumber.isValidPhoneNumber(region)
 }

@@ -44,5 +44,9 @@ object TR {
     var libraryAddress = Translation.getString("libraryAddress")
     var libraryAddressPlaceholder = Translation.getString("libraryAddressPlaceholder")
     var libraryAddressSupportingText = Translation.getString("libraryAddressSupportingText")
-    
+    var emailIdSameTitle = Translation.getString("emailIdSameTitle")
+    var emailIdSameSubTitle = Translation.getString("emailIdSameSubTitle")
+    var phoneNumberSameTitle = Translation.getString("phoneNumberSameTitle")
+    var phoneNumberSameSubTitle = Translation.getString("phoneNumberSameSubTitle")
+
 }

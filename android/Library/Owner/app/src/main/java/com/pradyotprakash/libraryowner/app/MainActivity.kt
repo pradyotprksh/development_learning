@@ -18,7 +18,6 @@ import androidx.navigation.compose.rememberNavController
 import com.pradyotprakash.libraryowner.app.localization.TR
 import com.pradyotprakash.libraryowner.app.localization.Translation
 import com.pradyotprakash.libraryowner.app.pages.details.view.DetailsView
-import com.pradyotprakash.libraryowner.app.pages.imagePicker.view.ImagePickerView
 import com.pradyotprakash.libraryowner.app.pages.splash.view.SplashView
 import com.pradyotprakash.libraryowner.app.pages.welcome.view.WelcomeView
 import com.pradyotprakash.libraryowner.app.routes.Routes
@@ -66,12 +65,6 @@ class MainActivity : ComponentActivity(), InternetConnectionCallback {
                         composable(Routes.Splash.path()) { SplashView() }
                         composable(Routes.Welcome.path()) { WelcomeView() }
                         composable(Routes.Details.path()) { DetailsView() }
-                        composable(Routes.ImagePicker.path()) {
-                            ImagePickerView(
-                                onPicked = { assets -> },
-                                onClose = { assets -> }
-                            )
-                        }
                     }
                 }
             }

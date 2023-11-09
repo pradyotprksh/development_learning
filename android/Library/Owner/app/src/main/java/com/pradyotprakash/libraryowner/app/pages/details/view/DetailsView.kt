@@ -4,29 +4,22 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.input.KeyboardCapitalization
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.pradyotprakash.libraryowner.app.composables.CustomButton
-import com.pradyotprakash.libraryowner.app.composables.CustomOutlinedTextField
 import com.pradyotprakash.libraryowner.app.composables.PageStateComposable
 import com.pradyotprakash.libraryowner.app.localization.TR
 import com.pradyotprakash.libraryowner.app.pages.details.view.composables.LibraryDetailsItemComposable
-import com.pradyotprakash.libraryowner.app.pages.details.view.composables.SectionComposable
 import com.pradyotprakash.libraryowner.app.pages.details.view.composables.YourDetailsItemComposable
-import com.pradyotprakash.libraryowner.app.pages.details.viewmodel.utils.CustomerDetails
 import com.pradyotprakash.libraryowner.app.pages.details.viewmodel.DetailsViewModel
-import com.pradyotprakash.libraryowner.app.pages.details.viewmodel.utils.DetailsTextField
+import com.pradyotprakash.libraryowner.app.pages.details.viewmodel.utils.CustomerDetails
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -83,14 +76,17 @@ fun DetailsView(detailsViewModel: DetailsViewModel = hiltViewModel()) {
                         showDeleteLibrary = libraryDetailList.value.size > 1,
                         deleteLibraryInformation = detailsViewModel::deleteLibraryInformation,
                         addNewLibraryInformation = detailsViewModel::addNewLibraryInformation,
-                        updateTextFieldValue = detailsViewModel::updateTextFieldValue
+                        updateTextFieldValue = detailsViewModel::updateTextFieldValue,
+                        emailIdSameAsCustomer = details.emailIdSameAsCustomer,
+                        phoneNumberSameAsCustomer = details.phoneNumberSameAsCustomer,
+                        onCheckedChange = detailsViewModel::onCheckedChange
                     )
                 }
 
                 item {
                     Spacer(modifier = Modifier.height(20.dp))
                     CustomButton(
-                        onClick = { },
+                        onClick = detailsViewModel::saveDetails,
                     ) {
                         Text(text = TR.saveDetails)
                     }
