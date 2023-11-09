@@ -2777,6 +2777,51 @@ It's important to note that the `zip` operator waits for all input Observables t
 
 The `zip` operator is useful when you need to synchronize and combine data from multiple sources, such as making parallel API requests and merging the results, or combining streams of data for presentation.
 
+# Lifecycle States
+
+In Android, the Lifecycle States refer to the various states that an Android component, such as an Activity or Fragment, goes through during its lifecycle. Understanding these states is crucial for developing robust Android apps, as they help you manage the behavior of your components as they interact with the user and the operating system. Here are the key Android lifecycle states and their details:
+
+1. **Created (onCreate):**
+   - This state is the initial state when an Android component is first created.
+   - In this state, the component is being instantiated, but its views have not been created or initialized yet.
+   - This is where you typically perform one-time initialization tasks, such as setting up resources, initializing variables, and preparing the UI.
+
+2. **Started (onStart):**
+   - In this state, the component is visible to the user, but it doesn't have focus.
+   - The `onStart` method is called when the component is about to become visible and start interacting with the user.
+   - It's a good place to start operations like registering for broadcast receivers or preparing to fetch data from a network.
+
+3. **Resumed (onResume):**
+   - This is the state where the component is in the foreground and has user focus.
+   - In this state, the component is actively interacting with the user, and it's where you should perform tasks that require immediate user attention, such as animations, media playback, and UI updates.
+
+4. **Paused (onPause):**
+   - When the component is paused, it is still visible to the user but has lost focus.
+   - The `onPause` method is called when the component is about to be partially obscured or lose focus, but it is still visible.
+   - You should use this state to release resources that are no longer needed, stop animations, and save user data.
+
+5. **Stopped (onStop):**
+   - The component is no longer visible to the user in this state.
+   - The `onStop` method is called when the component is about to be stopped and removed from view.
+   - You can use this state to release heavy resources, such as closing database connections or network requests.
+
+6. **Destroyed (onDestroy):**
+   - The component is being destroyed in this state.
+   - The `onDestroy` method is called when the component is being removed from memory.
+   - You should perform final cleanup tasks in this state, such as unregistering broadcast receivers or releasing any remaining resources.
+
+7. **Saved (onSaveInstanceState):**
+   - This state is a callback that occurs before the component is paused or stopped.
+   - It provides an opportunity to save important data or state, which can be restored when the component is recreated.
+   - This state is especially useful when handling configuration changes, like device rotation.
+
+8. **OnRestart:**
+   - This state is called when a stopped component is about to be restarted and come back to the started state.
+   - It provides an opportunity to prepare the component for a return to the foreground.
+
+These lifecycle states are essential for managing the behavior of your Android components. By handling tasks and resource management in the appropriate lifecycle methods, you can ensure a smooth and responsive user experience in your app. Lifecycle-aware components, such as ViewModel, LiveData, and LifecycleObserver, can further simplify lifecycle management in Android development.
+
+
 # Useful Articles
 
 * [things-that-cannot-change](https://android-developers.googleblog.com/2011/06/things-that-cannot-change.html)
