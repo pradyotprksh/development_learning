@@ -1,0 +1,30 @@
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - rust/**
+concurrency:
+  group: ${{ github.ref }}
+  cancel-in-progress: true
+env:
+  CARGO_TERM_COLOR: always
+name: Rust Projects
+jobs:
+  renter:
+    name: hello-rust Code Checker
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Checking hello-rust
+        working-directory: ./rust/hello-rust
+        run: |
+          cargo build
+          cargo run
+      - name: Send Message
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+            GitHub Action for rust/hello-rust is completed with status ${{ job.status }} for ${{ github.ref }}.
