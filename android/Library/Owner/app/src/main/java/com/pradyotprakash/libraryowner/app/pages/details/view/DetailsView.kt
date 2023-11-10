@@ -58,8 +58,11 @@ fun DetailsView(detailsViewModel: DetailsViewModel = hiltViewModel()) {
                         emailId = customerDetails.value.emailId,
                         phoneNumber = customerDetails.value.phoneNumber,
                         profileImage = customerDetails.value.profileImage,
+                        nameError = customerDetails.value.nameError,
+                        emailIdError = customerDetails.value.emailIdError,
+                        phoneNumberError = customerDetails.value.phoneNumberError,
                         updateTextFieldValue = detailsViewModel::updateTextFieldValue,
-                        imageSelector = detailsViewModel::openImagePicker
+                        imageSelector = detailsViewModel::openImagePicker,
                     )
                 }
 
@@ -74,11 +77,15 @@ fun DetailsView(detailsViewModel: DetailsViewModel = hiltViewModel()) {
                         address = details.address,
                         showAddNewLibrary = index == libraryDetailList.value.lastIndex,
                         showDeleteLibrary = libraryDetailList.value.size > 1,
-                        deleteLibraryInformation = detailsViewModel::deleteLibraryInformation,
-                        addNewLibraryInformation = detailsViewModel::addNewLibraryInformation,
-                        updateTextFieldValue = detailsViewModel::updateTextFieldValue,
                         emailIdSameAsCustomer = details.emailIdSameAsCustomer,
                         phoneNumberSameAsCustomer = details.phoneNumberSameAsCustomer,
+                        nameError = details.nameError,
+                        emailIdError = details.emailIdError,
+                        phoneNumberError = details.phoneNumberError,
+                        addressError = details.addressError,
+                        updateTextFieldValue = detailsViewModel::updateTextFieldValue,
+                        deleteLibraryInformation = detailsViewModel::deleteLibraryInformation,
+                        addNewLibraryInformation = detailsViewModel::addNewLibraryInformation,
                         onCheckedChange = detailsViewModel::onCheckedChange
                     )
                 }

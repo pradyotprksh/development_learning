@@ -31,6 +31,8 @@ class DetailsViewModel @Inject constructor(
     private val _libraryDetails = MutableLiveData(listOf<LibraryDetails>())
     val libraryDetails: LiveData<List<LibraryDetails>>
         get() = _libraryDetails
+    private val region: String
+        get() = ipGeolocator.ipGeolocation.value?.countryCode2 ?: ""
 
     init {
         addNewLibraryInformation()
@@ -48,18 +50,18 @@ class DetailsViewModel @Inject constructor(
     fun updateTextFieldValue(value: String, type: DetailsTextField, index: Int = -1) {
         when (type) {
             DetailsTextField.CustomerName -> _customerDetails.value =
-                _customerDetails.value?.copyWith(name = value)
+                _customerDetails.value?.copy(name = value)
 
             DetailsTextField.CustomerEmailId -> _customerDetails.value =
-                _customerDetails.value?.copyWith(emailId = value)
+                _customerDetails.value?.copy(emailId = value)
 
             DetailsTextField.CustomerPhoneNumber -> _customerDetails.value =
-                _customerDetails.value?.copyWith(phoneNumber = value)
+                _customerDetails.value?.copy(phoneNumber = value)
 
             DetailsTextField.LibraryName -> {
                 _libraryDetails.value?.let { details ->
                     val mutableDetails = details.toMutableList()
-                    mutableDetails[index] = mutableDetails[index].copyWith(name = value)
+                    mutableDetails[index] = mutableDetails[index].copy(name = value)
                     _libraryDetails.value = mutableDetails.toList()
                 }
             }
@@ -67,7 +69,7 @@ class DetailsViewModel @Inject constructor(
             DetailsTextField.LibraryEmailId -> {
                 _libraryDetails.value?.let { details ->
                     val mutableDetails = details.toMutableList()
-                    mutableDetails[index] = mutableDetails[index].copyWith(emailId = value)
+                    mutableDetails[index] = mutableDetails[index].copy(emailId = value)
                     _libraryDetails.value = mutableDetails.toList()
                 }
             }
@@ -75,7 +77,7 @@ class DetailsViewModel @Inject constructor(
             DetailsTextField.LibraryPhoneNumber -> {
                 _libraryDetails.value?.let { details ->
                     val mutableDetails = details.toMutableList()
-                    mutableDetails[index] = mutableDetails[index].copyWith(phoneNumber = value)
+                    mutableDetails[index] = mutableDetails[index].copy(phoneNumber = value)
                     _libraryDetails.value = mutableDetails.toList()
                 }
             }
@@ -83,7 +85,7 @@ class DetailsViewModel @Inject constructor(
             DetailsTextField.LibraryAddress -> {
                 _libraryDetails.value?.let { details ->
                     val mutableDetails = details.toMutableList()
-                    mutableDetails[index] = mutableDetails[index].copyWith(address = value)
+                    mutableDetails[index] = mutableDetails[index].copy(address = value)
                     _libraryDetails.value = mutableDetails.toList()
                 }
             }
@@ -111,7 +113,7 @@ class DetailsViewModel @Inject constructor(
                 _libraryDetails.value?.let { details ->
                     val mutableDetails = details.toMutableList()
                     mutableDetails[index] =
-                        mutableDetails[index].copyWith(emailIdSameAsCustomer = value)
+                        mutableDetails[index].copy(emailIdSameAsCustomer = value)
                     _libraryDetails.value = mutableDetails.toList()
                 }
             }
@@ -120,7 +122,7 @@ class DetailsViewModel @Inject constructor(
                 _libraryDetails.value?.let { details ->
                     val mutableDetails = details.toMutableList()
                     mutableDetails[index] =
-                        mutableDetails[index].copyWith(phoneNumberSameAsCustomer = value)
+                        mutableDetails[index].copy(phoneNumberSameAsCustomer = value)
                     _libraryDetails.value = mutableDetails.toList()
                 }
             }
@@ -139,11 +141,18 @@ class DetailsViewModel @Inject constructor(
     }
 
     private fun checkForLibraryDetails(libraryDetails: List<LibraryDetails>) {
-        TODO("Not yet implemented")
+        _libraryDetails.value?.let { details ->
+            val mutableDetails = details.toMutableList()
+
+            for (index in mutableDetails.indices) {
+                mutableDetails[index] = mutableDetails[index].checkValidity(region)
+            }
+
+            _libraryDetails.value = mutableDetails.toList()
+        }
     }
 
-    private fun checkUserDetails(userDetails: CustomerDetails): Boolean {
-        val region = ipGeolocator.ipGeolocation.value?.countryCode2 ?: ""
-        return userDetails.isValid(region = region)
+    private fun checkUserDetails(userDetails: CustomerDetails) {
+        _customerDetails.value = userDetails.checkValidity(region)
     }
 }

@@ -28,6 +28,10 @@ fun LibraryDetailsItemComposable(
     showDeleteLibrary: Boolean,
     emailIdSameAsCustomer: Boolean,
     phoneNumberSameAsCustomer: Boolean,
+    nameError: Boolean,
+    emailIdError: Boolean,
+    phoneNumberError: Boolean,
+    addressError: Boolean,
     deleteLibraryInformation: (Int) -> Unit,
     addNewLibraryInformation: () -> Unit,
     updateTextFieldValue: (String, DetailsTextField, Int) -> Unit,
@@ -52,7 +56,8 @@ fun LibraryDetailsItemComposable(
             keyboardOptions = KeyboardOptions(
                 capitalization = KeyboardCapitalization.Words,
                 keyboardType = KeyboardType.Text
-            )
+            ),
+            isError = nameError,
         )
         Spacer(modifier = Modifier.height(10.dp))
         CustomSwitch(
@@ -82,7 +87,8 @@ fun LibraryDetailsItemComposable(
                 supportingText = { Text(text = TR.libraryEmailIdSupportingText) },
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Email
-                )
+                ),
+                isError = emailIdError,
             )
         }
         Spacer(modifier = Modifier.height(10.dp))
@@ -113,7 +119,8 @@ fun LibraryDetailsItemComposable(
                 supportingText = { Text(text = TR.libraryPhoneNumberSupportingText) },
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Phone
-                )
+                ),
+                isError = phoneNumberError,
             )
         }
         Spacer(modifier = Modifier.height(5.dp))
@@ -131,7 +138,8 @@ fun LibraryDetailsItemComposable(
             supportingText = { Text(text = TR.libraryAddressSupportingText) },
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Text
-            )
+            ),
+            isError = addressError,
         )
         Spacer(modifier = Modifier.height(5.dp))
         if (showDeleteLibrary) {

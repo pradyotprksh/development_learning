@@ -8,10 +8,19 @@ import javax.inject.Inject
 
 class IpGeolocationAuthenticationInterceptor @Inject constructor() : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
-        val request = chain.request().newBuilder().run {
-            addHeader(Constants.IP_GEOLOCATION_API_KEY, IpGeolocation.API_KEY)
+        val originalRequest = chain.request()
+        val originalHttpUrl = originalRequest.url
+
+        val url = originalHttpUrl.newBuilder().run {
+            addQueryParameter(Constants.IP_GEOLOCATION_API_KEY, IpGeolocation.API_KEY)
             build()
         }
+
+        val request = originalRequest.newBuilder().run {
+            url(url)
+            build()
+        }
+
         return chain.proceed(request)
     }
 }

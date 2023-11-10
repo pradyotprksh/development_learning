@@ -1,26 +1,26 @@
 package com.pradyotprakash.libraryowner.app.pages.details.viewmodel.utils
 
+import android.webkit.URLUtil
+import com.pradyotprakash.libraryowner.app.utils.isValidEmailId
+import com.pradyotprakash.libraryowner.app.utils.isValidName
+import com.pradyotprakash.libraryowner.app.utils.isValidPhoneNumber
+
 data class LibraryDetails(
     val name: String = "",
     val emailId: String = "",
     val emailIdSameAsCustomer: Boolean = false,
     val phoneNumber: String = "",
     val phoneNumberSameAsCustomer: Boolean = false,
-    val address: String = ""
+    val address: String = "",
+    val nameError: Boolean = false,
+    val emailIdError: Boolean = false,
+    val phoneNumberError: Boolean = false,
+    val addressError: Boolean = false,
 ) {
-    fun copyWith(
-        name: String? = null,
-        emailId: String? = null,
-        phoneNumber: String? = null,
-        address: String? = null,
-        emailIdSameAsCustomer: Boolean? = null,
-        phoneNumberSameAsCustomer: Boolean? = null,
-    ) = LibraryDetails(
-        name = name ?: this.name,
-        emailId = emailId ?: this.emailId,
-        phoneNumber = phoneNumber ?: this.phoneNumber,
-        emailIdSameAsCustomer = emailIdSameAsCustomer ?: this.emailIdSameAsCustomer,
-        phoneNumberSameAsCustomer = phoneNumberSameAsCustomer ?: this.phoneNumberSameAsCustomer,
-        address = address ?: this.address
+    fun checkValidity(region: String) = this.copy(
+        nameError = !name.isValidName(),
+        emailIdError = !(emailIdSameAsCustomer || emailId.isValidEmailId()),
+        phoneNumberError = !(phoneNumberSameAsCustomer || phoneNumber.isValidPhoneNumber(region)),
+        addressError = !(address.isNotBlank() && URLUtil.isValidUrl(address)),
     )
 }

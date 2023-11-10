@@ -48,5 +48,5 @@ object TR {
     var emailIdSameSubTitle = Translation.getString("emailIdSameSubTitle")
     var phoneNumberSameTitle = Translation.getString("phoneNumberSameTitle")
     var phoneNumberSameSubTitle = Translation.getString("phoneNumberSameSubTitle")
-
+    
 }

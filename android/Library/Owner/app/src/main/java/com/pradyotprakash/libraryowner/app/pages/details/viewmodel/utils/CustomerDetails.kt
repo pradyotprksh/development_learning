@@ -13,25 +13,9 @@ data class CustomerDetails(
     val emailIdError: Boolean = false,
     val phoneNumberError: Boolean = false,
 ) {
-    fun copyWith(
-        name: String? = null,
-        emailId: String? = null,
-        phoneNumber: String? = null,
-        profileImage: String? = null,
-        nameError: Boolean? = null,
-        emailIdError: Boolean? = null,
-        phoneNumberError: Boolean? = null,
-    ) = CustomerDetails(
-        name = name ?: this.name,
-        emailId = emailId ?: this.emailId,
-        phoneNumber = phoneNumber ?: this.phoneNumber,
-        profileImage = profileImage ?: this.profileImage,
-        nameError = nameError ?: this.nameError,
-        emailIdError = emailIdError ?: this.emailIdError,
-        phoneNumberError = phoneNumberError ?: this.phoneNumberError,
+    fun checkValidity(region: String) = this.copy(
+        nameError = !name.isValidName(),
+        emailIdError = !emailId.isValidEmailId(),
+        phoneNumberError = !name.isValidPhoneNumber(region),
     )
-
-    fun isValid(region: String) = name.isValidName() &&
-            emailId.isValidEmailId() &&
-            phoneNumber.isValidPhoneNumber(region)
 }

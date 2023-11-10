@@ -19,6 +19,9 @@ fun YourDetailsItemComposable(
     emailId: String,
     phoneNumber: String,
     profileImage: String,
+    nameError: Boolean,
+    emailIdError: Boolean,
+    phoneNumberError: Boolean,
     updateTextFieldValue: (String, DetailsTextField) -> Unit,
     imageSelector: () -> Unit,
 ) {
@@ -85,7 +88,8 @@ fun YourDetailsItemComposable(
             keyboardOptions = KeyboardOptions(
                 capitalization = KeyboardCapitalization.Words,
                 keyboardType = KeyboardType.Text
-            )
+            ),
+            isError = nameError,
         )
         Spacer(modifier = Modifier.height(5.dp))
         CustomOutlinedTextField(
@@ -101,7 +105,8 @@ fun YourDetailsItemComposable(
             supportingText = { Text(text = TR.emailIdSupportingText) },
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Email
-            )
+            ),
+            isError = emailIdError,
         )
         Spacer(modifier = Modifier.height(5.dp))
         CustomOutlinedTextField(
@@ -117,7 +122,8 @@ fun YourDetailsItemComposable(
             supportingText = { Text(text = TR.phoneNumberSupportingText) },
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Phone
-            )
+            ),
+            isError = phoneNumberError,
         )
     }
     Spacer(modifier = Modifier.height(15.dp))

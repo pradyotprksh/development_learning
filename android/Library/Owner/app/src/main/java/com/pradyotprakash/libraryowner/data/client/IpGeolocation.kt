@@ -43,7 +43,7 @@ object IpGeolocation {
     @Singleton
     @Provides
     @IpGeolocationRetrofit
-    fun provideRetrofit(@UnsplashClient okHttpClient: OkHttpClient): Retrofit = Retrofit.Builder()
+    fun provideRetrofit(@IpGeolocationClient okHttpClient: OkHttpClient): Retrofit = Retrofit.Builder()
         .addConverterFactory(GsonConverterFactory.create())
         .baseUrl(IP_GEOLOCATION_BASE_URL)
         .client(okHttpClient)
