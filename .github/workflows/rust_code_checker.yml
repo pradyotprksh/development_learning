@@ -11,7 +11,7 @@ env:
   CARGO_TERM_COLOR: always
 name: Rust Projects
 jobs:
-  renter:
+  hello-rust:
     name: hello-rust Code Checker
     runs-on: ubuntu-latest
     steps:
@@ -28,3 +28,20 @@ jobs:
           token: ${{ secrets.TELEGRAM_TOKEN }}
           message: |
             GitHub Action for rust/hello-rust is completed with status ${{ job.status }} for ${{ github.ref }}.
+  guessing_number:
+    name: guessing_number Code Checker
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Checking guessing_number
+        working-directory: ./rust/guessing_number
+        run: |
+          cargo build
+          cargo check
+      - name: Send Message
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+            GitHub Action for rust/guessing_number is completed with status ${{ job.status }} for ${{ github.ref }}.
