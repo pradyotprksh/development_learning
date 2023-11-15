@@ -11,4 +11,8 @@ class UserFirestoreServiceImplementation(
     override suspend fun getUserDetails(userId: String) =
         firestore.collection(Keys.Collections.USERS).document(userId).get().await()
             .toObject(User::class.java)
+
+    override suspend fun setUserDetails(user: User) {
+        firestore.collection(Keys.Collections.USERS).document(user.userId).set(user).await()
+    }
 }

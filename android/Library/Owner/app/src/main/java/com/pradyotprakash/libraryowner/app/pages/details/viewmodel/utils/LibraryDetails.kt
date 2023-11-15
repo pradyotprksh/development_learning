@@ -17,6 +17,11 @@ data class LibraryDetails(
     val phoneNumberError: Boolean = false,
     val addressError: Boolean = false,
 ) {
+    fun isValid(region: String) = name.isValidName() &&
+            !(emailIdSameAsCustomer || emailId.isValidEmailId()) &&
+            (phoneNumberSameAsCustomer || phoneNumber.isValidPhoneNumber(region)) &&
+            (address.isNotBlank() && URLUtil.isValidUrl(address))
+
     fun checkValidity(region: String) = this.copy(
         nameError = !name.isValidName(),
         emailIdError = !(emailIdSameAsCustomer || emailId.isValidEmailId()),

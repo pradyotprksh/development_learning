@@ -17,6 +17,7 @@ class AuthenticationUseCase @Inject constructor(
             emailId = user.email ?: "",
             phoneNumber = user.phoneNumber ?: "",
             userId = user.uid,
+            createdOnTimestamp = user.metadata?.creationTimestamp,
         )
     }
 }

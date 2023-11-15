@@ -5,4 +5,5 @@ data class AuthUser(
     val emailId: String,
     val phoneNumber: String,
     val userId: String,
+    val createdOnTimestamp: Long?,
 )

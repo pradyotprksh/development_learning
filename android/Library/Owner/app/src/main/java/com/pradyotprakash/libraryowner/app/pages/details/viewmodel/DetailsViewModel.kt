@@ -3,14 +3,18 @@ package com.pradyotprakash.libraryowner.app.pages.details.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.pradyotprakash.libraryowner.app.pages.details.viewmodel.utils.CustomerDetails
 import com.pradyotprakash.libraryowner.app.pages.details.viewmodel.utils.DetailsSwitchField
 import com.pradyotprakash.libraryowner.app.pages.details.viewmodel.utils.DetailsTextField
 import com.pradyotprakash.libraryowner.app.pages.details.viewmodel.utils.LibraryDetails
 import com.pradyotprakash.libraryowner.core.geolocation.IpGeolocator
+import com.pradyotprakash.libraryowner.core.models.AuthUser
 import com.pradyotprakash.libraryowner.core.navigation.Navigator
 import com.pradyotprakash.libraryowner.domain.usecases.AuthenticationUseCase
+import com.pradyotprakash.libraryowner.domain.usecases.UserFirestoreUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -18,6 +22,7 @@ class DetailsViewModel @Inject constructor(
     private val authenticationUseCase: AuthenticationUseCase,
     private val navigator: Navigator,
     private val ipGeolocator: IpGeolocator,
+    private val userFirestoreUseCase: UserFirestoreUseCase,
 ) : ViewModel() {
     private val _loading = MutableLiveData(false)
     val loading: LiveData<Boolean>
@@ -28,6 +33,9 @@ class DetailsViewModel @Inject constructor(
     private val _customerDetails = MutableLiveData(CustomerDetails())
     val customerDetails: LiveData<CustomerDetails>
         get() = _customerDetails
+    private val _authUser = MutableLiveData<AuthUser>()
+    val authUser: LiveData<AuthUser>
+        get() = _authUser
     private val _libraryDetails = MutableLiveData(listOf<LibraryDetails>())
     val libraryDetails: LiveData<List<LibraryDetails>>
         get() = _libraryDetails
@@ -35,6 +43,7 @@ class DetailsViewModel @Inject constructor(
         get() = ipGeolocator.ipGeolocation.value?.countryCode2 ?: ""
 
     init {
+        getAuthenticationUserDetails()
         addNewLibraryInformation()
     }
 
@@ -43,8 +52,8 @@ class DetailsViewModel @Inject constructor(
         _errorText.value = message
     }
 
-    fun getAuthenticationUserDetails() {
-        authenticationUseCase.getCurrentUserDetails()?.let { details -> }
+    private fun getAuthenticationUserDetails() {
+        authenticationUseCase.getCurrentUserDetails()?.let { details -> _authUser.value = details }
     }
 
     fun updateTextFieldValue(value: String, type: DetailsTextField, index: Int = -1) {
@@ -130,29 +139,61 @@ class DetailsViewModel @Inject constructor(
     }
 
     fun saveDetails() {
-        val userDetails = _customerDetails.value
-        val libraryDetails = _libraryDetails.value
-        if (userDetails != null) {
-            if (!libraryDetails.isNullOrEmpty()) {
-                checkUserDetails(userDetails)
-                checkForLibraryDetails(libraryDetails)
+        _authUser.value?.let { authUser ->
+            _customerDetails.value?.let { userDetails ->
+                _libraryDetails.value?.let { libraryDetails ->
+                    if (authUser.userId.isNotBlank() && libraryDetails.isNotEmpty()) {
+                        if (checkUserDetails(userDetails) && checkForLibraryDetails(libraryDetails)) {
+                            viewModelScope.launch {
+                                updateUserDetails(
+                                    userId = authUser.userId,
+                                    userDetails = userDetails,
+                                    createdOn = authUser.createdOnTimestamp
+                                )
+
+                                updateLibraryDetails(
+                                    userId = authUser.userId,
+                                    libraryDetails = libraryDetails,
+                                )
+                            }
+                        }
+                    }
+                }
             }
         }
     }
 
-    private fun checkForLibraryDetails(libraryDetails: List<LibraryDetails>) {
-        _libraryDetails.value?.let { details ->
-            val mutableDetails = details.toMutableList()
-
-            for (index in mutableDetails.indices) {
-                mutableDetails[index] = mutableDetails[index].checkValidity(region)
-            }
-
-            _libraryDetails.value = mutableDetails.toList()
-        }
+    private fun updateLibraryDetails(userId: String, libraryDetails: List<LibraryDetails>) {
+        TODO("Not yet implemented")
     }
 
-    private fun checkUserDetails(userDetails: CustomerDetails) {
+    private suspend fun updateUserDetails(
+        userId: String,
+        userDetails: CustomerDetails,
+        createdOn: Long?,
+    ) {
+        userFirestoreUseCase.setUserDetails(
+            userId = userId,
+            customerDetails = userDetails,
+            createdOn = createdOn,
+        )
+    }
+
+    private fun checkForLibraryDetails(libraryDetails: List<LibraryDetails>): Boolean {
+        val mutableDetails = libraryDetails.toMutableList()
+
+        for (index in mutableDetails.indices) {
+            mutableDetails[index] = mutableDetails[index].checkValidity(region)
+        }
+
+        _libraryDetails.value = mutableDetails.toList()
+
+        return _libraryDetails.value?.none { !it.isValid(region) } ?: false
+    }
+
+    private fun checkUserDetails(userDetails: CustomerDetails): Boolean {
         _customerDetails.value = userDetails.checkValidity(region)
+
+        return _customerDetails.value?.isValid(region) ?: false
     }
 }

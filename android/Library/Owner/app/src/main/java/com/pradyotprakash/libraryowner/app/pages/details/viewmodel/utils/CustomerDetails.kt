@@ -13,9 +13,13 @@ data class CustomerDetails(
     val emailIdError: Boolean = false,
     val phoneNumberError: Boolean = false,
 ) {
+    fun isValid(region: String) = name.isValidName() &&
+            emailId.isValidEmailId() &&
+            phoneNumber.isValidPhoneNumber(region)
+
     fun checkValidity(region: String) = this.copy(
         nameError = !name.isValidName(),
         emailIdError = !emailId.isValidEmailId(),
-        phoneNumberError = !name.isValidPhoneNumber(region),
+        phoneNumberError = !phoneNumber.isValidPhoneNumber(region),
     )
 }
