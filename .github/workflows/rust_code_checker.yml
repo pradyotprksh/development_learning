@@ -20,6 +20,7 @@ jobs:
         working-directory: ./rust/hello-rust
         run: |
           cargo build
+          cargo check
           cargo run
       - name: Send Message
         uses: appleboy/telegram-action@master
@@ -45,3 +46,21 @@ jobs:
           token: ${{ secrets.TELEGRAM_TOKEN }}
           message: |
             GitHub Action for rust/guessing_number is completed with status ${{ job.status }} for ${{ github.ref }}.
+  common_programming_concepts:
+    name: common_programming_concepts Code Checker
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Checking common_programming_concepts
+        working-directory: ./rust/common_programming_concepts
+        run: |
+          cargo build
+          cargo check
+          cargo run
+      - name: Send Message
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+            GitHub Action for rust/common_programming_concepts is completed with status ${{ job.status }} for ${{ github.ref }}.
