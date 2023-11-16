@@ -64,21 +64,3 @@ jobs:
           token: ${{ secrets.TELEGRAM_TOKEN }}
           message: |
             GitHub Action for rust/common_programming_concepts is completed with status ${{ job.status }} for ${{ github.ref }}.
-  ownership:
-    name: ownership Code Checker
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v1
-      - name: Checking ownership
-        working-directory: ./rust/ownership
-        run: |
-          cargo build
-          cargo check
-          cargo run
-      - name: Send Message
-        uses: appleboy/telegram-action@master
-        with:
-          to: ${{ secrets.TELEGRAM_TO }}
-          token: ${{ secrets.TELEGRAM_TOKEN }}
-          message: |
-            GitHub Action for rust/ownership is completed with status ${{ job.status }} for ${{ github.ref }}.
