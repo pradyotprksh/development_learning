@@ -80,7 +80,7 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.7.3")
 
     // Compose
-    implementation("androidx.activity:activity-compose:1.8.0")
+    implementation("androidx.activity:activity-compose:1.8.1")
     implementation(platform("androidx.compose:compose-bom:2023.10.01"))
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.ui:ui-graphics")
@@ -92,7 +92,7 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-test-manifest")
 
     // Firebase
-    implementation(platform("com.google.firebase:firebase-bom:32.5.0"))
+    implementation(platform("com.google.firebase:firebase-bom:32.6.0"))
     implementation("com.google.firebase:firebase-analytics")
     implementation("com.google.firebase:firebase-appcheck-playintegrity")
     implementation("com.google.firebase:firebase-appcheck")
@@ -102,6 +102,7 @@ dependencies {
     implementation("com.firebaseui:firebase-ui-auth:8.0.2")
     implementation("com.google.firebase:firebase-firestore-ktx")
     implementation("com.google.firebase:firebase-config")
+    implementation("com.google.android.gms:play-services-auth:20.7.0")
 
     // Hilt
     implementation("com.google.dagger:hilt-android:2.48.1")
@@ -122,7 +123,7 @@ dependencies {
     releaseImplementation("com.github.chuckerteam.chucker:library-no-op:4.0.0")
 
     // Landscapist
-    implementation("com.github.skydoves:landscapist-coil:2.2.10")
+    implementation("com.github.skydoves:landscapist-coil:2.2.12")
 
     // Accompanist
     implementation("com.google.accompanist:accompanist-insets:0.14.0")
@@ -131,7 +132,7 @@ dependencies {
     implementation("androidx.datastore:datastore-preferences:1.0.0")
 
     // Libphonenumber
-    implementation("com.googlecode.libphonenumber:libphonenumber:8.13.24")
+    implementation("com.googlecode.libphonenumber:libphonenumber:8.13.25")
 
     // Testing
     testImplementation("junit:junit:4.13.2")

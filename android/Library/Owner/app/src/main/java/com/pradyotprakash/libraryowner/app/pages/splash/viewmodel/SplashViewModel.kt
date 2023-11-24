@@ -41,11 +41,12 @@ class SplashViewModel @Inject constructor(
                                     backgroundImages.subList(fromIndex = 0, toIndex = 9)
                             }
                         }
+                        is OwnerResponse.Idle -> {
+                            goToNextScreen()
+                        }
 
                         else -> {}
                     }
-
-                    goToNextScreen()
                 }
             }
         } else {
