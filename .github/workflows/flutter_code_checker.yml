@@ -204,7 +204,7 @@ jobs:
           flutter pub outdated
           flutter pub upgrade
           flutter pub get
-          flutter analyse
+          flutter analyze
 #          flutter test
       - name: Send Message
         uses: appleboy/telegram-action@master
