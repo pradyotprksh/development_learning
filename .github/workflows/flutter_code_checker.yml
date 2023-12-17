@@ -187,3 +187,29 @@ jobs:
           token: ${{ secrets.TELEGRAM_TOKEN }}
           message: |
             GitHub Action for flutter/fews is completed with status ${{ job.status }} for ${{ github.ref }}.
+  json_widget:
+    name: json_widget Code Checker
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-java@v1
+        with:
+          java-version: '12.x'
+      - uses: subosito/flutter-action@v1
+      - run: flutter doctor
+      - name: Checking json_widget
+        working-directory: ./flutter/json_widget
+        run: |
+          flutter clean
+          flutter pub outdated
+          flutter pub upgrade
+          flutter pub get
+          flutter analyse
+#          flutter test
+      - name: Send Message
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+            GitHub Action for flutter/fews is completed with status ${{ job.status }} for ${{ github.ref }}.
