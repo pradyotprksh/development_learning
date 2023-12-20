@@ -12,14 +12,19 @@ class Options {
   /// [onButtonTap] - Whenever a widget on which tap is performed, then this
   /// method will be called
   ///
-  /// [onAnyErrorWidget] - 
+  /// [onAnyErrorWidget] - When an error occurs while parsing the JSON then
+  /// this widget will be shown if present.
+  ///
+  /// [showLogs] - show logs for the library, can be disabled.
   Options({
     required this.onTextChanged,
     required this.onButtonTap,
     this.onAnyErrorWidget,
+    this.showLogs = true,
   });
 
   final Function(String, String)? onTextChanged;
   final Function(String)? onButtonTap;
   final Widget? onAnyErrorWidget;
+  final bool showLogs;
 }

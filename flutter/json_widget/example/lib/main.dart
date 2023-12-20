@@ -40,7 +40,7 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: JsonWidgetBuilder(
-        jsonString: "",
+        jsonString: "{}",
         options: Options(
           onTextChanged: (key, val) {},
           onButtonTap: (key) {},
