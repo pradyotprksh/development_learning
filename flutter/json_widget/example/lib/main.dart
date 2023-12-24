@@ -44,6 +44,7 @@ class _MyHomePageState extends State<MyHomePage> {
         options: Options(
           onTextChanged: (key, val) {},
           onButtonTap: (key) {},
+          showLogs: false
         ),
       ),
     );

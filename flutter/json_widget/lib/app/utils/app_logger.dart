@@ -17,7 +17,10 @@ abstract class AppLogger {
     Object? error,
     StackTrace? stackTrace,
     LogType logType = LogType.debug,
+    bool showLogs = true,
   }) {
+    if (!showLogs) return;
+
     switch (logType) {
       case LogType.trace:
         _logger.t(

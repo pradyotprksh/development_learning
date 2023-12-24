@@ -212,4 +212,4 @@ jobs:
           to: ${{ secrets.TELEGRAM_TO }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
           message: |
-            GitHub Action for flutter/fews is completed with status ${{ job.status }} for ${{ github.ref }}.
+            GitHub Action for flutter/json_widget is completed with status ${{ job.status }} for ${{ github.ref }}.
