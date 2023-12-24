@@ -80,19 +80,19 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.7.3")
 
     // Compose
-    implementation("androidx.activity:activity-compose:1.8.1")
+    implementation("androidx.activity:activity-compose:1.8.2")
     implementation(platform("androidx.compose:compose-bom:2023.10.01"))
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3")
-    implementation("androidx.navigation:navigation-compose:2.7.5")
+    implementation("androidx.navigation:navigation-compose:2.7.6")
     implementation("androidx.compose.runtime:runtime-livedata:1.5.4")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
 
     // Firebase
-    implementation(platform("com.google.firebase:firebase-bom:32.6.0"))
+    implementation(platform("com.google.firebase:firebase-bom:32.7.0"))
     implementation("com.google.firebase:firebase-analytics")
     implementation("com.google.firebase:firebase-appcheck-playintegrity")
     implementation("com.google.firebase:firebase-appcheck")
@@ -105,8 +105,8 @@ dependencies {
     implementation("com.google.android.gms:play-services-auth:20.7.0")
 
     // Hilt
-    implementation("com.google.dagger:hilt-android:2.48.1")
-    kapt("com.google.dagger:hilt-android-compiler:2.48.1")
+    implementation("com.google.dagger:hilt-android:2.50")
+    kapt("com.google.dagger:hilt-android-compiler:2.50")
     implementation("androidx.hilt:hilt-navigation-compose:1.1.0")
 
     // Logger
@@ -118,21 +118,21 @@ dependencies {
     // Retrofit
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
-    implementation("com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.10")
+    implementation("com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.12")
     debugImplementation("com.github.chuckerteam.chucker:library:4.0.0")
     releaseImplementation("com.github.chuckerteam.chucker:library-no-op:4.0.0")
 
     // Landscapist
-    implementation("com.github.skydoves:landscapist-coil:2.2.12")
+    implementation("com.github.skydoves:landscapist-coil:2.2.13")
 
     // Accompanist
-    implementation("com.google.accompanist:accompanist-insets:0.14.0")
+    implementation("com.google.accompanist:accompanist-insets:0.30.1")
 
     // Data store
     implementation("androidx.datastore:datastore-preferences:1.0.0")
 
     // Libphonenumber
-    implementation("com.googlecode.libphonenumber:libphonenumber:8.13.25")
+    implementation("com.googlecode.libphonenumber:libphonenumber:8.13.27")
 
     // Testing
     testImplementation("junit:junit:4.13.2")
