@@ -23,6 +23,8 @@ class JsonWidgetBuilderBloc
           logType: LogType.fatal,
           error: errorMessage,
         );
+
+        final jsonWidgetResponse = jsonWidgetResponseFromJson(event.jsonString);
       }
 
       emit(

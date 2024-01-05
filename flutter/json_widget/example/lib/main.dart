@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:json_widget/json_widget.dart';
 
 void main() {
@@ -39,14 +42,34 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
       ),
-      body: JsonWidgetBuilder(
-        jsonString: "{}",
-        options: Options(
-          onTextChanged: (key, val) {},
-          onButtonTap: (key) {},
-          showLogs: false
-        ),
+      body: FutureBuilder(
+        future: _readHappyJsonContent(),
+        builder: (_, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            return JsonWidgetBuilder(
+              jsonString: snapshot.data ?? "",
+              options: Options(
+                  onTextChanged: (key, val) {},
+                  onButtonTap: (key) {},
+                  showLogs: false
+              ),
+            );
+          }
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        },
       ),
     );
+  }
+
+  Future<String?> _readHappyJsonContent() async {
+    try {
+      await Future.delayed(const Duration(seconds: 3));
+      final jsonString = await rootBundle.loadString('assets/happy_json.json');
+      return jsonString;
+    } catch (_) {
+      return null;
+    }
   }
 }

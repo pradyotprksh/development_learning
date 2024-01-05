@@ -1,0 +1,12 @@
+{
+  "pages": [
+    {
+      "id": "8JF1PIbWSIx7bbttue8R",
+      "title": "Settings",
+      "subtitle": "Select the settings which suits you well",
+      "route": "/settings",
+      "body": [],
+      "onPop": {}
+    }
+  ]
+}
