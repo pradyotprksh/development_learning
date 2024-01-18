@@ -1,0 +1,1 @@
+/Users/pradyotprakash/Desktop/Data/Projects/development_learning/rust/struct_example/target/debug/struct_example: /Users/pradyotprakash/Desktop/Data/Projects/development_learning/rust/struct_example/src/main.rs
