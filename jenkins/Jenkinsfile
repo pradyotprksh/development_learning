@@ -26,30 +26,29 @@ pipeline {
                                     }
                                 }
                             }
-
                         }
-                        if (projectDir.contains('kotlin')) {
-                            stage("${projectDir} Project") {
-                                steps {
-                                    dir("./${projectDir}") {
-                                        script {
-                                            sh "python3 ${env.KOTLIN_SCRIPT}"
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                        if (projectDir.contains('rust')) {
-                            stage("${projectDir} Project") {
-                                steps {
-                                    dir("./${projectDir}") {
-                                        script {
-                                            sh "python3 ${env.KOTLIN_SCRIPT}"
-                                        }
-                                    }
-                                }
-                            }
-                        }
+//                         if (projectDir.contains('kotlin')) {
+//                             stage("${projectDir} Project") {
+//                                 steps {
+//                                     dir("./${projectDir}") {
+//                                         script {
+//                                             sh "python3 ${env.KOTLIN_SCRIPT}"
+//                                         }
+//                                     }
+//                                 }
+//                             }
+//                         }
+//                         if (projectDir.contains('rust')) {
+//                             stage("${projectDir} Project") {
+//                                 steps {
+//                                     dir("./${projectDir}") {
+//                                         script {
+//                                             sh "python3 ${env.KOTLIN_SCRIPT}"
+//                                         }
+//                                     }
+//                                 }
+//                             }
+//                         }
                     }
                 }
             }
