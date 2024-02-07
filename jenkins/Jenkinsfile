@@ -1,16 +1,19 @@
 pipeline {
     agent any
 
+    environment {
+        ANDROID_SCRIPT = '../../scripts/android_script.py'
+    }
+
     stages {
         stage('Projects Checkup') {
-            def android_script = '../../scripts/android_script.py'
             parallel {
                 // Android
                 stage('JenkinsLearning project') {
                     steps {
                         dir('./android/JenkinsLearning') {
                             script {
-                                sh 'python3 ${android_script}'
+                                sh 'python3 ${env.ANDROID_SCRIPT}'
                             }
                         }
                     }
