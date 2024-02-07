@@ -2,8 +2,9 @@ pipeline {
     agent any
 
     stages {
-        stage('Build Android Project') {
+        stage('Projects Checkup') {
             parallel {
+                // Android
                 stage('JenkinsLearning project') {
                     steps {
                         dir('./android/JenkinsLearning') {
@@ -14,20 +15,7 @@ pipeline {
                     }
                 }
 
-                stage('Demo project') {
-                    steps {
-                        dir('./android/Demo') {
-                            script {
-                                sh 'python3 ../../jenkins/android_script.py'
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        stage('Build Kotlin Project') {
-            parallel {
+                // Python
                 stage('pokedex project') {
                     steps {
                         dir('./kotlin/ktor/pokedex') {
