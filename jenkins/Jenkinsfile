@@ -12,22 +12,30 @@ pipeline {
             steps {
                 script {
                     def projectDirs = sh(script: 'ls -d ./*/ | tr -d \'/\'', returnStdout: true).trim().split('\n')
-
-                    // Run stages dynamically for each project directory
                     for (def projectDir in projectDirs) {
-                        stage("${projectDir} project") {
-                            steps {
-                                dir("./${projectDir}") {
-                                    script {
-                                        if (projectDir.contains('android')) {
-                                            sh "python3 ${env.ANDROID_SCRIPT}"
-                                        } else if (projectDir.contains('kotlin')) {
-                                            sh "python3 ${env.KOTLIN_SCRIPT}"
-                                        } else if (projectDir.contains('rust')) {
-                                            sh "python3 ${env.RUST_SCRIPT}"
-                                        } else {
-                                            pwd
-                                        }
+                        if (projectDir.contains('android')) {
+                            stage("${projectDir} Project") {
+                                steps {
+                                    dir("./${projectDir}") {
+                                        sh "python3 ${env.ANDROID_SCRIPT}"
+                                    }
+                                }
+                            }
+                        }
+                        if (projectDir.contains('kotlin')) {
+                            stage("${projectDir} Project") {
+                                steps {
+                                    dir("./${projectDir}") {
+                                        sh "python3 ${env.KOTLIN_SCRIPT}"
+                                    }
+                                }
+                            }
+                        }
+                        if (projectDir.contains('rust')) {
+                            stage("${projectDir} Project") {
+                                steps {
+                                    dir("./${projectDir}") {
+                                        sh "python3 ${env.KOTLIN_SCRIPT}"
                                     }
                                 }
                             }
