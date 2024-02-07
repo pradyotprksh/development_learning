@@ -9,63 +9,25 @@ pipeline {
 
     stages {
         stage('Projects Checkup') {
-            parallel {
-                // Android
-                stage('JenkinsLearning project') {
-                    steps {
-                        dir('./android/JenkinsLearning') {
-                            script {
-                                sh "python3 ${env.ANDROID_SCRIPT}"
-                            }
-                        }
-                    }
-                }
+            steps {
+                script {
+                    def projectDirs = sh(script: 'ls -d ./*/ | tr -d \'/\'', returnStdout: true).trim().split('\n')
 
-                // Python
-                stage('pokedex project') {
-                    steps {
-                        // when { changeset './kotlin/ktor/pokedex' }
-                        dir('./kotlin/ktor/pokedex') {
-                            script {
-                                sh "python3 ${env.KOTLIN_SCRIPT}"
-                            }
-                        }
-                    }
-                }
-
-                // Rust
-                stage('common_programming_concepts project') {
-                    steps {
-                        dir('./rust/common_programming_concepts') {
-                            script {
-                                sh "python3 ${env.RUST_SCRIPT}"
-                            }
-                        }
-                    }
-                }
-                stage('guessing_number project') {
-                    steps {
-                        dir('./rust/guessing_number') {
-                            script {
-                                sh "python3 ${env.RUST_SCRIPT}"
-                            }
-                        }
-                    }
-                }
-                stage('hello-rust project') {
-                    steps {
-                        dir('./rust/hello-rust') {
-                            script {
-                                sh "python3 ${env.RUST_SCRIPT}"
-                            }
-                        }
-                    }
-                }
-                stage('struct_example project') {
-                    steps {
-                        dir('./rust/struct_example') {
-                            script {
-                                sh "python3 ${env.RUST_SCRIPT}"
+                    // Run stages dynamically for each project directory
+                    for (def projectDir in projectDirs) {
+                        stage("${projectDir} project") {
+                            steps {
+                                dir("./${projectDir}") {
+                                    script {
+                                        if (projectDir.contains('android')) {
+                                            sh "python3 ${env.ANDROID_SCRIPT}"
+                                        } else if (projectDir.contains('kotlin')) {
+                                            sh "python3 ${env.KOTLIN_SCRIPT}"
+                                        } else if (projectDir.contains('rust')) {
+                                            sh "python3 ${env.RUST_SCRIPT}"
+                                        }
+                                    }
+                                }
                             }
                         }
                     }
