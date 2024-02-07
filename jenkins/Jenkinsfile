@@ -2,37 +2,39 @@ pipeline {
     agent any
 
     stages {
-        stage('Build Android Project') {
-            parallel {
-                stage('JenkinsLearning project') {
-                    steps {
-                        dir('./android/JenkinsLearning') {
-                            script {
-                                sh 'python3 ../../jenkins/android_script.py'
+        parallel {
+            stage('Build Android Project') {
+                parallel {
+                    stage('JenkinsLearning project') {
+                        steps {
+                            dir('./android/JenkinsLearning') {
+                                script {
+                                    sh 'python3 ../../jenkins/android_script.py'
+                                }
                             }
                         }
                     }
-                }
 
-                stage('Demo project') {
-                    steps {
-                        dir('./android/Demo') {
-                            script {
-                                sh 'python3 ../../jenkins/android_script.py'
+                    stage('Demo project') {
+                        steps {
+                            dir('./android/Demo') {
+                                script {
+                                    sh 'python3 ../../jenkins/android_script.py'
+                                }
                             }
                         }
                     }
                 }
             }
-        }
 
-        stage('Build Kotlin Project') {
-            parallel {
-                stage('pokedex project') {
-                    steps {
-                        dir('./kotlin/ktor/pokedex') {
-                            script {
-                                sh 'python3 ../../../jenkins/kotlin_script.py'
+            stage('Build Kotlin Project') {
+                parallel {
+                    stage('pokedex project') {
+                        steps {
+                            dir('./kotlin/ktor/pokedex') {
+                                script {
+                                    sh 'python3 ../../../jenkins/kotlin_script.py'
+                                }
                             }
                         }
                     }
