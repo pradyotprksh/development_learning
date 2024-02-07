@@ -7,8 +7,8 @@ pipeline {
                 echo 'Checking out the Android project'
                 dir('./android/JenkinsLearning') {
                     script {
-                        echo "sdk.dir=/Users/pradyotprakash/Library/Android/sdk" > local.properties
-                        echo 'Running ./gradlew build'
+                        writeFile file: 'local.properties', text: 'sdk.dir=/Users/pradyotprakash/Library/Android/sdk'
+                        echo "==== Build Command ===="
                         sh './gradlew build'
                     }
                 }
