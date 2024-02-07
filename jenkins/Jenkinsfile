@@ -2,19 +2,15 @@ pipeline {
     agent any
 
     stages {
-        stage('Android Builds') {
+        stage('Build Android Project') {
             steps {
-                echo 'Checking out Android projects'
-                script {
-                    def demoBuild = {
-                        echo 'Checking out the Demo project'
-                        dir('./android/Demo') {
-                            echo 'sdk.dir=/Users/pradyotprakash/Library/Android/sdk' > local.properties
-                            sh './gradlew build'
-                        }
+                echo 'Checking out the Android project'
+                dir('./android/JenkinsLearning') {
+                    script {
+                        echo "sdk.dir=/Users/pradyotprakash/Library/Android/sdk" > local.properties
+                        echo 'Running ./gradlew build'
+                        sh './gradlew build'
                     }
-
-                    parallel demoBuild: demoBuild
                 }
             }
         }
