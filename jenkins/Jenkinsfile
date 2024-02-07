@@ -3,9 +3,9 @@ pipeline {
 
     stages {
         stage('Projects Checkup') {
+            def android_script = '../../scripts/android_script.py'
             parallel {
                 // Android
-                def android_script = '../../scripts/android_script.py'
                 stage('JenkinsLearning project') {
                     steps {
                         dir('./android/JenkinsLearning') {
