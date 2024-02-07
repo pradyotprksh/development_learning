@@ -1,3 +1,5 @@
+import com.android.build.gradle.internal.tasks.factory.dependsOn
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -6,6 +8,10 @@ plugins {
     id("com.google.dagger.hilt.android")
     id("com.google.firebase.crashlytics")
     id("com.google.firebase.firebase-perf")
+}
+
+tasks.register("updateTranslations") {
+    Runtime.getRuntime().exec("python3 ./script/generate_translation_file.py")
 }
 
 android {
@@ -67,6 +73,8 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+
+    project.tasks.preBuild.dependsOn("updateTranslations")
 }
 
 dependencies {

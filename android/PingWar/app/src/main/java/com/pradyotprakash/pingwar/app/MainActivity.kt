@@ -15,6 +15,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.pradyotprakash.pingwar.app.localization.Translation
+import com.pradyotprakash.pingwar.app.pages.splash.view.SplashPage
 import com.pradyotprakash.pingwar.app.routes.Routes
 import com.pradyotprakash.pingwar.app.routes.path
 import com.pradyotprakash.pingwar.app.theme.PingWarTheme
@@ -53,7 +54,7 @@ class MainActivity : ComponentActivity() {
                         navController = navController,
                         startDestination = Routes.Splash.path()
                     ) {
-                        composable(Routes.Splash.path()) {}
+                        composable(Routes.Splash.path()) { SplashPage() }
                     }
                 }
             }
