@@ -14,15 +14,7 @@ pipeline {
                         }
                     }
 
-                    def pingWarBuild = {
-                        echo 'Checking out the PingWar project'
-                        dir('./android/PingWar') {
-                            echo 'sdk.dir=/Users/pradyotprakash/Library/Android/sdk' > local.properties
-                            sh './gradlew build'
-                        }
-                    }
-
-                    parallel demoBuild: demoBuild, pingWarBuild: pingWarBuild
+                    parallel demoBuild: demoBuild
                 }
             }
         }
