@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     stages {
-        stage {
+        stage("Projects Checkup") {
             parallel {
                 stage('Build Android Project') {
                     parallel {
