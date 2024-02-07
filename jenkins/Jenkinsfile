@@ -17,6 +17,16 @@ pipeline {
                         }
                     }
                 }
+
+                stage('Demo project') {
+                    steps {
+                        dir('./android/Demo') {
+                            script {
+                                sh 'python3 ./android_script.py'
+                            }
+                        }
+                    }
+                }
             }
         }
     }
