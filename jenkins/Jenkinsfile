@@ -13,7 +13,7 @@ pipeline {
                     steps {
                         dir('./android/JenkinsLearning') {
                             script {
-                                sh 'python3 ${env.ANDROID_SCRIPT}'
+                                sh "python3 ${env.ANDROID_SCRIPT}"
                             }
                         }
                     }
