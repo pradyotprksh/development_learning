@@ -5,27 +5,24 @@ pipeline {
         stage('Android Builds') {
             steps {
                 echo 'Checking out Android projects'
-                dir('./android') {
-                    parallel {
-                        stage('Demo Project') {
-                            steps {
-                                echo 'Checking out the Demo project'
-                                dir('./Demo') {
-                                    echo 'sdk.dir=/Users/pradyotprakash/Library/Android/sdk' > local.properties
-                                    sh './gradlew build'
-                                }
-                            }
-                        }
-                        stage('PingWar Project') {
-                            steps {
-                                echo 'Checking out the PingWar project'
-                                dir('./PingWar') {
-                                    echo 'sdk.dir=/Users/pradyotprakash/Library/Android/sdk' > local.properties
-                                    sh './gradlew build'
-                                }
-                            }
+                script {
+                    def demoBuild = {
+                        echo 'Checking out the Demo project'
+                        dir('./android/Demo') {
+                            echo 'sdk.dir=/Users/pradyotprakash/Library/Android/sdk' > local.properties
+                            sh './gradlew build'
                         }
                     }
+
+                    def pingWarBuild = {
+                        echo 'Checking out the PingWar project'
+                        dir('./android/PingWar') {
+                            echo 'sdk.dir=/Users/pradyotprakash/Library/Android/sdk' > local.properties
+                            sh './gradlew build'
+                        }
+                    }
+
+                    parallel demoBuild: demoBuild, pingWarBuild: pingWarBuild
                 }
             }
         }
