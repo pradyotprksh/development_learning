@@ -6,7 +6,9 @@ pipeline {
             steps {
                 echo 'Checking out android projects'
             }
+        }
 
+        stage('Parallel Builds') {
             parallel {
                 stage('JenkinsLearning project') {
                     steps {
