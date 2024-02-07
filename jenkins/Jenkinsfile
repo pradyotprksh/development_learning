@@ -25,5 +25,29 @@ pipeline {
                 }
             }
         }
+
+        stage('Build Kotlin Project') {
+            parallel {
+                stage('pokedex project') {
+                    steps {
+                        dir('./kotlin/ktor/pokedex') {
+                            script {
+                                sh 'python3 ../../jenkins/kotlin_script.py'
+                            }
+                        }
+                    }
+                }
+
+                stage('Demo project') {
+                    steps {
+                        dir('./android/Demo') {
+                            script {
+                                sh 'python3 ../../jenkins/android_script.py'
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 }
