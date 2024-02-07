@@ -28,37 +28,38 @@ pipeline {
                 }
 
                 // Rust
-                stage('Rust project') {
+                stage('common_programming_concepts project') {
                     steps {
-                        step {
-                            dir('./rust/common_programming_concepts') {
-                                script {
-                                    sh 'python3 ../../../scripts/rust_script.py.py'
-                                }
+                        dir('./rust/common_programming_concepts') {
+                            script {
+                                sh 'python3 ../../../scripts/rust_script.py.py'
                             }
                         }
-
-                        step {
-                            dir('./rust/guessing_number') {
-                                script {
-                                    sh 'python3 ../../../scripts/rust_script.py.py'
-                                }
+                    }
+                }
+                stage('guessing_number project') {
+                    steps {
+                        dir('./rust/guessing_number') {
+                            script {
+                                sh 'python3 ../../../scripts/rust_script.py.py'
                             }
                         }
-
-                        step {
-                            dir('./rust/hello-rust') {
-                                script {
-                                    sh 'python3 ../../../scripts/rust_script.py.py'
-                                }
+                    }
+                }
+                stage('hello-rust project') {
+                    steps {
+                        dir('./rust/hello-rust') {
+                            script {
+                                sh 'python3 ../../../scripts/rust_script.py.py'
                             }
                         }
-
-                        step {
-                            dir('./rust/struct_example') {
-                                script {
-                                    sh 'python3 ../../../scripts/rust_script.py.py'
-                                }
+                    }
+                }
+                stage('struct_example project') {
+                    steps {
+                        dir('./rust/struct_example') {
+                            script {
+                                sh 'python3 ../../../scripts/rust_script.py.py'
                             }
                         }
                     }
