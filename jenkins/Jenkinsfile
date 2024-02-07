@@ -5,11 +5,12 @@ pipeline {
         stage('Projects Checkup') {
             parallel {
                 // Android
+                def android_script = '../../scripts/android_script.py'
                 stage('JenkinsLearning project') {
                     steps {
                         dir('./android/JenkinsLearning') {
                             script {
-                                sh 'python3 ../../scripts/android_script.py'
+                                sh 'python3 ${android_script}'
                             }
                         }
                     }
@@ -32,7 +33,7 @@ pipeline {
                     steps {
                         dir('./rust/common_programming_concepts') {
                             script {
-                                sh 'python3 ../../../scripts/rust_script.py'
+                                sh 'python3 ../../scripts/rust_script.py'
                             }
                         }
                     }
@@ -41,7 +42,7 @@ pipeline {
                     steps {
                         dir('./rust/guessing_number') {
                             script {
-                                sh 'python3 ../../../scripts/rust_script.py'
+                                sh 'python3 ../../scripts/rust_script.py'
                             }
                         }
                     }
@@ -50,7 +51,7 @@ pipeline {
                     steps {
                         dir('./rust/hello-rust') {
                             script {
-                                sh 'python3 ../../../scripts/rust_script.py'
+                                sh 'python3 ../../scripts/rust_script.py'
                             }
                         }
                     }
@@ -59,7 +60,7 @@ pipeline {
                     steps {
                         dir('./rust/struct_example') {
                             script {
-                                sh 'python3 ../../../scripts/rust_script.py'
+                                sh 'python3 ../../scripts/rust_script.py'
                             }
                         }
                     }
