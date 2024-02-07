@@ -19,5 +19,22 @@ pipeline {
                 // Add more configurations as needed
             }
         }
+        stage('Parallel Builds 1') {
+            parallel {
+                stage('Build Configuration 3') {
+                    steps {
+                        echo 'Running Build Configuration 1'
+                        // Your build commands for configuration 1
+                    }
+                }
+                stage('Build Configuration 4') {
+                    steps {
+                        echo 'Running Build Configuration 2'
+                        // Your build commands for configuration 2
+                    }
+                }
+                // Add more configurations as needed
+            }
+        }
     }
 }
