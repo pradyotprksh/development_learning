@@ -2,18 +2,19 @@ pipeline {
     agent any
 
     stages {
-        stage('Parallel Build Android Project') {
+        stage('Build Android Project') {
             steps {
                 echo 'Checking out android projects'
             }
+        }
 
+        stage('Parallel Builds') {
             parallel {
                 stage('JenkinsLearning project') {
                     steps {
                         dir('./android/JenkinsLearning') {
                             script {
-                                writeFile file: 'local.properties', text: 'sdk.dir=/Users/pradyotprakash/Library/Android/sdk'
-                                sh './gradlew build'
+                                sh 'python3 android_script.py'
                             }
                         }
                     }
@@ -23,8 +24,7 @@ pipeline {
                     steps {
                         dir('./android/Demo') {
                             script {
-                                writeFile file: 'local.properties', text: 'sdk.dir=/Users/pradyotprakash/Library/Android/sdk'
-                                sh './gradlew build'
+                                sh 'python3 android_script.py'
                             }
                         }
                     }
