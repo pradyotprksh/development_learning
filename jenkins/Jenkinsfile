@@ -17,8 +17,9 @@ pipeline {
 
                 // Python
                 stage('pokedex project') {
+                    when { changeset "./kotlin/**" }
                     steps {
-                        dir(path: './kotlin/ktor/pokedex', changeset: 'changes') {
+                        dir('./kotlin/ktor/pokedex') {
                             script {
                                 sh 'python3 ../../../jenkins/kotlin_script.py'
                             }
