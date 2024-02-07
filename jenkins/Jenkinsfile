@@ -25,6 +25,8 @@ pipeline {
                                             sh "python3 ${env.KOTLIN_SCRIPT}"
                                         } else if (projectDir.contains('rust')) {
                                             sh "python3 ${env.RUST_SCRIPT}"
+                                        } else {
+                                            pwd
                                         }
                                     }
                                 }
