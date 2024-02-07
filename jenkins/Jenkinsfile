@@ -1,28 +1,25 @@
 pipeline {
-    agent any
+agent any
 
-    stages {
+stages {
+    stage('Android Builds') {
+        echo 'Checking out Android projects'
+        cd ./android
         parallel {
-            stage('Android Builds') {
-                echo 'Checking out Android projects'
-                cd ./android
-                parallel {
-                    stage('Demo Project') {
-                        steps {
-                            echo 'Checking out the Demo project'
-                            cd ./Demo
-                            echo 'sdk.dir=/Users/pradyotprakash/Library/Android/sdk' > local.properties
-                            ./gradlew build
-                        }
-                    }
-                    stage('PingWar Project') {
-                        steps {
-                            echo 'Checking out the PingWar project'
-                            cd ./PingWar
-                            echo 'sdk.dir=/Users/pradyotprakash/Library/Android/sdk' > local.properties
-                            ./gradlew build
-                        }
-                    }
+            stage('Demo Project') {
+                steps {
+                    echo 'Checking out the Demo project'
+                    cd ./Demo
+                    echo 'sdk.dir=/Users/pradyotprakash/Library/Android/sdk' > local.properties
+                    ./gradlew build
+                }
+            }
+            stage('PingWar Project') {
+                steps {
+                    echo 'Checking out the PingWar project'
+                    cd ./PingWar
+                    echo 'sdk.dir=/Users/pradyotprakash/Library/Android/sdk' > local.properties
+                    ./gradlew build
                 }
             }
         }
