@@ -2,18 +2,22 @@ pipeline {
     agent any
 
     stages {
-        stage('Build') {
-            steps {
-                echo 'Building...'
-                // Your build commands here
+        stage('Parallel Builds') {
+            parallel {
+                stage('Build Configuration 1') {
+                    steps {
+                        echo 'Running Build Configuration 1'
+                        // Your build commands for configuration 1
+                    }
+                }
+                stage('Build Configuration 2') {
+                    steps {
+                        echo 'Running Build Configuration 2'
+                        // Your build commands for configuration 2
+                    }
+                }
+                // Add more configurations as needed
             }
         }
-        stage('Test') {
-            steps {
-                echo 'Testing...'
-                // Your test commands here
-            }
-        }
-        // Add more stages as needed
     }
 }
