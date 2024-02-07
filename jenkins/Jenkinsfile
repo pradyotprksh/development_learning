@@ -3,13 +3,25 @@ pipeline {
 
     stages {
         stage('Build Android Project') {
-            steps {
-                echo 'Checking out the Android project'
-                dir('./android/JenkinsLearning') {
-                    script {
-                        writeFile file: 'local.properties', text: 'sdk.dir=/Users/pradyotprakash/Library/Android/sdk'
-                        echo "==== Build Command ===="
-                        sh './gradlew build'
+            echo 'Checking out android projects'
+        }
+
+        parallel {
+            dir('./android') {
+                stage('JenkinsLearning project') {
+                    dir('./JenkinsLearning') {
+                        script {
+                            writeFile file: 'local.properties', text: 'sdk.dir=/Users/pradyotprakash/Library/Android/sdk'
+                            sh './gradlew build'
+                        }
+                    }
+                }
+                stage('Demo project') {
+                    dir('./Demo') {
+                        script {
+                            writeFile file: 'local.properties', text: 'sdk.dir=/Users/pradyotprakash/Library/Android/sdk'
+                            sh './gradlew build'
+                        }
                     }
                 }
             }
