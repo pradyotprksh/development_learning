@@ -2,31 +2,67 @@ pipeline {
     agent any
 
     stages {
-        stage('Build Android Project') {
+        stage('Parallel Build Android Project') {
             steps {
                 echo 'Checking out android projects'
             }
-        }
 
-        stage('Parallel Builds') {
             parallel {
-                stage('JenkinsLearning project') {
+                stage('Demo project') {
                     steps {
-                        dir('./android/JenkinsLearning') {
+                        dir('./android/Demo') {
                             script {
-                                writeFile file: 'local.properties', text: 'sdk.dir=/Users/pradyotprakash/Library/Android/sdk'
-                                sh './gradlew build'
+                                python3 ./android_script.py
                             }
                         }
                     }
                 }
 
-                stage('Demo project') {
+                stage('Dicee project') {
                     steps {
-                        dir('./android/Demo') {
+                        dir('./android/Dicee') {
                             script {
-                                writeFile file: 'local.properties', text: 'sdk.dir=/Users/pradyotprakash/Library/Android/sdk'
-                                sh './gradlew build'
+                                python3 ./android_script.py
+                            }
+                        }
+                    }
+                }
+
+                stage('ExchangeRate project') {
+                    steps {
+                        dir('./android/ExchangeRate') {
+                            script {
+                                python3 ./android_script.py
+                            }
+                        }
+                    }
+                }
+
+                stage('FindingFalcone project') {
+                    steps {
+                        dir('./android/FindingFalcone') {
+                            script {
+                                python3 ./android_script.py
+                            }
+                        }
+                    }
+                }
+
+                stage('FlashChat project') {
+                    steps {
+                        dir('./android/FlashChat') {
+                            script {
+                                python3 ./android_script.py
+                            }
+                        }
+                    }
+                }
+
+                stage('JenkinsLearning project') {
+                    steps {
+                        dir('./android/JenkinsLearning') {
+                            script {
+                                python3 ./android_script.py
                             }
                         }
                     }
