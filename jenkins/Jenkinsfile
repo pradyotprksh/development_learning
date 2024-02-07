@@ -17,7 +17,9 @@ pipeline {
                             stage("${projectDir} Project") {
                                 steps {
                                     dir("./${projectDir}") {
-                                        sh "python3 ${env.ANDROID_SCRIPT}"
+                                        script {
+                                            sh "python3 ${env.ANDROID_SCRIPT}"
+                                        }
                                     }
                                 }
                             }
@@ -26,7 +28,9 @@ pipeline {
                             stage("${projectDir} Project") {
                                 steps {
                                     dir("./${projectDir}") {
-                                        sh "python3 ${env.KOTLIN_SCRIPT}"
+                                        script {
+                                            sh "python3 ${env.KOTLIN_SCRIPT}"
+                                        }
                                     }
                                 }
                             }
@@ -35,7 +39,9 @@ pipeline {
                             stage("${projectDir} Project") {
                                 steps {
                                     dir("./${projectDir}") {
-                                        sh "python3 ${env.KOTLIN_SCRIPT}"
+                                        script {
+                                            sh "python3 ${env.KOTLIN_SCRIPT}"
+                                        }
                                     }
                                 }
                             }
