@@ -8,56 +8,6 @@ pipeline {
             }
 
             parallel {
-                stage('Demo project') {
-                    steps {
-                        dir('./android/Demo') {
-                            script {
-                                python3 ./android_script.py
-                            }
-                        }
-                    }
-                }
-
-                stage('Dicee project') {
-                    steps {
-                        dir('./android/Dicee') {
-                            script {
-                                python3 ./android_script.py
-                            }
-                        }
-                    }
-                }
-
-                stage('ExchangeRate project') {
-                    steps {
-                        dir('./android/ExchangeRate') {
-                            script {
-                                python3 ./android_script.py
-                            }
-                        }
-                    }
-                }
-
-                stage('FindingFalcone project') {
-                    steps {
-                        dir('./android/FindingFalcone') {
-                            script {
-                                python3 ./android_script.py
-                            }
-                        }
-                    }
-                }
-
-                stage('FlashChat project') {
-                    steps {
-                        dir('./android/FlashChat') {
-                            script {
-                                python3 ./android_script.py
-                            }
-                        }
-                    }
-                }
-
                 stage('JenkinsLearning project') {
                     steps {
                         dir('./android/JenkinsLearning') {
