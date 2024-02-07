@@ -9,7 +9,7 @@ pipeline {
                     steps {
                         dir('./android/JenkinsLearning') {
                             script {
-                                sh 'python3 ../../jenkins/android_script.py'
+                                sh 'python3 ../../scripts/android_script.py'
                             }
                         }
                     }
@@ -17,11 +17,46 @@ pipeline {
 
                 // Python
                 stage('pokedex project') {
-                    when { changeset "./kotlin/**" }
                     steps {
+                        // when { changeset './kotlin/ktor/pokedex' }
                         dir('./kotlin/ktor/pokedex') {
                             script {
-                                sh 'python3 ../../../jenkins/kotlin_script.py'
+                                sh 'python3 ../../../scripts/kotlin_script.py'
+                            }
+                        }
+                    }
+                }
+
+                // Rust
+                stage('Rust project') {
+                    steps {
+                        dir('./rust/common_programming_concepts') {
+                            script {
+                                sh 'python3 ../../../scripts/rust_script.py.py'
+                            }
+                        }
+                    }
+
+                    steps {
+                        dir('./rust/guessing_number') {
+                            script {
+                                sh 'python3 ../../../scripts/rust_script.py.py'
+                            }
+                        }
+                    }
+
+                    steps {
+                        dir('./rust/hello-rust') {
+                            script {
+                                sh 'python3 ../../../scripts/rust_script.py.py'
+                            }
+                        }
+                    }
+
+                    steps {
+                        dir('./rust/struct_example') {
+                            script {
+                                sh 'python3 ../../../scripts/rust_script.py.py'
                             }
                         }
                     }
