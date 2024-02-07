@@ -7,17 +7,20 @@ pipeline {
         }
 
         parallel {
-            dir('./android') {
-                stage('JenkinsLearning project') {
-                    dir('./JenkinsLearning') {
+            stage('JenkinsLearning project') {
+                steps {
+                    dir('./android/JenkinsLearning') {
                         script {
                             writeFile file: 'local.properties', text: 'sdk.dir=/Users/pradyotprakash/Library/Android/sdk'
                             sh './gradlew build'
                         }
                     }
                 }
-                stage('Demo project') {
-                    dir('./Demo') {
+            }
+
+            stage('Demo project') {
+                steps {
+                    dir('./android/Demo') {
                         script {
                             writeFile file: 'local.properties', text: 'sdk.dir=/Users/pradyotprakash/Library/Android/sdk'
                             sh './gradlew build'
