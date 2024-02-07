@@ -14,15 +14,19 @@ pipeline {
                     def projectDirs = sh(script: 'ls -d ./*/ | tr -d \'/\'', returnStdout: true).trim().split('\n')
                     for (def projectDir in projectDirs) {
                         if (projectDir.contains('android')) {
-                            stage("${projectDir} Project") {
-                                steps {
-                                    dir("./${projectDir}") {
-                                        script {
-                                            sh "python3 ${env.ANDROID_SCRIPT}"
+                            def androidDirs = sh(script: 'ls -d ./android/*/ | tr -d \'/\'', returnStdout: true).trim().split('\n')
+                            for (def androidDir in androidDirs) {
+                                stage("${androidDir} Project") {
+                                    steps {
+                                        dir("./${androidDir}") {
+                                            script {
+                                                sh "python3 ${env.ANDROID_SCRIPT}"
+                                            }
                                         }
                                     }
                                 }
                             }
+
                         }
                         if (projectDir.contains('kotlin')) {
                             stage("${projectDir} Project") {
