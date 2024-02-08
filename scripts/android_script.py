@@ -6,7 +6,7 @@ with open("local.properties","w") as file:
 
 os.system("chmod +x ./gradlew")
 
-current_dir = sys.argv[0]
+current_dir = sys.argv[1]
 
 # Google services file check
 google_services_file = ""
