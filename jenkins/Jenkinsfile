@@ -11,69 +11,9 @@ pipeline {
         stage('Projects Checkup') {
             parallel {
                 // Android
-                stage('Demo project') {
-                    steps {
-                        dir('./android/Demo') {
-                            script {
-                                writeFile file: 'local.properties', text: 'sdk.dir=/Users/pradyotprakash/Library/Android/sdk'
-                                sh './gradlew lint'
-                                sh './gradlew testDebugUnitTest'
-                                sh './gradlew build'
-                            }
-                        }
-                    }
-                }
                 stage('Dicee project') {
                     steps {
                         dir('./android/Dice') {
-                            script {
-                                writeFile file: 'local.properties', text: 'sdk.dir=/Users/pradyotprakash/Library/Android/sdk'
-                                sh './gradlew lint'
-                                sh './gradlew testDebugUnitTest'
-                                sh './gradlew build'
-                            }
-                        }
-                    }
-                }
-                stage('ExchangeRate project') {
-                    steps {
-                        dir('./android/ExchangeRate') {
-                            script {
-                                writeFile file: 'local.properties', text: 'sdk.dir=/Users/pradyotprakash/Library/Android/sdk'
-                                sh './gradlew lint'
-                                sh './gradlew testDebugUnitTest'
-                                sh './gradlew build'
-                            }
-                        }
-                    }
-                }
-                stage('FindingFalcone project') {
-                    steps {
-                        dir('./android/FindingFalcone') {
-                            script {
-                                writeFile file: 'local.properties', text: 'sdk.dir=/Users/pradyotprakash/Library/Android/sdk'
-                                sh './gradlew lint'
-                                sh './gradlew testDebugUnitTest'
-                                sh './gradlew build'
-                            }
-                        }
-                    }
-                }
-                stage('FlashChat project') {
-                    steps {
-                        dir('./android/FlashChat') {
-                            script {
-                                writeFile file: 'local.properties', text: 'sdk.dir=/Users/pradyotprakash/Library/Android/sdk'
-                                sh './gradlew lint'
-                                sh './gradlew testDebugUnitTest'
-                                sh './gradlew build'
-                            }
-                        }
-                    }
-                }
-                stage('IAmRich project') {
-                    steps {
-                        dir('./android/FlashChat') {
                             script {
                                 writeFile file: 'local.properties', text: 'sdk.dir=/Users/pradyotprakash/Library/Android/sdk'
                                 sh './gradlew lint'
@@ -95,9 +35,9 @@ pipeline {
                         }
                     }
                 }
-                stage('mealz-compose-mvvm-coroutines project') {
+                stage('Library/Owner project') {
                     steps {
-                        dir('./android/mealz-compose-mvvm-coroutines') {
+                        dir('./android/Library/Owner') {
                             script {
                                 writeFile file: 'local.properties', text: 'sdk.dir=/Users/pradyotprakash/Library/Android/sdk'
                                 sh './gradlew lint'
@@ -107,9 +47,9 @@ pipeline {
                         }
                     }
                 }
-                stage('Notes') {
+                stage('mealz-compose-mvvm-coroutines project') {
                     steps {
-                        dir('./android/Notes') {
+                        dir('./android/mealz-compose-mvvm-coroutines') {
                             script {
                                 writeFile file: 'local.properties', text: 'sdk.dir=/Users/pradyotprakash/Library/Android/sdk'
                                 sh './gradlew lint'
@@ -131,69 +71,9 @@ pipeline {
                         }
                     }
                 }
-                stage('PitGull') {
-                    steps {
-                        dir('./android/PitGull') {
-                            script {
-                                writeFile file: 'local.properties', text: 'sdk.dir=/Users/pradyotprakash/Library/Android/sdk'
-                                sh './gradlew lint'
-                                sh './gradlew testDebugUnitTest'
-                                sh './gradlew build'
-                            }
-                        }
-                    }
-                }
-                stage('PostsComments') {
-                    steps {
-                        dir('./android/PostsComments') {
-                            script {
-                                writeFile file: 'local.properties', text: 'sdk.dir=/Users/pradyotprakash/Library/Android/sdk'
-                                sh './gradlew lint'
-                                sh './gradlew testDebugUnitTest'
-                                sh './gradlew build'
-                            }
-                        }
-                    }
-                }
                 stage('Rental') {
                     steps {
                         dir('./android/Rental') {
-                            script {
-                                writeFile file: 'local.properties', text: 'sdk.dir=/Users/pradyotprakash/Library/Android/sdk'
-                                sh './gradlew lint'
-                                sh './gradlew testDebugUnitTest'
-                                sh './gradlew build'
-                            }
-                        }
-                    }
-                }
-                stage('TerminalApp') {
-                    steps {
-                        dir('./android/TerminalApp') {
-                            script {
-                                writeFile file: 'local.properties', text: 'sdk.dir=/Users/pradyotprakash/Library/Android/sdk'
-                                sh './gradlew lint'
-                                sh './gradlew testDebugUnitTest'
-                                sh './gradlew build'
-                            }
-                        }
-                    }
-                }
-                stage('Twitter') {
-                    steps {
-                        dir('./android/Twitter') {
-                            script {
-                                writeFile file: 'local.properties', text: 'sdk.dir=/Users/pradyotprakash/Library/Android/sdk'
-                                sh './gradlew lint'
-                                sh './gradlew testDebugUnitTest'
-                                sh './gradlew build'
-                            }
-                        }
-                    }
-                }
-                stage('WhatsAppCompose') {
-                    steps {
-                        dir('./android/WhatsAppCompose') {
                             script {
                                 writeFile file: 'local.properties', text: 'sdk.dir=/Users/pradyotprakash/Library/Android/sdk'
                                 sh './gradlew lint'
