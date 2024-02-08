@@ -11,5 +11,5 @@ current_dir = sys.argv[0]
 # Google services file check
 google_services_file = ""
 
-print(os.system("pwd"))
-print(os.system(f"{current_dir}"))
+os.system("pwd")
+print(current_dir)
