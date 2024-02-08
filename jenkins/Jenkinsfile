@@ -155,18 +155,6 @@ pipeline {
                         }
                     }
                 }
-                stage('PostsComments') {
-                    steps {
-                        dir('./android/PostsComments') {
-                            script {
-                                writeFile file: 'local.properties', text: 'sdk.dir=/Users/pradyotprakash/Library/Android/sdk'
-                                sh './gradlew lint'
-                                sh './gradlew testDebugUnitTest'
-                                sh './gradlew build'
-                            }
-                        }
-                    }
-                }
                 stage('Rental') {
                     steps {
                         dir('./android/Rental') {
