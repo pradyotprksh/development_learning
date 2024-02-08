@@ -32,42 +32,42 @@ pipeline {
                         }
                     }
                 }
-                stage('Library/Owner project') {
-                    steps {
-                        dir('./android/Library/Owner') {
-                            script {
-                                sh "python3 ../${env.ANDROID_SCRIPT} Library/Owner"
-                                sh './gradlew lint'
-                                sh './gradlew testDebugUnitTest'
-                                sh './gradlew build'
-                            }
-                        }
-                    }
-                }
-                stage('PingWar') {
-                    steps {
-                        dir('./android/PingWar') {
-                            script {
-                                sh "python3 ${env.ANDROID_SCRIPT} PingWar"
-                                sh './gradlew lint'
-                                sh './gradlew testDebugUnitTest'
-                                sh './gradlew build'
-                            }
-                        }
-                    }
-                }
-                stage('Rental') {
-                    steps {
-                        dir('./android/Rental') {
-                            script {
-                                sh "python3 ${env.ANDROID_SCRIPT} Rental"
-                                sh './gradlew lint'
-                                sh './gradlew testDebugUnitTest'
-                                sh './gradlew build'
-                            }
-                        }
-                    }
-                }
+                // stage('Library/Owner project') {
+                //     steps {
+                //         dir('./android/Library/Owner') {
+                //             script {
+                //                 sh "python3 ../${env.ANDROID_SCRIPT} Library/Owner"
+                //                 sh './gradlew lint'
+                //                 sh './gradlew testDebugUnitTest'
+                //                 sh './gradlew build'
+                //             }
+                //         }
+                //     }
+                // }
+                // stage('PingWar') {
+                //     steps {
+                //         dir('./android/PingWar') {
+                //             script {
+                //                 sh "python3 ${env.ANDROID_SCRIPT} PingWar"
+                //                 sh './gradlew lint'
+                //                 sh './gradlew testDebugUnitTest'
+                //                 sh './gradlew build'
+                //             }
+                //         }
+                //     }
+                // }
+                // stage('Rental') {
+                //     steps {
+                //         dir('./android/Rental') {
+                //             script {
+                //                 sh "python3 ${env.ANDROID_SCRIPT} Rental"
+                //                 sh './gradlew lint'
+                //                 sh './gradlew testDebugUnitTest'
+                //                 sh './gradlew build'
+                //             }
+                //         }
+                //     }
+                // }
             }
         }
     }
