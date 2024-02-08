@@ -17,7 +17,8 @@ slash_count = current_dir.count("/")
 for _ in range(slash_count):
     parent_dir = f"../{parent_dir}"
 
-google_services_dir = f"{parent_dir}/JenkinsSetup/{current_dir}"
+google_services_dir = f"{parent_dir}/JenkinsSetup/{current_dir}/google-services.json"
 
 if os.path.isdir(google_services_dir):
+    print(f"Copying google-services.json from {google_services_dir} to {app_google_service_dir}")
     shutil.copy2(google_services_dir, app_google_service_dir)
