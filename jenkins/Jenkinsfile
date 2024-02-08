@@ -24,7 +24,7 @@ pipeline {
                     steps {
                         dir('./android/JenkinsLearning') {
                             script {
-                                sh "python3 ${env.ANDROID_SCRIPT}"
+                                sh "python3 ${env.ANDROID_SCRIPT} JenkinsLearning"
                                 sh './gradlew lint'
                                 sh './gradlew testDebugUnitTest'
                                 sh './gradlew build'
@@ -36,7 +36,7 @@ pipeline {
                     steps {
                         dir('./android/Library/Owner') {
                             script {
-                                sh "python3 ../${env.ANDROID_SCRIPT}"
+                                sh "python3 ../${env.ANDROID_SCRIPT} Library/Owner"
                                 sh './gradlew lint'
                                 sh './gradlew testDebugUnitTest'
                                 sh './gradlew build'
@@ -48,7 +48,7 @@ pipeline {
                     steps {
                         dir('./android/PingWar') {
                             script {
-                                sh "python3 ${env.ANDROID_SCRIPT}"
+                                sh "python3 ${env.ANDROID_SCRIPT} PingWar"
                                 sh './gradlew lint'
                                 sh './gradlew testDebugUnitTest'
                                 sh './gradlew build'
@@ -60,7 +60,7 @@ pipeline {
                     steps {
                         dir('./android/Rental') {
                             script {
-                                sh "python3 ${env.ANDROID_SCRIPT}"
+                                sh "python3 ${env.ANDROID_SCRIPT} Rental"
                                 sh './gradlew lint'
                                 sh './gradlew testDebugUnitTest'
                                 sh './gradlew build'
