@@ -20,18 +20,6 @@ pipeline {
         stage('Projects Checkup') {
             parallel {
                 // Android
-                stage('Dicee project') {
-                    steps {
-                        dir('./android/Dice') {
-                            script {
-                                sh "python3 ${env.ANDROID_SCRIPT}"
-                                sh './gradlew lint'
-                                sh './gradlew testDebugUnitTest'
-                                sh './gradlew build'
-                            }
-                        }
-                    }
-                }
                 stage('JenkinsLearning project') {
                     steps {
                         dir('./android/JenkinsLearning') {
@@ -48,19 +36,7 @@ pipeline {
                     steps {
                         dir('./android/Library/Owner') {
                             script {
-                                sh "python3 ${env.ANDROID_SCRIPT}"
-                                sh './gradlew lint'
-                                sh './gradlew testDebugUnitTest'
-                                sh './gradlew build'
-                            }
-                        }
-                    }
-                }
-                stage('mealz-compose-mvvm-coroutines project') {
-                    steps {
-                        dir('./android/mealz-compose-mvvm-coroutines') {
-                            script {
-                                sh "python3 ${env.ANDROID_SCRIPT}"
+                                sh "python3 ../${env.ANDROID_SCRIPT}"
                                 sh './gradlew lint'
                                 sh './gradlew testDebugUnitTest'
                                 sh './gradlew build'
