@@ -15,7 +15,8 @@ pipeline {
                     steps {
                         dir('./android/JenkinsLearning') {
                             script {
-                                sh "python3 ${env.ANDROID_SCRIPT}"
+                                writeFile file: 'local.properties', text: 'sdk.dir=/Users/pradyotprakash/Library/Android/sdk'
+                                sh './gradlew build'
                             }
                         }
                     }
