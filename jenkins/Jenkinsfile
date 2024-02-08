@@ -12,14 +12,12 @@ pipeline {
             parallel {
                 // Android
                 stage('JenkinsLearning project') {
-                    steps {
-                        dir('./android/JenkinsLearning') {
-                            script {
-                                writeFile file: 'local.properties', text: 'sdk.dir=/Users/pradyotprakash/Library/Android/sdk'
-                                sh './gradlew lint'
-                                sh './gradlew testDebugUnitTest'
-                                sh './gradlew build'
-                            }
+                    dir('./android/JenkinsLearning') {
+                        steps {
+                            writeFile file: 'local.properties', text: 'sdk.dir=/Users/pradyotprakash/Library/Android/sdk'
+                            sh './gradlew lint'
+                            sh './gradlew testDebugUnitTest'
+                            sh './gradlew build'
                         }
                     }
                 }
