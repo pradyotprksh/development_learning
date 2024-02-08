@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         ANDROID_SCRIPT = '../../scripts/android_script.py'
-        JENKINS_SETUP_SCRIPT = '../../scripts/jenkins_setup.py'
+        JENKINS_SETUP_SCRIPT = './scripts/jenkins_setup.py'
         KOTLIN_SCRIPT = '../../../scripts/kotlin_script.py'
         RUST_SCRIPT = '../../scripts/rust_script.py'
     }
