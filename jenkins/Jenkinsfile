@@ -3,11 +3,20 @@ pipeline {
 
     environment {
         ANDROID_SCRIPT = '../../scripts/android_script.py'
+        JENKINS_SETUP_SCRIPT = '../../scripts/jenkins_setup.py'
         KOTLIN_SCRIPT = '../../../scripts/kotlin_script.py'
         RUST_SCRIPT = '../../scripts/rust_script.py'
     }
 
     stages {
+        stage('JenkinsSetup Clone') {
+            steps {
+                script {
+                    sh "python3 ${env.JENKINS_SETUP_SCRIPT}"
+                }
+            }
+        }
+
         stage('Projects Checkup') {
             parallel {
                 // Android
@@ -15,7 +24,7 @@ pipeline {
                     steps {
                         dir('./android/Dice') {
                             script {
-                                writeFile file: 'local.properties', text: 'sdk.dir=/Users/pradyotprakash/Library/Android/sdk'
+                                sh "python3 ${env.ANDROID_SCRIPT}"
                                 sh './gradlew lint'
                                 sh './gradlew testDebugUnitTest'
                                 sh './gradlew build'
@@ -27,7 +36,7 @@ pipeline {
                     steps {
                         dir('./android/JenkinsLearning') {
                             script {
-                                writeFile file: 'local.properties', text: 'sdk.dir=/Users/pradyotprakash/Library/Android/sdk'
+                                sh "python3 ${env.ANDROID_SCRIPT}"
                                 sh './gradlew lint'
                                 sh './gradlew testDebugUnitTest'
                                 sh './gradlew build'
@@ -39,7 +48,7 @@ pipeline {
                     steps {
                         dir('./android/Library/Owner') {
                             script {
-                                writeFile file: 'local.properties', text: 'sdk.dir=/Users/pradyotprakash/Library/Android/sdk'
+                                sh "python3 ${env.ANDROID_SCRIPT}"
                                 sh './gradlew lint'
                                 sh './gradlew testDebugUnitTest'
                                 sh './gradlew build'
@@ -51,7 +60,7 @@ pipeline {
                     steps {
                         dir('./android/mealz-compose-mvvm-coroutines') {
                             script {
-                                writeFile file: 'local.properties', text: 'sdk.dir=/Users/pradyotprakash/Library/Android/sdk'
+                                sh "python3 ${env.ANDROID_SCRIPT}"
                                 sh './gradlew lint'
                                 sh './gradlew testDebugUnitTest'
                                 sh './gradlew build'
@@ -63,7 +72,7 @@ pipeline {
                     steps {
                         dir('./android/PingWar') {
                             script {
-                                writeFile file: 'local.properties', text: 'sdk.dir=/Users/pradyotprakash/Library/Android/sdk'
+                                sh "python3 ${env.ANDROID_SCRIPT}"
                                 sh './gradlew lint'
                                 sh './gradlew testDebugUnitTest'
                                 sh './gradlew build'
@@ -75,7 +84,7 @@ pipeline {
                     steps {
                         dir('./android/Rental') {
                             script {
-                                writeFile file: 'local.properties', text: 'sdk.dir=/Users/pradyotprakash/Library/Android/sdk'
+                                sh "python3 ${env.ANDROID_SCRIPT}"
                                 sh './gradlew lint'
                                 sh './gradlew testDebugUnitTest'
                                 sh './gradlew build'
