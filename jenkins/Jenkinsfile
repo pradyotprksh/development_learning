@@ -14,7 +14,7 @@ pipeline {
                 stage('JenkinsLearning project') {
                     steps {
                         dir('./android/JenkinsLearning') {
-                            step('Update local.properties') {
+                            step {
                                 script {
                                     sh "python3 ${env.ANDROID_SCRIPT}"
                                 }
