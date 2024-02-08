@@ -15,10 +15,12 @@ pipeline {
                     steps {
                         dir('./android/JenkinsLearning') {
                             steps {
-                                writeFile file: 'local.properties', text: 'sdk.dir=/Users/pradyotprakash/Library/Android/sdk'
-                                sh './gradlew lint'
-                                sh './gradlew testDebugUnitTest'
-                                sh './gradlew build'
+                                scripts {
+                                    writeFile file: 'local.properties', text: 'sdk.dir=/Users/pradyotprakash/Library/Android/sdk'
+                                    sh './gradlew lint'
+                                    sh './gradlew testDebugUnitTest'
+                                    sh './gradlew build'
+                                }
                             }
                         }
                     }
