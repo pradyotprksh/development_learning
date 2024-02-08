@@ -44,18 +44,18 @@ pipeline {
                 //         }
                 //     }
                 // }
-                // stage('PingWar') {
-                //     steps {
-                //         dir('./android/PingWar') {
-                //             script {
-                //                 sh "python3 ${env.ANDROID_SCRIPT} PingWar"
-                //                 sh './gradlew lint'
-                //                 sh './gradlew testDebugUnitTest'
-                //                 sh './gradlew build'
-                //             }
-                //         }
-                //     }
-                // }
+                stage('PingWar') {
+                    steps {
+                        dir('./android/PingWar') {
+                            script {
+                                sh "python3 ${env.ANDROID_SCRIPT} PingWar"
+                                sh './gradlew lint'
+                                sh './gradlew testDebugUnitTest'
+                                sh './gradlew build'
+                            }
+                        }
+                    }
+                }
                 // stage('Rental') {
                 //     steps {
                 //         dir('./android/Rental') {
