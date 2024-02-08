@@ -1,4 +1,5 @@
 import os
+import shutil
 import sys
 
 with open("local.properties","w") as file:
@@ -9,6 +10,8 @@ os.system("chmod +x ./gradlew")
 current_dir = sys.argv[1]
 
 # Google services file check
+app_google_service_dir = f"{current_dir}/app"
+
 parent_dir = ""
 slash_count = current_dir.count("/")
 for _ in range(slash_count):
@@ -16,4 +19,5 @@ for _ in range(slash_count):
 
 google_services_dir = f"{parent_dir}/JenkinsSetup/{current_dir}"
 
-print(google_services_dir)
+if os.path.isdir(google_services_dir):
+    shutil.copy2(google_services_dir, app_google_service_dir)
