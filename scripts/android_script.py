@@ -19,6 +19,10 @@ for _ in range(slash_count):
 
 google_services_dir = f"{parent_dir}/JenkinsSetup/{current_dir}/google-services.json"
 
+print("+++++++++++++++++++")
+print(f"google_services_dir {google_services_dir} app_google_service_dir {app_google_service_dir}")
+print("+++++++++++++++++++")
+
 if os.path.isdir(google_services_dir):
     print(f"Copying google-services.json from {google_services_dir} to {app_google_service_dir}")
     shutil.copy2(google_services_dir, app_google_service_dir)
