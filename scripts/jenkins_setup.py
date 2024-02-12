@@ -3,8 +3,8 @@ import shutil
 
 if os.path.isdir('JenkinsSetup'):
     os.system("cd JenkinsSetup")
-    current_directory = os.getcwd()
-    print(f"Deleting {current_directory}")
-    shutil.rmtree(current_directory)
+    jenkins_setup_directory = f"{os.getcwd()}/JenkinsSetup"
+    print(f"Deleting {jenkins_setup_directory}")
+    shutil.rmtree(jenkins_setup_directory)
 
 os.system("git clone git@github.com:pradyotprksh/JenkinsSetup.git")
