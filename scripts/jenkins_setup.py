@@ -1,9 +1,9 @@
 import os
+import shutil
 
 if os.path.isdir('JenkinsSetup'):
-    print("JenkinsSetup already cloned")
-    print("Updating code")
     os.system("cd JenkinsSetup")
-    os.system("git fetch origin")
-else:
-    os.system("git clone git@github.com:pradyotprksh/JenkinsSetup.git")
+    current_directory = os.getcwd()
+    shutil.rmtree(current_directory)
+
+os.system("git clone git@github.com:pradyotprksh/JenkinsSetup.git")
