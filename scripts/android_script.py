@@ -25,24 +25,28 @@ def add_google_services_file():
         print(f"Copying google-services.json to {current_dir}")
         shutil.copy2(f"{google_services_dir}/google-services.json", app_google_service_dir)
 
-def get_last_commit_message():
+def get_last_commit_message() -> str:
     try:
-        # Run the git rev-parse command to get the root of the current Git repository
         root_path = subprocess.run(['git', 'rev-parse', '--show-toplevel'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, check=True).stdout.strip()
-
-        # Run the git log command to get the last commit message for the current folder
         result = subprocess.run(['git', 'log', '-1', '--pretty=%B'], cwd=root_path, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, check=True)
-
-        # Print the last commit message
-        print("Last Commit Message in Current Folder:")
-        print(result.stdout.strip())
-
+        return result.stdout.strip()
     except subprocess.CalledProcessError as e:
-        # Handle errors, if any
-        print("Error:", e.stderr)
+        print("Error get_last_commit_message:", e.stderr)
+        return ""
+
+def get_last_commit_author() -> str:
+    try:
+        result = subprocess.run(['git', 'log', '-1', '--pretty=%an <%ae>'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, check=True)
+        return result.stdout.strip()
+    except subprocess.CalledProcessError as e:
+        print("Error get_last_commit_author:", e.stderr)
+        return ""
 
 def update_release_notes_for_debug():
-    get_last_commit_message()
+    commit_message = get_last_commit_message()
+    author_name = get_last_commit_author()
+
+    print(f"os.getcwd() {os.getcwd()} commit_message {commit_message} author_name {author_name}")
 
 update_local_properties_file()
 add_google_services_file()
