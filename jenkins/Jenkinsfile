@@ -27,7 +27,7 @@ pipeline {
                                 sh "python3 ${env.ANDROID_SCRIPT} JenkinsLearning"
                                 sh './gradlew lint'
                                 sh './gradlew testDebugUnitTest'
-                                sh './gradlew bundleDebug appDistributionUploadDebug'
+                                sh './gradlew assembleDebug appDistributionUploadDebug'
                             }
                         }
                     }

@@ -27,6 +27,7 @@ android {
     buildTypes {
         release {
             isMinifyEnabled = false
+            isDebuggable = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -34,20 +35,21 @@ android {
 
             firebaseAppDistribution {
                 artifactType = "AAB"
-                releaseNotesFile = "../releasenotes_release.txt.txt"
+                releaseNotesFile = "releasenotes_release.txt"
             }
         }
 
         debug {
             isMinifyEnabled = false
+            isDebuggable = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
 
             firebaseAppDistribution {
-                artifactType = "AAB"
-                releaseNotesFile = "../releasenotes_debug.txt"
+                artifactType = "APK"
+                releaseNotesFile = "releasenotes_debug.txt"
             }
         }
     }
