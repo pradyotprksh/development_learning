@@ -17,6 +17,7 @@ def is_file_available(file_path) -> bool:
     return os.path.isfile(file_path)
 
 def get_local_properties_content() -> str:
+    pass
 
 def update_local_properties_file():
     with open("local.properties", "w") as file:
@@ -56,8 +57,6 @@ def get_last_commit_author() -> str:
 def update_release_notes_for_debug():
     commit_message = get_last_commit_message()
     author_name = get_last_commit_author()
-
-    
 
 update_local_properties_file()
 add_google_services_file()
