@@ -1,3 +1,4 @@
+import json
 import os
 import shutil
 import subprocess
@@ -16,12 +17,27 @@ def is_directory_avaiable(dir_path) -> bool:
 def is_file_available(file_path) -> bool:
     return os.path.isfile(file_path)
 
+def get_confidential_content(key: str):
+    confidential_file_path = f"{get_jenkins_setup_dir()}/confidential.json"
+    try:
+        with open(file_path, 'r') as file:
+            data = json.load(file)
+        value = data[key]
+        return value
+    except FileNotFoundError:
+        print(f"Error: File '{file_path}' not found.")
+    except json.JSONDecodeError:
+        print(f"Error: Invalid JSON format in file '{file_path}'.")
+    except KeyError:
+        print(f"Error: Key '{key}' not found in the JSON data.")
+    return "***"
+
 def get_local_properties_content() -> str:
     pass
 
 def update_local_properties_file():
     with open("local.properties", "w") as file:
-        file.write("sdk.dir=/Users/pradyotprakash/Library/Android/sdk")
+        file.write(f"sdk.dir={get_confidential_content("ANDROID_SDK_PATH")}")
 
 def add_google_services_file():
     app_google_service_dir = f"{os.getcwd()}/app"
