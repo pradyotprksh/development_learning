@@ -36,8 +36,9 @@ def get_local_properties_content() -> str:
     pass
 
 def update_local_properties_file():
+    local_properties_value = get_confidential_content("ANDROID_SDK_PATH")
     with open("local.properties", "w") as file:
-        file.write(f"sdk.dir={get_confidential_content("ANDROID_SDK_PATH")}")
+        file.write(f"sdk.dir={local_properties_value}")
 
 def add_google_services_file():
     app_google_service_dir = f"{os.getcwd()}/app"
