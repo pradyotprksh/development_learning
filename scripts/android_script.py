@@ -54,6 +54,14 @@ def add_google_services_file():
         print(f"Copying google-services.json to {current_dir}")
         shutil.copy2(f"{google_services_dir}/google-services.json", app_google_service_dir)
 
+def get_last_commit_changed_files() -> str:
+    try:
+        root_path = subprocess.run(['git', 'rev-parse', '--show-toplevel'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, check=True).stdout.strip()
+        changed_files = subprocess.run(['git', 'diff', '--name-only'], cwd=root_path, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, check=True)
+        return changed_files.stdout.strip()
+    except subprocess.CalledProcessError as e:
+        print("Error get_last_commit_changed_files:", e.stderr)
+
 def get_last_commit_message() -> str:
     try:
         root_path = subprocess.run(['git', 'rev-parse', '--show-toplevel'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, check=True).stdout.strip()
@@ -74,13 +82,14 @@ def get_last_commit_author() -> str:
 def update_release_notes_for_debug():
     commit_message = get_last_commit_message()
     author_name = get_last_commit_author()
+    changed_files = get_last_commit_changed_files()
 
     release_notes_file = f"{os.getcwd()}/releasenotes_release.txt"
     debug_notes_file = f"{os.getcwd()}/releasenotes_debug.txt"
 
     if is_file_available(release_notes_file):
         with open(release_notes_file, "w") as file:
-            file.write(f"Author: {author_name}\nCommit Message:\n{commit_message}")
+            file.write(f"Author: {author_name}\n\nCommit Message:\n{commit_message}\n\nChanged Files:\n{changed_files}")
     else:
         print("Release notes file not avaiable")
 
