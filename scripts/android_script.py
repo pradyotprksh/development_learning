@@ -20,14 +20,14 @@ def is_file_available(file_path) -> bool:
 def get_confidential_content(key: str):
     confidential_file_path = f"{get_jenkins_setup_dir()}/confidential.json"
     try:
-        with open(file_path, 'r') as file:
+        with open(confidential_file_path, 'r') as file:
             data = json.load(file)
         value = data[key]
         return value
     except FileNotFoundError:
-        print(f"Error: File '{file_path}' not found.")
+        print(f"Error: File '{confidential_file_path}' not found.")
     except json.JSONDecodeError:
-        print(f"Error: Invalid JSON format in file '{file_path}'.")
+        print(f"Error: Invalid JSON format in file '{confidential_file_path}'.")
     except KeyError:
         print(f"Error: Key '{key}' not found in the JSON data.")
     return "***"
