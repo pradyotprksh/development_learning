@@ -84,18 +84,20 @@ def update_release_notes_for_debug():
     author_name = get_last_commit_author()
     changed_files = get_last_commit_changed_files()
 
+    notes_message = f"Author: {author_name}\n\nCommit Message:\n{commit_message}\n\nChanged Files:\n{changed_files}"
+
     release_notes_file = f"{os.getcwd()}/releasenotes_release.txt"
     debug_notes_file = f"{os.getcwd()}/releasenotes_debug.txt"
 
     if is_file_available(release_notes_file):
         with open(release_notes_file, "w") as file:
-            file.write(f"Author: {author_name}\n\nCommit Message:\n{commit_message}\n\nChanged Files:\n{changed_files}")
+            file.write(notes_message)
     else:
         print("Release notes file not avaiable")
 
     if is_file_available(debug_notes_file):
         with open(debug_notes_file, "w") as file:
-            file.write(f"Author: {author_name}\nCommit Message:\n{commit_message}")
+            file.write(notes_message)
     else:
         print("Debug notes file not avaiable")
 
