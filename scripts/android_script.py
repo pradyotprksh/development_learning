@@ -75,6 +75,21 @@ def update_release_notes_for_debug():
     commit_message = get_last_commit_message()
     author_name = get_last_commit_author()
 
+    release_notes_file = f"{os.getcwd()}/releasenotes_release.txt"
+    debug_notes_file = f"{os.getcwd()}/debug_release.txt"
+
+    if is_file_available(release_notes_file):
+        with open(release_notes_file, "w") as file:
+            file.write(f"Author: {author_name}\nCommit Message:\n{commit_message}")
+    else:
+        print("Release notes file not avaiable")
+
+    if is_file_available(debug_notes_file):
+        with open(debug_notes_file, "w") as file:
+            file.write(f"Author: {author_name}\nCommit Message:\n{commit_message}")
+    else:
+        print("Release notes file not avaiable")
+
 update_local_properties_file()
 add_google_services_file()
 update_release_notes_for_debug()
