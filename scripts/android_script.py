@@ -57,8 +57,9 @@ def add_google_services_file():
 def get_last_commit_changed_files() -> str:
     try:
         root_path = subprocess.run(['git', 'rev-parse', '--show-toplevel'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, check=True).stdout.strip()
-        changed_files = subprocess.run(['git', 'diff', '--name-only'], cwd=root_path, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, check=True)
-        return changed_files.stdout.strip()
+        status_output = subprocess.run(['git', 'status', '--short'], cwd=root_path, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, check=True)
+        changed_files = [line.split(' ', 1)[1] for line in status_output.stdout.split('\n') if line.startswith(' M') or line.startswith('A  ')]
+        return '\n'.join(changed_files)
     except subprocess.CalledProcessError as e:
         print("Error get_last_commit_changed_files:", e.stderr)
 
