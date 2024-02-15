@@ -80,14 +80,15 @@ def get_last_commit_author() -> str:
         print("Error get_last_commit_author:", e.stderr)
         return ""
 
+def update_version_name():
+    pass
+
 def update_release_notes_for_debug():
     commit_message = get_last_commit_message()
     author_name = get_last_commit_author()
     changed_files = get_last_commit_changed_files()
 
     notes_message = f"Author: {author_name}\n\nCommit Message:\n{commit_message}\n\nChanged Files:\n{changed_files}"
-
-    print(notes_message)
 
     release_notes_file = f"{os.getcwd()}/releasenotes_release.txt"
     debug_notes_file = f"{os.getcwd()}/releasenotes_debug.txt"
@@ -107,3 +108,4 @@ def update_release_notes_for_debug():
 update_local_properties_file()
 add_google_services_file()
 update_release_notes_for_debug()
+update_version_name()
