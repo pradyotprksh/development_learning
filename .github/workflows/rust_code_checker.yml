@@ -68,16 +68,12 @@ jobs:
     name: rustlings Code Checker
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: dtolnay/rust-toolchain@stable
-        with:
-          components: rustfmt
-      - uses: DavidAnson/markdownlint-cli2-action@v9
-        with:
-          globs: "exercises/**/*.md"
-      - name: Run cargo fmt
+      - uses: actions/checkout@v1
+      - name: Checking rustlings
+        working-directory: ./rust/rustlings
         run: |
-          cargo fmt --all -- --check
+          cargo build
+          cargo check
           cargo test
       - name: Send Message
         uses: appleboy/telegram-action@master
@@ -85,4 +81,4 @@ jobs:
           to: ${{ secrets.TELEGRAM_TO }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
           message: |
-            GitHub Action for rust/common_programming_concepts is completed with status ${{ job.status }} for ${{ github.ref }}.
+            GitHub Action for rust/rustlings is completed with status ${{ job.status }} for ${{ github.ref }}.
