@@ -73,8 +73,8 @@ jobs:
         working-directory: ./rust/rustlings
         run: |
           cargo build
-          cargo check
-          cargo test
+          cargo install --force --path .
+          rustlings verify
       - name: Send Message
         uses: appleboy/telegram-action@master
         with:
