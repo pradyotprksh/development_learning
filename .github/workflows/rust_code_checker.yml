@@ -72,9 +72,31 @@ jobs:
       - name: Checking rustlings
         working-directory: ./rust/rustlings
         run: |
-          cargo build
           cargo install --force --path .
-          rustlings verify || true
+          rustlings run intro1
+          rustlings run intro2
+          rustlings run variables1
+          rustlings run variables2
+          rustlings run variables3
+          rustlings run variables4
+          rustlings run variables5
+          rustlings run variables6
+          rustlings run functions1
+          rustlings run functions2
+          rustlings run functions3
+          rustlings run functions4
+          rustlings run functions5
+          rustlings run if1
+          rustlings run if2
+          rustlings run if3
+          rustlings run primitive_types1
+          rustlings run primitive_types2
+          rustlings run primitive_types3
+          rustlings run primitive_types4
+          rustlings run primitive_types5
+          rustlings run primitive_types6
+          rustlings run vecs1
+          rustlings run vecs2
       - name: Send Message
         uses: appleboy/telegram-action@master
         with:
