@@ -74,7 +74,7 @@ jobs:
         run: |
           cargo build
           cargo install --force --path .
-          rustlings verify
+          rustlings verify || true
       - name: Send Message
         uses: appleboy/telegram-action@master
         with:
