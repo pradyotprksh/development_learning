@@ -1,4 +1,3 @@
-import configparser
 import json
 import os
 import shutil
@@ -6,7 +5,6 @@ import subprocess
 import sys
 
 current_dir = sys.argv[1]
-config = configparser.ConfigParser()
 
 def convert_to_int_with_fallback(value: int, fallback_value=0) -> int:
     try:
@@ -95,24 +93,40 @@ def get_next_version_name(version_name: str) -> str:
     last_version = convert_to_int_with_fallback(version_split[2], 0) + 1
     return f"{version_split[0]}.{version_split[1]}.{last_version}"
 
+def read_local_properties(file_path):
+    result = {}
+    try:
+        with open(file_path, 'r') as file:
+            for line in file:
+                line = line.strip()
+                if line and not line.startswith('#'):
+                    key, value = line.split('=', 1)
+                    result[key.strip()] = value.strip()
+    except FileNotFoundError:
+        print(f"Error: File '{file_path}' not found.")
+    except Exception as e:
+        print(f"Error: {e}")
+
+    return result
+
 def update_version_name():
     application_details_file = f"{os.getcwd()}/application_details.properties"
 
     if is_file_available(application_details_file):
-        config.read(application_details_file)
-        version_code = config.get("version_code")
-        version_name = config.get("version_name")
+        config = read_local_properties(application_details_file)
+        version_code = config["version_code"]
+        version_name = config["version_name"]
 
-        new_version_code = convert_to_int_with_fallback(version_code, 1)
+        new_version_code = convert_to_int_with_fallback(version_code, 1) + 1
         new_version_name = get_next_version_name(version_name)
 
-        with open(application_details_file, "w") as file:
-            content = file.read()
-            content.replace(f"version_code={version_code}", f"version_code={new_version_code}")
-            content.replace(f"version_name={version_name}", f"version_name={new_version_name}")
-
+        file_content = ""
         with open(application_details_file, "r") as file:
-            print(file.read())
+            file_content = file.read()
+        file_content.replace(f"version_code={version_code}", f"version_code={new_version_code}")
+        file_content.replace(f"version_name={version_name}", f"version_name={new_version_name}")
+        with open(application_details_file, "w") as file:
+            file.write(file_content)
 
 def update_release_notes_for_debug():
     commit_message = get_last_commit_message()
