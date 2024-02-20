@@ -105,7 +105,7 @@ def update_release_notes_for_debug():
     else:
         print("Debug notes file not avaiable")
 
-update_local_properties_file()
+# update_local_properties_file()
 add_google_services_file()
 update_release_notes_for_debug()
 update_version_name()
