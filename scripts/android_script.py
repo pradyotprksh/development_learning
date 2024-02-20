@@ -1,3 +1,4 @@
+import configparser
 import json
 import os
 import shutil
@@ -5,6 +6,15 @@ import subprocess
 import sys
 
 current_dir = sys.argv[1]
+config = configparser.ConfigParser()
+
+def convert_to_int_with_fallback(value: int, fallback_value=0) -> int:
+    try:
+        integer_value = int(value)
+        return integer_value
+    except ValueError:
+        print(f"Error: '{value}' is not a valid integer. Using fallback value.")
+        return fallback_value
 
 def get_jenkins_setup_dir() -> str:
     android_path = f"/android/{current_dir}"
@@ -80,8 +90,29 @@ def get_last_commit_author() -> str:
         print("Error get_last_commit_author:", e.stderr)
         return ""
 
+def get_next_version_name(version_name: str) -> str:
+    version_split = version_name.split(".")
+    last_version = convert_to_int_with_fallback(version_split[2], 0) + 1
+    return f"{version_split[0]}.{version_split[1]}.{last_version}"
+
 def update_version_name():
-    pass
+    application_details_file = f"{os.getcwd()}/application_details.properties"
+
+    if is_file_available(application_details_file):
+        config.read(application_details_file)
+        version_code = config.get("version_code")
+        version_name = config.get("version_name")
+
+        new_version_code = convert_to_int_with_fallback(version_code, 1)
+        new_version_name = get_next_version_name(version_name)
+
+        with open(application_details_file, "w") as file:
+            content = file.read()
+            content.replace(f"version_code={version_code}", f"version_code={new_version_code}")
+            content.replace(f"version_name={version_name}", f"version_name={new_version_name}")
+
+        with open(application_details_file, "r") as file:
+            print(file.read())
 
 def update_release_notes_for_debug():
     commit_message = get_last_commit_message()

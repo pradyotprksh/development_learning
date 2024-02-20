@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -11,12 +13,16 @@ android {
     namespace = "com.pradyotprakash.jenkinslearning"
     compileSdk = 34
 
+    val applicationDetails = Properties().apply {
+        load(file("../application_details.properties").reader())
+    }
+
     defaultConfig {
         applicationId = "com.pradyotprakash.jenkinslearning"
         minSdk = 24
         targetSdk = 34
-        versionCode = 1
-        versionName = "1.0.0"
+        versionCode = applicationDetails.getProperty("version_code")?.toInt() ?: 1
+        versionName = applicationDetails.getProperty("version_name") as String
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
