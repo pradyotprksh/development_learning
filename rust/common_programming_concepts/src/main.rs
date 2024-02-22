@@ -8,6 +8,10 @@ fn main() {
     control_flow();
 
     exercise();
+
+    ownership();
+
+    mutability();
 }
 
 fn variables_and_mutability() {
@@ -238,4 +242,87 @@ fn tweleve_days_of_christmas() {
 
         println!("");
     }
+}
+
+fn ownership() {
+    let nums = vec![2, 4, 6];
+    println!("nums {:?}", nums);
+    let nums2 = nums;
+    println!("nums2 {:?}", nums2);
+
+    // below line will not execute due to ownership transfer
+    //
+    // ownership logic happens at compile time, not runtime
+    // rust will know no other is using it so it can be delocated
+    // drop() is the api which drops the memory when not needed.
+    // there is no GC kinf of concept in Rust.
+    //
+    // rule of ownership
+    // 1. Each value in Rust has an owner.
+    // 2. There can only be one owner at a time.
+    // 3. When the owner goes out of scope, the value will be dropped.
+    // println!("{:?}", nums);
+
+    // this will work because of shadowing
+    let nums = vec![2, 4, 6];
+    println!("nums {:?}", nums);
+    
+    print_nums(nums);
+    // this will not work because nums ownership moved to print_nums function
+    // this can be fixed by returning the nums back from print_nums
+    // but that's kind of a hack and sending the ownership back
+    // println!("nums {:?}", nums);
+
+    // for the above issue, we can use refrence concept in Rust.
+    // borrower concpet can be used.
+    let nums = vec![2, 4, 6];
+    let nums_ref: &Vec<i32> = &nums;
+    let nums_ref1: &Vec<i32> = &nums;
+    let nums_ref2: &Vec<i32> = &nums;
+    // the below is not allowed because the borrower is still alive
+    // for the owner to die all the borrower should die.
+    // let nums2 = nums;
+    // And also borowwer can't live past the owner like below.
+    // let num_ref: &Vec<i32>;
+    // {
+    //     let nums = vec![2, 4, 6];
+    //     num_ref = &nums;
+    // }
+    // println!("{:?}", num_ref);
+    println!("nums_ref {:?}", nums_ref);
+    println!("nums_ref {:?}", nums_ref1);
+    println!("nums_ref {:?}", nums_ref2);
+    // with the same concept the below will work now since we are passing 
+    // the reference not the ownership now
+    print_nums_ref(&nums);
+    println!("nums {:?}", nums);
+}
+
+fn print_nums(nums: Vec<i32>) {
+    for num in nums.iter() {
+        println!("{}", num);
+    }
+}
+
+fn print_nums_ref(nums: &Vec<i32>) {
+    for num in nums.iter() {
+        println!("{}", num);
+    }
+}
+
+fn mutability() {
+    let mut nums = vec![2, 4, 6];
+    nums.push(8);
+
+    // the below code will not work because reference by default
+    // are immutable, we have to make it mutable by stating it
+    // let mut nums_ref = &nums;
+    // nums_ref.push(10);
+
+    let mut nums_ref = &mut nums;
+    nums_ref.push(10);
+
+    // primitives are 'copy' able but vec is clonable but not copyable
+    // if array is holding the primitves then still the copyable concept 
+    // will work.
 }
