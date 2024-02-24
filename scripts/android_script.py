@@ -123,8 +123,10 @@ def update_version_details():
         file_content = ""
         with open(application_details_file, "r") as file:
             file_content = file.read()
-        file_content.replace(f"version_code={version_code}", f"version_code={new_version_code}")
-        file_content.replace(f"version_name={version_name}", f"version_name={new_version_name}")
+        print(f"file_content {file_content}")
+        file_content = file_content.replace(f"version_code={version_code}", f"version_code={new_version_code}")
+        file_content = file_content.replace(f"version_name={version_name}", f"version_name={new_version_name}")
+        print(f"file_content {file_content}")
         with open(application_details_file, "w") as file:
             file.write(file_content)
 
