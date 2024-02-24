@@ -109,7 +109,7 @@ def read_local_properties(file_path):
 
     return result
 
-def update_version_name():
+def update_version_details():
     application_details_file = f"{os.getcwd()}/application_details.properties"
 
     if is_file_available(application_details_file):
@@ -153,4 +153,4 @@ def update_release_notes_for_debug():
 # update_local_properties_file()
 add_google_services_file()
 update_release_notes_for_debug()
-update_version_name()
+update_version_details()
