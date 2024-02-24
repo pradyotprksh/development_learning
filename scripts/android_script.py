@@ -132,10 +132,22 @@ def update_version_details():
             file.write(file_content)
 
 def update_release_notes_for_debug():
+    notes_message = ""
     author_name = get_last_commit_author()
-    notes_message = f"Author: {author_name}"
+    if not author_name == "":
+        notes_message = f"Author: {author_name}"
     commit_message = get_last_commit_message()
+    if not commit_message == "":
+        if not notes_message == "":
+            notes_message = f"{notes_message}\n\nCommit Message:\n{commit_message}"
+        else:
+            notes_message = f"Commit Message:\n{commit_message}"
     changed_files = get_last_commit_changed_files()
+    if not changed_files == "":
+        if not notes_message == "":
+            notes_message = f"{notes_message}\n\nChanged Files:\n{changed_files}"
+        else:
+            notes_message = f"Changed Files:\n{changed_files}"
 
     release_notes_file = f"{os.getcwd()}/releasenotes_release.txt"
     debug_notes_file = f"{os.getcwd()}/releasenotes_debug.txt"
