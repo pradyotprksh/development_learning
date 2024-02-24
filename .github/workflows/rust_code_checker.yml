@@ -104,3 +104,21 @@ jobs:
           token: ${{ secrets.TELEGRAM_TOKEN }}
           message: |
             GitHub Action for rust/rustlings is completed with status ${{ job.status }} for ${{ github.ref }}.
+  mars_calc:
+    name: mars_calc Code Checker
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Checking mars_calc
+        working-directory: ./rust/udemy_course/mars_calc
+        run: |
+          cargo build
+          cargo check
+          cargo run
+      - name: Send Message
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+            GitHub Action for rust/udemy_course/mars_calc is completed with status ${{ job.status }} for ${{ github.ref }}.
