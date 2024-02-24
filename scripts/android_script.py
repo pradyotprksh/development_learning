@@ -121,6 +121,8 @@ def update_version_details():
 
         if not is_debug:
             new_version_code = convert_to_int_with_fallback(version_code, 1) + 1
+        else:
+            new_version_code = version_code
         new_version_name = get_next_version_name(version_name)
 
         file_content = ""
