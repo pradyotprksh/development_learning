@@ -5,6 +5,8 @@ import subprocess
 import sys
 
 current_dir = sys.argv[1]
+build_type = sys.argv[2]
+is_debug = build_type == "debug"
 
 def convert_to_int_with_fallback(value: int, fallback_value=0) -> int:
     try:
@@ -117,40 +119,40 @@ def update_version_details():
         version_code = config["version_code"]
         version_name = config["version_name"]
 
-        new_version_code = convert_to_int_with_fallback(version_code, 1) + 1
+        if not is_debug:
+            new_version_code = convert_to_int_with_fallback(version_code, 1) + 1
         new_version_name = get_next_version_name(version_name)
 
         file_content = ""
         with open(application_details_file, "r") as file:
             file_content = file.read()
-        print(f"file_content {file_content}")
         file_content = file_content.replace(f"version_code={version_code}", f"version_code={new_version_code}")
         file_content = file_content.replace(f"version_name={version_name}", f"version_name={new_version_name}")
-        print(f"file_content {file_content}")
         with open(application_details_file, "w") as file:
             file.write(file_content)
 
 def update_release_notes_for_debug():
-    commit_message = get_last_commit_message()
     author_name = get_last_commit_author()
+    notes_message = f"Author: {author_name}"
+    commit_message = get_last_commit_message()
     changed_files = get_last_commit_changed_files()
-
-    notes_message = f"Author: {author_name}\n\nCommit Message:\n{commit_message}\n\nChanged Files:\n{changed_files}"
 
     release_notes_file = f"{os.getcwd()}/releasenotes_release.txt"
     debug_notes_file = f"{os.getcwd()}/releasenotes_debug.txt"
 
-    if is_file_available(release_notes_file):
-        with open(release_notes_file, "w") as file:
-            file.write(notes_message)
-    else:
-        print("Release notes file not avaiable")
+    if not is_debug:
+        if is_file_available(release_notes_file):
+            with open(release_notes_file, "w") as file:
+                file.write(notes_message)
+        else:
+            print("Release notes file not avaiable")
 
-    if is_file_available(debug_notes_file):
-        with open(debug_notes_file, "w") as file:
-            file.write(notes_message)
-    else:
-        print("Debug notes file not avaiable")
+    if is_debug:
+        if is_file_available(debug_notes_file):
+            with open(debug_notes_file, "w") as file:
+                file.write(notes_message)
+        else:
+            print("Debug notes file not avaiable")
 
 # update_local_properties_file()
 add_google_services_file()
