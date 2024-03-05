@@ -18,9 +18,9 @@ jobs:
       - name: Checking C Programs
         working-directory: ./cs50/c
         run: |
-          make hello && ./hello
-          make compare && ./compare
-          make agree && ./agree
+          gcc -Wall -Werror -Wextra -pedantic -std=gnu89 */*.c */*/*.c */*/*/*.c -o hello && ./hello
+          gcc -Wall -Werror -Wextra -pedantic -std=gnu89 */*.c */*/*.c */*/*/*.c -o compare && ./compare
+          gcc -Wall -Werror -Wextra -pedantic -std=gnu89 */*.c */*/*.c */*/*/*.c -o agree && ./agree
       - name: Send Message
         if: always()
         uses: appleboy/telegram-action@master
