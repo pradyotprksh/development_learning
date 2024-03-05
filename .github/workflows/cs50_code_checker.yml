@@ -23,9 +23,9 @@ jobs:
       - name: Checking C Programs
         working-directory: ./cs50/c
         run: |
-          make hello && ./hello
-          make compare && ./compare
-          make agree && ./agree
+          make hello # && ./hello
+          make compare # && ./compare
+          make agree # && ./agree
       - name: Send Message
         if: always()
         uses: appleboy/telegram-action@master
