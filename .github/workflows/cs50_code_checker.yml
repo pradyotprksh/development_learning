@@ -26,6 +26,7 @@ jobs:
           make hello # && ./hello
           make compare # && ./compare
           make agree # && ./agree
+          make meow # && ./meow
       - name: Send Message
         if: always()
         uses: appleboy/telegram-action@master
