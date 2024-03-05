@@ -14,13 +14,18 @@ jobs:
         uses: styfle/cancel-workflow-action@0.9.1
         with:
           access_token: ${{ github.token }}
+      - name: Install compiler
+        id: install_cc
+        uses: rlalik/setup-cpp-compiler@master
+        with:
+          compiler: latest
       - uses: actions/checkout@v2
       - name: Checking C Programs
         working-directory: ./cs50/c
         run: |
-          gcc -Wall -Werror -Wextra -pedantic -std=gnu89 */*.c */*/*.c */*/*/*.c -o hello && ./hello
-          gcc -Wall -Werror -Wextra -pedantic -std=gnu89 */*.c */*/*.c */*/*/*.c -o compare && ./compare
-          gcc -Wall -Werror -Wextra -pedantic -std=gnu89 */*.c */*/*.c */*/*/*.c -o agree && ./agree
+          make hello && ./hello
+          make compare && ./compare
+          make agree && ./agree
       - name: Send Message
         if: always()
         uses: appleboy/telegram-action@master
