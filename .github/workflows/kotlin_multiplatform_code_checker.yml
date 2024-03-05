@@ -26,6 +26,7 @@ jobs:
           chmod +x ./gradlew
           ./gradlew assemble
       - name: Send Message
+        if: always()
         uses: appleboy/telegram-action@master
         with:
           to: ${{ secrets.TELEGRAM_TO }}
@@ -52,6 +53,7 @@ jobs:
           chmod +x ./gradlew
           ./gradlew assemble
       - name: Send Message
+        if: always()
         uses: appleboy/telegram-action@master
         with:
           to: ${{ secrets.TELEGRAM_TO }}
@@ -78,6 +80,7 @@ jobs:
           chmod +x ./gradlew
           ./gradlew assemble
       - name: Send Message
+        if: always()
         uses: appleboy/telegram-action@master
         with:
           to: ${{ secrets.TELEGRAM_TO }}
@@ -104,6 +107,7 @@ jobs:
           chmod +x ./gradlew
           ./gradlew assemble
       - name: Send Message
+        if: always()
         uses: appleboy/telegram-action@master
         with:
           to: ${{ secrets.TELEGRAM_TO }}

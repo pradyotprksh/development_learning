@@ -25,6 +25,7 @@ jobs:
           dart pub get
           dart analyze
       - name: Send Message
+        if: always()
         uses: appleboy/telegram-action@master
         with:
           to: ${{ secrets.TELEGRAM_TO }}
@@ -51,6 +52,7 @@ jobs:
           dart analyze
           dart test
       - name: Send Message
+        if: always()
         uses: appleboy/telegram-action@master
         with:
           to: ${{ secrets.TELEGRAM_TO }}
@@ -77,6 +79,7 @@ jobs:
           dart analyze
           dart run
       - name: Send Message
+        if: always()
         uses: appleboy/telegram-action@master
         with:
           to: ${{ secrets.TELEGRAM_TO }}
@@ -103,6 +106,7 @@ jobs:
           dart analyze
           dart run
       - name: Send Message
+        if: always()
         uses: appleboy/telegram-action@master
         with:
           to: ${{ secrets.TELEGRAM_TO }}
@@ -125,6 +129,7 @@ jobs:
           dart analyze
           dart run
       - name: Send Message
+        if: always()
         uses: appleboy/telegram-action@master
         with:
           to: ${{ secrets.TELEGRAM_TO }}
@@ -148,6 +153,7 @@ jobs:
           dart test
           dart pub publish --dry-run
       - name: Send Message
+        if: always()
         uses: appleboy/telegram-action@master
         with:
           to: ${{ secrets.TELEGRAM_TO }}

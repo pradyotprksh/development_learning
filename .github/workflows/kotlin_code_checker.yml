@@ -19,6 +19,7 @@ jobs:
         working-directory: ./kotlin/data_structure
         run: kotlinc Main.kt
       - name: Send Message
+        if: always()
         uses: appleboy/telegram-action@master
         with:
           to: ${{ secrets.TELEGRAM_TO }}
@@ -38,6 +39,7 @@ jobs:
         working-directory: ./kotlin/friends_tree
         run: kotlinc Main.kt
       - name: Send Message
+        if: always()
         uses: appleboy/telegram-action@master
         with:
           to: ${{ secrets.TELEGRAM_TO }}
@@ -57,6 +59,7 @@ jobs:
         working-directory: ./kotlin/practice
         run: kotlinc Main.kt
       - name: Send Message
+        if: always()
         uses: appleboy/telegram-action@master
         with:
           to: ${{ secrets.TELEGRAM_TO }}
@@ -76,6 +79,7 @@ jobs:
         working-directory: ./kotlin/udemy_course
         run: kotlinc Main.kt
       - name: Send Message
+        if: always()
         uses: appleboy/telegram-action@master
         with:
           to: ${{ secrets.TELEGRAM_TO }}
@@ -98,6 +102,7 @@ jobs:
           ./gradlew build
           ./gradlew test
       - name: Send Message
+        if: always()
         uses: appleboy/telegram-action@master
         with:
           to: ${{ secrets.TELEGRAM_TO }}

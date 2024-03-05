@@ -31,6 +31,7 @@ jobs:
         working-directory: ./go/learning/workspace/example
         run: go test ./...
       - name: Send Message
+        if: always()
         uses: appleboy/telegram-action@master
         with:
           to: ${{ secrets.TELEGRAM_TO }}
@@ -72,6 +73,7 @@ jobs:
         working-directory: ./go/stephen_udemy/interfaces_assignment_2
         run: go run main.go example.txt
       - name: Send Message
+        if: always()
         uses: appleboy/telegram-action@master
         with:
           to: ${{ secrets.TELEGRAM_TO }}

@@ -29,6 +29,7 @@ jobs:
           flutter pub get
           flutter analyze
       - name: Send Message
+        if: always()
         uses: appleboy/telegram-action@master
         with:
           to: ${{ secrets.TELEGRAM_TO }}
@@ -54,6 +55,7 @@ jobs:
           flutter pub get
           flutter analyze
       - name: Send Message
+        if: always()
         uses: appleboy/telegram-action@master
         with:
           to: ${{ secrets.TELEGRAM_TO }}
@@ -79,6 +81,7 @@ jobs:
           flutter pub get
           flutter analyze
       - name: Send Message
+        if: always()
         uses: appleboy/telegram-action@master
         with:
           to: ${{ secrets.TELEGRAM_TO }}
@@ -104,6 +107,7 @@ jobs:
           flutter pub get
           flutter analyze
       - name: Send Message
+        if: always()
         uses: appleboy/telegram-action@master
         with:
           to: ${{ secrets.TELEGRAM_TO }}
@@ -130,6 +134,7 @@ jobs:
           flutter analyze
           flutter test
       - name: Send Message
+        if: always()
         uses: appleboy/telegram-action@master
         with:
           to: ${{ secrets.TELEGRAM_TO }}
@@ -156,6 +161,7 @@ jobs:
           flutter analyze
           flutter test
       - name: Send Message
+        if: always()
         uses: appleboy/telegram-action@master
         with:
           to: ${{ secrets.TELEGRAM_TO }}
@@ -181,6 +187,7 @@ jobs:
           flutter pub get
           flutter test
       - name: Send Message
+        if: always()
         uses: appleboy/telegram-action@master
         with:
           to: ${{ secrets.TELEGRAM_TO }}
@@ -205,8 +212,8 @@ jobs:
           flutter pub upgrade
           flutter pub get
           flutter analyze
-#          flutter test
       - name: Send Message
+        if: always()
         uses: appleboy/telegram-action@master
         with:
           to: ${{ secrets.TELEGRAM_TO }}

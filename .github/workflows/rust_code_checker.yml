@@ -23,6 +23,7 @@ jobs:
           cargo check
           cargo run
       - name: Send Message
+        if: always()
         uses: appleboy/telegram-action@master
         with:
           to: ${{ secrets.TELEGRAM_TO }}
@@ -40,6 +41,7 @@ jobs:
           cargo build
           cargo check
       - name: Send Message
+        if: always()
         uses: appleboy/telegram-action@master
         with:
           to: ${{ secrets.TELEGRAM_TO }}
@@ -58,6 +60,7 @@ jobs:
           cargo check
           cargo run
       - name: Send Message
+        if: always()
         uses: appleboy/telegram-action@master
         with:
           to: ${{ secrets.TELEGRAM_TO }}
@@ -98,6 +101,7 @@ jobs:
           rustlings run vecs1
           rustlings run vecs2
       - name: Send Message
+        if: always()
         uses: appleboy/telegram-action@master
         with:
           to: ${{ secrets.TELEGRAM_TO }}
@@ -116,6 +120,7 @@ jobs:
           cargo check
           cargo run
       - name: Send Message
+        if: always()
         uses: appleboy/telegram-action@master
         with:
           to: ${{ secrets.TELEGRAM_TO }}

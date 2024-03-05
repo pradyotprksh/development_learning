@@ -18,6 +18,7 @@ jobs:
         with:
           python-root-list: "python/renter"
       - name: Send Message
+        if: always()
         uses: appleboy/telegram-action@master
         with:
           to: ${{ secrets.TELEGRAM_TO }}
@@ -33,6 +34,7 @@ jobs:
         with:
           python-root-list: "python/programming"
       - name: Send Message
+        if: always()
         uses: appleboy/telegram-action@master
         with:
           to: ${{ secrets.TELEGRAM_TO }}
@@ -48,6 +50,7 @@ jobs:
         with:
           python-root-list: "python/pyblog"
       - name: Send Message
+        if: always()
         uses: appleboy/telegram-action@master
         with:
           to: ${{ secrets.TELEGRAM_TO }}
@@ -63,6 +66,7 @@ jobs:
         with:
           python-root-list: "python/UdemyCourse/2022_Python_Bootcamp"
       - name: Send Message
+        if: always()
         uses: appleboy/telegram-action@master
         with:
           to: ${{ secrets.TELEGRAM_TO }}
