@@ -127,3 +127,22 @@ jobs:
           token: ${{ secrets.TELEGRAM_TOKEN }}
           message: |
             GitHub Action for rust/udemy_course/mars_calc is completed with status ${{ job.status }} for ${{ github.ref }}.
+  ds_algo:
+    name: ds_algo Code Checker
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Checking ds_algo
+        working-directory: ./rust/ds_algo
+        run: |
+          cargo build
+          cargo check
+          cargo run
+      - name: Send Message
+        if: always()
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+            GitHub Action for rust/ds_algo is completed with status ${{ job.status }} for ${{ github.ref }}.
