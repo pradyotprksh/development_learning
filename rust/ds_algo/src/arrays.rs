@@ -41,6 +41,12 @@ pub fn arrays_example() {
     println!("Reverse {:?}. Result: {:?}", arr, reverse_array(arr)); // [5, 6, 10, 7, 4, 2, 3]
     println!("Minimum element in {:?} is {}", arr, find_min(arr)); // 2
     println!("Second max element in {:?} is {}", arr, second_max(arr)); // 7
+
+    let arr = [8, 1, 0, 2, 1, 0, 3];
+    println!("Moving all the zeroes in {:?} in the end. Result: {:?}", arr, move_zeros_to_end(arr)); // [8, 1, 2, 1, 3, 0, 0]
+
+    let arr = [2, 3, 5, 7, 1, 4, 8];
+    println!("Missing element in {:?} is {}", arr, find_missing_element(arr)); // 6
 }
 
 /*
@@ -120,4 +126,36 @@ fn second_max(arr: [i32; 7]) -> i32 {
     }
 
     second_max
+}
+
+/*
+Understand the code from https://www.youtube.com/watch?v=2ZLl8GAk1X4&t=9663s
+*/
+fn move_zeros_to_end(mut arr: [i32; 7]) -> [i32; 7] {
+    let mut j = 0;
+
+    for i in 0..arr.len() {
+        if arr[i] != 0 && arr[j] == 0 {
+            let temp = arr[i];
+            arr[i] = arr[j];
+            arr[j] = temp;
+        }
+        if arr[j] != 0 {
+            j += 1;
+        }
+    }
+
+    arr
+}
+
+fn find_missing_element(arr: [i32; 7]) -> i32 {
+    let mut element_sum = 0;
+    for a in arr {
+        element_sum += a;
+    }
+
+    let n = arr.len() + 1;
+    let num_sum = (n * (n + 1) / 2) as i32;
+
+    num_sum - element_sum
 }
