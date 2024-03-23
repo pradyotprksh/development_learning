@@ -1,3 +1,4 @@
+mod arrays;
 mod notes;
 mod time_complexity;
 
@@ -12,4 +13,6 @@ fn main() {
     notes::space_complexity();
 
     notes::asymptotic_analysis_of_algorithm();
+
+    notes::arrays(arrays::arrays_example);
 }

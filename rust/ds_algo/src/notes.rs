@@ -73,3 +73,14 @@ fn big_o_notiation() {
     println!("- Drop constant multipliers");
     println!(" - Eg. T = 3n^2 + 6n + 1 ==> O(n^2)");
 }
+
+pub fn arrays(example: fn()) {
+    println!();
+    println!("=*=*=*= ARRAYS =*=*=*=");
+    println!("- Collection of data, of specified type");
+    println!("- Contiguous memory allocations");
+    println!("- Size is fixed and once created it can't be modified");
+    println!("- Index starts from 0 and end at n - 1, where n is the size - for 1D array");
+    println!("Let's see some examples: ");
+    example();
+}
