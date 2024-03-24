@@ -112,5 +112,8 @@ pub fn singly_linked_list_example() {
     let mut head = Node::new(1);
     head.append(2);
     head.append(3);
-    head.print_list();
+    head.append(4);
+    head.append(5);
+    head.append(6);
+    head.print_list(); // [1]->[2]->[3]->[4]->[5]->[6]->
 }
