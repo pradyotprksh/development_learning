@@ -84,3 +84,13 @@ pub fn arrays(example: fn()) {
     println!("Let's see some examples: ");
     example();
 }
+
+pub fn singly_linked_list(example: fn()) {
+    println!();
+    println!("=*=*=*= SINGLY LINKED LIST =*=*=*=");
+    println!("- Stores collection of data");
+    println!("- Contains sequence of nodes");
+    println!("- Have a head, start of the linked list");
+    println!("- Contains data and the refrence to the next node, if end then the value is null.");
+    example();
+}

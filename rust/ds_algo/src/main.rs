@@ -1,5 +1,6 @@
 mod arrays;
 mod notes;
+mod singly_linked_list;
 mod time_complexity;
 
 fn main() {
@@ -15,4 +16,6 @@ fn main() {
     notes::asymptotic_analysis_of_algorithm();
 
     notes::arrays(arrays::arrays_example);
+
+    notes::singly_linked_list(singly_linked_list::singly_linked_list_example)
 }
