@@ -47,6 +47,10 @@ pub fn arrays_example() {
 
     let arr = [2, 3, 5, 7, 1, 4, 8];
     println!("Missing element in {:?} is {}", arr, find_missing_element(arr)); // 6
+
+    println!("Is madam plaindrome? - {}", is_palindrome("madam"));
+    println!("Is Madam plaindrome? - {}", is_palindrome("Madam"));
+    println!("Is Rust plaindrome? - {}", is_palindrome("Rust"));
 }
 
 /*
@@ -158,4 +162,26 @@ fn find_missing_element(arr: [i32; 7]) -> i32 {
     let num_sum = (n * (n + 1) / 2) as i32;
 
     num_sum - element_sum
+}
+
+/*
+To check if a string is a palindrome in Rust, you can compare characters 
+from both ends of the string and check if they match.
+*/
+fn is_palindrome(value: &str) -> bool {
+    let s = value.trim().to_lowercase();
+    let chars: Vec<char> = s.chars().collect();
+
+    let mut start = 0;
+    let mut end = chars.len() - 1;
+
+    while start <= end {
+        if chars[start] != chars[end] {
+            return false;
+        }
+        start += 1;
+        end -= 1;
+    }
+
+    true
 }
