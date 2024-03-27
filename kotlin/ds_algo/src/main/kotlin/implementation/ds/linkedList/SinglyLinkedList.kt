@@ -173,6 +173,18 @@ class SinglyLinkedListImplementation<T>(
     }
 
     fun removeDuplicates() {
+        var current = head
+        while (current?.next != null) {
+            if (current.data == current.next?.data) {
+                current.next = current.next?.next
+            } else {
+                current = current.next
+            }
+        }
+
+        /*
+        Another approach, but slow
+
         if (head == null) {
             return
         } else {
@@ -191,6 +203,7 @@ class SinglyLinkedListImplementation<T>(
                 current = current.next
             }
         }
+        */
     }
 
     fun length(): Int {
@@ -351,6 +364,8 @@ object SinglyLinkedList {
         sll.deleteLast()
         sll.deleteLast()
 
+        sll.printSLL() // [1]->null. Length: 1
+
         sll.append(1)
         sll.append(1)
         sll.append(1)
@@ -359,9 +374,18 @@ object SinglyLinkedList {
         sll.printSLL() // [1]->[1]->[1]->[1]->[1]->null. Length: 5
 
         sll.removeDuplicates()
-        sll.printSLL() // [1]->[2]->[3]->[4]->[5]->[6]->null. Length: 6
+        sll.printSLL() // [1]->null. Length: 1
 
+        sll.append(1)
+        sll.append(1)
+        sll.append(1)
         sll.append(2)
+
+        sll.printSLL() // [1]->[1]->[1]->[1]->[2]->null. Length: 5
+
+        sll.removeDuplicates()
+        sll.printSLL() // [1]->[2]->null. Length: 2
+
         sll.append(3)
         sll.append(4)
         sll.append(5)
