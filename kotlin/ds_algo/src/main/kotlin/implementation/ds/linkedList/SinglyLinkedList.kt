@@ -172,6 +172,27 @@ class SinglyLinkedListImplementation<T>(
         return current
     }
 
+    fun removeDuplicates() {
+        if (head == null) {
+            return
+        } else {
+            var current = head
+            while (current != null) {
+                if (current.data == current.next?.data) {
+                    var temp = current
+                    while (temp != null) {
+                        if (temp.data != current.data) {
+                            break
+                        }
+                        temp = temp.next
+                    }
+                    current.next = temp
+                }
+                current = current.next
+            }
+        }
+    }
+
     fun length(): Int {
         var count = 0
         var current = head
@@ -215,7 +236,6 @@ object SinglyLinkedList {
         sll.printSLL() // [1]->null. Length: 1
 
         sll.append(2)
-
         sll.append(3)
         sll.append(4)
         sll.append(5)
@@ -321,5 +341,31 @@ object SinglyLinkedList {
 
         sll.insertAtPosition(5, 4)
         sll.printSLL() // [1]->[2]->[2]->[3]->[4]->[4]->[4]->[5]->[6]->null. Length: 9
+
+        sll.removeDuplicates()
+        sll.printSLL() // [1]->[2]->[3]->[4]->[5]->[6]->null. Length: 6
+
+        sll.deleteLast()
+        sll.deleteLast()
+        sll.deleteLast()
+        sll.deleteLast()
+        sll.deleteLast()
+
+        sll.append(1)
+        sll.append(1)
+        sll.append(1)
+        sll.append(1)
+
+        sll.printSLL() // [1]->[1]->[1]->[1]->[1]->null. Length: 5
+
+        sll.removeDuplicates()
+        sll.printSLL() // [1]->[2]->[3]->[4]->[5]->[6]->null. Length: 6
+
+        sll.append(2)
+        sll.append(3)
+        sll.append(4)
+        sll.append(5)
+        sll.append(6)
+        sll.printSLL() // [1]->[2]->[3]->[4]->[5]->[6]->null. Length: 6
     }
 }
