@@ -1,7 +1,21 @@
-fun main(args: Array<String>) {
-    println("Hello World!")
+import examples.TimeComplexity
+import implementation.ds.Arrays
+import notes.Algorithms
+import notes.DataStructure
 
-    // Try adding program arguments via Run/Debug configuration.
-    // Learn more about running applications: https://www.jetbrains.com/help/idea/running-applications.html.
-    println("Program arguments: ${args.joinToString()}")
+fun main() {
+    DataStructure.dsIntro()
+
+    Algorithms.algoIntro()
+
+    Algorithms.algoAnalysis()
+
+    Algorithms.timeComplexity { TimeComplexity.timeComplexityExample() }
+    Algorithms.spaceComplexity()
+
+    Algorithms.asymptoticAnalysisOfAlgorithm()
+
+    DataStructure.arrays { Arrays.implementation() }
+
+    DataStructure.singlyLinkedList {  }
 }
