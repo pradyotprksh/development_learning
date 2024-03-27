@@ -32,6 +32,7 @@ object DataStructure {
         println("- Contains sequence of nodes")
         println("- Have a head, start of the linked list")
         println("- Contains data and the reference to the next node, if end then the value is null.")
+        println("Let's see the implementation: ")
         implementation()
     }
 }
