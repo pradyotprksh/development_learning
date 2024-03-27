@@ -139,6 +139,27 @@ class SinglyLinkedListImplementation<T>(
         return null
     }
 
+    fun reverse() {
+        if (head == null) {
+            return
+        } else if (head?.next == null) {
+            return
+        } else {
+            var prev: SLLNode<T>? = null
+            var current = head
+            var next = head?.next
+
+            while (current != null) {
+                current.next = prev
+                prev = current
+                current = next
+                next = next?.next
+            }
+
+            head = prev
+        }
+    }
+
     fun length(): Int {
         var count = 0
         var current = head
@@ -251,5 +272,20 @@ object SinglyLinkedList {
 
         println("Search 6. ${sll.search(6)?.onlyNodeString()}") // Search 6. [6]->...
         println("Search 8. ${sll.search(8)?.onlyNodeString()}") // Search 8. null
+
+        sll.reverse()
+        sll.printSLL() // [6]->[5]->[4]->[3]->[2]->[1]->null. Length: 6
+
+        println("Deleting starting node ${sll.deleteAtStart()?.onlyNodeString()}") // Deleting node [6]->...
+        sll.printSLL() // [5]->[4]->[3]->[2]->[1]->null. Length: 5
+
+        sll.insertAtStart(6)
+        sll.printSLL() // [6]->[5]->[4]->[3]->[2]->[1]->null. Length: 6
+
+        println("Deleting last node ${sll.deleteLast()?.onlyNodeString()}") // Deleting last node [1]->...
+        sll.printSLL() // [6]->[5]->[4]->[3]->[2]->null. Length: 5
+
+        sll.append(1)
+        sll.printSLL() // [6]->[5]->[4]->[3]->[2]->[1]->null. Length: 6
     }
 }
