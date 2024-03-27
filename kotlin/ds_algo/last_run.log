@@ -8,8 +8,8 @@ Time and space complexity are the two factors which determine the performance of
  Time Complexity
  - The amount of time taken by an algorithm to run.
  Let's see an example below for finding the sum of n numbers using 2 approaches
- Find sum of 1711535087 number by formula: 1464676177871816328. Took 0 milliseconds
- Find sum of 1711535087 number by iteration: 1464676177871816328. Took 0 milliseconds
+ Find sum of 1711535425 number by formula: 1464676756370733025. Took 0 milliseconds
+ Find sum of 1711535425 number by iteration: 1464676756370733025. Took 0 milliseconds
  This is not the correct way of finding the time complexity. Because depending on the machine the time calculation might change and can't give the correct result.
 
  Space Complexity
@@ -90,8 +90,10 @@ Is Rust plaindrome? - false
 Let's see the implementation: 
 Deleting starting node [1]->...
 null. Length: 0
+null. Length: 0
 Deleting last node [1]->...
 null. Length: 0
+[1]->null. Length: 1
 [1]->[2]->null. Length: 2
 Deleting last node [2]->...
 [1]->null. Length: 1
