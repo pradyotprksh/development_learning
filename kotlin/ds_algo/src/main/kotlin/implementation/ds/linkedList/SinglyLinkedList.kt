@@ -15,10 +15,41 @@ data class SLLNode<T>(
     }
 }
 
+/*
+Sorting insert we can only do on comparable data, so that's why this extension
+will help in calling the insert on sorted linked list only when it's possible
+to compare the data
+ */
+fun <T> SinglyLinkedListImplementation<T>.insertDataInSorted(data: T) where T: Comparable<T> {
+    if (head == null) {
+        append(data = data)
+    } else {
+        var prev: SLLNode<T>? = null
+        var current = head
+        while (current != null) {
+            if (current.data < data) {
+                prev = current
+                current = current.next
+            } else {
+                break
+            }
+        }
+
+        if (prev == null) {
+            insertAtStart(data = data)
+        } else {
+            val newNode = SLLNode(data = data, next = null)
+            prev.next = newNode
+            newNode.next = current
+        }
+    }
+}
+
 class SinglyLinkedListImplementation<T>(
     data: T
 ) {
-    private var head: SLLNode<T>? = SLLNode(data = data, next = null)
+    var head: SLLNode<T>? = SLLNode(data = data, next = null)
+        private set
 
     fun append(data: T) {
         val newNode = SLLNode(data = data, next = null)
@@ -69,7 +100,7 @@ class SinglyLinkedListImplementation<T>(
         }
     }
 
-    fun deleteAtStart(): SLLNode<T>? {
+    fun deleteStart(): SLLNode<T>? {
         val temp = head
         head = head?.next
         return temp
@@ -104,7 +135,7 @@ class SinglyLinkedListImplementation<T>(
         } else {
             when (pos) {
                 0 -> {
-                    deleteAtStart()
+                    deleteStart()
                 }
                 length() -> {
                     deleteLast()
@@ -225,37 +256,37 @@ object SinglyLinkedList {
     fun implementation() {
         val sll = SinglyLinkedListImplementation(data = 1)
 
-        println("Deleting starting node ${sll.deleteAtStart()?.onlyNodeString()}") // Deleting starting node [1]->...
+        println("Deleting starting node ${sll.deleteStart()?.onlyNodeString()}") // Deleting starting node [1]->...
         sll.printSLL() // null. Length: 0
 
         sll.reverse()
         sll.printSLL() // null. Length: 0
 
-        sll.append(1)
+        sll.append(data = 1)
 
         println("Deleting last node ${sll.deleteLast()?.onlyNodeString()}") // Deleting last node [1]->...
         sll.printSLL() // null. Length: 0
 
-        sll.append(1)
+        sll.append(data = 1)
 
         sll.reverse()
         sll.printSLL() // [1]->null. Length: 1
 
-        sll.append(2)
+        sll.append(data = 2)
 
         sll.printSLL() // [1]->[2]->null. Length: 2
 
         println("Deleting last node ${sll.deleteLast()?.onlyNodeString()}") // Deleting last node [2]->...
         sll.printSLL() // [1]->null. Length: 1
 
-        sll.append(2)
-        sll.append(3)
-        sll.append(4)
-        sll.append(5)
-        sll.append(6)
+        sll.append(data = 2)
+        sll.append(data = 3)
+        sll.append(data = 4)
+        sll.append(data = 5)
+        sll.append(data = 6)
         sll.printSLL() // [1]->[2]->[3]->[4]->[5]->[6]->null. Length: 6
 
-        sll.insertAtStart(7)
+        sll.insertAtStart(data = 7)
         sll.printSLL() // [7]->[1]->[2]->[3]->[4]->[5]->[6]->null. Length: 7
 
         sll.insertAtPosition(pos = 2, data = 8)
@@ -295,40 +326,40 @@ object SinglyLinkedList {
         at MainKt.main(Main.kt)
         */
 
-        println("Deleting starting node ${sll.deleteAtStart()?.onlyNodeString()}") // Deleting node [10]->...
+        println("Deleting starting node ${sll.deleteStart()?.onlyNodeString()}") // Deleting node [10]->...
         sll.printSLL() // [7]->[1]->[8]->[2]->[3]->[4]->[5]->[9]->[6]->[11]->null. Length: 10
 
-        println("Deleting starting node ${sll.deleteAtStart()?.onlyNodeString()}") // Deleting node [7]->...
+        println("Deleting starting node ${sll.deleteStart()?.onlyNodeString()}") // Deleting node [7]->...
         sll.printSLL() // [1]->[8]->[2]->[3]->[4]->[5]->[9]->[6]->[11]->null. Length: 9
 
         println("Deleting last node ${sll.deleteLast()?.onlyNodeString()}") // Deleting last node [2]->...
         sll.printSLL() // [1]->[8]->[2]->[3]->[4]->[5]->[9]->[6]->null. Length: 8
 
-        println("Deleting at position 1 ${sll.deleteAtPosition(1)?.onlyNodeString()}") // Deleting node [8]->...
+        println("Deleting at position 1 ${sll.deleteAtPosition(pos = 1)?.onlyNodeString()}") // Deleting node [8]->...
         sll.printSLL() // [1]->[2]->[3]->[4]->[5]->[9]->[6]->null. Length: 7
 
-        println("Deleting at position 5 ${sll.deleteAtPosition(5)?.onlyNodeString()}") // Deleting node [9]->...
+        println("Deleting at position 5 ${sll.deleteAtPosition(pos = 5)?.onlyNodeString()}") // Deleting node [9]->...
         sll.printSLL() // [1]->[2]->[3]->[4]->[5]->[6]->null. Length: 6
 
         sll.insertAtStart(7)
         sll.printSLL() // [7]->[1]->[2]->[3]->[4]->[5]->[6]->null. Length: 7
 
-        println("Deleting at position 0 ${sll.deleteAtPosition(0)?.onlyNodeString()}") // Deleting node [7]->...
+        println("Deleting at position 0 ${sll.deleteAtPosition(pos = 0)?.onlyNodeString()}") // Deleting node [7]->...
         sll.printSLL() // [1]->[2]->[3]->[4]->[5]->[6]->null. Length: 6
 
-        println("Deleting at position ${sll.length()} ${sll.deleteAtPosition(sll.length())?.onlyNodeString()}") // Deleting node [6]->...
+        println("Deleting at position ${sll.length()} ${sll.deleteAtPosition(pos = sll.length())?.onlyNodeString()}") // Deleting node [6]->...
         sll.printSLL() // [1]->[2]->[3]->[4]->[5]->null. Length: 5
 
         sll.append(6)
         sll.printSLL() // [1]->[2]->[3]->[4]->[5]->[6]->null. Length: 6
 
-        println("Search 6. ${sll.search(6)?.onlyNodeString()}") // Search 6. [6]->...
-        println("Search 8. ${sll.search(8)?.onlyNodeString()}") // Search 8. null
+        println("Search 6. ${sll.search(data = 6)?.onlyNodeString()}") // Search 6. [6]->...
+        println("Search 8. ${sll.search(data = 8)?.onlyNodeString()}") // Search 8. null
 
         sll.reverse()
         sll.printSLL() // [6]->[5]->[4]->[3]->[2]->[1]->null. Length: 6
 
-        println("Deleting starting node ${sll.deleteAtStart()?.onlyNodeString()}") // Deleting node [6]->...
+        println("Deleting starting node ${sll.deleteStart()?.onlyNodeString()}") // Deleting node [6]->...
         sll.printSLL() // [5]->[4]->[3]->[2]->[1]->null. Length: 5
 
         sll.insertAtStart(6)
@@ -340,19 +371,19 @@ object SinglyLinkedList {
         sll.append(1)
         sll.printSLL() // [6]->[5]->[4]->[3]->[2]->[1]->null. Length: 6
 
-        println("2nd last node is ${sll.nodeAtPositionFromEnd(2)?.onlyNodeString()}") // 2nd last node is [2]->...
-        println("6th last node is ${sll.nodeAtPositionFromEnd(sll.length())?.onlyNodeString()}") // 6th last node is [6]->...
+        println("2nd last node is ${sll.nodeAtPositionFromEnd(pos = 2)?.onlyNodeString()}") // 2nd last node is [2]->...
+        println("6th last node is ${sll.nodeAtPositionFromEnd(pos = sll.length())?.onlyNodeString()}") // 6th last node is [6]->...
 
         sll.reverse()
         sll.printSLL() // [1]->[2]->[3]->[4]->[5]->[6]->null. Length: 6
 
-        sll.insertAtPosition(1, 2)
+        sll.insertAtPosition(pos = 1, data = 2)
         sll.printSLL() // [1]->[2]->[2]->[3]->[4]->[5]->[6]->null. Length: 7
 
-        sll.insertAtPosition(4, 4)
+        sll.insertAtPosition(pos = 4, data = 4)
         sll.printSLL() // [1]->[2]->[2]->[3]->[4]->[4]->[5]->[6]->null. Length: 8
 
-        sll.insertAtPosition(5, 4)
+        sll.insertAtPosition(pos = 5, data = 4)
         sll.printSLL() // [1]->[2]->[2]->[3]->[4]->[4]->[4]->[5]->[6]->null. Length: 9
 
         sll.removeDuplicates()
@@ -366,30 +397,44 @@ object SinglyLinkedList {
 
         sll.printSLL() // [1]->null. Length: 1
 
-        sll.append(1)
-        sll.append(1)
-        sll.append(1)
-        sll.append(1)
+        sll.append(data = 1)
+        sll.append(data = 1)
+        sll.append(data = 1)
+        sll.append(data = 1)
 
         sll.printSLL() // [1]->[1]->[1]->[1]->[1]->null. Length: 5
 
         sll.removeDuplicates()
         sll.printSLL() // [1]->null. Length: 1
 
-        sll.append(1)
-        sll.append(1)
-        sll.append(1)
-        sll.append(2)
+        sll.append(data = 1)
+        sll.append(data = 1)
+        sll.append(data = 1)
+        sll.append(data = 2)
 
         sll.printSLL() // [1]->[1]->[1]->[1]->[2]->null. Length: 5
 
         sll.removeDuplicates()
         sll.printSLL() // [1]->[2]->null. Length: 2
 
-        sll.append(3)
-        sll.append(4)
-        sll.append(5)
-        sll.append(6)
+        sll.append(data = 3)
+        sll.append(data = 4)
+        sll.append(data = 5)
+        sll.append(data = 6)
+        sll.printSLL() // [1]->[2]->[3]->[4]->[5]->[6]->null. Length: 6
+
+        sll.insertDataInSorted(data = 0)
+        sll.insertDataInSorted(data = 4)
+        sll.insertDataInSorted(data = 5)
+        sll.insertDataInSorted(data = 7)
+        sll.insertDataInSorted(data = 10)
+
+        sll.printSLL() // [0]->[1]->[2]->[3]->[4]->[4]->[5]->[5]->[6]->[7]->[10]->null. Length: 11
+
+        sll.removeDuplicates()
+        sll.deleteLast()
+        sll.deleteLast()
+        sll.deleteStart()
         sll.printSLL() // [1]->[2]->[3]->[4]->[5]->[6]->null. Length: 6
     }
 }
