@@ -1,0 +1,105 @@
+=*=*=*= ALGORITHMS =*=*=*=
+- Set of instructions to perform a task or solve a problem.
+
+Algorithm analysis helps in finding the best algorithm which runs fast and takes less memory.
+Time and space complexity are the two factors which determine the performance of an algorithm.
+
+ Time Complexity
+ - The amount of time taken by an algorithm to run.
+ Let's see an example below for finding the sum of n numbers using 2 approaches
+ Find sum of 1711531414 number by formula: 1464669891410185405. Took 0 milliseconds
+ Find sum of 1711531414 number by iteration: 1464669891410185405. Took 0 milliseconds
+ This is not the correct way of finding the time complexity. Because depending on the machine the time calculation might change and can't give the correct result.
+
+ Space Complexity
+ - The amount of space or memory taken by an algorithm to run.
+
+We usually don't go by the exact number of time and space. So we use a model to show how much time and space the algorithm is taking.
+Asymptotic analysis is one of the ways to show how much time and space the algorithm is taking. Also based on the input size as well. As we increase the size the time and space will get affected.
+
+Asymptotic notations help in determining the running time of an algorithm based on input size in -
+1. Best case
+2. Average case
+3. Worst case
+scenarios
+
+Different notation for runtime analysis
+Omega notation - best amount of time an algorithm to complete the task. Mainly the lower bound, best case for an algorithm.
+Big O notation - Upper bound of an algorithm. Longest amount of time an algorithm will take, worst case for an algorithm.
+Theta notation - middle bound of an algorithm, average case mainly.
+
+Big O notation is the most used notation. Since it shows the longest amount of time for an algorithm for a given input.
+
+Rules for Big O Notation
+- Single processor
+- Sequential execution of statements
+- Assignment operation takes 1 unit of time
+- Return statement takes 1 unit of time
+- Arithmetic operation takes 1 unit of time
+- Logical operation takes 1 unit of time
+- Other small/single operation takes 1 unit of time
+- Drop lower order terms
+ - Eg. T = n^2 + 3n + 1 ==> O(n^2)
+- Drop constant multipliers
+ - Eg. T = 3n^2 + 6n + 1 ==> O(n^2)
+
+=*=*=*= DATA STRUCTURES =*=*=*=
+- Way to organize data.
+-- Helps in processing the data.
+
+Two kinds of data structures:
+- Linear
+-- Data elements arranged in a sequential manner. Each member is connected to the previous and next element. Makes it easier to traverse them. Eg. Array, Linked List, Stack, Queue, etc.
+- Non-Linear
+-- Data elements arranged in a non-sequential manner. Each member is connected to the previous and next element through paths. Traversal is a bit difficult and not easy to implement. Eg. Tree, Graph, etc.
+
+=*=*=*= ARRAYS =*=*=*=
+- Collection of data, of specified type
+- Contiguous memory allocations
+- Size is fixed and once created it can't be modified
+- Index starts from 0 and ends at n - 1, where n is the size - for 1D array
+Let's see some examples:
+[1, 2, 3]
+[0, 0, 0, 0, 0]
+[1, 2, 3, 4, 5]
+[1, 2, 3, 4, 6]
+Length: 5
+Last element: 6
+1 2 3 4 6
+Index = 0 Item = 1
+Index = 1 Item = 2
+Index = 2 Item = 3
+Index = 3 Item = 4
+Index = 4 Item = 6
+Remove Even Elements from [3, 2, 4, 7, 10, 6, 5]. Result: [3, 7, 5]
+Reverse [3, 2, 4, 7, 10, 6, 5]. Result: [5, 6, 10, 7, 4, 2, 3]
+Minimum element in [5, 6, 10, 7, 4, 2, 3] is 2
+Second max element in [5, 6, 10, 7, 4, 2, 3] is 7
+Moving all the zeroes in [8, 1, 0, 2, 1, 0, 3] in the end. Result: [8, 1, 2, 1, 3, 0, 0]
+Missing element in [2, 3, 5, 7, 1, 4, 8] is 6
+Is madam plaindrome? - true
+Is Madam plaindrome? - true
+Is Rust plaindrome? - false
+
+=*=*=*= SINGLY LINKED LIST =*=*=*=
+- Stores collection of data
+- Contains sequence of nodes
+- Have a head, start of the linked list
+- Contains data and the reference to the next node, if end then the value is null.
+Let's see the implementation:
+Deleting node [1]->...
+null. Length: 0
+[1]->[2]->[3]->[4]->[5]->[6]->null. Length: 6
+[7]->[1]->[2]->[3]->[4]->[5]->[6]->null. Length: 7
+[7]->[1]->[8]->[2]->[3]->[4]->[5]->[6]->null. Length: 8
+[7]->[1]->[8]->[2]->[3]->[4]->[5]->[9]->[6]->null. Length: 9
+[10]->[7]->[1]->[8]->[2]->[3]->[4]->[5]->[9]->[6]->null. Length: 10
+[10]->[7]->[1]->[8]->[2]->[3]->[4]->[5]->[9]->[6]->[11]->null. Length: 11
+Deleting node [10]->...
+[7]->[1]->[8]->[2]->[3]->[4]->[5]->[9]->[6]->[11]->null. Length: 10
+Deleting node [7]->...
+[1]->[8]->[2]->[3]->[4]->[5]->[9]->[6]->[11]->null. Length: 9
+Deleting node [11]->...
+[1]->[8]->[2]->[3]->[4]->[5]->[9]->[6]->null. Length: 8
+
+Process finished with exit code 0

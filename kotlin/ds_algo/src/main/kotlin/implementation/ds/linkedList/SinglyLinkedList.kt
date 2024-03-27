@@ -75,6 +75,22 @@ class SinglyLinkedListImplementation<T>(
         return temp
     }
 
+    fun deleteLast(): SLLNode<T>? {
+        if (head == null) {
+            return null
+        }
+
+        var current = head
+        while (current?.next?.next != null) {
+            current = current.next
+        }
+
+        val temp = current?.next
+        current?.next = null
+
+        return temp
+    }
+
     fun length(): Int {
         var count = 0
         var current = head
@@ -150,6 +166,9 @@ object SinglyLinkedList {
         sll.printSLL() // [7]->[1]->[8]->[2]->[3]->[4]->[5]->[9]->[6]->[11]->null. Length: 10
 
         println("Deleting node ${sll.deleteAtStart()?.onlyNodeString()}") // Deleting node [7]->...
-        sll.printSLL() // [1]->[8]->[2]->[3]->[4]->[5]->[9]->[6]->[11]->null. Length: 10
+        sll.printSLL() // [1]->[8]->[2]->[3]->[4]->[5]->[9]->[6]->[11]->null. Length: 9
+
+        println("Deleting node ${sll.deleteLast()?.onlyNodeString()}") // Deleting node [11]->...
+        sll.printSLL() // [1]->[8]->[2]->[3]->[4]->[5]->[9]->[6]->null. Length: 8
     }
 }
