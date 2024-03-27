@@ -79,6 +79,11 @@ class SinglyLinkedListImplementation<T>(
         if (head == null) {
             return null
         }
+        if (head?.next == null) {
+            val temp = head
+            head = null
+            return temp
+        }
 
         var current = head
         while (current?.next?.next != null) {
@@ -110,11 +115,24 @@ object SinglyLinkedList {
     fun implementation() {
         val sll = SinglyLinkedListImplementation(data = 1)
 
-        println("Deleting node ${sll.deleteAtStart()?.onlyNodeString()}") // Deleting node [1]->...
+        println("Deleting starting node ${sll.deleteAtStart()?.onlyNodeString()}") // Deleting starting node [1]->...
+        sll.printSLL() // null. Length: 0
+
+        sll.append(1)
+
+        println("Deleting last node ${sll.deleteLast()?.onlyNodeString()}") // Deleting last node [1]->...
         sll.printSLL() // null. Length: 0
 
         sll.append(1)
         sll.append(2)
+
+        sll.printSLL() // [1]->[2]->null. Length: 2
+
+        println("Deleting last node ${sll.deleteLast()?.onlyNodeString()}") // Deleting last node [2]->...
+        sll.printSLL() // [1]->null. Length: 1
+
+        sll.append(2)
+
         sll.append(3)
         sll.append(4)
         sll.append(5)
@@ -162,13 +180,13 @@ object SinglyLinkedList {
         at MainKt.main(Main.kt)
         */
 
-        println("Deleting node ${sll.deleteAtStart()?.onlyNodeString()}") // Deleting node [10]->...
+        println("Deleting starting node ${sll.deleteAtStart()?.onlyNodeString()}") // Deleting node [10]->...
         sll.printSLL() // [7]->[1]->[8]->[2]->[3]->[4]->[5]->[9]->[6]->[11]->null. Length: 10
 
-        println("Deleting node ${sll.deleteAtStart()?.onlyNodeString()}") // Deleting node [7]->...
+        println("Deleting starting node ${sll.deleteAtStart()?.onlyNodeString()}") // Deleting node [7]->...
         sll.printSLL() // [1]->[8]->[2]->[3]->[4]->[5]->[9]->[6]->[11]->null. Length: 9
 
-        println("Deleting node ${sll.deleteLast()?.onlyNodeString()}") // Deleting node [11]->...
+        println("Deleting last node ${sll.deleteLast()?.onlyNodeString()}") // Deleting node [11]->...
         sll.printSLL() // [1]->[8]->[2]->[3]->[4]->[5]->[9]->[6]->null. Length: 8
     }
 }

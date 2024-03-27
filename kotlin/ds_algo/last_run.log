@@ -1,3 +1,4 @@
+
 =*=*=*= ALGORITHMS =*=*=*=
 - Set of instructions to perform a task or solve a problem.
 
@@ -7,8 +8,8 @@ Time and space complexity are the two factors which determine the performance of
  Time Complexity
  - The amount of time taken by an algorithm to run.
  Let's see an example below for finding the sum of n numbers using 2 approaches
- Find sum of 1711531414 number by formula: 1464669891410185405. Took 0 milliseconds
- Find sum of 1711531414 number by iteration: 1464669891410185405. Took 0 milliseconds
+ Find sum of 1711532100 number by formula: 1464671065520971050. Took 0 milliseconds
+ Find sum of 1711532100 number by iteration: 1464671065520971050. Took 1 milliseconds
  This is not the correct way of finding the time complexity. Because depending on the machine the time calculation might change and can't give the correct result.
 
  Space Complexity
@@ -58,14 +59,14 @@ Two kinds of data structures:
 - Contiguous memory allocations
 - Size is fixed and once created it can't be modified
 - Index starts from 0 and ends at n - 1, where n is the size - for 1D array
-Let's see some examples:
+Let's see some examples: 
 [1, 2, 3]
 [0, 0, 0, 0, 0]
 [1, 2, 3, 4, 5]
 [1, 2, 3, 4, 6]
 Length: 5
 Last element: 6
-1 2 3 4 6
+1 2 3 4 6 
 Index = 0 Item = 1
 Index = 1 Item = 2
 Index = 2 Item = 3
@@ -86,20 +87,23 @@ Is Rust plaindrome? - false
 - Contains sequence of nodes
 - Have a head, start of the linked list
 - Contains data and the reference to the next node, if end then the value is null.
-Let's see the implementation:
-Deleting node [1]->...
+Let's see the implementation: 
+Deleting starting node [1]->...
 null. Length: 0
+Deleting last node [1]->...
+null. Length: 0
+[1]->[2]->null. Length: 2
+Deleting last node [2]->...
+[1]->null. Length: 1
 [1]->[2]->[3]->[4]->[5]->[6]->null. Length: 6
 [7]->[1]->[2]->[3]->[4]->[5]->[6]->null. Length: 7
 [7]->[1]->[8]->[2]->[3]->[4]->[5]->[6]->null. Length: 8
 [7]->[1]->[8]->[2]->[3]->[4]->[5]->[9]->[6]->null. Length: 9
 [10]->[7]->[1]->[8]->[2]->[3]->[4]->[5]->[9]->[6]->null. Length: 10
 [10]->[7]->[1]->[8]->[2]->[3]->[4]->[5]->[9]->[6]->[11]->null. Length: 11
-Deleting node [10]->...
+Deleting starting node [10]->...
 [7]->[1]->[8]->[2]->[3]->[4]->[5]->[9]->[6]->[11]->null. Length: 10
-Deleting node [7]->...
+Deleting starting node [7]->...
 [1]->[8]->[2]->[3]->[4]->[5]->[9]->[6]->[11]->null. Length: 9
-Deleting node [11]->...
+Deleting last node [11]->...
 [1]->[8]->[2]->[3]->[4]->[5]->[9]->[6]->null. Length: 8
-
-Process finished with exit code 0
