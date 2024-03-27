@@ -79,7 +79,28 @@ impl<T> Node<T> {
             print!("[{}]->", node.data);
             current = node.next.as_deref();
         }
+        print!("null. Length {}", self.length());
         println!();
+    }
+
+    fn insert_node_at_start(&mut self, data: T) {
+        let new_node = Node {
+            data,
+            next: self.next.take(),
+        };
+        self.next = Some(Box::new(new_node));
+    }
+
+    fn length(&self) -> i32 {
+        let mut count = 0;
+        let mut current = Some(self);
+
+        while let Some(node) = current {
+            count += 1;
+            current = node.next.as_deref();
+        }
+
+        count
     }
 }
 
@@ -115,5 +136,5 @@ pub fn singly_linked_list_example() {
     head.append(4);
     head.append(5);
     head.append(6);
-    head.print_list(); // [1]->[2]->[3]->[4]->[5]->[6]->
+    head.print_list(); // [1]->[2]->[3]->[4]->[5]->[6]->null. Length 6
 }
