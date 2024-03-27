@@ -154,6 +154,24 @@ class SinglyLinkedListImplementation<T>(
         head = prev
     }
 
+    fun nodeAtPositionFromEnd(pos: Int): SLLNode<T>? {
+        if (pos > length()) {
+            throw IllegalArgumentException("Position can't be greater than length")
+        }
+        var fast = head
+        var count = 0
+        while (count < pos) {
+            ++count
+            fast = fast?.next
+        }
+        var current = head
+        while (fast != null) {
+            current = current?.next
+            fast = fast.next
+        }
+        return current
+    }
+
     fun length(): Int {
         var count = 0
         var current = head
@@ -288,5 +306,20 @@ object SinglyLinkedList {
 
         sll.append(1)
         sll.printSLL() // [6]->[5]->[4]->[3]->[2]->[1]->null. Length: 6
+
+        println("2nd last node is ${sll.nodeAtPositionFromEnd(2)?.onlyNodeString()}") // 2nd last node is [2]->...
+        println("6th last node is ${sll.nodeAtPositionFromEnd(sll.length())?.onlyNodeString()}") // 6th last node is [6]->...
+
+        sll.reverse()
+        sll.printSLL() // [1]->[2]->[3]->[4]->[5]->[6]->null. Length: 6
+
+        sll.insertAtPosition(1, 2)
+        sll.printSLL() // [1]->[2]->[2]->[3]->[4]->[5]->[6]->null. Length: 7
+
+        sll.insertAtPosition(4, 4)
+        sll.printSLL() // [1]->[2]->[2]->[3]->[4]->[4]->[5]->[6]->null. Length: 8
+
+        sll.insertAtPosition(5, 4)
+        sll.printSLL() // [1]->[2]->[2]->[3]->[4]->[4]->[4]->[5]->[6]->null. Length: 9
     }
 }
