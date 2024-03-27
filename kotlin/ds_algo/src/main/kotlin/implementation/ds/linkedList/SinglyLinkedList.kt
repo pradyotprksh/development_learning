@@ -96,6 +96,36 @@ class SinglyLinkedListImplementation<T>(
         return temp
     }
 
+    fun deleteAtPosition(pos: Int): SLLNode<T>? {
+        return if (pos > length()) {
+            throw IllegalArgumentException("Position can't be greater than length")
+        } else if (pos < 0) {
+            throw IllegalArgumentException("Position can't be less than 0")
+        } else {
+            when (pos) {
+                0 -> {
+                    deleteAtStart()
+                }
+                length() -> {
+                    deleteLast()
+                }
+                else -> {
+                    var position = 0
+                    var current = head
+
+                    while (position < pos - 1) {
+                        ++position
+                        current = current?.next
+                    }
+
+                    val temp = current?.next
+                    current?.next = current?.next?.next
+                    temp
+                }
+            }
+        }
+    }
+
     fun length(): Int {
         var count = 0
         var current = head
@@ -186,7 +216,25 @@ object SinglyLinkedList {
         println("Deleting starting node ${sll.deleteAtStart()?.onlyNodeString()}") // Deleting node [7]->...
         sll.printSLL() // [1]->[8]->[2]->[3]->[4]->[5]->[9]->[6]->[11]->null. Length: 9
 
-        println("Deleting last node ${sll.deleteLast()?.onlyNodeString()}") // Deleting node [11]->...
+        println("Deleting last node ${sll.deleteLast()?.onlyNodeString()}") // Deleting last node [2]->...
         sll.printSLL() // [1]->[8]->[2]->[3]->[4]->[5]->[9]->[6]->null. Length: 8
+
+        println("Deleting at position 1 ${sll.deleteAtPosition(1)?.onlyNodeString()}") // Deleting node [8]->...
+        sll.printSLL() // [1]->[2]->[3]->[4]->[5]->[9]->[6]->null. Length: 7
+
+        println("Deleting at position 5 ${sll.deleteAtPosition(5)?.onlyNodeString()}") // Deleting node [9]->...
+        sll.printSLL() // [1]->[2]->[3]->[4]->[5]->[6]->null. Length: 6
+
+        sll.insertAtStart(7)
+        sll.printSLL() // [7]->[1]->[2]->[3]->[4]->[5]->[6]->null. Length: 7
+
+        println("Deleting at position 0 ${sll.deleteAtPosition(0)?.onlyNodeString()}") // Deleting node [7]->...
+        sll.printSLL() // [1]->[2]->[3]->[4]->[5]->[6]->null. Length: 6
+
+        println("Deleting at position ${sll.length()} ${sll.deleteAtPosition(sll.length())?.onlyNodeString()}") // Deleting node [6]->...
+        sll.printSLL() // [1]->[2]->[3]->[4]->[5]->null. Length: 5
+
+        sll.append(6)
+        sll.printSLL() // [1]->[2]->[3]->[4]->[5]->[6]->null. Length: 6
     }
 }
