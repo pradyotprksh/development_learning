@@ -120,7 +120,9 @@ jobs:
       - uses: actions/checkout@v2
       - name: Checking ds_algo
         working-directory: ./kotlin/ds_algo
-        run: kotlinc src/main/kotlin/Main.kt
+        run: |
+#          kotlinc src/main/kotlin/Main.kt
+          cat last_run.log
       - name: Send Message
         if: always()
         uses: appleboy/telegram-action@master

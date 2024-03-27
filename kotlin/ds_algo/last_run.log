@@ -8,8 +8,8 @@ Time and space complexity are the two factors which determine the performance of
  Time Complexity
  - The amount of time taken by an algorithm to run.
  Let's see an example below for finding the sum of n numbers using 2 approaches
- Find sum of 1711532923 number by formula: 1464672474112228426. Took 0 milliseconds
- Find sum of 1711532923 number by iteration: 1464672474112228426. Took 1 milliseconds
+ Find sum of 1711534118 number by formula: 1464674519394786021. Took 0 milliseconds
+ Find sum of 1711534118 number by iteration: 1464674519394786021. Took 1 milliseconds
  This is not the correct way of finding the time complexity. Because depending on the machine the time calculation might change and can't give the correct result.
 
  Space Complexity
@@ -117,3 +117,5 @@ Deleting at position 0 [7]->...
 Deleting at position 6 [6]->...
 [1]->[2]->[3]->[4]->[5]->null. Length: 5
 [1]->[2]->[3]->[4]->[5]->[6]->null. Length: 6
+Search 6. [6]->...
+Search 8. null

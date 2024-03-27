@@ -126,6 +126,19 @@ class SinglyLinkedListImplementation<T>(
         }
     }
 
+    fun search(data: T): SLLNode<T>? {
+        var current = head
+
+        while (current != null) {
+            if (current.data == data) {
+                return current
+            }
+            current = current.next
+        }
+
+        return null
+    }
+
     fun length(): Int {
         var count = 0
         var current = head
@@ -236,5 +249,8 @@ object SinglyLinkedList {
 
         sll.append(6)
         sll.printSLL() // [1]->[2]->[3]->[4]->[5]->[6]->null. Length: 6
+
+        println("Search 6. ${sll.search(6)?.onlyNodeString()}") // Search 6. [6]->...
+        println("Search 8. ${sll.search(8)?.onlyNodeString()}") // Search 8. null
     }
 }
