@@ -209,7 +209,6 @@ object SinglyLinkedList {
 	    at MainKt.main(Main.kt:16)
 	    at MainKt.main(Main.kt)
          */
-
         /*
         sll.insertAtPosition(pos = sll.length() + 1, data = 12)
 
