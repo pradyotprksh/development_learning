@@ -10,8 +10,10 @@ data class SLLNode<T>(
 }
 
 class SinglyLinkedListImplementation<T>(
-    private var head: SLLNode<T>?
+    data: T
 ) {
+    private var head: SLLNode<T>? = SLLNode(data = data, next = null)
+
     fun append(data: T) {
         val newNode = SLLNode(data = data, next = null)
         var current = head
@@ -21,19 +23,29 @@ class SinglyLinkedListImplementation<T>(
         current?.next = newNode
     }
 
-    fun insertNodeAtStart(data: T) {
+    fun insert(data: T) {
         val newNode = SLLNode(data = data, next = head)
         head = newNode
     }
 
+    private fun length(): Int {
+        var count = 0
+        var current = head
+        while (current != null) {
+            ++count
+            current = current.next
+        }
+        return count
+    }
+
     fun printSLL() {
-        println(head)
+        println("$head. Length: ${length()}")
     }
 }
 
 object SinglyLinkedList {
     fun implementation() {
-        val sll = SinglyLinkedListImplementation(head = SLLNode(data = 1, next = null))
+        val sll = SinglyLinkedListImplementation(data = 1)
         sll.append(2)
         sll.append(3)
         sll.append(4)
@@ -42,7 +54,7 @@ object SinglyLinkedList {
 
         sll.printSLL()
 
-        sll.insertNodeAtStart(7)
+        sll.insert(7)
 
         sll.printSLL()
     }
