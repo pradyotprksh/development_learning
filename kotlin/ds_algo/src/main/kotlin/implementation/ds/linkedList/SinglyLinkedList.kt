@@ -237,6 +237,32 @@ class SinglyLinkedListImplementation<T>(
         */
     }
 
+    fun removeGivenData(data: T): SLLNode<T>? {
+        if (head != null) {
+            var prev: SLLNode<T>? = null
+            var current = head
+
+            while (current != null) {
+                if (current.data != data) {
+                    prev = current
+                    current = current.next
+                } else {
+                    break
+                }
+            }
+
+            if (current != null) {
+                return if (prev == null) {
+                    deleteStart()
+                } else {
+                    prev.next = current.next
+                    current
+                }
+            }
+        }
+        return null
+    }
+
     fun length(): Int {
         var count = 0
         var current = head
@@ -435,6 +461,24 @@ object SinglyLinkedList {
         sll.deleteLast()
         sll.deleteLast()
         sll.deleteStart()
+        sll.printSLL() // [1]->[2]->[3]->[4]->[5]->[6]->null. Length: 6
+
+        println("Removing 1. ${sll.removeGivenData(1)?.onlyNodeString()}") // Removing 1. [1]->...
+        sll.printSLL() // [2]->[3]->[4]->[5]->[6]->null. Length: 5
+
+        println("Removing 4. ${sll.removeGivenData(4)?.onlyNodeString()}") // Removing 4. [4]->...
+        sll.printSLL() // [2]->[3]->[5]->[6]->null. Length: 4
+
+        println("Removing 6. ${sll.removeGivenData(6)?.onlyNodeString()}") // Removing 6. [6]->...
+        sll.printSLL() // [2]->[3]->[5]->null. Length: 3
+
+        println("Removing 8. ${sll.removeGivenData(8)?.onlyNodeString()}") // Removing 8. null
+        sll.printSLL() // [2]->[3]->[5]->null. Length: 3
+
+        sll.insertAtStart(1)
+        sll.insertDataInSorted(4)
+        sll.append(6)
+
         sll.printSLL() // [1]->[2]->[3]->[4]->[5]->[6]->null. Length: 6
     }
 }
