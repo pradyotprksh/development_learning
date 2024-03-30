@@ -263,6 +263,25 @@ class SinglyLinkedListImplementation<T>(
         return null
     }
 
+    fun isLooped(node: SLLNode<T>? = null): Boolean {
+        val takeHead = node ?: head
+
+        if (takeHead != null) {
+            var slow = takeHead
+            var fast = takeHead.next
+
+            while (fast != null && slow != null) {
+                if (slow.data == fast.data) {
+                    return true
+                } else {
+                    slow = slow.next
+                    fast = fast.next?.next
+                }
+            }
+        }
+        return false
+    }
+
     fun length(): Int {
         var count = 0
         var current = head
@@ -478,6 +497,28 @@ object SinglyLinkedList {
         sll.insertAtStart(1)
         sll.insertDataInSorted(4)
         sll.append(6)
+
+        sll.printSLL() // [1]->[2]->[3]->[4]->[5]->[6]->null. Length: 6
+
+        println("Is ${sll.head?.toString()} looped? - ${sll.isLooped()}") // Is [1]->[2]->[3]->[4]->[5]->[6]->null looped? - false
+
+        val loop1 = SLLNode(
+            data = 1,
+            next = null
+        )
+        val loop2 = SLLNode(
+            data = 2,
+            next = null
+        )
+        val loop3 = SLLNode(
+            data = 3,
+            next = null
+        )
+        loop1.next = loop2
+        loop2.next = loop3
+        loop3.next = loop1
+
+        println("Is [1]->[2]->[3]->{1} Looped? ${sll.isLooped(loop1)}") // Is [1]->[2]->[3]->{1} Looped? true
 
         sll.printSLL() // [1]->[2]->[3]->[4]->[5]->[6]->null. Length: 6
     }
