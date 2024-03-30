@@ -1,5 +1,6 @@
 package implementation.ds.linkedList
 
+import java.lang.Exception
 import java.lang.IllegalArgumentException
 
 data class SLLNode<T>(
@@ -7,7 +8,11 @@ data class SLLNode<T>(
     var next: SLLNode<T>?
 ) {
     override fun toString(): String {
-        return "[$data]->$next"
+        return try {
+            "[$data]->$next"
+        } catch (e: Exception) {
+            "LOOP DETECTED"
+        }
     }
 
     fun onlyNodeString(): String {
@@ -263,7 +268,7 @@ class SinglyLinkedListImplementation<T>(
         return null
     }
 
-    fun isLooped(node: SLLNode<T>? = null): Boolean {
+    fun isLooped(node: SLLNode<T>? = null, removeLoop: Boolean = false): Boolean {
         val takeHead = node ?: head
 
         if (takeHead != null) {
@@ -271,7 +276,10 @@ class SinglyLinkedListImplementation<T>(
             var fast = takeHead.next
 
             while (fast != null && slow != null) {
-                if (slow.data == fast.data) {
+                if (slow == fast) {
+                    if (removeLoop) {
+                        removeLoop(head = node, slow = slow)
+                    }
                     return true
                 } else {
                     slow = slow.next
@@ -280,6 +288,16 @@ class SinglyLinkedListImplementation<T>(
             }
         }
         return false
+    }
+
+    private fun removeLoop(head: SLLNode<T>?, slow: SLLNode<T>?) {
+        var temp = head
+        var tempSlow = slow
+        while (tempSlow?.next != temp?.next) {
+            temp = temp?.next
+            tempSlow = slow?.next
+        }
+        slow?.next = null
     }
 
     fun length(): Int {
@@ -518,7 +536,9 @@ object SinglyLinkedList {
         loop2.next = loop3
         loop3.next = loop1
 
-        println("Is [1]->[2]->[3]->{1} Looped? ${sll.isLooped(loop1)}") // Is [1]->[2]->[3]->{1} Looped? true
+        println("Is [1]->[2]->[3]->{1} Looped? ${sll.isLooped(node = loop1)}") // Is [1]->[2]->[3]->{1} Looped? true
+
+        println("Remove loop from [1]->[2]->[3]->{1} ${sll.isLooped(node = loop1, removeLoop = true)}. $loop1") // Remove loop from [1]->[2]->[3]->{1} true. [1]->[2]->[3]->null
 
         sll.printSLL() // [1]->[2]->[3]->[4]->[5]->[6]->null. Length: 6
     }
