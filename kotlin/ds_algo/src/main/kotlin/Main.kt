@@ -1,6 +1,6 @@
 import examples.TimeComplexity
 import implementation.ds.Arrays
-import implementation.ds.linkedList.SinglyLinkedList
+import implementation.ds.linkedList.sll.SinglyLinkedList
 import notes.Algorithms
 import notes.DataStructure
 
