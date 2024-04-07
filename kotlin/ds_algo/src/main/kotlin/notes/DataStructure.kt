@@ -35,4 +35,16 @@ object DataStructure {
         println("Let's see the implementation: ")
         implementation()
     }
+
+    fun doublyLinkedList(implementation: () -> Unit) {
+        println()
+        println("=*=*=*= DOUBLY LINKED LIST =*=*=*=")
+        println("- Two way linked list")
+        println("- Stores collection of data")
+        println("- Contains sequence of nodes")
+        println("- Have a head, start of the linked list")
+        println("- Contains data and the reference to the previous and next node, if end then the next value is null or if start then the previous value is null.")
+        println("Let's see the implementation: ")
+        implementation()
+    }
 }
