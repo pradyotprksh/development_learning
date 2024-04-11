@@ -113,7 +113,7 @@ class DoublyLinkedListImplementation<T>(
                     val temp = current?.next
 
                     current?.next = temp?.next
-                    temp?.prev = current
+                    temp?.next?.prev = current
 
                     temp
                 }
@@ -140,7 +140,20 @@ class DoublyLinkedListImplementation<T>(
     }
 
     fun reverse() {
+        var prev: DLLNode<T>? = null
+        var current = head
+        var next = head?.next
+        tail = head
 
+        while (current != null) {
+            current.next = prev
+            current.prev = next
+            next?.prev = next?.next
+            prev = current
+            current = next
+            next = next?.next
+        }
+        head = prev
     }
 
     fun nodeAtPositionFromEnd(pos: Int): DLLNode<T>? {
@@ -150,7 +163,9 @@ class DoublyLinkedListImplementation<T>(
         var current = tail
         var count = 0
 
-        while (count < pos) {
+        /*Not sure why the current is jumping to the previous node even if the while loop is
+        done. Because of that putting - 1 on pos check. Will check on this latter.*/
+        while (count < pos - 1) {
             count++
             current = current?.prev
         }
@@ -160,10 +175,13 @@ class DoublyLinkedListImplementation<T>(
 
     fun removeDuplicates() {
         var current = head
-        while (current?.next != null) {
+        while (current != null) {
+            if (current.next == null) {
+                tail = current
+            }
             if (current.data == current.next?.data) {
                 current.next = current.next?.next
-                current.next?.next?.prev = current
+                current.next?.prev = current
             } else {
                 current = current.next
             }
@@ -192,7 +210,17 @@ class DoublyLinkedListImplementation<T>(
         return count
     }
 
-    fun printSLL() {
+    fun printDLL() {
         println("$head. Length: ${length()}")
+    }
+
+    fun printReverseDLL() {
+        var temp = tail
+        while (temp != null) {
+            print("[${temp.data}]<->")
+            temp = temp.prev
+        }
+        print("null")
+        println()
     }
 }
