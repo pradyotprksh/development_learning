@@ -189,15 +189,61 @@ class DoublyLinkedListImplementation<T>(
     }
 
     fun removeGivenData(data: T): DLLNode<T>? {
-        return null
+        if (head == null) {
+            return null
+        }
+
+        var current = head
+        while (current != null && current.data != data) {
+            current = current.next
+        }
+
+        return if (current == null) {
+            null
+        } else if (current.prev == null) {
+            deleteStart()
+        } else if (current.next == null) {
+            deleteLast()
+        } else {
+            val prev = current.prev
+            prev?.next = current.next
+            current.next?.prev = prev
+            current.next = null
+            current.prev = null
+            current
+        }
     }
 
     fun isLooped(node: DLLNode<T>? = null, removeLoop: Boolean = false): Boolean {
+        val takeHead = node ?: head
+
+        if (takeHead != null) {
+            var slow = takeHead
+            var fast = takeHead.next
+
+            while (fast != null && slow != null) {
+                if (slow == fast) {
+                    if (removeLoop) {
+                        removeLoop(head = node, slow = slow)
+                    }
+                    return true
+                } else {
+                    slow = slow.next
+                    fast = fast.next?.next
+                }
+            }
+        }
         return false
     }
 
     private fun removeLoop(head: DLLNode<T>?, slow: DLLNode<T>?) {
-
+        var temp = head
+        var tempSlow = slow
+        while (tempSlow?.next != temp?.next) {
+            temp = temp?.next
+            tempSlow = slow?.next
+        }
+        slow?.next = null
     }
 
     fun length(): Int {

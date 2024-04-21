@@ -185,24 +185,24 @@ object DoublyLinkedList {
         dll.deleteStart()
         dll.printDLL() // [1]<->[2]<->[3]<->[4]<->[5]<->[6]<->null. Length: 6
 
-        println("Removing 1. ${dll.removeGivenData(1)?.onlyNodeString()}") // Removing 1. [1]->...
-        dll.printDLL() // [2]->[3]->[4]->[5]->[6]->null. Length: 5
+        println("Removing 1. ${dll.removeGivenData(1)?.onlyNodeString()}") // Removing 1. ...<-[1]->...
+        dll.printDLL() // [2]<->[3]<->[4]<->[5]<->[6]<->null. Length: 5
 
-        println("Removing 4. ${dll.removeGivenData(4)?.onlyNodeString()}") // Removing 4. [4]->...
-        dll.printDLL() // [2]->[3]->[5]->[6]->null. Length: 4
+        println("Removing 4. ${dll.removeGivenData(4)?.onlyNodeString()}") // Removing 4. ...<-[4]->...
+        dll.printDLL() // [2]<->[3]<->[5]<->[6]<->null. Length: 4
 
-        println("Removing 6. ${dll.removeGivenData(6)?.onlyNodeString()}") // Removing 6. [6]->...
-        dll.printDLL() // [2]->[3]->[5]->null. Length: 3
+        println("Removing 6. ${dll.removeGivenData(6)?.onlyNodeString()}") // Removing 6. ...<-[6]->...
+        dll.printDLL() // [2]<->[3]<->[5]<->null. Length: 3
 
         println("Removing 8. ${dll.removeGivenData(8)?.onlyNodeString()}") // Removing 8. null
-        dll.printDLL() // [2]->[3]->[5]->null. Length: 3
+        dll.printDLL() // [2]<->[3]<->[5]<->null. Length: 3
 
         dll.insertAtStart(1)
         dll.insertDataInSorted(4)
         dll.append(6)
 
-        dll.printDLL() // [1]->[2]->[3]->[4]->[5]->[6]->null. Length: 6
+        dll.printDLL() // [1]<->[2]<->[3]<->[4]<->[5]<->[6]<->null. Length: 6
 
-        println("Is ${dll.head?.toString()} looped? - ${dll.isLooped()}") // Is [1]->[2]->[3]->[4]->[5]->[6]->null looped? - false
+        println("Is ${dll.head?.toString()} looped? - ${dll.isLooped()}") // Is [1]<->[2]<->[3]<->[4]<->[5]<->[6]<->null looped? - false
     }
 }
