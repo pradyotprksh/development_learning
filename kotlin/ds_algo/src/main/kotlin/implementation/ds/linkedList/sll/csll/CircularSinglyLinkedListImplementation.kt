@@ -45,6 +45,25 @@ class CircularSinglyLinkedListImplementation<T>(
         ++length
     }
 
+    fun removeFirstNode(): SLLNode<T>? {
+        if (last == null) {
+            return null
+        }
+
+        val temp = last?.next
+
+        if (last == temp) {
+            last = null
+        } else {
+            last?.next = temp?.next
+            temp?.next = null
+        }
+
+        --length
+
+        return temp
+    }
+
     private fun isEmpty() = length == 0
 
     fun printCsll() {
