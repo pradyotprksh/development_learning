@@ -2,6 +2,7 @@ import examples.TimeComplexity
 import implementation.ds.Arrays
 import implementation.ds.linkedList.dll.DoublyLinkedList
 import implementation.ds.linkedList.sll.SinglyLinkedList
+import implementation.ds.linkedList.sll.csll.CircularSinglyLinkedList
 import notes.Algorithms
 import notes.DataStructure
 
@@ -16,4 +17,5 @@ fun main() {
     DataStructure.arrays { Arrays.implementation() }
     DataStructure.singlyLinkedList { SinglyLinkedList.implementation() }
     DataStructure.doublyLinkedList { DoublyLinkedList.implementation() }
+    DataStructure.circularSinglyLinkedList { CircularSinglyLinkedList.implementation() }
 }

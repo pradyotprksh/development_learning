@@ -7,14 +7,14 @@ object TimeComplexity {
         val num: Long = getCurrentTimestamp()
 
         val startTime = getCurrentTimestamp()
-        val sumByFormula = findSumByFormula(num)
+        findSumByFormula(num)
         val endTime = getCurrentTimestamp()
-        println(" Find sum of $num number by formula: $sumByFormula. Took ${endTime - startTime} milliseconds")
+        println(" Find sum of $num number by formula. Took ${endTime - startTime} milliseconds")
 
         val startTime2 = getCurrentTimestamp()
-        val sumByIteration = findSumByIteration(num)
+        findSumByIteration(num)
         val endTime2 = getCurrentTimestamp()
-        println(" Find sum of $num number by iteration: $sumByIteration. Took ${endTime2 - startTime2} milliseconds")
+        println(" Find sum of $num number by iteration. Took ${endTime2 - startTime2} milliseconds")
     }
 
     private fun findSumByFormula(n: Long): Long {

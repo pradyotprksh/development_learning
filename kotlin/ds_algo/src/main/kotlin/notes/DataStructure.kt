@@ -47,4 +47,14 @@ object DataStructure {
         println("Let's see the implementation: ")
         implementation()
     }
+
+    fun circularSinglyLinkedList(implementation: () -> Unit) {
+        println()
+        println("=*=*=*= CIRCULAR SINGLY LINKED LIST =*=*=*=")
+        println("- Similar to SLL")
+        println("- Circular Singly Linked List the last node points to the first node and not null")
+        println("- Instead of head, we keep track of last node in Circular Singly Linked List, because it helps in insertion and deletion at constant time")
+        println("Let's see the implementation: ")
+        implementation();
+    }
 }
