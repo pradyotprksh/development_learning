@@ -7,6 +7,8 @@ import notes.Algorithms
 import notes.DataStructure
 
 fun main() {
+    println("Learning from = https://youtu.be/2ZLl8GAk1X4?si=ma0QRgdrVdQn-Wp6")
+
     Algorithms.algoIntro()
     Algorithms.algoAnalysis()
     Algorithms.timeComplexity { TimeComplexity.timeComplexityExample() }

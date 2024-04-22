@@ -1,3 +1,4 @@
+Learning from = https://youtu.be/2ZLl8GAk1X4?si=ma0QRgdrVdQn-Wp6
 
 =*=*=*= ALGORITHMS =*=*=*=
 - Set of instructions to perform a task or solve a problem.
@@ -8,8 +9,8 @@ Time and space complexity are the two factors which determine the performance of
  Time Complexity
  - The amount of time taken by an algorithm to run.
  Let's see an example below for finding the sum of n numbers using 2 approaches
- Find sum of 1713776825 number by formula. Took 0 milliseconds
- Find sum of 1713776825 number by iteration. Took 0 milliseconds
+ Find sum of 1713777827 number by formula. Took 0 milliseconds
+ Find sum of 1713777827 number by iteration. Took 0 milliseconds
  This is not the correct way of finding the time complexity. Because depending on the machine the time calculation might change and can't give the correct result.
 
  Space Complexity
