@@ -9,7 +9,7 @@ object Stack {
         println("Pop ${stackLinkedList.pop()?.onlyNodeString()}") // Pop [1]->...
 
         println("Top ${stackLinkedList.peak()?.onlyNodeString()}") /* Stack is empty
-                                                            Top null */
+                                                                      Top null */
 
         stackLinkedList.push(1)
         stackLinkedList.push(2)
@@ -24,7 +24,7 @@ object Stack {
         println("Pop ${stackLinkedList.pop()?.onlyNodeString()}") // Pop [1]->...
         stackLinkedList.printSLL() // null. Length: 0
         println("Pop ${stackLinkedList.pop()?.onlyNodeString()}") /* Stack is empty
-                                                           Pop null */
+                                                                     Pop null */
 
         stackLinkedList.push(1)
         stackLinkedList.push(2)
