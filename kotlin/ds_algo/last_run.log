@@ -9,8 +9,8 @@ Time and space complexity are the two factors which determine the performance of
  Time Complexity
  - The amount of time taken by an algorithm to run.
  Let's see an example below for finding the sum of n numbers using 2 approaches
- Find sum of 1713777827 number by formula. Took 0 milliseconds
- Find sum of 1713777827 number by iteration. Took 0 milliseconds
+ Find sum of 1713877261 number by formula. Took 0 milliseconds
+ Find sum of 1713877261 number by iteration. Took 1 milliseconds
  This is not the correct way of finding the time complexity. Because depending on the machine the time calculation might change and can't give the correct result.
 
  Space Complexity
@@ -247,3 +247,24 @@ Let's see the implementation:
 [6]->[HEAD]. Length: 1
 CSLL is empty.
 [1]->[2]->[3]->[4]->[5]->[6]->[HEAD]. Length: 6
+
+=*=*=*= STACK =*=*=*=
+- Linear data structure used for storing data
+- Insertion and Deletion are done at one end, called the top
+- LIFO, last in first out
+Let's see the implementation: 
+Top [1]->...
+Pop [1]->...
+Stack is empty
+Top null
+[3]->[2]->[1]->null. Length: 3
+Pop [3]->...
+[2]->[1]->null. Length: 2
+Pop [2]->...
+[1]->null. Length: 1
+Pop [1]->...
+null. Length: 0
+Stack is empty
+Pop null
+[3]->[2]->[1]->null. Length: 3
+Top [3]->...

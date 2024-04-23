@@ -55,6 +55,16 @@ object DataStructure {
         println("- Circular Singly Linked List the last node points to the first node and not null")
         println("- Instead of head, we keep track of last node in Circular Singly Linked List, because it helps in insertion and deletion at constant time")
         println("Let's see the implementation: ")
-        implementation();
+        implementation()
+    }
+
+    fun stack(implementation: () -> Unit) {
+        println()
+        println("=*=*=*= STACK =*=*=*=")
+        println("- Linear data structure used for storing data")
+        println("- Insertion and Deletion are done at one end, called the top")
+        println("- LIFO, last in first out")
+        println("Let's see the implementation: ")
+        implementation()
     }
 }
