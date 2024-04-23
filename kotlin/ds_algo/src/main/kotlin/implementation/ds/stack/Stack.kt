@@ -16,22 +16,58 @@ object Stack {
         stackLinkedList.push(2)
         stackLinkedList.push(3)
 
-        stackLinkedList.printSLL() // [3]->[2]->[1]->null. Length: 3
+        stackLinkedList.printSLLStack() // [3]->[2]->[1]->null. Length: 3
 
         println("Pop ${stackLinkedList.pop()?.onlyNodeString()}") // Pop [3]->...
-        stackLinkedList.printSLL() // [2]->[1]->null. Length: 2
+        stackLinkedList.printSLLStack() // [2]->[1]->null. Length: 2
         println("Pop ${stackLinkedList.pop()?.onlyNodeString()}") // Pop [2]->...
-        stackLinkedList.printSLL() // [1]->null. Length: 1
+        stackLinkedList.printSLLStack() // [1]->null. Length: 1
         println("Pop ${stackLinkedList.pop()?.onlyNodeString()}") // Pop [1]->...
-        stackLinkedList.printSLL() // null. Length: 0
+        stackLinkedList.printSLLStack() // null. Length: 0
         println("Pop ${stackLinkedList.pop()?.onlyNodeString()}") /* Stack is empty
                                                                      Pop null */
 
         stackLinkedList.push(1)
         stackLinkedList.push(2)
         stackLinkedList.push(3)
-        stackLinkedList.printSLL() // [3]->[2]->[1]->null. Length: 3
+        stackLinkedList.printSLLStack() // [3]->[2]->[1]->null. Length: 3
 
         println("Top ${stackLinkedList.peak()?.onlyNodeString()}") // Top [3]->...
+
+        println()
+
+        println("Stack implementation using Array")
+        val stackArray = StackArrayImplementation(size = 3)
+
+        println("Top ${stackArray.peak()}") /* Stack is empty
+                                               Top null */
+
+        println("Pop ${stackArray.pop()}") /* Stack is empty
+                                              Pop null */
+
+        println("Top ${stackArray.peak()}") /* Stack is empty
+                                               Top null */
+
+        stackArray.push(1)
+        stackArray.push(2)
+        stackArray.push(3)
+
+        stackArray.printStack() // [1, 2, 3]. Length: 3
+
+        println("Pop ${stackArray.pop()}") // Pop 3
+        stackArray.printStack() // [1, 2, null]. Length: 2
+        println("Pop ${stackArray.pop()}") // Pop 2
+        stackArray.printStack() // [1, null, null]. Length: 1
+        println("Pop ${stackArray.pop()}") // Pop 1
+        stackArray.printStack() // [null, null, null]. Length: 0
+        println("Pop ${stackArray.pop()}") /* Stack is empty
+                                              Pop null */
+
+        stackArray.push(1)
+        stackArray.push(2)
+        stackArray.push(3)
+        stackArray.printStack() // [1, 2, 3]. Length: 3
+
+        println("Top ${stackArray.peak()}") // Top 3
     }
 }

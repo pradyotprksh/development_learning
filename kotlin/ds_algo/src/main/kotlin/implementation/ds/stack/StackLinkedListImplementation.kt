@@ -37,7 +37,7 @@ class StackLinkedListImplementation<T>(
         return top
     }
 
-    fun printSLL() {
+    fun printSLLStack() {
         println("$top. Length: $length")
     }
 }
