@@ -2,7 +2,7 @@ package implementation.ds.stack
 
 object Stack {
     fun implementation() {
-        val stack = StackImplementation(data = 1)
+        val stack = StackLinkedListImplementation(data = 1)
 
         println("Top ${stack.peak()?.onlyNodeString()}") // Top [1]->...
 

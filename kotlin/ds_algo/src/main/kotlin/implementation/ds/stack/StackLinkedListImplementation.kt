@@ -2,7 +2,7 @@ package implementation.ds.stack
 
 import implementation.ds.linkedList.sll.SLLNode
 
-class StackImplementation<T>(
+class StackLinkedListImplementation<T>(
     data: T,
 ) {
     private var top: SLLNode<T>? = SLLNode(data = data, next = null)
