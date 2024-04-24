@@ -69,5 +69,25 @@ object Stack {
         stackArray.printStack() // [1, 2, 3]. Length: 3
 
         println("Top ${stackArray.peak()}") // Top 3
+
+        fun reverseString(value: String): String {
+            val charStack = StackLinkedListImplementation(data = value[0])
+            for (index in 1 until value.length) {
+                charStack.push(value[index])
+            }
+
+            val charArray = arrayListOf<Char>()
+            while (charStack.peak() != null) {
+                val top = charStack.pop()?.data
+                if (top != null) {
+                    charArray.add(top)
+                }
+            }
+
+            return charArray.joinToString("")
+        }
+
+        println("Reverse abcd: ${reverseString(value = "abcd")}")
+        println("Reverse Pradyot Prakash: ${reverseString(value = "Pradyot Prakash")}")
     }
 }
