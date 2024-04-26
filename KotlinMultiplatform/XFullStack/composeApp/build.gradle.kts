@@ -54,6 +54,7 @@ kotlin {
             implementation(libs.compose.ui.tooling.preview)
             implementation(libs.androidx.activity.compose)
         }
+
         commonMain.dependencies {
             implementation(compose.runtime)
             implementation(compose.foundation)
@@ -63,9 +64,11 @@ kotlin {
             implementation(compose.components.uiToolingPreview)
             implementation(projects.shared)
         }
+
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)
         }
+
         commonTest.dependencies {  }
     }
 }
@@ -85,20 +88,24 @@ android {
         versionCode = 1
         versionName = "1.0"
     }
+
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+
     buildTypes {
         getByName("release") {
             isMinifyEnabled = false
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+
     dependencies {
         debugImplementation(libs.compose.ui.tooling)
     }
