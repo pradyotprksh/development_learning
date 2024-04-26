@@ -89,5 +89,31 @@ object Stack {
 
         println("Reverse abcd: ${reverseString(value = "abcd")}")
         println("Reverse Pradyot Prakash: ${reverseString(value = "Pradyot Prakash")}")
+
+        fun nextGreaterElement(arr: IntArray): Array<Int?> {
+            val result = arrayOfNulls<Int>(size = arr.size)
+            val stack = StackArrayImplementation(size = arr.size)
+
+            for (i in arr.size - 1 downTo 0) {
+                if (!stack.isEmpty()) {
+                    var top = stack.peak()
+                    while (top != null && top <= arr[i]) {
+                        stack.pop()
+                        top = stack.peak()
+                    }
+                }
+
+                if (!stack.isEmpty()) {
+                    stack.peak()?.let {
+                        result[i] = it
+                    }
+                }
+                stack.push(arr[i])
+            }
+
+            return result
+        }
+
+        println("Next greater element [4, 7, 3, 4, 8, 1] ${nextGreaterElement(intArrayOf(4, 7, 3, 4, 8, 1)).toList()}")
     }
 }

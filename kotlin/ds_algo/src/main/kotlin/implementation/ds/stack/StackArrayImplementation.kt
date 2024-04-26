@@ -41,6 +41,10 @@ class StackArrayImplementation(
         return stack[top]
     }
 
+    fun isEmpty(): Boolean {
+        return top == -1
+    }
+
     fun printStack() {
         println("${stack.map { it.toString() }}. Length: ${top + 1}")
     }
