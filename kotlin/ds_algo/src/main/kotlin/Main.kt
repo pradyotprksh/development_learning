@@ -5,6 +5,7 @@ import implementation.ds.linkedList.sll.SinglyLinkedList
 import implementation.ds.linkedList.sll.csll.CircularSinglyLinkedList
 import implementation.ds.queue.Queue
 import implementation.ds.stack.Stack
+import implementation.ds.tree.Tree
 import notes.Algorithms
 import notes.DataStructure
 
@@ -24,4 +25,5 @@ fun main() {
     DataStructure.circularSinglyLinkedList { CircularSinglyLinkedList.implementation() }
     DataStructure.stack { Stack.implementation() }
     DataStructure.queue { Queue.implementation() }
+    DataStructure.tree { Tree.implementation() }
 }

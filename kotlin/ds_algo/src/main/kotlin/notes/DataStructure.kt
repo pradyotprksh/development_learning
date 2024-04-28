@@ -77,4 +77,11 @@ object DataStructure {
         println("Let's see the implementation: ")
         implementation()
     }
+
+    fun tree(implementation: () -> Unit) {
+        println()
+        println("=*=*=*= TREE =*=*=*=")
+        println("Let's see the implementation: ")
+        implementation()
+    }
 }
