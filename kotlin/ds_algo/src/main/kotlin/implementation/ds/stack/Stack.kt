@@ -87,8 +87,8 @@ object Stack {
             return charArray.joinToString("")
         }
 
-        println("Reverse abcd: ${reverseString(value = "abcd")}")
-        println("Reverse Pradyot Prakash: ${reverseString(value = "Pradyot Prakash")}")
+        println("Reverse abcd: ${reverseString(value = "abcd")}") // Reverse abcd: dcba
+        println("Reverse Pradyot Prakash: ${reverseString(value = "Pradyot Prakash")}") // Reverse Pradyot Prakash: hsakarP toydarP
 
         fun nextGreaterElement(arr: IntArray): Array<Int?> {
             val result = arrayOfNulls<Int>(size = arr.size)
@@ -114,6 +114,6 @@ object Stack {
             return result
         }
 
-        println("Next greater element [4, 7, 3, 4, 8, 1] ${nextGreaterElement(intArrayOf(4, 7, 3, 4, 8, 1)).toList()}")
+        println("Next greater element [4, 7, 3, 4, 8, 1] ${nextGreaterElement(intArrayOf(4, 7, 3, 4, 8, 1)).toList()}") // Next greater element [4, 7, 3, 4, 8, 1] [7, 8, 4, 8, null, null]
     }
 }

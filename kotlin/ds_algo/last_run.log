@@ -9,8 +9,8 @@ Time and space complexity are the two factors which determine the performance of
  Time Complexity
  - The amount of time taken by an algorithm to run.
  Let's see an example below for finding the sum of n numbers using 2 approaches
- Find sum of 1714052920 number by formula. Took 0 milliseconds
- Find sum of 1714052920 number by iteration. Took 0 milliseconds
+ Find sum of 1714295847 number by formula. Took 0 milliseconds
+ Find sum of 1714295847 number by iteration. Took 0 milliseconds
  This is not the correct way of finding the time complexity. Because depending on the machine the time calculation might change and can't give the correct result.
 
  Space Complexity
@@ -293,4 +293,4 @@ Reverse abcd: dcba
 Stack is empty
 Reverse Pradyot Prakash: hsakarP toydarP
 Stack is empty
-Next greater element [4, 7, 3, 4, 8, 1] [7, 8, 4, 8, -1, -1]
+Next greater element [4, 7, 3, 4, 8, 1] [7, 8, 4, 8, null, null]
