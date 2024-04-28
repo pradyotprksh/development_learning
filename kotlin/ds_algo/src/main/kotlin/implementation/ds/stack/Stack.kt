@@ -86,7 +86,6 @@ object Stack {
 
             return charArray.joinToString("")
         }
-
         println("Reverse abcd: ${reverseString(value = "abcd")}") // Reverse abcd: dcba
         println("Reverse Pradyot Prakash: ${reverseString(value = "Pradyot Prakash")}") // Reverse Pradyot Prakash: hsakarP toydarP
 
@@ -113,7 +112,41 @@ object Stack {
 
             return result
         }
-
         println("Next greater element [4, 7, 3, 4, 8, 1] ${nextGreaterElement(intArrayOf(4, 7, 3, 4, 8, 1)).toList()}") // Next greater element [4, 7, 3, 4, 8, 1] [7, 8, 4, 8, null, null]
+
+        fun validParenthesis(par: String): Boolean {
+            if (par.length <= 1) return false
+            val stack = StackLinkedListImplementation(data = 'A')
+            stack.pop()
+
+            for (p in par) {
+                when (p) {
+                    '}' -> {
+                        if (stack.pop()?.data != '{') {
+                            return false
+                        }
+                    }
+                    ']' -> {
+                        if (stack.pop()?.data != '[') {
+                            return false
+                        }
+                    }
+                    ')' -> {
+                        if (stack.pop()?.data != '(') {
+                            return false
+                        }
+                    }
+                    else -> stack.push(p)
+                }
+            }
+
+            return stack.isEmpty()
+        }
+        println("Is valid parenthesis? {{(([]))}} ${validParenthesis(par = "{{(([]))}}")}")
+        println("Is valid parenthesis? {({(){}})} ${validParenthesis(par = "{({(){}})}")}")
+        println("Is valid parenthesis? [{({(){}})} ${validParenthesis(par = "[{({(){}})}}")}")
+        println("Is valid parenthesis? {()} ${validParenthesis(par = "{()}")}")
+        println("Is valid parenthesis? {] ${validParenthesis(par = "{]")}")
+        println("Is valid parenthesis? {() ${validParenthesis(par = "{()")}")
     }
 }

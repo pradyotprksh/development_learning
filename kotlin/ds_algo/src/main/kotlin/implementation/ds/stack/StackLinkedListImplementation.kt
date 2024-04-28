@@ -40,4 +40,8 @@ class StackLinkedListImplementation<T>(
     fun printSLLStack() {
         println("$top. Length: $length")
     }
+
+    fun isEmpty(): Boolean {
+        return length == 0
+    }
 }
