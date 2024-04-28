@@ -33,5 +33,29 @@ object Queue {
         queueLinkedList.printSLLQueue() // [1]->[2]->[3]->null. Length: 3
 
         println("Top ${queueLinkedList.peak()?.onlyNodeString()}") // Top [1]->...
+
+        println()
+
+        fun generateBinaryNumbers(n: Int): Array<String> {
+            val result = arrayListOf<String>()
+            val queue = QueueLinkedListImplementation(data = "1")
+
+            for (i in 0 until n) {
+                val item = queue.dequeue()?.data
+                if (item != null) {
+                    result.add(item)
+                    queue.enqueue("${item}0")
+                    queue.enqueue("${item}1")
+                } else {
+                    break
+                }
+            }
+
+            return result.toTypedArray()
+        }
+        println("Generate 1 binary numbers ${generateBinaryNumbers(1).toList()}")
+        println("Generate 1 binary numbers ${generateBinaryNumbers(2).toList()}")
+        println("Generate 1 binary numbers ${generateBinaryNumbers(5).toList()}")
+        println("Generate 1 binary numbers ${generateBinaryNumbers(7).toList()}")
     }
 }
