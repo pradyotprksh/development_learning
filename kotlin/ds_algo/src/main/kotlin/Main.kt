@@ -3,6 +3,7 @@ import implementation.ds.Arrays
 import implementation.ds.linkedList.dll.DoublyLinkedList
 import implementation.ds.linkedList.sll.SinglyLinkedList
 import implementation.ds.linkedList.sll.csll.CircularSinglyLinkedList
+import implementation.ds.queue.Queue
 import implementation.ds.stack.Stack
 import notes.Algorithms
 import notes.DataStructure
@@ -22,4 +23,5 @@ fun main() {
     DataStructure.doublyLinkedList { DoublyLinkedList.implementation() }
     DataStructure.circularSinglyLinkedList { CircularSinglyLinkedList.implementation() }
     DataStructure.stack { Stack.implementation() }
+    DataStructure.queue { Queue.implementation() }
 }

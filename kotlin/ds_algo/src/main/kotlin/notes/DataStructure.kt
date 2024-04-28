@@ -67,4 +67,14 @@ object DataStructure {
         println("Let's see the implementation: ")
         implementation()
     }
+
+    fun queue(implementation: () -> Unit) {
+        println()
+        println("=*=*=*= QUEUE =*=*=*=")
+        println("- Linear data structure used for storing data")
+        println("- Insertion is done at one end, called rear and deletion is done at one end, called front")
+        println("- FIFO, first in first out")
+        println("Let's see the implementation: ")
+        implementation()
+    }
 }

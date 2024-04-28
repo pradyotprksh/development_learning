@@ -9,8 +9,8 @@ Time and space complexity are the two factors which determine the performance of
  Time Complexity
  - The amount of time taken by an algorithm to run.
  Let's see an example below for finding the sum of n numbers using 2 approaches
- Find sum of 1714296746 number by formula. Took 0 milliseconds
- Find sum of 1714296746 number by iteration. Took 1 milliseconds
+ Find sum of 1714297572 number by formula. Took 0 milliseconds
+ Find sum of 1714297572 number by iteration. Took 0 milliseconds
  This is not the correct way of finding the time complexity. Because depending on the machine the time calculation might change and can't give the correct result.
 
  Space Complexity
@@ -300,3 +300,25 @@ Is valid parenthesis? [{({(){}})} false
 Is valid parenthesis? {()} true
 Is valid parenthesis? {] false
 Is valid parenthesis? {() false
+
+=*=*=*= QUEUE =*=*=*=
+- Linear data structure used for storing data
+- Insertion is done at one end, called rear and deletion is done at one end, called front
+- FIFO, first in first out
+Let's see the implementation: 
+Queue implementation using Singly Linked List
+Top [1]->...
+Dequeue [1]->...
+Queue is empty
+Top null
+[1]->[2]->[3]->null. Length: 3
+Dequeue [1]->...
+[2]->[3]->null. Length: 2
+Dequeue [2]->...
+[3]->null. Length: 1
+Dequeue [3]->...
+null. Length: 0
+Queue is empty
+Dequeue null
+[1]->[2]->[3]->null. Length: 3
+Top [1]->...
