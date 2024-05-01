@@ -16,6 +16,7 @@ junit = "4.13.2"
 kotlin = "1.9.23"
 ktor = "2.3.10"
 logback = "1.5.6"
+navigation-compose = "2.7.0-alpha03"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -40,6 +41,7 @@ ktor-server-resources = { module = "io.ktor:ktor-server-resources", version.ref 
 ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx-json-jvm" }
 ktor-server-status-pages = { module = "io.ktor:ktor-server-status-pages", version.ref = "ktor" }
 ktor-server-tests = { module = "io.ktor:ktor-server-tests-jvm", version.ref = "ktor" }
+navigation-compose = { module = "org.jetbrains.androidx.navigation:navigation-compose", version.ref = "navigation-compose" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

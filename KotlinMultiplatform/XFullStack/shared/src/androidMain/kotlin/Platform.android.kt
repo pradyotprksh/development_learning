@@ -1,1 +1,1 @@
-actual fun getPlatform(): Platform = Platform.android
+actual fun getPlatform(): Platform = Platform.Android

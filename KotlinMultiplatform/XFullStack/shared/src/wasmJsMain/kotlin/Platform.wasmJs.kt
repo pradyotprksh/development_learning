@@ -1,1 +1,1 @@
-actual fun getPlatform(): Platform = Platform.web
+actual fun getPlatform(): Platform = Platform.Web

@@ -1,8 +1,8 @@
 enum class Platform {
-    android,
-    ios,
-    web,
-    desktop,
+    Android,
+    Ios,
+    Web,
+    Desktop,
 }
 
 expect fun getPlatform(): Platform

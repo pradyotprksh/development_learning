@@ -37,7 +37,7 @@ kotlin {
     
     sourceSets {
         commonMain.dependencies {
-            // put your Multiplatform dependencies here
+            implementation(libs.navigation.compose)
         }
     }
 }

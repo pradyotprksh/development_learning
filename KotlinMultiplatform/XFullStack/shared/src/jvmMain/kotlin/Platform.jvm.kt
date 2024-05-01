@@ -1,1 +1,1 @@
-actual fun getPlatform(): Platform = Platform.desktop
+actual fun getPlatform(): Platform = Platform.Desktop
