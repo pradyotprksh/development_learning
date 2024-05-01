@@ -15,7 +15,6 @@ object DataStructure {
     }
 
     fun arrays(implementation: () -> Unit) {
-        println()
         println("=*=*=*= ARRAYS =*=*=*=")
         println("- Collection of data, of specified type")
         println("- Contiguous memory allocations")
@@ -78,9 +77,24 @@ object DataStructure {
         implementation()
     }
 
-    fun tree(implementation: () -> Unit) {
-        println()
+    fun tree(
+        implementation: () -> Unit,
+        binaryTreeImplementation: () -> Unit,
+    ) {
         println("=*=*=*= TREE =*=*=*=")
+        println("- Non-Linear data structure")
+        println("- Made of nodes and edges without any cycle")
+        println("- Each node in the tree can point to n number of nodes")
+        println("- Shows hierarchical structure with parent node as root and many levels of additional nodes")
+        println("Let's see the implementation: ")
+        implementation()
+        binaryTree { binaryTreeImplementation() }
+    }
+
+    private fun binaryTree(implementation: () -> Unit) {
+        println()
+        println("=*=*=*= BINARY TREE =*=*=*=")
+        println("- A tree is a binary tree when each node has only 0/1/2 children.")
         println("Let's see the implementation: ")
         implementation()
     }

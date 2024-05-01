@@ -5,6 +5,7 @@ import implementation.ds.linkedList.sll.SinglyLinkedList
 import implementation.ds.linkedList.sll.csll.CircularSinglyLinkedList
 import implementation.ds.queue.Queue
 import implementation.ds.stack.Stack
+import implementation.ds.tree.binaryTree.BinaryTree
 import implementation.ds.tree.Tree
 import notes.Algorithms
 import notes.DataStructure
@@ -19,11 +20,18 @@ fun main() {
     Algorithms.asymptoticAnalysisOfAlgorithm()
 
     DataStructure.dsIntro()
+    println()
+    println("=*=*=*= Linear Data Structures =*=*=*=")
     DataStructure.arrays { Arrays.implementation() }
     DataStructure.singlyLinkedList { SinglyLinkedList.implementation() }
     DataStructure.doublyLinkedList { DoublyLinkedList.implementation() }
     DataStructure.circularSinglyLinkedList { CircularSinglyLinkedList.implementation() }
     DataStructure.stack { Stack.implementation() }
     DataStructure.queue { Queue.implementation() }
-    DataStructure.tree { Tree.implementation() }
+    println()
+    println("=*=*=*= Non-Linear Data Structures =*=*=*=")
+    DataStructure.tree(
+        implementation = { Tree.implementation() },
+        binaryTreeImplementation = { BinaryTree.implementation() },
+    )
 }

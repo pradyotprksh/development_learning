@@ -9,8 +9,8 @@ Time and space complexity are the two factors which determine the performance of
  Time Complexity
  - The amount of time taken by an algorithm to run.
  Let's see an example below for finding the sum of n numbers using 2 approaches
- Find sum of 1714299067 number by formula. Took 0 milliseconds
- Find sum of 1714299067 number by iteration. Took 1 milliseconds
+ Find sum of 1714555790 number by formula. Took 0 milliseconds
+ Find sum of 1714555790 number by iteration. Took 1 milliseconds
  This is not the correct way of finding the time complexity. Because depending on the machine the time calculation might change and can't give the correct result.
 
  Space Complexity
@@ -55,6 +55,7 @@ Two kinds of data structures:
 - Non-Linear
 -- Data elements arranged in a non-sequential manner. Each member is connected to the previous and next element through paths. Traversal is a bit difficult and not easy to implement. Eg. Tree, Graph, etc.
 
+=*=*=*= Linear Data Structures =*=*=*=
 =*=*=*= ARRAYS =*=*=*=
 - Collection of data, of specified type
 - Contiguous memory allocations
@@ -328,5 +329,24 @@ Generate 1 binary numbers [1, 10]
 Generate 1 binary numbers [1, 10, 11, 100, 101]
 Generate 1 binary numbers [1, 10, 11, 100, 101, 110, 111]
 
+=*=*=*= Non-Linear Data Structures =*=*=*=
 =*=*=*= TREE =*=*=*=
+- Non-Linear data structure
+- Made of nodes and edges without any cycle
+- Each node in the tree can point to n number of nodes
+- Shows hierarchical structure with parent node as root and many levels of additional nodes
 Let's see the implementation: 
+
+=*=*=*= BINARY TREE =*=*=*=
+- A tree is a binary tree when each node has only 0/1/2 children.
+Let's see the implementation: 
+1
+├── 2
+│   └── 4
+└── 3
+    ├── 5
+    └── 6
+        └── 7
+
+Preorder traversal using stack:     [1, 2, 4, 3, 5, 6, 7]
+Preorder traversal using recursion: [1, 2, 4, 3, 5, 6, 7]
