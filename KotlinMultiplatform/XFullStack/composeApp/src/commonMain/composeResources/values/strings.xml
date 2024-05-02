@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">X</string>
+    <string name="splash_screen_message">See what's happening in the work right now.</string>
+    <string name="continue_with_google">Continue with Google</string>
+    <string name="create_account">Create Account</string>
+    <string name="or">or</string>
+    <string name="by_signing_up">By signing up, you agree to our</string>
+    <string name="terms">Terms</string>
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="and">and</string>
+    <string name="cookie_use">Cookie Use</string>
+    <string name="comma">,</string>
+    <string name="full_stop">.</string>
+</resources>

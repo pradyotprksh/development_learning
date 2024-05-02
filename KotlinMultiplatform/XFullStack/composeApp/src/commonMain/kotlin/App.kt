@@ -4,7 +4,9 @@ import ui.theme.XFullStackTheme
 
 @Composable
 fun App() {
-    XFullStackTheme {
+    XFullStackTheme(
+        darkTheme = true,
+    ) {
         XApp()
     }
 }

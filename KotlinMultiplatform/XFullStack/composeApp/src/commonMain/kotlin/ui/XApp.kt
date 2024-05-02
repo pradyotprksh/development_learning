@@ -9,7 +9,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import core.navigation.Routes
+import ui.navigation.Routes
 import ui.pages.splash.screen.SplashScreen
 
 /**

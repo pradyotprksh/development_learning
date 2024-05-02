@@ -1,4 +1,4 @@
-package core.navigation
+package ui.navigation
 
 /**
  * Routes
