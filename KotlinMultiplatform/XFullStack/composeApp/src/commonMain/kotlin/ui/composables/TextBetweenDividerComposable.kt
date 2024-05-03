@@ -1,4 +1,4 @@
-package ui.pages.splash.screen.composables
+package ui.composables
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row

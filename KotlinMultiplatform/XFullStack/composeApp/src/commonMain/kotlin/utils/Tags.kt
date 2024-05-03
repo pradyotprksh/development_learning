@@ -16,4 +16,8 @@ enum class Tags(
         key = "cookie_use",
         value = ""
     ),
+    LogIn(
+        key = "log_in",
+        value = ""
+    ),
 }

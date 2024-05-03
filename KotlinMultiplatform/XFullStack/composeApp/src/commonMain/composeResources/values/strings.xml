@@ -11,4 +11,7 @@
     <string name="cookie_use">Cookie Use</string>
     <string name="comma">,</string>
     <string name="full_stop">.</string>
+    <string name="white_space"> </string>
+    <string name="have_an_account">Have an account?</string>
+    <string name="log_in">Log in</string>
 </resources>
