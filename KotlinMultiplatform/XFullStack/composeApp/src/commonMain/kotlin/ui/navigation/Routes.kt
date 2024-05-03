@@ -8,4 +8,5 @@ enum class Routes(
 ) {
     Splash("/splash"),
     AuthenticationOption("/authentication-option"),
+    Login("/login"),
 }

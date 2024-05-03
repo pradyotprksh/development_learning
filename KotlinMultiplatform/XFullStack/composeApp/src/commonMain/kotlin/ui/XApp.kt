@@ -10,6 +10,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import ui.navigation.Routes
+import ui.pages.authOptions.screen.AuthOptionsScreen
+import ui.pages.login.screen.LoginScreen
 import ui.pages.splash.screen.SplashScreen
 
 /**
@@ -28,7 +30,21 @@ fun XApp(
             startDestination = Routes.Splash.route,
         ) {
             composable(Routes.Splash.route) {
-                SplashScreen()
+                SplashScreen {
+                    navController.navigate(Routes.AuthenticationOption.route) {
+                        popUpTo(Routes.Splash.route) {
+                            inclusive = true
+                        }
+                    }
+                }
+            }
+            composable(Routes.AuthenticationOption.route) {
+                AuthOptionsScreen {
+                    navController.navigate(Routes.Login.route)
+                }
+            }
+            composable(Routes.Login.route) {
+                LoginScreen()
             }
         }
     }
