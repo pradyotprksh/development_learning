@@ -31,7 +31,7 @@ fun Application.configureMonitoring() {
 
 fun Application.configureAdministration() {
     install(ShutDownUrl.ApplicationCallPlugin) {
-        shutDownUrl = "/shutdown/x"
+        shutDownUrl = "/shutdown/pradyotprksh"
         exitCodeSupplier = { 0 }
     }
 }
