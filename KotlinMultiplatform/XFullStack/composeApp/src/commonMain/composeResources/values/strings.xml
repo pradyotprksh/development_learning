@@ -14,4 +14,8 @@
     <string name="white_space"> </string>
     <string name="have_an_account">Have an account?</string>
     <string name="log_in">Log in</string>
+    <string name="get_started_login">To get started, first enter your phone, email, or @username</string>
+    <string name="forgot_password">Forgot password?</string>
+    <string name="next">Next</string>
+    <string name="phone_email_username">Phone, email, or username</string>
 </resources>
