@@ -44,7 +44,9 @@ fun XApp(
                 }
             }
             composable(Routes.Login.route) {
-                LoginScreen()
+                LoginScreen {
+                    navController.popBackStack()
+                }
             }
         }
     }

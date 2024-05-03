@@ -1,6 +1,5 @@
 package ui.pages.authOptions.screen
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.calculateEndPadding
@@ -20,12 +19,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.dp
 import org.jetbrains.compose.resources.ExperimentalResourceApi
-import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
+import ui.composables.AppIcon
 import ui.composables.TextBetweenDivider
+import ui.composables.XAppBar
 import ui.pages.authOptions.composables.LoginComposable
 import ui.pages.authOptions.composables.SignupLegalDetails
-import utils.Resources
 import xfullstack.composeapp.generated.resources.Res
 import xfullstack.composeapp.generated.resources.continue_with_google
 import xfullstack.composeapp.generated.resources.create_account
@@ -36,7 +35,11 @@ import xfullstack.composeapp.generated.resources.splash_screen_message
 fun AuthOptionsScreen(
     navigateToLogin: () -> Unit,
 ) {
-    Scaffold {
+    Scaffold(
+        topBar = {
+            XAppBar()
+        }
+    ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -48,13 +51,6 @@ fun AuthOptionsScreen(
                 ),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            Image(
-                painter = painterResource(Resources.Logo.resource),
-                Resources.Logo.contentDescription,
-                modifier = Modifier
-                    .align(Alignment.CenterHorizontally)
-                    .size(50.dp)
-            )
             Spacer(
                 modifier = Modifier.weight(1f)
             )
@@ -85,7 +81,9 @@ fun AuthOptionsScreen(
             Spacer(
                 modifier = Modifier.height(15.dp)
             )
-            SignupLegalDetails()
+            SignupLegalDetails(
+                modifier = Modifier.fillMaxWidth()
+            )
             Spacer(
                 modifier = Modifier.height(40.dp)
             )
