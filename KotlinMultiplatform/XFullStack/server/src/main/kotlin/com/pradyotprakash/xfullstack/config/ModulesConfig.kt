@@ -1,6 +1,8 @@
 package com.pradyotprakash.xfullstack.config
 
 import com.pradyotprakash.xfullstack.core.database.XFullStackMongoDBClient
+import com.pradyotprakash.xfullstack.core.security.token.JwtTokenService
+import com.pradyotprakash.xfullstack.core.security.token.TokenService
 import com.pradyotprakash.xfullstack.data.user.MongoUserDataSource
 import com.pradyotprakash.xfullstack.data.user.UserDataSource
 import org.kodein.di.DI
@@ -14,9 +16,14 @@ object ModulesConfig {
         bindProvider<UserDataSource> { MongoUserDataSource(instance()) }
     }
 
+    private val securityModule = DI.Module("SECURITY") {
+        bindProvider<TokenService> { JwtTokenService() }
+    }
+
     val di = DI {
         importAll(
             databaseModule,
+            securityModule,
         )
     }
 }
