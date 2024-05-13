@@ -24,7 +24,7 @@ pipeline {
                     steps {
                         dir('./android/JenkinsLearning') {
                             script {
-                                sh './gradlew build'
+                                // sh './gradlew build'
                                 sh "python3 ${env.ANDROID_SCRIPT} JenkinsLearning debug"
                                 sh './gradlew lint'
                                 sh './gradlew testDebugUnitTest'
