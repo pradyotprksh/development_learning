@@ -4,6 +4,7 @@ import com.pradyotprakash.xfullstack.core.database.XFullStackMongoDBClient
 import com.pradyotprakash.xfullstack.core.security.hashing.HashingService
 import com.pradyotprakash.xfullstack.core.security.hashing.SHA256HashingService
 import com.pradyotprakash.xfullstack.core.security.token.JwtTokenService
+import com.pradyotprakash.xfullstack.core.security.token.TokenConfig
 import com.pradyotprakash.xfullstack.core.security.token.TokenService
 import com.pradyotprakash.xfullstack.data.user.MongoUserDataSource
 import com.pradyotprakash.xfullstack.data.user.UserDataSource
@@ -12,6 +13,7 @@ import com.pradyotprakash.xfullstack.features.authentication.controllers.login.L
 import com.pradyotprakash.xfullstack.features.authentication.controllers.login.LoginControllerImplementation
 import com.pradyotprakash.xfullstack.features.authentication.controllers.register.RegisterController
 import com.pradyotprakash.xfullstack.features.authentication.controllers.register.RegisterControllerImplementation
+import com.pradyotprakash.xfullstack.utils.Constants
 import org.kodein.di.DI
 import org.kodein.di.bindProvider
 import org.kodein.di.bindSingleton
@@ -26,6 +28,14 @@ object ModulesConfig {
     private val securityModule = DI.Module("SECURITY") {
         bindProvider<TokenService> { JwtTokenService() }
         bindProvider<HashingService> { SHA256HashingService() }
+        bindSingleton {
+            TokenConfig(
+                issuer = Constants.Jwt.ISSUER,
+                audience = Constants.Jwt.AUDIENCE,
+                expiresIn = 365L * 1000L * 60L * 60L * 24L,
+                secret = System.getenv("JWT_SECRET"),
+            )
+        }
     }
 
     private val controllersModule = DI.Module("CONTROLLERS") {

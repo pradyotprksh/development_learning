@@ -1,6 +1,7 @@
 package com.pradyotprakash.xfullstack.features.authentication
 
 import com.pradyotprakash.xfullstack.core.security.hashing.HashingService
+import com.pradyotprakash.xfullstack.core.security.token.TokenConfig
 import com.pradyotprakash.xfullstack.core.security.token.TokenService
 import com.pradyotprakash.xfullstack.data.user.UserDataSource
 import com.pradyotprakash.xfullstack.features.authentication.controllers.AuthenticationController
@@ -13,6 +14,7 @@ fun Routing.authentication(
     hashingService: HashingService,
     tokenService: TokenService,
     userDataSource: UserDataSource,
+    tokenConfig: TokenConfig,
 ) {
     post<AuthenticationResource.Register> {
         authenticationController.registerUser(
@@ -30,6 +32,7 @@ fun Routing.authentication(
             hashingService = hashingService,
             tokenService = tokenService,
             userDataSource = userDataSource,
+            tokenConfig = tokenConfig,
         )
     }
 }
