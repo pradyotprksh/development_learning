@@ -24,6 +24,9 @@ dependencies {
     implementation(libs.ktor.server.resources)
     implementation(libs.ktor.serialization.kotlinx.json)
     implementation(libs.ktor.server.status.pages)
+    implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.mongodb.driver.kotlin.coroutine)
+    implementation(libs.kodein.di)
 
     testImplementation(libs.ktor.server.tests)
     testImplementation(libs.kotlin.test.junit)
