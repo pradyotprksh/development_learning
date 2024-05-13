@@ -22,4 +22,8 @@
 
 ## [0.0.6] - 6/15/2023
 
-* Upgraded http packge
+* Upgraded http package
+
+## [0.0.7] - 5/13/2024
+
+* Upgraded http package

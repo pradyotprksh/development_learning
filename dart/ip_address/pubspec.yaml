@@ -1,13 +1,13 @@
 name: get_ip_address
 description: A package to get the ip address of the current device. Uses https://api64.ipify.org to get the system IP.
-version: 0.0.6
+version: 0.0.7
 homepage: https://github.com/pradyotprksh/development_learning/tree/main/dart/ip_address
 
 environment:
   sdk: ">=2.12.0 <4.0.0"
 
 dependencies:
-  http: ^1.0.0
+  http: ^1.2.1
 
 dev_dependencies:
   test: any
