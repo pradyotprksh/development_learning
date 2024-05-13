@@ -1,6 +1,8 @@
 package com.pradyotprakash.xfullstack.config
 
 import com.pradyotprakash.xfullstack.core.database.XFullStackMongoDBClient
+import com.pradyotprakash.xfullstack.core.security.hashing.HashingService
+import com.pradyotprakash.xfullstack.core.security.hashing.SHA256HashingService
 import com.pradyotprakash.xfullstack.core.security.token.JwtTokenService
 import com.pradyotprakash.xfullstack.core.security.token.TokenService
 import com.pradyotprakash.xfullstack.data.user.MongoUserDataSource
@@ -18,6 +20,7 @@ object ModulesConfig {
 
     private val securityModule = DI.Module("SECURITY") {
         bindProvider<TokenService> { JwtTokenService() }
+        bindProvider<HashingService> { SHA256HashingService() }
     }
 
     val di = DI {
