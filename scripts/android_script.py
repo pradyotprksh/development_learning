@@ -119,27 +119,17 @@ def update_version_details():
         version_code = config["version_code"]
         version_name = config["version_name"]
 
-        print(f"version_code {version_code}")
-        print(f"version_code {version_name}")
-
         if not is_debug:
             new_version_code = convert_to_int_with_fallback(version_code, 1) + 1
         else:
             new_version_code = version_code
         new_version_name = get_next_version_name(version_name)
 
-        print(f"new_version_code {new_version_code}")
-        print(f"new_version_name {new_version_name}")
-
+        file_content = ""
         with open(application_details_file, "r") as file:
             file_content = file.read()
-        
-        print(f"file_content {file_content}")
-
         file_content = file_content.replace(f"version_code={version_code}", f"version_code={new_version_code}")
-        print(f"file_content {file_content}")
         file_content = file_content.replace(f"version_name={version_name}", f"version_name={new_version_name}")
-        print(f"file_content {file_content}")
         with open(application_details_file, "w") as file:
             file.write(file_content)
 
