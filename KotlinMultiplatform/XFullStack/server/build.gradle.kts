@@ -27,6 +27,9 @@ dependencies {
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.mongodb.driver.kotlin.coroutine)
     implementation(libs.kodein.di)
+    implementation(libs.commons.codec)
+    implementation(libs.ktor.server.auth.jvm)
+    implementation(libs.ktor.server.auth.jwt.jvm)
 
     testImplementation(libs.ktor.server.tests)
     testImplementation(libs.kotlin.test.junit)

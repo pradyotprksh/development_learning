@@ -1,6 +1,7 @@
 package com.pradyotprakash.xfullstack.data.user
 
 import org.bson.codecs.pojo.annotations.BsonId
+import org.bson.codecs.pojo.annotations.BsonProperty
 import org.bson.types.ObjectId
 
 /**
@@ -11,11 +12,9 @@ data class User(
     val username: String,
     val password: String,
     val salt: String,
-    val emailAddress: String,
-    val phoneNumber: String,
-    val profilePicture: String?,
     val bio: String?,
-    val gender: String,
-    val dateOfBirth: String,
-    val location: String
+    @BsonProperty("email_address") val emailAddress: String,
+    @BsonProperty("phone_number") val phoneNumber: String,
+    @BsonProperty("profile_picture") val profilePicture: String?,
+    @BsonProperty("date_of_birth") val dateOfBirth: String
 )
