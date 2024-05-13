@@ -1,9 +1,16 @@
 package com.pradyotprakash.xfullstack.features.authentication
 
+import com.pradyotprakash.xfullstack.core.security.hashing.HashingService
+import com.pradyotprakash.xfullstack.data.user.UserDataSource
 import com.pradyotprakash.xfullstack.features.authentication.resource.AuthenticationResource
 import io.ktor.server.routing.Routing
 import io.ktor.server.routing.post
 
-fun Routing.authentication() {
-    post<AuthenticationResource.Login> { }
+fun Routing.authentication(
+    hashingService: HashingService,
+    userDataSource: UserDataSource,
+) {
+    post<AuthenticationResource.Register> {
+
+    }
 }

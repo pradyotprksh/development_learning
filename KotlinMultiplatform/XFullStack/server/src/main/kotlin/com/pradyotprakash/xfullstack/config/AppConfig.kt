@@ -1,5 +1,12 @@
 package com.pradyotprakash.xfullstack.config
 
+import com.pradyotprakash.xfullstack.config.plugins.configureAdministration
+import com.pradyotprakash.xfullstack.config.plugins.configureMonitoring
+import com.pradyotprakash.xfullstack.config.plugins.configureResource
+import com.pradyotprakash.xfullstack.config.plugins.configureRouting
+import com.pradyotprakash.xfullstack.config.plugins.configureSecurity
+import com.pradyotprakash.xfullstack.config.plugins.configureSerialization
+import com.pradyotprakash.xfullstack.config.plugins.configureStatusPages
 import com.pradyotprakash.xfullstack.core.security.hashing.HashingService
 import com.pradyotprakash.xfullstack.core.security.token.TokenConfig
 import com.pradyotprakash.xfullstack.core.security.token.TokenService
@@ -41,7 +48,10 @@ fun Application.mainModule() {
     configureMonitoring()
     configureStatusPages()
     configureResource()
-    configureRouting()
+    configureRouting(
+        userDataSource = userDataSource,
+        hashingService = hashingService
+    )
     configureSerialization()
     configureSecurity(tokenConfig)
 }
