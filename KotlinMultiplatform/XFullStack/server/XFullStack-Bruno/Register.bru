@@ -1,0 +1,23 @@
+meta {
+  name: Register
+  type: http
+  seq: 2
+}
+
+post {
+  url: http://192.168.1.37:8080/authentication/register
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "username": "pradyotprksh",
+    "password": "pradyotprksh4@1996",
+    "bio": "Hello new X user",
+    "emailAddress": "pradyotprksh4@gmail.com",
+    "phoneNumber": "+919004522346",
+    "profilePicture": "123",
+    "dateOfBirth": "30/09/1996"
+  }
+}

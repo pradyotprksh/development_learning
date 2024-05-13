@@ -1,5 +1,6 @@
 package com.pradyotprakash.xfullstack.features.authentication.resource
 
+import com.pradyotprakash.xfullstack.utils.Constants.Paths.Authentication.AUTHENTICATE
 import com.pradyotprakash.xfullstack.utils.Constants.Paths.Authentication.AUTHENTICATION
 import com.pradyotprakash.xfullstack.utils.Constants.Paths.Authentication.LOGIN
 import com.pradyotprakash.xfullstack.utils.Constants.Paths.Authentication.REGISTER
@@ -25,7 +26,6 @@ class AuthenticationResource {
         private val parent: AuthenticationResource = AuthenticationResource(),
         val username: String,
         val password: String,
-        val salt: String,
         val bio: String?,
         val emailAddress: String,
         val phoneNumber: String,
@@ -38,4 +38,9 @@ class AuthenticationResource {
 
         fun isPasswordValid() = password.length >= 8
     }
+
+    @Resource(AUTHENTICATE)
+    data class Authenticate(
+        private val parent: AuthenticationResource = AuthenticationResource(),
+    )
 }

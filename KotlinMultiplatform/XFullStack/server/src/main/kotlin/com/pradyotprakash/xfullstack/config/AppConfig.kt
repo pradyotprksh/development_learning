@@ -27,11 +27,11 @@ private fun server(
 }
 
 fun Application.mainModule() {
-    configureAdministration()
+    configureSecurity()
+    configureSerialization()
     configureMonitoring()
+    configureAdministration()
     configureStatusPages()
     configureResource()
     configureRouting()
-    configureSerialization()
-    configureSecurity()
 }
