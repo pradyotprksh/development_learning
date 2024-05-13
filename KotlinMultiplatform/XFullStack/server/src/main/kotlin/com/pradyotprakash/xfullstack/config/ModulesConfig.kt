@@ -8,6 +8,8 @@ import com.pradyotprakash.xfullstack.core.security.token.TokenService
 import com.pradyotprakash.xfullstack.data.user.MongoUserDataSource
 import com.pradyotprakash.xfullstack.data.user.UserDataSource
 import com.pradyotprakash.xfullstack.features.authentication.controllers.AuthenticationController
+import com.pradyotprakash.xfullstack.features.authentication.controllers.login.LoginController
+import com.pradyotprakash.xfullstack.features.authentication.controllers.login.LoginControllerImplementation
 import com.pradyotprakash.xfullstack.features.authentication.controllers.register.RegisterController
 import com.pradyotprakash.xfullstack.features.authentication.controllers.register.RegisterControllerImplementation
 import org.kodein.di.DI
@@ -28,10 +30,11 @@ object ModulesConfig {
 
     private val controllersModule = DI.Module("CONTROLLERS") {
         bindProvider<RegisterController> { RegisterControllerImplementation() }
+        bindProvider<LoginController> { LoginControllerImplementation() }
     }
 
     private val featuresModule = DI.Module("FEATURES") {
-        bindProvider { AuthenticationController(instance()) }
+        bindProvider { AuthenticationController(instance(), instance()) }
     }
 
     val di = DI {

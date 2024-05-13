@@ -50,7 +50,8 @@ fun Application.mainModule() {
     configureResource()
     configureRouting(
         userDataSource = userDataSource,
-        hashingService = hashingService
+        hashingService = hashingService,
+        tokenService = tokenService,
     )
     configureSerialization()
     configureSecurity(tokenConfig)

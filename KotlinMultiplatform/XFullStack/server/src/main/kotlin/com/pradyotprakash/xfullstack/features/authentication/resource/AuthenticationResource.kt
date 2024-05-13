@@ -10,7 +10,15 @@ class AuthenticationResource {
     @Resource(LOGIN)
     data class Login(
         private val parent: AuthenticationResource = AuthenticationResource(),
-    )
+        val username: String,
+        val password: String,
+    ) {
+        fun isValid() = username.isNotBlank() && password.isNotBlank()
+
+        fun isUsernameValid() = username.length >= 4
+
+        fun isPasswordValid() = password.length >= 8
+    }
 
     @Resource(REGISTER)
     data class Register(

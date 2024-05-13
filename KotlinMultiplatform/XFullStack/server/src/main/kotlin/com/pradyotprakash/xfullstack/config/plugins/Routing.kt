@@ -2,6 +2,7 @@ package com.pradyotprakash.xfullstack.config.plugins
 
 import com.pradyotprakash.xfullstack.config.ModulesConfig
 import com.pradyotprakash.xfullstack.core.security.hashing.HashingService
+import com.pradyotprakash.xfullstack.core.security.token.TokenService
 import com.pradyotprakash.xfullstack.data.user.UserDataSource
 import com.pradyotprakash.xfullstack.features.authentication.authentication
 import com.pradyotprakash.xfullstack.features.authentication.controllers.AuthenticationController
@@ -11,6 +12,7 @@ import org.kodein.di.instance
 
 fun Application.configureRouting(
     hashingService: HashingService,
+    tokenService: TokenService,
     userDataSource: UserDataSource,
 ) {
     val authenticationController by ModulesConfig.di.instance<AuthenticationController>()
@@ -19,6 +21,7 @@ fun Application.configureRouting(
         authentication(
             authenticationController = authenticationController,
             hashingService = hashingService,
+            tokenService = tokenService,
             userDataSource = userDataSource
         )
     }
