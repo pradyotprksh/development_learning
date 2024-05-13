@@ -125,7 +125,6 @@ def update_version_details():
             new_version_code = version_code
         new_version_name = get_next_version_name(version_name)
 
-        file_content = ""
         with open(application_details_file, "r") as file:
             file_content = file.read()
         file_content = file_content.replace(f"version_code={version_code}", f"version_code={new_version_code}")
