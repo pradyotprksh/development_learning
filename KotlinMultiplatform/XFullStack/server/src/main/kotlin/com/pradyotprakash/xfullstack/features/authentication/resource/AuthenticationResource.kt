@@ -15,5 +15,11 @@ class AuthenticationResource {
     @Resource(REGISTER)
     data class Register(
         private val parent: AuthenticationResource = AuthenticationResource(),
-    )
+        val username: String,
+        val password: String,
+    ) {
+        fun isValid(): Boolean {
+            return username.isNotBlank() && password.isNotBlank()
+        }
+    }
 }
