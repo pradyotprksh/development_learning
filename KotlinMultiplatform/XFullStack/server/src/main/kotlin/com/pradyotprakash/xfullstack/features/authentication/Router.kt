@@ -14,7 +14,7 @@ fun Routing.authentication(
 ) {
     post<AuthenticationResource.Register> {
         authenticationController.registerUser(
-            context = this.context,
+            call = this.context,
             resource = it,
             hashingService = hashingService,
             userDataSource = userDataSource,

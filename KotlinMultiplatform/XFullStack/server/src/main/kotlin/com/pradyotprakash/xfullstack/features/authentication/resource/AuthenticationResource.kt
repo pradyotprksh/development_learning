@@ -17,9 +17,17 @@ class AuthenticationResource {
         private val parent: AuthenticationResource = AuthenticationResource(),
         val username: String,
         val password: String,
+        val salt: String,
+        val bio: String?,
+        val emailAddress: String,
+        val phoneNumber: String,
+        val profilePicture: String?,
+        val dateOfBirth: String
     ) {
-        fun isValid(): Boolean {
-            return username.isNotBlank() && password.isNotBlank()
-        }
+        fun isValid() = username.isNotBlank() && password.isNotBlank()
+
+        fun isUsernameValid() = username.length >= 4
+
+        fun isPasswordValid() = password.length >= 8
     }
 }

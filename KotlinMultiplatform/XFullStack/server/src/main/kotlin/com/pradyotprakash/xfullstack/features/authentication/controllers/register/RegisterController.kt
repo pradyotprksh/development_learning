@@ -7,7 +7,7 @@ import io.ktor.server.application.ApplicationCall
 
 interface RegisterController {
     suspend fun registerUser(
-        context: ApplicationCall,
+        call: ApplicationCall,
         resource: AuthenticationResource.Register,
         hashingService: HashingService,
         userDataSource: UserDataSource,
