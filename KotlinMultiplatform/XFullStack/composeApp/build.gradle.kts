@@ -70,7 +70,7 @@ kotlin {
             implementation(compose.desktop.currentOs)
         }
 
-
+        commonTest.dependencies { }
     }
 }
 

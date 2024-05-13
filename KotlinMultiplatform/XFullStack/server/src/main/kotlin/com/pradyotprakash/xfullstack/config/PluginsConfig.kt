@@ -3,6 +3,7 @@ package com.pradyotprakash.xfullstack.config
 import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
 import com.pradyotprakash.xfullstack.core.security.token.TokenConfig
+import com.pradyotprakash.xfullstack.features.authentication.authentication
 import com.pradyotprakash.xfullstack.utils.Constants.Jwt.REALM
 import io.ktor.http.HttpHeaders
 import io.ktor.serialization.kotlinx.json.json
@@ -70,7 +71,9 @@ fun Application.configureResource() {
 }
 
 fun Application.configureRouting() {
-    routing {}
+    routing {
+        authentication()
+    }
 }
 
 fun Application.configureSerialization() {

@@ -23,4 +23,12 @@ object Constants {
         const val AUDIENCE = "users"
         const val REALM = "xfullstack ktor app"
     }
+
+    object Paths {
+        object Authentication {
+            const val AUTHENTICATION = "/auth"
+            const val LOGIN = "/login"
+            const val REGISTER = "/register"
+        }
+    }
 }
