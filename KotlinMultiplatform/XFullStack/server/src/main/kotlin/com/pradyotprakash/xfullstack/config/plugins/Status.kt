@@ -4,6 +4,7 @@ import com.pradyotprakash.xfullstack.data.response.ErrorResponse
 import com.pradyotprakash.xfullstack.data.response.XFullStackResponse
 import core.exception.InvalidParameter
 import core.exception.UnauthorizedAccess
+import core.exception.UserAuthDetailsError
 import core.exception.UserDetailsNotFound
 import core.exception.XFullStackException
 import core.utils.Localization
@@ -40,7 +41,7 @@ fun Application.configureStatusPages() {
                     )
                 )
 
-                UnauthorizedAccess -> call.respond(
+                is UnauthorizedAccess -> call.respond(
                     HttpStatusCode.Unauthorized,
                     XFullStackResponse(
                         status = ResponseStatus.Error,
@@ -50,7 +51,7 @@ fun Application.configureStatusPages() {
                     )
                 )
 
-                UserDetailsNotFound -> call.respond(
+                is UserAuthDetailsError, UserDetailsNotFound -> call.respond(
                     HttpStatusCode.Conflict,
                     XFullStackResponse(
                         status = ResponseStatus.Error,

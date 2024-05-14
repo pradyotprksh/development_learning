@@ -10,8 +10,11 @@ import com.pradyotprakash.xfullstack.data.response.AuthenticationResponse
 import com.pradyotprakash.xfullstack.data.response.XFullStackResponse
 import com.pradyotprakash.xfullstack.data.user.UserDataSource
 import com.pradyotprakash.xfullstack.features.authentication.resource.AuthenticationResource
+import core.exception.UserAuthDetailsError
+import core.exception.UserDetailsNotFound
 import core.utils.Constants.Keys.USER_ID
 import core.utils.ResponseStatus
+import core.utils.UtilsMethod
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.ApplicationCall
 import io.ktor.server.request.receive
@@ -28,21 +31,11 @@ class LoginControllerImplementation : LoginController {
     ) {
         val loginRequest = call.receive<LoginRequest>()
 
-        if (!loginRequest.isValid()) {
-            call.respond(HttpStatusCode.BadRequest)
-            return
-        }
+        UtilsMethod.isValidUserName(loginRequest.username)
+        UtilsMethod.isValidPassword(loginRequest.password)
 
-        if (!loginRequest.isPasswordValid() || !loginRequest.isUsernameValid()) {
-            call.respond(HttpStatusCode.Conflict)
-            return
-        }
-
-        val user = userDataSource.getUserByUsername(loginRequest.username)
-        if (user == null) {
-            call.respond(HttpStatusCode.Conflict)
-            return
-        }
+        val user =
+            userDataSource.getUserByUsername(loginRequest.username) ?: throw UserDetailsNotFound
 
         val isValidPassword = hashingService.verify(
             value = loginRequest.password, saltedHash = SaltedHash(
@@ -50,8 +43,7 @@ class LoginControllerImplementation : LoginController {
             )
         )
         if (!isValidPassword) {
-            call.respond(HttpStatusCode.Conflict)
-            return
+            throw UserAuthDetailsError
         }
 
         val token = tokenService.generate(

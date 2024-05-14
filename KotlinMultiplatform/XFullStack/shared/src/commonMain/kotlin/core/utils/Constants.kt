@@ -45,5 +45,6 @@ object Constants {
 
     object ConstValues {
         const val USERNAME_LENGTH = 5
+        const val PASSWORD_LENGTH = 8
     }
 }

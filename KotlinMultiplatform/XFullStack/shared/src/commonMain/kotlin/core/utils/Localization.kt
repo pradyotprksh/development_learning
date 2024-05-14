@@ -1,5 +1,6 @@
 package core.utils
 
+import core.utils.Constants.ConstValues.PASSWORD_LENGTH
 import core.utils.Constants.ConstValues.USERNAME_LENGTH
 
 object Localization {
@@ -31,4 +32,10 @@ object Localization {
     const val ERROR = "error"
     const val UNAUTHORIZED_ACCESS = "Unauthorized Access"
     const val USER_DETAILS_NOT_FOUND = "User details not found"
+    const val PASSWORD_LENGTH_ERROR = "Password should be greater than $PASSWORD_LENGTH characters"
+    const val NO_UPPERCASE_ERROR = "Doesn't contains any uppercase character"
+    const val NO_LOWERCASE_ERROR = "Doesn't contains any lowercase character"
+    const val NO_DIGIT_ERROR = "Doesn't contains any digit"
+    const val NO_SPECIAL_CHARACTER_ERROR = "Doesn't contains any special character"
+    const val USER_AUTH_DETAILS_ERROR = "Username, phone number, email or password is incorrect"
 }
