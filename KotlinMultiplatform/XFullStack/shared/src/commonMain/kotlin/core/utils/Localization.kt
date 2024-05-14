@@ -29,4 +29,6 @@ object Localization {
     const val VALID_USERNAME = "Valid username"
     const val SUCCESS = "Success"
     const val ERROR = "error"
+    const val UNAUTHORIZED_ACCESS = "Unauthorized Access"
+    const val USER_DETAILS_NOT_FOUND = "User details not found"
 }

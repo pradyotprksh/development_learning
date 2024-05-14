@@ -4,6 +4,7 @@ import com.pradyotprakash.xfullstack.data.response.UserInfoResponse
 import com.pradyotprakash.xfullstack.data.response.XFullStackResponse
 import com.pradyotprakash.xfullstack.data.user.UserDataSource
 import com.pradyotprakash.xfullstack.features.authentication.resource.AuthenticationResource
+import core.exception.UserDetailsNotFound
 import core.utils.Constants.Keys.USER_ID
 import core.utils.ResponseStatus
 import io.ktor.http.HttpStatusCode
@@ -19,17 +20,9 @@ class UserInfoControllerImplementation : UserInfoController {
         userDataSource: UserDataSource
     ) {
         val principal = call.principal<JWTPrincipal>()
-        val userId = principal?.payload?.getClaim(USER_ID)?.asString()
-        if (userId == null) {
-            call.respond(HttpStatusCode.Unauthorized)
-            return
-        }
 
-        val user = userDataSource.getUserByUserId(userId)
-        if (user == null) {
-            call.respond(HttpStatusCode.Conflict)
-            return
-        }
+        val userId = principal?.payload?.getClaim(USER_ID)?.asString() ?: throw UserDetailsNotFound
+        val user = userDataSource.getUserByUserId(userId) ?: throw UserDetailsNotFound
 
         val response = UserInfoResponse(
             id = user.id.toHexString(),
