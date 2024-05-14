@@ -4,6 +4,7 @@ import com.mongodb.client.model.Filters.eq
 import com.mongodb.kotlin.client.coroutine.MongoDatabase
 import com.pradyotprakash.xfullstack.utils.Constants.Database.Collections.USERS
 import kotlinx.coroutines.flow.firstOrNull
+import org.bson.types.ObjectId
 
 class MongoUserDataSource(
     db: MongoDatabase,
@@ -13,6 +14,12 @@ class MongoUserDataSource(
     override suspend fun getUserByUsername(username: String): User? {
         return usersCollection.find(
             eq(User::username.name, username)
+        ).limit(1).firstOrNull()
+    }
+
+    override suspend fun getUserByUserId(userId: String): User? {
+        return usersCollection.find(
+            eq("_id", ObjectId(userId))
         ).limit(1).firstOrNull()
     }
 

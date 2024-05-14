@@ -9,10 +9,14 @@ import com.pradyotprakash.xfullstack.core.security.token.TokenService
 import com.pradyotprakash.xfullstack.data.user.MongoUserDataSource
 import com.pradyotprakash.xfullstack.data.user.UserDataSource
 import com.pradyotprakash.xfullstack.features.authentication.controllers.AuthenticationController
+import com.pradyotprakash.xfullstack.features.authentication.controllers.authenticate.AuthenticateController
+import com.pradyotprakash.xfullstack.features.authentication.controllers.authenticate.AuthenticateControllerImplementation
 import com.pradyotprakash.xfullstack.features.authentication.controllers.login.LoginController
 import com.pradyotprakash.xfullstack.features.authentication.controllers.login.LoginControllerImplementation
 import com.pradyotprakash.xfullstack.features.authentication.controllers.register.RegisterController
 import com.pradyotprakash.xfullstack.features.authentication.controllers.register.RegisterControllerImplementation
+import com.pradyotprakash.xfullstack.features.authentication.controllers.userInfo.UserInfoController
+import com.pradyotprakash.xfullstack.features.authentication.controllers.userInfo.UserInfoControllerImplementation
 import com.pradyotprakash.xfullstack.utils.Constants
 import org.kodein.di.DI
 import org.kodein.di.bindProvider
@@ -41,10 +45,12 @@ object ModulesConfig {
     private val controllersModule = DI.Module("CONTROLLERS") {
         bindProvider<RegisterController> { RegisterControllerImplementation() }
         bindProvider<LoginController> { LoginControllerImplementation() }
+        bindProvider<AuthenticateController> { AuthenticateControllerImplementation() }
+        bindProvider<UserInfoController> { UserInfoControllerImplementation() }
     }
 
     private val featuresModule = DI.Module("FEATURES") {
-        bindProvider { AuthenticationController(instance(), instance()) }
+        bindProvider { AuthenticationController(instance(), instance(), instance(), instance()) }
     }
 
     val di = DI {

@@ -6,8 +6,10 @@ import com.pradyotprakash.xfullstack.core.security.token.TokenService
 import com.pradyotprakash.xfullstack.data.user.UserDataSource
 import com.pradyotprakash.xfullstack.features.authentication.controllers.AuthenticationController
 import com.pradyotprakash.xfullstack.features.authentication.resource.AuthenticationResource
+import io.ktor.server.auth.authenticate
+import io.ktor.server.resources.get
+import io.ktor.server.resources.post
 import io.ktor.server.routing.Routing
-import io.ktor.server.routing.post
 
 fun Routing.authentication(
     authenticationController: AuthenticationController,
@@ -34,5 +36,24 @@ fun Routing.authentication(
             userDataSource = userDataSource,
             tokenConfig = tokenConfig,
         )
+    }
+
+    authenticate {
+        get<AuthenticationResource.Authenticate> {
+            authenticationController.authenticateUser(
+                call = this.context,
+                resource = it,
+            )
+        }
+    }
+
+    authenticate {
+        get<AuthenticationResource.UserInfo> {
+            authenticationController.getUserInfo(
+                call = this.context,
+                resource = it,
+                userDataSource = userDataSource,
+            )
+        }
     }
 }

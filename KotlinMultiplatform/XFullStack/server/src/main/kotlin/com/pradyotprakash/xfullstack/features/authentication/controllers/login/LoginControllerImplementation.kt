@@ -5,11 +5,14 @@ import com.pradyotprakash.xfullstack.core.security.hashing.SaltedHash
 import com.pradyotprakash.xfullstack.core.security.token.TokenClaim
 import com.pradyotprakash.xfullstack.core.security.token.TokenConfig
 import com.pradyotprakash.xfullstack.core.security.token.TokenService
+import com.pradyotprakash.xfullstack.data.request.LoginRequest
 import com.pradyotprakash.xfullstack.data.response.AuthenticationResponse
 import com.pradyotprakash.xfullstack.data.user.UserDataSource
 import com.pradyotprakash.xfullstack.features.authentication.resource.AuthenticationResource
+import com.pradyotprakash.xfullstack.utils.Constants.Keys.USER_ID
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.ApplicationCall
+import io.ktor.server.request.receive
 import io.ktor.server.response.respond
 
 class LoginControllerImplementation : LoginController {
@@ -21,24 +24,26 @@ class LoginControllerImplementation : LoginController {
         userDataSource: UserDataSource,
         tokenConfig: TokenConfig,
     ) {
-        if (!resource.isValid()) {
+        val loginRequest = call.receive<LoginRequest>()
+
+        if (!loginRequest.isValid()) {
             call.respond(HttpStatusCode.BadRequest)
             return
         }
 
-        if (!resource.isPasswordValid() || !resource.isUsernameValid()) {
+        if (!loginRequest.isPasswordValid() || !loginRequest.isUsernameValid()) {
             call.respond(HttpStatusCode.Conflict)
             return
         }
 
-        val user = userDataSource.getUserByUsername(resource.username)
+        val user = userDataSource.getUserByUsername(loginRequest.username)
         if (user == null) {
             call.respond(HttpStatusCode.Conflict)
             return
         }
 
         val isValidPassword = hashingService.verify(
-            value = resource.password, saltedHash = SaltedHash(
+            value = loginRequest.password, saltedHash = SaltedHash(
                 hash = user.password, salt = user.salt
             )
         )
@@ -51,7 +56,7 @@ class LoginControllerImplementation : LoginController {
             config = tokenConfig,
             claims = arrayOf(
                 TokenClaim(
-                    name = "userId",
+                    name = USER_ID,
                     value = user.id.toHexString()
                 )
             )

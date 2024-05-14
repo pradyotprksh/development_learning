@@ -1,11 +1,13 @@
 package com.pradyotprakash.xfullstack.features.authentication.controllers.register
 
 import com.pradyotprakash.xfullstack.core.security.hashing.HashingService
+import com.pradyotprakash.xfullstack.data.request.RegisterRequest
 import com.pradyotprakash.xfullstack.data.user.User
 import com.pradyotprakash.xfullstack.data.user.UserDataSource
 import com.pradyotprakash.xfullstack.features.authentication.resource.AuthenticationResource
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.ApplicationCall
+import io.ktor.server.request.receive
 import io.ktor.server.response.respond
 
 class RegisterControllerImplementation : RegisterController {
@@ -15,27 +17,29 @@ class RegisterControllerImplementation : RegisterController {
         hashingService: HashingService,
         userDataSource: UserDataSource
     ) {
-        if (!resource.isValid()) {
+        val registerRequest = call.receive<RegisterRequest>()
+
+        if (!registerRequest.isValid()) {
             call.respond(HttpStatusCode.BadRequest)
             return
         }
 
-        if (!resource.isPasswordValid() || !resource.isUsernameValid()) {
+        if (!registerRequest.isPasswordValid() || !registerRequest.isUsernameValid()) {
             call.respond(HttpStatusCode.Conflict)
             return
         }
 
-        val saltedHash = hashingService.generateSaltedHash(value = resource.password)
+        val saltedHash = hashingService.generateSaltedHash(value = registerRequest.password)
 
         val user = User(
-            username = resource.username,
+            username = registerRequest.username,
             password = saltedHash.hash,
             salt = saltedHash.salt,
-            bio = resource.bio,
-            profilePicture = resource.profilePicture,
-            dateOfBirth = resource.dateOfBirth,
-            emailAddress = resource.emailAddress,
-            phoneNumber = resource.phoneNumber,
+            bio = registerRequest.bio,
+            profilePicture = registerRequest.profilePicture,
+            dateOfBirth = registerRequest.dateOfBirth,
+            emailAddress = registerRequest.emailAddress,
+            phoneNumber = registerRequest.phoneNumber,
         )
 
         val wasAcknowledged = userDataSource.insertNewUser(user)

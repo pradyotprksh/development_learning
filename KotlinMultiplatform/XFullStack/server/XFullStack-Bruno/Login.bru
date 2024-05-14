@@ -1,0 +1,18 @@
+meta {
+  name: Login
+  type: http
+  seq: 3
+}
+
+post {
+  url: http://192.168.1.37:8080/auth/login
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "username": "pradyotprksh",
+    "password": "pradyotprksh4@1996"
+  }
+}

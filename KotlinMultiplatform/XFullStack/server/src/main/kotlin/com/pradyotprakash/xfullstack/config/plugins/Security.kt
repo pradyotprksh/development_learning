@@ -6,7 +6,8 @@ import com.pradyotprakash.xfullstack.config.ModulesConfig
 import com.pradyotprakash.xfullstack.core.security.token.TokenConfig
 import com.pradyotprakash.xfullstack.utils.Constants
 import io.ktor.server.application.Application
-import io.ktor.server.auth.authentication
+import io.ktor.server.application.install
+import io.ktor.server.auth.Authentication
 import io.ktor.server.auth.jwt.JWTPrincipal
 import io.ktor.server.auth.jwt.jwt
 import org.kodein.di.instance
@@ -14,7 +15,7 @@ import org.kodein.di.instance
 fun Application.configureSecurity() {
     val tokenConfig by ModulesConfig.di.instance<TokenConfig>()
 
-    authentication {
+    install(Authentication) {
         jwt {
             realm = Constants.Jwt.REALM
             verifier(

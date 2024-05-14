@@ -1,0 +1,15 @@
+meta {
+  name: UserInfo
+  type: http
+  seq: 5
+}
+
+get {
+  url: http://192.168.1.37:8080/auth/user-info
+  body: none
+  auth: none
+}
+
+headers {
+  Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJ1c2VycyIsImlzcyI6Imh0dHA6Ly8xOTIuMTY4LjEuMzc6ODA4MCIsImV4cCI6MTc0NzIxNzAwMSwidXNlcklkIjoiNjY0MzIxZjJhOTk0NGY0MmU1ZGVkM2Y0In0.OGxf6hTOwHv5-Xp3RfBknrAGFyhiZGDAyVT5PKseNyE
+}

@@ -12,6 +12,7 @@ import io.ktor.server.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.server.plugins.statuspages.StatusPages
 import io.ktor.server.request.path
 import io.ktor.server.resources.Resources
+import kotlinx.serialization.json.Json
 import org.slf4j.event.Level
 
 fun Application.configureMonitoring() {
@@ -45,6 +46,11 @@ fun Application.configureResource() {
 
 fun Application.configureSerialization() {
     install(ContentNegotiation) {
-        json()
+        json(
+            Json {
+                prettyPrint = true
+                isLenient = true
+            }
+        )
     }
 }

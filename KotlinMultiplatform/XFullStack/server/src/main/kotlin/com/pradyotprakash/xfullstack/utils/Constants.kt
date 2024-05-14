@@ -26,10 +26,15 @@ object Constants {
 
     object Paths {
         object Authentication {
-            const val AUTHENTICATION = "authentication"
-            const val LOGIN = "login"
-            const val REGISTER = "register"
-            const val AUTHENTICATE = "authenticate"
+            const val AUTH = "/auth"
+            const val LOGIN = "/login"
+            const val REGISTER = "/register"
+            const val AUTHENTICATE = "/authenticate"
+            const val USER_INFO = "/user-info"
         }
+    }
+
+    object Keys {
+        const val USER_ID = "userId"
     }
 }

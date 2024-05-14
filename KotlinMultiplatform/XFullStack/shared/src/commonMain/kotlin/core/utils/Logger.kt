@@ -23,24 +23,24 @@ object Logger {
     private fun debug(
         message: String,
     ) {
-        println("${LoggerLevel.Debug.name}: $message")
+        println("PRADYOT_PRAKASH_X_FULLSTACK ${LoggerLevel.Debug.name}: $message")
     }
 
     private fun warn(
         message: String,
     ) {
-        println("${LoggerLevel.Warn.name}: $message")
+        println("PRADYOT_PRAKASH_X_FULLSTACK ${LoggerLevel.Warn.name}: $message")
     }
 
     private fun info(
         message: String,
     ) {
-        println("${LoggerLevel.Info.name}: $message")
+        println("PRADYOT_PRAKASH_X_FULLSTACK ${LoggerLevel.Info.name}: $message")
     }
 
     private fun error(
         message: String,
     ) {
-        println("${LoggerLevel.Error.name}: $message")
+        println("PRADYOT_PRAKASH_X_FULLSTACK ${LoggerLevel.Error.name}: $message")
     }
 }
