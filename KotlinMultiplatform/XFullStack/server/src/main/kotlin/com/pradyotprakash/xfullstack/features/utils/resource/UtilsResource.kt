@@ -1,7 +1,7 @@
 package com.pradyotprakash.xfullstack.features.utils.resource
 
-import com.pradyotprakash.xfullstack.utils.Constants.Paths.Utils.USERNAME_VALID
-import com.pradyotprakash.xfullstack.utils.Constants.Paths.Utils.UTILS
+import core.utils.Constants.Paths.Utils.USERNAME_VALID
+import core.utils.Constants.Paths.Utils.UTILS
 import io.ktor.resources.Resource
 
 @Resource(UTILS)

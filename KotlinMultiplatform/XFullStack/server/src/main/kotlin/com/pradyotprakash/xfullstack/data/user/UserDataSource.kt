@@ -18,4 +18,6 @@ interface UserDataSource {
      * Insert a new user in the data source.
      */
     suspend fun insertNewUser(user: User): Boolean
+
+    suspend fun isUsernamePresent(username: String): Boolean
 }

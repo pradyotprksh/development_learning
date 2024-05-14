@@ -1,10 +1,10 @@
 package com.pradyotprakash.xfullstack.features.authentication.resource
 
-import com.pradyotprakash.xfullstack.utils.Constants.Paths.Authentication.AUTH
-import com.pradyotprakash.xfullstack.utils.Constants.Paths.Authentication.AUTHENTICATE
-import com.pradyotprakash.xfullstack.utils.Constants.Paths.Authentication.LOGIN
-import com.pradyotprakash.xfullstack.utils.Constants.Paths.Authentication.REGISTER
-import com.pradyotprakash.xfullstack.utils.Constants.Paths.Authentication.USER_INFO
+import core.utils.Constants.Paths.Authentication.AUTH
+import core.utils.Constants.Paths.Authentication.AUTHENTICATE
+import core.utils.Constants.Paths.Authentication.LOGIN
+import core.utils.Constants.Paths.Authentication.REGISTER
+import core.utils.Constants.Paths.Authentication.USER_INFO
 import io.ktor.resources.Resource
 
 @Resource(AUTH)

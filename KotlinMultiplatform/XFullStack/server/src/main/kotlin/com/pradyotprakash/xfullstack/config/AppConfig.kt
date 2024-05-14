@@ -7,8 +7,8 @@ import com.pradyotprakash.xfullstack.config.plugins.configureRouting
 import com.pradyotprakash.xfullstack.config.plugins.configureSecurity
 import com.pradyotprakash.xfullstack.config.plugins.configureSerialization
 import com.pradyotprakash.xfullstack.config.plugins.configureStatusPages
-import com.pradyotprakash.xfullstack.utils.Constants.Server.HOST
-import com.pradyotprakash.xfullstack.utils.Constants.Server.PORT
+import core.utils.Constants.Server.HOST
+import core.utils.Constants.Server.PORT
 import io.ktor.server.application.Application
 import io.ktor.server.engine.ApplicationEngine
 import io.ktor.server.engine.ApplicationEngineFactory

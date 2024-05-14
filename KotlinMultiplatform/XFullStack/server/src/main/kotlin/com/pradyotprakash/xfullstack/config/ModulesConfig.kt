@@ -20,7 +20,7 @@ import com.pradyotprakash.xfullstack.features.authentication.controllers.userInf
 import com.pradyotprakash.xfullstack.features.utils.controllers.UtilsController
 import com.pradyotprakash.xfullstack.features.utils.controllers.usernameValid.UsernameValidController
 import com.pradyotprakash.xfullstack.features.utils.controllers.usernameValid.UsernameValidControllerImplementation
-import com.pradyotprakash.xfullstack.utils.Constants
+import core.utils.Constants
 import org.kodein.di.DI
 import org.kodein.di.bindProvider
 import org.kodein.di.bindSingleton

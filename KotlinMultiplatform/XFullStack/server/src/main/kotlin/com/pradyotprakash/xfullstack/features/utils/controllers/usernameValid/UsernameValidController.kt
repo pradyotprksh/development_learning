@@ -5,7 +5,7 @@ import com.pradyotprakash.xfullstack.features.utils.resource.UtilsResource
 import io.ktor.server.application.ApplicationCall
 
 interface UsernameValidController {
-    fun isUserNameValid(
+    suspend fun isUserNameValid(
         call: ApplicationCall,
         resource: UtilsResource.UsernameValid,
         userDataSource: UserDataSource,

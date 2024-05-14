@@ -1,5 +1,7 @@
 package core.utils
 
+import core.utils.Constants.ConstValues.USERNAME_LENGTH
+
 object Localization {
     const val APP_NAME = "X"
     const val SPLASH_SCREEN_MESSAGE = "See what's happening in the work right now."
@@ -20,4 +22,8 @@ object Localization {
     const val FORGOT_PASSWORD = "Forgot password?"
     const val NEXT = "Next"
     const val PHONE_EMAIL_USERNAME = "Phone, email, or username"
+    const val USERNAME_LENGTH_ERROR = "Username should be greater than $USERNAME_LENGTH characters"
+    const val INVALID_USERNAME = "Invalid username"
+    const val USERNAME_ALREADY_EXISTS = "Username already exists"
+    const val DEFAULT_ERROR_MESSAGE = "Something went wrong. Please try again later"
 }

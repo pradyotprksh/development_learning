@@ -1,4 +1,4 @@
-package com.pradyotprakash.xfullstack.utils
+package core.utils
 
 object Constants {
     object Server {

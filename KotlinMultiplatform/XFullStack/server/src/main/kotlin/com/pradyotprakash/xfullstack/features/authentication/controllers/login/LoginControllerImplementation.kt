@@ -9,7 +9,7 @@ import com.pradyotprakash.xfullstack.data.request.LoginRequest
 import com.pradyotprakash.xfullstack.data.response.AuthenticationResponse
 import com.pradyotprakash.xfullstack.data.user.UserDataSource
 import com.pradyotprakash.xfullstack.features.authentication.resource.AuthenticationResource
-import com.pradyotprakash.xfullstack.utils.Constants.Keys.USER_ID
+import core.utils.Constants.Keys.USER_ID
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.ApplicationCall
 import io.ktor.server.request.receive

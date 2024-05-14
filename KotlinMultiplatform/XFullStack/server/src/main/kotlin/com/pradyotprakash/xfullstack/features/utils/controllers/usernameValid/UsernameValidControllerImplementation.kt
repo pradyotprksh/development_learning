@@ -2,14 +2,27 @@ package com.pradyotprakash.xfullstack.features.utils.controllers.usernameValid
 
 import com.pradyotprakash.xfullstack.data.user.UserDataSource
 import com.pradyotprakash.xfullstack.features.utils.resource.UtilsResource
+import core.exception.InvalidParameter
+import core.utils.Localization
+import core.utils.UtilsMethod
+import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.ApplicationCall
+import io.ktor.server.response.respond
 
 class UsernameValidControllerImplementation : UsernameValidController {
-    override fun isUserNameValid(
+    override suspend fun isUserNameValid(
         call: ApplicationCall,
         resource: UtilsResource.UsernameValid,
         userDataSource: UserDataSource
     ) {
         val username = resource.username
+
+        if (UtilsMethod.isValidUserName(username)) {
+            if (userDataSource.isUsernamePresent(username)) {
+                throw InvalidParameter(message = Localization.USERNAME_ALREADY_EXISTS)
+            }
+        }
+
+        call.respond(HttpStatusCode.OK)
     }
 }

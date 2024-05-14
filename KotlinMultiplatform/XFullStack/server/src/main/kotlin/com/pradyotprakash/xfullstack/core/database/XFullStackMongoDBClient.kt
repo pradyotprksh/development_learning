@@ -2,9 +2,9 @@ package com.pradyotprakash.xfullstack.core.database
 
 import com.mongodb.kotlin.client.coroutine.MongoClient
 import com.mongodb.kotlin.client.coroutine.MongoDatabase
-import com.pradyotprakash.xfullstack.utils.Constants.Database.DATABASE_NAME
-import com.pradyotprakash.xfullstack.utils.Constants.Database.DEFAULT_MONGODB_URI
-import com.pradyotprakash.xfullstack.utils.Constants.Database.MONGODB_URI
+import core.utils.Constants.Database.DATABASE_NAME
+import core.utils.Constants.Database.DEFAULT_MONGODB_URI
+import core.utils.Constants.Database.MONGODB_URI
 import core.utils.Logger
 import core.utils.LoggerLevel
 import org.bson.BsonInt64

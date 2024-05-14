@@ -2,8 +2,9 @@ package com.pradyotprakash.xfullstack.data.user
 
 import com.mongodb.client.model.Filters.eq
 import com.mongodb.kotlin.client.coroutine.MongoDatabase
-import com.pradyotprakash.xfullstack.utils.Constants.Database.Collections.USERS
+import core.utils.Constants.Database.Collections.USERS
 import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.toList
 import org.bson.types.ObjectId
 
 class MongoUserDataSource(
@@ -25,5 +26,11 @@ class MongoUserDataSource(
 
     override suspend fun insertNewUser(user: User): Boolean {
         return usersCollection.insertOne(user).wasAcknowledged()
+    }
+
+    override suspend fun isUsernamePresent(username: String): Boolean {
+        return usersCollection.find(
+            eq(User::username.name, username)
+        ).toList().isNotEmpty()
     }
 }

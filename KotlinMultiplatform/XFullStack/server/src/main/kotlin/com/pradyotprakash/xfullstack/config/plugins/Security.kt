@@ -4,7 +4,7 @@ import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
 import com.pradyotprakash.xfullstack.config.ModulesConfig
 import com.pradyotprakash.xfullstack.core.security.token.TokenConfig
-import com.pradyotprakash.xfullstack.utils.Constants
+import core.utils.Constants
 import io.ktor.server.application.Application
 import io.ktor.server.application.install
 import io.ktor.server.auth.Authentication
