@@ -11,10 +11,4 @@ data class RegisterRequest(
     val phoneNumber: String,
     val profilePicture: String?,
     val dateOfBirth: String
-) {
-    fun isValid() = username.isNotBlank() && password.isNotBlank()
-
-    fun isUsernameValid() = username.length >= 4
-
-    fun isPasswordValid() = password.length >= 8
-}
+)

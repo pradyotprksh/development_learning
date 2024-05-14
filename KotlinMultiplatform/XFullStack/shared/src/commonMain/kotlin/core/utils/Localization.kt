@@ -27,9 +27,6 @@ object Localization {
     const val INVALID_USERNAME = "Invalid username"
     const val USERNAME_ALREADY_EXISTS = "Username already exists"
     const val DEFAULT_ERROR_MESSAGE = "Something went wrong. Please try again later"
-    const val VALID_USERNAME = "Valid username"
-    const val SUCCESS = "Success"
-    const val ERROR = "error"
     const val UNAUTHORIZED_ACCESS = "Unauthorized Access"
     const val USER_DETAILS_NOT_FOUND = "User details not found"
     const val PASSWORD_LENGTH_ERROR = "Password should be greater than $PASSWORD_LENGTH characters"
@@ -38,4 +35,7 @@ object Localization {
     const val NO_DIGIT_ERROR = "Doesn't contains any digit"
     const val NO_SPECIAL_CHARACTER_ERROR = "Doesn't contains any special character"
     const val USER_AUTH_DETAILS_ERROR = "Username, phone number, email or password is incorrect"
+    const val INVALID_EMAIL = "Invalid email address"
+    const val INVALID_PHONE_NUMBER = "Invalid phone number"
+    const val INVALID_LINK = "Invalid link"
 }

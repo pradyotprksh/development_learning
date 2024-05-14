@@ -58,4 +58,32 @@ object UtilsMethod {
 
         return true
     }
+
+    fun isValidEmail(email: String): Boolean {
+        if (!email.matches(Regex("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\$"))) {
+            throw InvalidParameter(message = Localization.INVALID_EMAIL)
+        }
+
+        return true
+    }
+
+    fun isValidPhoneNumber(phoneNumber: String): Boolean {
+        if (phoneNumber.matches(Regex("^(\\+\\d{1,3}[- ]?)?\\d{10}$"))) {
+            throw InvalidParameter(message = Localization.INVALID_PHONE_NUMBER)
+        }
+
+        return true
+    }
+
+    fun isValidLink(link: String): Boolean {
+        if (link.matches(Regex("^(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?$"))) {
+            throw InvalidParameter(message = Localization.INVALID_LINK)
+        }
+
+        return true
+    }
+
+    fun isValidDate(date: String): Boolean {
+        return true
+    }
 }

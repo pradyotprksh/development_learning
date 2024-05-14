@@ -5,6 +5,7 @@ import com.pradyotprakash.xfullstack.data.request.RegisterRequest
 import com.pradyotprakash.xfullstack.data.user.User
 import com.pradyotprakash.xfullstack.data.user.UserDataSource
 import com.pradyotprakash.xfullstack.features.authentication.resource.AuthenticationResource
+import core.utils.UtilsMethod
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.ApplicationCall
 import io.ktor.server.request.receive
@@ -19,15 +20,11 @@ class RegisterControllerImplementation : RegisterController {
     ) {
         val registerRequest = call.receive<RegisterRequest>()
 
-        if (!registerRequest.isValid()) {
-            call.respond(HttpStatusCode.BadRequest)
-            return
-        }
-
-        if (!registerRequest.isPasswordValid() || !registerRequest.isUsernameValid()) {
-            call.respond(HttpStatusCode.Conflict)
-            return
-        }
+        UtilsMethod.isValidUserName(registerRequest.username)
+        UtilsMethod.isValidPassword(registerRequest.password)
+        UtilsMethod.isValidEmail(registerRequest.emailAddress)
+        UtilsMethod.isValidPhoneNumber(registerRequest.phoneNumber)
+        registerRequest.profilePicture?.let { UtilsMethod.isValidLink(it) }
 
         val saltedHash = hashingService.generateSaltedHash(value = registerRequest.password)
 

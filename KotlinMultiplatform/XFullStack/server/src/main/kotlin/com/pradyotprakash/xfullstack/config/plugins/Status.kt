@@ -32,7 +32,7 @@ fun Application.configureStatusPages() {
         exception<XFullStackException> { call, cause ->
             when (cause) {
                 is InvalidParameter -> call.respond(
-                    HttpStatusCode.Conflict,
+                    HttpStatusCode.BadRequest,
                     XFullStackResponse(
                         status = ResponseStatus.Error,
                         data = ErrorResponse(

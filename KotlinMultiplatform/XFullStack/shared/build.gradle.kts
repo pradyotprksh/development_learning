@@ -36,9 +36,7 @@ kotlin {
     jvm()
 
     sourceSets {
-        commonMain.dependencies {
-            implementation(libs.navigation.compose)
-        }
+        commonMain.dependencies {}
     }
 }
 
