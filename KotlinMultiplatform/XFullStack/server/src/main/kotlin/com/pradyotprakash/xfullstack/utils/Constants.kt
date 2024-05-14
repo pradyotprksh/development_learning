@@ -32,9 +32,18 @@ object Constants {
             const val AUTHENTICATE = "/authenticate"
             const val USER_INFO = "/user-info"
         }
+
+        object Utils {
+            const val UTILS = "/utils"
+            const val USERNAME_VALID = "/username-valid"
+        }
     }
 
     object Keys {
         const val USER_ID = "userId"
+    }
+
+    object ConstValues {
+        const val USERNAME_LENGTH = 5
     }
 }

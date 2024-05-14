@@ -28,17 +28,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import org.jetbrains.compose.resources.ExperimentalResourceApi
-import org.jetbrains.compose.resources.stringResource
+import core.utils.Localization
 import ui.composables.XAppBar
 import ui.pages.login.viewModel.LoginViewModel
-import xfullstack.composeapp.generated.resources.Res
-import xfullstack.composeapp.generated.resources.forgot_password
-import xfullstack.composeapp.generated.resources.get_started_login
-import xfullstack.composeapp.generated.resources.next
-import xfullstack.composeapp.generated.resources.phone_email_username
 
-@OptIn(ExperimentalResourceApi::class)
 @Composable
 fun LoginScreen(
     loginViewModel: LoginViewModel = viewModel { LoginViewModel() },
@@ -72,7 +65,7 @@ fun LoginScreen(
                 .imePadding()
         ) {
             Text(
-                stringResource(Res.string.get_started_login),
+                Localization.GET_STARTED_LOGIN,
                 style = MaterialTheme.typography.headlineSmall
             )
             Spacer(modifier = Modifier.height(20.dp))
@@ -81,7 +74,7 @@ fun LoginScreen(
                 onValueChange = { },
                 label = {
                     Text(
-                        stringResource(Res.string.phone_email_username)
+                        Localization.PHONE_EMAIL_USERNAME
                     )
                 },
                 modifier = Modifier.fillMaxWidth()
@@ -101,14 +94,14 @@ fun LoginScreen(
                         onClick = {}
                     ) {
                         Text(
-                            stringResource(Res.string.forgot_password)
+                            Localization.FORGOT_PASSWORD
                         )
                     }
                     Button(
                         onClick = {}
                     ) {
                         Text(
-                            stringResource(Res.string.next)
+                            Localization.NEXT
                         )
                     }
                 }

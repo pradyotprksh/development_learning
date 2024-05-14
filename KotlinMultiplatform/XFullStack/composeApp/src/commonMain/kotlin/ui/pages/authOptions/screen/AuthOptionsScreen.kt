@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -18,19 +17,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.dp
-import org.jetbrains.compose.resources.ExperimentalResourceApi
-import org.jetbrains.compose.resources.stringResource
-import ui.composables.AppIcon
+import core.utils.Localization
 import ui.composables.TextBetweenDivider
 import ui.composables.XAppBar
 import ui.pages.authOptions.composables.LoginComposable
 import ui.pages.authOptions.composables.SignupLegalDetails
-import xfullstack.composeapp.generated.resources.Res
-import xfullstack.composeapp.generated.resources.continue_with_google
-import xfullstack.composeapp.generated.resources.create_account
-import xfullstack.composeapp.generated.resources.splash_screen_message
 
-@OptIn(ExperimentalResourceApi::class)
 @Composable
 fun AuthOptionsScreen(
     navigateToLogin: () -> Unit,
@@ -55,7 +47,7 @@ fun AuthOptionsScreen(
                 modifier = Modifier.weight(1f)
             )
             Text(
-                stringResource(Res.string.splash_screen_message),
+                Localization.SPLASH_SCREEN_MESSAGE,
                 style = MaterialTheme.typography.headlineMedium,
             )
             Spacer(
@@ -66,7 +58,7 @@ fun AuthOptionsScreen(
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text(
-                    stringResource(Res.string.continue_with_google),
+                    Localization.CONTINUE_WITH_GOOGLE,
                 )
             }
             TextBetweenDivider()
@@ -75,7 +67,7 @@ fun AuthOptionsScreen(
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text(
-                    stringResource(Res.string.create_account),
+                    Localization.CREATE_ACCOUNT,
                 )
             }
             Spacer(

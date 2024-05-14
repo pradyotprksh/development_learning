@@ -31,6 +31,7 @@ dependencies {
     implementation(libs.commons.codec)
     implementation(libs.ktor.server.auth.jvm)
     implementation(libs.ktor.server.auth.jwt.jvm)
+    implementation(libs.ktor.server.caching.headers)
 
     testImplementation(libs.ktor.server.tests)
     testImplementation(libs.kotlin.test.junit)

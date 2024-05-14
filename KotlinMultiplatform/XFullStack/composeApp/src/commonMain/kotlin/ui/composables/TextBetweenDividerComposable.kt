@@ -9,12 +9,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import org.jetbrains.compose.resources.ExperimentalResourceApi
-import org.jetbrains.compose.resources.stringResource
-import xfullstack.composeapp.generated.resources.Res
-import xfullstack.composeapp.generated.resources.or
+import core.utils.Localization
 
-@OptIn(ExperimentalResourceApi::class)
 @Composable
 fun TextBetweenDivider() {
     Row(
@@ -28,7 +24,7 @@ fun TextBetweenDivider() {
             modifier = Modifier.weight(1f)
         )
         Text(
-            stringResource(Res.string.or),
+            Localization.OR,
             modifier = Modifier.padding(
                 horizontal = 5.dp,
             )

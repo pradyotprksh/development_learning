@@ -4,38 +4,27 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.SpanStyle
+import core.utils.Localization
 import core.utils.Logger
 import core.utils.LoggerLevel
-import org.jetbrains.compose.resources.ExperimentalResourceApi
-import org.jetbrains.compose.resources.stringResource
 import ui.composables.richText.RichTextComposable
 import ui.composables.richText.RichTextDetails
 import ui.composables.richText.TextDetails
 import utils.Tags
-import xfullstack.composeapp.generated.resources.Res
-import xfullstack.composeapp.generated.resources.and
-import xfullstack.composeapp.generated.resources.by_signing_up
-import xfullstack.composeapp.generated.resources.comma
-import xfullstack.composeapp.generated.resources.cookie_use
-import xfullstack.composeapp.generated.resources.full_stop
-import xfullstack.composeapp.generated.resources.privacy_policy
-import xfullstack.composeapp.generated.resources.terms
-import xfullstack.composeapp.generated.resources.white_space
 
-@OptIn(ExperimentalResourceApi::class)
 @Composable
 fun SignupLegalDetails(modifier: Modifier = Modifier) {
     RichTextComposable(
         richTextDetails = RichTextDetails(
             texts = listOf(
                 TextDetails(
-                    text = stringResource(Res.string.by_signing_up),
+                    text = Localization.BY_SIGNING_UP,
                 ),
                 TextDetails(
-                    text = stringResource(Res.string.white_space),
+                    text = Localization.WHITE_SPACE,
                 ),
                 TextDetails(
-                    text = stringResource(Res.string.terms),
+                    text = Localization.TERMS,
                     isClickable = true,
                     spanStyle = SpanStyle(
                         color = MaterialTheme.colorScheme.primary,
@@ -49,13 +38,13 @@ fun SignupLegalDetails(modifier: Modifier = Modifier) {
                     }
                 ),
                 TextDetails(
-                    text = stringResource(Res.string.comma),
+                    text = Localization.COMMA,
                 ),
                 TextDetails(
-                    text = stringResource(Res.string.white_space),
+                    text = Localization.WHITE_SPACE,
                 ),
                 TextDetails(
-                    text = stringResource(Res.string.privacy_policy),
+                    text = Localization.PRIVACY_POLICY,
                     isClickable = true,
                     spanStyle = SpanStyle(
                         color = MaterialTheme.colorScheme.primary,
@@ -69,19 +58,19 @@ fun SignupLegalDetails(modifier: Modifier = Modifier) {
                     }
                 ),
                 TextDetails(
-                    text = stringResource(Res.string.comma),
+                    text = Localization.COMMA,
                 ),
                 TextDetails(
-                    text = stringResource(Res.string.white_space),
+                    text = Localization.WHITE_SPACE,
                 ),
                 TextDetails(
-                    text = stringResource(Res.string.and),
+                    text = Localization.AND,
                 ),
                 TextDetails(
-                    text = stringResource(Res.string.white_space),
+                    text = Localization.WHITE_SPACE,
                 ),
                 TextDetails(
-                    text = stringResource(Res.string.cookie_use),
+                    text = Localization.COOKIE_USE,
                     isClickable = true,
                     spanStyle = SpanStyle(
                         color = MaterialTheme.colorScheme.primary,
@@ -95,7 +84,7 @@ fun SignupLegalDetails(modifier: Modifier = Modifier) {
                     }
                 ),
                 TextDetails(
-                    text = stringResource(Res.string.full_stop),
+                    text = Localization.FULL_STOP,
                 ),
             ),
             textStyle = MaterialTheme.typography.labelMedium.copy(
