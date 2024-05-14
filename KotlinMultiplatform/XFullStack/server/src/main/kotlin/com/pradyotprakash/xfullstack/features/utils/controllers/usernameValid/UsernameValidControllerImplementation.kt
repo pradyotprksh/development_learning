@@ -1,9 +1,11 @@
 package com.pradyotprakash.xfullstack.features.utils.controllers.usernameValid
 
+import com.pradyotprakash.xfullstack.data.response.XFullStackResponse
 import com.pradyotprakash.xfullstack.data.user.UserDataSource
 import com.pradyotprakash.xfullstack.features.utils.resource.UtilsResource
 import core.exception.InvalidParameter
 import core.utils.Localization
+import core.utils.ResponseStatus
 import core.utils.UtilsMethod
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.ApplicationCall
@@ -11,9 +13,7 @@ import io.ktor.server.response.respond
 
 class UsernameValidControllerImplementation : UsernameValidController {
     override suspend fun isUserNameValid(
-        call: ApplicationCall,
-        resource: UtilsResource.UsernameValid,
-        userDataSource: UserDataSource
+        call: ApplicationCall, resource: UtilsResource.UsernameValid, userDataSource: UserDataSource
     ) {
         val username = resource.username
 
@@ -23,6 +23,8 @@ class UsernameValidControllerImplementation : UsernameValidController {
             }
         }
 
-        call.respond(HttpStatusCode.OK)
+        call.respond(
+            HttpStatusCode.OK, XFullStackResponse(status = ResponseStatus.Success, data = null)
+        )
     }
 }

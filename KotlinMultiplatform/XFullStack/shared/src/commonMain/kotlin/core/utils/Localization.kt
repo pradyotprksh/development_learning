@@ -26,4 +26,7 @@ object Localization {
     const val INVALID_USERNAME = "Invalid username"
     const val USERNAME_ALREADY_EXISTS = "Username already exists"
     const val DEFAULT_ERROR_MESSAGE = "Something went wrong. Please try again later"
+    const val VALID_USERNAME = "Valid username"
+    const val SUCCESS = "Success"
+    const val ERROR = "error"
 }

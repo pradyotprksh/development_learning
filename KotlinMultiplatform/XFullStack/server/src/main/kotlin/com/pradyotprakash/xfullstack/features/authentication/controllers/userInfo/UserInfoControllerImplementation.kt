@@ -1,9 +1,11 @@
 package com.pradyotprakash.xfullstack.features.authentication.controllers.userInfo
 
 import com.pradyotprakash.xfullstack.data.response.UserInfoResponse
+import com.pradyotprakash.xfullstack.data.response.XFullStackResponse
 import com.pradyotprakash.xfullstack.data.user.UserDataSource
 import com.pradyotprakash.xfullstack.features.authentication.resource.AuthenticationResource
 import core.utils.Constants.Keys.USER_ID
+import core.utils.ResponseStatus
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.ApplicationCall
 import io.ktor.server.auth.jwt.JWTPrincipal
@@ -39,6 +41,9 @@ class UserInfoControllerImplementation : UserInfoController {
             dateOfBirth = user.dateOfBirth
         )
 
-        call.respond(HttpStatusCode.OK, response)
+        call.respond(
+            HttpStatusCode.OK,
+            XFullStackResponse(status = ResponseStatus.Success, data = response)
+        )
     }
 }

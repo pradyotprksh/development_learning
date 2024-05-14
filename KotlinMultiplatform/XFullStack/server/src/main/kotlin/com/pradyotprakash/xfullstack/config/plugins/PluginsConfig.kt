@@ -1,8 +1,10 @@
 package com.pradyotprakash.xfullstack.config.plugins
 
 import com.pradyotprakash.xfullstack.data.response.ErrorResponse
+import com.pradyotprakash.xfullstack.data.response.XFullStackResponse
 import core.exception.InvalidParameter
 import core.exception.XFullStackException
+import core.utils.ResponseStatus
 import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpStatusCode
 import io.ktor.serialization.kotlinx.json.json
@@ -47,8 +49,11 @@ fun Application.configureStatusPages() {
             when (cause) {
                 is InvalidParameter -> call.respond(
                     HttpStatusCode.Conflict,
-                    ErrorResponse(
-                        message = cause.message,
+                    XFullStackResponse(
+                        status = ResponseStatus.Error,
+                        data = ErrorResponse(
+                            message = cause.message,
+                        )
                     )
                 )
             }

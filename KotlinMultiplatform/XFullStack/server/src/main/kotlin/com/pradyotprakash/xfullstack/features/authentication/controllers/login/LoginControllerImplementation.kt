@@ -7,9 +7,11 @@ import com.pradyotprakash.xfullstack.core.security.token.TokenConfig
 import com.pradyotprakash.xfullstack.core.security.token.TokenService
 import com.pradyotprakash.xfullstack.data.request.LoginRequest
 import com.pradyotprakash.xfullstack.data.response.AuthenticationResponse
+import com.pradyotprakash.xfullstack.data.response.XFullStackResponse
 import com.pradyotprakash.xfullstack.data.user.UserDataSource
 import com.pradyotprakash.xfullstack.features.authentication.resource.AuthenticationResource
 import core.utils.Constants.Keys.USER_ID
+import core.utils.ResponseStatus
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.ApplicationCall
 import io.ktor.server.request.receive
@@ -64,8 +66,11 @@ class LoginControllerImplementation : LoginController {
 
         call.respond(
             status = HttpStatusCode.OK,
-            message = AuthenticationResponse(
-                token = token
+            message = XFullStackResponse(
+                status = ResponseStatus.Success,
+                data = AuthenticationResponse(
+                    token = token
+                )
             )
         )
     }
