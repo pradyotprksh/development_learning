@@ -18,6 +18,18 @@ class MongoUserDataSource(
         ).limit(1).firstOrNull()
     }
 
+    override suspend fun getUserByEmailAddress(email: String): User? {
+        return usersCollection.find(
+            eq(User::emailAddress.name, email)
+        ).limit(1).firstOrNull()
+    }
+
+    override suspend fun getUserByPhoneNumber(phoneNumber: String): User? {
+        return usersCollection.find(
+            eq(User::phoneNumber.name, phoneNumber)
+        ).limit(1).firstOrNull()
+    }
+
     override suspend fun getUserByUserId(userId: String): User? {
         return usersCollection.find(
             eq("_id", ObjectId(userId))

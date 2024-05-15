@@ -64,5 +64,6 @@ object Constants {
         const val EMAIL_VALIDITY_ERROR_CODE = "XFS011"
         const val PHONE_NUMBER_VALIDITY_ERROR_CODE = "XFS012"
         const val PROFILE_PICTURE_VALIDITY_ERROR_CODE = "XFS013"
+        const val USERNAME_OR_EMAIL_OR_PHONE_NUMBER_REQUIRED_ERROR_CODE = "XFS014"
     }
 }

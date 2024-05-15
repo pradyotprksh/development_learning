@@ -10,9 +10,12 @@ import com.pradyotprakash.xfullstack.data.response.AuthenticationResponse
 import com.pradyotprakash.xfullstack.data.response.XFullStackResponse
 import com.pradyotprakash.xfullstack.data.user.UserDataSource
 import com.pradyotprakash.xfullstack.features.authentication.resource.AuthenticationResource
+import core.exception.InvalidParameter
 import core.exception.UserAuthDetailsError
 import core.exception.UserDetailsNotFound
+import core.utils.Constants.ErrorCode.USERNAME_OR_EMAIL_OR_PHONE_NUMBER_REQUIRED_ERROR_CODE
 import core.utils.Constants.Keys.USER_ID
+import core.utils.Localization
 import core.utils.ResponseStatus
 import core.utils.UtilsMethod
 import io.ktor.http.HttpStatusCode
@@ -31,11 +34,24 @@ class LoginControllerImplementation : LoginController {
     ) {
         val loginRequest = call.receive<LoginRequest>()
 
-        UtilsMethod.isValidUserName(loginRequest.username)
+        if (loginRequest.username == null && loginRequest.emailAddress == null && loginRequest.phoneNumber == null) {
+            throw InvalidParameter(
+                message = Localization.USERNAME_OR_EMAIL_OR_PHONE_NUMBER_REQUIRED,
+                errorCode = USERNAME_OR_EMAIL_OR_PHONE_NUMBER_REQUIRED_ERROR_CODE
+            )
+        }
+
+        loginRequest.username?.let { UtilsMethod.isValidUserName(it) }
+        loginRequest.emailAddress?.let { UtilsMethod.isValidEmail(it) }
+        loginRequest.phoneNumber?.let { UtilsMethod.isValidPhoneNumber(it) }
+
         UtilsMethod.isValidPassword(loginRequest.password)
 
         val user =
-            userDataSource.getUserByUsername(loginRequest.username) ?: throw UserDetailsNotFound()
+            loginRequest.phoneNumber?.let { userDataSource.getUserByPhoneNumber(it) }
+                ?: loginRequest.emailAddress?.let { userDataSource.getUserByEmailAddress(it) }
+                ?: loginRequest.username?.let { userDataSource.getUserByUsername(it) }
+                ?: throw UserDetailsNotFound()
 
         val isValidPassword = hashingService.verify(
             value = loginRequest.password, saltedHash = SaltedHash(

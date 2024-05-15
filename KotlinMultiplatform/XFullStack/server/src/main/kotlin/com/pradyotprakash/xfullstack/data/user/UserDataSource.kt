@@ -9,6 +9,10 @@ interface UserDataSource {
      */
     suspend fun getUserByUsername(username: String): User?
 
+    suspend fun getUserByEmailAddress(email: String): User?
+
+    suspend fun getUserByPhoneNumber(phoneNumber: String): User?
+
     /**
      * Get a user by their id.
      */
