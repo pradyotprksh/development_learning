@@ -30,13 +30,16 @@ fun XApp(
             startDestination = Routes.Splash.route,
         ) {
             composable(Routes.Splash.route) {
-                SplashScreen {
-                    navController.navigate(Routes.AuthenticationOption.route) {
-                        popUpTo(Routes.Splash.route) {
-                            inclusive = true
+                SplashScreen(
+                    navigateToAuthOption = {
+                        navController.navigate(Routes.AuthenticationOption.route) {
+                            popUpTo(Routes.Splash.route) {
+                                inclusive = true
+                            }
                         }
-                    }
-                }
+                    },
+                    navigateToHome = {}
+                )
             }
             composable(Routes.AuthenticationOption.route) {
                 AuthOptionsScreen {

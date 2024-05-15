@@ -6,7 +6,7 @@ import io.ktor.client.plugins.logging.Logging
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 
-object Api {
+object XFullStackHttpClient {
     fun createHttpClient() = HttpClient {
         install(ContentNegotiation) {
             json(

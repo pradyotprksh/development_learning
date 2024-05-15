@@ -25,11 +25,13 @@ import utils.Resources
 fun SplashScreen(
     splashViewModel: SplashViewModel = viewModel { SplashViewModel() },
     navigateToAuthOption: () -> Unit,
+    navigateToHome: () -> Unit,
 ) {
     LaunchedEffect(Unit) {
-        splashViewModel.navigateToAuthOption {
-            navigateToAuthOption()
-        }
+        splashViewModel.navigateToAuthOption(
+            navigateToAuthOption,
+            navigateToHome,
+        )
     }
 
     Scaffold {
