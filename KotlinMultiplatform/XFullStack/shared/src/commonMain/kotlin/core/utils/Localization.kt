@@ -26,6 +26,8 @@ object Localization {
     const val USERNAME_LENGTH_ERROR = "Username should be greater than $USERNAME_LENGTH characters"
     const val INVALID_USERNAME = "Invalid username"
     const val USERNAME_ALREADY_EXISTS = "Username already exists"
+    const val EMAIL_ALREADY_EXISTS = "Email already exists"
+    const val PHONE_NUMBER_ALREADY_EXISTS = "Phone number already exists"
     const val DEFAULT_ERROR_MESSAGE = "Something went wrong. Please try again later"
     const val UNAUTHORIZED_ACCESS = "Unauthorized Access"
     const val USER_DETAILS_NOT_FOUND = "User details not found"
@@ -38,4 +40,6 @@ object Localization {
     const val INVALID_EMAIL = "Invalid email address"
     const val INVALID_PHONE_NUMBER = "Invalid phone number"
     const val INVALID_LINK = "Invalid link"
+    const val DB_WRITE_ERROR = "Not able to save the details at the moment. Please try again later"
+    const val EMAIL_OR_PHONE_NUMBER_REQUIRED = "Email or phone number is required"
 }

@@ -13,8 +13,8 @@ data class User(
     val password: String,
     val salt: String,
     val bio: String?,
-    @BsonProperty("email_address") val emailAddress: String,
-    @BsonProperty("phone_number") val phoneNumber: String,
+    @BsonProperty("email_address") val emailAddress: String?,
+    @BsonProperty("phone_number") val phoneNumber: String?,
     @BsonProperty("profile_picture") val profilePicture: String?,
     @BsonProperty("date_of_birth") val dateOfBirth: String
 )

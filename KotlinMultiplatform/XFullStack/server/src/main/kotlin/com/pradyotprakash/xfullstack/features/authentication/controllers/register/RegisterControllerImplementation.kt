@@ -2,9 +2,19 @@ package com.pradyotprakash.xfullstack.features.authentication.controllers.regist
 
 import com.pradyotprakash.xfullstack.core.security.hashing.HashingService
 import com.pradyotprakash.xfullstack.data.request.RegisterRequest
+import com.pradyotprakash.xfullstack.data.response.XFullStackResponse
 import com.pradyotprakash.xfullstack.data.user.User
 import com.pradyotprakash.xfullstack.data.user.UserDataSource
 import com.pradyotprakash.xfullstack.features.authentication.resource.AuthenticationResource
+import core.exception.DBWriteError
+import core.exception.InvalidParameter
+import core.utils.Constants.ErrorCode.EMAIL_ALREADY_PRESENT_ERROR_CODE
+import core.utils.Constants.ErrorCode.EMAIL_OR_PHONE_NUMBER_REQUIRED_ERROR_CODE
+import core.utils.Constants.ErrorCode.PHONE_NUMBER_ALREADY_PRESENT_ERROR_CODE
+import core.utils.Constants.ErrorCode.PROFILE_PICTURE_VALIDITY_ERROR_CODE
+import core.utils.Constants.ErrorCode.USERNAME_ALREADY_PRESENT_ERROR_CODE
+import core.utils.Localization
+import core.utils.ResponseStatus
 import core.utils.UtilsMethod
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.ApplicationCall
@@ -20,11 +30,53 @@ class RegisterControllerImplementation : RegisterController {
     ) {
         val registerRequest = call.receive<RegisterRequest>()
 
-        UtilsMethod.isValidUserName(registerRequest.username)
+        if (UtilsMethod.isValidUserName(registerRequest.username)) {
+            if (userDataSource.isUsernamePresent(registerRequest.username)) {
+                throw InvalidParameter(
+                    errorCode = USERNAME_ALREADY_PRESENT_ERROR_CODE,
+                    message = Localization.USERNAME_ALREADY_EXISTS,
+                )
+            }
+        }
+
         UtilsMethod.isValidPassword(registerRequest.password)
-        UtilsMethod.isValidEmail(registerRequest.emailAddress)
-        UtilsMethod.isValidPhoneNumber(registerRequest.phoneNumber)
-        registerRequest.profilePicture?.let { UtilsMethod.isValidLink(it) }
+
+        if (registerRequest.emailAddress == null && registerRequest.phoneNumber == null) {
+            throw InvalidParameter(
+                message = Localization.EMAIL_OR_PHONE_NUMBER_REQUIRED,
+                errorCode = EMAIL_OR_PHONE_NUMBER_REQUIRED_ERROR_CODE
+            )
+        }
+
+        registerRequest.emailAddress?.let {
+            if (UtilsMethod.isValidEmail(it)) {
+                if (userDataSource.isEmailPresent(it)) {
+                    throw InvalidParameter(
+                        message = Localization.EMAIL_ALREADY_EXISTS,
+                        errorCode = EMAIL_ALREADY_PRESENT_ERROR_CODE
+                    )
+                }
+            }
+        }
+
+        registerRequest.phoneNumber?.let {
+            if (UtilsMethod.isValidPhoneNumber(it)) {
+                if (userDataSource.isPhoneNumberPresent(it)) {
+                    throw InvalidParameter(
+                        message = Localization.PHONE_NUMBER_ALREADY_EXISTS,
+                        errorCode = PHONE_NUMBER_ALREADY_PRESENT_ERROR_CODE
+                    )
+                }
+            }
+        }
+
+        registerRequest.profilePicture?.let {
+            UtilsMethod.isValidLink(
+                it,
+                PROFILE_PICTURE_VALIDITY_ERROR_CODE
+            )
+        }
+        UtilsMethod.isValidDate(registerRequest.dateOfBirth)
 
         val saltedHash = hashingService.generateSaltedHash(value = registerRequest.password)
 
@@ -42,10 +94,12 @@ class RegisterControllerImplementation : RegisterController {
         val wasAcknowledged = userDataSource.insertNewUser(user)
 
         if (!wasAcknowledged) {
-            call.respond(HttpStatusCode.Conflict)
-            return
+            throw DBWriteError()
         }
 
-        call.respond(HttpStatusCode.OK)
+        call.respond(
+            HttpStatusCode.Created,
+            XFullStackResponse(status = ResponseStatus.Success, errorCode = null, data = null)
+        )
     }
 }

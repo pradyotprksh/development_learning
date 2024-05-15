@@ -21,8 +21,9 @@ class UserInfoControllerImplementation : UserInfoController {
     ) {
         val principal = call.principal<JWTPrincipal>()
 
-        val userId = principal?.payload?.getClaim(USER_ID)?.asString() ?: throw UserDetailsNotFound
-        val user = userDataSource.getUserByUserId(userId) ?: throw UserDetailsNotFound
+        val userId =
+            principal?.payload?.getClaim(USER_ID)?.asString() ?: throw UserDetailsNotFound()
+        val user = userDataSource.getUserByUserId(userId) ?: throw UserDetailsNotFound()
 
         val response = UserInfoResponse(
             id = user.id.toHexString(),
@@ -36,7 +37,7 @@ class UserInfoControllerImplementation : UserInfoController {
 
         call.respond(
             HttpStatusCode.OK,
-            XFullStackResponse(status = ResponseStatus.Success, data = response)
+            XFullStackResponse(status = ResponseStatus.Success, errorCode = null, data = response)
         )
     }
 }

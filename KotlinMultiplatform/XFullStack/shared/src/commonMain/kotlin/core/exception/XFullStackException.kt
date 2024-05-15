@@ -1,16 +1,26 @@
 package core.exception
 
+import core.utils.Constants.ErrorCode.DB_WRITE_ERROR_CODE
+import core.utils.Constants.ErrorCode.UNAUTHORIZED_CODE
+import core.utils.Constants.ErrorCode.USER_AUTH_DETAILS_ERROR_CODE
+import core.utils.Constants.ErrorCode.USER_DETAILS_NOT_FOUND_CODE
 import core.utils.Localization
 
 sealed class XFullStackException(
     message: String
 ) : Throwable(message = message)
 
-data class InvalidParameter(override val message: String) : XFullStackException(message = message)
+data class InvalidParameter(override val message: String, val errorCode: String) :
+    XFullStackException(message = message)
 
-data object UnauthorizedAccess : XFullStackException(message = Localization.UNAUTHORIZED_ACCESS)
+data class UnauthorizedAccess(val errorCode: String = UNAUTHORIZED_CODE) :
+    XFullStackException(message = Localization.UNAUTHORIZED_ACCESS)
 
-data object UserDetailsNotFound : XFullStackException(message = Localization.USER_DETAILS_NOT_FOUND)
+data class UserDetailsNotFound(val errorCode: String = USER_DETAILS_NOT_FOUND_CODE) :
+    XFullStackException(message = Localization.USER_DETAILS_NOT_FOUND)
 
-data object UserAuthDetailsError :
+data class UserAuthDetailsError(val errorCode: String = USER_AUTH_DETAILS_ERROR_CODE) :
     XFullStackException(message = Localization.USER_AUTH_DETAILS_ERROR)
+
+data class DBWriteError(val errorCode: String = DB_WRITE_ERROR_CODE) :
+    XFullStackException(message = Localization.DB_WRITE_ERROR)

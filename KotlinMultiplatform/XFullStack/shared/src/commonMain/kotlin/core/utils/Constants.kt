@@ -41,10 +41,28 @@ object Constants {
 
     object Keys {
         const val USER_ID = "userId"
+        const val JWT_SECRET = "JWT_SECRET"
     }
 
     object ConstValues {
         const val USERNAME_LENGTH = 5
         const val PASSWORD_LENGTH = 8
+        const val TOKEN_EXPIRES_IN = 365L * 1000L * 60L * 60L * 24L
+    }
+
+    object ErrorCode {
+        const val UNAUTHORIZED_CODE = "XFS001"
+        const val USER_DETAILS_NOT_FOUND_CODE = "XFS002"
+        const val USER_AUTH_DETAILS_ERROR_CODE = "XFS003"
+        const val DB_WRITE_ERROR_CODE = "XFS004"
+        const val USERNAME_ALREADY_PRESENT_ERROR_CODE = "XFS005"
+        const val EMAIL_OR_PHONE_NUMBER_REQUIRED_ERROR_CODE = "XFS006"
+        const val EMAIL_ALREADY_PRESENT_ERROR_CODE = "XFS007"
+        const val PHONE_NUMBER_ALREADY_PRESENT_ERROR_CODE = "XFS008"
+        const val USERNAME_VALIDITY_ERROR_CODE = "XFS009"
+        const val PASSWORD_VALIDITY_ERROR_CODE = "XFS010"
+        const val EMAIL_VALIDITY_ERROR_CODE = "XFS011"
+        const val PHONE_NUMBER_VALIDITY_ERROR_CODE = "XFS012"
+        const val PROFILE_PICTURE_VALIDITY_ERROR_CODE = "XFS013"
     }
 }

@@ -33,4 +33,16 @@ class MongoUserDataSource(
             eq(User::username.name, username)
         ).toList().isNotEmpty()
     }
+
+    override suspend fun isEmailPresent(email: String): Boolean {
+        return usersCollection.find(
+            eq(User::emailAddress.name, email)
+        ).toList().isNotEmpty()
+    }
+
+    override suspend fun isPhoneNumberPresent(phoneNumber: String): Boolean {
+        return usersCollection.find(
+            eq(User::phoneNumber.name, phoneNumber)
+        ).toList().isNotEmpty()
+    }
 }

@@ -2,11 +2,13 @@ package com.pradyotprakash.xfullstack.config.plugins
 
 import com.pradyotprakash.xfullstack.data.response.ErrorResponse
 import com.pradyotprakash.xfullstack.data.response.XFullStackResponse
+import core.exception.DBWriteError
 import core.exception.InvalidParameter
 import core.exception.UnauthorizedAccess
 import core.exception.UserAuthDetailsError
 import core.exception.UserDetailsNotFound
 import core.exception.XFullStackException
+import core.utils.Constants.ErrorCode.UNAUTHORIZED_CODE
 import core.utils.Localization
 import core.utils.ResponseStatus
 import io.ktor.http.HttpStatusCode
@@ -22,6 +24,7 @@ fun Application.configureStatusPages() {
                 HttpStatusCode.Unauthorized,
                 XFullStackResponse(
                     status = ResponseStatus.Error,
+                    errorCode = UNAUTHORIZED_CODE,
                     data = ErrorResponse(
                         message = Localization.UNAUTHORIZED_ACCESS,
                     )
@@ -35,6 +38,7 @@ fun Application.configureStatusPages() {
                     HttpStatusCode.BadRequest,
                     XFullStackResponse(
                         status = ResponseStatus.Error,
+                        errorCode = cause.errorCode,
                         data = ErrorResponse(
                             message = cause.message,
                         )
@@ -45,16 +49,40 @@ fun Application.configureStatusPages() {
                     HttpStatusCode.Unauthorized,
                     XFullStackResponse(
                         status = ResponseStatus.Error,
+                        errorCode = cause.errorCode,
                         data = ErrorResponse(
                             message = cause.message ?: Localization.DEFAULT_ERROR_MESSAGE,
                         )
                     )
                 )
 
-                is UserAuthDetailsError, UserDetailsNotFound -> call.respond(
+                is UserAuthDetailsError -> call.respond(
                     HttpStatusCode.Conflict,
                     XFullStackResponse(
                         status = ResponseStatus.Error,
+                        errorCode = cause.errorCode,
+                        data = ErrorResponse(
+                            message = cause.message ?: Localization.DEFAULT_ERROR_MESSAGE,
+                        )
+                    )
+                )
+
+                is UserDetailsNotFound -> call.respond(
+                    HttpStatusCode.Conflict,
+                    XFullStackResponse(
+                        status = ResponseStatus.Error,
+                        errorCode = cause.errorCode,
+                        data = ErrorResponse(
+                            message = cause.message ?: Localization.DEFAULT_ERROR_MESSAGE,
+                        )
+                    )
+                )
+
+                is DBWriteError -> call.respond(
+                    HttpStatusCode.BadGateway,
+                    XFullStackResponse(
+                        status = ResponseStatus.Error,
+                        errorCode = cause.errorCode,
                         data = ErrorResponse(
                             message = cause.message ?: Localization.DEFAULT_ERROR_MESSAGE,
                         )

@@ -4,6 +4,7 @@ import com.pradyotprakash.xfullstack.data.response.XFullStackResponse
 import com.pradyotprakash.xfullstack.data.user.UserDataSource
 import com.pradyotprakash.xfullstack.features.utils.resource.UtilsResource
 import core.exception.InvalidParameter
+import core.utils.Constants.ErrorCode.USERNAME_ALREADY_PRESENT_ERROR_CODE
 import core.utils.Localization
 import core.utils.ResponseStatus
 import core.utils.UtilsMethod
@@ -19,12 +20,16 @@ class UsernameValidControllerImplementation : UsernameValidController {
 
         if (UtilsMethod.isValidUserName(username)) {
             if (userDataSource.isUsernamePresent(username)) {
-                throw InvalidParameter(message = Localization.USERNAME_ALREADY_EXISTS)
+                throw InvalidParameter(
+                    errorCode = USERNAME_ALREADY_PRESENT_ERROR_CODE,
+                    message = Localization.USERNAME_ALREADY_EXISTS
+                )
             }
         }
 
         call.respond(
-            HttpStatusCode.OK, XFullStackResponse(status = ResponseStatus.Success, data = null)
+            HttpStatusCode.OK,
+            XFullStackResponse(status = ResponseStatus.Success, errorCode = null, data = null)
         )
     }
 }

@@ -20,4 +20,8 @@ interface UserDataSource {
     suspend fun insertNewUser(user: User): Boolean
 
     suspend fun isUsernamePresent(username: String): Boolean
+
+    suspend fun isEmailPresent(email: String): Boolean
+
+    suspend fun isPhoneNumberPresent(phoneNumber: String): Boolean
 }

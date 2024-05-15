@@ -21,6 +21,8 @@ import com.pradyotprakash.xfullstack.features.utils.controllers.UtilsController
 import com.pradyotprakash.xfullstack.features.utils.controllers.usernameValid.UsernameValidController
 import com.pradyotprakash.xfullstack.features.utils.controllers.usernameValid.UsernameValidControllerImplementation
 import core.utils.Constants
+import core.utils.Constants.ConstValues.TOKEN_EXPIRES_IN
+import core.utils.Constants.Keys.JWT_SECRET
 import org.kodein.di.DI
 import org.kodein.di.bindProvider
 import org.kodein.di.bindSingleton
@@ -39,8 +41,8 @@ object ModulesConfig {
             TokenConfig(
                 issuer = Constants.Jwt.ISSUER,
                 audience = Constants.Jwt.AUDIENCE,
-                expiresIn = 365L * 1000L * 60L * 60L * 24L,
-                secret = System.getenv("JWT_SECRET"),
+                expiresIn = TOKEN_EXPIRES_IN,
+                secret = System.getenv(JWT_SECRET),
             )
         }
     }

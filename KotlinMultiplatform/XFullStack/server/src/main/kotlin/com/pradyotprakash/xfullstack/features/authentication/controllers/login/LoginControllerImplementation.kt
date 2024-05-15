@@ -35,7 +35,7 @@ class LoginControllerImplementation : LoginController {
         UtilsMethod.isValidPassword(loginRequest.password)
 
         val user =
-            userDataSource.getUserByUsername(loginRequest.username) ?: throw UserDetailsNotFound
+            userDataSource.getUserByUsername(loginRequest.username) ?: throw UserDetailsNotFound()
 
         val isValidPassword = hashingService.verify(
             value = loginRequest.password, saltedHash = SaltedHash(
@@ -43,7 +43,7 @@ class LoginControllerImplementation : LoginController {
             )
         )
         if (!isValidPassword) {
-            throw UserAuthDetailsError
+            throw UserAuthDetailsError()
         }
 
         val token = tokenService.generate(
@@ -60,6 +60,7 @@ class LoginControllerImplementation : LoginController {
             status = HttpStatusCode.OK,
             message = XFullStackResponse(
                 status = ResponseStatus.Success,
+                errorCode = null,
                 data = AuthenticationResponse(
                     token = token
                 )
