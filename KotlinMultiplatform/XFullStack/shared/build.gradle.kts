@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
+    alias(libs.plugins.kotlinSerialization)
 }
 
 kotlin {
@@ -19,7 +20,9 @@ kotlin {
     jvm()
 
     sourceSets {
-        commonMain.dependencies {}
+        commonMain.dependencies {
+            implementation(libs.ktor.serialization.kotlinx.json)
+        }
     }
 }
 

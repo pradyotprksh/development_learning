@@ -1,4 +1,4 @@
-package com.pradyotprakash.xfullstack.data.response
+package data.response
 
 import core.utils.ResponseStatus
 import kotlinx.serialization.Serializable

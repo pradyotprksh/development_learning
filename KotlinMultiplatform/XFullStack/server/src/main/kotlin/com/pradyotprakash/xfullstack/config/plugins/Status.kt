@@ -1,16 +1,16 @@
 package com.pradyotprakash.xfullstack.config.plugins
 
 import com.pradyotprakash.xfullstack.data.response.ErrorResponse
-import com.pradyotprakash.xfullstack.data.response.XFullStackResponse
 import core.exception.DBWriteError
 import core.exception.InvalidParameter
 import core.exception.UnauthorizedAccess
 import core.exception.UserAuthDetailsError
 import core.exception.UserDetailsNotFound
 import core.exception.XFullStackException
-import core.utils.Constants.ErrorCode.UNAUTHORIZED_CODE
+import core.utils.Constants.ErrorCode.UNAUTHORIZED_ERROR_CODE
 import core.utils.Localization
 import core.utils.ResponseStatus
+import data.response.XFullStackResponse
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.Application
 import io.ktor.server.application.install
@@ -24,7 +24,7 @@ fun Application.configureStatusPages() {
                 HttpStatusCode.Unauthorized,
                 XFullStackResponse(
                     status = ResponseStatus.Error,
-                    errorCode = UNAUTHORIZED_CODE,
+                    errorCode = UNAUTHORIZED_ERROR_CODE,
                     data = ErrorResponse(
                         message = Localization.UNAUTHORIZED_ACCESS,
                     )

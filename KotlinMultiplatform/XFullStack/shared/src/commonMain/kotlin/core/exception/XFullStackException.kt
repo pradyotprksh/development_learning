@@ -1,7 +1,7 @@
 package core.exception
 
 import core.utils.Constants.ErrorCode.DB_WRITE_ERROR_CODE
-import core.utils.Constants.ErrorCode.UNAUTHORIZED_CODE
+import core.utils.Constants.ErrorCode.UNAUTHORIZED_ERROR_CODE
 import core.utils.Constants.ErrorCode.USER_AUTH_DETAILS_ERROR_CODE
 import core.utils.Constants.ErrorCode.USER_DETAILS_NOT_FOUND_CODE
 import core.utils.Localization
@@ -13,7 +13,7 @@ sealed class XFullStackException(
 data class InvalidParameter(override val message: String, val errorCode: String) :
     XFullStackException(message = message)
 
-data class UnauthorizedAccess(val errorCode: String = UNAUTHORIZED_CODE) :
+data class UnauthorizedAccess(val errorCode: String = UNAUTHORIZED_ERROR_CODE) :
     XFullStackException(message = Localization.UNAUTHORIZED_ACCESS)
 
 data class UserDetailsNotFound(val errorCode: String = USER_DETAILS_NOT_FOUND_CODE) :

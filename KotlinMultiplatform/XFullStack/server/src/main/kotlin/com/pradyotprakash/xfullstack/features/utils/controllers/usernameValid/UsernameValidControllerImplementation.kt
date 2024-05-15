@@ -1,6 +1,5 @@
 package com.pradyotprakash.xfullstack.features.utils.controllers.usernameValid
 
-import com.pradyotprakash.xfullstack.data.response.XFullStackResponse
 import com.pradyotprakash.xfullstack.data.user.UserDataSource
 import com.pradyotprakash.xfullstack.features.utils.resource.UtilsResource
 import core.exception.InvalidParameter

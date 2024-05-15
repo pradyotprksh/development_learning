@@ -44,4 +44,5 @@ object Localization {
     const val EMAIL_OR_PHONE_NUMBER_REQUIRED = "Email or phone number is required"
     const val USERNAME_OR_EMAIL_OR_PHONE_NUMBER_REQUIRED =
         "Phone, email, or username is required"
+    const val LOADING = "Loading..."
 }

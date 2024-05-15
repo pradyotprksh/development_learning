@@ -2,13 +2,13 @@ package data.device
 
 import data.models.realm.CurrentUserId
 import data.models.realm.Token
-import domain.services.UserLocalDBService
+import domain.services.UserDBService
 import io.realm.kotlin.Realm
 import io.realm.kotlin.ext.query
 
-class UserLocalDBServiceImplementation(
+class UserDBServiceImplementation(
     private val realm: Realm,
-) : UserLocalDBService {
+) : UserDBService {
     override fun getCurrentUserId(): CurrentUserId? {
         return realm.query<CurrentUserId>().find().firstOrNull()
     }

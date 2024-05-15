@@ -1,15 +1,15 @@
 package domain.repositories
 
-import domain.services.UserLocalDBService
+import domain.services.UserDBService
 
 class CurrentUserRepository(
-    private val userLocalDBService: UserLocalDBService,
+    private val userDBService: UserDBService,
 ) {
     fun getCurrentLoggedInUserId(): String? {
-        return userLocalDBService.getCurrentUserId()?.userId
+        return userDBService.getCurrentUserId()?.userId
     }
 
     fun getToken(userId: String): String {
-        return userLocalDBService.getToken(userId)
+        return userDBService.getToken(userId)
     }
 }

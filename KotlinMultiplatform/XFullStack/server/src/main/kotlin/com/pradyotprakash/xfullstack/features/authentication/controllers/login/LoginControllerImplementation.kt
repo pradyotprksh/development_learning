@@ -7,7 +7,6 @@ import com.pradyotprakash.xfullstack.core.security.token.TokenConfig
 import com.pradyotprakash.xfullstack.core.security.token.TokenService
 import com.pradyotprakash.xfullstack.data.request.LoginRequest
 import com.pradyotprakash.xfullstack.data.response.AuthenticationResponse
-import com.pradyotprakash.xfullstack.data.response.XFullStackResponse
 import com.pradyotprakash.xfullstack.data.user.UserDataSource
 import com.pradyotprakash.xfullstack.features.authentication.resource.AuthenticationResource
 import core.exception.InvalidParameter
@@ -18,6 +17,7 @@ import core.utils.Constants.Keys.USER_ID
 import core.utils.Localization
 import core.utils.ResponseStatus
 import core.utils.UtilsMethod
+import data.response.XFullStackResponse
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.ApplicationCall
 import io.ktor.server.request.receive

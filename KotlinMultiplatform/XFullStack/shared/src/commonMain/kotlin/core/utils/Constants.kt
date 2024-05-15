@@ -18,8 +18,8 @@ object Constants {
     }
 
     object Jwt {
-        const val ISSUER = "http://${Server.HOST}:${Server.PORT}"
-        const val DOMAIN = "http://${Server.HOST}:${Server.PORT}"
+        const val ISSUER = ConstValues.BASE_URL
+        const val DOMAIN = ConstValues.BASE_URL
         const val AUDIENCE = "users"
         const val REALM = "xfullstack ktor app"
     }
@@ -42,16 +42,22 @@ object Constants {
     object Keys {
         const val USER_ID = "userId"
         const val JWT_SECRET = "JWT_SECRET"
+        const val CONTENT_TYPE = "Content-Type"
+        const val AUTHORIZATION = "Authorization"
     }
 
     object ConstValues {
         const val USERNAME_LENGTH = 5
         const val PASSWORD_LENGTH = 8
         const val TOKEN_EXPIRES_IN = 365L * 1000L * 60L * 60L * 24L
+        const val APPLICATION_JSON = "application/json"
+        const val BEARER = "Bearer"
+        const val BASE_URL = "http://${Server.HOST}:${Server.PORT}"
     }
 
     object ErrorCode {
-        const val UNAUTHORIZED_CODE = "XFS001"
+        const val DEFAULT_ERROR_CODE = "XFS000"
+        const val UNAUTHORIZED_ERROR_CODE = "XFS001"
         const val USER_DETAILS_NOT_FOUND_CODE = "XFS002"
         const val USER_AUTH_DETAILS_ERROR_CODE = "XFS003"
         const val DB_WRITE_ERROR_CODE = "XFS004"

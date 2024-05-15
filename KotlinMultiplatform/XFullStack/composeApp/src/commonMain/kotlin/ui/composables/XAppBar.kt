@@ -16,7 +16,7 @@ fun XAppBar(
     CenterAlignedTopAppBar(
         title = {
             AppIcon(
-                modifier = Modifier
+                imageModifier = Modifier
                     .size(40.dp)
             )
         },

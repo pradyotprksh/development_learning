@@ -1,10 +1,11 @@
 package di
 
 import core.database.XFullStackDatabaseClient
+import core.network.NetworkClient
 import core.network.XFullStackHttpClient
-import data.device.UserLocalDBServiceImplementation
+import data.device.UserDBServiceImplementation
 import domain.repositories.CurrentUserRepository
-import domain.services.UserLocalDBService
+import domain.services.UserDBService
 import org.kodein.di.DI
 import org.kodein.di.bindProvider
 import org.kodein.di.bindSingleton
@@ -12,7 +13,9 @@ import org.kodein.di.instance
 
 object ModulesDi {
     private val networkModule = DI.Module("NETWORK") {
-        bindSingleton { XFullStackHttpClient.createHttpClient() }
+        bindSingleton { XFullStackHttpClient(instance()) }
+        bindSingleton { instance<XFullStackHttpClient>().createHttpClient() }
+        bindProvider { NetworkClient(instance()) }
     }
 
     private val databaseModule = DI.Module("DATABASE") {
@@ -20,7 +23,7 @@ object ModulesDi {
     }
 
     private val servicesModule = DI.Module("SERVICES") {
-        bindProvider<UserLocalDBService> { UserLocalDBServiceImplementation(instance()) }
+        bindProvider<UserDBService> { UserDBServiceImplementation(instance()) }
     }
 
     private val repositoriesModule = DI.Module("REPOSITORIES") {
