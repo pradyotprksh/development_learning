@@ -1,4 +1,4 @@
-package core.utils
+package utils
 
 enum class LoggerLevel {
     Debug,

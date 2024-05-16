@@ -3,10 +3,10 @@ package com.pradyotprakash.xfullstack.features.utils.controllers.usernameValid
 import com.pradyotprakash.xfullstack.data.user.UserDataSource
 import com.pradyotprakash.xfullstack.features.utils.resource.UtilsResource
 import core.exception.InvalidParameter
-import core.utils.Constants.ErrorCode.USERNAME_ALREADY_PRESENT_ERROR_CODE
-import core.utils.Localization
-import core.utils.ResponseStatus
-import core.utils.UtilsMethod
+import utils.Constants.ErrorCode.USERNAME_ALREADY_PRESENT_ERROR_CODE
+import utils.Localization
+import utils.ResponseStatus
+import utils.UtilsMethod
 import data.response.XFullStackResponse
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.ApplicationCall

@@ -2,11 +2,11 @@ package com.pradyotprakash.xfullstack.core.database
 
 import com.mongodb.kotlin.client.coroutine.MongoClient
 import com.mongodb.kotlin.client.coroutine.MongoDatabase
-import core.utils.Constants.Database.DATABASE_NAME
-import core.utils.Constants.Database.DEFAULT_MONGODB_URI
-import core.utils.Constants.Database.MONGODB_URI
-import core.utils.Logger
-import core.utils.LoggerLevel
+import utils.Constants.Database.DATABASE_NAME
+import utils.Constants.Database.DEFAULT_MONGODB_URI
+import utils.Constants.Database.MONGODB_URI
+import utils.Logger
+import utils.LoggerLevel
 import org.bson.BsonInt64
 import org.bson.Document
 

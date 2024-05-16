@@ -2,7 +2,7 @@ package com.pradyotprakash.xfullstack.data.user
 
 import com.mongodb.client.model.Filters.eq
 import com.mongodb.kotlin.client.coroutine.MongoDatabase
-import core.utils.Constants.Database.Collections.USERS
+import utils.Constants.Database.Collections.USERS
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.toList
 import org.bson.types.ObjectId

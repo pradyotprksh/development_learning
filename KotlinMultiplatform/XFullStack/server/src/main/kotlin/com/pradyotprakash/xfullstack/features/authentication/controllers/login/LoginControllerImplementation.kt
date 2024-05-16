@@ -12,11 +12,11 @@ import com.pradyotprakash.xfullstack.features.authentication.resource.Authentica
 import core.exception.InvalidParameter
 import core.exception.UserAuthDetailsError
 import core.exception.UserDetailsNotFound
-import core.utils.Constants.ErrorCode.USERNAME_OR_EMAIL_OR_PHONE_NUMBER_REQUIRED_ERROR_CODE
-import core.utils.Constants.Keys.USER_ID
-import core.utils.Localization
-import core.utils.ResponseStatus
-import core.utils.UtilsMethod
+import utils.Constants.ErrorCode.USERNAME_OR_EMAIL_OR_PHONE_NUMBER_REQUIRED_ERROR_CODE
+import utils.Constants.Keys.USER_ID
+import utils.Localization
+import utils.ResponseStatus
+import utils.UtilsMethod
 import data.response.XFullStackResponse
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.ApplicationCall

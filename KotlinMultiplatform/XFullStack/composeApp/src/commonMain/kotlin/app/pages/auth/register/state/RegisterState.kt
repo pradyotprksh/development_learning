@@ -6,6 +6,8 @@ data class RegisterState(
     val nameValue: String = "",
     val phoneEmailValue: String = "",
     val dobValue: String = "",
+    val dobValueLong: Long = 0,
+    val datePickerVisible: Boolean = true,
 ) {
     val enableNextButton =
         nameValue.isNotBlank() && phoneEmailValue.isNotBlank() && dobValue.isNotBlank()

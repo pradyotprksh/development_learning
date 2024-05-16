@@ -1,15 +1,18 @@
-package core.utils
+package utils
 
 import core.exception.InvalidParameter
-import core.utils.Constants.ConstValues.NAME_MAX_LENGTH
-import core.utils.Constants.ConstValues.NAME_MIN_LENGTH
-import core.utils.Constants.ConstValues.PASSWORD_LENGTH
-import core.utils.Constants.ConstValues.USERNAME_LENGTH
-import core.utils.Constants.ErrorCode.EMAIL_VALIDITY_ERROR_CODE
-import core.utils.Constants.ErrorCode.NAME_VALIDITY_ERROR_CODE
-import core.utils.Constants.ErrorCode.PASSWORD_VALIDITY_ERROR_CODE
-import core.utils.Constants.ErrorCode.PHONE_NUMBER_VALIDITY_ERROR_CODE
-import core.utils.Constants.ErrorCode.USERNAME_VALIDITY_ERROR_CODE
+import kotlinx.datetime.Instant
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toLocalDateTime
+import utils.Constants.ConstValues.NAME_MAX_LENGTH
+import utils.Constants.ConstValues.NAME_MIN_LENGTH
+import utils.Constants.ConstValues.PASSWORD_LENGTH
+import utils.Constants.ConstValues.USERNAME_LENGTH
+import utils.Constants.ErrorCode.EMAIL_VALIDITY_ERROR_CODE
+import utils.Constants.ErrorCode.NAME_VALIDITY_ERROR_CODE
+import utils.Constants.ErrorCode.PASSWORD_VALIDITY_ERROR_CODE
+import utils.Constants.ErrorCode.PHONE_NUMBER_VALIDITY_ERROR_CODE
+import utils.Constants.ErrorCode.USERNAME_VALIDITY_ERROR_CODE
 import kotlin.math.absoluteValue
 
 object UtilsMethod {
@@ -19,8 +22,7 @@ object UtilsMethod {
     fun isValidName(name: String) {
         if (!maxNameLengthValid(name)) {
             throw InvalidParameter(
-                message = Localization.NAME_LENGTH_ERROR,
-                errorCode = NAME_VALIDITY_ERROR_CODE
+                message = Localization.NAME_LENGTH_ERROR, errorCode = NAME_VALIDITY_ERROR_CODE
             )
         }
     }
@@ -39,8 +41,7 @@ object UtilsMethod {
 
         if (!validUsername(username)) {
             throw InvalidParameter(
-                message = Localization.INVALID_USERNAME,
-                errorCode = USERNAME_VALIDITY_ERROR_CODE
+                message = Localization.INVALID_USERNAME, errorCode = USERNAME_VALIDITY_ERROR_CODE
             )
         }
 
@@ -71,22 +72,19 @@ object UtilsMethod {
 
         if (!passwordContainsAtLeastOneUpperCase(password)) {
             throw InvalidParameter(
-                message = Localization.NO_UPPERCASE_ERROR,
-                errorCode = PASSWORD_VALIDITY_ERROR_CODE
+                message = Localization.NO_UPPERCASE_ERROR, errorCode = PASSWORD_VALIDITY_ERROR_CODE
             )
         }
 
         if (!passwordContainsAtLeastOneLowerCase(password)) {
             throw InvalidParameter(
-                message = Localization.NO_LOWERCASE_ERROR,
-                errorCode = PASSWORD_VALIDITY_ERROR_CODE
+                message = Localization.NO_LOWERCASE_ERROR, errorCode = PASSWORD_VALIDITY_ERROR_CODE
             )
         }
 
         if (!passwordContainsAtLeastOneDigit(password)) {
             throw InvalidParameter(
-                message = Localization.NO_DIGIT_ERROR,
-                errorCode = PASSWORD_VALIDITY_ERROR_CODE
+                message = Localization.NO_DIGIT_ERROR, errorCode = PASSWORD_VALIDITY_ERROR_CODE
             )
         }
 
@@ -103,8 +101,7 @@ object UtilsMethod {
     fun isValidEmail(email: String): Boolean {
         if (!email.matches(Regex("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\$"))) {
             throw InvalidParameter(
-                message = Localization.INVALID_EMAIL,
-                errorCode = EMAIL_VALIDITY_ERROR_CODE
+                message = Localization.INVALID_EMAIL, errorCode = EMAIL_VALIDITY_ERROR_CODE
             )
         }
 
@@ -145,5 +142,12 @@ object UtilsMethod {
         } else {
             return numberStr.substring(0, 6)
         }
+    }
+
+    fun convertLongToReadableDate(date: Long): String {
+        val localDate = Instant.fromEpochMilliseconds(date)
+            .toLocalDateTime(TimeZone.currentSystemDefault()).date
+        val monthName = localDate.month.name.lowercase().replaceFirstChar { it.uppercase() }
+        return "${localDate.dayOfMonth} $monthName ${localDate.year}"
     }
 }

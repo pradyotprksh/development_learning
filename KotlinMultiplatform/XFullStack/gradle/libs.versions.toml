@@ -17,6 +17,7 @@ logback = "1.5.6"
 mongodb-driver-kotlin-coroutine = "4.10.1"
 navigation-compose = "2.7.0-alpha03"
 io-realm-kotlin = "1.16.0"
+kotlinx-datetime = "0.6.0"
 
 [libraries]
 kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }
@@ -50,6 +51,7 @@ ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx
 ktor-client-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktor_client" }
 realm-library-base = { module = "io.realm.kotlin:library-base", version.ref = "io-realm-kotlin" }
 realm-library-sync = { module = "io.realm.kotlin:library-sync", version.ref = "io-realm-kotlin" }
+kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinx-datetime" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

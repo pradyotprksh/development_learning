@@ -21,7 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import app.composables.AppIcon
 import app.pages.splash.viewModel.SplashViewModel
-import core.utils.Localization
+import utils.Localization
 
 @Composable
 fun SplashScreen(

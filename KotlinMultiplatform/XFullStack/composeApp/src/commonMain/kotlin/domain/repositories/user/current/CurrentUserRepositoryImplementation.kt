@@ -1,9 +1,9 @@
 package domain.repositories.user.current
 
 import core.models.response.ClientResponse
-import core.utils.Constants.ErrorCode.DEFAULT_ERROR_CODE
-import core.utils.Localization.DEFAULT_ERROR_MESSAGE
-import core.utils.ResponseStatus
+import utils.Constants.ErrorCode.DEFAULT_ERROR_CODE
+import utils.Localization.DEFAULT_ERROR_MESSAGE
+import utils.ResponseStatus
 import data.response.DefaultResponse
 import data.response.XFullStackResponse
 import domain.services.user.current.CurrentUserDBService

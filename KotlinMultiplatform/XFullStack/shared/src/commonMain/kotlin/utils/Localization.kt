@@ -1,9 +1,9 @@
-package core.utils
+package utils
 
-import core.utils.Constants.ConstValues.NAME_MAX_LENGTH
-import core.utils.Constants.ConstValues.NAME_MIN_LENGTH
-import core.utils.Constants.ConstValues.PASSWORD_LENGTH
-import core.utils.Constants.ConstValues.USERNAME_LENGTH
+import utils.Constants.ConstValues.NAME_MAX_LENGTH
+import utils.Constants.ConstValues.NAME_MIN_LENGTH
+import utils.Constants.ConstValues.PASSWORD_LENGTH
+import utils.Constants.ConstValues.USERNAME_LENGTH
 
 object Localization {
     const val APP_NAME = "X"

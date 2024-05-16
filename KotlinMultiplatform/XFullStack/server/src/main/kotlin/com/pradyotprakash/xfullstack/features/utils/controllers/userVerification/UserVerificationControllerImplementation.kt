@@ -2,12 +2,12 @@ package com.pradyotprakash.xfullstack.features.utils.controllers.userVerificatio
 
 import com.pradyotprakash.xfullstack.data.request.OtpVerificationRequest
 import com.pradyotprakash.xfullstack.features.utils.resource.UtilsResource
-import core.utils.Constants.ConstValues.OTP_LENGTH
-import core.utils.Constants.ErrorCode.OTP_GENERATION_ERROR_CODE
-import core.utils.Constants.ErrorCode.OTP_VALIDATION_ERROR_CODE
-import core.utils.Localization
-import core.utils.ResponseStatus
-import core.utils.UtilsMethod
+import utils.Constants.ConstValues.OTP_LENGTH
+import utils.Constants.ErrorCode.OTP_GENERATION_ERROR_CODE
+import utils.Constants.ErrorCode.OTP_VALIDATION_ERROR_CODE
+import utils.Localization
+import utils.ResponseStatus
+import utils.UtilsMethod
 import data.response.DefaultResponse
 import data.response.OTPResponse
 import data.response.XFullStackResponse

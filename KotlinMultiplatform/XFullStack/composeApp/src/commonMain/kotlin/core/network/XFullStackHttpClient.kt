@@ -1,11 +1,11 @@
 package core.network
 
-import core.utils.Constants.ConstValues.APPLICATION_JSON
-import core.utils.Constants.ConstValues.BASE_URL
-import core.utils.Constants.ConstValues.BEARER
-import core.utils.Constants.Keys.AUTHORIZATION
-import core.utils.Constants.Keys.CONTENT_TYPE
-import core.utils.Constants.Keys.REQUEST_IDENTIFIER
+import utils.Constants.ConstValues.APPLICATION_JSON
+import utils.Constants.ConstValues.BASE_URL
+import utils.Constants.ConstValues.BEARER
+import utils.Constants.Keys.AUTHORIZATION
+import utils.Constants.Keys.CONTENT_TYPE
+import utils.Constants.Keys.REQUEST_IDENTIFIER
 import di.ModulesDi
 import domain.repositories.user.current.CurrentUserRepository
 import io.ktor.client.HttpClient

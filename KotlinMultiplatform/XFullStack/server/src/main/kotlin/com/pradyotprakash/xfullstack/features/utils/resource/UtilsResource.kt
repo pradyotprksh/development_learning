@@ -1,9 +1,9 @@
 package com.pradyotprakash.xfullstack.features.utils.resource
 
-import core.utils.Constants.Paths.Utils.GENERATE_OTP
-import core.utils.Constants.Paths.Utils.USERNAME_VALID
-import core.utils.Constants.Paths.Utils.UTILS
-import core.utils.Constants.Paths.Utils.VALIDATE_OTP
+import utils.Constants.Paths.Utils.GENERATE_OTP
+import utils.Constants.Paths.Utils.USERNAME_VALID
+import utils.Constants.Paths.Utils.UTILS
+import utils.Constants.Paths.Utils.VALIDATE_OTP
 import io.ktor.resources.Resource
 
 @Resource(UTILS)

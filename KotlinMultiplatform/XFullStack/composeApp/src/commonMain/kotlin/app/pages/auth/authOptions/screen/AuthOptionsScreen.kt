@@ -21,7 +21,7 @@ import app.composables.TextBetweenDivider
 import app.composables.XAppBar
 import app.pages.auth.authOptions.composables.LoginComposable
 import app.pages.auth.authOptions.composables.SignupLegalDetails
-import core.utils.Localization
+import utils.Localization
 
 @Composable
 fun AuthOptionsScreen(

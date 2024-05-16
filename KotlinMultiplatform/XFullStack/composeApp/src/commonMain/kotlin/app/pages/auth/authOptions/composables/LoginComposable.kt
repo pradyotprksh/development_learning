@@ -7,7 +7,7 @@ import androidx.compose.ui.text.SpanStyle
 import app.composables.richText.RichTextComposable
 import app.composables.richText.RichTextDetails
 import app.composables.richText.TextDetails
-import core.utils.Localization
+import utils.Localization
 import utils.Tags
 
 @Composable

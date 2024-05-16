@@ -22,9 +22,9 @@ import com.pradyotprakash.xfullstack.features.utils.controllers.userVerification
 import com.pradyotprakash.xfullstack.features.utils.controllers.userVerification.UserVerificationControllerImplementation
 import com.pradyotprakash.xfullstack.features.utils.controllers.usernameValid.UsernameValidController
 import com.pradyotprakash.xfullstack.features.utils.controllers.usernameValid.UsernameValidControllerImplementation
-import core.utils.Constants
-import core.utils.Constants.ConstValues.TOKEN_EXPIRES_IN
-import core.utils.Constants.Keys.JWT_SECRET
+import utils.Constants
+import utils.Constants.ConstValues.TOKEN_EXPIRES_IN
+import utils.Constants.Keys.JWT_SECRET
 import org.kodein.di.DI
 import org.kodein.di.bindProvider
 import org.kodein.di.bindSingleton

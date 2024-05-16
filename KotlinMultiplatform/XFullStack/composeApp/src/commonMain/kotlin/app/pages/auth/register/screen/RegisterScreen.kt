@@ -16,6 +16,8 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Button
+import androidx.compose.material3.DatePicker
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -24,6 +26,7 @@ import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -39,16 +42,21 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import app.composables.XAppBar
 import app.pages.auth.register.viewModel.RegisterViewModel
-import core.utils.Constants.ConstValues.NAME_MAX_LENGTH
-import core.utils.Localization
+import utils.Constants.ConstValues.NAME_MAX_LENGTH
+import utils.Localization
 import utils.TextFieldType
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RegisterScreen(
     registerViewModel: RegisterViewModel = viewModel(),
     navigateBack: () -> Unit,
 ) {
     val registerScreenState by registerViewModel.registerScreenState.collectAsState()
+    val dateState = rememberDatePickerState()
+    if (registerScreenState.datePickerVisible) {
+        dateState.selectedDateMillis?.let { registerViewModel.updateSelectedDate(it) }
+    }
 
     Scaffold(topBar = {
         XAppBar(navigationIcon = {
@@ -150,7 +158,10 @@ fun RegisterScreen(
                         Localization.DATE_OF_BIRTH
                     )
                 },
-                modifier = startEndPaddingModifier.fillMaxWidth(), readOnly = true, maxLines = 1,
+                modifier = startEndPaddingModifier.fillMaxWidth().onFocusChanged {
+                    registerViewModel.focusedChangeForDob()
+                },
+                readOnly = true, maxLines = 1,
             )
             Spacer(modifier = Modifier.weight(1f))
             HorizontalDivider()
@@ -178,6 +189,16 @@ fun RegisterScreen(
                         Localization.NEXT
                     )
                 }
+            }
+            AnimatedVisibility(
+                visible = registerScreenState.datePickerVisible,
+            ) {
+                DatePicker(
+                    state = dateState,
+                    title = null,
+                    headline = null,
+                    showModeToggle = false,
+                )
             }
         }
     }

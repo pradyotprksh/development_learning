@@ -30,7 +30,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import app.composables.XAppBar
 import app.pages.auth.login.viewModel.LoginViewModel
-import core.utils.Localization
+import utils.Localization
 
 @Composable
 fun LoginScreen(

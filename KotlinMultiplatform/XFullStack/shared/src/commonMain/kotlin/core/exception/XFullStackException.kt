@@ -1,10 +1,10 @@
 package core.exception
 
-import core.utils.Constants.ErrorCode.DB_WRITE_ERROR_CODE
-import core.utils.Constants.ErrorCode.UNAUTHORIZED_ERROR_CODE
-import core.utils.Constants.ErrorCode.USER_AUTH_DETAILS_ERROR_CODE
-import core.utils.Constants.ErrorCode.USER_DETAILS_NOT_FOUND_CODE
-import core.utils.Localization
+import utils.Constants.ErrorCode.DB_WRITE_ERROR_CODE
+import utils.Constants.ErrorCode.UNAUTHORIZED_ERROR_CODE
+import utils.Constants.ErrorCode.USER_AUTH_DETAILS_ERROR_CODE
+import utils.Constants.ErrorCode.USER_DETAILS_NOT_FOUND_CODE
+import utils.Localization
 
 sealed class XFullStackException(
     message: String

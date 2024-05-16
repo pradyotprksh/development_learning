@@ -1,6 +1,6 @@
 package data.response
 
-import core.utils.ResponseStatus
+import utils.ResponseStatus
 import kotlinx.serialization.Serializable
 
 @Serializable

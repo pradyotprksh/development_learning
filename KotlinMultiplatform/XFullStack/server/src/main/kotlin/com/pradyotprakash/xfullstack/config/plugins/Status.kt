@@ -6,9 +6,9 @@ import core.exception.UnauthorizedAccess
 import core.exception.UserAuthDetailsError
 import core.exception.UserDetailsNotFound
 import core.exception.XFullStackException
-import core.utils.Constants.ErrorCode.UNAUTHORIZED_ERROR_CODE
-import core.utils.Localization
-import core.utils.ResponseStatus
+import utils.Constants.ErrorCode.UNAUTHORIZED_ERROR_CODE
+import utils.Localization
+import utils.ResponseStatus
 import data.response.DefaultResponse
 import data.response.XFullStackResponse
 import io.ktor.http.HttpStatusCode
