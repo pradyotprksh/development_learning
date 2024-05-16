@@ -1,7 +1,8 @@
 package core.utils
 
 import core.exception.InvalidParameter
-import core.utils.Constants.ConstValues.NAME_LENGTH
+import core.utils.Constants.ConstValues.NAME_MAX_LENGTH
+import core.utils.Constants.ConstValues.NAME_MIN_LENGTH
 import core.utils.Constants.ConstValues.PASSWORD_LENGTH
 import core.utils.Constants.ConstValues.USERNAME_LENGTH
 import core.utils.Constants.ErrorCode.EMAIL_VALIDITY_ERROR_CODE
@@ -12,7 +13,8 @@ import core.utils.Constants.ErrorCode.USERNAME_VALIDITY_ERROR_CODE
 import kotlin.math.absoluteValue
 
 object UtilsMethod {
-    private fun maxNameLengthValid(username: String) = username.length >= NAME_LENGTH
+    private fun maxNameLengthValid(username: String) =
+        username.length in NAME_MIN_LENGTH..NAME_MAX_LENGTH
 
     fun isValidName(name: String) {
         if (!maxNameLengthValid(name)) {

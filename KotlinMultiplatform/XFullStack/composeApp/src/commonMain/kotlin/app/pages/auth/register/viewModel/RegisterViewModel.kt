@@ -2,6 +2,7 @@ package app.pages.auth.register.viewModel
 
 import androidx.lifecycle.ViewModel
 import app.pages.auth.register.state.RegisterState
+import core.utils.Constants.ConstValues.NAME_MAX_LENGTH
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import utils.TextFieldType
@@ -25,9 +26,15 @@ class RegisterViewModel : ViewModel() {
 
     fun updateTextField(textFieldType: TextFieldType, value: String) {
         _registerScreenState.value = when (textFieldType) {
-            TextFieldType.Name -> registerScreenState.value.copy(
-                nameValue = value,
-            )
+            TextFieldType.Name -> {
+                if (value.length <= NAME_MAX_LENGTH) {
+                    registerScreenState.value.copy(
+                        nameValue = value,
+                    )
+                } else {
+                    registerScreenState.value
+                }
+            }
 
             TextFieldType.PhoneEmail -> registerScreenState.value.copy(
                 phoneEmailValue = value,

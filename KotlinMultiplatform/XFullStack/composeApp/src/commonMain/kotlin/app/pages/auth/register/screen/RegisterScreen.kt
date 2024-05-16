@@ -34,10 +34,12 @@ import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import app.composables.XAppBar
 import app.pages.auth.register.viewModel.RegisterViewModel
+import core.utils.Constants.ConstValues.NAME_MAX_LENGTH
 import core.utils.Localization
 import utils.TextFieldType
 
@@ -92,8 +94,14 @@ fun RegisterScreen(
                     imeAction = ImeAction.Next,
                     capitalization = KeyboardCapitalization.Words,
                 ),
+                supportingText = {
+                    Text(
+                        text = "${registerScreenState.nameValue.length} / $NAME_MAX_LENGTH",
+                        modifier = Modifier.fillMaxWidth(),
+                        textAlign = TextAlign.End,
+                    )
+                },
             )
-            Spacer(modifier = Modifier.height(15.dp))
             OutlinedTextField(
                 value = registerScreenState.phoneEmailValue,
                 onValueChange = { value ->
