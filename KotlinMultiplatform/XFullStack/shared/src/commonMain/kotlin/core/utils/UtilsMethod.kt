@@ -1,14 +1,27 @@
 package core.utils
 
 import core.exception.InvalidParameter
+import core.utils.Constants.ConstValues.NAME_LENGTH
 import core.utils.Constants.ConstValues.PASSWORD_LENGTH
 import core.utils.Constants.ConstValues.USERNAME_LENGTH
 import core.utils.Constants.ErrorCode.EMAIL_VALIDITY_ERROR_CODE
+import core.utils.Constants.ErrorCode.NAME_VALIDITY_ERROR_CODE
 import core.utils.Constants.ErrorCode.PASSWORD_VALIDITY_ERROR_CODE
 import core.utils.Constants.ErrorCode.PHONE_NUMBER_VALIDITY_ERROR_CODE
 import core.utils.Constants.ErrorCode.USERNAME_VALIDITY_ERROR_CODE
 
 object UtilsMethod {
+    private fun maxNameLengthValid(username: String) = username.length >= NAME_LENGTH
+
+    fun isValidName(name: String) {
+        if (!maxNameLengthValid(name)) {
+            throw InvalidParameter(
+                message = Localization.NAME_LENGTH_ERROR,
+                errorCode = NAME_VALIDITY_ERROR_CODE
+            )
+        }
+    }
+
     private fun maxUsernameLengthValid(username: String) = username.length >= USERNAME_LENGTH
 
     private fun validUsername(username: String) = username.matches(Regex("[^\\n]{5,}"))

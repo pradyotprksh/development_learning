@@ -49,6 +49,7 @@ object Constants {
 
     object ConstValues {
         const val USERNAME_LENGTH = 5
+        const val NAME_LENGTH = 1
         const val PASSWORD_LENGTH = 8
         const val TOKEN_EXPIRES_IN = 365L * 1000L * 60L * 60L * 24L
         const val APPLICATION_JSON = "application/json"
@@ -72,5 +73,6 @@ object Constants {
         const val PHONE_NUMBER_VALIDITY_ERROR_CODE = "XFS012"
         const val PROFILE_PICTURE_VALIDITY_ERROR_CODE = "XFS013"
         const val USERNAME_OR_EMAIL_OR_PHONE_NUMBER_REQUIRED_ERROR_CODE = "XFS014"
+        const val NAME_VALIDITY_ERROR_CODE = "XFS015"
     }
 }

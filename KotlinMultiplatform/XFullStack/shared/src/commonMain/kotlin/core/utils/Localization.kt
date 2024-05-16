@@ -1,5 +1,6 @@
 package core.utils
 
+import core.utils.Constants.ConstValues.NAME_LENGTH
 import core.utils.Constants.ConstValues.PASSWORD_LENGTH
 import core.utils.Constants.ConstValues.USERNAME_LENGTH
 
@@ -24,6 +25,7 @@ object Localization {
     const val NEXT = "Next"
     const val PHONE_EMAIL_USERNAME = "Phone, email, or username"
     const val USERNAME_LENGTH_ERROR = "Username should be greater than $USERNAME_LENGTH characters"
+    const val NAME_LENGTH_ERROR = "Username should be greater than $NAME_LENGTH characters"
     const val INVALID_USERNAME = "Invalid username"
     const val USERNAME_ALREADY_EXISTS = "Username already exists"
     const val EMAIL_ALREADY_EXISTS = "Email already exists"

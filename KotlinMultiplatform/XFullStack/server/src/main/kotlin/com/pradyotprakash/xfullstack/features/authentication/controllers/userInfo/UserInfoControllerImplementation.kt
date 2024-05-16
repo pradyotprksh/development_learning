@@ -27,6 +27,7 @@ class UserInfoControllerImplementation : UserInfoController {
 
         val response = UserInfoResponse(
             id = user.id.toHexString(),
+            name = user.name,
             username = user.username,
             bio = user.bio,
             emailAddress = user.emailAddress,

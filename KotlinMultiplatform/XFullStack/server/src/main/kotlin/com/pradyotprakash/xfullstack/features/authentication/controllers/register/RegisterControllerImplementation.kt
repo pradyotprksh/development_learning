@@ -30,6 +30,8 @@ class RegisterControllerImplementation : RegisterController {
     ) {
         val registerRequest = call.receive<RegisterRequest>()
 
+        UtilsMethod.isValidName(registerRequest.name)
+
         if (UtilsMethod.isValidUserName(registerRequest.username)) {
             if (userDataSource.isUsernamePresent(registerRequest.username)) {
                 throw InvalidParameter(
@@ -81,6 +83,7 @@ class RegisterControllerImplementation : RegisterController {
         val saltedHash = hashingService.generateSaltedHash(value = registerRequest.password)
 
         val user = User(
+            name = registerRequest.name,
             username = registerRequest.username,
             password = saltedHash.hash,
             salt = saltedHash.salt,
