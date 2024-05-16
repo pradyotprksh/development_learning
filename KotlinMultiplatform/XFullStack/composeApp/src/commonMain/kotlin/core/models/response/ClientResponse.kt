@@ -1,4 +1,4 @@
-package data.models.response
+package core.models.response
 
 sealed class ClientResponse<R> {
     data class Success<T>(val data: T) : ClientResponse<T>()

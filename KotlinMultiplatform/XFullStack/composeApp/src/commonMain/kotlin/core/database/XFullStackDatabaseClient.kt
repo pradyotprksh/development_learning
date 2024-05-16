@@ -1,7 +1,7 @@
 package core.database
 
-import data.models.realm.CurrentUserId
-import data.models.realm.Token
+import core.models.realm.CurrentUserId
+import core.models.realm.Token
 import io.realm.kotlin.Realm
 import io.realm.kotlin.RealmConfiguration
 import io.realm.kotlin.log.LogLevel
