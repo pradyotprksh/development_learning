@@ -31,12 +31,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import app.composables.XAppBar
 import app.pages.auth.register.viewModel.RegisterViewModel
 import core.utils.Localization
+import utils.TextFieldType
 
 @Composable
 fun RegisterScreen(
@@ -74,48 +77,72 @@ fun RegisterScreen(
                 modifier = startEndPaddingModifier
             )
             Spacer(modifier = Modifier.weight(1f))
-            OutlinedTextField(value = "", onValueChange = { }, label = {
-                Text(
-                    Localization.NAME
-                )
-            }, modifier = startEndPaddingModifier.fillMaxWidth()
-            )
-            Spacer(modifier = Modifier.height(15.dp))
-            OutlinedTextField(value = "", onValueChange = { }, label = {
-                if (registerScreenState.useEmailOrPhoneState) {
-                    if (registerScreenState.isUsingPhoneNumber) {
-                        Text(
-                            Localization.PHONE
-                        )
-                    } else {
-                        Text(
-                            Localization.EMAIL
-                        )
-                    }
-                } else {
+            OutlinedTextField(
+                value = registerScreenState.nameValue,
+                onValueChange = { value ->
+                    registerViewModel.updateTextField(textFieldType = TextFieldType.Name, value)
+                },
+                label = {
                     Text(
-                        Localization.PHONE_NUMBER_OR_EMAIL
+                        Localization.NAME
                     )
-                }
-            }, modifier = startEndPaddingModifier.fillMaxWidth().onFocusChanged {
-                registerViewModel.focusedChangeForPhoneEmail()
-            }, keyboardOptions = KeyboardOptions(
-                keyboardType = if (registerScreenState.isUsingPhoneNumber) {
-                    KeyboardType.Number
-                } else {
-                    KeyboardType.Email
-                }
-            )
+                },
+                modifier = startEndPaddingModifier.fillMaxWidth(), maxLines = 1,
+                keyboardOptions = KeyboardOptions(
+                    imeAction = ImeAction.Next,
+                    capitalization = KeyboardCapitalization.Words,
+                ),
             )
             Spacer(modifier = Modifier.height(15.dp))
             OutlinedTextField(
-                value = "", onValueChange = { },
+                value = registerScreenState.phoneEmailValue,
+                onValueChange = { value ->
+                    registerViewModel.updateTextField(
+                        textFieldType = TextFieldType.PhoneEmail, value
+                    )
+                },
+                label = {
+                    if (registerScreenState.useEmailOrPhoneState) {
+                        if (registerScreenState.isUsingPhoneNumber) {
+                            Text(
+                                Localization.PHONE
+                            )
+                        } else {
+                            Text(
+                                Localization.EMAIL
+                            )
+                        }
+                    } else {
+                        Text(
+                            Localization.PHONE_NUMBER_OR_EMAIL
+                        )
+                    }
+                },
+                modifier = startEndPaddingModifier.fillMaxWidth().onFocusChanged {
+                    registerViewModel.focusedChangeForPhoneEmail()
+                },
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = if (registerScreenState.isUsingPhoneNumber) {
+                        KeyboardType.Number
+                    } else {
+                        KeyboardType.Email
+                    },
+                    imeAction = ImeAction.Next
+                ),
+                maxLines = 1,
+            )
+            Spacer(modifier = Modifier.height(15.dp))
+            OutlinedTextField(
+                value = registerScreenState.dobValue,
+                onValueChange = { value ->
+                    registerViewModel.updateTextField(textFieldType = TextFieldType.Dob, value)
+                },
                 label = {
                     Text(
                         Localization.DATE_OF_BIRTH
                     )
                 },
-                modifier = startEndPaddingModifier.fillMaxWidth(), readOnly = true,
+                modifier = startEndPaddingModifier.fillMaxWidth(), readOnly = true, maxLines = 1,
             )
             Spacer(modifier = Modifier.weight(1f))
             HorizontalDivider()
@@ -138,7 +165,7 @@ fun RegisterScreen(
                     }
                 }
                 Spacer(modifier = Modifier.weight(1f))
-                Button(onClick = {}) {
+                Button(onClick = {}, enabled = registerScreenState.enableNextButton) {
                     Text(
                         Localization.NEXT
                     )
