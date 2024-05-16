@@ -26,6 +26,7 @@ import ui.pages.auth.authOptions.composables.SignupLegalDetails
 @Composable
 fun AuthOptionsScreen(
     navigateToLogin: () -> Unit,
+    navigateToRegister: () -> Unit,
 ) {
     Scaffold(
         topBar = {
@@ -63,7 +64,7 @@ fun AuthOptionsScreen(
             }
             TextBetweenDivider()
             Button(
-                onClick = {},
+                onClick = navigateToRegister,
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text(

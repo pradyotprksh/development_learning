@@ -52,7 +52,7 @@ fun SplashScreen(
                 imageModifier = Modifier.size(100.dp),
                 showCircularProgressIndicator = true,
             )
-            Spacer(modifier = Modifier.height(12.dp))
+            Spacer(modifier = Modifier.height(15.dp))
             Text(
                 Localization.LOADING, style = MaterialTheme.typography.titleMedium
             )

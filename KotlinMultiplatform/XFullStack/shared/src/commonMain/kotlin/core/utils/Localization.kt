@@ -45,4 +45,9 @@ object Localization {
     const val USERNAME_OR_EMAIL_OR_PHONE_NUMBER_REQUIRED =
         "Phone, email, or username is required"
     const val LOADING = "Loading..."
+    const val CREATE_YOUR_ACCOUNT = "Create your account"
+    const val NAME = "Name"
+    const val PHONE_NUMBER_OR_EMAIL = "Phone number or email address"
+    const val DATE_OF_BIRTH = "Date of birth"
+    const val USE_EMAIL_INSTEAD = "Use email instead"
 }

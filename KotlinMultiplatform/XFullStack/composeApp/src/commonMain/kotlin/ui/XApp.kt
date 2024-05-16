@@ -12,6 +12,7 @@ import androidx.navigation.compose.rememberNavController
 import ui.navigation.Routes
 import ui.pages.auth.authOptions.screen.AuthOptionsScreen
 import ui.pages.auth.login.screen.LoginScreen
+import ui.pages.auth.register.screen.RegisterScreen
 import ui.pages.splash.screen.SplashScreen
 
 /**
@@ -42,12 +43,22 @@ fun XApp(
                 )
             }
             composable(Routes.AuthenticationOption.route) {
-                AuthOptionsScreen {
-                    navController.navigate(Routes.Login.route)
-                }
+                AuthOptionsScreen(
+                    navigateToLogin = {
+                        navController.navigate(Routes.Login.route)
+                    },
+                    navigateToRegister = {
+                        navController.navigate(Routes.Register.route)
+                    },
+                )
             }
             composable(Routes.Login.route) {
                 LoginScreen {
+                    navController.popBackStack()
+                }
+            }
+            composable(Routes.Register.route) {
+                RegisterScreen {
                     navController.popBackStack()
                 }
             }
