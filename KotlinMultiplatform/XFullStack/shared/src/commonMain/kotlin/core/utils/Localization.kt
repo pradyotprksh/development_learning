@@ -52,8 +52,11 @@ object Localization {
     const val PHONE_NUMBER_OR_EMAIL = "Phone number or email address"
     const val DATE_OF_BIRTH = "Date of birth"
     const val USE_EMAIL_INSTEAD = "Use email instead"
+    const val USE_PHONE_INSTEAD = "Use phone instead"
     const val OTP_GENERATION_ERROR = "Not able to generate OTP at the moment. Please try again."
     const val OTP_VERIFICATION_SUCCESS = "OTP verified successfully"
     const val OTP_VERIFICATION_INVALID = "Invalid OTP"
     const val OTP_VERIFICATION_ERROR = "Not able to verify OTP at the moment. Please try again."
+    const val EMAIL = "Email"
+    const val PHONE = "Phone"
 }

@@ -1,5 +1,6 @@
 package app.pages.auth.register.screen
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -11,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Button
@@ -23,9 +25,13 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import app.composables.XAppBar
@@ -37,6 +43,8 @@ fun RegisterScreen(
     registerViewModel: RegisterViewModel = viewModel(),
     navigateBack: () -> Unit,
 ) {
+    val registerScreenState by registerViewModel.registerScreenState.collectAsState()
+
     Scaffold(topBar = {
         XAppBar(navigationIcon = {
             IconButton(
@@ -74,17 +82,40 @@ fun RegisterScreen(
             )
             Spacer(modifier = Modifier.height(15.dp))
             OutlinedTextField(value = "", onValueChange = { }, label = {
-                Text(
-                    Localization.PHONE_NUMBER_OR_EMAIL
-                )
-            }, modifier = startEndPaddingModifier.fillMaxWidth()
+                if (registerScreenState.useEmailOrPhoneState) {
+                    if (registerScreenState.isUsingPhoneNumber) {
+                        Text(
+                            Localization.PHONE
+                        )
+                    } else {
+                        Text(
+                            Localization.EMAIL
+                        )
+                    }
+                } else {
+                    Text(
+                        Localization.PHONE_NUMBER_OR_EMAIL
+                    )
+                }
+            }, modifier = startEndPaddingModifier.fillMaxWidth().onFocusChanged {
+                registerViewModel.focusedChangeForPhoneEmail()
+            }, keyboardOptions = KeyboardOptions(
+                keyboardType = if (registerScreenState.isUsingPhoneNumber) {
+                    KeyboardType.Number
+                } else {
+                    KeyboardType.Email
+                }
+            )
             )
             Spacer(modifier = Modifier.height(15.dp))
-            OutlinedTextField(value = "", onValueChange = { }, label = {
-                Text(
-                    Localization.DATE_OF_BIRTH
-                )
-            }, modifier = startEndPaddingModifier.fillMaxWidth()
+            OutlinedTextField(
+                value = "", onValueChange = { },
+                label = {
+                    Text(
+                        Localization.DATE_OF_BIRTH
+                    )
+                },
+                modifier = startEndPaddingModifier.fillMaxWidth(), readOnly = true,
             )
             Spacer(modifier = Modifier.weight(1f))
             HorizontalDivider()
@@ -94,11 +125,19 @@ fun RegisterScreen(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 modifier = startEndPaddingModifier.fillMaxWidth()
             ) {
-                OutlinedButton(onClick = {}) {
-                    Text(
-                        Localization.USE_EMAIL_INSTEAD
-                    )
+                AnimatedVisibility(
+                    visible = registerScreenState.useEmailOrPhoneState,
+                ) {
+                    OutlinedButton(onClick = {
+                        registerViewModel.updateUseEmailOrPhone()
+                    }) {
+                        Text(
+                            if (registerScreenState.isUsingPhoneNumber) Localization.USE_EMAIL_INSTEAD
+                            else Localization.USE_PHONE_INSTEAD
+                        )
+                    }
                 }
+                Spacer(modifier = Modifier.weight(1f))
                 Button(onClick = {}) {
                     Text(
                         Localization.NEXT
