@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material3.Button
 import androidx.compose.material3.DatePicker
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -33,6 +34,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
@@ -109,6 +111,15 @@ fun RegisterScreen(
                         textAlign = TextAlign.End,
                     )
                 },
+                trailingIcon = {
+                    if (registerScreenState.isNameValid) {
+                        Icon(
+                            imageVector = Icons.Default.CheckCircle,
+                            contentDescription = Icons.Default.CheckCircle.name,
+                            tint = Color.Green
+                        )
+                    }
+                }
             )
             OutlinedTextField(
                 value = registerScreenState.phoneEmailValue,
@@ -139,15 +150,40 @@ fun RegisterScreen(
                 },
                 keyboardOptions = KeyboardOptions(
                     keyboardType = if (registerScreenState.isUsingPhoneNumber) {
-                        KeyboardType.Number
+                        KeyboardType.Phone
                     } else {
                         KeyboardType.Email
                     },
                     imeAction = ImeAction.Next
                 ),
                 maxLines = 1,
+                trailingIcon = {
+                    if (registerScreenState.isPhoneEmailValid) {
+                        Icon(
+                            imageVector = Icons.Default.CheckCircle,
+                            contentDescription = Icons.Default.CheckCircle.name,
+                            tint = Color.Green
+                        )
+                    }
+                },
+                isError = registerScreenState.showPhoneNumberError,
+                supportingText = {
+                    if (registerScreenState.showPhoneNumberError) {
+                        Text(
+                            if (registerScreenState.isUsingPhoneNumber)
+                                Localization.EMAIL_PHONE_ERROR_MESSAGE.replace(
+                                    "%s",
+                                    Localization.PHONE_NUMBER.lowercase()
+                                )
+                            else
+                                Localization.EMAIL_PHONE_ERROR_MESSAGE.replace(
+                                    "%s",
+                                    Localization.EMAIL.lowercase()
+                                )
+                        )
+                    }
+                }
             )
-            Spacer(modifier = Modifier.height(15.dp))
             OutlinedTextField(
                 value = registerScreenState.dobValue,
                 onValueChange = { value ->

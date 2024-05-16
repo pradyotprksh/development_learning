@@ -61,4 +61,6 @@ object Localization {
     const val OTP_VERIFICATION_ERROR = "Not able to verify OTP at the moment. Please try again."
     const val EMAIL = "Email"
     const val PHONE = "Phone"
+    const val EMAIL_PHONE_ERROR_MESSAGE = "Please enter a valid %s."
+    const val PHONE_NUMBER = "Phone number"
 }

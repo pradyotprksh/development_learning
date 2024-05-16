@@ -19,12 +19,14 @@ object UtilsMethod {
     private fun maxNameLengthValid(username: String) =
         username.length in NAME_MIN_LENGTH..NAME_MAX_LENGTH
 
-    fun isValidName(name: String) {
+    fun isValidName(name: String): Boolean {
         if (!maxNameLengthValid(name)) {
             throw InvalidParameter(
                 message = Localization.NAME_LENGTH_ERROR, errorCode = NAME_VALIDITY_ERROR_CODE
             )
         }
+
+        return true
     }
 
     private fun maxUsernameLengthValid(username: String) = username.length >= USERNAME_LENGTH
@@ -109,7 +111,7 @@ object UtilsMethod {
     }
 
     fun isValidPhoneNumber(phoneNumber: String): Boolean {
-        if (phoneNumber.matches(Regex("^(\\+\\d{1,3}[- ]?)?\\d{10}$"))) {
+        if (!phoneNumber.matches(Regex("^(\\+\\d{1,3}[- ]?)?\\d{10}$"))) {
             throw InvalidParameter(
                 message = Localization.INVALID_PHONE_NUMBER,
                 errorCode = PHONE_NUMBER_VALIDITY_ERROR_CODE
@@ -120,7 +122,7 @@ object UtilsMethod {
     }
 
     fun isValidLink(link: String, errorCode: String): Boolean {
-        if (link.matches(Regex("^(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?$"))) {
+        if (!link.matches(Regex("^(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?$"))) {
             throw InvalidParameter(message = Localization.INVALID_LINK, errorCode = errorCode)
         }
 
