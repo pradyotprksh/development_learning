@@ -1,6 +1,6 @@
 import androidx.compose.runtime.Composable
-import ui.XApp
-import ui.theme.XFullStackTheme
+import app.XApp
+import app.theme.XFullStackTheme
 
 @Composable
 fun App() {
