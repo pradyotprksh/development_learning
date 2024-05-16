@@ -18,6 +18,8 @@ import com.pradyotprakash.xfullstack.features.authentication.controllers.registe
 import com.pradyotprakash.xfullstack.features.authentication.controllers.userInfo.UserInfoController
 import com.pradyotprakash.xfullstack.features.authentication.controllers.userInfo.UserInfoControllerImplementation
 import com.pradyotprakash.xfullstack.features.utils.controllers.UtilsController
+import com.pradyotprakash.xfullstack.features.utils.controllers.userVerification.UserVerificationController
+import com.pradyotprakash.xfullstack.features.utils.controllers.userVerification.UserVerificationControllerImplementation
 import com.pradyotprakash.xfullstack.features.utils.controllers.usernameValid.UsernameValidController
 import com.pradyotprakash.xfullstack.features.utils.controllers.usernameValid.UsernameValidControllerImplementation
 import core.utils.Constants
@@ -54,12 +56,13 @@ object ModulesConfig {
         bindProvider<UserInfoController> { UserInfoControllerImplementation() }
 
         bindProvider<UsernameValidController> { UsernameValidControllerImplementation() }
+        bindProvider<UserVerificationController> { UserVerificationControllerImplementation() }
     }
 
     private val featuresModule = DI.Module("FEATURES") {
         bindProvider { AuthenticationController(instance(), instance(), instance(), instance()) }
 
-        bindProvider { UtilsController(instance()) }
+        bindProvider { UtilsController(instance(), instance()) }
     }
 
     val di = DI {

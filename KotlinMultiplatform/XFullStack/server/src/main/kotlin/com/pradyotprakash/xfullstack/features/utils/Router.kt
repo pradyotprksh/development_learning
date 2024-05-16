@@ -4,6 +4,7 @@ import com.pradyotprakash.xfullstack.data.user.UserDataSource
 import com.pradyotprakash.xfullstack.features.utils.controllers.UtilsController
 import com.pradyotprakash.xfullstack.features.utils.resource.UtilsResource
 import io.ktor.server.resources.get
+import io.ktor.server.resources.post
 import io.ktor.server.routing.Routing
 
 fun Routing.utils(
@@ -15,6 +16,20 @@ fun Routing.utils(
             call = this.context,
             resource = it,
             userDataSource = userDataSource,
+        )
+    }
+
+    get<UtilsResource.GenerateOtp> {
+        utilsController.generateOtp(
+            call = this.context,
+            resource = it,
+        )
+    }
+
+    post<UtilsResource.ValidateOtp> {
+        utilsController.validateOtp(
+            call = this.context,
+            resource = it,
         )
     }
 }
