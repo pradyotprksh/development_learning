@@ -9,6 +9,7 @@ import core.utils.Constants.ErrorCode.NAME_VALIDITY_ERROR_CODE
 import core.utils.Constants.ErrorCode.PASSWORD_VALIDITY_ERROR_CODE
 import core.utils.Constants.ErrorCode.PHONE_NUMBER_VALIDITY_ERROR_CODE
 import core.utils.Constants.ErrorCode.USERNAME_VALIDITY_ERROR_CODE
+import kotlin.math.absoluteValue
 
 object UtilsMethod {
     private fun maxNameLengthValid(username: String) = username.length >= NAME_LENGTH
@@ -130,5 +131,17 @@ object UtilsMethod {
     fun isValidDate(date: String): Boolean {
         // TODO: Implement date validation
         return true
+    }
+
+    fun getIntegerValue(value: String, length: Int): String {
+        val absHashCode = value.hashCode().absoluteValue
+        val numberStr = absHashCode.toString()
+        val numDigits = numberStr.length
+        if (numDigits < length) {
+            val padding = "0".repeat(length - numDigits)
+            return padding + numberStr
+        } else {
+            return numberStr.substring(0, 6)
+        }
     }
 }

@@ -4,12 +4,12 @@ import com.pradyotprakash.xfullstack.features.utils.resource.UtilsResource
 import io.ktor.server.application.ApplicationCall
 
 interface UserVerificationController {
-    fun generateOtp(
+    suspend fun generateOtp(
         call: ApplicationCall,
         resource: UtilsResource.GenerateOtp,
     )
 
-    fun validateOtp(
+    suspend fun validateOtp(
         call: ApplicationCall,
         resource: UtilsResource.ValidateOtp,
     )

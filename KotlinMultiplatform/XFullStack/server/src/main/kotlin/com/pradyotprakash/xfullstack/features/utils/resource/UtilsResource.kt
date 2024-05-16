@@ -24,7 +24,5 @@ class UtilsResource {
     @Resource(VALIDATE_OTP)
     data class ValidateOtp(
         private val parent: UtilsResource = UtilsResource(),
-        val value: String,
-        val otp: String,
     )
 }

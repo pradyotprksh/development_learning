@@ -1,0 +1,18 @@
+meta {
+  name: OTPVerification
+  type: http
+  seq: 3
+}
+
+post {
+  url: http://192.168.1.37:8080/utils/validate-otp
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "value": "pradyotprksh4@gmail.com",
+    "otp": "199589"
+  }
+}

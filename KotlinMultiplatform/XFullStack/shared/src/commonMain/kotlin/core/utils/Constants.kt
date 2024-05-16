@@ -57,6 +57,7 @@ object Constants {
         const val APPLICATION_JSON = "application/json"
         const val BEARER = "Bearer"
         const val BASE_URL = "http://${Server.HOST}:${Server.PORT}"
+        const val OTP_LENGTH = 6
     }
 
     object ErrorCode {
@@ -76,5 +77,7 @@ object Constants {
         const val PROFILE_PICTURE_VALIDITY_ERROR_CODE = "XFS013"
         const val USERNAME_OR_EMAIL_OR_PHONE_NUMBER_REQUIRED_ERROR_CODE = "XFS014"
         const val NAME_VALIDITY_ERROR_CODE = "XFS015"
+        const val OTP_GENERATION_ERROR_CODE = "XFS016"
+        const val OTP_VALIDATION_ERROR_CODE = "XFS017"
     }
 }
