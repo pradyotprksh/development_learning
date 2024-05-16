@@ -10,8 +10,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import ui.navigation.Routes
-import ui.pages.authOptions.screen.AuthOptionsScreen
-import ui.pages.login.screen.LoginScreen
+import ui.pages.auth.authOptions.screen.AuthOptionsScreen
+import ui.pages.auth.login.screen.LoginScreen
 import ui.pages.splash.screen.SplashScreen
 
 /**

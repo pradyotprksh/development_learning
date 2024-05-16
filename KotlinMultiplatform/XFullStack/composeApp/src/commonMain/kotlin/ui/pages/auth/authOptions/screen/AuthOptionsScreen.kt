@@ -1,4 +1,4 @@
-package ui.pages.authOptions.screen
+package ui.pages.auth.authOptions.screen
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -20,8 +20,8 @@ import androidx.compose.ui.unit.dp
 import core.utils.Localization
 import ui.composables.TextBetweenDivider
 import ui.composables.XAppBar
-import ui.pages.authOptions.composables.LoginComposable
-import ui.pages.authOptions.composables.SignupLegalDetails
+import ui.pages.auth.authOptions.composables.LoginComposable
+import ui.pages.auth.authOptions.composables.SignupLegalDetails
 
 @Composable
 fun AuthOptionsScreen(

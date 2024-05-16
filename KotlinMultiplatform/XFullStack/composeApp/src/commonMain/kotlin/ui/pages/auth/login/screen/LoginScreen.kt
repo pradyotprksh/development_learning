@@ -1,4 +1,4 @@
-package ui.pages.login.screen
+package ui.pages.auth.login.screen
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -30,7 +30,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import core.utils.Localization
 import ui.composables.XAppBar
-import ui.pages.login.viewModel.LoginViewModel
+import ui.pages.auth.login.viewModel.LoginViewModel
 
 @Composable
 fun LoginScreen(
