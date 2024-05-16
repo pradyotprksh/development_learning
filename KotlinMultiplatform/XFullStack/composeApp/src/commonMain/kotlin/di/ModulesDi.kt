@@ -1,7 +1,6 @@
 package di
 
 import core.database.XFullStackDatabaseClient
-import core.network.NetworkClient
 import core.network.XFullStackHttpClient
 import data.device.UserDBServiceImplementation
 import domain.repositories.CurrentUserRepository
@@ -15,7 +14,6 @@ object ModulesDi {
     private val networkModule = DI.Module("NETWORK") {
         bindSingleton { XFullStackHttpClient(instance()) }
         bindSingleton { instance<XFullStackHttpClient>().createHttpClient() }
-        bindProvider { NetworkClient(instance()) }
     }
 
     private val databaseModule = DI.Module("DATABASE") {
@@ -32,8 +30,8 @@ object ModulesDi {
 
     val di = DI {
         importAll(
-            networkModule,
             databaseModule,
+            networkModule,
             servicesModule,
             repositoriesModule,
         )

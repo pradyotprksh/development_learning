@@ -1,6 +1,5 @@
 package com.pradyotprakash.xfullstack.config.plugins
 
-import com.pradyotprakash.xfullstack.data.response.ErrorResponse
 import core.exception.DBWriteError
 import core.exception.InvalidParameter
 import core.exception.UnauthorizedAccess
@@ -10,6 +9,7 @@ import core.exception.XFullStackException
 import core.utils.Constants.ErrorCode.UNAUTHORIZED_ERROR_CODE
 import core.utils.Localization
 import core.utils.ResponseStatus
+import data.response.DefaultResponse
 import data.response.XFullStackResponse
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.Application
@@ -25,7 +25,7 @@ fun Application.configureStatusPages() {
                 XFullStackResponse(
                     status = ResponseStatus.Error,
                     errorCode = UNAUTHORIZED_ERROR_CODE,
-                    data = ErrorResponse(
+                    data = DefaultResponse(
                         message = Localization.UNAUTHORIZED_ACCESS,
                     )
                 )
@@ -39,7 +39,7 @@ fun Application.configureStatusPages() {
                     XFullStackResponse(
                         status = ResponseStatus.Error,
                         errorCode = cause.errorCode,
-                        data = ErrorResponse(
+                        data = DefaultResponse(
                             message = cause.message,
                         )
                     )
@@ -50,7 +50,7 @@ fun Application.configureStatusPages() {
                     XFullStackResponse(
                         status = ResponseStatus.Error,
                         errorCode = cause.errorCode,
-                        data = ErrorResponse(
+                        data = DefaultResponse(
                             message = cause.message ?: Localization.DEFAULT_ERROR_MESSAGE,
                         )
                     )
@@ -61,7 +61,7 @@ fun Application.configureStatusPages() {
                     XFullStackResponse(
                         status = ResponseStatus.Error,
                         errorCode = cause.errorCode,
-                        data = ErrorResponse(
+                        data = DefaultResponse(
                             message = cause.message ?: Localization.DEFAULT_ERROR_MESSAGE,
                         )
                     )
@@ -72,7 +72,7 @@ fun Application.configureStatusPages() {
                     XFullStackResponse(
                         status = ResponseStatus.Error,
                         errorCode = cause.errorCode,
-                        data = ErrorResponse(
+                        data = DefaultResponse(
                             message = cause.message ?: Localization.DEFAULT_ERROR_MESSAGE,
                         )
                     )
@@ -83,7 +83,7 @@ fun Application.configureStatusPages() {
                     XFullStackResponse(
                         status = ResponseStatus.Error,
                         errorCode = cause.errorCode,
-                        data = ErrorResponse(
+                        data = DefaultResponse(
                             message = cause.message ?: Localization.DEFAULT_ERROR_MESSAGE,
                         )
                     )

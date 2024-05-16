@@ -1,3 +1,8 @@
 package data.response
 
-data object DefaultResponse
+import kotlinx.serialization.Serializable
+
+@Serializable
+data class DefaultResponse(
+    val message: String,
+)

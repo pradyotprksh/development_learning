@@ -7,6 +7,7 @@ import core.utils.Constants.ErrorCode.USERNAME_ALREADY_PRESENT_ERROR_CODE
 import core.utils.Localization
 import core.utils.ResponseStatus
 import core.utils.UtilsMethod
+import data.response.XFullStackResponse
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.ApplicationCall
 import io.ktor.server.response.respond

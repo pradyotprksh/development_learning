@@ -14,11 +14,21 @@ class SplashViewModel : ViewModel() {
         navigateToHome: () -> Unit
     ) {
         delay(3000)
-        if (currentUserRepository.getCurrentLoggedInUserId() == null) {
+        val currentUserId = currentUserRepository.getCurrentUserId()
+        if (currentUserId == null) {
             navigateToAuthOption()
             return
         }
 
-        navigateToHome()
+        checkCurrentUserAuthentication(
+            navigateToAuthOption,
+            navigateToHome
+        )
+    }
+
+    private suspend fun checkCurrentUserAuthentication(
+        navigateToAuthOption: () -> Unit,
+        navigateToHome: () -> Unit,
+    ) {
     }
 }

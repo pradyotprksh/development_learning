@@ -5,7 +5,7 @@ import domain.services.UserDBService
 class CurrentUserRepository(
     private val userDBService: UserDBService,
 ) {
-    fun getCurrentLoggedInUserId(): String? {
+    fun getCurrentUserId(): String? {
         return userDBService.getCurrentUserId()?.userId
     }
 

@@ -5,7 +5,7 @@ import core.utils.Constants.ConstValues.BASE_URL
 import core.utils.Constants.ConstValues.BEARER
 import core.utils.Constants.Keys.AUTHORIZATION
 import core.utils.Constants.Keys.CONTENT_TYPE
-import domain.services.UserDBService
+import domain.repositories.CurrentUserRepository
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.DefaultRequest
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
@@ -16,7 +16,7 @@ import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 
 class XFullStackHttpClient(
-    private val userDBService: UserDBService,
+    private val currentUserRepository: CurrentUserRepository,
 ) {
     fun createHttpClient() = HttpClient {
         install(ContentNegotiation) {
@@ -36,8 +36,8 @@ class XFullStackHttpClient(
 
             header(CONTENT_TYPE, APPLICATION_JSON)
 
-            userDBService.getCurrentUserId()?.userId?.let { userId ->
-                header(AUTHORIZATION, "$BEARER ${userDBService.getToken(userId)}")
+            currentUserRepository.getCurrentUserId()?.let { userId ->
+                header(AUTHORIZATION, "$BEARER ${currentUserRepository.getToken(userId)}")
             }
         }
     }
