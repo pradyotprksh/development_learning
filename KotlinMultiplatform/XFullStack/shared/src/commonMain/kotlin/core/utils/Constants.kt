@@ -44,6 +44,7 @@ object Constants {
         const val JWT_SECRET = "JWT_SECRET"
         const val CONTENT_TYPE = "Content-Type"
         const val AUTHORIZATION = "Authorization"
+        const val REQUEST_IDENTIFIER = "request-identifier"
     }
 
     object ConstValues {
