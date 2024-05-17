@@ -1,13 +1,7 @@
-package com.pradyotprakash.xfullstack.features.utils.controllers.userVerification
+package com.pradyotprakash.xfullstack.features.verification.controllers.userVerification
 
 import com.pradyotprakash.xfullstack.data.request.OtpVerificationRequest
-import com.pradyotprakash.xfullstack.features.utils.resource.UtilsResource
-import utils.Constants.ConstValues.OTP_LENGTH
-import utils.Constants.ErrorCode.OTP_GENERATION_ERROR_CODE
-import utils.Constants.ErrorCode.OTP_VALIDATION_ERROR_CODE
-import utils.Localization
-import utils.ResponseStatus
-import utils.UtilsMethod
+import com.pradyotprakash.xfullstack.features.verification.resource.VerificationResource
 import data.response.DefaultResponse
 import data.response.OTPResponse
 import data.response.XFullStackResponse
@@ -15,9 +9,18 @@ import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.ApplicationCall
 import io.ktor.server.request.receive
 import io.ktor.server.response.respond
+import utils.Constants.ConstValues.OTP_LENGTH
+import utils.Constants.ErrorCode.OTP_GENERATION_ERROR_CODE
+import utils.Constants.ErrorCode.OTP_VALIDATION_ERROR_CODE
+import utils.Localization
+import utils.ResponseStatus
+import utils.UtilsMethod
 
 class UserVerificationControllerImplementation : UserVerificationController {
-    override suspend fun generateOtp(call: ApplicationCall, resource: UtilsResource.GenerateOtp) {
+    override suspend fun generateOtp(
+        call: ApplicationCall,
+        resource: VerificationResource.GenerateOtp
+    ) {
         try {
             val otp = UtilsMethod.getIntegerValue(
                 value = resource.value,
@@ -47,7 +50,10 @@ class UserVerificationControllerImplementation : UserVerificationController {
         }
     }
 
-    override suspend fun validateOtp(call: ApplicationCall, resource: UtilsResource.ValidateOtp) {
+    override suspend fun validateOtp(
+        call: ApplicationCall,
+        resource: VerificationResource.ValidateOtp
+    ) {
         val otpVerificationRequest = call.receive<OtpVerificationRequest>()
 
         try {

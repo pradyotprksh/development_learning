@@ -18,17 +18,18 @@ import com.pradyotprakash.xfullstack.features.authentication.controllers.registe
 import com.pradyotprakash.xfullstack.features.authentication.controllers.userInfo.UserInfoController
 import com.pradyotprakash.xfullstack.features.authentication.controllers.userInfo.UserInfoControllerImplementation
 import com.pradyotprakash.xfullstack.features.utils.controllers.UtilsController
-import com.pradyotprakash.xfullstack.features.utils.controllers.userVerification.UserVerificationController
-import com.pradyotprakash.xfullstack.features.utils.controllers.userVerification.UserVerificationControllerImplementation
 import com.pradyotprakash.xfullstack.features.utils.controllers.usernameValid.UsernameValidController
 import com.pradyotprakash.xfullstack.features.utils.controllers.usernameValid.UsernameValidControllerImplementation
-import utils.Constants
-import utils.Constants.ConstValues.TOKEN_EXPIRES_IN
-import utils.Constants.Keys.JWT_SECRET
+import com.pradyotprakash.xfullstack.features.verification.controllers.VerificationController
+import com.pradyotprakash.xfullstack.features.verification.controllers.userVerification.UserVerificationController
+import com.pradyotprakash.xfullstack.features.verification.controllers.userVerification.UserVerificationControllerImplementation
 import org.kodein.di.DI
 import org.kodein.di.bindProvider
 import org.kodein.di.bindSingleton
 import org.kodein.di.instance
+import utils.Constants
+import utils.Constants.ConstValues.TOKEN_EXPIRES_IN
+import utils.Constants.Keys.JWT_SECRET
 
 object ModulesConfig {
     private val databaseModule = DI.Module("DATABASE") {
@@ -56,13 +57,16 @@ object ModulesConfig {
         bindProvider<UserInfoController> { UserInfoControllerImplementation() }
 
         bindProvider<UsernameValidController> { UsernameValidControllerImplementation() }
+
         bindProvider<UserVerificationController> { UserVerificationControllerImplementation() }
     }
 
     private val featuresModule = DI.Module("FEATURES") {
         bindProvider { AuthenticationController(instance(), instance(), instance(), instance()) }
 
-        bindProvider { UtilsController(instance(), instance()) }
+        bindProvider { UtilsController(instance()) }
+
+        bindProvider { VerificationController(instance()) }
     }
 
     val di = DI {

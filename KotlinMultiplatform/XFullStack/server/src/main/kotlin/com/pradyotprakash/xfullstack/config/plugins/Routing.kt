@@ -9,6 +9,8 @@ import com.pradyotprakash.xfullstack.features.authentication.authentication
 import com.pradyotprakash.xfullstack.features.authentication.controllers.AuthenticationController
 import com.pradyotprakash.xfullstack.features.utils.controllers.UtilsController
 import com.pradyotprakash.xfullstack.features.utils.utils
+import com.pradyotprakash.xfullstack.features.verification.controllers.VerificationController
+import com.pradyotprakash.xfullstack.features.verification.verification
 import io.ktor.server.application.Application
 import io.ktor.server.routing.routing
 import org.kodein.di.instance
@@ -20,6 +22,7 @@ fun Application.configureRouting() {
     val hashingService by ModulesConfig.di.instance<HashingService>()
     val authenticationController by ModulesConfig.di.instance<AuthenticationController>()
     val utilsController by ModulesConfig.di.instance<UtilsController>()
+    val verificationController by ModulesConfig.di.instance<VerificationController>()
 
     routing {
         authentication(
@@ -32,6 +35,9 @@ fun Application.configureRouting() {
         utils(
             userDataSource = userDataSource,
             utilsController = utilsController,
+        )
+        verification(
+            verificationController = verificationController,
         )
     }
 }

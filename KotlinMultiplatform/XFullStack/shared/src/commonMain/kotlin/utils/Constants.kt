@@ -36,6 +36,10 @@ object Constants {
         object Utils {
             const val UTILS = "/utils"
             const val USERNAME_VALID = "/username-valid"
+        }
+
+        object Verification {
+            const val VERIFICATION = "/verification"
             const val GENERATE_OTP = "/generate-otp"
             const val VALIDATE_OTP = "/validate-otp"
         }
