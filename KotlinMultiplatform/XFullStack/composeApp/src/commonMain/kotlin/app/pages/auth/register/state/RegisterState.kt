@@ -28,14 +28,20 @@ data class RegisterState(
     val errorMessage: String? = null,
     val showOtpOption: Boolean = false,
     val otpValue: String = "",
-    val showPasswordOption: Boolean = false,
+    val showPasswordOption: Boolean = true,
     val passwordValue: String = "",
     val confirmPasswordValue: String = "",
     val showConfirmPassword: Boolean = false,
     val passwordValidation: PasswordValidation = PasswordValidation()
 ) {
+    val passwordValid: Boolean
+        get() = passwordValue.isNotBlank() && passwordValidation.isValid
+
+    val confirmPasswordValid: Boolean
+        get() = confirmPasswordValue.isNotBlank() && confirmPasswordValue == passwordValue
+
     val enableNextButton: Boolean
         get() = if (showOtpOption) otpValue.isNotBlank() && otpValue.length == OTP_LENGTH
-        else if (showPasswordOption) passwordValue.isNotBlank() && confirmPasswordValue.isNotBlank() && passwordValue == confirmPasswordValue && passwordValidation.isValid
+        else if (showPasswordOption) passwordValid && confirmPasswordValid
         else nameValue.isNotBlank() && isNameValid && phoneEmailValue.isNotBlank() && isPhoneEmailValid && dobValue.isNotBlank()
 }

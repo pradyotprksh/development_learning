@@ -93,7 +93,13 @@ class RegisterViewModel : ViewModel() {
             UtilsMethod.isValidPassword(value)
             _registerScreenState.value = _registerScreenState.value.copy(
                 showConfirmPassword = true,
-                passwordValidation = PasswordValidation()
+                passwordValidation = PasswordValidation(
+                    length = true,
+                    uppercase = true,
+                    lowercase = true,
+                    digit = true,
+                    specialCharacter = true,
+                )
             )
         } catch (e: Throwable) {
             _registerScreenState.value = _registerScreenState.value.copy(
