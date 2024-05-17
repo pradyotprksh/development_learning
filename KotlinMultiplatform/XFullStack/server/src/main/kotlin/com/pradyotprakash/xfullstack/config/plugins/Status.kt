@@ -6,9 +6,6 @@ import core.exception.UnauthorizedAccess
 import core.exception.UserAuthDetailsError
 import core.exception.UserDetailsNotFound
 import core.exception.XFullStackException
-import utils.Constants.ErrorCode.UNAUTHORIZED_ERROR_CODE
-import utils.Localization
-import utils.ResponseStatus
 import data.response.DefaultResponse
 import data.response.XFullStackResponse
 import io.ktor.http.HttpStatusCode
@@ -16,6 +13,10 @@ import io.ktor.server.application.Application
 import io.ktor.server.application.install
 import io.ktor.server.plugins.statuspages.StatusPages
 import io.ktor.server.response.respond
+import utils.Constants.ErrorCode.INTERNAL_SERVER_ERROR_CODE
+import utils.Constants.ErrorCode.UNAUTHORIZED_ERROR_CODE
+import utils.Localization
+import utils.ResponseStatus
 
 fun Application.configureStatusPages() {
     install(StatusPages) {
@@ -27,6 +28,19 @@ fun Application.configureStatusPages() {
                     errorCode = UNAUTHORIZED_ERROR_CODE,
                     data = DefaultResponse(
                         message = Localization.UNAUTHORIZED_ACCESS,
+                    )
+                )
+            )
+        }
+
+        status(HttpStatusCode.InternalServerError) { call, _ ->
+            call.respond(
+                HttpStatusCode.InternalServerError,
+                XFullStackResponse(
+                    status = ResponseStatus.Error,
+                    errorCode = INTERNAL_SERVER_ERROR_CODE,
+                    data = DefaultResponse(
+                        message = HttpStatusCode.InternalServerError.description,
                     )
                 )
             )

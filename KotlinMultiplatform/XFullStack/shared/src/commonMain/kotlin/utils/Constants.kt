@@ -42,6 +42,7 @@ object Constants {
             const val VERIFICATION = "/verification"
             const val GENERATE_OTP = "/generate-otp"
             const val VALIDATE_OTP = "/validate-otp"
+            const val USER_PRESENT = "/user-present"
         }
     }
 
@@ -84,5 +85,14 @@ object Constants {
         const val NAME_VALIDITY_ERROR_CODE = "XFS015"
         const val OTP_GENERATION_ERROR_CODE = "XFS016"
         const val OTP_VALIDATION_ERROR_CODE = "XFS017"
+        const val INTERNAL_SERVER_ERROR_CODE = "XFS018"
+    }
+
+    object DbKeys {
+        const val ID = "_id"
+        const val EMAIL_ADDRESS = "email_address"
+        const val PHONE_NUMBER = "phone_number"
+        const val PROFILE_PICTURE = "profile_picture"
+        const val DATE_OF_BIRTH = "date_of_birth"
     }
 }

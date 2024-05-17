@@ -38,6 +38,7 @@ fun Application.configureRouting() {
         )
         verification(
             verificationController = verificationController,
+            userDataSource = userDataSource,
         )
     }
 }

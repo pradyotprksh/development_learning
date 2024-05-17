@@ -2,10 +2,13 @@ package com.pradyotprakash.xfullstack.data.user
 
 import com.mongodb.client.model.Filters.eq
 import com.mongodb.kotlin.client.coroutine.MongoDatabase
-import utils.Constants.Database.Collections.USERS
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.toList
 import org.bson.types.ObjectId
+import utils.Constants.Database.Collections.USERS
+import utils.Constants.DbKeys.EMAIL_ADDRESS
+import utils.Constants.DbKeys.ID
+import utils.Constants.DbKeys.PHONE_NUMBER
 
 class MongoUserDataSource(
     db: MongoDatabase,
@@ -20,19 +23,19 @@ class MongoUserDataSource(
 
     override suspend fun getUserByEmailAddress(email: String): User? {
         return usersCollection.find(
-            eq(User::emailAddress.name, email)
+            eq(EMAIL_ADDRESS, email)
         ).limit(1).firstOrNull()
     }
 
     override suspend fun getUserByPhoneNumber(phoneNumber: String): User? {
         return usersCollection.find(
-            eq(User::phoneNumber.name, phoneNumber)
+            eq(PHONE_NUMBER, phoneNumber)
         ).limit(1).firstOrNull()
     }
 
     override suspend fun getUserByUserId(userId: String): User? {
         return usersCollection.find(
-            eq("_id", ObjectId(userId))
+            eq(ID, ObjectId(userId))
         ).limit(1).firstOrNull()
     }
 
@@ -48,13 +51,13 @@ class MongoUserDataSource(
 
     override suspend fun isEmailPresent(email: String): Boolean {
         return usersCollection.find(
-            eq(User::emailAddress.name, email)
+            eq(EMAIL_ADDRESS, email)
         ).toList().isNotEmpty()
     }
 
     override suspend fun isPhoneNumberPresent(phoneNumber: String): Boolean {
         return usersCollection.find(
-            eq(User::phoneNumber.name, phoneNumber)
+            eq(PHONE_NUMBER, phoneNumber)
         ).toList().isNotEmpty()
     }
 }
