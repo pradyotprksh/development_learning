@@ -11,7 +11,10 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import org.kodein.di.instance
 import utils.Constants.ConstValues.NAME_MAX_LENGTH
+import utils.Constants.ConstValues.OTP_LENGTH
 import utils.Constants.ErrorCode.USER_DETAILS_NOT_FOUND_CODE
+import utils.Logger
+import utils.LoggerLevel
 import utils.TextFieldType
 import utils.UtilsMethod
 import utils.debounce
@@ -59,6 +62,14 @@ class RegisterViewModel : ViewModel() {
                 _registerScreenState.value = _registerScreenState.value.copy(
                     dobValue = value,
                 )
+            }
+
+            TextFieldType.Otp -> {
+                if (value.length <= OTP_LENGTH) {
+                    _registerScreenState.value = _registerScreenState.value.copy(
+                        otpValue = value
+                    )
+                }
             }
         }
     }
@@ -121,28 +132,42 @@ class RegisterViewModel : ViewModel() {
     }
 
     fun checkForDetails(
-        navigateToLogin: (String) -> Unit,
+        navigateToLogin: ((String) -> Unit)? = null,
     ) {
         viewModelScope.launch {
-            userVerificationRepository.isUserPresent(_registerScreenState.value.phoneEmailValue)
-                .collect {
+            if (_registerScreenState.value.showOtpOption) {
+                userVerificationRepository.validateOtp(
+                    otp = _registerScreenState.value.otpValue,
+                    value = _registerScreenState.value.phoneEmailValue,
+                ).collect {
                     when (it) {
-                        is ClientResponse.Error -> onUserPresentError(
-                            it,
-                        )
-
+                        is ClientResponse.Error -> showErrorMessage(it.message)
                         ClientResponse.Idle -> updateLoaderState(showLoader = false)
                         ClientResponse.Loading -> updateLoaderState(showLoader = true)
-                        is ClientResponse.Success -> onUserPresentSuccess(navigateToLogin)
+                        is ClientResponse.Success -> otpVerificationSuccess()
                     }
                 }
+            } else {
+                userVerificationRepository.isUserPresent(_registerScreenState.value.phoneEmailValue)
+                    .collect {
+                        when (it) {
+                            is ClientResponse.Error -> onUserPresentError(
+                                it,
+                            )
+
+                            ClientResponse.Idle -> updateLoaderState(showLoader = false)
+                            ClientResponse.Loading -> updateLoaderState(showLoader = true)
+                            is ClientResponse.Success -> {
+                                navigateToLogin?.invoke(_registerScreenState.value.phoneEmailValue)
+                            }
+                        }
+                    }
+            }
         }
     }
 
-    private fun onUserPresentSuccess(
-        navigateToLogin: (String) -> Unit
-    ) {
-        navigateToLogin(_registerScreenState.value.phoneEmailValue)
+    private fun otpVerificationSuccess() {
+        
     }
 
     private fun onUserPresentError(
@@ -151,13 +176,34 @@ class RegisterViewModel : ViewModel() {
         if (error.errorCode == USER_DETAILS_NOT_FOUND_CODE) {
             generateOtp()
         } else {
-            _registerScreenState.value = _registerScreenState.value.copy(
-                errorMessage = error.message,
-            )
+            showErrorMessage(error.message)
         }
     }
 
+    private fun showErrorMessage(message: String) {
+        _registerScreenState.value = _registerScreenState.value.copy(
+            errorMessage = message,
+        )
+    }
+
     private fun generateOtp() {
+        viewModelScope.launch {
+            userVerificationRepository.generateOtp(_registerScreenState.value.phoneEmailValue)
+                .collect {
+                    when (it) {
+                        is ClientResponse.Error -> showErrorMessage(it.message)
+                        ClientResponse.Idle -> updateLoaderState(showLoader = false)
+                        ClientResponse.Loading -> updateLoaderState(showLoader = true)
+                        is ClientResponse.Success -> {
+                            Logger.log(LoggerLevel.Info, "Generate OTP ${it.data.data?.otp}")
+                            showOtpOption()
+                        }
+                    }
+                }
+        }
+    }
+
+    private fun showOtpOption() {
         _registerScreenState.value = _registerScreenState.value.copy(
             showOtpOption = true,
             useEmailOrPhoneState = false,

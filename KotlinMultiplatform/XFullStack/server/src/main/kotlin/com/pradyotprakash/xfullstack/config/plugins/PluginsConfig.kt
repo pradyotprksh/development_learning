@@ -11,7 +11,6 @@ import io.ktor.server.plugins.callloging.CallLogging
 import io.ktor.server.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.server.request.path
 import io.ktor.server.resources.Resources
-import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 import org.slf4j.event.Level
 
@@ -40,14 +39,12 @@ fun Application.configureResource() {
     install(Resources)
 }
 
-@OptIn(ExperimentalSerializationApi::class)
 fun Application.configureSerialization() {
     install(ContentNegotiation) {
         json(
             Json {
                 prettyPrint = true
                 isLenient = true
-                explicitNulls = false
             }
         )
     }

@@ -104,9 +104,9 @@ fun RegisterScreen(
                 modifier = Modifier.weight(1f)
             ) {
                 AnimatedVisibility(
-                    visible = registerScreenState.showOtpOption
+                    visible = !registerScreenState.showOtpOption
                 ) {
-                    OtpVerificationComposable(
+                    RegisterFormComposable(
                         modifier = Modifier.weight(1f),
                         startEndPaddingModifier = startEndPaddingModifier,
                         registerScreenState = registerScreenState,
@@ -114,9 +114,9 @@ fun RegisterScreen(
                     )
                 }
                 AnimatedVisibility(
-                    visible = !registerScreenState.showOtpOption
+                    visible = registerScreenState.showOtpOption,
                 ) {
-                    RegisterFormComposable(
+                    OtpVerificationComposable(
                         modifier = Modifier.weight(1f),
                         startEndPaddingModifier = startEndPaddingModifier,
                         registerScreenState = registerScreenState,

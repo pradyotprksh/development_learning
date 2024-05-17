@@ -1,8 +1,8 @@
 package com.pradyotprakash.xfullstack.features.verification.controllers.userVerification
 
-import com.pradyotprakash.xfullstack.data.request.OtpVerificationRequest
 import com.pradyotprakash.xfullstack.data.user.UserDataSource
 import com.pradyotprakash.xfullstack.features.verification.resource.VerificationResource
+import data.request.OtpVerificationRequest
 import data.response.DefaultResponse
 import data.response.OTPResponse
 import data.response.XFullStackResponse
@@ -10,6 +10,7 @@ import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.ApplicationCall
 import io.ktor.server.request.receive
 import io.ktor.server.response.respond
+import kotlinx.coroutines.delay
 import utils.Constants.ConstValues.OTP_LENGTH
 import utils.Constants.ErrorCode.OTP_GENERATION_ERROR_CODE
 import utils.Constants.ErrorCode.OTP_VALIDATION_ERROR_CODE
@@ -25,6 +26,7 @@ class UserVerificationControllerImplementation : UserVerificationController {
         call: ApplicationCall,
         resource: VerificationResource.GenerateOtp
     ) {
+        delay(1500)
         try {
             val otp = UtilsMethod.getIntegerValue(
                 value = resource.value,
@@ -37,6 +39,7 @@ class UserVerificationControllerImplementation : UserVerificationController {
                     errorCode = null,
                     data = OTPResponse(
                         otp = otp,
+                        message = Localization.OTP_GENERATE_SUCCESSFULLY,
                     )
                 )
             )
@@ -46,7 +49,8 @@ class UserVerificationControllerImplementation : UserVerificationController {
                 XFullStackResponse(
                     status = ResponseStatus.Error,
                     errorCode = OTP_GENERATION_ERROR_CODE,
-                    data = DefaultResponse(
+                    data = OTPResponse(
+                        otp = "",
                         message = Localization.OTP_GENERATION_ERROR
                     )
                 )
@@ -58,6 +62,7 @@ class UserVerificationControllerImplementation : UserVerificationController {
         call: ApplicationCall,
         resource: VerificationResource.ValidateOtp
     ) {
+        delay(1500)
         val otpVerificationRequest = call.receive<OtpVerificationRequest>()
 
         try {

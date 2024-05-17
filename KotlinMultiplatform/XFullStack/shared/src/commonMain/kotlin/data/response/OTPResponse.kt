@@ -4,5 +4,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class OTPResponse(
-    val otp: String
+    val otp: String,
+    val message: String,
 )

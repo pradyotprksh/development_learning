@@ -4,4 +4,5 @@ enum class TextFieldType {
     Name,
     PhoneEmail,
     Dob,
+    Otp,
 }
