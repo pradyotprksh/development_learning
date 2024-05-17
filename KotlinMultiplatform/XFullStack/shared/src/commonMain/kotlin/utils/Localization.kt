@@ -66,4 +66,5 @@ object Localization {
     const val DOB_SUPPORTING_TEXT =
         "This will not be shown publicly. Confirm your own age, even if this account is for a business, a pet, or something else."
     const val USER_PRESENT = "User details are present."
+    const val OKAY = "Okay"
 }

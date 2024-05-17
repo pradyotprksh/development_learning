@@ -26,11 +26,17 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
@@ -42,8 +48,11 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import app.composables.LoadingDialog
 import app.composables.XAppBar
 import app.pages.auth.register.viewModel.RegisterViewModel
+import app.pages.otpVerification.model.OtpVerificationNavArguments
+import kotlinx.coroutines.launch
 import utils.Constants.ConstValues.NAME_MAX_LENGTH
 import utils.Localization
 import utils.TextFieldType
@@ -52,26 +61,55 @@ import utils.TextFieldType
 @Composable
 fun RegisterScreen(
     registerViewModel: RegisterViewModel = viewModel(),
+    navigateToOtpVerification: (OtpVerificationNavArguments) -> Unit,
+    navigateToLogin: (String) -> Unit,
     navigateBack: () -> Unit,
 ) {
-    val registerScreenState by registerViewModel.registerScreenState.collectAsState()
     val dateState = rememberDatePickerState()
+    val scope = rememberCoroutineScope()
+    val snackbarHostState = remember { SnackbarHostState() }
+    val registerScreenState by registerViewModel.registerScreenState.collectAsState()
     if (registerScreenState.datePickerVisible) {
         dateState.selectedDateMillis?.let { registerViewModel.updateSelectedDate(it) }
     }
-
-    Scaffold(topBar = {
-        XAppBar(navigationIcon = {
-            IconButton(
-                onClick = navigateBack,
-            ) {
-                Icon(
-                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                    contentDescription = Icons.AutoMirrored.Filled.ArrowBack.name,
+    if (registerScreenState.showLoading) {
+        LoadingDialog()
+    }
+    registerScreenState.errorMessage?.let { message ->
+        scope.launch {
+            val result = snackbarHostState
+                .showSnackbar(
+                    message = message,
+                    actionLabel = Localization.OKAY,
+                    duration = SnackbarDuration.Short
                 )
+            when (result) {
+                SnackbarResult.ActionPerformed, SnackbarResult.Dismissed -> {
+                    registerViewModel.removeErrorMessage()
+                }
             }
-        })
-    }) {
+        }
+    }
+
+    Scaffold(
+        topBar = {
+            XAppBar(
+                navigationIcon = {
+                    IconButton(
+                        onClick = navigateBack,
+                    ) {
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                            contentDescription = Icons.AutoMirrored.Filled.ArrowBack.name,
+                        )
+                    }
+                },
+            )
+        },
+        snackbarHost = {
+            SnackbarHost(hostState = snackbarHostState)
+        },
+    ) {
         Column(
             modifier = Modifier.fillMaxSize().padding(
                 top = it.calculateTopPadding() + 10.dp,
@@ -89,8 +127,7 @@ fun RegisterScreen(
                 modifier = startEndPaddingModifier
             )
             Spacer(modifier = Modifier.weight(1f))
-            OutlinedTextField(
-                value = registerScreenState.nameValue,
+            OutlinedTextField(value = registerScreenState.nameValue,
                 onValueChange = { value ->
                     registerViewModel.updateTextField(textFieldType = TextFieldType.Name, value)
                 },
@@ -99,7 +136,8 @@ fun RegisterScreen(
                         Localization.NAME
                     )
                 },
-                modifier = startEndPaddingModifier.fillMaxWidth(), maxLines = 1,
+                modifier = startEndPaddingModifier.fillMaxWidth(),
+                maxLines = 1,
                 keyboardOptions = KeyboardOptions(
                     imeAction = ImeAction.Next,
                     capitalization = KeyboardCapitalization.Words,
@@ -119,10 +157,8 @@ fun RegisterScreen(
                             tint = Color.Green
                         )
                     }
-                }
-            )
-            OutlinedTextField(
-                value = registerScreenState.phoneEmailValue,
+                })
+            OutlinedTextField(value = registerScreenState.phoneEmailValue,
                 onValueChange = { value ->
                     registerViewModel.updateTextField(
                         textFieldType = TextFieldType.PhoneEmail, value
@@ -153,8 +189,7 @@ fun RegisterScreen(
                         KeyboardType.Phone
                     } else {
                         KeyboardType.Email
-                    },
-                    imeAction = ImeAction.Next
+                    }, imeAction = ImeAction.Next
                 ),
                 maxLines = 1,
                 trailingIcon = {
@@ -170,43 +205,31 @@ fun RegisterScreen(
                 supportingText = {
                     if (registerScreenState.showPhoneNumberError) {
                         Text(
-                            if (registerScreenState.isUsingPhoneNumber)
-                                Localization.EMAIL_PHONE_ERROR_MESSAGE.replace(
-                                    "%s",
-                                    Localization.PHONE_NUMBER.lowercase()
-                                )
-                            else
-                                Localization.EMAIL_PHONE_ERROR_MESSAGE.replace(
-                                    "%s",
-                                    Localization.EMAIL.lowercase()
-                                )
+                            if (registerScreenState.isUsingPhoneNumber) Localization.EMAIL_PHONE_ERROR_MESSAGE.replace(
+                                "%s", Localization.PHONE_NUMBER.lowercase()
+                            )
+                            else Localization.EMAIL_PHONE_ERROR_MESSAGE.replace(
+                                "%s", Localization.EMAIL.lowercase()
+                            )
                         )
                     }
-                }
-            )
-            OutlinedTextField(
-                value = registerScreenState.dobValue,
-                onValueChange = { value ->
-                    registerViewModel.updateTextField(textFieldType = TextFieldType.Dob, value)
-                },
-                label = {
+                })
+            OutlinedTextField(value = registerScreenState.dobValue, onValueChange = { value ->
+                registerViewModel.updateTextField(textFieldType = TextFieldType.Dob, value)
+            }, label = {
+                Text(
+                    Localization.DATE_OF_BIRTH
+                )
+            }, modifier = startEndPaddingModifier.fillMaxWidth().onFocusChanged {
+                registerViewModel.focusedChangeForDob()
+            }, readOnly = true, maxLines = 1, supportingText = {
+                if (registerScreenState.datePickerVisible) {
                     Text(
-                        Localization.DATE_OF_BIRTH
+                        text = Localization.DOB_SUPPORTING_TEXT,
+                        style = MaterialTheme.typography.bodySmall
                     )
-                },
-                modifier = startEndPaddingModifier.fillMaxWidth().onFocusChanged {
-                    registerViewModel.focusedChangeForDob()
-                },
-                readOnly = true, maxLines = 1,
-                supportingText = {
-                    if (registerScreenState.datePickerVisible) {
-                        Text(
-                            text = Localization.DOB_SUPPORTING_TEXT,
-                            style = MaterialTheme.typography.bodySmall
-                        )
-                    }
                 }
-            )
+            })
             Spacer(modifier = Modifier.weight(1f))
             HorizontalDivider()
             Spacer(modifier = Modifier.height(20.dp))
@@ -229,8 +252,12 @@ fun RegisterScreen(
                 }
                 Spacer(modifier = Modifier.weight(1f))
                 Button(
-                    onClick = { registerViewModel.checkForDetails() },
-                    enabled = registerScreenState.enableNextButton
+                    onClick = {
+                        registerViewModel.checkForDetails(
+                            navigateToLogin = navigateToLogin,
+                            navigateToOtpVerification = navigateToOtpVerification
+                        )
+                    }, enabled = registerScreenState.enableNextButton
                 ) {
                     Text(
                         Localization.NEXT

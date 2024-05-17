@@ -3,12 +3,18 @@ package app.pages.auth.register.viewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.pages.auth.register.state.RegisterState
+import app.pages.otpVerification.model.OtpVerificationNavArguments
+import core.models.response.ClientResponse
+import data.response.DefaultResponse
+import data.response.XFullStackResponse
 import di.ModulesDi
 import domain.repositories.user.verification.UserVerificationRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 import org.kodein.di.instance
 import utils.Constants.ConstValues.NAME_MAX_LENGTH
+import utils.Constants.ErrorCode.USER_DETAILS_NOT_FOUND_CODE
 import utils.TextFieldType
 import utils.UtilsMethod
 import utils.debounce
@@ -39,8 +45,7 @@ class RegisterViewModel : ViewModel() {
             TextFieldType.Name -> {
                 if (value.length <= NAME_MAX_LENGTH) {
                     _registerScreenState.value = _registerScreenState.value.copy(
-                        nameValue = value,
-                        isNameValid = false
+                        nameValue = value, isNameValid = false
                     )
                 }
                 checkForNameValidity(_registerScreenState.value.nameValue)
@@ -48,9 +53,7 @@ class RegisterViewModel : ViewModel() {
 
             TextFieldType.PhoneEmail -> {
                 _registerScreenState.value = _registerScreenState.value.copy(
-                    phoneEmailValue = value,
-                    isPhoneEmailValid = false,
-                    showPhoneNumberError = false
+                    phoneEmailValue = value, isPhoneEmailValid = false, showPhoneNumberError = false
                 )
                 checkForEmailPhoneValidity(_registerScreenState.value.phoneEmailValue)
             }
@@ -110,17 +113,76 @@ class RegisterViewModel : ViewModel() {
             val value = UtilsMethod.convertLongToReadableDate(date)
             _registerScreenState.value = _registerScreenState.value.copy(
                 dobValue = value,
-                dobValueLong = date,
+                dobValueTimestamp = date,
             )
         } catch (e: Exception) {
             _registerScreenState.value = _registerScreenState.value.copy(
                 dobValue = "",
-                dobValueLong = 0,
+                dobValueTimestamp = 0,
             )
         }
     }
 
-    fun checkForDetails() {
-        TODO("Not yet implemented")
+    fun checkForDetails(
+        navigateToOtpVerification: (OtpVerificationNavArguments) -> Unit,
+        navigateToLogin: (String) -> Unit,
+    ) {
+        viewModelScope.launch {
+            userVerificationRepository.isUserPresent(_registerScreenState.value.phoneEmailValue)
+                .collect {
+                    when (it) {
+                        is ClientResponse.Error -> onUserPresentError(
+                            it,
+                            navigateToOtpVerification,
+                        )
+
+                        ClientResponse.Idle -> updateLoaderState(showLoader = false)
+                        ClientResponse.Loading -> updateLoaderState(showLoader = true)
+                        is ClientResponse.Success -> onUserPresentSuccess(
+                            it,
+                            navigateToLogin,
+                        )
+                    }
+                }
+        }
+    }
+
+    private fun onUserPresentSuccess(
+        success: ClientResponse<out XFullStackResponse<DefaultResponse>>,
+        navigateToLogin: (String) -> Unit
+    ) {
+        navigateToLogin(_registerScreenState.value.phoneEmailValue)
+    }
+
+    private fun onUserPresentError(
+        error: ClientResponse.Error,
+        navigateToOtpVerification: (OtpVerificationNavArguments) -> Unit
+    ) {
+        if (error.errorCode == USER_DETAILS_NOT_FOUND_CODE) {
+            navigateToOtpVerification(
+                OtpVerificationNavArguments(
+                    emailPhone = _registerScreenState.value.phoneEmailValue,
+                    name = _registerScreenState.value.nameValue,
+                    dob = _registerScreenState.value.dobValue,
+                    dobTimeStamp = _registerScreenState.value.dobValueTimestamp,
+                )
+            )
+        } else {
+            _registerScreenState.value = _registerScreenState.value.copy(
+                errorMessage = error.message,
+            )
+        }
+    }
+
+    private fun updateLoaderState(showLoader: Boolean) {
+        _registerScreenState.value = _registerScreenState.value.copy(
+            showLoading = showLoader
+        )
+    }
+
+    fun removeErrorMessage() {
+        _registerScreenState.value = _registerScreenState.value.copy(
+            errorMessage = null
+        )
     }
 }

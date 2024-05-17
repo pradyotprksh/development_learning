@@ -6,11 +6,13 @@ data class RegisterState(
     val nameValue: String = "",
     val phoneEmailValue: String = "",
     val dobValue: String = "",
-    val dobValueLong: Long = 0,
+    val dobValueTimestamp: Long = 0,
     val datePickerVisible: Boolean = true,
     val isNameValid: Boolean = false,
     val isPhoneEmailValid: Boolean = false,
     val showPhoneNumberError: Boolean = false,
+    val showLoading: Boolean = false,
+    val errorMessage: String? = null,
 ) {
     val enableNextButton =
         nameValue.isNotBlank() && isNameValid && phoneEmailValue.isNotBlank() && isPhoneEmailValid && dobValue.isNotBlank()

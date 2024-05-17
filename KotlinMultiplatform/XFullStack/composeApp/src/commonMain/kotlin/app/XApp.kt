@@ -44,9 +44,6 @@ fun XApp(
             val navigateToRegister = {
                 navController.navigate(Routes.Register.route)
             }
-            val navigateBack = {
-                navController.popBackStack()
-            }
 
             composable(Routes.Splash.route) {
                 SplashScreen(
@@ -62,12 +59,15 @@ fun XApp(
             }
             composable(Routes.Login.route) {
                 LoginScreen {
-                    navigateBack()
+                    navController.popBackStack()
                 }
             }
             composable(Routes.Register.route) {
-                RegisterScreen {
-                    navigateBack()
+                RegisterScreen(
+                    navigateToLogin = {},
+                    navigateToOtpVerification = {}
+                ) {
+                    navController.popBackStack()
                 }
             }
         }
