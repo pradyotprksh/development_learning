@@ -1,8 +1,9 @@
-package com.pradyotprakash.xfullstack.data.response
+package data.response
 
 import kotlinx.serialization.Serializable
 
 @Serializable
 data class AuthenticationResponse(
-    val token: String
+    val userId: String,
+    val token: String,
 )

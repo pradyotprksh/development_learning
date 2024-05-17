@@ -33,8 +33,8 @@ data class RegisterState(
     val confirmPasswordValue: String = "",
     val showConfirmPassword: Boolean = false,
     val passwordValidation: PasswordValidation = PasswordValidation(),
-    val profileImage: String? = null,
-    val username: String = "",
+    val profileImageValue: String? = null,
+    val usernameValue: String = "",
     val isUsernameValid: Boolean = false,
     val showUsernameProfileImage: Boolean = false,
 ) {

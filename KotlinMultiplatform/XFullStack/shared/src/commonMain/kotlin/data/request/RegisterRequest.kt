@@ -1,4 +1,4 @@
-package com.pradyotprakash.xfullstack.data.request
+package data.request
 
 import kotlinx.serialization.Serializable
 
@@ -11,5 +11,5 @@ data class RegisterRequest(
     val emailAddress: String?,
     val phoneNumber: String?,
     val profilePicture: String?,
-    val dateOfBirth: String
+    val dateOfBirth: Long
 )

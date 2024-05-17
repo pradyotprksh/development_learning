@@ -1,4 +1,4 @@
-package com.pradyotprakash.xfullstack.data.request
+package data.request
 
 import kotlinx.serialization.Serializable
 

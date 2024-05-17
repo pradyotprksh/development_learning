@@ -39,7 +39,7 @@ fun UsernameProfileImageComposable(
         )
         Spacer(modifier = Modifier.height(10.dp))
         OutlinedTextField(
-            value = registerScreenState.username,
+            value = registerScreenState.usernameValue,
             onValueChange = { value ->
                 registerViewModel.updateTextField(
                     textFieldType = TextFieldType.Username,

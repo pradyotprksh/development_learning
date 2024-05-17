@@ -21,5 +21,5 @@ data class User(
     @BsonProperty(EMAIL_ADDRESS) val emailAddress: String?,
     @BsonProperty(PHONE_NUMBER) val phoneNumber: String?,
     @BsonProperty(PROFILE_PICTURE) val profilePicture: String?,
-    @BsonProperty(DATE_OF_BIRTH) val dateOfBirth: String
+    @BsonProperty(DATE_OF_BIRTH) val dateOfBirth: Long
 )

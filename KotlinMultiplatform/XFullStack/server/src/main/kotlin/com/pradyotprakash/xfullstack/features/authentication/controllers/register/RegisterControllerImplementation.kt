@@ -1,12 +1,18 @@
 package com.pradyotprakash.xfullstack.features.authentication.controllers.register
 
 import com.pradyotprakash.xfullstack.core.security.hashing.HashingService
-import com.pradyotprakash.xfullstack.data.request.RegisterRequest
 import com.pradyotprakash.xfullstack.data.user.User
 import com.pradyotprakash.xfullstack.data.user.UserDataSource
 import com.pradyotprakash.xfullstack.features.authentication.resource.AuthenticationResource
 import core.exception.DBWriteError
 import core.exception.InvalidParameter
+import data.request.RegisterRequest
+import data.response.DefaultResponse
+import data.response.XFullStackResponse
+import io.ktor.http.HttpStatusCode
+import io.ktor.server.application.ApplicationCall
+import io.ktor.server.request.receive
+import io.ktor.server.response.respond
 import utils.Constants.ErrorCode.EMAIL_ALREADY_PRESENT_ERROR_CODE
 import utils.Constants.ErrorCode.EMAIL_OR_PHONE_NUMBER_REQUIRED_ERROR_CODE
 import utils.Constants.ErrorCode.PHONE_NUMBER_ALREADY_PRESENT_ERROR_CODE
@@ -15,11 +21,6 @@ import utils.Constants.ErrorCode.USERNAME_ALREADY_PRESENT_ERROR_CODE
 import utils.Localization
 import utils.ResponseStatus
 import utils.UtilsMethod
-import data.response.XFullStackResponse
-import io.ktor.http.HttpStatusCode
-import io.ktor.server.application.ApplicationCall
-import io.ktor.server.request.receive
-import io.ktor.server.response.respond
 
 class RegisterControllerImplementation : RegisterController {
     override suspend fun registerUser(
@@ -102,7 +103,13 @@ class RegisterControllerImplementation : RegisterController {
 
         call.respond(
             HttpStatusCode.Created,
-            XFullStackResponse(status = ResponseStatus.Success, errorCode = null, data = null)
+            XFullStackResponse(
+                status = ResponseStatus.Success,
+                errorCode = null,
+                data = DefaultResponse(
+                    message = Localization.ACCOUNT_CREATED_SUCCESSFULLY
+                ),
+            )
         )
     }
 }

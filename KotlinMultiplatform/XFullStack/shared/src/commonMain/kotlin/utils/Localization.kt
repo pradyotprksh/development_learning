@@ -83,4 +83,6 @@ object Localization {
     const val SHARE_PROFILE_IMAGE_USERNAME =
         "Add an username to share your profile image for others to find you easily"
     const val USERNAME = "Username"
+    const val ACCOUNT_CREATED_SUCCESSFULLY = "Account created successfully"
+    const val TOKEN_GENERATED_SUCCESSFULLY = "Account token generated successfully"
 }

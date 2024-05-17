@@ -5,7 +5,9 @@ import androidx.lifecycle.viewModelScope
 import app.pages.auth.register.state.PasswordValidation
 import app.pages.auth.register.state.RegisterState
 import core.models.response.ClientResponse
+import data.request.RegisterRequest
 import di.ModulesDi
+import domain.repositories.user.current.CurrentUserRepository
 import domain.repositories.user.verification.UserVerificationRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -24,6 +26,7 @@ import utils.debounce
 
 class RegisterViewModel : ViewModel() {
     private val userVerificationRepository: UserVerificationRepository by ModulesDi.di.instance()
+    private val currentUserRepository: CurrentUserRepository by ModulesDi.di.instance()
 
     private val _registerScreenState = MutableStateFlow(RegisterState())
     val registerScreenState = _registerScreenState.asStateFlow()
@@ -90,9 +93,9 @@ class RegisterViewModel : ViewModel() {
 
             TextFieldType.Username -> {
                 _registerScreenState.value = _registerScreenState.value.copy(
-                    username = value, isUsernameValid = false
+                    usernameValue = value, isUsernameValid = false
                 )
-                checkForUsernameValidity(_registerScreenState.value.username)
+                checkForUsernameValidity(_registerScreenState.value.usernameValue)
             }
         }
     }
@@ -162,9 +165,9 @@ class RegisterViewModel : ViewModel() {
         waitMs = 1000,
         scope = viewModelScope,
     ) {
-        if (_registerScreenState.value.username.isNotBlank()) {
+        if (_registerScreenState.value.usernameValue.isNotBlank()) {
             viewModelScope.launch {
-                userVerificationRepository.isUsernameValid(_registerScreenState.value.username)
+                userVerificationRepository.isUsernameValid(_registerScreenState.value.usernameValue)
                     .collect {
                         when (it) {
                             is ClientResponse.Error -> {
@@ -214,33 +217,64 @@ class RegisterViewModel : ViewModel() {
         navigateToLogin: ((String) -> Unit)? = null,
     ) {
         viewModelScope.launch {
-            if (_registerScreenState.value.showOtpOption) {
-                userVerificationRepository.validateOtp(
-                    otp = _registerScreenState.value.otpValue,
-                    value = _registerScreenState.value.phoneEmailValue,
-                ).collect {
-                    when (it) {
-                        is ClientResponse.Error -> showErrorMessage(it.message)
-                        ClientResponse.Idle -> updateLoaderState(showLoader = false)
-                        ClientResponse.Loading -> updateLoaderState(showLoader = true)
-                        is ClientResponse.Success -> otpVerificationSuccess()
+            if (_registerScreenState.value.otpForm) {
+                performOTPOperations()
+            } else if (_registerScreenState.value.usernameProfileImageForm) {
+                performCreateAccountOperations()
+            } else {
+                performRegisterFormOperations(navigateToLogin)
+            }
+        }
+    }
+
+    private suspend fun performCreateAccountOperations() {
+        val registerRequest = RegisterRequest(
+            name = _registerScreenState.value.nameValue,
+            username = _registerScreenState.value.usernameValue,
+            password = _registerScreenState.value.passwordValue,
+            bio = null,
+            emailAddress = if (_registerScreenState.value.isUsingPhoneNumber) null else _registerScreenState.value.phoneEmailValue,
+            phoneNumber = if (_registerScreenState.value.isUsingPhoneNumber) _registerScreenState.value.phoneEmailValue else null,
+            profilePicture = _registerScreenState.value.profileImageValue,
+            dateOfBirth = _registerScreenState.value.dobValueTimestamp,
+        )
+        currentUserRepository.registerUser(registerRequest).collect {
+            when (it) {
+                is ClientResponse.Error -> showErrorMessage(it.message)
+                ClientResponse.Idle -> updateLoaderState(false)
+                ClientResponse.Loading -> updateLoaderState(true)
+                is ClientResponse.Success -> {}
+            }
+        }
+    }
+
+    private suspend fun performRegisterFormOperations(navigateToLogin: ((String) -> Unit)? = null) {
+        userVerificationRepository.isUserPresent(_registerScreenState.value.phoneEmailValue)
+            .collect {
+                when (it) {
+                    is ClientResponse.Error -> onUserPresentError(
+                        it,
+                    )
+
+                    ClientResponse.Idle -> updateLoaderState(showLoader = false)
+                    ClientResponse.Loading -> updateLoaderState(showLoader = true)
+                    is ClientResponse.Success -> {
+                        navigateToLogin?.invoke(_registerScreenState.value.phoneEmailValue)
                     }
                 }
-            } else {
-                userVerificationRepository.isUserPresent(_registerScreenState.value.phoneEmailValue)
-                    .collect {
-                        when (it) {
-                            is ClientResponse.Error -> onUserPresentError(
-                                it,
-                            )
+            }
+    }
 
-                            ClientResponse.Idle -> updateLoaderState(showLoader = false)
-                            ClientResponse.Loading -> updateLoaderState(showLoader = true)
-                            is ClientResponse.Success -> {
-                                navigateToLogin?.invoke(_registerScreenState.value.phoneEmailValue)
-                            }
-                        }
-                    }
+    private suspend fun performOTPOperations() {
+        userVerificationRepository.validateOtp(
+            otp = _registerScreenState.value.otpValue,
+            value = _registerScreenState.value.phoneEmailValue,
+        ).collect {
+            when (it) {
+                is ClientResponse.Error -> showErrorMessage(it.message)
+                ClientResponse.Idle -> updateLoaderState(showLoader = false)
+                ClientResponse.Loading -> updateLoaderState(showLoader = true)
+                is ClientResponse.Success -> otpVerificationSuccess()
             }
         }
     }

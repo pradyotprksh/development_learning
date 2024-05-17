@@ -5,23 +5,23 @@ import com.pradyotprakash.xfullstack.core.security.hashing.SaltedHash
 import com.pradyotprakash.xfullstack.core.security.token.TokenClaim
 import com.pradyotprakash.xfullstack.core.security.token.TokenConfig
 import com.pradyotprakash.xfullstack.core.security.token.TokenService
-import com.pradyotprakash.xfullstack.data.request.LoginRequest
-import com.pradyotprakash.xfullstack.data.response.AuthenticationResponse
 import com.pradyotprakash.xfullstack.data.user.UserDataSource
 import com.pradyotprakash.xfullstack.features.authentication.resource.AuthenticationResource
 import core.exception.InvalidParameter
 import core.exception.UserAuthDetailsError
 import core.exception.UserDetailsNotFound
-import utils.Constants.ErrorCode.USERNAME_OR_EMAIL_OR_PHONE_NUMBER_REQUIRED_ERROR_CODE
-import utils.Constants.Keys.USER_ID
-import utils.Localization
-import utils.ResponseStatus
-import utils.UtilsMethod
+import data.request.LoginRequest
+import data.response.AuthenticationResponse
 import data.response.XFullStackResponse
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.ApplicationCall
 import io.ktor.server.request.receive
 import io.ktor.server.response.respond
+import utils.Constants.ErrorCode.USERNAME_OR_EMAIL_OR_PHONE_NUMBER_REQUIRED_ERROR_CODE
+import utils.Constants.Keys.USER_ID
+import utils.Localization
+import utils.ResponseStatus
+import utils.UtilsMethod
 
 class LoginControllerImplementation : LoginController {
     override suspend fun loginUser(
@@ -78,6 +78,7 @@ class LoginControllerImplementation : LoginController {
                 status = ResponseStatus.Success,
                 errorCode = null,
                 data = AuthenticationResponse(
+                    userId = user.id.toHexString(),
                     token = token
                 )
             )

@@ -129,9 +129,8 @@ object UtilsMethod {
         return true
     }
 
-    fun isValidDate(date: String): Boolean {
-        // TODO: Implement date validation
-        return true
+    fun isValidDate(date: Long): Boolean {
+        return convertLongToReadableDate(date).isNotBlank()
     }
 
     fun getIntegerValue(value: String, length: Int): String {
