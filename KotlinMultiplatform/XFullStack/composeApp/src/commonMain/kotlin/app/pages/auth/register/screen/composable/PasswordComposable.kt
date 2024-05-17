@@ -135,7 +135,9 @@ fun PasswordComposable(
                     imeAction = ImeAction.Send,
                 ),
                 keyboardActions = KeyboardActions(
-                    onSend = {}
+                    onSend = {
+                        registerViewModel.passwordDone()
+                    }
                 ),
                 trailingIcon = {
                     if (registerScreenState.confirmPasswordValid) {

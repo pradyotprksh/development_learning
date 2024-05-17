@@ -56,7 +56,7 @@ object Constants {
     }
 
     object ConstValues {
-        const val USERNAME_LENGTH = 5
+        const val USERNAME_MIN_LENGTH = 5
         const val NAME_MIN_LENGTH = 1
         const val NAME_MAX_LENGTH = 50
         const val PASSWORD_MIN_LENGTH = 8

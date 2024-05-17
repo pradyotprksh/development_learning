@@ -7,4 +7,5 @@ enum class TextFieldType {
     Otp,
     Password,
     ConfirmPassword,
+    Username,
 }

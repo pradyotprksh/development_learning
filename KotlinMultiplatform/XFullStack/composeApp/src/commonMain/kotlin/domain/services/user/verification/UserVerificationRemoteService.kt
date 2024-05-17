@@ -11,4 +11,6 @@ interface UserVerificationRemoteService {
     suspend fun generateOtp(value: String): XFullStackResponse<OTPResponse>
 
     suspend fun validateOtp(otpVerificationRequest: OtpVerificationRequest): XFullStackResponse<DefaultResponse>
+
+    suspend fun isUserNameValid(username: String): XFullStackResponse<DefaultResponse>
 }

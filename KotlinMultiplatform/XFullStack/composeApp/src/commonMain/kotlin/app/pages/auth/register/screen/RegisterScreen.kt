@@ -40,6 +40,7 @@ import app.composables.XAppBar
 import app.pages.auth.register.screen.composable.OtpVerificationComposable
 import app.pages.auth.register.screen.composable.PasswordComposable
 import app.pages.auth.register.screen.composable.RegisterFormComposable
+import app.pages.auth.register.screen.composable.UsernameProfileImageComposable
 import app.pages.auth.register.viewModel.RegisterViewModel
 import kotlinx.coroutines.launch
 import utils.Localization
@@ -58,12 +59,11 @@ fun RegisterScreen(
     }
     registerScreenState.errorMessage?.let { message ->
         scope.launch {
-            val result = snackbarHostState
-                .showSnackbar(
-                    message = message,
-                    actionLabel = Localization.OKAY,
-                    duration = SnackbarDuration.Short
-                )
+            val result = snackbarHostState.showSnackbar(
+                message = message,
+                actionLabel = Localization.OKAY,
+                duration = SnackbarDuration.Short
+            )
             when (result) {
                 SnackbarResult.ActionPerformed, SnackbarResult.Dismissed -> {
                     registerViewModel.removeErrorMessage()
@@ -105,7 +105,7 @@ fun RegisterScreen(
                 modifier = Modifier.weight(1f)
             ) {
                 AnimatedVisibility(
-                    visible = !registerScreenState.showOtpOption && !registerScreenState.showPasswordOption,
+                    visible = registerScreenState.userDetailsForm,
                 ) {
                     RegisterFormComposable(
                         modifier = Modifier.weight(1f),
@@ -115,7 +115,7 @@ fun RegisterScreen(
                     )
                 }
                 AnimatedVisibility(
-                    visible = registerScreenState.showOtpOption && !registerScreenState.showPasswordOption,
+                    visible = registerScreenState.otpForm,
                 ) {
                     OtpVerificationComposable(
                         modifier = Modifier.weight(1f),
@@ -125,9 +125,19 @@ fun RegisterScreen(
                     )
                 }
                 AnimatedVisibility(
-                    visible = !registerScreenState.showOtpOption && registerScreenState.showPasswordOption,
+                    visible = registerScreenState.passwordForm,
                 ) {
                     PasswordComposable(
+                        modifier = Modifier.weight(1f),
+                        startEndPaddingModifier = startEndPaddingModifier,
+                        registerScreenState = registerScreenState,
+                        registerViewModel = registerViewModel,
+                    )
+                }
+                AnimatedVisibility(
+                    visible = registerScreenState.usernameProfileImageForm,
+                ) {
+                    UsernameProfileImageComposable(
                         modifier = Modifier.weight(1f),
                         startEndPaddingModifier = startEndPaddingModifier,
                         registerScreenState = registerScreenState,
@@ -165,7 +175,7 @@ fun RegisterScreen(
                     }, enabled = registerScreenState.enableNextButton
                 ) {
                     Text(
-                        Localization.NEXT
+                        if (!registerScreenState.usernameProfileImageForm) Localization.NEXT else Localization.CREATE_ACCOUNT
                     )
                 }
             }

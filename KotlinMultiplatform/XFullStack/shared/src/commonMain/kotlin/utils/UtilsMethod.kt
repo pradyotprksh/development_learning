@@ -7,7 +7,7 @@ import kotlinx.datetime.toLocalDateTime
 import utils.Constants.ConstValues.NAME_MAX_LENGTH
 import utils.Constants.ConstValues.NAME_MIN_LENGTH
 import utils.Constants.ConstValues.PASSWORD_MIN_LENGTH
-import utils.Constants.ConstValues.USERNAME_LENGTH
+import utils.Constants.ConstValues.USERNAME_MIN_LENGTH
 import utils.Constants.ErrorCode.EMAIL_VALIDITY_ERROR_CODE
 import utils.Constants.ErrorCode.NAME_VALIDITY_ERROR_CODE
 import utils.Constants.ErrorCode.PASSWORD_VALIDITY_ERROR_CODE
@@ -29,7 +29,7 @@ object UtilsMethod {
         return true
     }
 
-    private fun maxUsernameLengthValid(username: String) = username.length >= USERNAME_LENGTH
+    private fun maxUsernameLengthValid(username: String) = username.length >= USERNAME_MIN_LENGTH
 
     private fun validUsername(username: String) = username.matches(Regex("[^\\n]{5,}"))
 

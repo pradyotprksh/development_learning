@@ -10,6 +10,6 @@ class UtilsResource {
     @Resource(USERNAME_VALID)
     data class UsernameValid(
         private val parent: UtilsResource = UtilsResource(),
-        val username: String,
+        val value: String,
     )
 }

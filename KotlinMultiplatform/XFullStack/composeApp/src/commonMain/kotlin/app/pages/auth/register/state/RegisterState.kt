@@ -28,12 +28,28 @@ data class RegisterState(
     val errorMessage: String? = null,
     val showOtpOption: Boolean = false,
     val otpValue: String = "",
-    val showPasswordOption: Boolean = true,
+    val showPasswordOption: Boolean = false,
     val passwordValue: String = "",
     val confirmPasswordValue: String = "",
     val showConfirmPassword: Boolean = false,
-    val passwordValidation: PasswordValidation = PasswordValidation()
+    val passwordValidation: PasswordValidation = PasswordValidation(),
+    val profileImage: String? = null,
+    val username: String = "",
+    val isUsernameValid: Boolean = false,
+    val showUsernameProfileImage: Boolean = false,
 ) {
+    val userDetailsForm: Boolean
+        get() = !showOtpOption && !showPasswordOption && !showUsernameProfileImage
+
+    val otpForm: Boolean
+        get() = showOtpOption && !showPasswordOption && !showUsernameProfileImage
+
+    val passwordForm: Boolean
+        get() = !showOtpOption && showPasswordOption && !showUsernameProfileImage
+
+    val usernameProfileImageForm: Boolean
+        get() = !showOtpOption && !showPasswordOption && showUsernameProfileImage
+
     val passwordValid: Boolean
         get() = passwordValue.isNotBlank() && passwordValidation.isValid
 
@@ -41,7 +57,8 @@ data class RegisterState(
         get() = confirmPasswordValue.isNotBlank() && confirmPasswordValue == passwordValue
 
     val enableNextButton: Boolean
-        get() = if (showOtpOption) otpValue.isNotBlank() && otpValue.length == OTP_LENGTH
-        else if (showPasswordOption) passwordValid && confirmPasswordValid
+        get() = if (otpForm) otpValue.isNotBlank() && otpValue.length == OTP_LENGTH
+        else if (passwordForm) passwordValid && confirmPasswordValid
+        else if (usernameProfileImageForm) isUsernameValid
         else nameValue.isNotBlank() && isNameValid && phoneEmailValue.isNotBlank() && isPhoneEmailValid && dobValue.isNotBlank()
 }

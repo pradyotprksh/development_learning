@@ -103,4 +103,31 @@ class UserVerificationRepositoryImplementation(
             }
             emit(ClientResponse.Idle)
         }
+
+    override suspend fun isUsernameValid(value: String): Flow<ClientResponse<out XFullStackResponse<DefaultResponse>>> =
+        flow {
+            emit(ClientResponse.Loading)
+            try {
+                val response = userVerificationRemoteService.isUserNameValid(username = value)
+                if (response.status == ResponseStatus.Success) {
+                    emit(ClientResponse.Success(response))
+                } else {
+                    emit(
+                        ClientResponse.Error(
+                            message = response.data?.message ?: Localization.DEFAULT_ERROR_MESSAGE,
+                            errorCode = response.errorCode
+                                ?: Constants.ErrorCode.DEFAULT_ERROR_CODE,
+                        ),
+                    )
+                }
+            } catch (e: Exception) {
+                emit(
+                    ClientResponse.Error(
+                        message = e.message ?: Localization.DEFAULT_ERROR_MESSAGE,
+                        errorCode = Constants.ErrorCode.DEFAULT_ERROR_CODE,
+                    ),
+                )
+            }
+            emit(ClientResponse.Idle)
+        }
 }

@@ -13,6 +13,8 @@ import kotlinx.coroutines.launch
 import org.kodein.di.instance
 import utils.Constants.ConstValues.NAME_MAX_LENGTH
 import utils.Constants.ConstValues.OTP_LENGTH
+import utils.Constants.ErrorCode.USERNAME_ALREADY_PRESENT_ERROR_CODE
+import utils.Constants.ErrorCode.USERNAME_VALIDITY_ERROR_CODE
 import utils.Constants.ErrorCode.USER_DETAILS_NOT_FOUND_CODE
 import utils.Logger
 import utils.LoggerLevel
@@ -85,6 +87,13 @@ class RegisterViewModel : ViewModel() {
                     confirmPasswordValue = value
                 )
             }
+
+            TextFieldType.Username -> {
+                _registerScreenState.value = _registerScreenState.value.copy(
+                    username = value, isUsernameValid = false
+                )
+                checkForUsernameValidity(_registerScreenState.value.username)
+            }
         }
     }
 
@@ -92,8 +101,7 @@ class RegisterViewModel : ViewModel() {
         try {
             UtilsMethod.isValidPassword(value)
             _registerScreenState.value = _registerScreenState.value.copy(
-                showConfirmPassword = true,
-                passwordValidation = PasswordValidation(
+                showConfirmPassword = true, passwordValidation = PasswordValidation(
                     length = true,
                     uppercase = true,
                     lowercase = true,
@@ -103,8 +111,7 @@ class RegisterViewModel : ViewModel() {
             )
         } catch (e: Throwable) {
             _registerScreenState.value = _registerScreenState.value.copy(
-                showConfirmPassword = false,
-                passwordValidation = PasswordValidation(
+                showConfirmPassword = false, passwordValidation = PasswordValidation(
                     length = UtilsMethod.minPasswordLengthValid(value),
                     uppercase = UtilsMethod.passwordContainsAtLeastOneUpperCase(value),
                     lowercase = UtilsMethod.passwordContainsAtLeastOneLowerCase(value),
@@ -148,6 +155,37 @@ class RegisterViewModel : ViewModel() {
                 isPhoneEmailValid = isValid,
                 showPhoneNumberError = !isValid,
             )
+        }
+    }
+
+    private val checkForUsernameValidity = debounce<String>(
+        waitMs = 1000,
+        scope = viewModelScope,
+    ) {
+        if (_registerScreenState.value.username.isNotBlank()) {
+            viewModelScope.launch {
+                userVerificationRepository.isUsernameValid(_registerScreenState.value.username)
+                    .collect {
+                        when (it) {
+                            is ClientResponse.Error -> {
+                                if (it.errorCode == USERNAME_ALREADY_PRESENT_ERROR_CODE || it.errorCode == USERNAME_VALIDITY_ERROR_CODE) {
+                                    _registerScreenState.value = _registerScreenState.value.copy(
+                                        isUsernameValid = false,
+                                    )
+                                } else {
+                                    showErrorMessage(it.message)
+                                }
+                            }
+
+                            is ClientResponse.Success -> _registerScreenState.value =
+                                _registerScreenState.value.copy(
+                                    isUsernameValid = true,
+                                )
+
+                            else -> {}
+                        }
+                    }
+            }
         }
     }
 
@@ -270,6 +308,16 @@ class RegisterViewModel : ViewModel() {
     fun removeErrorMessage() {
         _registerScreenState.value = _registerScreenState.value.copy(
             errorMessage = null
+        )
+    }
+
+    fun passwordDone() {
+        _registerScreenState.value = _registerScreenState.value.copy(
+            showOtpOption = false,
+            showPasswordOption = false,
+            showUsernameProfileImage = true,
+            showLoading = false,
+            errorMessage = null,
         )
     }
 }

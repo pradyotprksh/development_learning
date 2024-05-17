@@ -3,7 +3,7 @@ package utils
 import utils.Constants.ConstValues.NAME_MAX_LENGTH
 import utils.Constants.ConstValues.NAME_MIN_LENGTH
 import utils.Constants.ConstValues.PASSWORD_MIN_LENGTH
-import utils.Constants.ConstValues.USERNAME_LENGTH
+import utils.Constants.ConstValues.USERNAME_MIN_LENGTH
 
 object Localization {
     const val APP_NAME = "X"
@@ -25,10 +25,12 @@ object Localization {
     const val FORGOT_PASSWORD = "Forgot password?"
     const val NEXT = "Next"
     const val PHONE_EMAIL_USERNAME = "Phone, email, or username"
-    const val USERNAME_LENGTH_ERROR = "Username should be greater than $USERNAME_LENGTH characters"
+    const val USERNAME_LENGTH_ERROR =
+        "Username should be greater than $USERNAME_MIN_LENGTH characters"
     const val NAME_LENGTH_ERROR =
         "Username should be in the range $NAME_MIN_LENGTH-$NAME_MAX_LENGTH characters"
     const val INVALID_USERNAME = "Invalid username"
+    const val VALID_USERNAME = "Valid username"
     const val USERNAME_ALREADY_EXISTS = "Username already exists"
     const val EMAIL_ALREADY_EXISTS = "Email already exists"
     const val PHONE_NUMBER_ALREADY_EXISTS = "Phone number already exists"
@@ -78,4 +80,7 @@ object Localization {
     const val PROTECT_YOUR_ACCOUNT_WITH_PASSWORD = "Protect your account with a password"
     const val PASSWORD = "Password"
     const val CONFIRM_PASSWORD = "Confirm password"
+    const val SHARE_PROFILE_IMAGE_USERNAME =
+        "Add an username to share your profile image for others to find you easily"
+    const val USERNAME = "Username"
 }

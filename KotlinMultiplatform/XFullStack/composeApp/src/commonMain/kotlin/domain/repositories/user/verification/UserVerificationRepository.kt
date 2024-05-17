@@ -15,4 +15,6 @@ interface UserVerificationRepository {
         value: String,
         otp: String,
     ): Flow<ClientResponse<out XFullStackResponse<DefaultResponse>>>
+
+    suspend fun isUsernameValid(value: String): Flow<ClientResponse<out XFullStackResponse<DefaultResponse>>>
 }
