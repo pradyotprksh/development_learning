@@ -6,18 +6,14 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
-import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navArgument
 import app.navigation.Routes
 import app.pages.auth.authOptions.screen.AuthOptionsScreen
 import app.pages.auth.login.screen.LoginScreen
 import app.pages.auth.register.screen.RegisterScreen
-import app.pages.otpVerification.screen.OtpVerificationScreen
 import app.pages.splash.screen.SplashScreen
-import utils.Constants.Keys.VALUE
 
 /**
  * XApp
@@ -66,22 +62,9 @@ fun XApp(
                     navController.popBackStack()
                 }
             }
-            composable(
-                Routes.OtpVerification.route,
-                arguments = listOf(
-                    navArgument(VALUE) { type = NavType.StringType }
-                )
-            ) {
-                val value = it.arguments?.getString(VALUE) ?: ""
-
-                OtpVerificationScreen {
-                    navController.popBackStack()
-                }
-            }
             composable(Routes.Register.route) {
                 RegisterScreen(
                     navigateToLogin = {},
-                    navigateToOtpVerification = {}
                 ) {
                     navController.popBackStack()
                 }

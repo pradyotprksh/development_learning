@@ -67,4 +67,10 @@ object Localization {
         "This will not be shown publicly. Confirm your own age, even if this account is for a business, a pet, or something else."
     const val USER_PRESENT = "User details are present."
     const val OKAY = "Okay"
+    const val WE_SENT_YOU_CODE = "We sent you a code"
+    const val ENTER_BELOW_TO_VERIFY = "Enter it below to verify %s"
+    const val WAITING_FOR_SMS = "Waiting for SMS to arrive"
+    const val DID_NOT_RECEIVE_SMS = "Didn't receive SMS?"
+    const val VERIFICATION_CODE = "Verification code"
+    const val DID_NOT_RECEIVE_EMAIL = "Didn't receive email?"
 }

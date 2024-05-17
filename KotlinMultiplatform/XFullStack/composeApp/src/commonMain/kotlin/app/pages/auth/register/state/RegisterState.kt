@@ -13,6 +13,7 @@ data class RegisterState(
     val showPhoneNumberError: Boolean = false,
     val showLoading: Boolean = false,
     val errorMessage: String? = null,
+    val showOtpOption: Boolean = false,
 ) {
     val enableNextButton =
         nameValue.isNotBlank() && isNameValid && phoneEmailValue.isNotBlank() && isPhoneEmailValid && dobValue.isNotBlank()

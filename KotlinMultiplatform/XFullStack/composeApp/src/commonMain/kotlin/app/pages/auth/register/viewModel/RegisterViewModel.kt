@@ -121,7 +121,6 @@ class RegisterViewModel : ViewModel() {
     }
 
     fun checkForDetails(
-        navigateToOtpVerification: (String) -> Unit,
         navigateToLogin: (String) -> Unit,
     ) {
         viewModelScope.launch {
@@ -130,7 +129,6 @@ class RegisterViewModel : ViewModel() {
                     when (it) {
                         is ClientResponse.Error -> onUserPresentError(
                             it,
-                            navigateToOtpVerification,
                         )
 
                         ClientResponse.Idle -> updateLoaderState(showLoader = false)
@@ -149,15 +147,24 @@ class RegisterViewModel : ViewModel() {
 
     private fun onUserPresentError(
         error: ClientResponse.Error,
-        navigateToOtpVerification: (String) -> Unit
     ) {
         if (error.errorCode == USER_DETAILS_NOT_FOUND_CODE) {
-            navigateToOtpVerification(_registerScreenState.value.phoneEmailValue)
+            generateOtp()
         } else {
             _registerScreenState.value = _registerScreenState.value.copy(
                 errorMessage = error.message,
             )
         }
+    }
+
+    private fun generateOtp() {
+        _registerScreenState.value = _registerScreenState.value.copy(
+            showOtpOption = true,
+            useEmailOrPhoneState = false,
+            datePickerVisible = false,
+            showLoading = false,
+            errorMessage = null,
+        )
     }
 
     private fun updateLoaderState(showLoader: Boolean) {
