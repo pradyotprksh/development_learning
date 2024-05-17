@@ -1,7 +1,6 @@
 package domain.repositories.user.verification
 
 import core.models.response.ClientResponse
-import data.response.DefaultResponse
 import data.response.OTPResponse
 import data.response.XFullStackResponse
 import kotlinx.coroutines.flow.Flow

@@ -3,7 +3,6 @@ package data.remote.user.current
 import core.models.request.XFullStackClientRequestDetails
 import core.network.NetworkClient
 import data.request.RegisterRequest
-import data.response.DefaultResponse
 import data.response.XFullStackResponse
 import domain.services.user.current.CurrentUserRemoteService
 import utils.Constants.Paths.Authentication.AUTH

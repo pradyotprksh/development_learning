@@ -85,4 +85,6 @@ object Localization {
     const val USERNAME = "Username"
     const val ACCOUNT_CREATED_SUCCESSFULLY = "Account created successfully"
     const val TOKEN_GENERATED_SUCCESSFULLY = "Account token generated successfully"
+    const val USER_AUTHENTICATED = "User authenticated"
+    const val DETAILS_FOUND = "Details found"
 }

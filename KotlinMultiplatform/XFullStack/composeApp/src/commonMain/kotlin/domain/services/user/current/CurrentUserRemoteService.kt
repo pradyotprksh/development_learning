@@ -1,7 +1,6 @@
 package domain.services.user.current
 
 import data.request.RegisterRequest
-import data.response.DefaultResponse
 import data.response.XFullStackResponse
 
 interface CurrentUserRemoteService {

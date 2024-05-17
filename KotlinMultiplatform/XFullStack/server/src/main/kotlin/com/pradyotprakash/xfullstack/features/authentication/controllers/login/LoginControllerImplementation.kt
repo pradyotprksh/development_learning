@@ -77,6 +77,7 @@ class LoginControllerImplementation : LoginController {
             message = XFullStackResponse(
                 status = ResponseStatus.Success,
                 errorCode = null,
+                message = Localization.TOKEN_GENERATED_SUCCESSFULLY,
                 data = AuthenticationResponse(
                     userId = user.id.toHexString(),
                     token = token

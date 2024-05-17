@@ -7,7 +7,6 @@ import com.pradyotprakash.xfullstack.features.authentication.resource.Authentica
 import core.exception.DBWriteError
 import core.exception.InvalidParameter
 import data.request.RegisterRequest
-import data.response.DefaultResponse
 import data.response.XFullStackResponse
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.ApplicationCall
@@ -106,9 +105,8 @@ class RegisterControllerImplementation : RegisterController {
             XFullStackResponse(
                 status = ResponseStatus.Success,
                 errorCode = null,
-                data = DefaultResponse(
-                    message = Localization.ACCOUNT_CREATED_SUCCESSFULLY
-                ),
+                message = Localization.ACCOUNT_CREATED_SUCCESSFULLY,
+                data = null,
             )
         )
     }

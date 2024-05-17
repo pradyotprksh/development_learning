@@ -1,7 +1,6 @@
 package domain.services.user.verification
 
 import data.request.OtpVerificationRequest
-import data.response.DefaultResponse
 import data.response.OTPResponse
 import data.response.XFullStackResponse
 

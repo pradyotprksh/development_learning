@@ -2,7 +2,6 @@ package domain.repositories.user.current
 
 import core.models.response.ClientResponse
 import data.request.RegisterRequest
-import data.response.DefaultResponse
 import data.response.XFullStackResponse
 import domain.services.user.current.CurrentUserDBService
 import domain.services.user.current.CurrentUserRemoteService

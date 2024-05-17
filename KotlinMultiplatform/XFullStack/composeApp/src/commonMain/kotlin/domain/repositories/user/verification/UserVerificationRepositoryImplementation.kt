@@ -2,7 +2,6 @@ package domain.repositories.user.verification
 
 import core.models.response.ClientResponse
 import data.request.OtpVerificationRequest
-import data.response.DefaultResponse
 import data.response.OTPResponse
 import data.response.XFullStackResponse
 import domain.services.user.verification.UserVerificationRemoteService

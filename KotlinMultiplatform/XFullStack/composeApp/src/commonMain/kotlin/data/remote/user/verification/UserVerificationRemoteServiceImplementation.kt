@@ -3,7 +3,6 @@ package data.remote.user.verification
 import core.models.request.XFullStackClientRequestDetails
 import core.network.NetworkClient
 import data.request.OtpVerificationRequest
-import data.response.DefaultResponse
 import data.response.OTPResponse
 import data.response.XFullStackResponse
 import domain.services.user.verification.UserVerificationRemoteService

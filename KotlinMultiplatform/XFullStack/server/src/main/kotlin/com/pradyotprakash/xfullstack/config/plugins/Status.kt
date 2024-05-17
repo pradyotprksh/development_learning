@@ -6,7 +6,6 @@ import core.exception.UnauthorizedAccess
 import core.exception.UserAuthDetailsError
 import core.exception.UserDetailsNotFound
 import core.exception.XFullStackException
-import data.response.DefaultResponse
 import data.response.XFullStackResponse
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.Application
@@ -26,9 +25,8 @@ fun Application.configureStatusPages() {
                 XFullStackResponse(
                     status = ResponseStatus.Error,
                     errorCode = UNAUTHORIZED_ERROR_CODE,
-                    data = DefaultResponse(
-                        message = Localization.UNAUTHORIZED_ACCESS,
-                    )
+                    message = Localization.UNAUTHORIZED_ACCESS,
+                    data = null
                 )
             )
         }
@@ -39,9 +37,8 @@ fun Application.configureStatusPages() {
                 XFullStackResponse(
                     status = ResponseStatus.Error,
                     errorCode = INTERNAL_SERVER_ERROR_CODE,
-                    data = DefaultResponse(
-                        message = HttpStatusCode.InternalServerError.description,
-                    )
+                    message = HttpStatusCode.InternalServerError.description,
+                    data = null,
                 )
             )
         }
@@ -53,9 +50,8 @@ fun Application.configureStatusPages() {
                     XFullStackResponse(
                         status = ResponseStatus.Error,
                         errorCode = cause.errorCode,
-                        data = DefaultResponse(
-                            message = cause.message,
-                        )
+                        message = cause.message,
+                        data = null
                     )
                 )
 
@@ -64,9 +60,8 @@ fun Application.configureStatusPages() {
                     XFullStackResponse(
                         status = ResponseStatus.Error,
                         errorCode = cause.errorCode,
-                        data = DefaultResponse(
-                            message = cause.message ?: Localization.DEFAULT_ERROR_MESSAGE,
-                        )
+                        message = cause.message ?: Localization.DEFAULT_ERROR_MESSAGE,
+                        data = null
                     )
                 )
 
@@ -75,9 +70,8 @@ fun Application.configureStatusPages() {
                     XFullStackResponse(
                         status = ResponseStatus.Error,
                         errorCode = cause.errorCode,
-                        data = DefaultResponse(
-                            message = cause.message ?: Localization.DEFAULT_ERROR_MESSAGE,
-                        )
+                        message = cause.message ?: Localization.DEFAULT_ERROR_MESSAGE,
+                        data = null
                     )
                 )
 
@@ -86,9 +80,8 @@ fun Application.configureStatusPages() {
                     XFullStackResponse(
                         status = ResponseStatus.Error,
                         errorCode = cause.errorCode,
-                        data = DefaultResponse(
-                            message = cause.message ?: Localization.DEFAULT_ERROR_MESSAGE,
-                        )
+                        message = cause.message ?: Localization.DEFAULT_ERROR_MESSAGE,
+                        data = null
                     )
                 )
 
@@ -97,9 +90,8 @@ fun Application.configureStatusPages() {
                     XFullStackResponse(
                         status = ResponseStatus.Error,
                         errorCode = cause.errorCode,
-                        data = DefaultResponse(
-                            message = cause.message ?: Localization.DEFAULT_ERROR_MESSAGE,
-                        )
+                        message = cause.message ?: Localization.DEFAULT_ERROR_MESSAGE,
+                        data = null
                     )
                 )
             }
