@@ -2,7 +2,7 @@ package utils
 
 import utils.Constants.ConstValues.NAME_MAX_LENGTH
 import utils.Constants.ConstValues.NAME_MIN_LENGTH
-import utils.Constants.ConstValues.PASSWORD_LENGTH
+import utils.Constants.ConstValues.PASSWORD_MIN_LENGTH
 import utils.Constants.ConstValues.USERNAME_LENGTH
 
 object Localization {
@@ -35,7 +35,8 @@ object Localization {
     const val DEFAULT_ERROR_MESSAGE = "Something went wrong. Please try again later"
     const val UNAUTHORIZED_ACCESS = "Unauthorized Access"
     const val USER_DETAILS_NOT_FOUND = "User details not found"
-    const val PASSWORD_LENGTH_ERROR = "Password should be greater than $PASSWORD_LENGTH characters"
+    const val PASSWORD_LENGTH_ERROR =
+        "Password should be greater than $PASSWORD_MIN_LENGTH characters"
     const val NO_UPPERCASE_ERROR = "Doesn't contains any uppercase character"
     const val NO_LOWERCASE_ERROR = "Doesn't contains any lowercase character"
     const val NO_DIGIT_ERROR = "Doesn't contains any digit"
@@ -74,4 +75,7 @@ object Localization {
     const val DID_NOT_RECEIVE_SMS = "Didn't receive SMS?"
     const val VERIFICATION_CODE = "Verification code"
     const val DID_NOT_RECEIVE_EMAIL = "Didn't receive email?"
+    const val PROTECT_YOUR_ACCOUNT_WITH_PASSWORD = "Protect your account with a password"
+    const val PASSWORD = "Password"
+    const val CONFIRM_PASSWORD = "Confirm password"
 }

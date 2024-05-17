@@ -5,4 +5,6 @@ enum class TextFieldType {
     PhoneEmail,
     Dob,
     Otp,
+    Password,
+    ConfirmPassword,
 }

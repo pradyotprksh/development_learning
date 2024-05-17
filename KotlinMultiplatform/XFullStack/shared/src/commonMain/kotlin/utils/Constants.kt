@@ -59,7 +59,7 @@ object Constants {
         const val USERNAME_LENGTH = 5
         const val NAME_MIN_LENGTH = 1
         const val NAME_MAX_LENGTH = 50
-        const val PASSWORD_LENGTH = 8
+        const val PASSWORD_MIN_LENGTH = 8
         const val TOKEN_EXPIRES_IN = 365L * 1000L * 60L * 60L * 24L
         const val APPLICATION_JSON = "application/json"
         const val BEARER = "Bearer"

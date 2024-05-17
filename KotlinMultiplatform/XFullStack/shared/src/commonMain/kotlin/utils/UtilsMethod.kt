@@ -6,7 +6,7 @@ import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import utils.Constants.ConstValues.NAME_MAX_LENGTH
 import utils.Constants.ConstValues.NAME_MIN_LENGTH
-import utils.Constants.ConstValues.PASSWORD_LENGTH
+import utils.Constants.ConstValues.PASSWORD_MIN_LENGTH
 import utils.Constants.ConstValues.USERNAME_LENGTH
 import utils.Constants.ErrorCode.EMAIL_VALIDITY_ERROR_CODE
 import utils.Constants.ErrorCode.NAME_VALIDITY_ERROR_CODE
@@ -50,22 +50,22 @@ object UtilsMethod {
         return true
     }
 
-    private fun maxPasswordLengthValid(password: String) = password.length >= PASSWORD_LENGTH
+    fun minPasswordLengthValid(password: String) = password.length >= PASSWORD_MIN_LENGTH
 
-    private fun passwordContainsAtLeastOneUpperCase(password: String) =
+    fun passwordContainsAtLeastOneUpperCase(password: String) =
         password.contains(Regex("[A-Z]"))
 
-    private fun passwordContainsAtLeastOneLowerCase(password: String) =
+    fun passwordContainsAtLeastOneLowerCase(password: String) =
         password.contains(Regex("[a-z]"))
 
-    private fun passwordContainsAtLeastOneDigit(password: String) =
+    fun passwordContainsAtLeastOneDigit(password: String) =
         password.contains(Regex("[0-9]"))
 
-    private fun passwordContainsAtLeastOneSpecialCharacters(password: String) =
+    fun passwordContainsAtLeastOneSpecialCharacters(password: String) =
         password.contains(Regex("[^A-Za-z0-9]"))
 
     fun isValidPassword(password: String): Boolean {
-        if (!maxPasswordLengthValid(password)) {
+        if (!minPasswordLengthValid(password)) {
             throw InvalidParameter(
                 message = Localization.PASSWORD_LENGTH_ERROR,
                 errorCode = PASSWORD_VALIDITY_ERROR_CODE

@@ -38,6 +38,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import app.composables.LoadingDialog
 import app.composables.XAppBar
 import app.pages.auth.register.screen.composable.OtpVerificationComposable
+import app.pages.auth.register.screen.composable.PasswordComposable
 import app.pages.auth.register.screen.composable.RegisterFormComposable
 import app.pages.auth.register.viewModel.RegisterViewModel
 import kotlinx.coroutines.launch
@@ -104,7 +105,7 @@ fun RegisterScreen(
                 modifier = Modifier.weight(1f)
             ) {
                 AnimatedVisibility(
-                    visible = !registerScreenState.showOtpOption
+                    visible = !registerScreenState.showOtpOption && !registerScreenState.showPasswordOption,
                 ) {
                     RegisterFormComposable(
                         modifier = Modifier.weight(1f),
@@ -114,9 +115,19 @@ fun RegisterScreen(
                     )
                 }
                 AnimatedVisibility(
-                    visible = registerScreenState.showOtpOption,
+                    visible = registerScreenState.showOtpOption && !registerScreenState.showPasswordOption,
                 ) {
                     OtpVerificationComposable(
+                        modifier = Modifier.weight(1f),
+                        startEndPaddingModifier = startEndPaddingModifier,
+                        registerScreenState = registerScreenState,
+                        registerViewModel = registerViewModel,
+                    )
+                }
+                AnimatedVisibility(
+                    visible = !registerScreenState.showOtpOption && registerScreenState.showPasswordOption,
+                ) {
+                    PasswordComposable(
                         modifier = Modifier.weight(1f),
                         startEndPaddingModifier = startEndPaddingModifier,
                         registerScreenState = registerScreenState,

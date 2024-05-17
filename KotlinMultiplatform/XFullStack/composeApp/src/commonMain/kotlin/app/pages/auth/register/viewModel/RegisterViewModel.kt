@@ -2,6 +2,7 @@ package app.pages.auth.register.viewModel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import app.pages.auth.register.state.PasswordValidation
 import app.pages.auth.register.state.RegisterState
 import core.models.response.ClientResponse
 import di.ModulesDi
@@ -71,6 +72,40 @@ class RegisterViewModel : ViewModel() {
                     )
                 }
             }
+
+            TextFieldType.Password -> {
+                _registerScreenState.value = _registerScreenState.value.copy(
+                    passwordValue = value
+                )
+                checkPasswordValidity(value)
+            }
+
+            TextFieldType.ConfirmPassword -> {
+                _registerScreenState.value = _registerScreenState.value.copy(
+                    confirmPasswordValue = value
+                )
+            }
+        }
+    }
+
+    private fun checkPasswordValidity(value: String) {
+        try {
+            UtilsMethod.isValidPassword(value)
+            _registerScreenState.value = _registerScreenState.value.copy(
+                showConfirmPassword = true,
+                passwordValidation = PasswordValidation()
+            )
+        } catch (e: Throwable) {
+            _registerScreenState.value = _registerScreenState.value.copy(
+                showConfirmPassword = false,
+                passwordValidation = PasswordValidation(
+                    length = UtilsMethod.minPasswordLengthValid(value),
+                    uppercase = UtilsMethod.passwordContainsAtLeastOneUpperCase(value),
+                    lowercase = UtilsMethod.passwordContainsAtLeastOneLowerCase(value),
+                    digit = UtilsMethod.passwordContainsAtLeastOneDigit(value),
+                    specialCharacter = UtilsMethod.passwordContainsAtLeastOneSpecialCharacters(value),
+                )
+            )
         }
     }
 
@@ -167,7 +202,14 @@ class RegisterViewModel : ViewModel() {
     }
 
     private fun otpVerificationSuccess() {
-        
+        _registerScreenState.value = _registerScreenState.value.copy(
+            showOtpOption = false,
+            showPasswordOption = true,
+            useEmailOrPhoneState = false,
+            datePickerVisible = false,
+            showLoading = false,
+            errorMessage = null,
+        )
     }
 
     private fun onUserPresentError(
