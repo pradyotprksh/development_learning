@@ -51,7 +51,6 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import app.composables.LoadingDialog
 import app.composables.XAppBar
 import app.pages.auth.register.viewModel.RegisterViewModel
-import app.pages.otpVerification.model.OtpVerificationNavArguments
 import kotlinx.coroutines.launch
 import utils.Constants.ConstValues.NAME_MAX_LENGTH
 import utils.Localization
@@ -61,7 +60,8 @@ import utils.TextFieldType
 @Composable
 fun RegisterScreen(
     registerViewModel: RegisterViewModel = viewModel(),
-    navigateToOtpVerification: (OtpVerificationNavArguments) -> Unit,
+    isOtpVerified: Boolean = false,
+    navigateToOtpVerification: (String) -> Unit,
     navigateToLogin: (String) -> Unit,
     navigateBack: () -> Unit,
 ) {

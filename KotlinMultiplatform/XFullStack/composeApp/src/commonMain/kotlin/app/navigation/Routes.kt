@@ -1,5 +1,7 @@
 package app.navigation
 
+import utils.Constants.Keys.VALUE
+
 /**
  * Routes
  */
@@ -10,4 +12,5 @@ enum class Routes(
     AuthenticationOption("/authentication-option"),
     Login("/login"),
     Register("/register"),
+    OtpVerification("/otp-verification/{$VALUE}"),
 }

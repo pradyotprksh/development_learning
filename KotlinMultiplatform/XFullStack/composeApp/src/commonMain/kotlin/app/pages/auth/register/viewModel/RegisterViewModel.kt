@@ -3,10 +3,7 @@ package app.pages.auth.register.viewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.pages.auth.register.state.RegisterState
-import app.pages.otpVerification.model.OtpVerificationNavArguments
 import core.models.response.ClientResponse
-import data.response.DefaultResponse
-import data.response.XFullStackResponse
 import di.ModulesDi
 import domain.repositories.user.verification.UserVerificationRepository
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -124,7 +121,7 @@ class RegisterViewModel : ViewModel() {
     }
 
     fun checkForDetails(
-        navigateToOtpVerification: (OtpVerificationNavArguments) -> Unit,
+        navigateToOtpVerification: (String) -> Unit,
         navigateToLogin: (String) -> Unit,
     ) {
         viewModelScope.launch {
@@ -138,17 +135,13 @@ class RegisterViewModel : ViewModel() {
 
                         ClientResponse.Idle -> updateLoaderState(showLoader = false)
                         ClientResponse.Loading -> updateLoaderState(showLoader = true)
-                        is ClientResponse.Success -> onUserPresentSuccess(
-                            it,
-                            navigateToLogin,
-                        )
+                        is ClientResponse.Success -> onUserPresentSuccess(navigateToLogin)
                     }
                 }
         }
     }
 
     private fun onUserPresentSuccess(
-        success: ClientResponse<out XFullStackResponse<DefaultResponse>>,
         navigateToLogin: (String) -> Unit
     ) {
         navigateToLogin(_registerScreenState.value.phoneEmailValue)
@@ -156,17 +149,10 @@ class RegisterViewModel : ViewModel() {
 
     private fun onUserPresentError(
         error: ClientResponse.Error,
-        navigateToOtpVerification: (OtpVerificationNavArguments) -> Unit
+        navigateToOtpVerification: (String) -> Unit
     ) {
         if (error.errorCode == USER_DETAILS_NOT_FOUND_CODE) {
-            navigateToOtpVerification(
-                OtpVerificationNavArguments(
-                    emailPhone = _registerScreenState.value.phoneEmailValue,
-                    name = _registerScreenState.value.nameValue,
-                    dob = _registerScreenState.value.dobValue,
-                    dobTimeStamp = _registerScreenState.value.dobValueTimestamp,
-                )
-            )
+            navigateToOtpVerification(_registerScreenState.value.phoneEmailValue)
         } else {
             _registerScreenState.value = _registerScreenState.value.copy(
                 errorMessage = error.message,
