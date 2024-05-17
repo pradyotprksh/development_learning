@@ -17,11 +17,10 @@ import utils.Constants.Paths.Verification.VERIFICATION
 class UserVerificationRemoteServiceImplementation(
     private val networkClient: NetworkClient,
 ) : UserVerificationRemoteService {
-    override suspend fun isUserPresent(value: String): XFullStackResponse<DefaultResponse> {
-        val response = networkClient.get<XFullStackResponse<DefaultResponse>>(
+    override suspend fun isUserPresent(value: String): XFullStackResponse<Nothing> {
+        val response = networkClient.get<XFullStackResponse<Nothing>>(
             details = XFullStackClientRequestDetails(
-                endpoint = "${VERIFICATION}${USER_PRESENT}",
-                queries = mapOf(
+                endpoint = "${VERIFICATION}${USER_PRESENT}", queries = mapOf(
                     VALUE to value
                 )
             )
@@ -33,8 +32,7 @@ class UserVerificationRemoteServiceImplementation(
     override suspend fun generateOtp(value: String): XFullStackResponse<OTPResponse> {
         val response = networkClient.get<XFullStackResponse<OTPResponse>>(
             details = XFullStackClientRequestDetails(
-                endpoint = "${VERIFICATION}${GENERATE_OTP}",
-                queries = mapOf(
+                endpoint = "${VERIFICATION}${GENERATE_OTP}", queries = mapOf(
                     VALUE to value,
                 )
             )
@@ -45,8 +43,8 @@ class UserVerificationRemoteServiceImplementation(
 
     override suspend fun validateOtp(
         otpVerificationRequest: OtpVerificationRequest
-    ): XFullStackResponse<DefaultResponse> {
-        val response = networkClient.post<XFullStackResponse<DefaultResponse>>(
+    ): XFullStackResponse<Nothing> {
+        val response = networkClient.post<XFullStackResponse<Nothing>>(
             details = XFullStackClientRequestDetails(
                 endpoint = "${VERIFICATION}${VALIDATE_OTP}",
                 body = otpVerificationRequest,
@@ -56,11 +54,10 @@ class UserVerificationRemoteServiceImplementation(
         return response.getOrThrow()
     }
 
-    override suspend fun isUserNameValid(username: String): XFullStackResponse<DefaultResponse> {
-        val response = networkClient.get<XFullStackResponse<DefaultResponse>>(
+    override suspend fun isUserNameValid(username: String): XFullStackResponse<Nothing> {
+        val response = networkClient.get<XFullStackResponse<Nothing>>(
             details = XFullStackClientRequestDetails(
-                endpoint = "${UTILS}${USERNAME_VALID}",
-                queries = mapOf(
+                endpoint = "${UTILS}${USERNAME_VALID}", queries = mapOf(
                     VALUE to username,
                 )
             )

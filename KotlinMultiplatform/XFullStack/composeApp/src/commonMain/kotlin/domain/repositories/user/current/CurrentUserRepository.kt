@@ -10,9 +10,9 @@ interface CurrentUserRepository {
 
     fun getToken(userId: String): String
 
-    suspend fun authenticateUser(): Flow<ClientResponse<out XFullStackResponse<DefaultResponse>>>
+    suspend fun authenticateUser(): Flow<ClientResponse<out XFullStackResponse<Nothing>>>
 
     suspend fun deleteUserDetails(fromLocal: Boolean, fromRemote: Boolean)
 
-    suspend fun registerUser(registerRequest: RegisterRequest): Flow<ClientResponse<out XFullStackResponse<DefaultResponse>>>
+    suspend fun registerUser(registerRequest: RegisterRequest): Flow<ClientResponse<out XFullStackResponse<Nothing>>>
 }

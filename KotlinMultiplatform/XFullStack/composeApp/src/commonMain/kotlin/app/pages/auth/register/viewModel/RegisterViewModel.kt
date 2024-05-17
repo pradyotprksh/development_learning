@@ -219,12 +219,18 @@ class RegisterViewModel : ViewModel() {
         viewModelScope.launch {
             if (_registerScreenState.value.otpForm) {
                 performOTPOperations()
+            } else if (_registerScreenState.value.passwordForm) {
+                performPasswordOperations()
             } else if (_registerScreenState.value.usernameProfileImageForm) {
                 performCreateAccountOperations()
             } else {
                 performRegisterFormOperations(navigateToLogin)
             }
         }
+    }
+
+    private fun performPasswordOperations() {
+        passwordDone()
     }
 
     private suspend fun performCreateAccountOperations() {

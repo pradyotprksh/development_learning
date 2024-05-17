@@ -23,7 +23,7 @@ class CurrentUserRepositoryImplementation(
         return currentUserDBService.getToken(userId)
     }
 
-    override suspend fun authenticateUser(): Flow<ClientResponse<out XFullStackResponse<DefaultResponse>>> =
+    override suspend fun authenticateUser(): Flow<ClientResponse<out XFullStackResponse<Nothing>>> =
         flow {
             emit(ClientResponse.Loading)
             try {
@@ -33,7 +33,7 @@ class CurrentUserRepositoryImplementation(
                 } else {
                     emit(
                         ClientResponse.Error(
-                            message = response.data?.message ?: DEFAULT_ERROR_MESSAGE,
+                            message = response.message ?: DEFAULT_ERROR_MESSAGE,
                             errorCode = response.errorCode ?: DEFAULT_ERROR_CODE,
                         ),
                     )
@@ -49,7 +49,7 @@ class CurrentUserRepositoryImplementation(
             emit(ClientResponse.Idle)
         }
 
-    override suspend fun registerUser(registerRequest: RegisterRequest): Flow<ClientResponse<out XFullStackResponse<DefaultResponse>>> =
+    override suspend fun registerUser(registerRequest: RegisterRequest): Flow<ClientResponse<out XFullStackResponse<Nothing>>> =
         flow {
             emit(ClientResponse.Loading)
             try {
@@ -59,7 +59,7 @@ class CurrentUserRepositoryImplementation(
                 } else {
                     emit(
                         ClientResponse.Error(
-                            message = response.data?.message ?: DEFAULT_ERROR_MESSAGE,
+                            message = response.message ?: DEFAULT_ERROR_MESSAGE,
                             errorCode = response.errorCode ?: DEFAULT_ERROR_CODE,
                         ),
                     )

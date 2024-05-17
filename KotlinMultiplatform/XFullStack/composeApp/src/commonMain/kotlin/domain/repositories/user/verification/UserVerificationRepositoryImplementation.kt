@@ -14,7 +14,7 @@ import utils.ResponseStatus
 class UserVerificationRepositoryImplementation(
     private val userVerificationRemoteService: UserVerificationRemoteService,
 ) : UserVerificationRepository {
-    override suspend fun isUserPresent(value: String): Flow<ClientResponse<out XFullStackResponse<DefaultResponse>>> =
+    override suspend fun isUserPresent(value: String): Flow<ClientResponse<out XFullStackResponse<Nothing>>> =
         flow {
             emit(ClientResponse.Loading)
             try {
@@ -24,7 +24,7 @@ class UserVerificationRepositoryImplementation(
                 } else {
                     emit(
                         ClientResponse.Error(
-                            message = response.data?.message ?: Localization.DEFAULT_ERROR_MESSAGE,
+                            message = response.message ?: Localization.DEFAULT_ERROR_MESSAGE,
                             errorCode = response.errorCode
                                 ?: Constants.ErrorCode.DEFAULT_ERROR_CODE,
                         ),
@@ -51,7 +51,7 @@ class UserVerificationRepositoryImplementation(
                 } else {
                     emit(
                         ClientResponse.Error(
-                            message = response.data?.message ?: Localization.DEFAULT_ERROR_MESSAGE,
+                            message = response.message ?: Localization.DEFAULT_ERROR_MESSAGE,
                             errorCode = response.errorCode
                                 ?: Constants.ErrorCode.DEFAULT_ERROR_CODE,
                         ),
@@ -71,7 +71,7 @@ class UserVerificationRepositoryImplementation(
     override suspend fun validateOtp(
         value: String,
         otp: String
-    ): Flow<ClientResponse<out XFullStackResponse<DefaultResponse>>> =
+    ): Flow<ClientResponse<out XFullStackResponse<Nothing>>> =
         flow {
             emit(ClientResponse.Loading)
             try {
@@ -86,7 +86,7 @@ class UserVerificationRepositoryImplementation(
                 } else {
                     emit(
                         ClientResponse.Error(
-                            message = response.data?.message ?: Localization.DEFAULT_ERROR_MESSAGE,
+                            message = response.message ?: Localization.DEFAULT_ERROR_MESSAGE,
                             errorCode = response.errorCode
                                 ?: Constants.ErrorCode.DEFAULT_ERROR_CODE,
                         ),
@@ -103,7 +103,7 @@ class UserVerificationRepositoryImplementation(
             emit(ClientResponse.Idle)
         }
 
-    override suspend fun isUsernameValid(value: String): Flow<ClientResponse<out XFullStackResponse<DefaultResponse>>> =
+    override suspend fun isUsernameValid(value: String): Flow<ClientResponse<out XFullStackResponse<Nothing>>> =
         flow {
             emit(ClientResponse.Loading)
             try {
@@ -113,7 +113,7 @@ class UserVerificationRepositoryImplementation(
                 } else {
                     emit(
                         ClientResponse.Error(
-                            message = response.data?.message ?: Localization.DEFAULT_ERROR_MESSAGE,
+                            message = response.message ?: Localization.DEFAULT_ERROR_MESSAGE,
                             errorCode = response.errorCode
                                 ?: Constants.ErrorCode.DEFAULT_ERROR_CODE,
                         ),

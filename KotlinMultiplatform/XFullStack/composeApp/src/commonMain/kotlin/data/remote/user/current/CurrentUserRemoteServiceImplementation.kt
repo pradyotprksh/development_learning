@@ -12,8 +12,8 @@ import utils.Constants.Paths.Authentication.REGISTER
 class CurrentUserRemoteServiceImplementation(
     private val networkClient: NetworkClient
 ) : CurrentUserRemoteService {
-    override suspend fun authenticateUser(): XFullStackResponse<DefaultResponse> {
-        val response = networkClient.get<XFullStackResponse<DefaultResponse>>(
+    override suspend fun authenticateUser(): XFullStackResponse<Nothing> {
+        val response = networkClient.get<XFullStackResponse<Nothing>>(
             details = XFullStackClientRequestDetails(
                 endpoint = "$AUTH$AUTHENTICATE"
             )
@@ -22,8 +22,8 @@ class CurrentUserRemoteServiceImplementation(
         return response.getOrThrow()
     }
 
-    override suspend fun registerUser(registerRequest: RegisterRequest): XFullStackResponse<DefaultResponse> {
-        val response = networkClient.post<XFullStackResponse<DefaultResponse>>(
+    override suspend fun registerUser(registerRequest: RegisterRequest): XFullStackResponse<Nothing> {
+        val response = networkClient.post<XFullStackResponse<Nothing>>(
             details = XFullStackClientRequestDetails(
                 endpoint = "$AUTH$REGISTER",
                 body = registerRequest,

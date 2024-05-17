@@ -7,6 +7,6 @@ import utils.ResponseStatus
 data class XFullStackResponse<T>(
     val status: ResponseStatus,
     val errorCode: String?,
-    val message: String,
+    val message: String?,
     val data: T?,
 )
