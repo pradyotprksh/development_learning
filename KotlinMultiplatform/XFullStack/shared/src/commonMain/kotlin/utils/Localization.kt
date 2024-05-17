@@ -63,4 +63,6 @@ object Localization {
     const val PHONE = "Phone"
     const val EMAIL_PHONE_ERROR_MESSAGE = "Please enter a valid %s."
     const val PHONE_NUMBER = "Phone number"
+    const val DOB_SUPPORTING_TEXT =
+        "This will not be shown publicly. Confirm your own age, even if this account is for a business, a pet, or something else."
 }

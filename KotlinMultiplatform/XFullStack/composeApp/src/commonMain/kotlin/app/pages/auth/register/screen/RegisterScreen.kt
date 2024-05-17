@@ -198,6 +198,14 @@ fun RegisterScreen(
                     registerViewModel.focusedChangeForDob()
                 },
                 readOnly = true, maxLines = 1,
+                supportingText = {
+                    if (registerScreenState.datePickerVisible) {
+                        Text(
+                            text = Localization.DOB_SUPPORTING_TEXT,
+                            style = MaterialTheme.typography.bodySmall
+                        )
+                    }
+                }
             )
             Spacer(modifier = Modifier.weight(1f))
             HorizontalDivider()

@@ -3,7 +3,6 @@ package app.pages.auth.register.viewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.pages.auth.register.state.RegisterState
-import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import utils.Constants.ConstValues.NAME_MAX_LENGTH
@@ -30,7 +29,6 @@ class RegisterViewModel : ViewModel() {
         )
     }
 
-    @OptIn(FlowPreview::class)
     fun updateTextField(textFieldType: TextFieldType, value: String) {
         when (textFieldType) {
             TextFieldType.Name -> {
