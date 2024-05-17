@@ -1,35 +1,35 @@
 package domain.repositories.user.current
 
 import core.models.response.ClientResponse
-import utils.Constants.ErrorCode.DEFAULT_ERROR_CODE
-import utils.Localization.DEFAULT_ERROR_MESSAGE
-import utils.ResponseStatus
 import data.response.DefaultResponse
 import data.response.XFullStackResponse
 import domain.services.user.current.CurrentUserDBService
 import domain.services.user.current.CurrentUserRemoteService
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import utils.Constants.ErrorCode.DEFAULT_ERROR_CODE
+import utils.Localization.DEFAULT_ERROR_MESSAGE
+import utils.ResponseStatus
 
 class CurrentUserRepositoryImplementation(
-    private val userDBService: CurrentUserDBService,
-    private val userRemoteService: CurrentUserRemoteService,
+    private val currentUserDBService: CurrentUserDBService,
+    private val currentUserRemoteService: CurrentUserRemoteService,
 ) : CurrentUserRepository {
     override fun getUserId(): String? {
-        return userDBService.getUserId()?.userId
+        return currentUserDBService.getUserId()?.userId
     }
 
     override fun getToken(userId: String): String {
-        return userDBService.getToken(userId)
+        return currentUserDBService.getToken(userId)
     }
 
     override suspend fun authenticateUser(): Flow<ClientResponse<out XFullStackResponse<DefaultResponse>>> =
         flow {
             emit(ClientResponse.Loading)
             try {
-                val response = userRemoteService.authenticateUser()
+                val response = currentUserRemoteService.authenticateUser()
                 if (response.status == ResponseStatus.Success) {
-                    emit(ClientResponse.Success(userRemoteService.authenticateUser()))
+                    emit(ClientResponse.Success(response))
                 } else {
                     emit(
                         ClientResponse.Error(
@@ -51,7 +51,7 @@ class CurrentUserRepositoryImplementation(
 
     override suspend fun deleteUserDetails(fromLocal: Boolean, fromRemote: Boolean) {
         if (fromLocal) {
-            userDBService.deleteDetails()
+            currentUserDBService.deleteDetails()
         }
     }
 }

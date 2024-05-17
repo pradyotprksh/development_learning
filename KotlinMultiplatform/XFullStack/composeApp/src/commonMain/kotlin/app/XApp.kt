@@ -30,36 +30,44 @@ fun XApp(
                 .padding(innerPadding),
             startDestination = Routes.Splash.route,
         ) {
+            val navigateToAuthOption = {
+                navController.navigate(Routes.AuthenticationOption.route) {
+                    popUpTo(Routes.Splash.route) {
+                        inclusive = true
+                    }
+                }
+            }
+            val navigateToHome = {}
+            val navigateToLogin = {
+                navController.navigate(Routes.Login.route)
+            }
+            val navigateToRegister = {
+                navController.navigate(Routes.Register.route)
+            }
+            val navigateBack = {
+                navController.popBackStack()
+            }
+
             composable(Routes.Splash.route) {
                 SplashScreen(
-                    navigateToAuthOption = {
-                        navController.navigate(Routes.AuthenticationOption.route) {
-                            popUpTo(Routes.Splash.route) {
-                                inclusive = true
-                            }
-                        }
-                    },
-                    navigateToHome = {}
+                    navigateToAuthOption = navigateToAuthOption,
+                    navigateToHome = navigateToHome
                 )
             }
             composable(Routes.AuthenticationOption.route) {
                 AuthOptionsScreen(
-                    navigateToLogin = {
-                        navController.navigate(Routes.Login.route)
-                    },
-                    navigateToRegister = {
-                        navController.navigate(Routes.Register.route)
-                    },
+                    navigateToLogin = navigateToLogin,
+                    navigateToRegister = navigateToRegister,
                 )
             }
             composable(Routes.Login.route) {
                 LoginScreen {
-                    navController.popBackStack()
+                    navigateBack()
                 }
             }
             composable(Routes.Register.route) {
                 RegisterScreen {
-                    navController.popBackStack()
+                    navigateBack()
                 }
             }
         }

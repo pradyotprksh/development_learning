@@ -52,6 +52,7 @@ object Constants {
         const val CONTENT_TYPE = "Content-Type"
         const val AUTHORIZATION = "Authorization"
         const val REQUEST_IDENTIFIER = "request-identifier"
+        const val VALUE = "value"
     }
 
     object ConstValues {

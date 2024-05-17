@@ -228,7 +228,10 @@ fun RegisterScreen(
                     }
                 }
                 Spacer(modifier = Modifier.weight(1f))
-                Button(onClick = {}, enabled = registerScreenState.enableNextButton) {
+                Button(
+                    onClick = { registerViewModel.checkForDetails() },
+                    enabled = registerScreenState.enableNextButton
+                ) {
                     Text(
                         Localization.NEXT
                     )

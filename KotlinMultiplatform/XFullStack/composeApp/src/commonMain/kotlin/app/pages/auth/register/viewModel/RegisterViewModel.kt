@@ -3,14 +3,19 @@ package app.pages.auth.register.viewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.pages.auth.register.state.RegisterState
+import di.ModulesDi
+import domain.repositories.user.verification.UserVerificationRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import org.kodein.di.instance
 import utils.Constants.ConstValues.NAME_MAX_LENGTH
 import utils.TextFieldType
 import utils.UtilsMethod
 import utils.debounce
 
 class RegisterViewModel : ViewModel() {
+    private val userVerificationRepository: UserVerificationRepository by ModulesDi.di.instance()
+
     private val _registerScreenState = MutableStateFlow(RegisterState())
     val registerScreenState = _registerScreenState.asStateFlow()
 
@@ -113,5 +118,9 @@ class RegisterViewModel : ViewModel() {
                 dobValueLong = 0,
             )
         }
+    }
+
+    fun checkForDetails() {
+        TODO("Not yet implemented")
     }
 }
