@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.Button
 import androidx.compose.material3.HorizontalDivider
@@ -34,6 +35,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -124,18 +126,26 @@ fun LoginScreen(
                         Localization.PHONE_EMAIL_USERNAME
                     )
                 },
-                isError = loginScreenState.showUsernamePhoneEmailError,
-                modifier = Modifier.fillMaxWidth(),
+                modifier = startEndPaddingModifier.fillMaxWidth(),
                 maxLines = 1,
                 keyboardOptions = KeyboardOptions(
                     imeAction = ImeAction.Next,
                     keyboardType = KeyboardType.Text,
-                )
+                ),
+                trailingIcon = {
+                    if (loginScreenState.isUsernamePhoneEmailValid) {
+                        Icon(
+                            imageVector = Icons.Default.CheckCircle,
+                            contentDescription = Icons.Default.CheckCircle.name,
+                            tint = Color.Green
+                        )
+                    }
+                },
             )
+            Spacer(modifier = Modifier.height(15.dp))
             AnimatedVisibility(
                 visible = loginScreenState.isUsernamePhoneEmailValid,
             ) {
-                Spacer(modifier = Modifier.height(15.dp))
                 PasswordTextFieldComposable(
                     modifier = startEndPaddingModifier,
                     passwordValue = loginScreenState.passwordValue,

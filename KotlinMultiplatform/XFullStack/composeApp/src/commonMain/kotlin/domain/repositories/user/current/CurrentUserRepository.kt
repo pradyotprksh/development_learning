@@ -12,7 +12,7 @@ interface CurrentUserRepository {
 
     fun getToken(userId: String): String?
 
-    suspend fun saveUserDetails(userId: String, token: String)
+    suspend fun saveUserDetails(userId: String, token: String): Boolean
 
     suspend fun authenticateUser(): Flow<ClientResponse<out XFullStackResponse<Nothing>>>
 

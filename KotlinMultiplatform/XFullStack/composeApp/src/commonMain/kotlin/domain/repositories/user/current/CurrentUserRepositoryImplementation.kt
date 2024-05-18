@@ -1,7 +1,5 @@
 package domain.repositories.user.current
 
-import core.models.realm.CurrentUserId
-import core.models.realm.Token
 import core.models.response.ClientResponse
 import data.request.LoginRequest
 import data.request.RegisterRequest
@@ -27,12 +25,11 @@ class CurrentUserRepositoryImplementation(
         return currentUserDBService.getToken(userId)?.token
     }
 
-    override suspend fun saveUserDetails(userId: String, token: String) {
-        currentUserDBService.saveTokenDetails(Token().apply {
-            this.userId = userId
-            this.token = token
-        })
-        currentUserDBService.saveUserId(CurrentUserId().apply { this.userId = userId })
+    override suspend fun saveUserDetails(userId: String, token: String): Boolean {
+        val isTokenSaved = currentUserDBService.saveTokenDetails(userId, token)
+        val isCurrentUserIdSaved = currentUserDBService.saveUserId(userId)
+
+        return isTokenSaved && isCurrentUserIdSaved
     }
 
     override suspend fun authenticateUser(): Flow<ClientResponse<out XFullStackResponse<Nothing>>> =

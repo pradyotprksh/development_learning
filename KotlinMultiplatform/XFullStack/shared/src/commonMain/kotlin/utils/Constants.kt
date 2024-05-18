@@ -66,6 +66,7 @@ object Constants {
         const val BASE_URL = "http://${Server.HOST}:${Server.PORT}"
         const val OTP_LENGTH = 6
         const val USERNAME = "username"
+        const val NO_USERNAME = "no-username"
     }
 
     object ErrorCode {
@@ -91,7 +92,6 @@ object Constants {
     }
 
     object SuccessCode {
-        const val DEFAULT_SUCCESS_CODE = "SC_XFS000"
         const val USERNAME_PRESENT = "SC_XFS001"
         const val EMAIL_PRESENT = "SC_XFS002"
         const val PHONE_NUMBER_PRESENT = "SC_XFS003"
@@ -103,5 +103,6 @@ object Constants {
         const val PHONE_NUMBER = "phone_number"
         const val PROFILE_PICTURE = "profile_picture"
         const val DATE_OF_BIRTH = "date_of_birth"
+        const val USER_ID = "userId"
     }
 }

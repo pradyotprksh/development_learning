@@ -8,9 +8,9 @@ interface CurrentUserDBService {
 
     fun getToken(userId: String): Token?
 
-    suspend fun saveTokenDetails(token: Token)
+    suspend fun saveTokenDetails(userId: String, token: String): Boolean
 
-    suspend fun saveUserId(userId: CurrentUserId)
+    suspend fun saveUserId(userId: String): Boolean
 
     suspend fun deleteDetails()
 }
