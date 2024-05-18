@@ -17,6 +17,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.unit.dp
+import app.composables.UsernameTextFieldComposable
 import app.pages.auth.register.state.RegisterState
 import app.pages.auth.register.viewModel.RegisterViewModel
 import utils.Localization
@@ -38,33 +39,15 @@ fun UsernameProfileImageComposable(
             modifier = startEndPaddingModifier
         )
         Spacer(modifier = Modifier.height(10.dp))
-        OutlinedTextField(
-            value = registerScreenState.usernameValue,
-            onValueChange = { value ->
+        UsernameTextFieldComposable(
+            modifier = startEndPaddingModifier,
+            usernameValue = registerScreenState.usernameValue,
+            isUsernameValid = registerScreenState.isUsernameValid,
+            imageAction = ImeAction.Next,
+            onValueChange = { type, value ->
                 registerViewModel.updateTextField(
-                    textFieldType = TextFieldType.Username,
-                    value
+                    type, value
                 )
-            },
-            label = {
-                Text(
-                    Localization.USERNAME
-                )
-            },
-            modifier = startEndPaddingModifier.fillMaxWidth(),
-            maxLines = 1,
-            keyboardOptions = KeyboardOptions(
-                imeAction = ImeAction.Done,
-                capitalization = KeyboardCapitalization.None,
-            ),
-            trailingIcon = {
-                if (registerScreenState.isUsernameValid) {
-                    Icon(
-                        imageVector = Icons.Default.CheckCircle,
-                        contentDescription = Icons.Default.CheckCircle.name,
-                        tint = Color.Green
-                    )
-                }
             }
         )
     }

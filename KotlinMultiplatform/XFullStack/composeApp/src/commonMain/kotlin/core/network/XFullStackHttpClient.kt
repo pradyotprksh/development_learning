@@ -1,11 +1,5 @@
 package core.network
 
-import utils.Constants.ConstValues.APPLICATION_JSON
-import utils.Constants.ConstValues.BASE_URL
-import utils.Constants.ConstValues.BEARER
-import utils.Constants.Keys.AUTHORIZATION
-import utils.Constants.Keys.CONTENT_TYPE
-import utils.Constants.Keys.REQUEST_IDENTIFIER
 import di.ModulesDi
 import domain.repositories.user.current.CurrentUserRepository
 import io.ktor.client.HttpClient
@@ -18,6 +12,12 @@ import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 import org.kodein.di.instance
 import org.mongodb.kbson.BsonObjectId
+import utils.Constants.ConstValues.APPLICATION_JSON
+import utils.Constants.ConstValues.BASE_URL
+import utils.Constants.ConstValues.BEARER
+import utils.Constants.Keys.AUTHORIZATION
+import utils.Constants.Keys.CONTENT_TYPE
+import utils.Constants.Keys.REQUEST_IDENTIFIER
 
 object XFullStackHttpClient {
     private val currentUserRepository: CurrentUserRepository by ModulesDi.di.instance()
@@ -42,7 +42,9 @@ object XFullStackHttpClient {
             header(REQUEST_IDENTIFIER, BsonObjectId().toHexString())
 
             currentUserRepository.getUserId()?.let { userId ->
-                header(AUTHORIZATION, "$BEARER ${currentUserRepository.getToken(userId)}")
+                currentUserRepository.getToken(userId)?.let { token ->
+                    header(AUTHORIZATION, "$BEARER $token")
+                }
             }
         }
     }

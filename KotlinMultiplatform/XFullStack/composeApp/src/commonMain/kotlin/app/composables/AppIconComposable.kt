@@ -14,7 +14,7 @@ import utils.Resources
 
 @OptIn(ExperimentalResourceApi::class)
 @Composable
-fun AppIcon(
+fun AppIconComposable(
     boxModifier: Modifier = Modifier,
     imageModifier: Modifier = Modifier,
     showCircularProgressIndicator: Boolean = false

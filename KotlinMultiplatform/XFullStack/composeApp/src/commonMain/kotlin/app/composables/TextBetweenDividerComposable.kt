@@ -12,7 +12,7 @@ import androidx.compose.ui.unit.dp
 import utils.Localization
 
 @Composable
-fun TextBetweenDivider() {
+fun TextBetweenDividerComposable() {
     Row(
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically,

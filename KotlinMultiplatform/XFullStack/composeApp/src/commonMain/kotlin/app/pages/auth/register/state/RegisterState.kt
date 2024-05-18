@@ -1,17 +1,7 @@
 package app.pages.auth.register.state
 
 import utils.Constants.ConstValues.OTP_LENGTH
-
-data class PasswordValidation(
-    val length: Boolean = false,
-    val uppercase: Boolean = false,
-    val lowercase: Boolean = false,
-    val digit: Boolean = false,
-    val specialCharacter: Boolean = false,
-) {
-    val isValid: Boolean
-        get() = length && uppercase && lowercase && digit && specialCharacter
-}
+import utils.PasswordValidation
 
 data class RegisterState(
     val useEmailOrPhoneState: Boolean = true,
@@ -25,7 +15,7 @@ data class RegisterState(
     val isPhoneEmailValid: Boolean = false,
     val showPhoneNumberError: Boolean = false,
     val showLoading: Boolean = false,
-    val errorMessage: String? = null,
+    val snackBarMessage: String? = null,
     val showOtpOption: Boolean = false,
     val otpValue: String = "",
     val showPasswordOption: Boolean = false,

@@ -1,7 +1,11 @@
 package domain.repositories.user.current
 
+import core.models.realm.CurrentUserId
+import core.models.realm.Token
 import core.models.response.ClientResponse
+import data.request.LoginRequest
 import data.request.RegisterRequest
+import data.response.AuthenticationResponse
 import data.response.XFullStackResponse
 import domain.services.user.current.CurrentUserDBService
 import domain.services.user.current.CurrentUserRemoteService
@@ -19,8 +23,16 @@ class CurrentUserRepositoryImplementation(
         return currentUserDBService.getUserId()?.userId
     }
 
-    override fun getToken(userId: String): String {
-        return currentUserDBService.getToken(userId)
+    override fun getToken(userId: String): String? {
+        return currentUserDBService.getToken(userId)?.token
+    }
+
+    override suspend fun saveUserDetails(userId: String, token: String) {
+        currentUserDBService.saveTokenDetails(Token().apply {
+            this.userId = userId
+            this.token = token
+        })
+        currentUserDBService.saveUserId(CurrentUserId().apply { this.userId = userId })
     }
 
     override suspend fun authenticateUser(): Flow<ClientResponse<out XFullStackResponse<Nothing>>> =
@@ -34,7 +46,7 @@ class CurrentUserRepositoryImplementation(
                     emit(
                         ClientResponse.Error(
                             message = response.message ?: DEFAULT_ERROR_MESSAGE,
-                            errorCode = response.errorCode ?: DEFAULT_ERROR_CODE,
+                            errorCode = response.code ?: DEFAULT_ERROR_CODE,
                         ),
                     )
                 }
@@ -60,7 +72,33 @@ class CurrentUserRepositoryImplementation(
                     emit(
                         ClientResponse.Error(
                             message = response.message ?: DEFAULT_ERROR_MESSAGE,
-                            errorCode = response.errorCode ?: DEFAULT_ERROR_CODE,
+                            errorCode = response.code ?: DEFAULT_ERROR_CODE,
+                        ),
+                    )
+                }
+            } catch (e: Exception) {
+                emit(
+                    ClientResponse.Error(
+                        message = e.message ?: DEFAULT_ERROR_MESSAGE,
+                        errorCode = DEFAULT_ERROR_CODE,
+                    ),
+                )
+            }
+            emit(ClientResponse.Idle)
+        }
+
+    override suspend fun loginUser(loginRequest: LoginRequest): Flow<ClientResponse<out XFullStackResponse<AuthenticationResponse>>> =
+        flow {
+            emit(ClientResponse.Loading)
+            try {
+                val response = currentUserRemoteService.loginUser(loginRequest)
+                if (response.status == ResponseStatus.Success) {
+                    emit(ClientResponse.Success(response))
+                } else {
+                    emit(
+                        ClientResponse.Error(
+                            message = response.message ?: DEFAULT_ERROR_MESSAGE,
+                            errorCode = response.code ?: DEFAULT_ERROR_CODE,
                         ),
                     )
                 }

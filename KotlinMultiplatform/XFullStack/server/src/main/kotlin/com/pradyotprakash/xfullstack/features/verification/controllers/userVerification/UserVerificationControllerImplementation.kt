@@ -14,6 +14,9 @@ import utils.Constants.ConstValues.OTP_LENGTH
 import utils.Constants.ErrorCode.OTP_GENERATION_ERROR_CODE
 import utils.Constants.ErrorCode.OTP_VALIDATION_ERROR_CODE
 import utils.Constants.ErrorCode.USER_DETAILS_NOT_FOUND_CODE
+import utils.Constants.SuccessCode.EMAIL_PRESENT
+import utils.Constants.SuccessCode.PHONE_NUMBER_PRESENT
+import utils.Constants.SuccessCode.USERNAME_PRESENT
 import utils.Localization
 import utils.ResponseStatus
 import utils.UtilsMethod
@@ -33,7 +36,7 @@ class UserVerificationControllerImplementation : UserVerificationController {
                 HttpStatusCode.OK,
                 XFullStackResponse(
                     status = ResponseStatus.Success,
-                    errorCode = null,
+                    code = null,
                     message = Localization.OTP_GENERATE_SUCCESSFULLY,
                     data = OTPResponse(
                         otp = otp,
@@ -45,7 +48,7 @@ class UserVerificationControllerImplementation : UserVerificationController {
                 HttpStatusCode.InternalServerError,
                 XFullStackResponse(
                     status = ResponseStatus.Error,
-                    errorCode = OTP_GENERATION_ERROR_CODE,
+                    code = OTP_GENERATION_ERROR_CODE,
                     message = Localization.OTP_GENERATION_ERROR,
                     data = null
                 )
@@ -71,7 +74,7 @@ class UserVerificationControllerImplementation : UserVerificationController {
                     HttpStatusCode.OK,
                     XFullStackResponse(
                         status = ResponseStatus.Success,
-                        errorCode = null,
+                        code = null,
                         message = Localization.OTP_VERIFICATION_SUCCESS,
                         data = null
                     )
@@ -81,7 +84,7 @@ class UserVerificationControllerImplementation : UserVerificationController {
                     HttpStatusCode.Conflict,
                     XFullStackResponse(
                         status = ResponseStatus.Error,
-                        errorCode = OTP_VALIDATION_ERROR_CODE,
+                        code = OTP_VALIDATION_ERROR_CODE,
                         message = Localization.OTP_VERIFICATION_INVALID,
                         data = null
                     )
@@ -92,7 +95,7 @@ class UserVerificationControllerImplementation : UserVerificationController {
                 HttpStatusCode.InternalServerError,
                 XFullStackResponse(
                     status = ResponseStatus.Error,
-                    errorCode = OTP_VALIDATION_ERROR_CODE,
+                    code = OTP_VALIDATION_ERROR_CODE,
                     message = Localization.OTP_VERIFICATION_ERROR,
                     data = null
                 )
@@ -110,7 +113,7 @@ class UserVerificationControllerImplementation : UserVerificationController {
                 HttpStatusCode.OK,
                 XFullStackResponse(
                     status = ResponseStatus.Success,
-                    errorCode = null,
+                    code = USERNAME_PRESENT,
                     message = Localization.USER_PRESENT,
                     data = null,
                 )
@@ -123,7 +126,7 @@ class UserVerificationControllerImplementation : UserVerificationController {
                 HttpStatusCode.OK,
                 XFullStackResponse(
                     status = ResponseStatus.Success,
-                    errorCode = null,
+                    code = EMAIL_PRESENT,
                     message = Localization.USER_PRESENT,
                     data = null
                 )
@@ -136,7 +139,7 @@ class UserVerificationControllerImplementation : UserVerificationController {
                 HttpStatusCode.OK,
                 XFullStackResponse(
                     status = ResponseStatus.Success,
-                    errorCode = null,
+                    code = PHONE_NUMBER_PRESENT,
                     message = Localization.USER_PRESENT,
                     data = null
                 )
@@ -148,7 +151,7 @@ class UserVerificationControllerImplementation : UserVerificationController {
             HttpStatusCode.Conflict,
             XFullStackResponse(
                 status = ResponseStatus.Error,
-                errorCode = USER_DETAILS_NOT_FOUND_CODE,
+                code = USER_DETAILS_NOT_FOUND_CODE,
                 message = Localization.USER_DETAILS_NOT_FOUND,
                 data = null
             )

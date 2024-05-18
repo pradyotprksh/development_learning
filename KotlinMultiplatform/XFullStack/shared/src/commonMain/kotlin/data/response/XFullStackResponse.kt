@@ -6,7 +6,7 @@ import utils.ResponseStatus
 @Serializable
 data class XFullStackResponse<T>(
     val status: ResponseStatus,
-    val errorCode: String?,
+    val code: String?,
     val message: String?,
     val data: T?,
 )

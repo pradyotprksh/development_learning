@@ -19,7 +19,7 @@ import androidx.compose.ui.window.DialogProperties
 import utils.Localization
 
 @Composable
-fun LoadingDialog(
+fun LoadingDialogComposable(
     message: String = Localization.LOADING
 ) {
     Dialog(

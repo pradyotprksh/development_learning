@@ -25,7 +25,7 @@ class UserVerificationRepositoryImplementation(
                     emit(
                         ClientResponse.Error(
                             message = response.message ?: Localization.DEFAULT_ERROR_MESSAGE,
-                            errorCode = response.errorCode
+                            errorCode = response.code
                                 ?: Constants.ErrorCode.DEFAULT_ERROR_CODE,
                         ),
                     )
@@ -52,7 +52,7 @@ class UserVerificationRepositoryImplementation(
                     emit(
                         ClientResponse.Error(
                             message = response.message ?: Localization.DEFAULT_ERROR_MESSAGE,
-                            errorCode = response.errorCode
+                            errorCode = response.code
                                 ?: Constants.ErrorCode.DEFAULT_ERROR_CODE,
                         ),
                     )
@@ -87,7 +87,7 @@ class UserVerificationRepositoryImplementation(
                     emit(
                         ClientResponse.Error(
                             message = response.message ?: Localization.DEFAULT_ERROR_MESSAGE,
-                            errorCode = response.errorCode
+                            errorCode = response.code
                                 ?: Constants.ErrorCode.DEFAULT_ERROR_CODE,
                         ),
                     )
@@ -114,7 +114,7 @@ class UserVerificationRepositoryImplementation(
                     emit(
                         ClientResponse.Error(
                             message = response.message ?: Localization.DEFAULT_ERROR_MESSAGE,
-                            errorCode = response.errorCode
+                            errorCode = response.code
                                 ?: Constants.ErrorCode.DEFAULT_ERROR_CODE,
                         ),
                     )

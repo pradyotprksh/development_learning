@@ -13,8 +13,16 @@ class CurrentUserDBServiceImplementation(
         return realm.query<CurrentUserId>().find().firstOrNull()
     }
 
-    override fun getToken(userId: String): String {
-        return realm.query<Token>("userId == $userId").find().firstOrNull()?.token ?: ""
+    override fun getToken(userId: String): Token? {
+        return realm.query<Token>("userId == $userId").find().firstOrNull()
+    }
+
+    override suspend fun saveTokenDetails(token: Token) {
+        realm.write { copyToRealm(token) }
+    }
+
+    override suspend fun saveUserId(userId: CurrentUserId) {
+        realm.write { copyToRealm(userId) }
     }
 
     override suspend fun deleteDetails() {

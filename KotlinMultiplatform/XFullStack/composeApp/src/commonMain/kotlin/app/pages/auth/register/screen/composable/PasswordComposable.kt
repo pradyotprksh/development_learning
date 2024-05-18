@@ -18,8 +18,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
+import app.composables.PasswordTextFieldComposable
 import app.pages.auth.register.state.RegisterState
 import app.pages.auth.register.viewModel.RegisterViewModel
 import utils.Localization
@@ -41,76 +41,19 @@ fun PasswordComposable(
             modifier = startEndPaddingModifier
         )
         Spacer(modifier = Modifier.height(10.dp))
-        OutlinedTextField(
-            value = registerScreenState.passwordValue,
-            onValueChange = {
+        PasswordTextFieldComposable(
+            modifier = startEndPaddingModifier,
+            passwordValue = registerScreenState.passwordValue,
+            passwordValidation = registerScreenState.passwordValidation,
+            passwordValid = registerScreenState.passwordValid,
+            showPasswordErrors = true,
+            imeAction = ImeAction.Next,
+            onValueChange = { type, value ->
                 registerViewModel.updateTextField(
-                    textFieldType = TextFieldType.Password,
-                    value = it
+                    textFieldType = type,
+                    value = value
                 )
-            },
-            label = {
-                Text(
-                    Localization.PASSWORD
-                )
-            },
-            modifier = startEndPaddingModifier.fillMaxWidth(),
-            maxLines = 1,
-            keyboardOptions = KeyboardOptions(
-                keyboardType = KeyboardType.Password,
-                imeAction = ImeAction.Next,
-            ),
-            supportingText = {
-                if (registerScreenState.passwordValue.isNotBlank() && !registerScreenState.passwordValidation.isValid) {
-                    Column {
-                        if (!registerScreenState.passwordValidation.length)
-                            Text(
-                                Localization.PASSWORD_LENGTH_ERROR,
-                                style = MaterialTheme.typography.bodySmall.copy(
-                                    color = MaterialTheme.colorScheme.error
-                                ),
-                            )
-                        if (!registerScreenState.passwordValidation.uppercase)
-                            Text(
-                                Localization.NO_UPPERCASE_ERROR,
-                                style = MaterialTheme.typography.bodySmall.copy(
-                                    color = MaterialTheme.colorScheme.error
-                                ),
-                            )
-                        if (!registerScreenState.passwordValidation.lowercase)
-                            Text(
-                                Localization.NO_LOWERCASE_ERROR,
-                                style = MaterialTheme.typography.bodySmall.copy(
-                                    color = MaterialTheme.colorScheme.error
-                                ),
-                            )
-                        if (!registerScreenState.passwordValidation.digit)
-                            Text(
-                                Localization.NO_DIGIT_ERROR,
-                                style = MaterialTheme.typography.bodySmall.copy(
-                                    color = MaterialTheme.colorScheme.error
-                                ),
-                            )
-                        if (!registerScreenState.passwordValidation.specialCharacter)
-                            Text(
-                                Localization.NO_SPECIAL_CHARACTER_ERROR,
-                                style = MaterialTheme.typography.bodySmall.copy(
-                                    color = MaterialTheme.colorScheme.error
-                                ),
-                            )
-                    }
-                }
-            },
-            trailingIcon = {
-                if (registerScreenState.passwordValid) {
-                    Icon(
-                        imageVector = Icons.Default.CheckCircle,
-                        contentDescription = Icons.Default.CheckCircle.name,
-                        tint = Color.Green
-                    )
-                }
-            },
-            visualTransformation = PasswordVisualTransformation()
+            }
         )
         AnimatedVisibility(
             visible = registerScreenState.showConfirmPassword

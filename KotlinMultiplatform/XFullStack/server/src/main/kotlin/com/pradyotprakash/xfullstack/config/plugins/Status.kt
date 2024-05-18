@@ -24,7 +24,7 @@ fun Application.configureStatusPages() {
                 HttpStatusCode.Unauthorized,
                 XFullStackResponse(
                     status = ResponseStatus.Error,
-                    errorCode = UNAUTHORIZED_ERROR_CODE,
+                    code = UNAUTHORIZED_ERROR_CODE,
                     message = Localization.UNAUTHORIZED_ACCESS,
                     data = null
                 )
@@ -36,7 +36,7 @@ fun Application.configureStatusPages() {
                 HttpStatusCode.InternalServerError,
                 XFullStackResponse(
                     status = ResponseStatus.Error,
-                    errorCode = INTERNAL_SERVER_ERROR_CODE,
+                    code = INTERNAL_SERVER_ERROR_CODE,
                     message = HttpStatusCode.InternalServerError.description,
                     data = null,
                 )
@@ -49,7 +49,7 @@ fun Application.configureStatusPages() {
                     HttpStatusCode.BadRequest,
                     XFullStackResponse(
                         status = ResponseStatus.Error,
-                        errorCode = cause.errorCode,
+                        code = cause.errorCode,
                         message = cause.message,
                         data = null
                     )
@@ -59,7 +59,7 @@ fun Application.configureStatusPages() {
                     HttpStatusCode.Unauthorized,
                     XFullStackResponse(
                         status = ResponseStatus.Error,
-                        errorCode = cause.errorCode,
+                        code = cause.errorCode,
                         message = cause.message ?: Localization.DEFAULT_ERROR_MESSAGE,
                         data = null
                     )
@@ -69,7 +69,7 @@ fun Application.configureStatusPages() {
                     HttpStatusCode.Conflict,
                     XFullStackResponse(
                         status = ResponseStatus.Error,
-                        errorCode = cause.errorCode,
+                        code = cause.errorCode,
                         message = cause.message ?: Localization.DEFAULT_ERROR_MESSAGE,
                         data = null
                     )
@@ -79,7 +79,7 @@ fun Application.configureStatusPages() {
                     HttpStatusCode.Conflict,
                     XFullStackResponse(
                         status = ResponseStatus.Error,
-                        errorCode = cause.errorCode,
+                        code = cause.errorCode,
                         message = cause.message ?: Localization.DEFAULT_ERROR_MESSAGE,
                         data = null
                     )
@@ -89,7 +89,7 @@ fun Application.configureStatusPages() {
                     HttpStatusCode.BadGateway,
                     XFullStackResponse(
                         status = ResponseStatus.Error,
-                        errorCode = cause.errorCode,
+                        code = cause.errorCode,
                         message = cause.message ?: Localization.DEFAULT_ERROR_MESSAGE,
                         data = null
                     )

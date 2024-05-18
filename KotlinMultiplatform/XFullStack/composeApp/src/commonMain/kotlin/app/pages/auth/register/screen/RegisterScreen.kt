@@ -35,8 +35,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import app.composables.LoadingDialog
-import app.composables.XAppBar
+import app.composables.LoadingDialogComposable
+import app.composables.XAppBarComposable
 import app.pages.auth.register.screen.composable.OtpVerificationComposable
 import app.pages.auth.register.screen.composable.PasswordComposable
 import app.pages.auth.register.screen.composable.RegisterFormComposable
@@ -55,9 +55,9 @@ fun RegisterScreen(
     val snackbarHostState = remember { SnackbarHostState() }
     val registerScreenState by registerViewModel.registerScreenState.collectAsState()
     if (registerScreenState.showLoading) {
-        LoadingDialog()
+        LoadingDialogComposable()
     }
-    registerScreenState.errorMessage?.let { message ->
+    registerScreenState.snackBarMessage?.let { message ->
         scope.launch {
             val result = snackbarHostState.showSnackbar(
                 message = message,
@@ -66,7 +66,7 @@ fun RegisterScreen(
             )
             when (result) {
                 SnackbarResult.ActionPerformed, SnackbarResult.Dismissed -> {
-                    registerViewModel.removeErrorMessage()
+                    registerViewModel.removeSnackBarMessage()
                 }
             }
         }
@@ -74,7 +74,7 @@ fun RegisterScreen(
 
     Scaffold(
         topBar = {
-            XAppBar(
+            XAppBarComposable(
                 navigationIcon = {
                     IconButton(
                         onClick = navigateBack,

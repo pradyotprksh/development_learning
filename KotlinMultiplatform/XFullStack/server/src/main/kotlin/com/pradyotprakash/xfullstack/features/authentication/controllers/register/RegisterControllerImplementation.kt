@@ -104,7 +104,7 @@ class RegisterControllerImplementation : RegisterController {
             HttpStatusCode.Created,
             XFullStackResponse(
                 status = ResponseStatus.Success,
-                errorCode = null,
+                code = null,
                 message = Localization.ACCOUNT_CREATED_SUCCESSFULLY,
                 data = null,
             )

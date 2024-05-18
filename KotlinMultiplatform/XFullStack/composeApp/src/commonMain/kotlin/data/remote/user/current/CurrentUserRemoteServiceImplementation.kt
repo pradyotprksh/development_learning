@@ -2,11 +2,14 @@ package data.remote.user.current
 
 import core.models.request.XFullStackClientRequestDetails
 import core.network.NetworkClient
+import data.request.LoginRequest
 import data.request.RegisterRequest
+import data.response.AuthenticationResponse
 import data.response.XFullStackResponse
 import domain.services.user.current.CurrentUserRemoteService
 import utils.Constants.Paths.Authentication.AUTH
 import utils.Constants.Paths.Authentication.AUTHENTICATE
+import utils.Constants.Paths.Authentication.LOGIN
 import utils.Constants.Paths.Authentication.REGISTER
 
 class CurrentUserRemoteServiceImplementation(
@@ -27,6 +30,17 @@ class CurrentUserRemoteServiceImplementation(
             details = XFullStackClientRequestDetails(
                 endpoint = "$AUTH$REGISTER",
                 body = registerRequest,
+            )
+        )
+
+        return response.getOrThrow()
+    }
+
+    override suspend fun loginUser(loginRequest: LoginRequest): XFullStackResponse<AuthenticationResponse> {
+        val response = networkClient.post<XFullStackResponse<AuthenticationResponse>>(
+            details = XFullStackClientRequestDetails(
+                endpoint = "$AUTH$LOGIN",
+                body = loginRequest,
             )
         )
 

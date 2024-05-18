@@ -65,28 +65,36 @@ object Constants {
         const val BEARER = "Bearer"
         const val BASE_URL = "http://${Server.HOST}:${Server.PORT}"
         const val OTP_LENGTH = 6
+        const val USERNAME = "username"
     }
 
     object ErrorCode {
-        const val DEFAULT_ERROR_CODE = "XFS000"
-        const val UNAUTHORIZED_ERROR_CODE = "XFS001"
-        const val USER_DETAILS_NOT_FOUND_CODE = "XFS002"
-        const val USER_AUTH_DETAILS_ERROR_CODE = "XFS003"
-        const val DB_WRITE_ERROR_CODE = "XFS004"
-        const val USERNAME_ALREADY_PRESENT_ERROR_CODE = "XFS005"
-        const val EMAIL_OR_PHONE_NUMBER_REQUIRED_ERROR_CODE = "XFS006"
-        const val EMAIL_ALREADY_PRESENT_ERROR_CODE = "XFS007"
-        const val PHONE_NUMBER_ALREADY_PRESENT_ERROR_CODE = "XFS008"
-        const val USERNAME_VALIDITY_ERROR_CODE = "XFS009"
-        const val PASSWORD_VALIDITY_ERROR_CODE = "XFS010"
-        const val EMAIL_VALIDITY_ERROR_CODE = "XFS011"
-        const val PHONE_NUMBER_VALIDITY_ERROR_CODE = "XFS012"
-        const val PROFILE_PICTURE_VALIDITY_ERROR_CODE = "XFS013"
-        const val USERNAME_OR_EMAIL_OR_PHONE_NUMBER_REQUIRED_ERROR_CODE = "XFS014"
-        const val NAME_VALIDITY_ERROR_CODE = "XFS015"
-        const val OTP_GENERATION_ERROR_CODE = "XFS016"
-        const val OTP_VALIDATION_ERROR_CODE = "XFS017"
-        const val INTERNAL_SERVER_ERROR_CODE = "XFS018"
+        const val DEFAULT_ERROR_CODE = "EC_XFS000"
+        const val UNAUTHORIZED_ERROR_CODE = "EC_XFS001"
+        const val USER_DETAILS_NOT_FOUND_CODE = "EC_XFS002"
+        const val USER_AUTH_DETAILS_ERROR_CODE = "EC_XFS003"
+        const val DB_WRITE_ERROR_CODE = "EC_XFS004"
+        const val USERNAME_ALREADY_PRESENT_ERROR_CODE = "EC_XFS005"
+        const val EMAIL_OR_PHONE_NUMBER_REQUIRED_ERROR_CODE = "EC_XFS006"
+        const val EMAIL_ALREADY_PRESENT_ERROR_CODE = "EC_XFS007"
+        const val PHONE_NUMBER_ALREADY_PRESENT_ERROR_CODE = "EC_XFS008"
+        const val USERNAME_VALIDITY_ERROR_CODE = "EC_XFS009"
+        const val PASSWORD_VALIDITY_ERROR_CODE = "EC_XFS010"
+        const val EMAIL_VALIDITY_ERROR_CODE = "EC_XFS011"
+        const val PHONE_NUMBER_VALIDITY_ERROR_CODE = "EC_XFS012"
+        const val PROFILE_PICTURE_VALIDITY_ERROR_CODE = "EC_XFS013"
+        const val USERNAME_OR_EMAIL_OR_PHONE_NUMBER_REQUIRED_ERROR_CODE = "EC_XFS014"
+        const val NAME_VALIDITY_ERROR_CODE = "EC_XFS015"
+        const val OTP_GENERATION_ERROR_CODE = "EC_XFS016"
+        const val OTP_VALIDATION_ERROR_CODE = "EC_XFS017"
+        const val INTERNAL_SERVER_ERROR_CODE = "EC_XFS018"
+    }
+
+    object SuccessCode {
+        const val DEFAULT_SUCCESS_CODE = "SC_XFS000"
+        const val USERNAME_PRESENT = "SC_XFS001"
+        const val EMAIL_PRESENT = "SC_XFS002"
+        const val PHONE_NUMBER_PRESENT = "SC_XFS003"
     }
 
     object DbKeys {

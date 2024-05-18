@@ -9,13 +9,13 @@ import androidx.compose.ui.unit.dp
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun XAppBar(
+fun XAppBarComposable(
     modifier: Modifier = Modifier,
     navigationIcon: @Composable () -> Unit = {},
 ) {
     CenterAlignedTopAppBar(
         title = {
-            AppIcon(
+            AppIconComposable(
                 imageModifier = Modifier
                     .size(40.dp)
             )

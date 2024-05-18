@@ -17,7 +17,7 @@ class AuthenticateControllerImplementation : AuthenticateController {
             HttpStatusCode.OK,
             XFullStackResponse(
                 status = ResponseStatus.Success,
-                errorCode = null,
+                code = null,
                 message = Localization.USER_AUTHENTICATED,
                 data = null
             )

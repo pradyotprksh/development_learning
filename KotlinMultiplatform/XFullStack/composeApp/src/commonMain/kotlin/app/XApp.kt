@@ -6,14 +6,17 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import app.navigation.Routes
 import app.pages.auth.authOptions.screen.AuthOptionsScreen
 import app.pages.auth.login.screen.LoginScreen
 import app.pages.auth.register.screen.RegisterScreen
 import app.pages.splash.screen.SplashScreen
+import utils.Constants.ConstValues.USERNAME
 
 /**
  * XApp
@@ -57,8 +60,15 @@ fun XApp(
                     navigateToRegister = navigateToRegister,
                 )
             }
-            composable(Routes.Login.route) {
-                LoginScreen {
+            composable(
+                Routes.Login.route,
+                arguments = listOf(navArgument(USERNAME) { type = NavType.StringType })
+            ) {
+                val username = it.arguments?.getString(USERNAME)
+
+                LoginScreen(
+                    username = username,
+                ) {
                     navController.popBackStack()
                 }
             }

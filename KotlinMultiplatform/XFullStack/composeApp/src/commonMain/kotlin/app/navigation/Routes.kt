@@ -1,5 +1,7 @@
 package app.navigation
 
+import utils.Constants.ConstValues.USERNAME
+
 /**
  * Routes
  */
@@ -8,6 +10,6 @@ enum class Routes(
 ) {
     Splash("/splash"),
     AuthenticationOption("/authentication-option"),
-    Login("/login"),
+    Login("/login/{$USERNAME}"),
     Register("/register"),
 }

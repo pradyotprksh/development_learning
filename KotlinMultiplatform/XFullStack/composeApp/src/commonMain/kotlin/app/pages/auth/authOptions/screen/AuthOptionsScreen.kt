@@ -17,8 +17,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.dp
-import app.composables.TextBetweenDivider
-import app.composables.XAppBar
+import app.composables.TextBetweenDividerComposable
+import app.composables.XAppBarComposable
 import app.pages.auth.authOptions.composables.LoginComposable
 import app.pages.auth.authOptions.composables.SignupLegalDetails
 import utils.Localization
@@ -30,7 +30,7 @@ fun AuthOptionsScreen(
 ) {
     Scaffold(
         topBar = {
-            XAppBar()
+            XAppBarComposable()
         }
     ) {
         Column(
@@ -62,7 +62,7 @@ fun AuthOptionsScreen(
                     Localization.CONTINUE_WITH_GOOGLE,
                 )
             }
-            TextBetweenDivider()
+            TextBetweenDividerComposable()
             Button(
                 onClick = navigateToRegister,
                 modifier = Modifier.fillMaxWidth()

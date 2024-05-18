@@ -41,7 +41,7 @@ class UserInfoControllerImplementation : UserInfoController {
             HttpStatusCode.OK,
             XFullStackResponse(
                 status = ResponseStatus.Success,
-                errorCode = null,
+                code = null,
                 message = Localization.DETAILS_FOUND,
                 data = response
             )

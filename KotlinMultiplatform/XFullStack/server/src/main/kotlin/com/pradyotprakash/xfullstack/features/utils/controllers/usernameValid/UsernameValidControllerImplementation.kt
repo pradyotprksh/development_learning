@@ -31,7 +31,7 @@ class UsernameValidControllerImplementation : UsernameValidController {
             HttpStatusCode.OK,
             XFullStackResponse(
                 status = ResponseStatus.Success,
-                errorCode = null,
+                code = null,
                 message = Localization.VALID_USERNAME,
                 data = null,
             )

@@ -2,7 +2,6 @@ package app.pages.auth.register.viewModel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import app.pages.auth.register.state.PasswordValidation
 import app.pages.auth.register.state.RegisterState
 import core.models.response.ClientResponse
 import data.request.RegisterRequest
@@ -20,6 +19,7 @@ import utils.Constants.ErrorCode.USERNAME_VALIDITY_ERROR_CODE
 import utils.Constants.ErrorCode.USER_DETAILS_NOT_FOUND_CODE
 import utils.Logger
 import utils.LoggerLevel
+import utils.PasswordValidation
 import utils.TextFieldType
 import utils.UtilsMethod
 import utils.debounce
@@ -97,6 +97,8 @@ class RegisterViewModel : ViewModel() {
                 )
                 checkForUsernameValidity(_registerScreenState.value.usernameValue)
             }
+
+            else -> {}
         }
     }
 
@@ -176,7 +178,7 @@ class RegisterViewModel : ViewModel() {
                                         isUsernameValid = false,
                                     )
                                 } else {
-                                    showErrorMessage(it.message)
+                                    showMessage(it.message)
                                 }
                             }
 
@@ -222,7 +224,7 @@ class RegisterViewModel : ViewModel() {
             } else if (_registerScreenState.value.passwordForm) {
                 performPasswordOperations()
             } else if (_registerScreenState.value.usernameProfileImageForm) {
-                performCreateAccountOperations()
+                performCreateAccountOperations(navigateToLogin)
             } else {
                 performRegisterFormOperations(navigateToLogin)
             }
@@ -233,7 +235,7 @@ class RegisterViewModel : ViewModel() {
         passwordDone()
     }
 
-    private suspend fun performCreateAccountOperations() {
+    private suspend fun performCreateAccountOperations(navigateToLogin: ((String) -> Unit)?) {
         val registerRequest = RegisterRequest(
             name = _registerScreenState.value.nameValue,
             username = _registerScreenState.value.usernameValue,
@@ -246,10 +248,13 @@ class RegisterViewModel : ViewModel() {
         )
         currentUserRepository.registerUser(registerRequest).collect {
             when (it) {
-                is ClientResponse.Error -> showErrorMessage(it.message)
+                is ClientResponse.Error -> showMessage(it.message)
                 ClientResponse.Idle -> updateLoaderState(false)
                 ClientResponse.Loading -> updateLoaderState(true)
-                is ClientResponse.Success -> {}
+                is ClientResponse.Success -> {
+                    it.data.message?.let { message -> showMessage(message) }
+                    navigateToLogin?.invoke(_registerScreenState.value.usernameValue)
+                }
             }
         }
     }
@@ -277,7 +282,7 @@ class RegisterViewModel : ViewModel() {
             value = _registerScreenState.value.phoneEmailValue,
         ).collect {
             when (it) {
-                is ClientResponse.Error -> showErrorMessage(it.message)
+                is ClientResponse.Error -> showMessage(it.message)
                 ClientResponse.Idle -> updateLoaderState(showLoader = false)
                 ClientResponse.Loading -> updateLoaderState(showLoader = true)
                 is ClientResponse.Success -> otpVerificationSuccess()
@@ -292,7 +297,7 @@ class RegisterViewModel : ViewModel() {
             useEmailOrPhoneState = false,
             datePickerVisible = false,
             showLoading = false,
-            errorMessage = null,
+            snackBarMessage = null,
         )
     }
 
@@ -302,13 +307,13 @@ class RegisterViewModel : ViewModel() {
         if (error.errorCode == USER_DETAILS_NOT_FOUND_CODE) {
             generateOtp()
         } else {
-            showErrorMessage(error.message)
+            showMessage(error.message)
         }
     }
 
-    private fun showErrorMessage(message: String) {
+    private fun showMessage(message: String) {
         _registerScreenState.value = _registerScreenState.value.copy(
-            errorMessage = message,
+            snackBarMessage = message,
         )
     }
 
@@ -317,7 +322,7 @@ class RegisterViewModel : ViewModel() {
             userVerificationRepository.generateOtp(_registerScreenState.value.phoneEmailValue)
                 .collect {
                     when (it) {
-                        is ClientResponse.Error -> showErrorMessage(it.message)
+                        is ClientResponse.Error -> showMessage(it.message)
                         ClientResponse.Idle -> updateLoaderState(showLoader = false)
                         ClientResponse.Loading -> updateLoaderState(showLoader = true)
                         is ClientResponse.Success -> {
@@ -335,7 +340,7 @@ class RegisterViewModel : ViewModel() {
             useEmailOrPhoneState = false,
             datePickerVisible = false,
             showLoading = false,
-            errorMessage = null,
+            snackBarMessage = null,
         )
     }
 
@@ -345,9 +350,9 @@ class RegisterViewModel : ViewModel() {
         )
     }
 
-    fun removeErrorMessage() {
+    fun removeSnackBarMessage() {
         _registerScreenState.value = _registerScreenState.value.copy(
-            errorMessage = null
+            snackBarMessage = null
         )
     }
 
@@ -357,7 +362,7 @@ class RegisterViewModel : ViewModel() {
             showPasswordOption = false,
             showUsernameProfileImage = true,
             showLoading = false,
-            errorMessage = null,
+            snackBarMessage = null,
         )
     }
 }
