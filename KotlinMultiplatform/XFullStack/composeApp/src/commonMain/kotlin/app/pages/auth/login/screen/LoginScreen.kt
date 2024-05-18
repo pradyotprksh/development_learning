@@ -169,7 +169,9 @@ fun LoginScreen(
                         )
                     }
                     Button(
-                        onClick = {}
+                        onClick = {
+                            loginViewModel.loginUser()
+                        }
                     ) {
                         Text(
                             Localization.LOG_IN
