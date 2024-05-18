@@ -124,6 +124,7 @@ fun LoginScreen(
                         Localization.PHONE_EMAIL_USERNAME
                     )
                 },
+                isError = loginScreenState.showUsernamePhoneEmailError,
                 modifier = Modifier.fillMaxWidth(),
                 maxLines = 1,
                 keyboardOptions = KeyboardOptions(

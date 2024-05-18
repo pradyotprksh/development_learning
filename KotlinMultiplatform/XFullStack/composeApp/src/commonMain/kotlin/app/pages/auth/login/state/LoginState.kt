@@ -15,4 +15,7 @@ data class LoginState(
 ) {
     val passwordValid: Boolean
         get() = passwordValue.isNotBlank() && passwordValidation.isValid
+
+    val showUsernamePhoneEmailError: Boolean
+        get() = !isUsernamePhoneEmailValid && usernamePhoneEmailValue.isNotBlank()
 }
