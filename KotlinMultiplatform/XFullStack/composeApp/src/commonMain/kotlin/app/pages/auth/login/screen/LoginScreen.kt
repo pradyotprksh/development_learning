@@ -52,13 +52,18 @@ import utils.TextFieldType
 @Composable
 fun LoginScreen(
     loginViewModel: LoginViewModel = viewModel { LoginViewModel() },
-    username: String?,
+    usernameEmailPhoneValue: String?,
     navigateBack: () -> Unit,
 ) {
     val scope = rememberCoroutineScope()
     val snackbarHostState = remember { SnackbarHostState() }
     val loginScreenState by loginViewModel.loginScreenState.collectAsState()
-    username?.let { loginViewModel.updateTextField(TextFieldType.Username, it) }
+    usernameEmailPhoneValue?.let {
+        loginViewModel.updateTextField(
+            TextFieldType.UsernamePhoneEmail,
+            it
+        )
+    }
     if (loginScreenState.showLoading) {
         LoadingDialogComposable()
     }

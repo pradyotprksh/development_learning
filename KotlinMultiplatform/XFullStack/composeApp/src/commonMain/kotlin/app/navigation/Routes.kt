@@ -1,6 +1,6 @@
 package app.navigation
 
-import utils.Constants.ConstValues.USERNAME
+import utils.Constants.ConstValues.USERNAME_EMAIL_PHONE
 
 fun Routes.path(): String {
     if (arguments.isEmpty()) return route
@@ -20,6 +20,6 @@ enum class Routes(
 ) {
     Splash("splash/"),
     AuthenticationOption("authentication-option/"),
-    Login("login/", listOf(USERNAME)),
+    Login("login/", listOf(USERNAME_EMAIL_PHONE)),
     Register("register"),
 }

@@ -18,7 +18,7 @@ import app.pages.auth.login.screen.LoginScreen
 import app.pages.auth.register.screen.RegisterScreen
 import app.pages.splash.screen.SplashScreen
 import utils.Constants.ConstValues.NO_USERNAME
-import utils.Constants.ConstValues.USERNAME
+import utils.Constants.ConstValues.USERNAME_EMAIL_PHONE
 
 /**
  * XApp
@@ -73,11 +73,12 @@ fun XApp(
                     }
                 }
             ) {
-                val usernameArgument = it.arguments?.getString(USERNAME)
-                val username = if (usernameArgument == NO_USERNAME) null else usernameArgument
+                val usernameEmailPhoneArgument = it.arguments?.getString(USERNAME_EMAIL_PHONE)
+                val usernameEmailPhone =
+                    if (usernameEmailPhoneArgument == NO_USERNAME) null else usernameEmailPhoneArgument
 
                 LoginScreen(
-                    username = username,
+                    usernameEmailPhoneValue = usernameEmailPhone,
                 ) {
                     navController.popBackStack()
                 }

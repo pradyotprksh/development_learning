@@ -265,6 +265,7 @@ class RegisterViewModel : ViewModel() {
                 when (it) {
                     is ClientResponse.Error -> onUserPresentError(
                         it,
+                        navigateToLogin,
                     )
 
                     ClientResponse.Idle -> updateLoaderState(showLoader = false)
@@ -303,6 +304,7 @@ class RegisterViewModel : ViewModel() {
 
     private fun onUserPresentError(
         error: ClientResponse.Error,
+        navigateToLogin: ((String) -> Unit)?,
     ) {
         if (error.errorCode == USER_DETAILS_NOT_FOUND_CODE) {
             generateOtp()

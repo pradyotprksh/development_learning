@@ -65,7 +65,7 @@ object Constants {
         const val BEARER = "Bearer"
         const val BASE_URL = "http://${Server.HOST}:${Server.PORT}"
         const val OTP_LENGTH = 6
-        const val USERNAME = "username"
+        const val USERNAME_EMAIL_PHONE = "usernameEmailPhone"
         const val NO_USERNAME = "no-username"
     }
 
