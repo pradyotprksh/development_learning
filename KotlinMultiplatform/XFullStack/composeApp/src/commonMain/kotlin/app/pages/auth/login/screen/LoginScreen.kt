@@ -25,6 +25,7 @@ import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Text
@@ -96,7 +97,10 @@ fun LoginScreen(
                     }
                 }
             )
-        }
+        },
+        snackbarHost = {
+            SnackbarHost(hostState = snackbarHostState)
+        },
     ) {
         val startEndPaddingModifier = Modifier.padding(
             start = it.calculateStartPadding(LocalLayoutDirection.current) + 25.dp,

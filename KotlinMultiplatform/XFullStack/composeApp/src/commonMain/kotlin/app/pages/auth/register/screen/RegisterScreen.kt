@@ -47,7 +47,7 @@ import utils.Localization
 
 @Composable
 fun RegisterScreen(
-    registerViewModel: RegisterViewModel = viewModel(),
+    registerViewModel: RegisterViewModel = viewModel { RegisterViewModel() },
     navigateToLogin: (String) -> Unit,
     navigateBack: () -> Unit,
 ) {
