@@ -111,7 +111,7 @@ class RegisterViewModel : ViewModel() {
 
     private fun checkPasswordValidity(value: String) {
         try {
-            UtilsMethod.isValidPassword(value)
+            UtilsMethod.Validation.isValidPassword(value)
             _registerScreenState.value = _registerScreenState.value.copy(
                 showConfirmPassword = true, passwordValidation = PasswordValidation(
                     length = true,
@@ -124,11 +124,13 @@ class RegisterViewModel : ViewModel() {
         } catch (e: Throwable) {
             _registerScreenState.value = _registerScreenState.value.copy(
                 showConfirmPassword = false, passwordValidation = PasswordValidation(
-                    length = UtilsMethod.minPasswordLengthValid(value),
-                    uppercase = UtilsMethod.passwordContainsAtLeastOneUpperCase(value),
-                    lowercase = UtilsMethod.passwordContainsAtLeastOneLowerCase(value),
-                    digit = UtilsMethod.passwordContainsAtLeastOneDigit(value),
-                    specialCharacter = UtilsMethod.passwordContainsAtLeastOneSpecialCharacters(value),
+                    length = UtilsMethod.Validation.minPasswordLengthValid(value),
+                    uppercase = UtilsMethod.Validation.passwordContainsAtLeastOneUpperCase(value),
+                    lowercase = UtilsMethod.Validation.passwordContainsAtLeastOneLowerCase(value),
+                    digit = UtilsMethod.Validation.passwordContainsAtLeastOneDigit(value),
+                    specialCharacter = UtilsMethod.Validation.passwordContainsAtLeastOneSpecialCharacters(
+                        value
+                    ),
                 )
             )
         }
@@ -141,7 +143,7 @@ class RegisterViewModel : ViewModel() {
         if (_registerScreenState.value.nameValue.isNotBlank()) {
             _registerScreenState.value = _registerScreenState.value.copy(
                 isNameValid = try {
-                    UtilsMethod.isValidName(it)
+                    UtilsMethod.Validation.isValidName(it)
                 } catch (e: Throwable) {
                     false
                 }
@@ -156,7 +158,7 @@ class RegisterViewModel : ViewModel() {
         if (_registerScreenState.value.bioValue?.isNotBlank() == true) {
             _registerScreenState.value = _registerScreenState.value.copy(
                 isBioValid = try {
-                    UtilsMethod.isValidBio(it)
+                    UtilsMethod.Validation.isValidBio(it)
                 } catch (e: Throwable) {
                     false
                 }
@@ -171,9 +173,9 @@ class RegisterViewModel : ViewModel() {
         if (_registerScreenState.value.phoneEmailValue.isNotBlank()) {
             val isValid = try {
                 if (_registerScreenState.value.isUsingPhoneNumber) {
-                    UtilsMethod.isValidPhoneNumber(it)
+                    UtilsMethod.Validation.isValidPhoneNumber(it)
                 } else {
-                    UtilsMethod.isValidEmail(it)
+                    UtilsMethod.Validation.isValidEmail(it)
                 }
             } catch (e: Throwable) {
                 false
@@ -224,7 +226,7 @@ class RegisterViewModel : ViewModel() {
 
     fun updateSelectedDate(date: Long) {
         try {
-            val value = UtilsMethod.convertLongToReadableDate(date)
+            val value = UtilsMethod.Dates.convertLongToReadableDate(date)
             _registerScreenState.value = _registerScreenState.value.copy(
                 dobValue = value,
                 dobValueTimestamp = date,

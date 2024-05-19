@@ -50,7 +50,7 @@ class LoginViewModel : ViewModel() {
 
     private fun checkPasswordValidity(value: String) {
         try {
-            UtilsMethod.isValidPassword(value)
+            UtilsMethod.Validation.isValidPassword(value)
             _loginScreenState.value = _loginScreenState.value.copy(
                 passwordValidation = PasswordValidation(
                     length = true,
@@ -63,11 +63,13 @@ class LoginViewModel : ViewModel() {
         } catch (e: Throwable) {
             _loginScreenState.value = _loginScreenState.value.copy(
                 passwordValidation = PasswordValidation(
-                    length = UtilsMethod.minPasswordLengthValid(value),
-                    uppercase = UtilsMethod.passwordContainsAtLeastOneUpperCase(value),
-                    lowercase = UtilsMethod.passwordContainsAtLeastOneLowerCase(value),
-                    digit = UtilsMethod.passwordContainsAtLeastOneDigit(value),
-                    specialCharacter = UtilsMethod.passwordContainsAtLeastOneSpecialCharacters(value),
+                    length = UtilsMethod.Validation.minPasswordLengthValid(value),
+                    uppercase = UtilsMethod.Validation.passwordContainsAtLeastOneUpperCase(value),
+                    lowercase = UtilsMethod.Validation.passwordContainsAtLeastOneLowerCase(value),
+                    digit = UtilsMethod.Validation.passwordContainsAtLeastOneDigit(value),
+                    specialCharacter = UtilsMethod.Validation.passwordContainsAtLeastOneSpecialCharacters(
+                        value
+                    ),
                 )
             )
         }

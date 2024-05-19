@@ -3,6 +3,10 @@ package app.pages.home.screen
 import androidx.compose.foundation.layout.calculateEndPadding
 import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
@@ -50,7 +54,18 @@ fun HomeScreen(
 
     Scaffold(
         topBar = {
-            XAppBarComposable()
+            XAppBarComposable(
+                actions = {
+                    IconButton(
+                        onClick = {},
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Settings,
+                            contentDescription = Icons.Default.Settings.name,
+                        )
+                    }
+                },
+            )
         },
         snackbarHost = {
             SnackbarHost(hostState = snackbarHostState)

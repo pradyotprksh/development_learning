@@ -22,7 +22,7 @@ class UsernameValidControllerImplementation : UsernameValidController {
 
         val username = resource.value
 
-        if (UtilsMethod.isValidUserName(username)) {
+        if (UtilsMethod.Validation.isValidUserName(username)) {
             if (userDataSource.isUsernamePresent(username)) {
                 throw InvalidParameter(
                     errorCode = USERNAME_ALREADY_PRESENT_ERROR_CODE,

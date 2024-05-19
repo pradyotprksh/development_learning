@@ -45,11 +45,11 @@ class LoginControllerImplementation : LoginController {
             )
         }
 
-        loginRequest.username?.let { UtilsMethod.isValidUserName(it) }
-        loginRequest.emailAddress?.let { UtilsMethod.isValidEmail(it) }
-        loginRequest.phoneNumber?.let { UtilsMethod.isValidPhoneNumber(it) }
+        loginRequest.username?.let { UtilsMethod.Validation.isValidUserName(it) }
+        loginRequest.emailAddress?.let { UtilsMethod.Validation.isValidEmail(it) }
+        loginRequest.phoneNumber?.let { UtilsMethod.Validation.isValidPhoneNumber(it) }
 
-        UtilsMethod.isValidPassword(loginRequest.password)
+        UtilsMethod.Validation.isValidPassword(loginRequest.password)
 
         val user =
             loginRequest.phoneNumber?.let { userDataSource.getUserByPhoneNumber(it) }

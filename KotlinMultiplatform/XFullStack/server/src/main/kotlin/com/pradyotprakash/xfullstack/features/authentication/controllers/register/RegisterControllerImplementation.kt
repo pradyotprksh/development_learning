@@ -34,9 +34,9 @@ class RegisterControllerImplementation : RegisterController {
 
         val registerRequest = call.receive<RegisterRequest>()
 
-        UtilsMethod.isValidName(registerRequest.name)
+        UtilsMethod.Validation.isValidName(registerRequest.name)
 
-        if (UtilsMethod.isValidUserName(registerRequest.username)) {
+        if (UtilsMethod.Validation.isValidUserName(registerRequest.username)) {
             if (userDataSource.isUsernamePresent(registerRequest.username)) {
                 throw InvalidParameter(
                     errorCode = USERNAME_ALREADY_PRESENT_ERROR_CODE,
@@ -45,7 +45,7 @@ class RegisterControllerImplementation : RegisterController {
             }
         }
 
-        UtilsMethod.isValidPassword(registerRequest.password)
+        UtilsMethod.Validation.isValidPassword(registerRequest.password)
 
         if (registerRequest.emailAddress == null && registerRequest.phoneNumber == null) {
             throw InvalidParameter(
@@ -55,7 +55,7 @@ class RegisterControllerImplementation : RegisterController {
         }
 
         registerRequest.emailAddress?.let {
-            if (UtilsMethod.isValidEmail(it)) {
+            if (UtilsMethod.Validation.isValidEmail(it)) {
                 if (userDataSource.isEmailPresent(it)) {
                     throw InvalidParameter(
                         message = Localization.EMAIL_ALREADY_EXISTS,
@@ -66,7 +66,7 @@ class RegisterControllerImplementation : RegisterController {
         }
 
         registerRequest.phoneNumber?.let {
-            if (UtilsMethod.isValidPhoneNumber(it)) {
+            if (UtilsMethod.Validation.isValidPhoneNumber(it)) {
                 if (userDataSource.isPhoneNumberPresent(it)) {
                     throw InvalidParameter(
                         message = Localization.PHONE_NUMBER_ALREADY_EXISTS,
@@ -77,15 +77,15 @@ class RegisterControllerImplementation : RegisterController {
         }
 
         registerRequest.profilePicture?.let {
-            UtilsMethod.isValidLink(
+            UtilsMethod.Validation.isValidLink(
                 it,
                 PROFILE_PICTURE_VALIDITY_ERROR_CODE
             )
         }
 
-        UtilsMethod.isValidDate(registerRequest.dateOfBirth)
+        UtilsMethod.Validation.isValidDate(registerRequest.dateOfBirth)
 
-        registerRequest.bio?.let { UtilsMethod.isValidBio(it) }
+        registerRequest.bio?.let { UtilsMethod.Validation.isValidBio(it) }
 
         val saltedHash = hashingService.generateSaltedHash(value = registerRequest.password)
 

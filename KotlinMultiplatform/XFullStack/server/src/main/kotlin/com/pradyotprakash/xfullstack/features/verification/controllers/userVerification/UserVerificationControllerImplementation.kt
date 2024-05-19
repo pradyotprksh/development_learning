@@ -29,7 +29,7 @@ class UserVerificationControllerImplementation : UserVerificationController {
     ) {
         delay(API_RESPONSE_DELAY)
         try {
-            val otp = UtilsMethod.getIntegerValue(
+            val otp = UtilsMethod.Conversion.getIntegerValue(
                 value = resource.value,
                 length = OTP_LENGTH,
             )
@@ -65,7 +65,7 @@ class UserVerificationControllerImplementation : UserVerificationController {
         val otpVerificationRequest = call.receive<OtpVerificationRequest>()
 
         try {
-            val otp = UtilsMethod.getIntegerValue(
+            val otp = UtilsMethod.Conversion.getIntegerValue(
                 value = otpVerificationRequest.value,
                 length = OTP_LENGTH,
             )

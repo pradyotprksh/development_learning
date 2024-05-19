@@ -18,6 +18,7 @@ import utils.Constants.ConstValues.BEARER
 import utils.Constants.Keys.AUTHORIZATION
 import utils.Constants.Keys.CONTENT_TYPE
 import utils.Constants.Keys.REQUEST_IDENTIFIER
+import utils.Constants.Keys.USER_ID_HEADER
 
 object XFullStackHttpClient {
     private val currentUserRepository: CurrentUserRepository by ModulesDi.di.instance()
@@ -42,6 +43,7 @@ object XFullStackHttpClient {
             header(REQUEST_IDENTIFIER, BsonObjectId().toHexString())
 
             currentUserRepository.getUserId()?.let { userId ->
+                header(USER_ID_HEADER, userId)
                 currentUserRepository.getToken(userId)?.let { token ->
                     header(AUTHORIZATION, "$BEARER $token")
                 }

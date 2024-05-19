@@ -1,5 +1,6 @@
 package app.composables
 
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -14,15 +15,17 @@ import androidx.compose.ui.unit.dp
 fun XAppBarComposable(
     modifier: Modifier = Modifier,
     navigationIcon: @Composable () -> Unit = {},
+    actions: @Composable (RowScope.() -> Unit) = {},
 ) {
     CenterAlignedTopAppBar(
         title = {
             AppIconComposable(
                 imageModifier = Modifier
-                    .size(20.dp)
+                    .size(25.dp)
             )
         },
         navigationIcon = navigationIcon,
+        actions = actions,
         modifier = modifier,
         colors = TopAppBarDefaults.centerAlignedTopAppBarColors().copy(
             containerColor = MaterialTheme.colorScheme.background

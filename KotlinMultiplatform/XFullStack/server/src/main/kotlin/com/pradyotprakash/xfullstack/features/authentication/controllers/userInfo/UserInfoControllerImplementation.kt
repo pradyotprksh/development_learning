@@ -1,9 +1,9 @@
 package com.pradyotprakash.xfullstack.features.authentication.controllers.userInfo
 
-import com.pradyotprakash.xfullstack.data.response.UserInfoResponse
 import com.pradyotprakash.xfullstack.data.user.UserDataSource
 import com.pradyotprakash.xfullstack.features.authentication.resource.AuthenticationResource
 import core.exception.UserDetailsNotFound
+import data.response.UserInfoResponse
 import data.response.XFullStackResponse
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.ApplicationCall
