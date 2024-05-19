@@ -61,12 +61,14 @@ object Constants {
         const val NAME_MAX_LENGTH = 50
         const val PASSWORD_MIN_LENGTH = 8
         const val TOKEN_EXPIRES_IN = 365L * 1000L * 60L * 60L * 24L
+        const val API_RESPONSE_DELAY = 1500L
         const val APPLICATION_JSON = "application/json"
         const val BEARER = "Bearer"
         const val BASE_URL = "http://${Server.HOST}:${Server.PORT}"
         const val OTP_LENGTH = 6
         const val USERNAME_EMAIL_PHONE = "usernameEmailPhone"
         const val NO_USERNAME = "no-username"
+        const val BIO_MAX_LENGTH = 50
     }
 
     object ErrorCode {
@@ -89,6 +91,7 @@ object Constants {
         const val OTP_GENERATION_ERROR_CODE = "EC_XFS016"
         const val OTP_VALIDATION_ERROR_CODE = "EC_XFS017"
         const val INTERNAL_SERVER_ERROR_CODE = "EC_XFS018"
+        const val BIO_VALIDITY_ERROR_CODE = "EC_XFS019"
     }
 
     object SuccessCode {

@@ -4,10 +4,12 @@ import core.exception.InvalidParameter
 import kotlinx.datetime.Instant
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
+import utils.Constants.ConstValues.BIO_MAX_LENGTH
 import utils.Constants.ConstValues.NAME_MAX_LENGTH
 import utils.Constants.ConstValues.NAME_MIN_LENGTH
 import utils.Constants.ConstValues.PASSWORD_MIN_LENGTH
 import utils.Constants.ConstValues.USERNAME_MIN_LENGTH
+import utils.Constants.ErrorCode.BIO_VALIDITY_ERROR_CODE
 import utils.Constants.ErrorCode.EMAIL_VALIDITY_ERROR_CODE
 import utils.Constants.ErrorCode.NAME_VALIDITY_ERROR_CODE
 import utils.Constants.ErrorCode.PASSWORD_VALIDITY_ERROR_CODE
@@ -16,6 +18,16 @@ import utils.Constants.ErrorCode.USERNAME_VALIDITY_ERROR_CODE
 import kotlin.math.absoluteValue
 
 object UtilsMethod {
+    fun isValidBio(bio: String): Boolean {
+        if (bio.length !in 0..BIO_MAX_LENGTH) {
+            throw InvalidParameter(
+                message = Localization.BIO_MAX_LENGTH_ERROR, errorCode = BIO_VALIDITY_ERROR_CODE
+            )
+        }
+
+        return true
+    }
+
     private fun maxNameLengthValid(username: String) =
         username.length in NAME_MIN_LENGTH..NAME_MAX_LENGTH
 

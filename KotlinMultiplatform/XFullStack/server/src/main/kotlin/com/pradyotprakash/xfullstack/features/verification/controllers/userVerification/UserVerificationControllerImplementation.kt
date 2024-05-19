@@ -10,6 +10,7 @@ import io.ktor.server.application.ApplicationCall
 import io.ktor.server.request.receive
 import io.ktor.server.response.respond
 import kotlinx.coroutines.delay
+import utils.Constants.ConstValues.API_RESPONSE_DELAY
 import utils.Constants.ConstValues.OTP_LENGTH
 import utils.Constants.ErrorCode.OTP_GENERATION_ERROR_CODE
 import utils.Constants.ErrorCode.OTP_VALIDATION_ERROR_CODE
@@ -26,7 +27,7 @@ class UserVerificationControllerImplementation : UserVerificationController {
         call: ApplicationCall,
         resource: VerificationResource.GenerateOtp
     ) {
-        delay(1500)
+        delay(API_RESPONSE_DELAY)
         try {
             val otp = UtilsMethod.getIntegerValue(
                 value = resource.value,
@@ -60,7 +61,7 @@ class UserVerificationControllerImplementation : UserVerificationController {
         call: ApplicationCall,
         resource: VerificationResource.ValidateOtp
     ) {
-        delay(1500)
+        delay(API_RESPONSE_DELAY)
         val otpVerificationRequest = call.receive<OtpVerificationRequest>()
 
         try {
@@ -108,6 +109,7 @@ class UserVerificationControllerImplementation : UserVerificationController {
         resource: VerificationResource.UserPresent,
         userDataSource: UserDataSource
     ) {
+        delay(API_RESPONSE_DELAY)
         if (userDataSource.isUsernamePresent(resource.value)) {
             call.respond(
                 HttpStatusCode.OK,

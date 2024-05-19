@@ -37,10 +37,10 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import app.composables.LoadingDialogComposable
 import app.composables.XAppBarComposable
+import app.pages.auth.register.screen.composable.OtherDetailsComposable
 import app.pages.auth.register.screen.composable.OtpVerificationComposable
 import app.pages.auth.register.screen.composable.PasswordComposable
 import app.pages.auth.register.screen.composable.RegisterFormComposable
-import app.pages.auth.register.screen.composable.UsernameProfileImageComposable
 import app.pages.auth.register.viewModel.RegisterViewModel
 import kotlinx.coroutines.launch
 import utils.Localization
@@ -137,7 +137,7 @@ fun RegisterScreen(
                 AnimatedVisibility(
                     visible = registerScreenState.usernameProfileImageForm,
                 ) {
-                    UsernameProfileImageComposable(
+                    OtherDetailsComposable(
                         modifier = Modifier.weight(1f),
                         startEndPaddingModifier = startEndPaddingModifier,
                         registerScreenState = registerScreenState,

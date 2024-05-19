@@ -15,16 +15,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.KeyboardCapitalization
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import app.composables.UsernameTextFieldComposable
 import app.pages.auth.register.state.RegisterState
 import app.pages.auth.register.viewModel.RegisterViewModel
+import utils.Constants.ConstValues.BIO_MAX_LENGTH
 import utils.Localization
 import utils.TextFieldType
 
 @Composable
-fun UsernameProfileImageComposable(
+fun OtherDetailsComposable(
     modifier: Modifier = Modifier,
     startEndPaddingModifier: Modifier = Modifier,
     registerScreenState: RegisterState,
@@ -49,6 +50,42 @@ fun UsernameProfileImageComposable(
                     type, value
                 )
             }
+        )
+        Spacer(modifier = Modifier.height(15.dp))
+        OutlinedTextField(
+            value = registerScreenState.bioValue ?: "",
+            onValueChange = { value ->
+                registerViewModel.updateTextField(
+                    textFieldType = TextFieldType.Bio,
+                    value
+                )
+            },
+            label = {
+                Text(
+                    Localization.BIO,
+                )
+            },
+            modifier = startEndPaddingModifier.fillMaxWidth(),
+            maxLines = 1,
+            keyboardOptions = KeyboardOptions(
+                imeAction = ImeAction.Next,
+            ),
+            supportingText = {
+                Text(
+                    text = "${registerScreenState.bioValue?.length ?: 0} / $BIO_MAX_LENGTH",
+                    modifier = Modifier.fillMaxWidth(),
+                    textAlign = TextAlign.End,
+                )
+            },
+            trailingIcon = {
+                if (registerScreenState.isBioValid) {
+                    Icon(
+                        imageVector = Icons.Default.CheckCircle,
+                        contentDescription = Icons.Default.CheckCircle.name,
+                        tint = Color.Green
+                    )
+                }
+            },
         )
     }
 }

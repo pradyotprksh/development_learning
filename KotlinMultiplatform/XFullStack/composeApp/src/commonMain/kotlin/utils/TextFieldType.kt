@@ -9,4 +9,5 @@ enum class TextFieldType {
     ConfirmPassword,
     Username,
     UsernamePhoneEmail,
+    Bio,
 }

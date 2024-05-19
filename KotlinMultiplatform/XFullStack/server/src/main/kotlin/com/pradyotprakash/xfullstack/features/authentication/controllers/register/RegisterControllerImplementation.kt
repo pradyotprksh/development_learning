@@ -12,6 +12,8 @@ import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.ApplicationCall
 import io.ktor.server.request.receive
 import io.ktor.server.response.respond
+import kotlinx.coroutines.delay
+import utils.Constants.ConstValues.API_RESPONSE_DELAY
 import utils.Constants.ErrorCode.EMAIL_ALREADY_PRESENT_ERROR_CODE
 import utils.Constants.ErrorCode.EMAIL_OR_PHONE_NUMBER_REQUIRED_ERROR_CODE
 import utils.Constants.ErrorCode.PHONE_NUMBER_ALREADY_PRESENT_ERROR_CODE
@@ -28,6 +30,8 @@ class RegisterControllerImplementation : RegisterController {
         hashingService: HashingService,
         userDataSource: UserDataSource
     ) {
+        delay(API_RESPONSE_DELAY)
+
         val registerRequest = call.receive<RegisterRequest>()
 
         UtilsMethod.isValidName(registerRequest.name)
@@ -78,7 +82,10 @@ class RegisterControllerImplementation : RegisterController {
                 PROFILE_PICTURE_VALIDITY_ERROR_CODE
             )
         }
+
         UtilsMethod.isValidDate(registerRequest.dateOfBirth)
+
+        registerRequest.bio?.let { UtilsMethod.isValidBio(it) }
 
         val saltedHash = hashingService.generateSaltedHash(value = registerRequest.password)
 

@@ -98,6 +98,13 @@ class RegisterViewModel : ViewModel() {
                 checkForUsernameValidity(_registerScreenState.value.usernameValue)
             }
 
+            TextFieldType.Bio -> {
+                _registerScreenState.value = _registerScreenState.value.copy(
+                    bioValue = value.ifBlank { null }, isBioValid = false
+                )
+                checkForBioValidity(_registerScreenState.value.bioValue ?: "")
+            }
+
             else -> {}
         }
     }
@@ -135,6 +142,21 @@ class RegisterViewModel : ViewModel() {
             _registerScreenState.value = _registerScreenState.value.copy(
                 isNameValid = try {
                     UtilsMethod.isValidName(it)
+                } catch (e: Throwable) {
+                    false
+                }
+            )
+        }
+    }
+
+    private val checkForBioValidity = debounce<String>(
+        waitMs = 1000,
+        scope = viewModelScope,
+    ) {
+        if (_registerScreenState.value.bioValue?.isNotBlank() == true) {
+            _registerScreenState.value = _registerScreenState.value.copy(
+                isBioValid = try {
+                    UtilsMethod.isValidBio(it)
                 } catch (e: Throwable) {
                     false
                 }
@@ -240,7 +262,7 @@ class RegisterViewModel : ViewModel() {
             name = _registerScreenState.value.nameValue,
             username = _registerScreenState.value.usernameValue,
             password = _registerScreenState.value.passwordValue,
-            bio = null,
+            bio = if (_registerScreenState.value.isBioValid) _registerScreenState.value.bioValue else null,
             emailAddress = if (_registerScreenState.value.isUsingPhoneNumber) null else _registerScreenState.value.phoneEmailValue,
             phoneNumber = if (_registerScreenState.value.isUsingPhoneNumber) _registerScreenState.value.phoneEmailValue else null,
             profilePicture = _registerScreenState.value.profileImageValue,

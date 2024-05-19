@@ -30,6 +30,7 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -59,11 +60,13 @@ fun LoginScreen(
     val scope = rememberCoroutineScope()
     val snackbarHostState = remember { SnackbarHostState() }
     val loginScreenState by loginViewModel.loginScreenState.collectAsState()
-    usernameEmailPhoneValue?.let {
-        loginViewModel.updateTextField(
-            TextFieldType.UsernamePhoneEmail,
-            it
-        )
+    LaunchedEffect(usernameEmailPhoneValue) {
+        usernameEmailPhoneValue?.let {
+            loginViewModel.updateTextField(
+                TextFieldType.UsernamePhoneEmail,
+                it
+            )
+        }
     }
     if (loginScreenState.showLoading) {
         LoadingDialogComposable()

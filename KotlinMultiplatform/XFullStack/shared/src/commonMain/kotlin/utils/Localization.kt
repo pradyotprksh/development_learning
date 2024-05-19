@@ -1,5 +1,6 @@
 package utils
 
+import utils.Constants.ConstValues.BIO_MAX_LENGTH
 import utils.Constants.ConstValues.NAME_MAX_LENGTH
 import utils.Constants.ConstValues.NAME_MIN_LENGTH
 import utils.Constants.ConstValues.PASSWORD_MIN_LENGTH
@@ -54,6 +55,7 @@ object Localization {
     const val LOADING = "Loading..."
     const val CREATE_YOUR_ACCOUNT = "Create your account"
     const val NAME = "Name"
+    const val BIO = "Bio"
     const val PHONE_NUMBER_OR_EMAIL = "Phone number or email address"
     const val DATE_OF_BIRTH = "Date of birth"
     const val USE_EMAIL_INSTEAD = "Use email instead"
@@ -87,4 +89,5 @@ object Localization {
     const val TOKEN_GENERATED_SUCCESSFULLY = "Account token generated successfully"
     const val USER_AUTHENTICATED = "User authenticated"
     const val DETAILS_FOUND = "Details found"
+    const val BIO_MAX_LENGTH_ERROR = "Bio length should be less than $BIO_MAX_LENGTH characters"
 }

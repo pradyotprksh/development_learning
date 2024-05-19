@@ -17,6 +17,8 @@ import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.ApplicationCall
 import io.ktor.server.request.receive
 import io.ktor.server.response.respond
+import kotlinx.coroutines.delay
+import utils.Constants.ConstValues.API_RESPONSE_DELAY
 import utils.Constants.ErrorCode.USERNAME_OR_EMAIL_OR_PHONE_NUMBER_REQUIRED_ERROR_CODE
 import utils.Constants.Keys.USER_ID
 import utils.Localization
@@ -32,6 +34,8 @@ class LoginControllerImplementation : LoginController {
         userDataSource: UserDataSource,
         tokenConfig: TokenConfig,
     ) {
+        delay(API_RESPONSE_DELAY)
+
         val loginRequest = call.receive<LoginRequest>()
 
         if (loginRequest.username == null && loginRequest.emailAddress == null && loginRequest.phoneNumber == null) {

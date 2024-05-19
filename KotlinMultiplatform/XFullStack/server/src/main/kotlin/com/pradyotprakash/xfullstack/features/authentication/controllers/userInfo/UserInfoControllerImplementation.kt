@@ -10,6 +10,8 @@ import io.ktor.server.application.ApplicationCall
 import io.ktor.server.auth.jwt.JWTPrincipal
 import io.ktor.server.auth.principal
 import io.ktor.server.response.respond
+import kotlinx.coroutines.delay
+import utils.Constants.ConstValues.API_RESPONSE_DELAY
 import utils.Constants.Keys.USER_ID
 import utils.Localization
 import utils.ResponseStatus
@@ -20,6 +22,8 @@ class UserInfoControllerImplementation : UserInfoController {
         resource: AuthenticationResource.UserInfo,
         userDataSource: UserDataSource
     ) {
+        delay(API_RESPONSE_DELAY)
+
         val principal = call.principal<JWTPrincipal>()
 
         val userId =
