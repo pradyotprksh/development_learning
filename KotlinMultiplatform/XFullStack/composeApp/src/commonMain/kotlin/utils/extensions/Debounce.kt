@@ -1,4 +1,4 @@
-package utils
+package utils.extensions
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job

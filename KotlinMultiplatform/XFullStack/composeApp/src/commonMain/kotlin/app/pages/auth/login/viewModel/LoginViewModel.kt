@@ -19,7 +19,7 @@ import utils.Constants.SuccessCode.USERNAME_PRESENT
 import utils.PasswordValidation
 import utils.TextFieldType
 import utils.UtilsMethod
-import utils.debounce
+import utils.extensions.debounce
 
 class LoginViewModel : ViewModel() {
     private val userVerificationRepository: UserVerificationRepository by ModulesDi.di.instance()
@@ -132,7 +132,9 @@ class LoginViewModel : ViewModel() {
         )
     }
 
-    fun loginUser() {
+    fun loginUser(
+        navigateToHome: () -> Unit,
+    ) {
         val loginRequest = LoginRequest(
             username = if (_loginScreenState.value.isUsernameValue) _loginScreenState.value.usernamePhoneEmailValue else null,
             phoneNumber = if (_loginScreenState.value.isPhoneNumberValue) _loginScreenState.value.usernamePhoneEmailValue else null,
@@ -153,6 +155,8 @@ class LoginViewModel : ViewModel() {
                                     userId,
                                     token,
                                 )
+
+                                navigateToHome()
                             }
                         }
                     }

@@ -49,7 +49,7 @@ fun SplashScreen(
         ) {
             AppIconComposable(
                 boxModifier = Modifier.size(100.dp),
-                imageModifier = Modifier.size(100.dp),
+                imageModifier = Modifier.size(50.dp),
                 showCircularProgressIndicator = true,
             )
             Spacer(modifier = Modifier.height(15.dp))

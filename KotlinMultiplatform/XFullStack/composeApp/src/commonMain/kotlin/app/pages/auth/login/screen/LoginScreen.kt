@@ -55,6 +55,7 @@ import utils.TextFieldType
 fun LoginScreen(
     loginViewModel: LoginViewModel = viewModel { LoginViewModel() },
     usernameEmailPhoneValue: String?,
+    navigateToHome: () -> Unit,
     navigateBack: () -> Unit,
 ) {
     val scope = rememberCoroutineScope()
@@ -166,7 +167,7 @@ fun LoginScreen(
                     showPasswordErrors = false,
                     imeAction = ImeAction.Done,
                     onDone = {
-                        loginViewModel.loginUser()
+                        loginViewModel.loginUser(navigateToHome)
                     },
                     onValueChange = { type, value ->
                         loginViewModel.updateTextField(type, value)
@@ -193,7 +194,7 @@ fun LoginScreen(
                     }
                     Button(
                         onClick = {
-                            loginViewModel.loginUser()
+                            loginViewModel.loginUser(navigateToHome)
                         }
                     ) {
                         Text(

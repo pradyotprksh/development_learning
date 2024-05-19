@@ -16,9 +16,11 @@ import app.navigation.path
 import app.pages.auth.authOptions.screen.AuthOptionsScreen
 import app.pages.auth.login.screen.LoginScreen
 import app.pages.auth.register.screen.RegisterScreen
+import app.pages.home.screen.HomeScreen
 import app.pages.splash.screen.SplashScreen
 import utils.Constants.ConstValues.NO_USERNAME
 import utils.Constants.ConstValues.USERNAME_EMAIL_PHONE
+import utils.extensions.popUpToTop
 
 /**
  * XApp
@@ -37,12 +39,16 @@ fun XApp(
         ) {
             val navigateToAuthOption = {
                 navController.navigate(Routes.AuthenticationOption.path()) {
-                    popUpTo(Routes.Splash.route) {
+                    popUpTo(Routes.Splash.path()) {
                         inclusive = true
                     }
                 }
             }
-            val navigateToHome = {}
+            val navigateToHome = {
+                navController.navigate(Routes.Home.path()) {
+                    popUpToTop(navController)
+                }
+            }
             val navigateToLogin = { value: String ->
                 navController.navigate(
                     "${Routes.Login.route}$value",
@@ -79,16 +85,23 @@ fun XApp(
 
                 LoginScreen(
                     usernameEmailPhoneValue = usernameEmailPhone,
+                    navigateToHome = navigateToHome,
                 ) {
                     navController.popBackStack()
                 }
             }
             composable(Routes.Register.path()) {
                 RegisterScreen(
-                    navigateToLogin = navigateToLogin,
+                    navigateToLogin = {
+                        navController.popBackStack()
+                        navigateToLogin(it)
+                    },
                 ) {
                     navController.popBackStack()
                 }
+            }
+            composable(Routes.Home.path()) {
+                HomeScreen()
             }
         }
     }
