@@ -53,6 +53,7 @@ object Constants {
         const val AUTHORIZATION = "Authorization"
         const val USER_ID_HEADER = "User-Id"
         const val REQUEST_IDENTIFIER = "request-identifier"
+        const val REQUEST_TIMESTAMP = "request-time"
         const val VALUE = "value"
     }
 

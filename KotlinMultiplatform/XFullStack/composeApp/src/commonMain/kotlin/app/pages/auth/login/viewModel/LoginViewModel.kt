@@ -16,6 +16,7 @@ import utils.Constants.ErrorCode.USER_DETAILS_NOT_FOUND_CODE
 import utils.Constants.SuccessCode.EMAIL_PRESENT
 import utils.Constants.SuccessCode.PHONE_NUMBER_PRESENT
 import utils.Constants.SuccessCode.USERNAME_PRESENT
+import utils.Localization.DEFAULT_ERROR_MESSAGE
 import utils.PasswordValidation
 import utils.TextFieldType
 import utils.UtilsMethod
@@ -153,15 +154,38 @@ class LoginViewModel : ViewModel() {
                     is ClientResponse.Success -> {
                         it.data.data?.userId?.let { userId ->
                             it.data.data?.token?.let { token ->
-                                currentUserRepository.saveUserDetails(
-                                    userId,
-                                    token,
+                                afterLoginSuccessOperation(
+                                    userId, token, navigateToHome
                                 )
-
-                                navigateToHome()
+                            } ?: run {
+                                showMessage(DEFAULT_ERROR_MESSAGE)
                             }
+                        } ?: run {
+                            showMessage(DEFAULT_ERROR_MESSAGE)
                         }
                     }
+                }
+            }
+        }
+    }
+
+    private suspend fun afterLoginSuccessOperation(
+        userId: String,
+        token: String,
+        navigateToHome: () -> Unit
+    ) {
+        currentUserRepository.saveUserDetails(
+            userId,
+            token,
+        )
+
+        currentUserRepository.updateUserInfo().collect {
+            when (it) {
+                is ClientResponse.Error -> showMessage(it.message)
+                ClientResponse.Idle -> updateLoaderState(false)
+                ClientResponse.Loading -> updateLoaderState(true)
+                is ClientResponse.Success -> {
+                    navigateToHome()
                 }
             }
         }

@@ -1,5 +1,6 @@
 package domain.repositories.user.current
 
+import core.models.realm.CurrentUserInfoDB
 import core.models.response.ClientResponse
 import data.request.LoginRequest
 import data.request.RegisterRequest
@@ -9,6 +10,7 @@ import domain.services.user.current.CurrentUserDBService
 import domain.services.user.current.CurrentUserRemoteService
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
 import utils.Constants.ErrorCode.DEFAULT_ERROR_CODE
 import utils.Localization.DEFAULT_ERROR_MESSAGE
 import utils.ResponseStatus
@@ -109,6 +111,54 @@ class CurrentUserRepositoryImplementation(
             }
             emit(ClientResponse.Idle)
         }
+
+    override suspend fun updateUserInfo(): Flow<ClientResponse<out XFullStackResponse<CurrentUserInfoDB>>> =
+        flow {
+            emit(ClientResponse.Loading)
+            try {
+                val response = currentUserRemoteService.getUserInfo()
+                if (response.status == ResponseStatus.Success) {
+                    response.data?.let { userInfoResponse ->
+                        val dbSavedData = currentUserDBService.saveUserInfo(userInfoResponse)
+                        emit(
+                            ClientResponse.Success(
+                                XFullStackResponse(
+                                    status = response.status,
+                                    message = response.message,
+                                    code = response.code,
+                                    data = dbSavedData,
+                                )
+                            )
+                        )
+                    } ?: run {
+                        emit(
+                            ClientResponse.Error(
+                                message = DEFAULT_ERROR_MESSAGE,
+                                errorCode = DEFAULT_ERROR_CODE,
+                            ),
+                        )
+                    }
+                } else {
+                    emit(
+                        ClientResponse.Error(
+                            message = response.message ?: DEFAULT_ERROR_MESSAGE,
+                            errorCode = response.code ?: DEFAULT_ERROR_CODE,
+                        ),
+                    )
+                }
+            } catch (e: Exception) {
+                emit(
+                    ClientResponse.Error(
+                        message = e.message ?: DEFAULT_ERROR_MESSAGE,
+                        errorCode = DEFAULT_ERROR_CODE,
+                    ),
+                )
+            }
+            emit(ClientResponse.Idle)
+        }
+
+    override suspend fun userInfoChanges(userId: String): Flow<CurrentUserInfoDB?> =
+        currentUserDBService.getUserInfo(userId).map { it.list.firstOrNull() }
 
     override suspend fun deleteUserDetails(fromLocal: Boolean, fromRemote: Boolean) {
         if (fromLocal) {

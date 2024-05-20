@@ -18,7 +18,9 @@ import utils.Constants.ConstValues.BEARER
 import utils.Constants.Keys.AUTHORIZATION
 import utils.Constants.Keys.CONTENT_TYPE
 import utils.Constants.Keys.REQUEST_IDENTIFIER
+import utils.Constants.Keys.REQUEST_TIMESTAMP
 import utils.Constants.Keys.USER_ID_HEADER
+import utils.UtilsMethod
 
 object XFullStackHttpClient {
     private val currentUserRepository: CurrentUserRepository by ModulesDi.di.instance()
@@ -41,6 +43,7 @@ object XFullStackHttpClient {
 
             header(CONTENT_TYPE, APPLICATION_JSON)
             header(REQUEST_IDENTIFIER, BsonObjectId().toHexString())
+            header(REQUEST_TIMESTAMP, UtilsMethod.Dates.getCurrentTimeStamp())
 
             currentUserRepository.getUserId()?.let { userId ->
                 header(USER_ID_HEADER, userId)

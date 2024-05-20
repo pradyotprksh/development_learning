@@ -1,5 +1,6 @@
 package domain.repositories.user.current
 
+import core.models.realm.CurrentUserInfoDB
 import core.models.response.ClientResponse
 import data.request.LoginRequest
 import data.request.RegisterRequest
@@ -21,4 +22,8 @@ interface CurrentUserRepository {
     suspend fun registerUser(registerRequest: RegisterRequest): Flow<ClientResponse<out XFullStackResponse<Nothing>>>
 
     suspend fun loginUser(loginRequest: LoginRequest): Flow<ClientResponse<out XFullStackResponse<AuthenticationResponse>>>
+
+    suspend fun updateUserInfo(): Flow<ClientResponse<out XFullStackResponse<CurrentUserInfoDB>>>
+
+    suspend fun userInfoChanges(userId: String): Flow<CurrentUserInfoDB?>
 }

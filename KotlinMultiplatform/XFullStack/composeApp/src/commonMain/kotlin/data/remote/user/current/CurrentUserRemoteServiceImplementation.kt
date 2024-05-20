@@ -5,12 +5,14 @@ import core.network.NetworkClient
 import data.request.LoginRequest
 import data.request.RegisterRequest
 import data.response.AuthenticationResponse
+import data.response.UserInfoResponse
 import data.response.XFullStackResponse
 import domain.services.user.current.CurrentUserRemoteService
 import utils.Constants.Paths.Authentication.AUTH
 import utils.Constants.Paths.Authentication.AUTHENTICATE
 import utils.Constants.Paths.Authentication.LOGIN
 import utils.Constants.Paths.Authentication.REGISTER
+import utils.Constants.Paths.Authentication.USER_INFO
 
 class CurrentUserRemoteServiceImplementation(
     private val networkClient: NetworkClient
@@ -41,6 +43,16 @@ class CurrentUserRemoteServiceImplementation(
             details = XFullStackClientRequestDetails(
                 endpoint = "$AUTH$LOGIN",
                 body = loginRequest,
+            )
+        )
+
+        return response.getOrThrow()
+    }
+
+    override suspend fun getUserInfo(): XFullStackResponse<UserInfoResponse> {
+        val response = networkClient.get<XFullStackResponse<UserInfoResponse>>(
+            details = XFullStackClientRequestDetails(
+                endpoint = "$AUTH$USER_INFO"
             )
         )
 

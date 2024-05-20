@@ -1,6 +1,7 @@
 package utils
 
 import core.exception.InvalidParameter
+import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
@@ -172,5 +173,7 @@ object UtilsMethod {
             val monthName = localDate.month.name.lowercase().replaceFirstChar { it.uppercase() }
             return "${localDate.dayOfMonth} $monthName ${localDate.year}"
         }
+
+        fun getCurrentTimeStamp(): Long = Clock.System.now().epochSeconds
     }
 }

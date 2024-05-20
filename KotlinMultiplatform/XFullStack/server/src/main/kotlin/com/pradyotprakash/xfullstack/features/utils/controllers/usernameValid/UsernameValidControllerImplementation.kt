@@ -7,8 +7,6 @@ import data.response.XFullStackResponse
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.ApplicationCall
 import io.ktor.server.response.respond
-import kotlinx.coroutines.delay
-import utils.Constants.ConstValues.API_RESPONSE_DELAY
 import utils.Constants.ErrorCode.USERNAME_ALREADY_PRESENT_ERROR_CODE
 import utils.Localization
 import utils.ResponseStatus
@@ -18,8 +16,6 @@ class UsernameValidControllerImplementation : UsernameValidController {
     override suspend fun isUserNameValid(
         call: ApplicationCall, resource: UtilsResource.UsernameValid, userDataSource: UserDataSource
     ) {
-        delay(API_RESPONSE_DELAY)
-
         val username = resource.value
 
         if (UtilsMethod.Validation.isValidUserName(username)) {

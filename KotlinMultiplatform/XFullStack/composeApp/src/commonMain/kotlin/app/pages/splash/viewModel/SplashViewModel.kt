@@ -23,7 +23,7 @@ class SplashViewModel : ViewModel() {
 
         checkCurrentUserAuthentication(
             navigateToAuthOption,
-            navigateToHome
+            navigateToHome,
         )
     }
 
@@ -38,7 +38,33 @@ class SplashViewModel : ViewModel() {
                     navigateToAuthOption()
                 }
 
-                is ClientResponse.Success -> navigateToHome()
+                is ClientResponse.Success -> {
+                    updateCurrentUserInfo(
+                        navigateToAuthOption,
+                        navigateToHome,
+                    )
+                }
+
+                else -> {}
+            }
+        }
+    }
+
+    private suspend fun updateCurrentUserInfo(
+        navigateToAuthOption: () -> Unit,
+        navigateToHome: () -> Unit
+    ) {
+        currentUserRepository.updateUserInfo().collect {
+            when (it) {
+                is ClientResponse.Error -> {
+                    currentUserRepository.deleteUserDetails(fromLocal = true, fromRemote = false)
+                    navigateToAuthOption()
+                }
+
+                is ClientResponse.Success -> {
+                    navigateToHome()
+                }
+
                 else -> {}
             }
         }

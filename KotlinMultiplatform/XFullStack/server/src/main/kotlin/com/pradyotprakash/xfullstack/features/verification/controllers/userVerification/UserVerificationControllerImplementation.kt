@@ -109,7 +109,6 @@ class UserVerificationControllerImplementation : UserVerificationController {
         resource: VerificationResource.UserPresent,
         userDataSource: UserDataSource
     ) {
-        delay(API_RESPONSE_DELAY)
         if (userDataSource.isUsernamePresent(resource.value)) {
             call.respond(
                 HttpStatusCode.OK,

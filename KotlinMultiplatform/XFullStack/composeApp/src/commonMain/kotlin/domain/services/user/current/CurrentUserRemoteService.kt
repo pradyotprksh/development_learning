@@ -3,6 +3,7 @@ package domain.services.user.current
 import data.request.LoginRequest
 import data.request.RegisterRequest
 import data.response.AuthenticationResponse
+import data.response.UserInfoResponse
 import data.response.XFullStackResponse
 
 interface CurrentUserRemoteService {
@@ -11,4 +12,6 @@ interface CurrentUserRemoteService {
     suspend fun registerUser(registerRequest: RegisterRequest): XFullStackResponse<Nothing>
 
     suspend fun loginUser(loginRequest: LoginRequest): XFullStackResponse<AuthenticationResponse>
+
+    suspend fun getUserInfo(): XFullStackResponse<UserInfoResponse>
 }
