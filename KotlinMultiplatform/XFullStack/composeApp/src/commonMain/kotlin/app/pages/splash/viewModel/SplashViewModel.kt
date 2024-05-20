@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import core.models.response.ClientResponse
 import di.ModulesDi
 import domain.repositories.user.current.CurrentUserRepository
-import kotlinx.coroutines.delay
 import org.kodein.di.instance
 
 class SplashViewModel : ViewModel() {
@@ -14,7 +13,6 @@ class SplashViewModel : ViewModel() {
         navigateToAuthOption: () -> Unit,
         navigateToHome: () -> Unit
     ) {
-        delay(3000)
         val currentUserId = currentUserRepository.getUserId()
         if (currentUserId == null) {
             navigateToAuthOption()

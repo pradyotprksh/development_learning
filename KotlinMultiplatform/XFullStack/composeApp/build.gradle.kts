@@ -60,6 +60,7 @@ kotlin {
             implementation(libs.ktor.client.logging)
             implementation(libs.realm.library.base)
             implementation(libs.realm.library.sync)
+            implementation(libs.kamel.image)
         }
 
         desktopMain.dependencies {

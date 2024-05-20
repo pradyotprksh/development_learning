@@ -3,4 +3,7 @@ package app.pages.home.state
 data class HomeState(
     val showLoading: Boolean = false,
     val snackBarMessage: String? = null,
+    val profileImage: String? = null,
+    val name: String = "",
+    val username: String = "",
 )

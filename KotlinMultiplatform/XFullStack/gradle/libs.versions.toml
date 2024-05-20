@@ -18,7 +18,7 @@ mongodb-driver-kotlin-coroutine = "4.10.1"
 navigation-compose = "2.7.0-alpha03"
 io-realm-kotlin = "1.16.0"
 kotlinx-datetime = "0.6.0"
-lifecycle-viewmodel-compose = "2.8.0-beta02"
+kamel-image = "0.9.4"
 
 [libraries]
 kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }
@@ -54,6 +54,7 @@ ktor-client-logging = { module = "io.ktor:ktor-client-logging", version.ref = "k
 realm-library-base = { module = "io.realm.kotlin:library-base", version.ref = "io-realm-kotlin" }
 realm-library-sync = { module = "io.realm.kotlin:library-sync", version.ref = "io-realm-kotlin" }
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinx-datetime" }
+kamel-image = { module = "media.kamel:kamel-image", version.ref = "kamel-image" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

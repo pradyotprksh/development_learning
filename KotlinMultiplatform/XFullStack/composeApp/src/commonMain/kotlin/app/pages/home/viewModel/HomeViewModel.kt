@@ -7,8 +7,6 @@ import domain.repositories.user.current.CurrentUserRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import org.kodein.di.instance
-import utils.Logger
-import utils.LoggerLevel
 
 class HomeViewModel : ViewModel() {
     private val currentUserRepository: CurrentUserRepository by ModulesDi.di.instance()
@@ -41,7 +39,13 @@ class HomeViewModel : ViewModel() {
     private suspend fun getCurrentUserInfo() {
         currentUserRepository.getUserId()?.let { currentUserId ->
             currentUserRepository.userInfoChanges(currentUserId).collect {
-                Logger.log(LoggerLevel.Info, "Current user info: $it")
+                if (it != null) {
+                    _homeScreenState.value = _homeScreenState.value.copy(
+                        profileImage = it.profilePicture,
+                        name = it.name,
+                        username = it.username,
+                    )
+                }
             }
         }
     }
