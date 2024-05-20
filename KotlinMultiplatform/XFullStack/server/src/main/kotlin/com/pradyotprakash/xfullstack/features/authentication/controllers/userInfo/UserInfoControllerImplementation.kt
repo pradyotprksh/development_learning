@@ -38,7 +38,9 @@ class UserInfoControllerImplementation : UserInfoController {
             emailAddress = user.emailAddress,
             phoneNumber = user.phoneNumber,
             profilePicture = user.profilePicture,
-            dateOfBirth = user.dateOfBirth
+            dateOfBirth = user.dateOfBirth,
+            followers = user.followers,
+            following = user.following,
         )
 
         call.respond(

@@ -71,6 +71,7 @@ object Constants {
         const val USERNAME_EMAIL_PHONE = "usernameEmailPhone"
         const val NO_USERNAME = "no-username"
         const val BIO_MAX_LENGTH = 50
+        const val USERNAME_PREFIX = "@"
     }
 
     object ErrorCode {

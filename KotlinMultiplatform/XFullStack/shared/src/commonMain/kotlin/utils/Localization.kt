@@ -90,4 +90,13 @@ object Localization {
     const val USER_AUTHENTICATED = "User authenticated"
     const val DETAILS_FOUND = "Details found"
     const val BIO_MAX_LENGTH_ERROR = "Bio length should be less than $BIO_MAX_LENGTH characters"
+    const val FOLLOWING = "Following"
+    const val FOLLOWERS = "Followers"
+    const val PROFILE = "Profile"
+    const val PREMIUM = "Premium"
+    const val COMMUNITIES = "Communities"
+    const val BOOKMARKS = "Bookmarks"
+    const val LISTS = "Lists"
+    const val SPACES = "Spaces"
+    const val MONETISATION = "Monetisation"
 }

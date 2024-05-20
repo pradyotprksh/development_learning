@@ -13,4 +13,6 @@ class CurrentUserInfoDB : RealmObject {
     var phoneNumber: String? = null
     var profilePicture: String? = null
     var dateOfBirth: Long = 0
+    var following: Int = 0
+    var followers: Int = 0
 }

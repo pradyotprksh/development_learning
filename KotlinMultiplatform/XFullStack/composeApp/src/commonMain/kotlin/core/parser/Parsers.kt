@@ -13,5 +13,7 @@ fun UserInfoResponse.parseToCurrentUserInfoDB() = this.let { info ->
         this.phoneNumber = info.phoneNumber
         this.profilePicture = info.profilePicture
         this.dateOfBirth = info.dateOfBirth
+        this.following = info.following
+        this.followers = info.followers
     }
 }

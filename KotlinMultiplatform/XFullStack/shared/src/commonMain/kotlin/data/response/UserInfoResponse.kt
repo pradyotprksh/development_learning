@@ -11,5 +11,7 @@ data class UserInfoResponse(
     val emailAddress: String?,
     val phoneNumber: String?,
     val profilePicture: String?,
-    val dateOfBirth: Long
+    val dateOfBirth: Long,
+    val following: Int,
+    val followers: Int,
 )

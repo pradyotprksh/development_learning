@@ -99,6 +99,8 @@ class RegisterControllerImplementation : RegisterController {
             dateOfBirth = registerRequest.dateOfBirth,
             emailAddress = registerRequest.emailAddress,
             phoneNumber = registerRequest.phoneNumber,
+            following = 0,
+            followers = 0,
         )
 
         val wasAcknowledged = userDataSource.insertNewUser(user)

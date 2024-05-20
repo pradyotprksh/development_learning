@@ -6,4 +6,6 @@ data class HomeState(
     val profileImage: String? = null,
     val name: String = "",
     val username: String = "",
+    val following: Int = 0,
+    val followers: Int = 0,
 )

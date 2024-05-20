@@ -44,6 +44,8 @@ class HomeViewModel : ViewModel() {
                         profileImage = it.profilePicture,
                         name = it.name,
                         username = it.username,
+                        following = it.following,
+                        followers = it.followers,
                     )
                 }
             }
