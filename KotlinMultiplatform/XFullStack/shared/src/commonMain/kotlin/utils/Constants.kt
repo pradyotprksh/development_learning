@@ -44,6 +44,10 @@ object Constants {
             const val VALIDATE_OTP = "/validate-otp"
             const val USER_PRESENT = "/user-present"
         }
+
+        object Tweets {
+            const val TWEETS = "/tweets"
+        }
     }
 
     object Keys {
@@ -110,5 +114,7 @@ object Constants {
         const val PROFILE_PICTURE = "profile_picture"
         const val DATE_OF_BIRTH = "date_of_birth"
         const val USER_ID = "userId"
+        const val CREATED_BY = "created_by"
+        const val CREATED_ON = "created_on"
     }
 }
