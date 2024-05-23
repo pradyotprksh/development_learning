@@ -1,7 +1,6 @@
 package implementation.ds.tree.binaryTree
 
 import implementation.ds.stack.StackLinkedListImplementation
-import implementation.ds.tree.Tree
 import implementation.ds.tree.TreeNode
 import kotlin.random.Random
 
@@ -54,18 +53,18 @@ class BinaryTreeImplementation<T>(
         }
 
         val stack = StackLinkedListImplementation(data = root)
-        stack.pop()
         val preorderTraversal = ArrayList<T>()
-        var current = root
 
-        while (current != null || !stack.isEmpty()) {
-            while (current != null) {
-                preorderTraversal.add(current.data)
-                stack.push(current)
-                current = current.left
-            }
-            if (!stack.isEmpty()) {
-                current = stack.pop()?.data?.right
+        while (!stack.isEmpty()) {
+            val tempNode = stack.pop()?.data
+            if (tempNode != null) {
+                preorderTraversal.add(tempNode.data)
+                if (tempNode.right != null) {
+                    stack.push(tempNode.right)
+                }
+                if (tempNode.left != null) {
+                    stack.push(tempNode.left)
+                }
             }
         }
 

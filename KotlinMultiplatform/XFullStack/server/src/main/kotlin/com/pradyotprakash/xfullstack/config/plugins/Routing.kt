@@ -4,9 +4,12 @@ import com.pradyotprakash.xfullstack.config.ModulesConfig
 import com.pradyotprakash.xfullstack.core.security.hashing.HashingService
 import com.pradyotprakash.xfullstack.core.security.token.TokenConfig
 import com.pradyotprakash.xfullstack.core.security.token.TokenService
+import com.pradyotprakash.xfullstack.data.tweet.TweetDataSource
 import com.pradyotprakash.xfullstack.data.user.UserDataSource
 import com.pradyotprakash.xfullstack.features.authentication.authentication
 import com.pradyotprakash.xfullstack.features.authentication.controllers.AuthenticationController
+import com.pradyotprakash.xfullstack.features.tweet.controllers.TweetController
+import com.pradyotprakash.xfullstack.features.tweet.tweet
 import com.pradyotprakash.xfullstack.features.utils.controllers.UtilsController
 import com.pradyotprakash.xfullstack.features.utils.utils
 import com.pradyotprakash.xfullstack.features.verification.controllers.VerificationController
@@ -17,12 +20,16 @@ import org.kodein.di.instance
 
 fun Application.configureRouting() {
     val userDataSource by ModulesConfig.di.instance<UserDataSource>()
+    val tweetDataSource by ModulesConfig.di.instance<TweetDataSource>()
+
     val tokenService by ModulesConfig.di.instance<TokenService>()
     val tokenConfig by ModulesConfig.di.instance<TokenConfig>()
     val hashingService by ModulesConfig.di.instance<HashingService>()
+
     val authenticationController by ModulesConfig.di.instance<AuthenticationController>()
     val utilsController by ModulesConfig.di.instance<UtilsController>()
     val verificationController by ModulesConfig.di.instance<VerificationController>()
+    val tweetController by ModulesConfig.di.instance<TweetController>()
 
     routing {
         authentication(
@@ -38,6 +45,11 @@ fun Application.configureRouting() {
         )
         verification(
             verificationController = verificationController,
+            userDataSource = userDataSource,
+        )
+        tweet(
+            tweetController = tweetController,
+            tweetDataSource = tweetDataSource,
             userDataSource = userDataSource,
         )
     }

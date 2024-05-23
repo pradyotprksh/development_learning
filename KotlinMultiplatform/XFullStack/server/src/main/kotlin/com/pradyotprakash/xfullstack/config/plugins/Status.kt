@@ -2,6 +2,7 @@ package com.pradyotprakash.xfullstack.config.plugins
 
 import core.exception.DBWriteError
 import core.exception.InvalidParameter
+import core.exception.InvalidTweet
 import core.exception.UnauthorizedAccess
 import core.exception.UserAuthDetailsError
 import core.exception.UserDetailsNotFound
@@ -91,6 +92,16 @@ fun Application.configureStatusPages() {
                         status = ResponseStatus.Error,
                         code = cause.errorCode,
                         message = cause.message ?: Localization.DEFAULT_ERROR_MESSAGE,
+                        data = null
+                    )
+                )
+
+                is InvalidTweet -> call.respond(
+                    HttpStatusCode.Conflict,
+                    XFullStackResponse(
+                        status = ResponseStatus.Error,
+                        code = cause.errorCode,
+                        message = cause.message,
                         data = null
                     )
                 )

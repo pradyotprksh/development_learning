@@ -6,6 +6,8 @@ import com.pradyotprakash.xfullstack.core.security.hashing.SHA256HashingService
 import com.pradyotprakash.xfullstack.core.security.token.JwtTokenService
 import com.pradyotprakash.xfullstack.core.security.token.TokenConfig
 import com.pradyotprakash.xfullstack.core.security.token.TokenService
+import com.pradyotprakash.xfullstack.data.tweet.MongoTweetDataSource
+import com.pradyotprakash.xfullstack.data.tweet.TweetDataSource
 import com.pradyotprakash.xfullstack.data.user.MongoUserDataSource
 import com.pradyotprakash.xfullstack.data.user.UserDataSource
 import com.pradyotprakash.xfullstack.features.authentication.controllers.AuthenticationController
@@ -17,6 +19,9 @@ import com.pradyotprakash.xfullstack.features.authentication.controllers.registe
 import com.pradyotprakash.xfullstack.features.authentication.controllers.register.RegisterControllerImplementation
 import com.pradyotprakash.xfullstack.features.authentication.controllers.userInfo.UserInfoController
 import com.pradyotprakash.xfullstack.features.authentication.controllers.userInfo.UserInfoControllerImplementation
+import com.pradyotprakash.xfullstack.features.tweet.controllers.TweetController
+import com.pradyotprakash.xfullstack.features.tweet.controllers.tweetCreation.TweetCreationController
+import com.pradyotprakash.xfullstack.features.tweet.controllers.tweetCreation.TweetCreationControllerImplementation
 import com.pradyotprakash.xfullstack.features.utils.controllers.UtilsController
 import com.pradyotprakash.xfullstack.features.utils.controllers.usernameValid.UsernameValidController
 import com.pradyotprakash.xfullstack.features.utils.controllers.usernameValid.UsernameValidControllerImplementation
@@ -34,7 +39,9 @@ import utils.Constants.Keys.JWT_SECRET
 object ModulesConfig {
     private val databaseModule = DI.Module("DATABASE") {
         bindSingleton { XFullStackMongoDBClient.getDatabase() }
+
         bindProvider<UserDataSource> { MongoUserDataSource(instance()) }
+        bindProvider<TweetDataSource> { MongoTweetDataSource(instance()) }
     }
 
     private val securityModule = DI.Module("SECURITY") {
@@ -59,6 +66,8 @@ object ModulesConfig {
         bindProvider<UsernameValidController> { UsernameValidControllerImplementation() }
 
         bindProvider<UserVerificationController> { UserVerificationControllerImplementation() }
+
+        bindProvider<TweetCreationController> { TweetCreationControllerImplementation() }
     }
 
     private val featuresModule = DI.Module("FEATURES") {
@@ -67,6 +76,8 @@ object ModulesConfig {
         bindProvider { UtilsController(instance()) }
 
         bindProvider { VerificationController(instance()) }
+
+        bindProvider { TweetController(instance()) }
     }
 
     val di = DI {

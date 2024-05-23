@@ -14,6 +14,7 @@ object Constants {
 
         object Collections {
             const val USERS = "users"
+            const val TWEET = "tweet"
         }
     }
 
@@ -46,7 +47,7 @@ object Constants {
         }
 
         object Tweets {
-            const val TWEETS = "/tweets"
+            const val TWEET = "/tweet"
         }
     }
 
@@ -76,6 +77,7 @@ object Constants {
         const val NO_USERNAME = "no-username"
         const val BIO_MAX_LENGTH = 50
         const val USERNAME_PREFIX = "@"
+        const val TWEET_MAX_LENGTH = 150
     }
 
     object ErrorCode {
@@ -99,6 +101,7 @@ object Constants {
         const val OTP_VALIDATION_ERROR_CODE = "EC_XFS017"
         const val INTERNAL_SERVER_ERROR_CODE = "EC_XFS018"
         const val BIO_VALIDITY_ERROR_CODE = "EC_XFS019"
+        const val TWEET_VALIDITY_ERROR_CODE = "EC_XFS020"
     }
 
     object SuccessCode {
@@ -116,5 +119,10 @@ object Constants {
         const val USER_ID = "userId"
         const val CREATED_BY = "created_by"
         const val CREATED_ON = "created_on"
+        const val IS_A_POLL = "is_a_poll"
+        const val POLL_CHOICES = "poll_choices"
+        const val POLL_LENGTH = "poll_length"
+        const val SCHEDULED_TWEET = "scheduled_tweet"
+        const val PARENT_TWEET_ID = "parent_tweet_id"
     }
 }

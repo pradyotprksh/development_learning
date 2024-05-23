@@ -4,6 +4,7 @@ import utils.Constants.ConstValues.BIO_MAX_LENGTH
 import utils.Constants.ConstValues.NAME_MAX_LENGTH
 import utils.Constants.ConstValues.NAME_MIN_LENGTH
 import utils.Constants.ConstValues.PASSWORD_MIN_LENGTH
+import utils.Constants.ConstValues.TWEET_MAX_LENGTH
 import utils.Constants.ConstValues.USERNAME_MIN_LENGTH
 
 object Localization {
@@ -99,4 +100,5 @@ object Localization {
     const val LISTS = "Lists"
     const val SPACES = "Spaces"
     const val MONETISATION = "Monetisation"
+    const val INVALID_TWEET_LENGTH = "Tweet length should be less than $TWEET_MAX_LENGTH characters"
 }
