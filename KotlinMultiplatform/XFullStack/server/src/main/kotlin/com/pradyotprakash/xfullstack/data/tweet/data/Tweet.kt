@@ -34,7 +34,7 @@ data class Tweet(
     // Poll tweet details
     @BsonProperty(IS_A_POLL) val isAPoll: Boolean,
     @BsonProperty(POLL_CHOICES) val pollChoices: List<PollChoices>,
-    @BsonProperty(POLL_LENGTH) val pollLength: Long,
+    @BsonProperty(POLL_LENGTH) val pollLength: Long?,
 
     // Scheduled tweet details
     @BsonProperty(SCHEDULED_ON_TWEET) val scheduledOnTweet: Long,
@@ -44,7 +44,6 @@ data class Tweet(
 
     // Comment tweet details
     @BsonProperty(IS_A_COMMENT_TWEET) val isACommentTweet: Boolean,
-    @BsonProperty(PARENT_TWEET_ID) val parentTweetId: ObjectId?,
 
     // Retweet details
     @BsonProperty(IS_A_QUOTE_TWEET) val isQuoteTweet: Boolean,
@@ -52,4 +51,7 @@ data class Tweet(
 
     // Liked comment
     @BsonProperty(IS_A_LIKED_TWEET) val isLikedTweet: Boolean,
+
+    // For comment, liked and retweet parent id will be required
+    @BsonProperty(PARENT_TWEET_ID) val parentTweetId: ObjectId?,
 )

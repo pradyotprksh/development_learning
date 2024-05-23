@@ -87,6 +87,7 @@ class TweetCreationControllerImplementation : TweetCreationController {
                     PollChoices(
                         choice = it,
                         voteCount = 0,
+                        votedBy = emptyList()
                     )
                 },
                 pollLength = if (tweetRequest.isAPoll) UtilsMethod.Dates.getFutureTimeStamp(

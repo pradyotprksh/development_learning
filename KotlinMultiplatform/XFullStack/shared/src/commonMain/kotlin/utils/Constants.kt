@@ -48,6 +48,7 @@ object Constants {
 
         object Tweets {
             const val TWEET = "/tweet"
+            const val TWEET_VOTE = "/tweet-vote"
         }
     }
 
@@ -133,5 +134,6 @@ object Constants {
         const val IS_A_REPOST_TWEET = "is_a_repost_tweet"
         const val IS_A_LIKED_TWEET = "is_a_liked_tweet"
         const val VOTE_COUNT = "vote_count"
+        const val VOTED_BY = "voted_by"
     }
 }
