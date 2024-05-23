@@ -1,14 +1,18 @@
 package utils
 
 import core.exception.InvalidParameter
+import core.exception.InvalidTweet
 import kotlinx.datetime.Clock
+import kotlinx.datetime.DateTimeUnit
 import kotlinx.datetime.Instant
 import kotlinx.datetime.TimeZone
+import kotlinx.datetime.plus
 import kotlinx.datetime.toLocalDateTime
 import utils.Constants.ConstValues.BIO_MAX_LENGTH
 import utils.Constants.ConstValues.NAME_MAX_LENGTH
 import utils.Constants.ConstValues.NAME_MIN_LENGTH
 import utils.Constants.ConstValues.PASSWORD_MIN_LENGTH
+import utils.Constants.ConstValues.TWEET_MAX_LENGTH
 import utils.Constants.ConstValues.USERNAME_MIN_LENGTH
 import utils.Constants.ErrorCode.BIO_VALIDITY_ERROR_CODE
 import utils.Constants.ErrorCode.EMAIL_VALIDITY_ERROR_CODE
@@ -20,6 +24,42 @@ import kotlin.math.absoluteValue
 
 object UtilsMethod {
     object Validation {
+        fun isPollTweetValid(
+            tweet: String?,
+            pollChoices: List<String>,
+            pollHour: Long?,
+        ): Boolean {
+            isTweetValid(tweet)
+
+            if (pollChoices.none { it.isNotBlank() }) {
+                throw InvalidTweet(
+                    message = Localization.INVALID_POLL_CHOICES
+                )
+            }
+
+            if (pollHour == null) {
+                throw InvalidTweet(
+                    message = Localization.INVALID_POLL_TIMING
+                )
+            }
+
+            return true
+        }
+
+        fun isTweetValid(tweet: String?): Boolean {
+            tweet?.let {
+                if (it.length !in 1..TWEET_MAX_LENGTH) {
+                    throw InvalidTweet(
+                        message = Localization.INVALID_TWEET_LENGTH
+                    )
+                }
+            } ?: throw InvalidTweet(
+                message = Localization.INVALID_TWEET_LENGTH
+            )
+
+            return true
+        }
+
         fun isValidBio(bio: String): Boolean {
             if (bio.length !in 0..BIO_MAX_LENGTH) {
                 throw InvalidParameter(
@@ -74,8 +114,7 @@ object UtilsMethod {
         fun passwordContainsAtLeastOneLowerCase(password: String) =
             password.contains(Regex("[a-z]"))
 
-        fun passwordContainsAtLeastOneDigit(password: String) =
-            password.contains(Regex("[0-9]"))
+        fun passwordContainsAtLeastOneDigit(password: String) = password.contains(Regex("[0-9]"))
 
         fun passwordContainsAtLeastOneSpecialCharacters(password: String) =
             password.contains(Regex("[^A-Za-z0-9]"))
@@ -175,5 +214,21 @@ object UtilsMethod {
         }
 
         fun getCurrentTimeStamp(): Long = Clock.System.now().epochSeconds
+
+        fun isFutureTimeStamp(timeStamp: Long) = Clock.System.now().epochSeconds < timeStamp
+
+        fun getFutureTimeStamp(
+            pollHour: Long,
+            pollMinute: Long?,
+            pollSeconds: Long?,
+        ): Long {
+            val now = Clock.System.now()
+            val systemTZ = TimeZone.currentSystemDefault()
+            var addedTime = now.plus(pollHour, DateTimeUnit.HOUR, systemTZ)
+            pollMinute?.let { addedTime = addedTime.plus(it, DateTimeUnit.MINUTE, systemTZ) }
+            pollSeconds?.let { addedTime = addedTime.plus(it, DateTimeUnit.SECOND, systemTZ) }
+
+            return addedTime.epochSeconds
+        }
     }
 }

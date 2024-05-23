@@ -102,6 +102,7 @@ object Constants {
         const val INTERNAL_SERVER_ERROR_CODE = "EC_XFS018"
         const val BIO_VALIDITY_ERROR_CODE = "EC_XFS019"
         const val TWEET_VALIDITY_ERROR_CODE = "EC_XFS020"
+        const val BAD_REQUEST_ERROR_CODE = "EC_XFS021"
     }
 
     object SuccessCode {
@@ -118,11 +119,19 @@ object Constants {
         const val DATE_OF_BIRTH = "date_of_birth"
         const val USER_ID = "userId"
         const val CREATED_BY = "created_by"
-        const val CREATED_ON = "created_on"
+        const val TWEETED_ON = "tweeted_on"
+        const val COMMENT_COUNT = "comment_count"
+        const val RETWEET_COUNT = "retweet_count"
+        const val LIKES_COUNT = "likes_count"
         const val IS_A_POLL = "is_a_poll"
         const val POLL_CHOICES = "poll_choices"
         const val POLL_LENGTH = "poll_length"
-        const val SCHEDULED_TWEET = "scheduled_tweet"
+        const val SCHEDULED_ON_TWEET = "scheduled_on_tweet"
+        const val IS_A_COMMENT_TWEET = "is_a_comment_tweet"
         const val PARENT_TWEET_ID = "parent_tweet_id"
+        const val IS_A_QUOTE_TWEET = "is_a_quote_tweet"
+        const val IS_A_REPOST_TWEET = "is_a_repost_tweet"
+        const val IS_A_LIKED_TWEET = "is_a_liked_tweet"
+        const val VOTE_COUNT = "vote_count"
     }
 }

@@ -100,5 +100,12 @@ object Localization {
     const val LISTS = "Lists"
     const val SPACES = "Spaces"
     const val MONETISATION = "Monetisation"
-    const val INVALID_TWEET_LENGTH = "Tweet length should be less than $TWEET_MAX_LENGTH characters"
+    const val INVALID_TWEET_LENGTH =
+        "Tweet length should be in the range 0-$TWEET_MAX_LENGTH characters"
+    const val INVALID_POLL_CHOICES = "At least one choice is needed for a poll"
+    const val INVALID_POLL_TIMING = "Poll timing should be specified or correct"
+    const val PARENT_TWEET_NOT_FOUND = "Need the parent tweet for this tweet"
+    const val SCHEDULED_TWEET_IS_NOT_CORRECT =
+        "Scheduled tweet time is not correct. Please select a valid time for."
+    const val TWEET_CREATED_SUCCESSFULLY = "Tweet created successfully"
 }

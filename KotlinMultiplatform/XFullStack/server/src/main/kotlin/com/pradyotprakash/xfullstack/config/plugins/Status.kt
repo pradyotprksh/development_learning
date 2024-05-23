@@ -13,6 +13,7 @@ import io.ktor.server.application.Application
 import io.ktor.server.application.install
 import io.ktor.server.plugins.statuspages.StatusPages
 import io.ktor.server.response.respond
+import utils.Constants.ErrorCode.BAD_REQUEST_ERROR_CODE
 import utils.Constants.ErrorCode.INTERNAL_SERVER_ERROR_CODE
 import utils.Constants.ErrorCode.UNAUTHORIZED_ERROR_CODE
 import utils.Localization
@@ -27,6 +28,18 @@ fun Application.configureStatusPages() {
                     status = ResponseStatus.Error,
                     code = UNAUTHORIZED_ERROR_CODE,
                     message = Localization.UNAUTHORIZED_ACCESS,
+                    data = null
+                )
+            )
+        }
+
+        status(HttpStatusCode.BadRequest) { call, _ ->
+            call.respond(
+                HttpStatusCode.BadRequest,
+                XFullStackResponse(
+                    status = ResponseStatus.Error,
+                    code = BAD_REQUEST_ERROR_CODE,
+                    message = HttpStatusCode.BadRequest.description,
                     data = null
                 )
             )
