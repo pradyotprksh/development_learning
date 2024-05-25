@@ -2,8 +2,10 @@ package com.pradyotprakash.xfullstack.features.tweet.controllers.tweetCreation
 
 import com.pradyotprakash.xfullstack.data.tweet.TweetDataSource
 import com.pradyotprakash.xfullstack.data.tweet.data.PollChoices
+import com.pradyotprakash.xfullstack.data.tweet.data.PollVoterDetails
 import com.pradyotprakash.xfullstack.data.tweet.data.Tweet
 import com.pradyotprakash.xfullstack.data.user.UserDataSource
+import com.pradyotprakash.xfullstack.features.tweet.resource.TweetResource
 import core.exception.DBWriteError
 import core.exception.InvalidTweet
 import core.exception.UserDetailsNotFound
@@ -23,7 +25,7 @@ import utils.Localization
 import utils.ResponseStatus
 import utils.UtilsMethod
 
-class TweetCreationControllerImplementation : TweetCreationController {
+class TweetCreateUpdateControllerImplementation : TweetCreateUpdateController {
     override suspend fun createTweet(
         call: ApplicationCall, userDataSource: UserDataSource, tweetDataSource: TweetDataSource
     ) {
@@ -85,9 +87,7 @@ class TweetCreationControllerImplementation : TweetCreationController {
                 isAPoll = tweetRequest.isAPoll,
                 pollChoices = tweetRequest.pollChoices.map {
                     PollChoices(
-                        choice = it,
-                        voteCount = 0,
-                        votedBy = emptyList()
+                        choice = it, voteCount = 0, voterDetails = emptyList()
                     )
                 },
                 pollLength = if (tweetRequest.isAPoll) UtilsMethod.Dates.getFutureTimeStamp(
@@ -112,11 +112,93 @@ class TweetCreationControllerImplementation : TweetCreationController {
         }
 
         call.respond(
-            HttpStatusCode.Created,
-            XFullStackResponse(
+            HttpStatusCode.Created, XFullStackResponse(
                 status = ResponseStatus.Success,
                 code = null,
                 message = Localization.TWEET_CREATED_SUCCESSFULLY,
+                data = null,
+            )
+        )
+    }
+
+    override suspend fun voteOnTweet(
+        call: ApplicationCall,
+        resource: TweetResource.TweetVote,
+        userDataSource: UserDataSource,
+        tweetDataSource: TweetDataSource
+    ) {
+        delay(API_RESPONSE_DELAY)
+
+        val principal = call.principal<JWTPrincipal>()
+        val userId =
+            principal?.payload?.getClaim(USER_ID)?.asString() ?: throw UserDetailsNotFound()
+
+        userDataSource.getUserByUserId(userId) ?: throw UserDetailsNotFound()
+
+        val tweetDetails = tweetDataSource.findTweetById(resource.tweetId) ?: throw InvalidTweet(
+            message = Localization.VALID_TWEET_NOT_FOUND,
+        )
+
+        if (!tweetDetails.isAPoll) {
+            throw InvalidTweet(
+                message = Localization.VALID_TWEET_NOT_FOUND,
+            )
+        }
+
+        tweetDetails.pollLength?.let {
+            if (!UtilsMethod.Dates.isFutureTimeStamp(it)) throw InvalidTweet(
+                message = Localization.POLL_VOTE_EXPIRED,
+            )
+        } ?: throw InvalidTweet(
+            message = Localization.VALID_TWEET_NOT_FOUND,
+        )
+
+        val isUserAlreadyVoted = tweetDetails.pollChoices.find { pollChoice ->
+            pollChoice.voterDetails.map { voter -> voter.votedBy }.contains(ObjectId(userId))
+        } != null
+
+        if (isUserAlreadyVoted) {
+            throw InvalidTweet(
+                message = Localization.VOTE_ALREADY_CASTED,
+            )
+        }
+
+        val requiredOption = tweetDetails.pollChoices.find { it.id == ObjectId(resource.optionId) }
+
+        if (requiredOption == null) {
+            throw InvalidTweet(
+                message = Localization.VALID_TWEET_NOT_FOUND,
+            )
+        }
+
+        val updatedChoices = tweetDetails.pollChoices.map {
+            if (it.id == ObjectId(resource.optionId)) {
+                it.copy(
+                    voteCount = it.voteCount.plus(1),
+                    voterDetails = it.voterDetails + PollVoterDetails(
+                        votedBy = ObjectId(userId),
+                        votedOn = UtilsMethod.Dates.getCurrentTimeStamp(),
+                    ),
+                )
+            } else {
+                it
+            }
+        }
+
+        val wasAcknowledged = tweetDataSource.incrementVotesOnPoll(
+            tweetId = resource.tweetId,
+            choices = updatedChoices,
+        )
+
+        if (!wasAcknowledged) {
+            throw DBWriteError()
+        }
+
+        call.respond(
+            HttpStatusCode.OK, XFullStackResponse(
+                status = ResponseStatus.Success,
+                code = null,
+                message = Localization.TWEET_VOTE_CASTED_SUCCESSFULLY,
                 data = null,
             )
         )
