@@ -1,18 +1,13 @@
 meta {
-  name: Tweet Poll
+  name: Get All Tweets
   type: http
-  seq: 2
+  seq: 3
 }
 
-post {
-  url: http://192.168.1.37:8080/tweet/poll?tweetId=665473addf74511ad2c1248d&optionId=665473addf74511ad2c1248a
+get {
+  url: http://192.168.1.37:8080/tweet
   body: none
   auth: none
-}
-
-query {
-  tweetId: 665473addf74511ad2c1248d
-  optionId: 665473addf74511ad2c1248a
 }
 
 headers {

@@ -39,6 +39,8 @@ class TweetCreateUpdateControllerImplementation : TweetCreateUpdateController {
 
         userDataSource.getUserByUserId(createdBy) ?: throw UserDetailsNotFound()
 
+        var parentTweetId: ObjectId? = null
+
         val tweetsDb = tweetsRequest.map { tweetRequest ->
             if (!tweetRequest.tweetIsOptional) {
                 UtilsMethod.Validation.isTweetValid(tweetRequest.tweet)
@@ -74,7 +76,7 @@ class TweetCreateUpdateControllerImplementation : TweetCreateUpdateController {
                 )
             }
 
-            Tweet(
+            val tweetDb = Tweet(
                 tweet = tweetRequest.tweet ?: "",
                 createdBy = ObjectId(createdBy),
                 tweetedOn = UtilsMethod.Dates.getCurrentTimeStamp(),
@@ -98,11 +100,16 @@ class TweetCreateUpdateControllerImplementation : TweetCreateUpdateController {
                 scheduledOnTweet = tweetRequest.scheduledOnTweet ?: 0,
                 location = tweetRequest.location ?: "",
                 isACommentTweet = tweetRequest.isACommentTweet,
-                parentTweetId = tweetRequest.parentTweetId?.let { ObjectId(tweetRequest.parentTweetId) },
+                parentTweetId = tweetRequest.parentTweetId?.let { ObjectId(tweetRequest.parentTweetId) }
+                    ?: parentTweetId,
                 isQuoteTweet = tweetRequest.isQuoteTweet,
                 isRepostTweet = tweetRequest.isRepostTweet,
                 isLikedTweet = tweetRequest.isLikedTweet,
             )
+
+            parentTweetId = tweetDb.id
+
+            tweetDb
         }
 
         val wasAcknowledged = tweetDataSource.insertNewTweets(tweetsDb)

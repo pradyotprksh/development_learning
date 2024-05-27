@@ -1,7 +1,10 @@
 package com.pradyotprakash.xfullstack.features.tweet.controllers
 
 import com.pradyotprakash.xfullstack.features.tweet.controllers.tweetCreation.TweetCreateUpdateController
+import com.pradyotprakash.xfullstack.features.tweet.controllers.tweetFetch.TweetFetchController
 
 class TweetUpdateController(
     private val tweetCreationController: TweetCreateUpdateController,
-) : TweetCreateUpdateController by tweetCreationController
+    private val tweetFetchController: TweetFetchController,
+) : TweetCreateUpdateController by tweetCreationController,
+    TweetFetchController by tweetFetchController

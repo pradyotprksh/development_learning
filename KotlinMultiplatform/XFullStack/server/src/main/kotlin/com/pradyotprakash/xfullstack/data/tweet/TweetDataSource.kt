@@ -4,6 +4,8 @@ import com.pradyotprakash.xfullstack.data.tweet.data.PollChoices
 import com.pradyotprakash.xfullstack.data.tweet.data.Tweet
 
 interface TweetDataSource {
+    suspend fun getAllTweets(): List<Tweet>
+
     suspend fun findTweetById(tweetId: String): Tweet?
 
     suspend fun insertNewTweets(tweets: List<Tweet>): Boolean

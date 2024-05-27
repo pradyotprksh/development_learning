@@ -22,6 +22,8 @@ import com.pradyotprakash.xfullstack.features.authentication.controllers.userInf
 import com.pradyotprakash.xfullstack.features.tweet.controllers.TweetUpdateController
 import com.pradyotprakash.xfullstack.features.tweet.controllers.tweetCreation.TweetCreateUpdateController
 import com.pradyotprakash.xfullstack.features.tweet.controllers.tweetCreation.TweetCreateUpdateControllerImplementation
+import com.pradyotprakash.xfullstack.features.tweet.controllers.tweetFetch.TweetFetchController
+import com.pradyotprakash.xfullstack.features.tweet.controllers.tweetFetch.TweetFetchControllerImplementation
 import com.pradyotprakash.xfullstack.features.utils.controllers.UtilsController
 import com.pradyotprakash.xfullstack.features.utils.controllers.serverDetails.ServerDetailsController
 import com.pradyotprakash.xfullstack.features.utils.controllers.serverDetails.ServerDetailsControllerImplementation
@@ -71,6 +73,7 @@ object ModulesConfig {
         bindProvider<UserVerificationController> { UserVerificationControllerImplementation() }
 
         bindProvider<TweetCreateUpdateController> { TweetCreateUpdateControllerImplementation() }
+        bindProvider<TweetFetchController> { TweetFetchControllerImplementation() }
     }
 
     private val featuresModule = DI.Module("FEATURES") {
@@ -80,7 +83,7 @@ object ModulesConfig {
 
         bindProvider { VerificationController(instance()) }
 
-        bindProvider { TweetUpdateController(instance()) }
+        bindProvider { TweetUpdateController(instance(), instance()) }
     }
 
     val di = DI {
