@@ -2,7 +2,11 @@ package app
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.Message
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.DrawerValue
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.NavigationBar
@@ -29,6 +33,7 @@ import app.navigation.path
 import app.navigation.showAppBar
 import app.navigation.showBottomNavBar
 import app.navigation.showDrawer
+import app.navigation.showFloatingActionButton
 import app.pages.auth.authOptions.screen.AuthOptionsScreen
 import app.pages.auth.login.screen.LoginScreen
 import app.pages.auth.register.screen.RegisterScreen
@@ -76,6 +81,21 @@ fun XApp(
                             }
                         },
                     )
+                }
+            },
+            floatingActionButton = {
+                val navBackStackEntry by navController.currentBackStackEntryAsState()
+                val currentDestination = navBackStackEntry?.destination?.route
+
+                if (showFloatingActionButton(currentDestination ?: "")) {
+                    FloatingActionButton(
+                        onClick = {},
+                    ) {
+                        Icon(
+                            imageVector = if (currentDestination == Routes.HomeMessages.path()) Icons.AutoMirrored.Filled.Message else Icons.Default.Add,
+                            contentDescription = (if (currentDestination == Routes.HomeMessages.path()) Icons.AutoMirrored.Filled.Message else Icons.Default.Add).name,
+                        )
+                    }
                 }
             },
             bottomBar = {
