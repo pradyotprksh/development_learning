@@ -8,6 +8,7 @@ import domain.repositories.server.utils.ServerUtilsRepository
 import domain.repositories.user.current.CurrentUserRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.firstOrNull
 import org.kodein.di.instance
 
 class SplashViewModel : ViewModel() {
@@ -21,18 +22,17 @@ class SplashViewModel : ViewModel() {
         serverUtilsRepository.isServerAvailable().collect {
             when (it) {
                 is ClientResponse.Error -> {
-                    updateLoaderState(showLoader = false)
                     showMessage(message = it.message)
                 }
 
-                is ClientResponse.Success -> {
-                    checkForAuthentication(
-                        navigateToAuthOption = navigateToAuthOption,
-                        navigateToHome = navigateToHome,
-                    )
-                }
-
                 else -> {}
+            }
+
+            if (it is ClientResponse.Error || it is ClientResponse.Success) {
+                checkForAuthentication(
+                    navigateToAuthOption = navigateToAuthOption,
+                    navigateToHome = navigateToHome,
+                )
             }
         }
     }
@@ -58,20 +58,11 @@ class SplashViewModel : ViewModel() {
         navigateToHome: () -> Unit,
     ) {
         currentUserRepository.authenticateUser().collect {
-            when (it) {
-                is ClientResponse.Error -> {
-                    currentUserRepository.deleteUserDetails(fromLocal = true, fromRemote = false)
-                    navigateToAuthOption()
-                }
-
-                is ClientResponse.Success -> {
-                    updateCurrentUserInfo(
-                        navigateToAuthOption,
-                        navigateToHome,
-                    )
-                }
-
-                else -> {}
+            if (it is ClientResponse.Error || it is ClientResponse.Success) {
+                updateCurrentUserInfo(
+                    navigateToAuthOption,
+                    navigateToHome,
+                )
             }
         }
     }
@@ -83,8 +74,15 @@ class SplashViewModel : ViewModel() {
         currentUserRepository.updateUserInfo().collect {
             when (it) {
                 is ClientResponse.Error -> {
-                    currentUserRepository.deleteUserDetails(fromLocal = true, fromRemote = false)
-                    navigateToAuthOption()
+                    currentUserRepository.getUserId()?.let { userId ->
+                        currentUserRepository.userInfoChanges(userId).firstOrNull()?.let {
+                            navigateToHome()
+                        } ?: run {
+                            deleteLocalDbAndRedirectToAuthOption(navigateToAuthOption)
+                        }
+                    } ?: run {
+                        deleteLocalDbAndRedirectToAuthOption(navigateToAuthOption)
+                    }
                 }
 
                 is ClientResponse.Success -> {
@@ -94,6 +92,14 @@ class SplashViewModel : ViewModel() {
                 else -> {}
             }
         }
+    }
+
+    private suspend fun deleteLocalDbAndRedirectToAuthOption(navigateToAuthOption: () -> Unit) {
+        currentUserRepository.deleteUserDetails(
+            fromLocal = true,
+            fromRemote = false
+        )
+        navigateToAuthOption()
     }
 
     private fun showMessage(message: String) {

@@ -55,22 +55,20 @@ fun XApp(
     val scope = rememberCoroutineScope()
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
 
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentDestination = navBackStackEntry?.destination
+
     ModalNavigationDrawer(
         drawerState = drawerState,
         drawerContent = {
-            val navBackStackEntry by navController.currentBackStackEntryAsState()
-            val currentDestination = navBackStackEntry?.destination
-
             if (showDrawer(currentDestination?.route ?: "")) {
                 UserNavigationDrawerComposable()
             }
         },
+        gesturesEnabled = showDrawer(currentDestination?.route ?: "")
     ) {
         Scaffold(
             topBar = {
-                val navBackStackEntry by navController.currentBackStackEntryAsState()
-                val currentDestination = navBackStackEntry?.destination
-
                 if (showAppBar(currentDestination?.route ?: "")) {
                     UserAppBarComposable(
                         toggleNavDrawer = {
@@ -84,24 +82,18 @@ fun XApp(
                 }
             },
             floatingActionButton = {
-                val navBackStackEntry by navController.currentBackStackEntryAsState()
-                val currentDestination = navBackStackEntry?.destination?.route
-
-                if (showFloatingActionButton(currentDestination ?: "")) {
+                if (showFloatingActionButton(currentDestination?.route ?: "")) {
                     FloatingActionButton(
                         onClick = {},
                     ) {
                         Icon(
-                            imageVector = if (currentDestination == Routes.HomeMessages.path()) Icons.AutoMirrored.Filled.Message else Icons.Default.Add,
-                            contentDescription = (if (currentDestination == Routes.HomeMessages.path()) Icons.AutoMirrored.Filled.Message else Icons.Default.Add).name,
+                            imageVector = if (currentDestination?.route == Routes.HomeMessages.path()) Icons.AutoMirrored.Filled.Message else Icons.Default.Add,
+                            contentDescription = (if (currentDestination?.route == Routes.HomeMessages.path()) Icons.AutoMirrored.Filled.Message else Icons.Default.Add).name,
                         )
                     }
                 }
             },
             bottomBar = {
-                val navBackStackEntry by navController.currentBackStackEntryAsState()
-                val currentDestination = navBackStackEntry?.destination
-
                 if (showBottomNavBar(currentDestination?.route ?: "")) {
                     NavigationBar {
                         listOf(

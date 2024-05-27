@@ -3,17 +3,23 @@ package di
 import core.database.XFullStackDatabaseClient
 import core.network.NetworkClient
 import core.network.XFullStackHttpClient
+import data.device.tweet.TweetDBServiceImplementation
 import data.device.user.current.CurrentUserDBServiceImplementation
 import data.remote.server.utils.ServerUtilsRemoteServiceImplementation
+import data.remote.tweet.TweetRemoteServiceImplementation
 import data.remote.user.current.CurrentUserRemoteServiceImplementation
 import data.remote.user.verification.UserVerificationRemoteServiceImplementation
 import domain.repositories.server.utils.ServerUtilsRepository
 import domain.repositories.server.utils.ServerUtilsRepositoryImplementation
+import domain.repositories.tweet.TweetRepository
+import domain.repositories.tweet.TweetRepositoryImplementation
 import domain.repositories.user.current.CurrentUserRepository
 import domain.repositories.user.current.CurrentUserRepositoryImplementation
 import domain.repositories.user.verification.UserVerificationRepository
 import domain.repositories.user.verification.UserVerificationRepositoryImplementation
 import domain.services.server.utils.ServerUtilsRemoteService
+import domain.services.tweet.TweetDBService
+import domain.services.tweet.TweetRemoteService
 import domain.services.user.current.CurrentUserDBService
 import domain.services.user.current.CurrentUserRemoteService
 import domain.services.user.verification.UserVerificationRemoteService
@@ -36,6 +42,8 @@ object ModulesDi {
 
     private val servicesDBModule = DI.Module("SERVICES_DB") {
         bindProvider<CurrentUserDBService> { CurrentUserDBServiceImplementation(instance()) }
+
+        bindProvider<TweetDBService> { TweetDBServiceImplementation(instance()) }
     }
 
     private val servicesRemoteModule = DI.Module("SERVICES_REMOTE") {
@@ -45,7 +53,10 @@ object ModulesDi {
                 instance()
             )
         }
+
         bindProvider<ServerUtilsRemoteService> { ServerUtilsRemoteServiceImplementation(instance()) }
+
+        bindProvider<TweetRemoteService> { TweetRemoteServiceImplementation(instance()) }
     }
 
     private val repositoriesModule = DI.Module("REPOSITORIES") {
@@ -57,8 +68,13 @@ object ModulesDi {
         bind<UserVerificationRepository>() with singleton {
             UserVerificationRepositoryImplementation(instance())
         }
+
         bind<ServerUtilsRepository>() with singleton {
             ServerUtilsRepositoryImplementation(instance())
+        }
+
+        bind<TweetRepository>() with singleton {
+            TweetRepositoryImplementation(instance(), instance())
         }
     }
 
