@@ -4,12 +4,16 @@ import core.database.XFullStackDatabaseClient
 import core.network.NetworkClient
 import core.network.XFullStackHttpClient
 import data.device.user.current.CurrentUserDBServiceImplementation
+import data.remote.server.utils.ServerUtilsRemoteServiceImplementation
 import data.remote.user.current.CurrentUserRemoteServiceImplementation
 import data.remote.user.verification.UserVerificationRemoteServiceImplementation
+import domain.repositories.server.utils.ServerUtilsRepository
+import domain.repositories.server.utils.ServerUtilsRepositoryImplementation
 import domain.repositories.user.current.CurrentUserRepository
 import domain.repositories.user.current.CurrentUserRepositoryImplementation
 import domain.repositories.user.verification.UserVerificationRepository
 import domain.repositories.user.verification.UserVerificationRepositoryImplementation
+import domain.services.server.utils.ServerUtilsRemoteService
 import domain.services.user.current.CurrentUserDBService
 import domain.services.user.current.CurrentUserRemoteService
 import domain.services.user.verification.UserVerificationRemoteService
@@ -30,14 +34,18 @@ object ModulesDi {
         bindSingleton { XFullStackDatabaseClient.createDatabaseClient() }
     }
 
-    private val servicesModule = DI.Module("SERVICES") {
+    private val servicesDBModule = DI.Module("SERVICES_DB") {
         bindProvider<CurrentUserDBService> { CurrentUserDBServiceImplementation(instance()) }
+    }
+
+    private val servicesRemoteModule = DI.Module("SERVICES_REMOTE") {
         bindProvider<CurrentUserRemoteService> { CurrentUserRemoteServiceImplementation(instance()) }
         bindProvider<UserVerificationRemoteService> {
             UserVerificationRemoteServiceImplementation(
                 instance()
             )
         }
+        bindProvider<ServerUtilsRemoteService> { ServerUtilsRemoteServiceImplementation(instance()) }
     }
 
     private val repositoriesModule = DI.Module("REPOSITORIES") {
@@ -49,13 +57,17 @@ object ModulesDi {
         bind<UserVerificationRepository>() with singleton {
             UserVerificationRepositoryImplementation(instance())
         }
+        bind<ServerUtilsRepository>() with singleton {
+            ServerUtilsRepositoryImplementation(instance())
+        }
     }
 
     val di = DI {
         importAll(
             databaseModule,
             networkModule,
-            servicesModule,
+            servicesDBModule,
+            servicesRemoteModule,
             repositoriesModule,
         )
     }
