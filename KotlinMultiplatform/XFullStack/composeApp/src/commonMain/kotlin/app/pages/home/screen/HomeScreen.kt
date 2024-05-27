@@ -33,7 +33,7 @@ import utils.Localization
 
 @Composable
 fun HomeScreen(
-    homeViewModel: HomeViewModel = viewModel { HomeViewModel() }
+    homeViewModel: HomeViewModel = viewModel { HomeViewModel() },
 ) {
     LaunchedEffect(homeViewModel) {
         homeViewModel.initialSetup()
@@ -81,7 +81,7 @@ fun HomeScreen(
                                         if (isClosed) open() else close()
                                     }
                                 }
-                            }
+                            },
                         )
                     },
                     actions = {

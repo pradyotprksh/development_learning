@@ -2,21 +2,30 @@ package app
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Icon
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavDestination.Companion.hierarchy
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import app.navigation.Routes
 import app.navigation.path
+import app.navigation.showBottomNavBar
 import app.pages.auth.authOptions.screen.AuthOptionsScreen
 import app.pages.auth.login.screen.LoginScreen
 import app.pages.auth.register.screen.RegisterScreen
 import app.pages.home.screen.HomeScreen
+import app.pages.home.screen.bottomBar.HomeBottomNavItems
 import app.pages.splash.screen.SplashScreen
 import utils.Constants.ConstValues.NO_USERNAME
 import utils.Constants.ConstValues.USERNAME_EMAIL_PHONE
@@ -29,12 +38,49 @@ import utils.extensions.popUpToTop
 fun XApp(
     navController: NavHostController = rememberNavController()
 ) {
-    Scaffold { innerPadding ->
+    Scaffold(
+        bottomBar = {
+            val navBackStackEntry by navController.currentBackStackEntryAsState()
+            val currentDestination = navBackStackEntry?.destination
+
+            if (showBottomNavBar(currentDestination?.route ?: "")) {
+                NavigationBar {
+                    listOf(
+                        HomeBottomNavItems.Home,
+                        HomeBottomNavItems.Search,
+                        HomeBottomNavItems.Grok,
+                        HomeBottomNavItems.Communities,
+                        HomeBottomNavItems.Notification,
+                        HomeBottomNavItems.Messages,
+                    ).forEach { screen ->
+                        NavigationBarItem(
+                            selected = currentDestination?.hierarchy?.any { it.route == screen.route } == true,
+                            label = {},
+                            icon = {
+                                Icon(
+                                    imageVector = screen.icon, contentDescription = screen.icon.name
+                                )
+                            },
+                            onClick = {
+                                navController.navigate(screen.route) {
+                                    popUpTo(
+                                        navController.graph.findStartDestination().route ?: ""
+                                    ) {
+                                        saveState = true
+                                    }
+                                    launchSingleTop = true
+                                    restoreState = true
+                                }
+                            },
+                        )
+                    }
+                }
+            }
+        },
+    ) { innerPadding ->
         NavHost(
             navController = navController,
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(innerPadding),
+            modifier = Modifier.fillMaxSize().padding(innerPadding),
             startDestination = Routes.Splash.path(),
         ) {
             val navigateToAuthOption = {
@@ -60,8 +106,7 @@ fun XApp(
 
             composable(Routes.Splash.path()) {
                 SplashScreen(
-                    navigateToAuthOption = navigateToAuthOption,
-                    navigateToHome = navigateToHome
+                    navigateToAuthOption = navigateToAuthOption, navigateToHome = navigateToHome
                 )
             }
             composable(Routes.AuthenticationOption.path()) {
@@ -70,15 +115,12 @@ fun XApp(
                     navigateToRegister = navigateToRegister,
                 )
             }
-            composable(
-                Routes.Login.path(),
-                arguments = Routes.Login.arguments.map {
-                    navArgument(it) {
-                        type = NavType.StringType
-                        defaultValue = NO_USERNAME
-                    }
+            composable(Routes.Login.path(), arguments = Routes.Login.arguments.map {
+                navArgument(it) {
+                    type = NavType.StringType
+                    defaultValue = NO_USERNAME
                 }
-            ) {
+            }) {
                 val usernameEmailPhoneArgument = it.arguments?.getString(USERNAME_EMAIL_PHONE)
                 val usernameEmailPhone =
                     if (usernameEmailPhoneArgument == NO_USERNAME) null else usernameEmailPhoneArgument
@@ -103,6 +145,11 @@ fun XApp(
             composable(Routes.Home.path()) {
                 HomeScreen()
             }
+            composable(Routes.HomeSearch.path()) { }
+            composable(Routes.HomeGrok.path()) { }
+            composable(Routes.HomeCommunities.path()) { }
+            composable(Routes.HomeNotifications.path()) { }
+            composable(Routes.HomeMessages.path()) { }
         }
     }
 }

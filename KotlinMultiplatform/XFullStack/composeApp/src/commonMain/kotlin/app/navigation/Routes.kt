@@ -22,5 +22,19 @@ enum class Routes(
     AuthenticationOption("authentication-option/"),
     Login("login/", listOf(USERNAME_EMAIL_PHONE)),
     Register("register/"),
-    Home("home/")
+    Home("home/"),
+    HomeSearch("home/search"),
+    HomeGrok("home/grok"),
+    HomeCommunities("home/communities"),
+    HomeNotifications("home/notifications"),
+    HomeMessages("home/messages"),
 }
+
+fun showBottomNavBar(route: String) = listOf(
+    Routes.Home.path(),
+    Routes.HomeSearch.path(),
+    Routes.HomeGrok.path(),
+    Routes.HomeCommunities.path(),
+    Routes.HomeNotifications.path(),
+    Routes.HomeMessages.path(),
+).contains(route)
