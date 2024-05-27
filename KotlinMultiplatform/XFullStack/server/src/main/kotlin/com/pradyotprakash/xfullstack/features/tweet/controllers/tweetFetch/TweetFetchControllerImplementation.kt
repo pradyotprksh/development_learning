@@ -1,11 +1,11 @@
 package com.pradyotprakash.xfullstack.features.tweet.controllers.tweetFetch
 
+import com.pradyotprakash.xfullstack.core.data.parseToUserInfoResponse
 import com.pradyotprakash.xfullstack.data.tweet.TweetDataSource
 import com.pradyotprakash.xfullstack.data.user.UserDataSource
 import core.exception.UserDetailsNotFound
 import data.response.PollChoicesResponse
 import data.response.TweetsResponse
-import data.response.UserInfoResponse
 import data.response.XFullStackResponse
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.ApplicationCall
@@ -40,18 +40,7 @@ class TweetFetchControllerImplementation : TweetFetchController {
             TweetsResponse(
                 id = tweet.id.toHexString(),
                 tweet = tweet.tweet,
-                createdBy = UserInfoResponse(
-                    id = createdByUserDetails.id.toHexString(),
-                    name = createdByUserDetails.name,
-                    username = createdByUserDetails.username,
-                    bio = createdByUserDetails.bio,
-                    emailAddress = createdByUserDetails.emailAddress,
-                    phoneNumber = createdByUserDetails.phoneNumber,
-                    profilePicture = createdByUserDetails.profilePicture,
-                    dateOfBirth = createdByUserDetails.dateOfBirth,
-                    followers = createdByUserDetails.followers,
-                    following = createdByUserDetails.following,
-                ),
+                createdBy = createdByUserDetails.parseToUserInfoResponse(),
                 tweetedOn = tweet.tweetedOn,
                 media = tweet.media,
                 gif = tweet.gif,

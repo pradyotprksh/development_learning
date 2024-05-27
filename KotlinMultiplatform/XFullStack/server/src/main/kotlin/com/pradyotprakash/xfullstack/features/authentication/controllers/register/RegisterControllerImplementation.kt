@@ -1,7 +1,7 @@
 package com.pradyotprakash.xfullstack.features.authentication.controllers.register
 
+import com.pradyotprakash.xfullstack.core.data.parseToUser
 import com.pradyotprakash.xfullstack.core.security.hashing.HashingService
-import com.pradyotprakash.xfullstack.data.user.User
 import com.pradyotprakash.xfullstack.data.user.UserDataSource
 import com.pradyotprakash.xfullstack.features.authentication.resource.AuthenticationResource
 import core.exception.DBWriteError
@@ -89,19 +89,7 @@ class RegisterControllerImplementation : RegisterController {
 
         val saltedHash = hashingService.generateSaltedHash(value = registerRequest.password)
 
-        val user = User(
-            name = registerRequest.name,
-            username = registerRequest.username,
-            password = saltedHash.hash,
-            salt = saltedHash.salt,
-            bio = registerRequest.bio,
-            profilePicture = registerRequest.profilePicture,
-            dateOfBirth = registerRequest.dateOfBirth,
-            emailAddress = registerRequest.emailAddress,
-            phoneNumber = registerRequest.phoneNumber,
-            following = 0,
-            followers = 0,
-        )
+        val user = registerRequest.parseToUser(saltedHash)
 
         val wasAcknowledged = userDataSource.insertNewUser(user)
 

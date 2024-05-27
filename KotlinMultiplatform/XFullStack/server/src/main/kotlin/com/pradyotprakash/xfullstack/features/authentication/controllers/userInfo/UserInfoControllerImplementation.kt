@@ -1,9 +1,9 @@
 package com.pradyotprakash.xfullstack.features.authentication.controllers.userInfo
 
+import com.pradyotprakash.xfullstack.core.data.parseToUserInfoResponse
 import com.pradyotprakash.xfullstack.data.user.UserDataSource
 import com.pradyotprakash.xfullstack.features.authentication.resource.AuthenticationResource
 import core.exception.UserDetailsNotFound
-import data.response.UserInfoResponse
 import data.response.XFullStackResponse
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.ApplicationCall
@@ -30,18 +30,7 @@ class UserInfoControllerImplementation : UserInfoController {
             principal?.payload?.getClaim(USER_ID)?.asString() ?: throw UserDetailsNotFound()
         val user = userDataSource.getUserByUserId(userId) ?: throw UserDetailsNotFound()
 
-        val response = UserInfoResponse(
-            id = user.id.toHexString(),
-            name = user.name,
-            username = user.username,
-            bio = user.bio,
-            emailAddress = user.emailAddress,
-            phoneNumber = user.phoneNumber,
-            profilePicture = user.profilePicture,
-            dateOfBirth = user.dateOfBirth,
-            followers = user.followers,
-            following = user.following,
-        )
+        val response = user.parseToUserInfoResponse()
 
         call.respond(
             HttpStatusCode.OK,
