@@ -1,4 +1,4 @@
-package app.pages.home.screen.bottomBar
+package app.pages.home.bottomBar
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CheckCircle

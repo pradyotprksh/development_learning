@@ -1,4 +1,4 @@
-package app.pages.home.state
+package app.pages.home.home.state
 
 data class HomeState(
     val showLoading: Boolean = false,

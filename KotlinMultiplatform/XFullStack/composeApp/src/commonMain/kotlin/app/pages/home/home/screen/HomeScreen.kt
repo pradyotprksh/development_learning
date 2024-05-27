@@ -1,10 +1,9 @@
-package app.pages.home.screen
+package app.pages.home.home.screen
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
@@ -12,7 +11,6 @@ import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarResult
-import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -25,20 +23,20 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import app.composables.LoadingDialogComposable
 import app.composables.ProfileImageComposable
 import app.composables.XAppBarComposable
-import app.pages.home.viewModel.HomeViewModel
+import app.pages.home.home.viewModel.HomeViewModel
 import kotlinx.coroutines.launch
 import utils.Localization
 
 @Composable
 fun HomeScreen(
     homeViewModel: HomeViewModel = viewModel { HomeViewModel() },
+    toggleNavDrawer: () -> Unit,
 ) {
     LaunchedEffect(homeViewModel) {
         homeViewModel.initialSetup()
     }
 
     val scope = rememberCoroutineScope()
-    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val snackbarHostState = remember { SnackbarHostState() }
     val homeScreenState by homeViewModel.homeScreenState.collectAsState()
     if (homeScreenState.showLoading) {
@@ -66,11 +64,7 @@ fun HomeScreen(
                     ProfileImageComposable(
                         profileImage = homeScreenState.profileImage,
                         modifier = Modifier.size(30.dp).clickable {
-                            scope.launch {
-                                drawerState.apply {
-                                    if (isClosed) open() else close()
-                                }
-                            }
+                            toggleNavDrawer()
                         },
                     )
                 },

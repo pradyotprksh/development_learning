@@ -11,6 +11,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -29,9 +30,10 @@ import app.navigation.showDrawer
 import app.pages.auth.authOptions.screen.AuthOptionsScreen
 import app.pages.auth.login.screen.LoginScreen
 import app.pages.auth.register.screen.RegisterScreen
-import app.pages.home.screen.HomeScreen
-import app.pages.home.screen.bottomBar.HomeBottomNavItems
+import app.pages.home.bottomBar.HomeBottomNavItems
+import app.pages.home.home.screen.HomeScreen
 import app.pages.splash.screen.SplashScreen
+import kotlinx.coroutines.launch
 import utils.Constants.ConstValues.NO_USERNAME
 import utils.Constants.ConstValues.USERNAME_EMAIL_PHONE
 import utils.extensions.popUpToTop
@@ -43,6 +45,7 @@ import utils.extensions.popUpToTop
 fun XApp(
     navController: NavHostController = rememberNavController()
 ) {
+    val scope = rememberCoroutineScope()
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
 
     ModalNavigationDrawer(
@@ -162,7 +165,15 @@ fun XApp(
                     }
                 }
                 composable(Routes.Home.path()) {
-                    HomeScreen()
+                    HomeScreen(
+                        toggleNavDrawer = {
+                            scope.launch {
+                                drawerState.apply {
+                                    if (isClosed) open() else close()
+                                }
+                            }
+                        }
+                    )
                 }
                 composable(Routes.HomeSearch.path()) { }
                 composable(Routes.HomeGrok.path()) { }

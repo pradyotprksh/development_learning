@@ -1,7 +1,7 @@
-package app.pages.home.viewModel
+package app.pages.home.home.viewModel
 
 import androidx.lifecycle.ViewModel
-import app.pages.home.state.HomeState
+import app.pages.home.home.state.HomeState
 import di.ModulesDi
 import domain.repositories.user.current.CurrentUserRepository
 import kotlinx.coroutines.flow.MutableStateFlow
