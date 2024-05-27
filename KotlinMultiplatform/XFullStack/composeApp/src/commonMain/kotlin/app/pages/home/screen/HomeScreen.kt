@@ -7,7 +7,6 @@ import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
@@ -26,7 +25,6 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import app.composables.LoadingDialogComposable
 import app.composables.ProfileImageComposable
 import app.composables.XAppBarComposable
-import app.pages.home.screen.composables.NavigationDrawerComposable
 import app.pages.home.viewModel.HomeViewModel
 import kotlinx.coroutines.launch
 import utils.Localization
@@ -61,44 +59,35 @@ fun HomeScreen(
         }
     }
 
-    ModalNavigationDrawer(
-        drawerState = drawerState,
-        drawerContent = {
-            NavigationDrawerComposable(
-                homeScreenState = homeScreenState,
+    Scaffold(
+        topBar = {
+            XAppBarComposable(
+                navigationIcon = {
+                    ProfileImageComposable(
+                        profileImage = homeScreenState.profileImage,
+                        modifier = Modifier.size(30.dp).clickable {
+                            scope.launch {
+                                drawerState.apply {
+                                    if (isClosed) open() else close()
+                                }
+                            }
+                        },
+                    )
+                },
+                actions = {
+                    IconButton(
+                        onClick = {},
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Settings,
+                            contentDescription = Icons.Default.Settings.name,
+                        )
+                    }
+                },
             )
         },
-    ) {
-        Scaffold(
-            topBar = {
-                XAppBarComposable(
-                    navigationIcon = {
-                        ProfileImageComposable(
-                            profileImage = homeScreenState.profileImage,
-                            modifier = Modifier.size(30.dp).clickable {
-                                scope.launch {
-                                    drawerState.apply {
-                                        if (isClosed) open() else close()
-                                    }
-                                }
-                            },
-                        )
-                    },
-                    actions = {
-                        IconButton(
-                            onClick = {},
-                        ) {
-                            Icon(
-                                imageVector = Icons.Default.Settings,
-                                contentDescription = Icons.Default.Settings.name,
-                            )
-                        }
-                    },
-                )
-            },
-            snackbarHost = {
-                SnackbarHost(hostState = snackbarHostState)
-            },
-        ) {}
-    }
+        snackbarHost = {
+            SnackbarHost(hostState = snackbarHostState)
+        },
+    ) {}
 }

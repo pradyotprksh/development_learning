@@ -1,4 +1,4 @@
-package app.pages.home.screen.composables
+package app.composables.userDrawer.composable
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -25,13 +25,17 @@ import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.NavigationDrawerItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import app.composables.AppIconComposable
 import app.composables.FollowingFollowerComposable
 import app.composables.ProfileImageComposable
-import app.pages.home.state.HomeState
+import app.composables.userDrawer.viewModel.UserDrawerViewModel
 import utils.Constants.ConstValues.USERNAME_PREFIX
 import utils.Localization.BOOKMARKS
 import utils.Localization.COMMUNITIES
@@ -42,9 +46,16 @@ import utils.Localization.PROFILE
 import utils.Localization.SPACES
 
 @Composable
-fun NavigationDrawerComposable(
-    modifier: Modifier = Modifier, homeScreenState: HomeState
+fun UserNavigationDrawerComposable(
+    modifier: Modifier = Modifier,
+    userDrawerViewModel: UserDrawerViewModel = viewModel { UserDrawerViewModel() }
 ) {
+    LaunchedEffect(Unit) {
+        userDrawerViewModel.initialSetup()
+    }
+
+    val userDrawerState by userDrawerViewModel.userDrawerState.collectAsState()
+
     ModalDrawerSheet(
         modifier = modifier,
     ) {
@@ -59,7 +70,7 @@ fun NavigationDrawerComposable(
                 horizontalArrangement = Arrangement.SpaceBetween,
             ) {
                 ProfileImageComposable(
-                    profileImage = homeScreenState.profileImage,
+                    profileImage = userDrawerState.profileImage,
                     modifier = Modifier.size(45.dp),
                 )
                 IconButton(onClick = {}) {
@@ -71,16 +82,16 @@ fun NavigationDrawerComposable(
             }
             Spacer(modifier = Modifier.height(8.dp))
             Text(
-                homeScreenState.name, style = MaterialTheme.typography.titleMedium
+                userDrawerState.name, style = MaterialTheme.typography.titleMedium
             )
             Text(
-                "${USERNAME_PREFIX}${homeScreenState.username}",
+                "${USERNAME_PREFIX}${userDrawerState.username}",
                 style = MaterialTheme.typography.bodySmall
             )
             Spacer(modifier = Modifier.height(10.dp))
             FollowingFollowerComposable(
-                homeScreenState.following.toString(),
-                homeScreenState.followers.toString(),
+                userDrawerState.following.toString(),
+                userDrawerState.followers.toString(),
             )
         }
         HorizontalDivider()

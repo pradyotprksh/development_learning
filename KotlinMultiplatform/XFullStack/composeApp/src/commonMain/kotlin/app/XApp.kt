@@ -2,10 +2,13 @@ package app
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.Icon
+import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -18,9 +21,11 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import app.composables.userDrawer.composable.UserNavigationDrawerComposable
 import app.navigation.Routes
 import app.navigation.path
 import app.navigation.showBottomNavBar
+import app.navigation.showDrawer
 import app.pages.auth.authOptions.screen.AuthOptionsScreen
 import app.pages.auth.login.screen.LoginScreen
 import app.pages.auth.register.screen.RegisterScreen
@@ -38,118 +43,133 @@ import utils.extensions.popUpToTop
 fun XApp(
     navController: NavHostController = rememberNavController()
 ) {
-    Scaffold(
-        bottomBar = {
+    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
+
+    ModalNavigationDrawer(
+        drawerState = drawerState,
+        drawerContent = {
             val navBackStackEntry by navController.currentBackStackEntryAsState()
             val currentDestination = navBackStackEntry?.destination
 
-            if (showBottomNavBar(currentDestination?.route ?: "")) {
-                NavigationBar {
-                    listOf(
-                        HomeBottomNavItems.Home,
-                        HomeBottomNavItems.Search,
-                        HomeBottomNavItems.Grok,
-                        HomeBottomNavItems.Communities,
-                        HomeBottomNavItems.Notification,
-                        HomeBottomNavItems.Messages,
-                    ).forEach { screen ->
-                        NavigationBarItem(
-                            selected = currentDestination?.hierarchy?.any { it.route == screen.route } == true,
-                            label = {},
-                            icon = {
-                                Icon(
-                                    imageVector = screen.icon, contentDescription = screen.icon.name
-                                )
-                            },
-                            onClick = {
-                                navController.navigate(screen.route) {
-                                    popUpTo(
-                                        navController.graph.findStartDestination().route ?: ""
-                                    ) {
-                                        saveState = true
-                                    }
-                                    launchSingleTop = true
-                                    restoreState = true
-                                }
-                            },
-                        )
-                    }
-                }
+            if (showDrawer(currentDestination?.route ?: "")) {
+                UserNavigationDrawerComposable()
             }
         },
-    ) { innerPadding ->
-        NavHost(
-            navController = navController,
-            modifier = Modifier.fillMaxSize().padding(innerPadding),
-            startDestination = Routes.Splash.path(),
-        ) {
-            val navigateToAuthOption = {
-                navController.navigate(Routes.AuthenticationOption.path()) {
-                    popUpTo(Routes.Splash.path()) {
-                        inclusive = true
+    ) {
+        Scaffold(
+            bottomBar = {
+                val navBackStackEntry by navController.currentBackStackEntryAsState()
+                val currentDestination = navBackStackEntry?.destination
+
+                if (showBottomNavBar(currentDestination?.route ?: "")) {
+                    NavigationBar {
+                        listOf(
+                            HomeBottomNavItems.Home,
+                            HomeBottomNavItems.Search,
+                            HomeBottomNavItems.Grok,
+                            HomeBottomNavItems.Communities,
+                            HomeBottomNavItems.Notification,
+                            HomeBottomNavItems.Messages,
+                        ).forEach { screen ->
+                            NavigationBarItem(
+                                selected = currentDestination?.hierarchy?.any { it.route == screen.route } == true,
+                                label = {},
+                                icon = {
+                                    Icon(
+                                        imageVector = screen.icon,
+                                        contentDescription = screen.icon.name
+                                    )
+                                },
+                                onClick = {
+                                    navController.navigate(screen.route) {
+                                        popUpTo(
+                                            navController.graph.findStartDestination().route ?: ""
+                                        ) {
+                                            saveState = true
+                                        }
+                                        launchSingleTop = true
+                                        restoreState = true
+                                    }
+                                },
+                            )
+                        }
                     }
                 }
-            }
-            val navigateToHome = {
-                navController.navigate(Routes.Home.path()) {
-                    popUpToTop(navController)
+            },
+        ) { innerPadding ->
+            NavHost(
+                navController = navController,
+                modifier = Modifier.fillMaxSize().padding(innerPadding),
+                startDestination = Routes.Splash.path(),
+            ) {
+                val navigateToAuthOption = {
+                    navController.navigate(Routes.AuthenticationOption.path()) {
+                        popUpTo(Routes.Splash.path()) {
+                            inclusive = true
+                        }
+                    }
                 }
-            }
-            val navigateToLogin = { value: String ->
-                navController.navigate(
-                    "${Routes.Login.route}$value",
-                )
-            }
-            val navigateToRegister = {
-                navController.navigate(Routes.Register.path())
-            }
+                val navigateToHome = {
+                    navController.navigate(Routes.Home.path()) {
+                        popUpToTop(navController)
+                    }
+                }
+                val navigateToLogin = { value: String ->
+                    navController.navigate(
+                        "${Routes.Login.route}$value",
+                    )
+                }
+                val navigateToRegister = {
+                    navController.navigate(Routes.Register.path())
+                }
 
-            composable(Routes.Splash.path()) {
-                SplashScreen(
-                    navigateToAuthOption = navigateToAuthOption, navigateToHome = navigateToHome
-                )
-            }
-            composable(Routes.AuthenticationOption.path()) {
-                AuthOptionsScreen(
-                    navigateToLogin = navigateToLogin,
-                    navigateToRegister = navigateToRegister,
-                )
-            }
-            composable(Routes.Login.path(), arguments = Routes.Login.arguments.map {
-                navArgument(it) {
-                    type = NavType.StringType
-                    defaultValue = NO_USERNAME
+                composable(Routes.Splash.path()) {
+                    SplashScreen(
+                        navigateToAuthOption = navigateToAuthOption, navigateToHome = navigateToHome
+                    )
                 }
-            }) {
-                val usernameEmailPhoneArgument = it.arguments?.getString(USERNAME_EMAIL_PHONE)
-                val usernameEmailPhone =
-                    if (usernameEmailPhoneArgument == NO_USERNAME) null else usernameEmailPhoneArgument
+                composable(Routes.AuthenticationOption.path()) {
+                    AuthOptionsScreen(
+                        navigateToLogin = navigateToLogin,
+                        navigateToRegister = navigateToRegister,
+                    )
+                }
+                composable(Routes.Login.path(), arguments = Routes.Login.arguments.map {
+                    navArgument(it) {
+                        type = NavType.StringType
+                        defaultValue = NO_USERNAME
+                    }
+                }) {
+                    val usernameEmailPhoneArgument = it.arguments?.getString(USERNAME_EMAIL_PHONE)
+                    val usernameEmailPhone =
+                        if (usernameEmailPhoneArgument == NO_USERNAME) null else usernameEmailPhoneArgument
 
-                LoginScreen(
-                    usernameEmailPhoneValue = usernameEmailPhone,
-                    navigateToHome = navigateToHome,
-                ) {
-                    navController.popBackStack()
-                }
-            }
-            composable(Routes.Register.path()) {
-                RegisterScreen(
-                    navigateToLogin = {
+                    LoginScreen(
+                        usernameEmailPhoneValue = usernameEmailPhone,
+                        navigateToHome = navigateToHome,
+                    ) {
                         navController.popBackStack()
-                        navigateToLogin(it)
-                    },
-                ) {
-                    navController.popBackStack()
+                    }
                 }
+                composable(Routes.Register.path()) {
+                    RegisterScreen(
+                        navigateToLogin = {
+                            navController.popBackStack()
+                            navigateToLogin(it)
+                        },
+                    ) {
+                        navController.popBackStack()
+                    }
+                }
+                composable(Routes.Home.path()) {
+                    HomeScreen()
+                }
+                composable(Routes.HomeSearch.path()) { }
+                composable(Routes.HomeGrok.path()) { }
+                composable(Routes.HomeCommunities.path()) { }
+                composable(Routes.HomeNotifications.path()) { }
+                composable(Routes.HomeMessages.path()) { }
             }
-            composable(Routes.Home.path()) {
-                HomeScreen()
-            }
-            composable(Routes.HomeSearch.path()) { }
-            composable(Routes.HomeGrok.path()) { }
-            composable(Routes.HomeCommunities.path()) { }
-            composable(Routes.HomeNotifications.path()) { }
-            composable(Routes.HomeMessages.path()) { }
         }
     }
 }
