@@ -22,9 +22,11 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import app.composables.userAppBar.composable.UserAppBarComposable
 import app.composables.userDrawer.composable.UserNavigationDrawerComposable
 import app.navigation.Routes
 import app.navigation.path
+import app.navigation.showAppBar
 import app.navigation.showBottomNavBar
 import app.navigation.showDrawer
 import app.pages.auth.authOptions.screen.AuthOptionsScreen
@@ -60,6 +62,22 @@ fun XApp(
         },
     ) {
         Scaffold(
+            topBar = {
+                val navBackStackEntry by navController.currentBackStackEntryAsState()
+                val currentDestination = navBackStackEntry?.destination
+
+                if (showAppBar(currentDestination?.route ?: "")) {
+                    UserAppBarComposable(
+                        toggleNavDrawer = {
+                            scope.launch {
+                                drawerState.apply {
+                                    if (isClosed) open() else close()
+                                }
+                            }
+                        },
+                    )
+                }
+            },
             bottomBar = {
                 val navBackStackEntry by navController.currentBackStackEntryAsState()
                 val currentDestination = navBackStackEntry?.destination
@@ -165,15 +183,7 @@ fun XApp(
                     }
                 }
                 composable(Routes.Home.path()) {
-                    HomeScreen(
-                        toggleNavDrawer = {
-                            scope.launch {
-                                drawerState.apply {
-                                    if (isClosed) open() else close()
-                                }
-                            }
-                        }
-                    )
+                    HomeScreen()
                 }
                 composable(Routes.HomeSearch.path()) { }
                 composable(Routes.HomeGrok.path()) { }

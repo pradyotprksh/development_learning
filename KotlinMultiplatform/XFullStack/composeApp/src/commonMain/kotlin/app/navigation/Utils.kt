@@ -10,3 +10,5 @@ fun showBottomNavBar(route: String) = listOf(
 ).contains(route)
 
 fun showDrawer(route: String) = showBottomNavBar(route)
+
+fun showAppBar(route: String) = showDrawer(route)
