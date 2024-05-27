@@ -36,6 +36,7 @@ object Constants {
 
         object Utils {
             const val UTILS = "/utils"
+            const val SERVER_AVAILABLE = "/server-available"
             const val USERNAME_VALID = "/username-valid"
         }
 

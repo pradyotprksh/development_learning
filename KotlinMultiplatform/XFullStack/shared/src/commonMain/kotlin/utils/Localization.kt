@@ -112,4 +112,5 @@ object Localization {
     const val TWEET_VOTE_CASTED_SUCCESSFULLY = "Tweet vote casted successfully"
     const val VOTE_ALREADY_CASTED = "You have already casted your vote."
     const val POLL_VOTE_EXPIRED = "The poll has ended. You can't vote anymore."
+    const val SERVER_IS_AVAILABLE = "Server is available"
 }

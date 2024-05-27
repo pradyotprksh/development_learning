@@ -32,7 +32,4 @@ dependencies {
     implementation(libs.ktor.server.caching.headers)
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kodein.di)
-
-    testImplementation(libs.ktor.server.tests)
-    testImplementation(libs.kotlin.test.junit)
 }

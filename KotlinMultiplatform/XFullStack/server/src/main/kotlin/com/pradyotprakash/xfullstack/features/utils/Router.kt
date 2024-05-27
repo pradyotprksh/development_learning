@@ -17,4 +17,11 @@ fun Routing.utils(
             userDataSource = userDataSource,
         )
     }
+
+    get<UtilsResource.ServerAvailable> {
+        utilsController.isServerAvailable(
+            call = this.context,
+            resource = it,
+        )
+    }
 }
