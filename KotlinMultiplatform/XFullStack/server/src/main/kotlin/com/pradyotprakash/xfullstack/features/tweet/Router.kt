@@ -15,9 +15,10 @@ fun Routing.tweet(
     userDataSource: UserDataSource,
 ) {
     authenticate {
-        get<TweetResource> {
+        get<TweetResource.TweetPaginate> {
             tweetController.getAllTweets(
                 this.context,
+                it,
                 userDataSource,
                 tweetDataSource,
             )

@@ -50,6 +50,7 @@ object Constants {
         object Tweets {
             const val TWEET = "/tweet"
             const val TWEET_VOTE = "/poll"
+            const val PAGINATE = "/paginate"
         }
     }
 
@@ -62,6 +63,8 @@ object Constants {
         const val REQUEST_IDENTIFIER = "request-identifier"
         const val REQUEST_TIMESTAMP = "request-time"
         const val VALUE = "value"
+        const val PAGE = "page"
+        const val LIMIT = "limit"
     }
 
     object ConstValues {

@@ -15,11 +15,13 @@ class TweetRepositoryImplementation(
     private val tweetDBService: TweetDBService,
     private val tweetRemoteService: TweetRemoteService,
 ) : TweetRepository {
-    override suspend fun getAllTweets(): Flow<ClientResponse<out XFullStackResponse<List<TweetDB>>>> =
+    override suspend fun getAllTweets(
+        page: Int,
+    ): Flow<ClientResponse<out XFullStackResponse<List<TweetDB>>>> =
         flow {
             emit(ClientResponse.Loading)
             try {
-                val response = tweetRemoteService.getAllTweets()
+                val response = tweetRemoteService.getAllTweets(page = page)
                 if (response.status == XFullStackResponseStatus.Success) {
                     response.data?.let { tweetsResponse ->
                         val dbSavedData = tweetDBService.saveAllTweets(tweetsResponse)

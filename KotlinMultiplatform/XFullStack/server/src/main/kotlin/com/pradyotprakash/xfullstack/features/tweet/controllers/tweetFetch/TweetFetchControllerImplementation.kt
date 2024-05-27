@@ -3,6 +3,7 @@ package com.pradyotprakash.xfullstack.features.tweet.controllers.tweetFetch
 import com.pradyotprakash.xfullstack.core.data.parseToUserInfoResponse
 import com.pradyotprakash.xfullstack.data.tweet.TweetDataSource
 import com.pradyotprakash.xfullstack.data.user.UserDataSource
+import com.pradyotprakash.xfullstack.features.tweet.resource.TweetResource
 import core.exception.UserDetailsNotFound
 import data.response.PollChoicesResponse
 import data.response.TweetsResponse
@@ -21,7 +22,10 @@ import utils.XFullStackResponseStatus
 
 class TweetFetchControllerImplementation : TweetFetchController {
     override suspend fun getAllTweets(
-        call: ApplicationCall, userDataSource: UserDataSource, tweetDataSource: TweetDataSource
+        call: ApplicationCall,
+        tweetPaginate: TweetResource.TweetPaginate,
+        userDataSource: UserDataSource,
+        tweetDataSource: TweetDataSource
     ) {
         delay(API_RESPONSE_DELAY)
 
@@ -31,7 +35,7 @@ class TweetFetchControllerImplementation : TweetFetchController {
 
         userDataSource.getUserByUserId(createdBy) ?: throw UserDetailsNotFound()
 
-        val tweets = tweetDataSource.getAllTweets()
+        val tweets = tweetDataSource.getAllTweets(tweetPaginate.page, tweetPaginate.limit)
 
         val tweetsResponse = tweets.map { tweet ->
             val createdByUserDetails = userDataSource.getUserByUserId(tweet.createdBy.toHexString())

@@ -16,8 +16,12 @@ class MongoTweetDataSource(
     db: MongoDatabase,
 ) : TweetDataSource {
     private val tweetCollection = db.getCollection<Tweet>(TWEET)
-    override suspend fun getAllTweets(): List<Tweet> {
-        return tweetCollection.find().toList()
+    override suspend fun getAllTweets(
+        page: Int,
+        limit: Int,
+    ): List<Tweet> {
+        val skip = (page - 1) * limit
+        return tweetCollection.find().skip(skip).limit(limit).toList()
     }
 
     override suspend fun findTweetById(tweetId: String): Tweet? {
