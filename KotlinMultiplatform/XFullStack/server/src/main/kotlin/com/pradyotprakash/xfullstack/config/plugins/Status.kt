@@ -17,7 +17,7 @@ import utils.Constants.ErrorCode.BAD_REQUEST_ERROR_CODE
 import utils.Constants.ErrorCode.INTERNAL_SERVER_ERROR_CODE
 import utils.Constants.ErrorCode.UNAUTHORIZED_ERROR_CODE
 import utils.Localization
-import utils.ResponseStatus
+import utils.XFullStackResponseStatus
 
 fun Application.configureStatusPages() {
     install(StatusPages) {
@@ -25,7 +25,7 @@ fun Application.configureStatusPages() {
             call.respond(
                 HttpStatusCode.Unauthorized,
                 XFullStackResponse(
-                    status = ResponseStatus.Error,
+                    status = XFullStackResponseStatus.Error,
                     code = UNAUTHORIZED_ERROR_CODE,
                     message = Localization.UNAUTHORIZED_ACCESS,
                     data = null
@@ -37,7 +37,7 @@ fun Application.configureStatusPages() {
             call.respond(
                 HttpStatusCode.BadRequest,
                 XFullStackResponse(
-                    status = ResponseStatus.Error,
+                    status = XFullStackResponseStatus.Error,
                     code = BAD_REQUEST_ERROR_CODE,
                     message = HttpStatusCode.BadRequest.description,
                     data = null
@@ -49,7 +49,7 @@ fun Application.configureStatusPages() {
             call.respond(
                 HttpStatusCode.InternalServerError,
                 XFullStackResponse(
-                    status = ResponseStatus.Error,
+                    status = XFullStackResponseStatus.Error,
                     code = INTERNAL_SERVER_ERROR_CODE,
                     message = HttpStatusCode.InternalServerError.description,
                     data = null,
@@ -62,7 +62,7 @@ fun Application.configureStatusPages() {
                 is InvalidParameter -> call.respond(
                     HttpStatusCode.BadRequest,
                     XFullStackResponse(
-                        status = ResponseStatus.Error,
+                        status = XFullStackResponseStatus.Error,
                         code = cause.errorCode,
                         message = cause.message,
                         data = null
@@ -72,7 +72,7 @@ fun Application.configureStatusPages() {
                 is UnauthorizedAccess -> call.respond(
                     HttpStatusCode.Unauthorized,
                     XFullStackResponse(
-                        status = ResponseStatus.Error,
+                        status = XFullStackResponseStatus.Error,
                         code = cause.errorCode,
                         message = cause.message ?: Localization.DEFAULT_ERROR_MESSAGE,
                         data = null
@@ -82,7 +82,7 @@ fun Application.configureStatusPages() {
                 is UserAuthDetailsError -> call.respond(
                     HttpStatusCode.Conflict,
                     XFullStackResponse(
-                        status = ResponseStatus.Error,
+                        status = XFullStackResponseStatus.Error,
                         code = cause.errorCode,
                         message = cause.message ?: Localization.DEFAULT_ERROR_MESSAGE,
                         data = null
@@ -92,7 +92,7 @@ fun Application.configureStatusPages() {
                 is UserDetailsNotFound -> call.respond(
                     HttpStatusCode.Conflict,
                     XFullStackResponse(
-                        status = ResponseStatus.Error,
+                        status = XFullStackResponseStatus.Error,
                         code = cause.errorCode,
                         message = cause.message ?: Localization.DEFAULT_ERROR_MESSAGE,
                         data = null
@@ -102,7 +102,7 @@ fun Application.configureStatusPages() {
                 is DBWriteError -> call.respond(
                     HttpStatusCode.BadGateway,
                     XFullStackResponse(
-                        status = ResponseStatus.Error,
+                        status = XFullStackResponseStatus.Error,
                         code = cause.errorCode,
                         message = cause.message ?: Localization.DEFAULT_ERROR_MESSAGE,
                         data = null
@@ -112,7 +112,7 @@ fun Application.configureStatusPages() {
                 is InvalidTweet -> call.respond(
                     HttpStatusCode.Conflict,
                     XFullStackResponse(
-                        status = ResponseStatus.Error,
+                        status = XFullStackResponseStatus.Error,
                         code = cause.errorCode,
                         message = cause.message,
                         data = null

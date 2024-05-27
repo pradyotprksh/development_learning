@@ -1,11 +1,11 @@
 package data.response
 
 import kotlinx.serialization.Serializable
-import utils.ResponseStatus
+import utils.XFullStackResponseStatus
 
 @Serializable
 data class XFullStackResponse<T>(
-    val status: ResponseStatus,
+    val status: XFullStackResponseStatus,
     val code: String?,
     val message: String?,
     val data: T?,

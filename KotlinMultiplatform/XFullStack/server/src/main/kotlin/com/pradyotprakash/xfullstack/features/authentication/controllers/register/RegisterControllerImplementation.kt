@@ -20,8 +20,8 @@ import utils.Constants.ErrorCode.PHONE_NUMBER_ALREADY_PRESENT_ERROR_CODE
 import utils.Constants.ErrorCode.PROFILE_PICTURE_VALIDITY_ERROR_CODE
 import utils.Constants.ErrorCode.USERNAME_ALREADY_PRESENT_ERROR_CODE
 import utils.Localization
-import utils.ResponseStatus
 import utils.UtilsMethod
+import utils.XFullStackResponseStatus
 
 class RegisterControllerImplementation : RegisterController {
     override suspend fun registerUser(
@@ -112,7 +112,7 @@ class RegisterControllerImplementation : RegisterController {
         call.respond(
             HttpStatusCode.Created,
             XFullStackResponse(
-                status = ResponseStatus.Success,
+                status = XFullStackResponseStatus.Success,
                 code = null,
                 message = Localization.ACCOUNT_CREATED_SUCCESSFULLY,
                 data = null,

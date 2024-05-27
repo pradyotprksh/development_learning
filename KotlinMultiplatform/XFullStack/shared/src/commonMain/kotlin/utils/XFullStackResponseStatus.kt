@@ -1,6 +1,6 @@
 package utils
 
-enum class ResponseStatus {
+enum class XFullStackResponseStatus {
     Success,
     Error,
 }

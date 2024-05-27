@@ -10,8 +10,8 @@ import utils.Constants.Paths.Tweets.TWEET
 class TweetRemoteServiceImplementation(
     private val networkClient: NetworkClient,
 ) : TweetRemoteService {
-    override suspend fun getAllTweets(): XFullStackResponse<TweetsResponse> {
-        val response = networkClient.get<XFullStackResponse<TweetsResponse>>(
+    override suspend fun getAllTweets(): XFullStackResponse<List<TweetsResponse>> {
+        val response = networkClient.get<XFullStackResponse<List<TweetsResponse>>>(
             details = XFullStackClientRequestDetails(
                 endpoint = TWEET,
             )

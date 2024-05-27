@@ -14,7 +14,7 @@ import kotlinx.coroutines.delay
 import utils.Constants.ConstValues.API_RESPONSE_DELAY
 import utils.Constants.Keys.USER_ID
 import utils.Localization
-import utils.ResponseStatus
+import utils.XFullStackResponseStatus
 
 class UserInfoControllerImplementation : UserInfoController {
     override suspend fun getUserInfo(
@@ -46,7 +46,7 @@ class UserInfoControllerImplementation : UserInfoController {
         call.respond(
             HttpStatusCode.OK,
             XFullStackResponse(
-                status = ResponseStatus.Success,
+                status = XFullStackResponseStatus.Success,
                 code = null,
                 message = Localization.DETAILS_FOUND,
                 data = response

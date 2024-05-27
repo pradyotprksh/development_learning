@@ -16,8 +16,8 @@ import kotlinx.coroutines.delay
 import utils.Constants.ConstValues.API_RESPONSE_DELAY
 import utils.Constants.Keys.USER_ID
 import utils.Localization
-import utils.ResponseStatus
 import utils.UtilsMethod
+import utils.XFullStackResponseStatus
 
 class TweetFetchControllerImplementation : TweetFetchController {
     override suspend fun getAllTweets(
@@ -76,11 +76,13 @@ class TweetFetchControllerImplementation : TweetFetchController {
                 isLikedTweet = tweet.isLikedTweet,
                 parentTweetId = tweet.parentTweetId?.toHexString(),
             )
+        }.filter {
+            !UtilsMethod.Dates.isFutureTimeStamp(it.scheduledOnTweet)
         }.sortedByDescending { it.tweetedOn }
 
         call.respond(
             HttpStatusCode.OK, XFullStackResponse(
-                status = ResponseStatus.Success,
+                status = XFullStackResponseStatus.Success,
                 code = null,
                 message = Localization.DETAILS_FOUND,
                 data = tweetsResponse

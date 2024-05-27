@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import utils.Constants.ErrorCode.DEFAULT_ERROR_CODE
 import utils.Localization.DEFAULT_ERROR_MESSAGE
-import utils.ResponseStatus
+import utils.XFullStackResponseStatus
 
 class CurrentUserRepositoryImplementation(
     private val currentUserDBService: CurrentUserDBService,
@@ -39,7 +39,7 @@ class CurrentUserRepositoryImplementation(
             emit(ClientResponse.Loading)
             try {
                 val response = currentUserRemoteService.authenticateUser()
-                if (response.status == ResponseStatus.Success) {
+                if (response.status == XFullStackResponseStatus.Success) {
                     emit(ClientResponse.Success(response))
                 } else {
                     emit(
@@ -65,7 +65,7 @@ class CurrentUserRepositoryImplementation(
             emit(ClientResponse.Loading)
             try {
                 val response = currentUserRemoteService.registerUser(registerRequest)
-                if (response.status == ResponseStatus.Success) {
+                if (response.status == XFullStackResponseStatus.Success) {
                     emit(ClientResponse.Success(response))
                 } else {
                     emit(
@@ -91,7 +91,7 @@ class CurrentUserRepositoryImplementation(
             emit(ClientResponse.Loading)
             try {
                 val response = currentUserRemoteService.loginUser(loginRequest)
-                if (response.status == ResponseStatus.Success) {
+                if (response.status == XFullStackResponseStatus.Success) {
                     emit(ClientResponse.Success(response))
                 } else {
                     emit(
@@ -117,7 +117,7 @@ class CurrentUserRepositoryImplementation(
             emit(ClientResponse.Loading)
             try {
                 val response = currentUserRemoteService.getUserInfo()
-                if (response.status == ResponseStatus.Success) {
+                if (response.status == XFullStackResponseStatus.Success) {
                     response.data?.let { userInfoResponse ->
                         val dbSavedData = currentUserDBService.saveUserInfo(userInfoResponse)
                         emit(

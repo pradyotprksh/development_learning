@@ -4,5 +4,5 @@ import data.response.TweetsResponse
 import data.response.XFullStackResponse
 
 interface TweetRemoteService {
-    suspend fun getAllTweets(): XFullStackResponse<TweetsResponse>
+    suspend fun getAllTweets(): XFullStackResponse<List<TweetsResponse>>
 }

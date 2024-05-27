@@ -138,5 +138,6 @@ object Constants {
         const val VOTED_BY = "voted_by"
         const val VOTER_DETAILS = "voter_details"
         const val VOTED_ON = "voted_on"
+        const val TWEET_ID = "tweetId"
     }
 }

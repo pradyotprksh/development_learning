@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import utils.Constants
 import utils.Localization
-import utils.ResponseStatus
+import utils.XFullStackResponseStatus
 
 class UserVerificationRepositoryImplementation(
     private val userVerificationRemoteService: UserVerificationRemoteService,
@@ -19,7 +19,7 @@ class UserVerificationRepositoryImplementation(
             emit(ClientResponse.Loading)
             try {
                 val response = userVerificationRemoteService.isUserPresent(value)
-                if (response.status == ResponseStatus.Success) {
+                if (response.status == XFullStackResponseStatus.Success) {
                     emit(ClientResponse.Success(response))
                 } else {
                     emit(
@@ -46,7 +46,7 @@ class UserVerificationRepositoryImplementation(
             emit(ClientResponse.Loading)
             try {
                 val response = userVerificationRemoteService.generateOtp(value)
-                if (response.status == ResponseStatus.Success) {
+                if (response.status == XFullStackResponseStatus.Success) {
                     emit(ClientResponse.Success(response))
                 } else {
                     emit(
@@ -81,7 +81,7 @@ class UserVerificationRepositoryImplementation(
                         otp = otp,
                     )
                 )
-                if (response.status == ResponseStatus.Success) {
+                if (response.status == XFullStackResponseStatus.Success) {
                     emit(ClientResponse.Success(response))
                 } else {
                     emit(
@@ -108,7 +108,7 @@ class UserVerificationRepositoryImplementation(
             emit(ClientResponse.Loading)
             try {
                 val response = userVerificationRemoteService.isUserNameValid(username = value)
-                if (response.status == ResponseStatus.Success) {
+                if (response.status == XFullStackResponseStatus.Success) {
                     emit(ClientResponse.Success(response))
                 } else {
                     emit(

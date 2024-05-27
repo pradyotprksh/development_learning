@@ -22,8 +22,8 @@ import utils.Constants.ConstValues.API_RESPONSE_DELAY
 import utils.Constants.ErrorCode.USERNAME_OR_EMAIL_OR_PHONE_NUMBER_REQUIRED_ERROR_CODE
 import utils.Constants.Keys.USER_ID
 import utils.Localization
-import utils.ResponseStatus
 import utils.UtilsMethod
+import utils.XFullStackResponseStatus
 
 class LoginControllerImplementation : LoginController {
     override suspend fun loginUser(
@@ -79,7 +79,7 @@ class LoginControllerImplementation : LoginController {
         call.respond(
             status = HttpStatusCode.OK,
             message = XFullStackResponse(
-                status = ResponseStatus.Success,
+                status = XFullStackResponseStatus.Success,
                 code = null,
                 message = Localization.TOKEN_GENERATED_SUCCESSFULLY,
                 data = AuthenticationResponse(

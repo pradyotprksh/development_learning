@@ -22,8 +22,8 @@ import org.bson.types.ObjectId
 import utils.Constants.ConstValues.API_RESPONSE_DELAY
 import utils.Constants.Keys.USER_ID
 import utils.Localization
-import utils.ResponseStatus
 import utils.UtilsMethod
+import utils.XFullStackResponseStatus
 
 class TweetCreateUpdateControllerImplementation : TweetCreateUpdateController {
     override suspend fun createTweet(
@@ -120,7 +120,7 @@ class TweetCreateUpdateControllerImplementation : TweetCreateUpdateController {
 
         call.respond(
             HttpStatusCode.Created, XFullStackResponse(
-                status = ResponseStatus.Success,
+                status = XFullStackResponseStatus.Success,
                 code = null,
                 message = Localization.TWEET_CREATED_SUCCESSFULLY,
                 data = null,
@@ -203,7 +203,7 @@ class TweetCreateUpdateControllerImplementation : TweetCreateUpdateController {
 
         call.respond(
             HttpStatusCode.OK, XFullStackResponse(
-                status = ResponseStatus.Success,
+                status = XFullStackResponseStatus.Success,
                 code = null,
                 message = Localization.TWEET_VOTE_CASTED_SUCCESSFULLY,
                 data = null,

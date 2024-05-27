@@ -8,7 +8,7 @@ import io.ktor.server.response.respond
 import kotlinx.coroutines.delay
 import utils.Constants.ConstValues.API_RESPONSE_DELAY
 import utils.Localization
-import utils.ResponseStatus
+import utils.XFullStackResponseStatus
 
 class AuthenticateControllerImplementation : AuthenticateController {
     override suspend fun authenticateUser(
@@ -20,7 +20,7 @@ class AuthenticateControllerImplementation : AuthenticateController {
         call.respond(
             HttpStatusCode.OK,
             XFullStackResponse(
-                status = ResponseStatus.Success,
+                status = XFullStackResponseStatus.Success,
                 code = null,
                 message = Localization.USER_AUTHENTICATED,
                 data = null

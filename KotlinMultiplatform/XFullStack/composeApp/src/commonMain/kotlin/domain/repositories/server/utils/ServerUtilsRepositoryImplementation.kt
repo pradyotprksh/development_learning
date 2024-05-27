@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import utils.Constants
 import utils.Localization
-import utils.ResponseStatus
+import utils.XFullStackResponseStatus
 
 class ServerUtilsRepositoryImplementation(
     private val serverUtilsRemoteService: ServerUtilsRemoteService,
@@ -17,7 +17,7 @@ class ServerUtilsRepositoryImplementation(
             emit(ClientResponse.Loading)
             try {
                 val response = serverUtilsRemoteService.isServerAvailable()
-                if (response.status == ResponseStatus.Success) {
+                if (response.status == XFullStackResponseStatus.Success) {
                     emit(ClientResponse.Success(response))
                 } else {
                     emit(

@@ -7,6 +7,7 @@ import core.parser.parseToCurrentUserInfoDB
 import data.response.UserInfoResponse
 import domain.services.user.current.CurrentUserDBService
 import io.realm.kotlin.Realm
+import io.realm.kotlin.UpdatePolicy
 import io.realm.kotlin.ext.isManaged
 import io.realm.kotlin.ext.query
 import io.realm.kotlin.notifications.ResultsChange
@@ -52,21 +53,11 @@ class CurrentUserDBServiceImplementation(
     }
 
     override suspend fun saveUserInfo(userInfoResponse: UserInfoResponse) = realm.write {
-        query<CurrentUserInfoDB>("$USER_ID == $0", userInfoResponse.id).find().firstOrNull()
-            ?.let { savedUserInfo ->
-                savedUserInfo.name = userInfoResponse.name
-                savedUserInfo.username = userInfoResponse.username
-                savedUserInfo.bio = userInfoResponse.bio
-                savedUserInfo.emailAddress = userInfoResponse.emailAddress
-                savedUserInfo.phoneNumber = userInfoResponse.phoneNumber
-                savedUserInfo.profilePicture = userInfoResponse.profilePicture
-                savedUserInfo.dateOfBirth = userInfoResponse.dateOfBirth
-                savedUserInfo
-            } ?: run {
-            val unmanagedObject = userInfoResponse.parseToCurrentUserInfoDB()
-            val managedObject = copyToRealm(unmanagedObject)
-            managedObject
-        }
+        val unmanagedObject = userInfoResponse.parseToCurrentUserInfoDB()
+        val managedObject = copyToRealm(
+            unmanagedObject, updatePolicy = UpdatePolicy.ALL
+        )
+        managedObject
     }
 
     override suspend fun getUserInfo(userId: String): Flow<ResultsChange<CurrentUserInfoDB>> {

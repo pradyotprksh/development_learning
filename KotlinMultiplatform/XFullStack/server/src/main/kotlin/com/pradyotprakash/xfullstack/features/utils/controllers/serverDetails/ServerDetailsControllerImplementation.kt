@@ -6,7 +6,7 @@ import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.ApplicationCall
 import io.ktor.server.response.respond
 import utils.Localization
-import utils.ResponseStatus
+import utils.XFullStackResponseStatus
 
 class ServerDetailsControllerImplementation : ServerDetailsController {
     override suspend fun isServerAvailable(
@@ -16,7 +16,7 @@ class ServerDetailsControllerImplementation : ServerDetailsController {
         call.respond(
             HttpStatusCode.OK,
             XFullStackResponse(
-                status = ResponseStatus.Success,
+                status = XFullStackResponseStatus.Success,
                 code = null,
                 message = Localization.SERVER_IS_AVAILABLE,
                 data = null
