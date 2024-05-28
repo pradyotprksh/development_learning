@@ -24,7 +24,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
-import app.composables.LoadingDialogComposable
+import app.pages.home.home.screen.composables.ForYouTweetsComposable
 import app.pages.home.home.viewModel.HomeViewModel
 import kotlinx.coroutines.launch
 import utils.Localization
@@ -42,9 +42,6 @@ fun HomeScreen(
     val snackbarHostState = remember { SnackbarHostState() }
     val homeScreenState by homeViewModel.homeScreenState.collectAsState()
     val tabPagerState = rememberPagerState(pageCount = { homeScreenState.tabsDetails.size })
-    if (homeScreenState.showLoading) {
-        LoadingDialogComposable()
-    }
     homeScreenState.snackBarMessage?.let { message ->
         scope.launch {
             val result = snackbarHostState.showSnackbar(
@@ -90,7 +87,13 @@ fun HomeScreen(
                 state = tabPagerState,
             ) { page ->
                 when (page) {
-                    0 -> {}
+                    0 -> {
+                        ForYouTweetsComposable(
+                            tweets = homeScreenState.tweets,
+                            showLoading = homeScreenState.showLoading,
+                        )
+                    }
+
                     1 -> {}
                 }
             }

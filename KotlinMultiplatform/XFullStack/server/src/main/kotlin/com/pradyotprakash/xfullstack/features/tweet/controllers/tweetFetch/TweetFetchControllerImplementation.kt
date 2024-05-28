@@ -45,7 +45,7 @@ class TweetFetchControllerImplementation : TweetFetchController {
                 id = tweet.id.toHexString(),
                 tweet = tweet.tweet,
                 createdBy = createdByUserDetails.parseToUserInfoResponse(),
-                tweetedOn = tweet.tweetedOn,
+                tweetedOn = UtilsMethod.Dates.convertTimestampToTimeAgo(tweet.tweetedOn),
                 media = tweet.media,
                 gif = tweet.gif,
                 commentCount = tweet.commentCount,

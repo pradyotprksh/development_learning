@@ -41,10 +41,8 @@ class HomeViewModel : ViewModel() {
         )
     }
 
-    fun initialSetup() {
-        viewModelScope.launch {
-            updateAllTweets(page = 1)
-        }
+    suspend fun initialSetup() {
+        updateAllTweets(page = _homeScreenState.value.forYouTweetPage)
     }
 
     private suspend fun updateAllTweets(page: Int) {

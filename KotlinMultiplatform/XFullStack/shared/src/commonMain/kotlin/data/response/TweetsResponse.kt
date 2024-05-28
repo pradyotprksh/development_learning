@@ -7,7 +7,7 @@ data class TweetsResponse(
     val id: String,
     val tweet: String,
     val createdBy: UserInfoResponse,
-    val tweetedOn: Long,
+    val tweetedOn: String,
     val media: List<String>,
     val gif: List<String>,
     val commentCount: Int,

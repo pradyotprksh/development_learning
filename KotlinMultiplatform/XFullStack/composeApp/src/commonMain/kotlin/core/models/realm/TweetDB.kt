@@ -10,7 +10,7 @@ class TweetDB : RealmObject {
     var tweetId: String = ""
     var tweet: String = ""
     var createdBy: CurrentUserInfoDB? = null
-    var tweetedOn: Long = 0
+    var tweetedOn: String = ""
     var media: RealmList<String> = realmListOf()
     var gif: RealmList<String> = realmListOf()
     var commentCount: Int = 0

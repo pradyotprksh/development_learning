@@ -114,4 +114,11 @@ object Localization {
     const val POLL_VOTE_EXPIRED = "The poll has ended. You can't vote anymore."
     const val SERVER_IS_AVAILABLE = "Server is available"
     const val FOR_YOU = "For you"
+    const val DAY_AGO = "day ago"
+    const val DAYS_AGO = "days ago"
+    const val HOUR_AGO = "hour ago"
+    const val HOURS_AGO = "hours ago"
+    const val MINUTE_AGO = "minute ago"
+    const val MINUTES_AGO = "minutes ago"
+    const val JUST_NOW = "just now"
 }
