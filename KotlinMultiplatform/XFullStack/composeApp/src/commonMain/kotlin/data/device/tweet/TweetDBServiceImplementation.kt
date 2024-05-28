@@ -7,6 +7,8 @@ import domain.services.tweet.TweetDBService
 import io.realm.kotlin.Realm
 import io.realm.kotlin.UpdatePolicy
 import io.realm.kotlin.ext.query
+import io.realm.kotlin.notifications.ResultsChange
+import kotlinx.coroutines.flow.Flow
 
 class TweetDBServiceImplementation(
     private val realm: Realm,
@@ -22,7 +24,7 @@ class TweetDBServiceImplementation(
             managedObject
         }
 
-    override suspend fun getAllTweets(): List<TweetDB> {
-        return realm.query<TweetDB>().find()
+    override suspend fun getAllTweets(): Flow<ResultsChange<TweetDB>> {
+        return realm.query<TweetDB>().asFlow()
     }
 }

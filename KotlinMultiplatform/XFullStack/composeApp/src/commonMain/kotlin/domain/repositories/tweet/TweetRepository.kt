@@ -6,7 +6,9 @@ import data.response.XFullStackResponse
 import kotlinx.coroutines.flow.Flow
 
 interface TweetRepository {
-    suspend fun getAllTweets(
+    suspend fun updateAllTweets(
         page: Int = 1,
-    ): Flow<ClientResponse<out XFullStackResponse<List<TweetDB>>>>
+    ): Flow<ClientResponse<out XFullStackResponse<Nothing>>>
+
+    suspend fun allTweetsChanges(): Flow<List<TweetDB>>
 }

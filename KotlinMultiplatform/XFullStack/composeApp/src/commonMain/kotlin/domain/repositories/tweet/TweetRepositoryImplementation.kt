@@ -7,6 +7,7 @@ import domain.services.tweet.TweetDBService
 import domain.services.tweet.TweetRemoteService
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
 import utils.Constants.ErrorCode.DEFAULT_ERROR_CODE
 import utils.Localization
 import utils.XFullStackResponseStatus
@@ -15,63 +16,40 @@ class TweetRepositoryImplementation(
     private val tweetDBService: TweetDBService,
     private val tweetRemoteService: TweetRemoteService,
 ) : TweetRepository {
-    override suspend fun getAllTweets(
+    override suspend fun updateAllTweets(
         page: Int,
-    ): Flow<ClientResponse<out XFullStackResponse<List<TweetDB>>>> =
-        flow {
-            emit(ClientResponse.Loading)
-            try {
-                val response = tweetRemoteService.getAllTweets(page = page)
-                if (response.status == XFullStackResponseStatus.Success) {
-                    response.data?.let { tweetsResponse ->
-                        val dbSavedData = tweetDBService.saveAllTweets(tweetsResponse)
-                        emit(
-                            ClientResponse.Success(
-                                XFullStackResponse(
-                                    status = response.status,
-                                    message = response.message,
-                                    code = response.code,
-                                    data = dbSavedData,
-                                )
-                            )
-                        )
-                    }
-                } else {
-                    val dbSavedData = tweetDBService.getAllTweets()
-                    emit(
-                        ClientResponse.Success(
-                            XFullStackResponse(
-                                status = XFullStackResponseStatus.Success,
-                                message = null,
-                                code = null,
-                                data = dbSavedData,
-                            )
-                        )
-                    )
-                }
-            } catch (mainE: Exception) {
-                try {
-                    val dbSavedData = tweetDBService.getAllTweets()
-                    emit(
-                        ClientResponse.Success(
-                            XFullStackResponse(
-                                status = XFullStackResponseStatus.Success,
-                                message = null,
-                                code = null,
-                                data = dbSavedData,
-                            )
-                        )
-                    )
-                } catch (e: Exception) {
-                    emit(
-                        ClientResponse.Error(
-                            message = mainE.message ?: e.message
-                            ?: Localization.DEFAULT_ERROR_MESSAGE,
-                            errorCode = DEFAULT_ERROR_CODE,
-                        ),
-                    )
+    ): Flow<ClientResponse<out XFullStackResponse<Nothing>>> = flow {
+        emit(ClientResponse.Loading)
+        try {
+            val response = tweetRemoteService.getAllTweets(page = page)
+            if (response.status == XFullStackResponseStatus.Success) {
+                response.data?.let { tweetsResponse ->
+                    tweetDBService.saveAllTweets(tweetsResponse)
                 }
             }
-            emit(ClientResponse.Idle)
+
+            emit(
+                ClientResponse.Success(
+                    XFullStackResponse(
+                        status = response.status,
+                        message = response.message,
+                        code = response.code,
+                        data = null,
+                    )
+                )
+            )
+        } catch (e: Exception) {
+            emit(
+                ClientResponse.Error(
+                    message = e.message ?: Localization.DEFAULT_ERROR_MESSAGE,
+                    errorCode = DEFAULT_ERROR_CODE,
+                ),
+            )
         }
+        emit(ClientResponse.Idle)
+    }
+
+    override suspend fun allTweetsChanges(): Flow<List<TweetDB>> {
+        return tweetDBService.getAllTweets().map { it.list }
+    }
 }
