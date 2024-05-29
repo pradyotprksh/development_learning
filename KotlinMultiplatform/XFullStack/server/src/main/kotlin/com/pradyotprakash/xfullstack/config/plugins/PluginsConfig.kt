@@ -11,6 +11,7 @@ import io.ktor.server.plugins.callloging.CallLogging
 import io.ktor.server.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.server.request.path
 import io.ktor.server.resources.Resources
+import io.ktor.server.websocket.WebSockets
 import kotlinx.serialization.json.Json
 import org.slf4j.event.Level
 
@@ -48,4 +49,8 @@ fun Application.configureSerialization() {
             }
         )
     }
+}
+
+fun Application.configureWebSockets() {
+    install(WebSockets)
 }

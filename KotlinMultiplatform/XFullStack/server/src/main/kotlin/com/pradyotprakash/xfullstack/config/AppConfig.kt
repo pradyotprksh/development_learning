@@ -7,14 +7,15 @@ import com.pradyotprakash.xfullstack.config.plugins.configureRouting
 import com.pradyotprakash.xfullstack.config.plugins.configureSecurity
 import com.pradyotprakash.xfullstack.config.plugins.configureSerialization
 import com.pradyotprakash.xfullstack.config.plugins.configureStatusPages
-import utils.Constants.Server.HOST
-import utils.Constants.Server.PORT
+import com.pradyotprakash.xfullstack.config.plugins.configureWebSockets
 import io.ktor.server.application.Application
 import io.ktor.server.engine.ApplicationEngine
 import io.ktor.server.engine.ApplicationEngineFactory
 import io.ktor.server.engine.BaseApplicationEngine
 import io.ktor.server.engine.embeddedServer
 import io.ktor.server.netty.Netty
+import utils.Constants.Server.HOST
+import utils.Constants.Server.PORT
 
 fun setup(): BaseApplicationEngine = server(Netty)
 
@@ -29,6 +30,7 @@ private fun server(
 fun Application.mainModule() {
     configureSecurity()
     configureResource()
+    configureWebSockets()
     configureRouting()
     configureSerialization()
     configureMonitoring()

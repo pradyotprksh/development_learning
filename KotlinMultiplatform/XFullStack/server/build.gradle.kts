@@ -32,4 +32,5 @@ dependencies {
     implementation(libs.ktor.server.caching.headers)
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kodein.di)
+    implementation(libs.ktor.server.websockets)
 }

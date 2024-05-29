@@ -14,6 +14,7 @@ import com.pradyotprakash.xfullstack.features.utils.controllers.UtilsController
 import com.pradyotprakash.xfullstack.features.utils.utils
 import com.pradyotprakash.xfullstack.features.verification.controllers.VerificationController
 import com.pradyotprakash.xfullstack.features.verification.verification
+import com.pradyotprakash.xfullstack.features.websockets.websockets
 import io.ktor.server.application.Application
 import io.ktor.server.routing.routing
 import org.kodein.di.instance
@@ -49,6 +50,10 @@ fun Application.configureRouting() {
         )
         tweet(
             tweetController = tweetController,
+            tweetDataSource = tweetDataSource,
+            userDataSource = userDataSource,
+        )
+        websockets(
             tweetDataSource = tweetDataSource,
             userDataSource = userDataSource,
         )

@@ -53,6 +53,7 @@ realm-library-base = { module = "io.realm.kotlin:library-base", version.ref = "i
 realm-library-sync = { module = "io.realm.kotlin:library-sync", version.ref = "io-realm-kotlin" }
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinx-datetime" }
 kamel-image = { module = "media.kamel:kamel-image", version.ref = "kamel-image" }
+ktor-server-websockets = { module = "io.ktor:ktor-server-websockets", version.ref = "ktor" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
