@@ -46,6 +46,7 @@ fun TweetsResponse.parseToTweetsDB() = this.let { info ->
         this.tweetId = info.id
         this.tweet = info.tweet
         this.createdBy = info.createdBy.parseToCurrentUserInfoDB()
+        this.tweetedOnTimestamp = info.tweetedOnTimestamp
         this.tweetedOn = info.tweetedOn
         this.media = media
         this.gif = gif

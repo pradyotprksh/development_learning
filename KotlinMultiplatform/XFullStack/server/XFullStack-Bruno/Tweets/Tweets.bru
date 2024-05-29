@@ -5,19 +5,15 @@ meta {
 }
 
 post {
-  url: http://192.168.1.37:8080/tweet
+  url: {{BASE_URL}}/tweet
   body: json
   auth: none
-}
-
-headers {
-  Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJ1c2VycyIsImlzcyI6Imh0dHA6Ly8xOTIuMTY4LjEuMzc6ODA4MCIsImV4cCI6MTc0ODAwMjU0NywidXNlcklkIjoiNjY0YjE2NGI1ZTIxNTU3Y2MzMTQ4M2ZkIn0.QPPDcThrN513p7A3ExHLIMaTgfWWnUNzAXffbkUwkBc
 }
 
 body:json {
   [
     {
-      "tweet": "nested1",
+      "tweet": "nested4",
       "media": [],
       "gif": [],
       "isAPoll": false,
@@ -35,7 +31,7 @@ body:json {
       "isLikedTweet": false
     },
     {
-      "tweet": "nested2",
+      "tweet": "nested5",
       "media": [],
       "gif": [],
       "isAPoll": false,
@@ -53,7 +49,25 @@ body:json {
       "isLikedTweet": false
     },
     {
-      "tweet": "nested3",
+      "tweet": "nested6",
+      "media": [],
+      "gif": [],
+      "isAPoll": false,
+      "pollChoices": [],
+      "pollHour": null,
+      "pollMinute": null,
+      "pollSeconds": null,
+      "isScheduledTweet": false,
+      "scheduledOnTweet": null,
+      "location": null,
+      "isACommentTweet": false,
+      "parentTweetId": null,
+      "isQuoteTweet": false,
+      "isRepostTweet": false,
+      "isLikedTweet": false
+    },
+    {
+      "tweet": "nested7",
       "media": [],
       "gif": [],
       "isAPoll": false,

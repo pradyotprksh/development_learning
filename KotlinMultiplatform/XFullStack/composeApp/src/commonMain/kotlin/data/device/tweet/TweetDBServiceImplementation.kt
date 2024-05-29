@@ -8,7 +8,9 @@ import io.realm.kotlin.Realm
 import io.realm.kotlin.UpdatePolicy
 import io.realm.kotlin.ext.query
 import io.realm.kotlin.notifications.ResultsChange
+import io.realm.kotlin.query.Sort
 import kotlinx.coroutines.flow.Flow
+import utils.Constants.DbKeys.TWEETED_ON_TIMESTAMP
 
 class TweetDBServiceImplementation(
     private val realm: Realm,
@@ -25,6 +27,9 @@ class TweetDBServiceImplementation(
         }
 
     override suspend fun getAllTweets(): Flow<ResultsChange<TweetDB>> {
-        return realm.query<TweetDB>().asFlow()
+        return realm.query<TweetDB>().sort(
+            property = TWEETED_ON_TIMESTAMP,
+            sortOrder = Sort.DESCENDING,
+        ).asFlow()
     }
 }

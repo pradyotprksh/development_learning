@@ -5,7 +5,7 @@ meta {
 }
 
 post {
-  url: http://192.168.1.37:8080/tweet/poll?tweetId=665473addf74511ad2c1248d&optionId=665473addf74511ad2c1248a
+  url: {{BASE_URL}}/tweet/poll?tweetId=665473addf74511ad2c1248d&optionId=665473addf74511ad2c1248a
   body: none
   auth: none
 }
@@ -13,8 +13,4 @@ post {
 query {
   tweetId: 665473addf74511ad2c1248d
   optionId: 665473addf74511ad2c1248a
-}
-
-headers {
-  Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJ1c2VycyIsImlzcyI6Imh0dHA6Ly8xOTIuMTY4LjEuMzc6ODA4MCIsImV4cCI6MTc0ODAwMjU0NywidXNlcklkIjoiNjY0YjE2NGI1ZTIxNTU3Y2MzMTQ4M2ZkIn0.QPPDcThrN513p7A3ExHLIMaTgfWWnUNzAXffbkUwkBc
 }

@@ -45,6 +45,7 @@ class TweetFetchControllerImplementation : TweetFetchController {
                 id = tweet.id.toHexString(),
                 tweet = tweet.tweet,
                 createdBy = createdByUserDetails.parseToUserInfoResponse(),
+                tweetedOnTimestamp = tweet.tweetedOn,
                 tweetedOn = UtilsMethod.Dates.convertTimestampToTimeAgo(tweet.tweetedOn),
                 media = tweet.media,
                 gif = tweet.gif,
@@ -71,7 +72,7 @@ class TweetFetchControllerImplementation : TweetFetchController {
             )
         }.filter {
             !UtilsMethod.Dates.isFutureTimeStamp(it.scheduledOnTweet)
-        }.sortedByDescending { it.tweetedOn }
+        }
 
         call.respond(
             HttpStatusCode.OK, XFullStackResponse(

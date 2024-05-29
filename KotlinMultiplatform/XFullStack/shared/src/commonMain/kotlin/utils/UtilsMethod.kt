@@ -20,8 +20,8 @@ import utils.Constants.ErrorCode.NAME_VALIDITY_ERROR_CODE
 import utils.Constants.ErrorCode.PASSWORD_VALIDITY_ERROR_CODE
 import utils.Constants.ErrorCode.PHONE_NUMBER_VALIDITY_ERROR_CODE
 import utils.Constants.ErrorCode.USERNAME_VALIDITY_ERROR_CODE
+import utils.timeago.TimeAgo
 import kotlin.math.absoluteValue
-import kotlin.time.DurationUnit
 
 object UtilsMethod {
     object Validation {
@@ -235,32 +235,7 @@ object UtilsMethod {
         fun convertTimestampToTimeAgo(
             timestamp: Long,
         ): String {
-            val now = Clock.System.now()
-            val time = Instant.fromEpochMilliseconds(timestamp)
-            val duration = now - time
-
-            val days = duration.toDouble(DurationUnit.DAYS)
-            val hours = duration.toDouble(DurationUnit.HOURS)
-            val minutes = duration.toDouble(DurationUnit.MINUTES)
-
-            return when {
-                days >= 1 -> {
-                    val dayCount = days.toInt()
-                    if (dayCount == 1) "$dayCount ${Localization.DAY_AGO}" else "$dayCount ${Localization.DAYS_AGO}"
-                }
-
-                hours >= 1 -> {
-                    val hourCount = hours.toInt()
-                    if (hourCount == 1) "$hourCount ${Localization.HOURS_AGO}" else "$hourCount ${Localization.HOURS_AGO}"
-                }
-
-                minutes >= 1 -> {
-                    val minuteCount = minutes.toInt()
-                    if (minuteCount == 1) "$minuteCount ${Localization.MINUTE_AGO}" else "$minuteCount ${Localization.MINUTES_AGO}"
-                }
-
-                else -> Localization.JUST_NOW
-            }
+            return TimeAgo.using(timestamp)
         }
     }
 }

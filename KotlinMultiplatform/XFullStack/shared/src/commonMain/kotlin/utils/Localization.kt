@@ -8,6 +8,18 @@ import utils.Constants.ConstValues.TWEET_MAX_LENGTH
 import utils.Constants.ConstValues.USERNAME_MIN_LENGTH
 
 object Localization {
+    fun format(key: String, vararg arguments: Any): String {
+        var result = key
+        for (a in arguments) {
+            if (result.contains("%s")) {
+                result = result.replaceFirst("%s", a.toString())
+            } else {
+                break
+            }
+        }
+        return result
+    }
+
     const val APP_NAME = "X"
     const val SPLASH_SCREEN_MESSAGE = "See what's happening in the work right now."
     const val CONTINUE_WITH_GOOGLE = "Continue with Google"
@@ -51,8 +63,7 @@ object Localization {
     const val INVALID_LINK = "Invalid link"
     const val DB_WRITE_ERROR = "Not able to save the details at the moment. Please try again later"
     const val EMAIL_OR_PHONE_NUMBER_REQUIRED = "Email or phone number is required"
-    const val USERNAME_OR_EMAIL_OR_PHONE_NUMBER_REQUIRED =
-        "Phone, email, or username is required"
+    const val USERNAME_OR_EMAIL_OR_PHONE_NUMBER_REQUIRED = "Phone, email, or username is required"
     const val LOADING = "Loading..."
     const val CREATE_YOUR_ACCOUNT = "Create your account"
     const val NAME = "Name"
@@ -114,11 +125,33 @@ object Localization {
     const val POLL_VOTE_EXPIRED = "The poll has ended. You can't vote anymore."
     const val SERVER_IS_AVAILABLE = "Server is available"
     const val FOR_YOU = "For you"
-    const val DAY_AGO = "day ago"
-    const val DAYS_AGO = "days ago"
-    const val HOUR_AGO = "hour ago"
-    const val HOURS_AGO = "hours ago"
-    const val MINUTE_AGO = "minute ago"
-    const val MINUTES_AGO = "minutes ago"
     const val JUST_NOW = "just now"
+    const val ONE_MINUTE_PAST = "one minute ago"
+    const val X_MINUTES_PAST = "%s minutes ago"
+    const val ABOUT_AN_HOUR_PAST = "about an hour ago"
+    const val X_HOURS_PAST = "%s hours ago"
+    const val ONE_DAY_PAST = "yesterday"
+    const val X_DAYS_PAST = "%s days ago"
+    const val ONE_WEEK_PAST = "a week ago"
+    const val X_WEEKS_PAST = "%s weeks ago"
+    const val ABOUT_A_MONTH_PAST = "about a month ago"
+    const val X_MONTHS_PAST = "%s months ago"
+    const val ABOUT_A_YEAR_PAST = "about a year ago"
+    const val OVER_A_YEAR_PAST = "over a year ago"
+    const val ALMOST_TWO_YEARS_PAST = "almost two years ago"
+    const val X_YEARS_PAST = "%s years ago"
+    const val ONE_MINUTE_FUTURE = "within one minute"
+    const val X_MINUTES_FUTURE = "within %s minutes"
+    const val ABOUT_AN_HOUR_FUTURE = "within about an hour"
+    const val X_HOURS_FUTURE = "within %s hours"
+    const val ONE_DAY_FUTURE = "tomorrow"
+    const val X_DAYS_FUTURE = "within %s days"
+    const val ONE_WEEK_FUTURE = "within one week"
+    const val X_WEEKS_FUTURE = "within %s weeks"
+    const val ABOUT_A_MONTH_FUTURE = "within about a month"
+    const val X_MONTHS_FUTURE = "within %s months"
+    const val ABOUT_A_YEAR_FUTURE = "within about a year"
+    const val OVER_A_YEAR_FUTURE = "within over a year"
+    const val ALMOST_TWO_YEARS_FUTURE = "within almost two years"
+    const val X_YEARS_FUTURE = "within %s years"
 }
