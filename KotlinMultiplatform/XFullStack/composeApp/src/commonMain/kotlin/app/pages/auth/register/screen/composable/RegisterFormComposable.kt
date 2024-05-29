@@ -54,8 +54,7 @@ fun RegisterFormComposable(
             value = registerScreenState.nameValue,
             onValueChange = { value ->
                 registerViewModel.updateTextField(
-                    textFieldType = TextFieldType.Name,
-                    value
+                    textFieldType = TextFieldType.Name, value
                 )
             },
             label = {
@@ -134,11 +133,12 @@ fun RegisterFormComposable(
             supportingText = {
                 if (registerScreenState.showPhoneNumberError) {
                     Text(
-                        if (registerScreenState.isUsingPhoneNumber) Localization.EMAIL_PHONE_ERROR_MESSAGE.replace(
-                            "%s", Localization.PHONE_NUMBER.lowercase()
+                        if (registerScreenState.isUsingPhoneNumber) Localization.format(
+                            Localization.EMAIL_PHONE_ERROR_MESSAGE,
+                            Localization.PHONE_NUMBER.lowercase()
                         )
-                        else Localization.EMAIL_PHONE_ERROR_MESSAGE.replace(
-                            "%s", Localization.EMAIL.lowercase()
+                        else Localization.format(
+                            Localization.EMAIL_PHONE_ERROR_MESSAGE, Localization.EMAIL.lowercase()
                         )
                     )
                 }
@@ -148,8 +148,7 @@ fun RegisterFormComposable(
             value = registerScreenState.dobValue,
             onValueChange = { value ->
                 registerViewModel.updateTextField(
-                    textFieldType = TextFieldType.Dob,
-                    value
+                    textFieldType = TextFieldType.Dob, value
                 )
             },
             label = {

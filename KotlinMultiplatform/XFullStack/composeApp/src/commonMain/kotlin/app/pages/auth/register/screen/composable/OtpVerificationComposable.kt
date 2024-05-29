@@ -40,8 +40,9 @@ fun OtpVerificationComposable(
         )
         Spacer(modifier = Modifier.height(10.dp))
         Text(
-            Localization.ENTER_BELOW_TO_VERIFY.replace(
-                "%s", registerScreenState.phoneEmailValue
+            Localization.format(
+                Localization.ENTER_BELOW_TO_VERIFY,
+                registerScreenState.phoneEmailValue
             ), style = MaterialTheme.typography.bodySmall, modifier = startEndPaddingModifier
         )
         Spacer(modifier = Modifier.height(10.dp))
