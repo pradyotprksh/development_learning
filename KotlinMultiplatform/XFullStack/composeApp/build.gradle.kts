@@ -62,6 +62,7 @@ kotlin {
             implementation(libs.realm.library.base)
             implementation(libs.realm.library.sync)
             implementation(libs.kamel.image)
+            implementation(libs.ktor.client.websockets)
         }
 
         desktopMain.dependencies {

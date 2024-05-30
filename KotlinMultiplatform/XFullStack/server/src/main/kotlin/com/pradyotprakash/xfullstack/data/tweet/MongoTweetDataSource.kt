@@ -27,6 +27,8 @@ class MongoTweetDataSource(
             .toList()
     }
 
+    override suspend fun watchTweets() = tweetCollection.watch()
+
     override suspend fun findTweetById(tweetId: String): Tweet? {
         return tweetCollection.find(
             Filters.eq(ID, ObjectId(tweetId))

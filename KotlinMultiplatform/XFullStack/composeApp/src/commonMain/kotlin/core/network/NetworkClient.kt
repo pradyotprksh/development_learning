@@ -3,10 +3,16 @@ package core.network
 import core.models.request.XFullStackClientRequestDetails
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
+import io.ktor.client.plugins.websocket.webSocket
 import io.ktor.client.request.get
 import io.ktor.client.request.parameter
 import io.ktor.client.request.post
 import io.ktor.client.request.setBody
+import io.ktor.websocket.Frame
+import io.ktor.websocket.readText
+import kotlinx.coroutines.flow.flow
+import utils.Constants.ErrorCode.DEFAULT_ERROR_CODE
+import utils.Constants.Paths.Websockets.WEBSOCKETS
 
 class NetworkClient(
     val httpClient: HttpClient,
@@ -39,6 +45,23 @@ class NetworkClient(
             return Result.success(result)
         } catch (e: Exception) {
             Result.failure(e)
+        }
+    }
+
+    suspend fun websocket() = flow {
+        try {
+            httpClient.webSocket(WEBSOCKETS) {
+                try {
+                    while (true) {
+                        val incomingMessage = (incoming.receive() as? Frame.Text)?.readText()
+                        emit(incomingMessage)
+                    }
+                } catch (e: Exception) {
+                    emit(DEFAULT_ERROR_CODE)
+                }
+            }
+        } catch (e: Exception) {
+            emit(DEFAULT_ERROR_CODE)
         }
     }
 }

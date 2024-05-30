@@ -1,5 +1,6 @@
 package com.pradyotprakash.xfullstack.data.tweet
 
+import com.mongodb.kotlin.client.coroutine.ChangeStreamFlow
 import com.pradyotprakash.xfullstack.data.tweet.data.PollChoices
 import com.pradyotprakash.xfullstack.data.tweet.data.Tweet
 
@@ -8,6 +9,8 @@ interface TweetDataSource {
         page: Int,
         limit: Int,
     ): List<Tweet>
+
+    suspend fun watchTweets(): ChangeStreamFlow<Tweet>
 
     suspend fun findTweetById(tweetId: String): Tweet?
 

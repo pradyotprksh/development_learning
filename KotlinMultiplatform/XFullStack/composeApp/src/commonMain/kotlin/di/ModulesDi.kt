@@ -9,6 +9,7 @@ import data.remote.server.utils.ServerUtilsRemoteServiceImplementation
 import data.remote.tweet.TweetRemoteServiceImplementation
 import data.remote.user.current.CurrentUserRemoteServiceImplementation
 import data.remote.user.verification.UserVerificationRemoteServiceImplementation
+import data.remote.websocket.WebsocketRemoteServiceImplementation
 import domain.repositories.server.utils.ServerUtilsRepository
 import domain.repositories.server.utils.ServerUtilsRepositoryImplementation
 import domain.repositories.tweet.TweetRepository
@@ -17,12 +18,15 @@ import domain.repositories.user.current.CurrentUserRepository
 import domain.repositories.user.current.CurrentUserRepositoryImplementation
 import domain.repositories.user.verification.UserVerificationRepository
 import domain.repositories.user.verification.UserVerificationRepositoryImplementation
+import domain.repositories.websocket.WebsocketRepository
+import domain.repositories.websocket.WebsocketRepositoryImplementation
 import domain.services.server.utils.ServerUtilsRemoteService
 import domain.services.tweet.TweetDBService
 import domain.services.tweet.TweetRemoteService
 import domain.services.user.current.CurrentUserDBService
 import domain.services.user.current.CurrentUserRemoteService
 import domain.services.user.verification.UserVerificationRemoteService
+import domain.services.websocket.WebsocketRemoteService
 import org.kodein.di.DI
 import org.kodein.di.bind
 import org.kodein.di.bindProvider
@@ -57,6 +61,8 @@ object ModulesDi {
         bindProvider<ServerUtilsRemoteService> { ServerUtilsRemoteServiceImplementation(instance()) }
 
         bindProvider<TweetRemoteService> { TweetRemoteServiceImplementation(instance()) }
+
+        bindProvider<WebsocketRemoteService> { WebsocketRemoteServiceImplementation(instance()) }
     }
 
     private val repositoriesModule = DI.Module("REPOSITORIES") {
@@ -75,6 +81,10 @@ object ModulesDi {
 
         bind<TweetRepository>() with singleton {
             TweetRepositoryImplementation(instance(), instance())
+        }
+
+        bind<WebsocketRepository>() with singleton {
+            WebsocketRepositoryImplementation(instance())
         }
     }
 

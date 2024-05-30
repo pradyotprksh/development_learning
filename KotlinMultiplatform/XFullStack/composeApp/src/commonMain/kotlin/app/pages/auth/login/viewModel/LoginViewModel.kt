@@ -13,9 +13,9 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import org.kodein.di.instance
 import utils.Constants.ErrorCode.USER_DETAILS_NOT_FOUND_CODE
-import utils.Constants.SuccessCode.EMAIL_PRESENT
-import utils.Constants.SuccessCode.PHONE_NUMBER_PRESENT
-import utils.Constants.SuccessCode.USERNAME_PRESENT
+import utils.Constants.SuccessCode.EMAIL_PRESENT_SUCCESS_CODE
+import utils.Constants.SuccessCode.PHONE_NUMBER_PRESENT_SUCCESS_CODE
+import utils.Constants.SuccessCode.USERNAME_PRESENT_SUCCESS_CODE
 import utils.Localization.DEFAULT_ERROR_MESSAGE
 import utils.PasswordValidation
 import utils.TextFieldType
@@ -97,17 +97,17 @@ class LoginViewModel : ViewModel() {
 
                             is ClientResponse.Success -> {
                                 _loginScreenState.value = when (it.data.code) {
-                                    USERNAME_PRESENT -> _loginScreenState.value.copy(
+                                    USERNAME_PRESENT_SUCCESS_CODE -> _loginScreenState.value.copy(
                                         isUsernamePhoneEmailValid = true,
                                         isUsernameValue = true,
                                     )
 
-                                    EMAIL_PRESENT -> _loginScreenState.value.copy(
+                                    EMAIL_PRESENT_SUCCESS_CODE -> _loginScreenState.value.copy(
                                         isUsernamePhoneEmailValid = true,
                                         isEmailValue = true,
                                     )
 
-                                    PHONE_NUMBER_PRESENT -> _loginScreenState.value.copy(
+                                    PHONE_NUMBER_PRESENT_SUCCESS_CODE -> _loginScreenState.value.copy(
                                         isUsernamePhoneEmailValid = true,
                                         isPhoneNumberValue = true,
                                     )

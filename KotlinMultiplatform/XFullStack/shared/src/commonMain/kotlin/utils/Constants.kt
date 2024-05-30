@@ -47,6 +47,10 @@ object Constants {
             const val USER_PRESENT = "/user-present"
         }
 
+        object Websockets {
+            const val WEBSOCKETS = "/websockets"
+        }
+
         object Tweets {
             const val TWEET = "/tweet"
             const val TWEET_VOTE = "/poll"
@@ -111,9 +115,10 @@ object Constants {
     }
 
     object SuccessCode {
-        const val USERNAME_PRESENT = "SC_XFS001"
-        const val EMAIL_PRESENT = "SC_XFS002"
-        const val PHONE_NUMBER_PRESENT = "SC_XFS003"
+        const val USERNAME_PRESENT_SUCCESS_CODE = "SC_XFS001"
+        const val EMAIL_PRESENT_SUCCESS_CODE = "SC_XFS002"
+        const val PHONE_NUMBER_PRESENT_SUCCESS_CODE = "SC_XFS003"
+        const val TWEETS_UPDATE_SUCCESS_CODE = "SC_XFS004"
     }
 
     object DbKeys {

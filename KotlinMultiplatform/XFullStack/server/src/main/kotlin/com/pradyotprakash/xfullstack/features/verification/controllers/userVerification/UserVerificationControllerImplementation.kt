@@ -15,9 +15,9 @@ import utils.Constants.ConstValues.OTP_LENGTH
 import utils.Constants.ErrorCode.OTP_GENERATION_ERROR_CODE
 import utils.Constants.ErrorCode.OTP_VALIDATION_ERROR_CODE
 import utils.Constants.ErrorCode.USER_DETAILS_NOT_FOUND_CODE
-import utils.Constants.SuccessCode.EMAIL_PRESENT
-import utils.Constants.SuccessCode.PHONE_NUMBER_PRESENT
-import utils.Constants.SuccessCode.USERNAME_PRESENT
+import utils.Constants.SuccessCode.EMAIL_PRESENT_SUCCESS_CODE
+import utils.Constants.SuccessCode.PHONE_NUMBER_PRESENT_SUCCESS_CODE
+import utils.Constants.SuccessCode.USERNAME_PRESENT_SUCCESS_CODE
 import utils.Localization
 import utils.UtilsMethod
 import utils.XFullStackResponseStatus
@@ -114,7 +114,7 @@ class UserVerificationControllerImplementation : UserVerificationController {
                 HttpStatusCode.OK,
                 XFullStackResponse(
                     status = XFullStackResponseStatus.Success,
-                    code = USERNAME_PRESENT,
+                    code = USERNAME_PRESENT_SUCCESS_CODE,
                     message = Localization.USER_PRESENT,
                     data = null,
                 )
@@ -127,7 +127,7 @@ class UserVerificationControllerImplementation : UserVerificationController {
                 HttpStatusCode.OK,
                 XFullStackResponse(
                     status = XFullStackResponseStatus.Success,
-                    code = EMAIL_PRESENT,
+                    code = EMAIL_PRESENT_SUCCESS_CODE,
                     message = Localization.USER_PRESENT,
                     data = null
                 )
@@ -140,7 +140,7 @@ class UserVerificationControllerImplementation : UserVerificationController {
                 HttpStatusCode.OK,
                 XFullStackResponse(
                     status = XFullStackResponseStatus.Success,
-                    code = PHONE_NUMBER_PRESENT,
+                    code = PHONE_NUMBER_PRESENT_SUCCESS_CODE,
                     message = Localization.USER_PRESENT,
                     data = null
                 )

@@ -7,6 +7,7 @@ import io.ktor.client.plugins.DefaultRequest
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.defaultRequest
 import io.ktor.client.plugins.logging.Logging
+import io.ktor.client.plugins.websocket.WebSockets
 import io.ktor.client.request.header
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
@@ -37,6 +38,7 @@ object XFullStackHttpClient {
         }
         install(Logging)
         install(DefaultRequest)
+        install(WebSockets)
 
         defaultRequest {
             url("$BASE_URL/")
