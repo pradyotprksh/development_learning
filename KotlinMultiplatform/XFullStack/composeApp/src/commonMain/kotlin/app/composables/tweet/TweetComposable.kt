@@ -1,4 +1,4 @@
-package app.pages.home.home.screen.composables
+package app.composables.tweet
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource

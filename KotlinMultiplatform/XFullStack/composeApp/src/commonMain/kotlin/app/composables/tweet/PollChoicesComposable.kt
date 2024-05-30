@@ -1,4 +1,4 @@
-package app.pages.home.home.screen.composables
+package app.composables.tweet
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
