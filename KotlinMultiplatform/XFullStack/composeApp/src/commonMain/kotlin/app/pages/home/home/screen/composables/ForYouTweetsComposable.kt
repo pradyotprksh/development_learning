@@ -18,6 +18,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
+import app.pages.home.home.state.TweetActions
 import core.models.realm.TweetDB
 
 @Composable
@@ -25,6 +26,7 @@ fun ForYouTweetsComposable(
     modifier: Modifier = Modifier,
     tweets: List<TweetDB> = emptyList(),
     showLoading: Boolean = false,
+    tweetActions: TweetActions,
 ) {
     Box {
         LazyColumn(
@@ -52,10 +54,12 @@ fun ForYouTweetsComposable(
                         retweetCount = "${tweet.retweetCount}",
                         likeCount = "${tweet.likeCount}",
                         views = "${tweet.views}",
-                        profileImageClick = {},
-                        onTweetClick = {},
-                        onBookmark = {},
-                        onShare = {},
+                        isAPoll = tweet.isAPoll,
+                        pollChoices = tweet.pollChoices.toList(),
+                        isPollingAllowed = tweet.isPollingAllowed,
+                        pollingEndTime = tweet.pollingEndTime,
+                        totalVotesOnPoll = tweet.totalVotesOnPoll,
+                        tweetActions = tweetActions,
                     )
                     HorizontalDivider()
                 }

@@ -1,27 +1,27 @@
 package app.pages.home.home.screen.composables
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
+import app.composables.CircularDotComposable
 import app.composables.ProfileImageComposable
+import app.pages.home.home.state.TweetActions
+import core.models.realm.PollChoicesDB
 import utils.Constants.ConstValues.USERNAME_PREFIX
 
 @Composable
@@ -36,10 +36,12 @@ fun TweetComposable(
     retweetCount: String,
     likeCount: String,
     views: String,
-    profileImageClick: () -> Unit,
-    onTweetClick: () -> Unit,
-    onBookmark: () -> Unit,
-    onShare: () -> Unit,
+    isAPoll: Boolean,
+    pollChoices: List<PollChoicesDB>,
+    isPollingAllowed: Boolean,
+    pollingEndTime: String,
+    totalVotesOnPoll: Int,
+    tweetActions: TweetActions,
 ) {
     Row(
         modifier = modifier.fillMaxWidth()
@@ -49,7 +51,7 @@ fun TweetComposable(
             modifier = Modifier.size(40.dp).clickable(
                 indication = null,
                 interactionSource = remember { MutableInteractionSource() },
-                onClick = profileImageClick,
+                onClick = tweetActions.profileImageClick,
             )
         )
 
@@ -60,7 +62,7 @@ fun TweetComposable(
             ).weight(1f).clickable(
                 indication = null,
                 interactionSource = remember { MutableInteractionSource() },
-                onClick = onTweetClick,
+                onClick = tweetActions.onTweetClick,
             )
         ) {
             Row(
@@ -77,10 +79,8 @@ fun TweetComposable(
                     style = MaterialTheme.typography.bodySmall
                 )
                 Spacer(modifier = Modifier.width(4.dp))
-                Box(
-                    modifier = Modifier.size(3.dp).clip(CircleShape).background(
-                        color = MaterialTheme.colorScheme.onBackground
-                    )
+                CircularDotComposable(
+                    modifier = Modifier.size(3.dp),
                 )
                 Spacer(modifier = Modifier.width(4.dp))
                 Text(
@@ -91,13 +91,24 @@ fun TweetComposable(
             Text(
                 tweet,
             )
+            Spacer(modifier = Modifier.height(10.dp))
+            if (isAPoll) {
+                PollChoicesComposable(
+                    modifier = Modifier.fillMaxWidth(),
+                    pollChoices = pollChoices,
+                    isPollingAllowed = isPollingAllowed,
+                    pollingEndTime = pollingEndTime,
+                    totalVotesOnPoll = totalVotesOnPoll,
+                    onPollSelection = tweetActions.onPollSelection,
+                )
+            }
             TweetActionsComposable(
                 commentCount = commentCount,
                 retweetCount = retweetCount,
                 likeCount = likeCount,
                 views = views,
-                onBookmark = onBookmark,
-                onShare = onShare,
+                onBookmark = tweetActions.onBookmark,
+                onShare = tweetActions.onShare,
             )
         }
     }

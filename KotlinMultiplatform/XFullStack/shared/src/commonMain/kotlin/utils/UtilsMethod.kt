@@ -232,6 +232,51 @@ object UtilsMethod {
             return addedTime.epochSeconds
         }
 
+        fun timeLeft(
+            timestamp: Long,
+        ): String {
+            val now = Clock.System.now()
+            val future = Instant.fromEpochSeconds(timestamp)
+            val difference = future - now
+
+            val days = difference.inWholeDays
+            val hours = difference.inWholeHours % 24
+            val minutes = difference.inWholeMinutes % 60
+
+            val result = StringBuilder()
+
+            if (days > 0) {
+                if (days == 1L) {
+                    result.append("$days ${Localization.DAY}")
+                } else if (days > 1) {
+                    result.append("$days ${Localization.DAYS}")
+                }
+            }
+
+            if (hours > 0) {
+                result.append(Localization.WHITE_SPACE)
+                if (hours == 1L) {
+                    result.append("$hours ${Localization.HOUR}")
+                } else if (hours > 1) {
+                    result.append("$hours ${Localization.HOURS}")
+                }
+            }
+
+            if (minutes > 0) {
+                result.append(Localization.WHITE_SPACE)
+                if (minutes == 1L) {
+                    result.append("$minutes ${Localization.MINUTE}")
+                } else if (minutes > 1) {
+                    result.append("$minutes ${Localization.MINUTES}")
+                }
+            }
+
+            result.append(Localization.WHITE_SPACE)
+            result.append(Localization.LEFT)
+
+            return result.toString()
+        }
+
         fun convertTimestampToTimeAgo(
             timestamp: Long,
         ): String {

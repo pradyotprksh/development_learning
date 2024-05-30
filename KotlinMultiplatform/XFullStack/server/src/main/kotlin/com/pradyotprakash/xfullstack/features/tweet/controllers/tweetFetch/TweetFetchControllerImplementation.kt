@@ -41,6 +41,18 @@ class TweetFetchControllerImplementation : TweetFetchController {
             val createdByUserDetails = userDataSource.getUserByUserId(tweet.createdBy.toHexString())
                 ?: throw UserDetailsNotFound()
 
+            val isPollingAllowed = UtilsMethod.Dates.isFutureTimeStamp(tweet.pollLength ?: 0)
+            val isAPoll = tweet.isAPoll
+            val pollingEndTime = tweet.pollLength?.let {
+                if (isPollingAllowed) {
+                    UtilsMethod.Dates.timeLeft(it)
+                } else if (isAPoll) {
+                    Localization.FINAL_RESULTS
+                } else {
+                    ""
+                }
+            } ?: ""
+
             TweetsResponse(
                 id = tweet.id.toHexString(),
                 tweet = tweet.tweet,
@@ -53,7 +65,7 @@ class TweetFetchControllerImplementation : TweetFetchController {
                 retweetCount = tweet.retweetCount,
                 likesCount = tweet.likesCount,
                 views = tweet.views,
-                isAPoll = tweet.isAPoll,
+                isAPoll = isAPoll,
                 pollChoices = tweet.pollChoices.map { pollChoice ->
                     PollChoicesResponse(
                         id = pollChoice.id.toHexString(),
@@ -61,7 +73,8 @@ class TweetFetchControllerImplementation : TweetFetchController {
                         voteCount = pollChoice.voteCount,
                     )
                 },
-                isPollingAllowed = UtilsMethod.Dates.isFutureTimeStamp(tweet.pollLength ?: 0),
+                pollingEndTime = pollingEndTime,
+                isPollingAllowed = isPollingAllowed,
                 scheduledOnTweet = tweet.scheduledOnTweet,
                 location = tweet.location,
                 isACommentTweet = tweet.isACommentTweet,

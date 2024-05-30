@@ -22,10 +22,10 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun TweetActionsComposable(
     modifier: Modifier = Modifier,
-    commentCount: String = "0",
-    retweetCount: String = "0",
-    likeCount: String = "0",
-    views: String = "0",
+    commentCount: String,
+    retweetCount: String,
+    likeCount: String,
+    views: String,
     onBookmark: () -> Unit,
     onShare: () -> Unit,
 ) {

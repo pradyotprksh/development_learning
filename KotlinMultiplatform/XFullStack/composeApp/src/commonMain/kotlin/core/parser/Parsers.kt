@@ -56,6 +56,7 @@ fun TweetsResponse.parseToTweetsDB() = this.let { info ->
         this.views = info.views
         this.isAPoll = info.isAPoll
         this.pollChoices = pollChoices
+        this.pollingEndTime = info.pollingEndTime
         this.isPollingAllowed = info.isPollingAllowed
         this.location = info.location
         this.isACommentTweet = info.isACommentTweet

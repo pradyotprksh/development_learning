@@ -25,6 +25,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import app.pages.home.home.screen.composables.ForYouTweetsComposable
+import app.pages.home.home.state.TweetActions
 import app.pages.home.home.viewModel.HomeViewModel
 import kotlinx.coroutines.launch
 import utils.Localization
@@ -91,6 +92,13 @@ fun HomeScreen(
                         ForYouTweetsComposable(
                             tweets = homeScreenState.tweets,
                             showLoading = homeScreenState.showLoading,
+                            tweetActions = TweetActions(
+                                profileImageClick = {},
+                                onTweetClick = {},
+                                onBookmark = {},
+                                onShare = {},
+                                onPollSelection = {},
+                            )
                         )
                     }
 

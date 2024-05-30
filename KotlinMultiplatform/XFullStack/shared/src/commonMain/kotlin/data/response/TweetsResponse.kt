@@ -18,6 +18,7 @@ data class TweetsResponse(
     val isAPoll: Boolean,
     val pollChoices: List<PollChoicesResponse>,
     val isPollingAllowed: Boolean,
+    val pollingEndTime: String,
     val scheduledOnTweet: Long,
     val location: String,
     val isACommentTweet: Boolean,
