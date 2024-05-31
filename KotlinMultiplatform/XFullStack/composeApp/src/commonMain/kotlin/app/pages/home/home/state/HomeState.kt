@@ -14,6 +14,7 @@ data class HomeState(
     val tweets: List<TweetDB> = emptyList(),
     val forYouTweetPage: Int = 1,
     val followingTweetPage: Int = 1,
+    val firstLoadDone: Boolean = false,
     val tabsDetails: List<String> = listOf(
         Localization.FOR_YOU,
         Localization.FOLLOWING,

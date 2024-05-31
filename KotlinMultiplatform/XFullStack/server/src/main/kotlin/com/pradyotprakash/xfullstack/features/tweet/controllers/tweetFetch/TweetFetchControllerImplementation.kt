@@ -14,6 +14,7 @@ import io.ktor.server.auth.jwt.JWTPrincipal
 import io.ktor.server.auth.principal
 import io.ktor.server.response.respond
 import kotlinx.coroutines.delay
+import org.bson.types.ObjectId
 import utils.Constants.ConstValues.API_RESPONSE_DELAY
 import utils.Constants.Keys.USER_ID
 import utils.Localization
@@ -30,10 +31,10 @@ class TweetFetchControllerImplementation : TweetFetchController {
         delay(API_RESPONSE_DELAY)
 
         val principal = call.principal<JWTPrincipal>()
-        val createdBy =
+        val currentUserId =
             principal?.payload?.getClaim(USER_ID)?.asString() ?: throw UserDetailsNotFound()
 
-        userDataSource.getUserByUserId(createdBy) ?: throw UserDetailsNotFound()
+        userDataSource.getUserByUserId(currentUserId) ?: throw UserDetailsNotFound()
 
         val tweets = tweetDataSource.getAllTweets(tweetPaginate.page, tweetPaginate.limit)
 
@@ -41,6 +42,11 @@ class TweetFetchControllerImplementation : TweetFetchController {
             val createdByUserDetails = userDataSource.getUserByUserId(tweet.createdBy.toHexString())
                 ?: throw UserDetailsNotFound()
 
+            val allowCurrentUserVote =
+                tweet.createdBy.toHexString() != currentUserId && tweet.pollChoices.find { pollChoice ->
+                    pollChoice.voterDetails.map { voter -> voter.votedBy }
+                        .contains(ObjectId(currentUserId))
+                } == null
             val isPollingAllowed = UtilsMethod.Dates.isFutureTimeStamp(tweet.pollLength ?: 0)
             val isAPoll = tweet.isAPoll
             val pollingEndTime = tweet.pollLength?.let {
@@ -74,7 +80,7 @@ class TweetFetchControllerImplementation : TweetFetchController {
                     )
                 },
                 pollingEndTime = pollingEndTime,
-                isPollingAllowed = isPollingAllowed,
+                isPollingAllowed = allowCurrentUserVote && isPollingAllowed,
                 scheduledOnTweet = tweet.scheduledOnTweet,
                 location = tweet.location,
                 isACommentTweet = tweet.isACommentTweet,

@@ -204,6 +204,21 @@ object UtilsMethod {
                 return numberStr.substring(0, 6)
             }
         }
+
+        fun formatDecimalPlaces(value: Float): String {
+            val valueStr = value.toString()
+            val decimalIndex = valueStr.indexOf(".")
+            val integerPart = valueStr.substring(0, decimalIndex)
+            val decimalPart = valueStr.substring(decimalIndex + 1).run {
+                if (length > 2) {
+                    substring(0, 1)
+                } else {
+                    this
+                }
+            }
+
+            return "$integerPart${Localization.FULL_STOP}$decimalPart"
+        }
     }
 
     object Dates {

@@ -8,5 +8,7 @@ import kotlinx.coroutines.flow.Flow
 interface TweetDBService {
     suspend fun saveAllTweets(tweetsResponse: List<TweetsResponse>): List<TweetDB>
 
-    suspend fun getAllTweets(): Flow<ResultsChange<TweetDB>>
+    fun getAllTweets(): Flow<ResultsChange<TweetDB>>
+
+    fun getTweetById(id: String): TweetDB?
 }

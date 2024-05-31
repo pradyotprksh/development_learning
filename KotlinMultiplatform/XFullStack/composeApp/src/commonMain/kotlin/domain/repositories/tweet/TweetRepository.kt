@@ -11,4 +11,9 @@ interface TweetRepository {
     ): Flow<ClientResponse<out XFullStackResponse<Nothing>>>
 
     suspend fun allTweetsChanges(): Flow<List<TweetDB>>
+
+    suspend fun updateTweetPoll(
+        tweetId: String,
+        pollId: String,
+    ): Flow<ClientResponse<out XFullStackResponse<Nothing>>>
 }

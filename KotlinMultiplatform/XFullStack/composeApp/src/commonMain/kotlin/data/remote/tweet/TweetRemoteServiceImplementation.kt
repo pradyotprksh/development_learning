@@ -6,9 +6,12 @@ import data.response.TweetsResponse
 import data.response.XFullStackResponse
 import domain.services.tweet.TweetRemoteService
 import utils.Constants.Keys.LIMIT
+import utils.Constants.Keys.OPTION_ID
 import utils.Constants.Keys.PAGE
+import utils.Constants.Keys.TWEET_ID
 import utils.Constants.Paths.Tweets.PAGINATE
 import utils.Constants.Paths.Tweets.TWEET
+import utils.Constants.Paths.Tweets.TWEET_VOTE
 
 class TweetRemoteServiceImplementation(
     private val networkClient: NetworkClient,
@@ -23,6 +26,23 @@ class TweetRemoteServiceImplementation(
                 queries = mapOf(
                     PAGE to page,
                     LIMIT to limit
+                )
+            )
+        )
+
+        return response.getOrThrow()
+    }
+
+    override suspend fun updateTweetPoll(
+        tweetId: String,
+        optionId: String
+    ): XFullStackResponse<Nothing> {
+        val response = networkClient.post<XFullStackResponse<Nothing>>(
+            details = XFullStackClientRequestDetails(
+                endpoint = "$TWEET$TWEET_VOTE",
+                queries = mapOf(
+                    TWEET_ID to tweetId,
+                    OPTION_ID to optionId,
                 )
             )
         )

@@ -52,4 +52,30 @@ class TweetRepositoryImplementation(
     override suspend fun allTweetsChanges(): Flow<List<TweetDB>> {
         return tweetDBService.getAllTweets().map { it.list }
     }
+
+    override suspend fun updateTweetPoll(tweetId: String, pollId: String) = flow {
+        try {
+            val response = tweetRemoteService.updateTweetPoll(tweetId, pollId)
+            if (response.status == XFullStackResponseStatus.Success) {
+                emit(
+                    ClientResponse.Success(response)
+                )
+            } else {
+                emit(
+                    ClientResponse.Error(
+                        message = response.message ?: Localization.DEFAULT_ERROR_MESSAGE,
+                        errorCode = response.code ?: DEFAULT_ERROR_CODE,
+                    )
+                )
+            }
+        } catch (e: Exception) {
+            emit(
+                ClientResponse.Error(
+                    message = e.message ?: Localization.DEFAULT_ERROR_MESSAGE,
+                    errorCode = DEFAULT_ERROR_CODE,
+                ),
+            )
+        }
+        emit(ClientResponse.Idle)
+    }
 }

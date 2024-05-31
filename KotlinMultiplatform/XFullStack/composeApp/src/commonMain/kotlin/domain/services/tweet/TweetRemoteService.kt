@@ -8,4 +8,9 @@ interface TweetRemoteService {
         page: Int = 1,
         limit: Int = 10,
     ): XFullStackResponse<List<TweetsResponse>>
+
+    suspend fun updateTweetPoll(
+        tweetId: String,
+        optionId: String,
+    ): XFullStackResponse<Nothing>
 }

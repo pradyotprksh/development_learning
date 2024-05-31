@@ -5,5 +5,5 @@ data class TweetActions(
     val onTweetClick: () -> Unit,
     val onBookmark: () -> Unit,
     val onShare: () -> Unit,
-    val onPollSelection: (String) -> Unit,
+    val onPollSelection: (String, String) -> Unit,
 )

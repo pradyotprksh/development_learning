@@ -66,8 +66,12 @@ class HomeViewModel : ViewModel() {
             when (it) {
                 is ClientResponse.Error -> showMessage(it.message)
                 ClientResponse.Idle -> updateLoaderState(false)
-                ClientResponse.Loading -> updateLoaderState(true)
-                is ClientResponse.Success -> {}
+                ClientResponse.Loading -> updateLoaderState(!_homeScreenState.value.firstLoadDone)
+                is ClientResponse.Success -> {
+                    _homeScreenState.value = _homeScreenState.value.copy(
+                        firstLoadDone = true,
+                    )
+                }
             }
         }
     }
@@ -77,6 +81,19 @@ class HomeViewModel : ViewModel() {
             _homeScreenState.value = _homeScreenState.value.copy(
                 tweets = it
             )
+        }
+    }
+
+    fun updatePollOption(tweetId: String, optionId: String) {
+        viewModelScope.launch {
+            tweetRepository.updateTweetPoll(tweetId, optionId).collect {
+                when (it) {
+                    is ClientResponse.Error -> showMessage(it.message)
+                    ClientResponse.Idle -> updateLoaderState(false)
+                    ClientResponse.Loading -> updateLoaderState(true)
+                    is ClientResponse.Success -> {}
+                }
+            }
         }
     }
 }

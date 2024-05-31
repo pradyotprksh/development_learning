@@ -97,7 +97,9 @@ fun HomeScreen(
                                 onTweetClick = {},
                                 onBookmark = {},
                                 onShare = {},
-                                onPollSelection = {},
+                                onPollSelection = { tweetId, optionId ->
+                                    homeViewModel.updatePollOption(tweetId, optionId)
+                                },
                             )
                         )
                     }

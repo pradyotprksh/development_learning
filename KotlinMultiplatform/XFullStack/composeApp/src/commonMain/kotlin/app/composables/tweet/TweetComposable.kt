@@ -40,7 +40,7 @@ fun TweetComposable(
     pollChoices: List<PollChoicesDB>,
     isPollingAllowed: Boolean,
     pollingEndTime: String,
-    totalVotesOnPoll: Int,
+    onPollSelection: (String) -> Unit,
     tweetActions: TweetActions,
 ) {
     Row(
@@ -98,8 +98,8 @@ fun TweetComposable(
                     pollChoices = pollChoices,
                     isPollingAllowed = isPollingAllowed,
                     pollingEndTime = pollingEndTime,
-                    totalVotesOnPoll = totalVotesOnPoll,
-                    onPollSelection = tweetActions.onPollSelection,
+                    totalVotesOnPoll = pollChoices.sumOf { it.voteCount },
+                    onPollSelection = onPollSelection,
                 )
             }
             TweetActionsComposable(

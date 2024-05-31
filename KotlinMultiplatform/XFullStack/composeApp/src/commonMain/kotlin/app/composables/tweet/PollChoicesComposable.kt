@@ -1,5 +1,7 @@
 package app.composables.tweet
 
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -14,6 +16,7 @@ import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.StrokeCap
@@ -21,6 +24,7 @@ import androidx.compose.ui.unit.dp
 import app.composables.CircularDotComposable
 import core.models.realm.PollChoicesDB
 import utils.Localization
+import utils.UtilsMethod
 
 @Composable
 fun PollChoicesComposable(
@@ -36,12 +40,19 @@ fun PollChoicesComposable(
     ) {
         pollChoices.forEach { pollChoice ->
             val percentage =
-                if (totalVotesOnPoll > 0) ((pollChoice.voteCount / totalVotesOnPoll).toFloat()) / 100 else 0f
+                if (totalVotesOnPoll > 0) (pollChoice.voteCount.toFloat() / totalVotesOnPoll) else 0f
 
             Column(
                 modifier = Modifier.fillMaxWidth().padding(
                     vertical = 5.dp
-                )
+                ).clickable(
+                    indication = null,
+                    interactionSource = remember { MutableInteractionSource() },
+                ) {
+                    if (isPollingAllowed) {
+                        onPollSelection(pollChoice.id)
+                    }
+                },
             ) {
                 Box {
                     LinearProgressIndicator(
@@ -60,7 +71,7 @@ fun PollChoicesComposable(
                             pollChoice.choice, modifier = Modifier.align(Alignment.CenterVertically)
                         )
                         Text(
-                            "${percentage * 100}${Localization.PERCENTAGE}",
+                            "${UtilsMethod.Conversion.formatDecimalPlaces(percentage * 100)}${Localization.PERCENTAGE}",
                             modifier = Modifier.align(Alignment.CenterVertically)
                         )
                     }
@@ -72,8 +83,9 @@ fun PollChoicesComposable(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center,
         ) {
+            val voteOrVotes = if (totalVotesOnPoll > 0) Localization.VOTES else Localization.VOTE
             Text(
-                "$totalVotesOnPoll ${Localization.VOTES}",
+                "$totalVotesOnPoll $voteOrVotes",
                 style = MaterialTheme.typography.bodySmall,
             )
             Spacer(modifier = Modifier.width(4.dp))

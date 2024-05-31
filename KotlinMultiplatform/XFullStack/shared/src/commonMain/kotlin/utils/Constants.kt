@@ -69,6 +69,8 @@ object Constants {
         const val VALUE = "value"
         const val PAGE = "page"
         const val LIMIT = "limit"
+        const val TWEET_ID = "tweetId"
+        const val OPTION_ID = "optionId"
     }
 
     object ConstValues {
@@ -147,5 +149,6 @@ object Constants {
         const val VOTER_DETAILS = "voter_details"
         const val VOTED_ON = "voted_on"
         const val TWEETED_ON_TIMESTAMP = "tweetedOnTimestamp"
+        const val TWEET_ID = "tweetId"
     }
 }

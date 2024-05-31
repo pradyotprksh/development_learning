@@ -3,7 +3,6 @@ package core.models.realm
 import io.realm.kotlin.ext.realmListOf
 import io.realm.kotlin.types.RealmList
 import io.realm.kotlin.types.RealmObject
-import io.realm.kotlin.types.annotations.Ignore
 import io.realm.kotlin.types.annotations.PrimaryKey
 
 class TweetDB : RealmObject {
@@ -29,7 +28,4 @@ class TweetDB : RealmObject {
     var isRepostTweet: Boolean = false
     var isLikedTweet: Boolean = false
     var parentTweetId: String? = null
-
-    @Ignore
-    val totalVotesOnPoll = pollChoices.sumOf { it.voteCount }
 }

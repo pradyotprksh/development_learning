@@ -59,7 +59,12 @@ fun ForYouTweetsComposable(
                         pollChoices = tweet.pollChoices.toList(),
                         isPollingAllowed = tweet.isPollingAllowed,
                         pollingEndTime = tweet.pollingEndTime,
-                        totalVotesOnPoll = tweet.totalVotesOnPoll,
+                        onPollSelection = { optionId ->
+                            tweetActions.onPollSelection(
+                                tweet.tweetId,
+                                optionId,
+                            )
+                        },
                         tweetActions = tweetActions,
                     )
                     HorizontalDivider()
