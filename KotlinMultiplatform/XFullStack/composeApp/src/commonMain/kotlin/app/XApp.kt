@@ -37,6 +37,7 @@ import app.navigation.showFloatingActionButton
 import app.pages.auth.authOptions.screen.AuthOptionsScreen
 import app.pages.auth.login.screen.LoginScreen
 import app.pages.auth.register.screen.RegisterScreen
+import app.pages.createTweet.screen.CreateTweetScreen
 import app.pages.home.bottomBar.HomeBottomNavItems
 import app.pages.home.home.screen.HomeScreen
 import app.pages.splash.screen.SplashScreen
@@ -59,13 +60,11 @@ fun XApp(
     val currentDestination = navBackStackEntry?.destination
 
     ModalNavigationDrawer(
-        drawerState = drawerState,
-        drawerContent = {
+        drawerState = drawerState, drawerContent = {
             if (showDrawer(currentDestination?.route ?: "")) {
                 UserNavigationDrawerComposable()
             }
-        },
-        gesturesEnabled = showDrawer(currentDestination?.route ?: "")
+        }, gesturesEnabled = showDrawer(currentDestination?.route ?: "")
     ) {
         Scaffold(
             topBar = {
@@ -84,7 +83,13 @@ fun XApp(
             floatingActionButton = {
                 if (showFloatingActionButton(currentDestination?.route ?: "")) {
                     FloatingActionButton(
-                        onClick = {},
+                        onClick = {
+                            if (currentDestination?.route == Routes.HomeMessages.path()) {
+                                TODO()
+                            } else {
+                                navController.navigate(Routes.CreateTweet.path())
+                            }
+                        },
                     ) {
                         Icon(
                             imageVector = if (currentDestination?.route == Routes.HomeMessages.path()) Icons.AutoMirrored.Filled.Message else Icons.Default.Add,
@@ -167,12 +172,15 @@ fun XApp(
                         navigateToRegister = navigateToRegister,
                     )
                 }
-                composable(Routes.Login.path(), arguments = Routes.Login.arguments.map {
-                    navArgument(it) {
-                        type = NavType.StringType
-                        defaultValue = NO_USERNAME
-                    }
-                }) {
+                composable(
+                    Routes.Login.path(),
+                    arguments = Routes.Login.arguments.map {
+                        navArgument(it) {
+                            type = NavType.StringType
+                            defaultValue = NO_USERNAME
+                        }
+                    },
+                ) {
                     val usernameEmailPhoneArgument = it.arguments?.getString(USERNAME_EMAIL_PHONE)
                     val usernameEmailPhone =
                         if (usernameEmailPhoneArgument == NO_USERNAME) null else usernameEmailPhoneArgument
@@ -197,11 +205,11 @@ fun XApp(
                 composable(Routes.Home.path()) {
                     HomeScreen()
                 }
-                composable(Routes.HomeSearch.path()) { }
-                composable(Routes.HomeGrok.path()) { }
-                composable(Routes.HomeCommunities.path()) { }
-                composable(Routes.HomeNotifications.path()) { }
-                composable(Routes.HomeMessages.path()) { }
+                composable(Routes.CreateTweet.path()) {
+                    CreateTweetScreen {
+                        navController.popBackStack()
+                    }
+                }
             }
         }
     }

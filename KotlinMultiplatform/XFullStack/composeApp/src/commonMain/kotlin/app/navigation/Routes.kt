@@ -23,9 +23,10 @@ enum class Routes(
     Login("login/", listOf(USERNAME_EMAIL_PHONE)),
     Register("register/"),
     Home("home/"),
-    HomeSearch("home/search"),
-    HomeGrok("home/grok"),
-    HomeCommunities("home/communities"),
-    HomeNotifications("home/notifications"),
-    HomeMessages("home/messages"),
+    HomeSearch("home/search/"),
+    HomeGrok("home/grok/"),
+    HomeCommunities("home/communities/"),
+    HomeNotifications("home/notifications/"),
+    HomeMessages("home/messages/"),
+    CreateTweet("create-tweet/")
 }

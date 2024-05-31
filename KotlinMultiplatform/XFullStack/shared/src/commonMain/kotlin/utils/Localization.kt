@@ -165,4 +165,6 @@ object Localization {
     const val VOTES = "votes"
     const val VOTE = "vote"
     const val FINAL_RESULTS = "Final results"
+    const val POST = "Post"
+    const val POST_ALL = "Post all"
 }
