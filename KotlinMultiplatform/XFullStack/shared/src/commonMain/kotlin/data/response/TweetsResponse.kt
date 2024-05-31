@@ -26,4 +26,5 @@ data class TweetsResponse(
     val isRepostTweet: Boolean,
     val isLikedTweet: Boolean,
     val parentTweetId: String?,
+    val parentTweetDetails: TweetsResponse?,
 )

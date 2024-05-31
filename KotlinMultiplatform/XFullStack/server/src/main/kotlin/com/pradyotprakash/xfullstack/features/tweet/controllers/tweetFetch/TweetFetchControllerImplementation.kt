@@ -2,6 +2,7 @@ package com.pradyotprakash.xfullstack.features.tweet.controllers.tweetFetch
 
 import com.pradyotprakash.xfullstack.core.data.parseToUserInfoResponse
 import com.pradyotprakash.xfullstack.data.tweet.TweetDataSource
+import com.pradyotprakash.xfullstack.data.tweet.data.Tweet
 import com.pradyotprakash.xfullstack.data.user.UserDataSource
 import com.pradyotprakash.xfullstack.features.tweet.resource.TweetResource
 import core.exception.UserDetailsNotFound
@@ -39,55 +40,8 @@ class TweetFetchControllerImplementation : TweetFetchController {
         val tweets = tweetDataSource.getAllTweets(tweetPaginate.page, tweetPaginate.limit)
 
         val tweetsResponse = tweets.map { tweet ->
-            val createdByUserDetails = userDataSource.getUserByUserId(tweet.createdBy.toHexString())
-                ?: throw UserDetailsNotFound()
-
-            val allowCurrentUserVote =
-                tweet.createdBy.toHexString() != currentUserId && tweet.pollChoices.find { pollChoice ->
-                    pollChoice.voterDetails.map { voter -> voter.votedBy }
-                        .contains(ObjectId(currentUserId))
-                } == null
-            val isPollingAllowed = UtilsMethod.Dates.isFutureTimeStamp(tweet.pollLength ?: 0)
-            val isAPoll = tweet.isAPoll
-            val pollingEndTime = tweet.pollLength?.let {
-                if (isPollingAllowed) {
-                    UtilsMethod.Dates.timeLeft(it)
-                } else if (isAPoll) {
-                    Localization.FINAL_RESULTS
-                } else {
-                    ""
-                }
-            } ?: ""
-
-            TweetsResponse(
-                id = tweet.id.toHexString(),
-                tweet = tweet.tweet,
-                createdBy = createdByUserDetails.parseToUserInfoResponse(),
-                tweetedOnTimestamp = tweet.tweetedOn,
-                tweetedOn = UtilsMethod.Dates.convertTimestampToTimeAgo(tweet.tweetedOn),
-                media = tweet.media,
-                gif = tweet.gif,
-                commentCount = tweet.commentCount,
-                retweetCount = tweet.retweetCount,
-                likesCount = tweet.likesCount,
-                views = tweet.views,
-                isAPoll = isAPoll,
-                pollChoices = tweet.pollChoices.map { pollChoice ->
-                    PollChoicesResponse(
-                        id = pollChoice.id.toHexString(),
-                        choice = pollChoice.choice,
-                        voteCount = pollChoice.voteCount,
-                    )
-                },
-                pollingEndTime = pollingEndTime,
-                isPollingAllowed = allowCurrentUserVote && isPollingAllowed,
-                scheduledOnTweet = tweet.scheduledOnTweet,
-                location = tweet.location,
-                isACommentTweet = tweet.isACommentTweet,
-                isQuoteTweet = tweet.isQuoteTweet,
-                isRepostTweet = tweet.isRepostTweet,
-                isLikedTweet = tweet.isLikedTweet,
-                parentTweetId = tweet.parentTweetId?.toHexString(),
+            convertToTweetResponse(
+                userDataSource, tweetDataSource, tweet, currentUserId
             )
         }.filter {
             !UtilsMethod.Dates.isFutureTimeStamp(it.scheduledOnTweet)
@@ -100,6 +54,72 @@ class TweetFetchControllerImplementation : TweetFetchController {
                 message = Localization.DETAILS_FOUND,
                 data = tweetsResponse
             )
+        )
+    }
+
+    private suspend fun convertToTweetResponse(
+        userDataSource: UserDataSource,
+        tweetDataSource: TweetDataSource,
+        tweet: Tweet,
+        currentUserId: String,
+    ): TweetsResponse {
+        val createdByUserDetails = userDataSource.getUserByUserId(tweet.createdBy.toHexString())
+            ?: throw UserDetailsNotFound()
+
+        val allowCurrentUserVote =
+            tweet.createdBy.toHexString() != currentUserId && tweet.pollChoices.find { pollChoice ->
+                pollChoice.voterDetails.map { voter -> voter.votedBy }
+                    .contains(ObjectId(currentUserId))
+            } == null
+        val isPollingAllowed = UtilsMethod.Dates.isFutureTimeStamp(tweet.pollLength ?: 0)
+        val isAPoll = tweet.isAPoll
+        val pollingEndTime = tweet.pollLength?.let {
+            if (isPollingAllowed) {
+                UtilsMethod.Dates.timeLeft(it)
+            } else if (isAPoll) {
+                Localization.FINAL_RESULTS
+            } else {
+                ""
+            }
+        } ?: ""
+
+        val parentTweetDetails =
+            tweet.parentTweetId?.let { tweetDataSource.findTweetById(it.toHexString()) }
+
+        return TweetsResponse(
+            id = tweet.id.toHexString(),
+            tweet = tweet.tweet,
+            createdBy = createdByUserDetails.parseToUserInfoResponse(),
+            tweetedOnTimestamp = tweet.tweetedOn,
+            tweetedOn = UtilsMethod.Dates.convertTimestampToTimeAgo(tweet.tweetedOn),
+            media = tweet.media,
+            gif = tweet.gif,
+            commentCount = tweet.commentCount,
+            retweetCount = tweet.retweetCount,
+            likesCount = tweet.likesCount,
+            views = tweet.views,
+            isAPoll = isAPoll,
+            pollChoices = tweet.pollChoices.map { pollChoice ->
+                PollChoicesResponse(
+                    id = pollChoice.id.toHexString(),
+                    choice = pollChoice.choice,
+                    voteCount = pollChoice.voteCount,
+                )
+            },
+            pollingEndTime = pollingEndTime,
+            isPollingAllowed = allowCurrentUserVote && isPollingAllowed,
+            scheduledOnTweet = tweet.scheduledOnTweet,
+            location = tweet.location,
+            isACommentTweet = tweet.isACommentTweet,
+            isQuoteTweet = tweet.isQuoteTweet,
+            isRepostTweet = tweet.isRepostTweet,
+            isLikedTweet = tweet.isLikedTweet,
+            parentTweetId = tweet.parentTweetId?.toHexString(),
+            parentTweetDetails = parentTweetDetails?.let {
+                convertToTweetResponse(
+                    userDataSource, tweetDataSource, it, currentUserId
+                )
+            },
         )
     }
 }
