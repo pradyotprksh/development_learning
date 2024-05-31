@@ -1,6 +1,6 @@
 package com.pradyotprakash.xfullstack.features.tweet.controllers
 
-import com.pradyotprakash.xfullstack.features.tweet.controllers.tweetCreation.TweetCreateUpdateController
+import com.pradyotprakash.xfullstack.features.tweet.controllers.tweetCreationUpdate.TweetCreateUpdateController
 import com.pradyotprakash.xfullstack.features.tweet.controllers.tweetFetch.TweetFetchController
 
 class TweetUpdateController(

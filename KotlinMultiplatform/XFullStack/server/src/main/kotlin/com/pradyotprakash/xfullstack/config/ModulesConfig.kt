@@ -20,8 +20,8 @@ import com.pradyotprakash.xfullstack.features.authentication.controllers.registe
 import com.pradyotprakash.xfullstack.features.authentication.controllers.userInfo.UserInfoController
 import com.pradyotprakash.xfullstack.features.authentication.controllers.userInfo.UserInfoControllerImplementation
 import com.pradyotprakash.xfullstack.features.tweet.controllers.TweetUpdateController
-import com.pradyotprakash.xfullstack.features.tweet.controllers.tweetCreation.TweetCreateUpdateController
-import com.pradyotprakash.xfullstack.features.tweet.controllers.tweetCreation.TweetCreateUpdateControllerImplementation
+import com.pradyotprakash.xfullstack.features.tweet.controllers.tweetCreationUpdate.TweetCreateUpdateController
+import com.pradyotprakash.xfullstack.features.tweet.controllers.tweetCreationUpdate.TweetCreateUpdateControllerImplementation
 import com.pradyotprakash.xfullstack.features.tweet.controllers.tweetFetch.TweetFetchController
 import com.pradyotprakash.xfullstack.features.tweet.controllers.tweetFetch.TweetFetchControllerImplementation
 import com.pradyotprakash.xfullstack.features.utils.controllers.UtilsController

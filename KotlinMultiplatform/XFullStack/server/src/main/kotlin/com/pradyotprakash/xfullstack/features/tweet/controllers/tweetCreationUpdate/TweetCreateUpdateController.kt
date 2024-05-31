@@ -1,4 +1,4 @@
-package com.pradyotprakash.xfullstack.features.tweet.controllers.tweetCreation
+package com.pradyotprakash.xfullstack.features.tweet.controllers.tweetCreationUpdate
 
 import com.pradyotprakash.xfullstack.data.tweet.TweetDataSource
 import com.pradyotprakash.xfullstack.data.user.UserDataSource
