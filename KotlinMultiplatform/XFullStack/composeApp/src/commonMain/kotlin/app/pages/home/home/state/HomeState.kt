@@ -11,10 +11,11 @@ data class HomeState(
     val username: String = "",
     val following: Int = 0,
     val followers: Int = 0,
-    val tweets: List<TweetDB> = emptyList(),
+    val forYouTweets: List<TweetDB> = emptyList(),
     val forYouTweetPage: Int = 1,
     val followingTweetPage: Int = 1,
     val firstLoadDone: Boolean = false,
+    val canPaginate: Boolean = false,
     val tabsDetails: List<String> = listOf(
         Localization.FOR_YOU,
         Localization.FOLLOWING,

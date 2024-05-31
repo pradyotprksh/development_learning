@@ -4,6 +4,7 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.HorizontalDivider
@@ -19,6 +20,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -40,8 +42,21 @@ fun HomeScreen(
     }
 
     val scope = rememberCoroutineScope()
+    val tweetsLazyColumnState = rememberLazyListState()
     val snackbarHostState = remember { SnackbarHostState() }
     val homeScreenState by homeViewModel.homeScreenState.collectAsState()
+    val shouldStartPaginate = remember {
+        derivedStateOf {
+            homeScreenState.canPaginate && (tweetsLazyColumnState.layoutInfo.visibleItemsInfo.lastOrNull()?.index
+                ?: -9) >= (tweetsLazyColumnState.layoutInfo.totalItemsCount - 6)
+        }
+    }
+
+    LaunchedEffect(key1 = shouldStartPaginate.value) {
+        if (shouldStartPaginate.value)
+            homeViewModel.updateTweetsPage()
+    }
+
     val tabPagerState = rememberPagerState(pageCount = { homeScreenState.tabsDetails.size })
     homeScreenState.snackBarMessage?.let { message ->
         scope.launch {
@@ -90,8 +105,9 @@ fun HomeScreen(
                 when (page) {
                     0 -> {
                         ForYouTweetsComposable(
-                            tweets = homeScreenState.tweets,
+                            tweets = homeScreenState.forYouTweets,
                             showLoading = homeScreenState.showLoading,
+                            tweetsLazyColumnState = tweetsLazyColumnState,
                             tweetActions = TweetActions(
                                 profileImageClick = {},
                                 onTweetClick = {},
@@ -100,7 +116,7 @@ fun HomeScreen(
                                 onPollSelection = { tweetId, optionId ->
                                     homeViewModel.updatePollOption(tweetId, optionId)
                                 },
-                            )
+                            ),
                         )
                     }
 

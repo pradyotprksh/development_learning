@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.HorizontalDivider
@@ -27,11 +28,13 @@ fun ForYouTweetsComposable(
     modifier: Modifier = Modifier,
     tweets: List<TweetDB> = emptyList(),
     showLoading: Boolean = false,
+    tweetsLazyColumnState: LazyListState,
     tweetActions: TweetActions,
 ) {
     Box {
         LazyColumn(
-            modifier = modifier.fillMaxSize()
+            modifier = modifier.fillMaxSize(),
+            state = tweetsLazyColumnState,
         ) {
             items(tweets.size) { index ->
                 val tweet = tweets[index]

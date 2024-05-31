@@ -18,6 +18,7 @@ class TweetRepositoryImplementation(
 ) : TweetRepository {
     override suspend fun updateAllTweets(
         page: Int,
+        limit: Int,
     ): Flow<ClientResponse<out XFullStackResponse<Nothing>>> = flow {
         emit(ClientResponse.Loading)
         try {

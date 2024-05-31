@@ -11,6 +11,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import org.kodein.di.instance
+import utils.Constants.ConstValues.DEFAULT_PAGINATE_LIMIT
 import utils.Constants.SuccessCode.TWEETS_UPDATE_SUCCESS_CODE
 
 class HomeViewModel : ViewModel() {
@@ -29,7 +30,8 @@ class HomeViewModel : ViewModel() {
             websocketRepository.connectAndListen().collect {
                 when (it) {
                     TWEETS_UPDATE_SUCCESS_CODE -> updateForYouAllTweets(
-                        _homeScreenState.value.forYouTweetPage
+                        1,
+                        _homeScreenState.value.forYouTweets.size,
                     )
                 }
             }
@@ -58,15 +60,44 @@ class HomeViewModel : ViewModel() {
     }
 
     suspend fun initialSetup() {
-        updateForYouAllTweets(page = _homeScreenState.value.forYouTweetPage)
+        updateForYouAllTweets(
+            page = _homeScreenState.value.forYouTweetPage,
+            limit = DEFAULT_PAGINATE_LIMIT,
+        )
     }
 
-    private suspend fun updateForYouAllTweets(page: Int) {
-        tweetRepository.updateAllTweets(page).collect {
+    fun updateTweetsPage() {
+        viewModelScope.launch {
+            _homeScreenState.value = _homeScreenState.value.copy(
+                forYouTweetPage = _homeScreenState.value.forYouTweetPage + 1,
+            )
+            updateForYouAllTweets(
+                page = _homeScreenState.value.forYouTweetPage,
+                limit = 10,
+            )
+        }
+    }
+
+    private suspend fun updateForYouAllTweets(
+        page: Int,
+        limit: Int,
+    ) {
+        tweetRepository.updateAllTweets(
+            page,
+            limit,
+        ).collect {
             when (it) {
                 is ClientResponse.Error -> showMessage(it.message)
-                ClientResponse.Idle -> updateLoaderState(false)
-                ClientResponse.Loading -> updateLoaderState(!_homeScreenState.value.firstLoadDone)
+                ClientResponse.Idle -> {
+                    updatePaginateState(true)
+                    updateLoaderState(false)
+                }
+
+                ClientResponse.Loading -> {
+                    updatePaginateState(false)
+                    updateLoaderState(!_homeScreenState.value.firstLoadDone)
+                }
+
                 is ClientResponse.Success -> {
                     _homeScreenState.value = _homeScreenState.value.copy(
                         firstLoadDone = true,
@@ -76,10 +107,16 @@ class HomeViewModel : ViewModel() {
         }
     }
 
+    private fun updatePaginateState(value: Boolean) {
+        _homeScreenState.value = _homeScreenState.value.copy(
+            canPaginate = value,
+        )
+    }
+
     private suspend fun getAllTweets() {
         tweetRepository.allTweetsChanges().collect {
             _homeScreenState.value = _homeScreenState.value.copy(
-                tweets = it
+                forYouTweets = it
             )
         }
     }

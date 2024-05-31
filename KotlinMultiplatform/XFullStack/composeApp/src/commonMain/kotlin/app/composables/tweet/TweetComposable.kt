@@ -88,11 +88,12 @@ fun TweetComposable(
                     style = MaterialTheme.typography.bodySmall
                 )
             }
+            Spacer(modifier = Modifier.height(5.dp))
             Text(
                 tweet,
             )
-            Spacer(modifier = Modifier.height(10.dp))
             if (isAPoll) {
+                Spacer(modifier = Modifier.height(10.dp))
                 PollChoicesComposable(
                     modifier = Modifier.fillMaxWidth(),
                     pollChoices = pollChoices,
