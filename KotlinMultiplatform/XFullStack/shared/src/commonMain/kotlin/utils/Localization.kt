@@ -167,4 +167,5 @@ object Localization {
     const val FINAL_RESULTS = "Final results"
     const val POST = "Post"
     const val POST_ALL = "Post all"
+    const val EVERYONE_CAN_REPLY = "Everyone can reply"
 }
