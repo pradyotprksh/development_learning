@@ -168,4 +168,6 @@ object Localization {
     const val POST = "Post"
     const val POST_ALL = "Post all"
     const val EVERYONE_CAN_REPLY = "Everyone can reply"
+    const val WHATS_HAPPENING = "What's happening?"
+    const val ADD_ANOTHER_TWEET = "Add another tweet"
 }

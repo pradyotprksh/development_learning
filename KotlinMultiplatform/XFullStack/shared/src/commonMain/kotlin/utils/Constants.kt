@@ -90,6 +90,7 @@ object Constants {
         const val USERNAME_PREFIX = "@"
         const val TWEET_MAX_LENGTH = 150
         const val DEFAULT_PAGINATE_LIMIT = 10
+        const val MAX_TWEET_CREATION_LIMIT = 25
     }
 
     object ErrorCode {

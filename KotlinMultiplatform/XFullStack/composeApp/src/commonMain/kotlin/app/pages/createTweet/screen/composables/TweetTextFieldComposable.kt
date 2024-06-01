@@ -9,10 +9,18 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import app.composables.ProfileImageComposable
 import app.pages.createTweet.state.TweetDetails
@@ -22,7 +30,10 @@ fun TweetTextFieldComposable(
     modifier: Modifier = Modifier,
     profileImage: String?,
     tweet: TweetDetails,
+    showCloseButton: Boolean,
     onValueChange: (String) -> Unit,
+    onFocusChange: () -> Unit,
+    deleteTweet: () -> Unit,
 ) {
     Column(
         modifier = modifier.fillMaxWidth(),
@@ -39,8 +50,31 @@ fun TweetTextFieldComposable(
             OutlinedTextField(
                 value = tweet.tweet,
                 onValueChange = onValueChange,
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier.weight(1f).onFocusChanged {
+                    if (it.hasFocus) {
+                        onFocusChange()
+                    }
+                },
+                colors = OutlinedTextFieldDefaults.colors().copy(
+                    focusedContainerColor = Color.Transparent,
+                    unfocusedContainerColor = Color.Transparent,
+                ),
+                label = {
+                    Text(
+                        tweet.label,
+                    )
+                }
             )
+            if (showCloseButton) {
+                IconButton(
+                    onClick = deleteTweet,
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Close,
+                        contentDescription = Icons.Default.Close.name,
+                    )
+                }
+            }
         }
         Spacer(modifier = Modifier.height(10.dp))
     }

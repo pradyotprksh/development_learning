@@ -1,5 +1,6 @@
 package app.pages.createTweet.screen
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.calculateEndPadding
@@ -65,7 +66,7 @@ fun CreateTweetScreen(
                         onClick = {},
                     ) {
                         Text(
-                            if (createTweetState.tweets.size == 1) Localization.POST else Localization.POST_ALL
+                            if (createTweetState.multipleTweets) Localization.POST_ALL else Localization.POST
                         )
                     }
                     Spacer(modifier = Modifier.width(10.dp))
@@ -88,12 +89,21 @@ fun CreateTweetScreen(
                 )
             ) {
                 items(createTweetState.tweets) { tweet ->
-                    if (tweet.isVisible) {
+                    AnimatedVisibility(
+                        visible = tweet.isVisible
+                    ) {
                         TweetTextFieldComposable(
                             profileImage = createTweetState.profileImage,
                             tweet = tweet,
+                            showCloseButton = tweet.index > 0,
                             onValueChange = { value ->
                                 createTweetViewModel.updateTweet(value, tweet.index)
+                            },
+                            onFocusChange = {
+                                createTweetViewModel.focusChange(tweet.index)
+                            },
+                            deleteTweet = {
+                                createTweetViewModel.deleteTweet(tweet.index)
                             },
                         )
                     }
@@ -105,13 +115,15 @@ fun CreateTweetScreen(
             )
             HorizontalDivider()
             CreateTweetOptionsComposable(
-                progress = createTweetState.currentSelectedTweet.tweet.length.toFloat() / TWEET_MAX_LENGTH,
+                progress = createTweetState.currentSelectedTweetLength.toFloat() / TWEET_MAX_LENGTH,
                 enableAddNewTweetButton = createTweetState.enableAddNewTweetButton,
                 onImageClick = {},
                 onGifClick = {},
                 onPollClick = {},
                 onLocationClick = {},
-                onAddTweetClick = {},
+                onAddTweetClick = {
+                    createTweetViewModel.addNewTweetField()
+                },
             )
         }
     }

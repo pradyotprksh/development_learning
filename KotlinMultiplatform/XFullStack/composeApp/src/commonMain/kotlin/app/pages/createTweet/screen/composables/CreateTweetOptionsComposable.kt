@@ -20,6 +20,7 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DividerDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -49,6 +50,7 @@ fun CreateTweetOptionsComposable(
             Icon(
                 imageVector = Icons.Default.Image,
                 contentDescription = Icons.Default.Image.name,
+                tint = MaterialTheme.colorScheme.primary,
             )
         }
         IconButton(
@@ -57,6 +59,7 @@ fun CreateTweetOptionsComposable(
             Icon(
                 imageVector = Icons.Default.Gif,
                 contentDescription = Icons.Default.Gif.name,
+                tint = MaterialTheme.colorScheme.primary,
             )
         }
         IconButton(
@@ -65,6 +68,7 @@ fun CreateTweetOptionsComposable(
             Icon(
                 imageVector = Icons.Default.Poll,
                 contentDescription = Icons.Default.Poll.name,
+                tint = MaterialTheme.colorScheme.primary,
             )
         }
         IconButton(
@@ -73,6 +77,7 @@ fun CreateTweetOptionsComposable(
             Icon(
                 imageVector = Icons.Default.LocationOn,
                 contentDescription = Icons.Default.LocationOn.name,
+                tint = MaterialTheme.colorScheme.primary,
             )
         }
         Spacer(modifier = Modifier.weight(1f))
@@ -84,10 +89,7 @@ fun CreateTweetOptionsComposable(
         )
         Spacer(modifier = Modifier.width(10.dp))
         Box(
-            modifier = Modifier
-                .height(24.dp)
-                .width(DividerDefaults.Thickness)
-                .background(
+            modifier = Modifier.height(24.dp).width(DividerDefaults.Thickness).background(
                     color = DividerDefaults.color,
                 ),
         )
@@ -98,6 +100,7 @@ fun CreateTweetOptionsComposable(
             Icon(
                 imageVector = Icons.Default.AddCircle,
                 contentDescription = Icons.Default.AddCircle.name,
+                tint = if (enableAddNewTweetButton) MaterialTheme.colorScheme.primary else LocalContentColor.current,
             )
         }
     }

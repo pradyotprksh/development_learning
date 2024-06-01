@@ -4,4 +4,5 @@ data class TweetDetails(
     val tweet: String = "",
     val isVisible: Boolean = false,
     val index: Int = -1,
+    val label: String = "",
 )
