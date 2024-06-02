@@ -19,11 +19,8 @@ data class CreateTweetState(
     ),
     val multipleTweets: Boolean = false,
     val currentSelectedTweetLength: Int = 0,
-    val media: List<String> = emptyList(),
-    val gifs: List<String> = emptyList(),
-    val pollChoices: List<String> = emptyList(),
-    val profileImage: String? = null,
+    val currentFocusedTweetIndex: Int = -1,
     val enableAddNewTweetButton: Boolean = false,
-    val location: String = "",
     val currentPostLength: Int = 0,
+    val profileImage: String? = null,
 )

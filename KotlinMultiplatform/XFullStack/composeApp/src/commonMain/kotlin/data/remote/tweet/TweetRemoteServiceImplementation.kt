@@ -2,6 +2,7 @@ package data.remote.tweet
 
 import core.models.request.XFullStackClientRequestDetails
 import core.network.NetworkClient
+import data.request.TweetRequest
 import data.response.TweetsResponse
 import data.response.XFullStackResponse
 import domain.services.tweet.TweetRemoteService
@@ -44,6 +45,17 @@ class TweetRemoteServiceImplementation(
                     TWEET_ID to tweetId,
                     OPTION_ID to optionId,
                 )
+            )
+        )
+
+        return response.getOrThrow()
+    }
+
+    override suspend fun uploadTweets(tweets: List<TweetRequest>): XFullStackResponse<Nothing> {
+        val response = networkClient.post<XFullStackResponse<Nothing>>(
+            details = XFullStackClientRequestDetails(
+                endpoint = TWEET,
+                body = tweets,
             )
         )
 

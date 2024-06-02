@@ -63,7 +63,9 @@ fun CreateTweetScreen(
                 },
                 actions = {
                     Button(
-                        onClick = {},
+                        onClick = {
+                            createTweetViewModel.createTweet()
+                        },
                     ) {
                         Text(
                             if (createTweetState.multipleTweets) Localization.POST_ALL else Localization.POST
@@ -119,7 +121,9 @@ fun CreateTweetScreen(
                 enableAddNewTweetButton = createTweetState.enableAddNewTweetButton,
                 onImageClick = {},
                 onGifClick = {},
-                onPollClick = {},
+                onPollClick = {
+                    createTweetViewModel.updateCurrentTweetToPoll()
+                },
                 onLocationClick = {},
                 onAddTweetClick = {
                     createTweetViewModel.addNewTweetField()

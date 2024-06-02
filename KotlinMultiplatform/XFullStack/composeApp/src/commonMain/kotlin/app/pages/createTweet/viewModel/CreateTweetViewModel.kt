@@ -2,7 +2,7 @@ package app.pages.createTweet.viewModel
 
 import androidx.lifecycle.ViewModel
 import app.pages.createTweet.state.CreateTweetState
-import app.pages.createTweet.state.TweetDetails
+import core.parser.parseToTweetRequest
 import di.ModulesDi
 import domain.repositories.user.current.CurrentUserRepository
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -39,8 +39,8 @@ class CreateTweetViewModel : ViewModel() {
             val deletedTweet = tweets.removeAt(index)
             tweets.add(
                 index,
-                TweetDetails(
-                    tweet = value, index = index, isVisible = true, label = deletedTweet.label,
+                deletedTweet.copy(
+                    tweet = value,
                 ),
             )
 
@@ -48,7 +48,7 @@ class CreateTweetViewModel : ViewModel() {
                 tweets = tweets,
                 currentSelectedTweetLength = value.length,
             )
-            
+
             multipleTweetsToTweet()
             updateAddTweetButton()
         }
@@ -77,6 +77,7 @@ class CreateTweetViewModel : ViewModel() {
         val tweetDetails = _createTweetState.value.tweets[index]
         _createTweetState.value = _createTweetState.value.copy(
             currentSelectedTweetLength = tweetDetails.tweet.length,
+            currentFocusedTweetIndex = index,
         )
 
         multipleTweetsToTweet()
@@ -92,7 +93,9 @@ class CreateTweetViewModel : ViewModel() {
                 val deletedTweet = tweets.removeAt(nextIndex)
                 tweets.add(
                     nextIndex,
-                    TweetDetails(index = nextIndex, isVisible = true, label = deletedTweet.label)
+                    deletedTweet.copy(
+                        isVisible = true,
+                    ),
                 )
                 _createTweetState.value = _createTweetState.value.copy(
                     tweets = tweets,
@@ -110,8 +113,8 @@ class CreateTweetViewModel : ViewModel() {
             val deletedTweet = tweets.removeAt(index)
             tweets.add(
                 index,
-                TweetDetails(
-                    index = index, isVisible = false, label = deletedTweet.label,
+                deletedTweet.copy(
+                    isVisible = false,
                 ),
             )
 
@@ -129,5 +132,24 @@ class CreateTweetViewModel : ViewModel() {
         _createTweetState.value = _createTweetState.value.copy(
             multipleTweets = _createTweetState.value.tweets.filter { it.tweet.isNotBlank() }.size > 1,
         )
+    }
+
+    fun updateCurrentTweetToPoll() {
+        val tweets = _createTweetState.value.tweets.toMutableList()
+        val currentFocusedTweetIndex = _createTweetState.value.currentFocusedTweetIndex
+        val deletedTweet = tweets.removeAt(currentFocusedTweetIndex)
+        tweets.add(
+            currentFocusedTweetIndex,
+            deletedTweet.copy(isAPoll = true, pollChoices = List(size = 2, init = { "" })),
+        )
+        _createTweetState.value = _createTweetState.value.copy(
+            tweets = tweets,
+        )
+    }
+
+    fun createTweet() {
+        val tweetRequests = _createTweetState.value.tweets.filter {
+            it.shouldSelectThisTweet()
+        }.map { it.parseToTweetRequest() }
     }
 }
