@@ -170,4 +170,6 @@ object Localization {
     const val EVERYONE_CAN_REPLY = "Everyone can reply"
     const val WHATS_HAPPENING = "What's happening?"
     const val ADD_ANOTHER_TWEET = "Add another tweet"
+    const val ASK_A_QUESTION = "Ask a question..."
+    const val CHOICE = "Choice %s"
 }

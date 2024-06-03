@@ -1,5 +1,6 @@
 package app.pages.createTweet.screen.composables
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -31,9 +32,13 @@ fun TweetTextFieldComposable(
     profileImage: String?,
     tweet: TweetDetails,
     showCloseButton: Boolean,
-    onValueChange: (String) -> Unit,
+    showPoll: Boolean,
+    onTweetValueChange: (String) -> Unit,
     onFocusChange: () -> Unit,
     deleteTweet: () -> Unit,
+    onPollCloseClick: () -> Unit,
+    onAddNewPollClick: () -> Unit,
+    onPollChoiceChange: (Int, String) -> Unit,
 ) {
     Column(
         modifier = modifier.fillMaxWidth(),
@@ -47,24 +52,42 @@ fun TweetTextFieldComposable(
                 modifier = Modifier.size(35.dp).clickable {},
             )
             Spacer(modifier = Modifier.width(5.dp))
-            OutlinedTextField(
-                value = tweet.tweet,
-                onValueChange = onValueChange,
-                modifier = Modifier.weight(1f).onFocusChanged {
-                    if (it.hasFocus) {
-                        onFocusChange()
-                    }
-                },
-                colors = OutlinedTextFieldDefaults.colors().copy(
-                    focusedContainerColor = Color.Transparent,
-                    unfocusedContainerColor = Color.Transparent,
-                ),
-                label = {
-                    Text(
-                        tweet.label,
+            Column(
+                modifier = Modifier.fillMaxWidth().weight(1f),
+            ) {
+                OutlinedTextField(
+                    value = tweet.tweet,
+                    onValueChange = onTweetValueChange,
+                    modifier = Modifier.fillMaxWidth().onFocusChanged {
+                        if (it.hasFocus) {
+                            onFocusChange()
+                        }
+                    },
+                    colors = OutlinedTextFieldDefaults.colors().copy(
+                        focusedContainerColor = Color.Transparent,
+                        unfocusedContainerColor = Color.Transparent,
+                    ),
+                    label = {
+                        Text(
+                            tweet.label,
+                        )
+                    },
+                )
+                if (tweet.isAPoll) {
+                    Spacer(modifier = Modifier.height(10.dp))
+                }
+                AnimatedVisibility(
+                    visible = tweet.isAPoll && showPoll,
+                ) {
+                    PollChoiceInputComposable(
+                        modifier = Modifier.fillMaxWidth(),
+                        pollChoices = tweet.pollChoices,
+                        onPollCloseClick = onPollCloseClick,
+                        onAddNewPollClick = onAddNewPollClick,
+                        onPollChoiceChange = onPollChoiceChange,
                     )
                 }
-            )
+            }
             if (showCloseButton) {
                 IconButton(
                     onClick = deleteTweet,

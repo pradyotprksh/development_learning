@@ -88,9 +88,10 @@ object Constants {
         const val NO_USERNAME = "no-username"
         const val BIO_MAX_LENGTH = 50
         const val USERNAME_PREFIX = "@"
-        const val TWEET_MAX_LENGTH = 150
+        const val TWEET_MAX_LENGTH = 250
         const val DEFAULT_PAGINATE_LIMIT = 10
         const val MAX_TWEET_CREATION_LIMIT = 25
+        const val MAX_POLL_CHOICE_LENGTH = 25
     }
 
     object ErrorCode {

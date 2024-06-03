@@ -25,6 +25,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -92,13 +93,17 @@ fun CreateTweetScreen(
             ) {
                 items(createTweetState.tweets) { tweet ->
                     AnimatedVisibility(
-                        visible = tweet.isVisible
+                        visible = tweet.isVisible,
                     ) {
                         TweetTextFieldComposable(
+                            modifier = Modifier.alpha(
+                                if (createTweetState.currentFocusedTweetIndex == tweet.index) 1f else 0.4f
+                            ),
                             profileImage = createTweetState.profileImage,
                             tweet = tweet,
                             showCloseButton = tweet.index > 0,
-                            onValueChange = { value ->
+                            showPoll = createTweetState.currentFocusedTweetIndex == tweet.index,
+                            onTweetValueChange = { value ->
                                 createTweetViewModel.updateTweet(value, tweet.index)
                             },
                             onFocusChange = {
@@ -106,6 +111,17 @@ fun CreateTweetScreen(
                             },
                             deleteTweet = {
                                 createTweetViewModel.deleteTweet(tweet.index)
+                            },
+                            onPollCloseClick = {
+                                createTweetViewModel.updateCurrentTweetPollStatus(isAPoll = false)
+                            },
+                            onAddNewPollClick = {
+                                createTweetViewModel.addNewPollChoice(tweet.index)
+                            },
+                            onPollChoiceChange = { index, value ->
+                                createTweetViewModel.updatePollChoiceValue(
+                                    tweet.index, index, value,
+                                )
                             },
                         )
                     }
@@ -122,7 +138,7 @@ fun CreateTweetScreen(
                 onImageClick = {},
                 onGifClick = {},
                 onPollClick = {
-                    createTweetViewModel.updateCurrentTweetToPoll()
+                    createTweetViewModel.updateCurrentTweetPollStatus(isAPoll = true)
                 },
                 onLocationClick = {},
                 onAddTweetClick = {

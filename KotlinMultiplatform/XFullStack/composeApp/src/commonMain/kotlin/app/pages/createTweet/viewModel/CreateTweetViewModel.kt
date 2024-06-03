@@ -2,14 +2,15 @@ package app.pages.createTweet.viewModel
 
 import androidx.lifecycle.ViewModel
 import app.pages.createTweet.state.CreateTweetState
-import core.parser.parseToTweetRequest
 import di.ModulesDi
 import domain.repositories.user.current.CurrentUserRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import org.kodein.di.instance
+import utils.Constants.ConstValues.MAX_POLL_CHOICE_LENGTH
 import utils.Constants.ConstValues.MAX_TWEET_CREATION_LIMIT
 import utils.Constants.ConstValues.TWEET_MAX_LENGTH
+import utils.Localization
 
 class CreateTweetViewModel : ViewModel() {
     private val currentUserRepository: CurrentUserRepository by ModulesDi.di.instance()
@@ -35,7 +36,7 @@ class CreateTweetViewModel : ViewModel() {
 
     fun updateTweet(value: String, index: Int) {
         val tweets = _createTweetState.value.tweets.toMutableList()
-        if (value.length < TWEET_MAX_LENGTH) {
+        if (value.length <= TWEET_MAX_LENGTH) {
             val deletedTweet = tweets.removeAt(index)
             tweets.add(
                 index,
@@ -134,22 +135,61 @@ class CreateTweetViewModel : ViewModel() {
         )
     }
 
-    fun updateCurrentTweetToPoll() {
-        val tweets = _createTweetState.value.tweets.toMutableList()
+    fun updateCurrentTweetPollStatus(isAPoll: Boolean) {
         val currentFocusedTweetIndex = _createTweetState.value.currentFocusedTweetIndex
-        val deletedTweet = tweets.removeAt(currentFocusedTweetIndex)
+        if (currentFocusedTweetIndex >= 0) {
+            val tweets = _createTweetState.value.tweets.toMutableList()
+            val deletedTweet = tweets.removeAt(currentFocusedTweetIndex)
+            tweets.add(
+                currentFocusedTweetIndex,
+                deletedTweet.copy(
+                    isAPoll = isAPoll,
+                    pollChoices = List(
+                        size = 2, init = { "" },
+                    ),
+                    label = Localization.ASK_A_QUESTION,
+                ),
+            )
+            _createTweetState.value = _createTweetState.value.copy(
+                tweets = tweets,
+            )
+        }
+    }
+
+    fun addNewPollChoice(index: Int) {
+        val tweets = _createTweetState.value.tweets.toMutableList()
+        val deletedTweet = tweets.removeAt(index)
         tweets.add(
-            currentFocusedTweetIndex,
-            deletedTweet.copy(isAPoll = true, pollChoices = List(size = 2, init = { "" })),
+            index,
+            deletedTweet.copy(
+                pollChoices = deletedTweet.pollChoices + "",
+            ),
         )
         _createTweetState.value = _createTweetState.value.copy(
             tweets = tweets,
         )
     }
 
+    fun updatePollChoiceValue(tweetIndex: Int, choiceIndex: Int, value: String) {
+        if (value.length <= MAX_POLL_CHOICE_LENGTH) {
+            val tweets = _createTweetState.value.tweets.toMutableList()
+            val deletedTweet = tweets.removeAt(tweetIndex)
+            val newChoices = deletedTweet.pollChoices.toMutableList()
+            newChoices.removeAt(choiceIndex)
+            newChoices.add(choiceIndex, value)
+            tweets.add(
+                tweetIndex,
+                deletedTweet.copy(
+                    pollChoices = newChoices,
+                ),
+            )
+            _createTweetState.value = _createTweetState.value.copy(
+                tweets = tweets,
+            )
+        }
+    }
+
     fun createTweet() {
-        val tweetRequests = _createTweetState.value.tweets.filter {
-            it.shouldSelectThisTweet()
-        }.map { it.parseToTweetRequest() }
+
     }
 }
