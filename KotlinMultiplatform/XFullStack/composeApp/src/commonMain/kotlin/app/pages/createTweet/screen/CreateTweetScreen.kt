@@ -125,6 +125,11 @@ fun CreateTweetScreen(
                                     tweet.index, index, value,
                                 )
                             },
+                            onPollTimeChange = { hour, minute, seconds ->
+                                createTweetViewModel.updatePollTime(
+                                    tweet.index, hour, minute, seconds,
+                                )
+                            }
                         )
                     }
                 }

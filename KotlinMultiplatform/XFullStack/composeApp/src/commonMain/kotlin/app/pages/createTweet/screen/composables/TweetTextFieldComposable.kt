@@ -39,6 +39,7 @@ fun TweetTextFieldComposable(
     onPollCloseClick: () -> Unit,
     onAddNewPollClick: () -> Unit,
     onPollChoiceChange: (Int, String) -> Unit,
+    onPollTimeChange: (Long?, Long?, Long?) -> Unit,
 ) {
     Column(
         modifier = modifier.fillMaxWidth(),
@@ -82,9 +83,13 @@ fun TweetTextFieldComposable(
                     PollChoiceInputComposable(
                         modifier = Modifier.fillMaxWidth(),
                         pollChoices = tweet.pollChoices,
+                        hour = tweet.pollHour,
+                        minute = tweet.pollMinute,
+                        seconds = tweet.pollSeconds,
                         onPollCloseClick = onPollCloseClick,
                         onAddNewPollClick = onAddNewPollClick,
                         onPollChoiceChange = onPollChoiceChange,
+                        onPollTimeChange = onPollTimeChange,
                     )
                 }
             }

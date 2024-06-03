@@ -12,7 +12,7 @@ data class TweetDetails(
     val pollHour: Long? = null,
     val pollMinute: Long? = null,
     val pollSeconds: Long? = null,
-    val isLocation: Boolean = true,
+    val isLocation: Boolean = false,
     val location: String = "",
     val isScheduledTweet: Boolean = false,
     val scheduledOnTweet: Long? = null,

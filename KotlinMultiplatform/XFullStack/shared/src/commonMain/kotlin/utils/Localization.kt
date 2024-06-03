@@ -161,6 +161,7 @@ object Localization {
     const val HOURS = "hours"
     const val MINUTE = "minute"
     const val MINUTES = "minutes"
+    const val SECONDS = "seconds"
     const val LEFT = "left"
     const val VOTES = "votes"
     const val VOTE = "vote"

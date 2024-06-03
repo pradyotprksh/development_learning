@@ -205,4 +205,20 @@ class CreateTweetViewModel : ViewModel() {
             }
         }
     }
+
+    fun updatePollTime(index: Int, hour: Long?, minute: Long?, seconds: Long?) {
+        val tweets = _createTweetState.value.tweets.toMutableList()
+        val deletedTweet = tweets.removeAt(index)
+        tweets.add(
+            index,
+            deletedTweet.copy(
+                pollHour = hour,
+                pollMinute = minute,
+                pollSeconds = seconds,
+            ),
+        )
+        _createTweetState.value = _createTweetState.value.copy(
+            tweets = tweets,
+        )
+    }
 }
