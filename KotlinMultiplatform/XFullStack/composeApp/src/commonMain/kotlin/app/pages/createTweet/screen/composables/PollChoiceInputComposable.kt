@@ -42,7 +42,7 @@ fun PollChoiceInputComposable(
     Column(
         modifier = modifier.border(
             width = Dp.Hairline,
-            color = MaterialTheme.colorScheme.onBackground,
+            color = MaterialTheme.colorScheme.outlineVariant,
             shape = RoundedCornerShape(10.dp)
         ),
     ) {
@@ -110,13 +110,12 @@ fun PollChoiceInputComposable(
             OutlinedTextField(
                 value = hour?.toString() ?: "",
                 onValueChange = {
-                    it.toLongOrNull()?.let { value ->
-                        onPollTimeChange(value, minute, seconds)
-                    }
+                    onPollTimeChange(it.toLongOrNull(), minute, seconds)
                 },
                 label = {
                     Text(
                         Localization.HOURS.uppercase(),
+                        style = MaterialTheme.typography.bodySmall,
                     )
                 },
                 keyboardOptions = KeyboardOptions(
@@ -130,13 +129,12 @@ fun PollChoiceInputComposable(
             OutlinedTextField(
                 value = minute?.toString() ?: "",
                 onValueChange = {
-                    it.toLongOrNull()?.let { value ->
-                        onPollTimeChange(hour, value, seconds)
-                    }
+                    onPollTimeChange(hour, it.toLongOrNull(), seconds)
                 },
                 label = {
                     Text(
                         Localization.MINUTES.uppercase(),
+                        style = MaterialTheme.typography.bodySmall,
                     )
                 },
                 keyboardOptions = KeyboardOptions(
@@ -151,13 +149,12 @@ fun PollChoiceInputComposable(
             OutlinedTextField(
                 value = seconds?.toString() ?: "",
                 onValueChange = {
-                    it.toLongOrNull()?.let { value ->
-                        onPollTimeChange(hour, minute, value)
-                    }
+                    onPollTimeChange(hour, minute, it.toLongOrNull())
                 },
                 label = {
                     Text(
                         Localization.SECONDS.uppercase(),
+                        style = MaterialTheme.typography.bodySmall,
                     )
                 },
                 keyboardOptions = KeyboardOptions(

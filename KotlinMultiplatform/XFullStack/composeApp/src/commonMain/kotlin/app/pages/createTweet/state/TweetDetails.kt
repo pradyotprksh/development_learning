@@ -7,7 +7,7 @@ data class TweetDetails(
     val label: String = "",
     val media: List<String> = emptyList(),
     val gifs: List<String> = emptyList(),
-    val isAPoll: Boolean = true,
+    val isAPoll: Boolean = false,
     val pollChoices: List<String> = emptyList(),
     val pollHour: Long? = null,
     val pollMinute: Long? = null,

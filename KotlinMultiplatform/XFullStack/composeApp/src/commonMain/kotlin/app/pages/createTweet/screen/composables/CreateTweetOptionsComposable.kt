@@ -84,14 +84,14 @@ fun CreateTweetOptionsComposable(
         CircularProgressIndicator(
             modifier = Modifier.size(24.dp),
             progress = { progress },
-            trackColor = MaterialTheme.colorScheme.onBackground,
+            trackColor = MaterialTheme.colorScheme.outlineVariant,
             strokeWidth = 2.dp,
         )
         Spacer(modifier = Modifier.width(10.dp))
         Box(
             modifier = Modifier.height(24.dp).width(DividerDefaults.Thickness).background(
-                    color = DividerDefaults.color,
-                ),
+                color = DividerDefaults.color,
+            ),
         )
         IconButton(
             onClick = onAddTweetClick,

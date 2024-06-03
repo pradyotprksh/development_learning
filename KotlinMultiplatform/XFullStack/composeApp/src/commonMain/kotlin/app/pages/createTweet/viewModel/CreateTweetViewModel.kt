@@ -152,7 +152,7 @@ class CreateTweetViewModel : ViewModel() {
                     pollChoices = List(
                         size = 2, init = { "" },
                     ),
-                    label = Localization.ASK_A_QUESTION,
+                    label = if (isAPoll) Localization.ASK_A_QUESTION else if (deletedTweet.index == 0) Localization.WHATS_HAPPENING else Localization.ADD_ANOTHER_TWEET,
                 ),
             )
             _createTweetState.value = _createTweetState.value.copy(
