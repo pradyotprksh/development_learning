@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.pages.home.home.state.HomeState
 import core.models.response.ClientResponse
+import core.parser.parseToTweetRequest
 import di.ModulesDi
 import domain.repositories.tweet.TweetRepository
 import domain.repositories.websocket.WebsocketRepository
@@ -21,7 +22,33 @@ class HomeViewModel : ViewModel() {
     init {
         viewModelScope.launch {
             startTweetUpdateListener()
+            listenToAddTweet()
             getAllTweets()
+        }
+    }
+
+    private fun listenToAddTweet() {
+        viewModelScope.launch {
+            tweetRepository.allTweetRequestChanges().collect { tweetRequestsDb ->
+                tweetRequestsDb.forEach { requestDb ->
+                    val tweetRequest = requestDb.parseToTweetRequest()
+                    if (tweetRequest.isNotEmpty()) {
+                        tweetRepository.uploadTweets(tweetRequest).collect {
+                            when (it) {
+                                is ClientResponse.Error -> showMessage(it.message)
+                                is ClientResponse.Success -> {
+                                    tweetRepository.deleteTweetRequest(requestDb.requestId.toHexString())
+                                    it.data.message?.let { message -> showMessage(message) }
+                                }
+
+                                else -> {}
+                            }
+                        }
+                    } else {
+                        tweetRepository.deleteTweetRequest(requestDb.requestId.toHexString())
+                    }
+                }
+            }
         }
     }
 
