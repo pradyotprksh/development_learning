@@ -87,8 +87,7 @@ fun TweetDetails.parseToTweetRequest() = TweetRequest(
 )
 
 fun List<TweetRequest>.parseToTweetRequestDb() = this.let { tweets ->
-    val tweetDetailsDb = realmListOf<TweetRequestDB>()
-    tweets.forEach { tweetDetails ->
+    val tweetsParse = tweets.map { tweetDetails ->
         val media = realmListOf<String>()
         tweetDetails.media.forEach { media.add(it) }
 
@@ -114,6 +113,9 @@ fun List<TweetRequest>.parseToTweetRequestDb() = this.let { tweets ->
             this.parentTweetId = tweetDetails.parentTweetId
         }
     }
+
+    val tweetDetailsDb = realmListOf<TweetRequestDB>()
+    tweetDetailsDb.addAll(tweetsParse)
 
     TweetRequestsDB().apply {
         this.tweets = tweetDetailsDb

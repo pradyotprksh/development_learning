@@ -26,16 +26,20 @@ class XAppViewModel : ViewModel() {
             tweetRepository.allTweetRequestChanges().collect { tweetRequestsDb ->
                 tweetRequestsDb.forEach { requestDb ->
                     val tweetRequest = requestDb.parseToTweetRequest()
-                    tweetRepository.uploadTweets(tweetRequest).collect {
-                        when (it) {
-                            is ClientResponse.Error -> showMessage(it.message)
-                            is ClientResponse.Success -> {
-                                tweetRepository.deleteTweetRequest(requestDb.requestId.toHexString())
-                                it.data.message?.let { message -> showMessage(message) }
-                            }
+                    if (tweetRequest.isNotEmpty()) {
+                        tweetRepository.uploadTweets(tweetRequest).collect {
+                            when (it) {
+                                is ClientResponse.Error -> showMessage(it.message)
+                                is ClientResponse.Success -> {
+                                    tweetRepository.deleteTweetRequest(requestDb.requestId.toHexString())
+                                    it.data.message?.let { message -> showMessage(message) }
+                                }
 
-                            else -> {}
+                                else -> {}
+                            }
                         }
+                    } else {
+                        tweetRepository.deleteTweetRequest(requestDb.requestId.toHexString())
                     }
                 }
             }
