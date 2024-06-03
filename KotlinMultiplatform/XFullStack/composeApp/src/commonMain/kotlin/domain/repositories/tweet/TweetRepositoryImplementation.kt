@@ -1,6 +1,7 @@
 package domain.repositories.tweet
 
 import core.models.realm.TweetDB
+import core.models.realm.TweetRequestsDB
 import core.models.response.ClientResponse
 import data.request.TweetRequest
 import data.response.XFullStackResponse
@@ -55,6 +56,14 @@ class TweetRepositoryImplementation(
         return tweetDBService.getAllTweets().map { it.list }
     }
 
+    override suspend fun allTweetRequestChanges(): Flow<List<TweetRequestsDB>> {
+        return tweetDBService.getAllTweetRequests().map { it.list }
+    }
+
+    override suspend fun deleteTweetRequest(id: String) {
+        tweetDBService.deleteTweetRequest(id)
+    }
+
     override suspend fun updateTweetPoll(tweetId: String, pollId: String) = flow {
         try {
             val response = tweetRemoteService.updateTweetPoll(tweetId, pollId)
@@ -79,6 +88,10 @@ class TweetRepositoryImplementation(
             )
         }
         emit(ClientResponse.Idle)
+    }
+
+    override suspend fun saveTweetRequests(tweets: List<TweetRequest>) {
+        tweetDBService.saveTweetRequests(tweets)
     }
 
     override suspend fun uploadTweets(tweets: List<TweetRequest>) = flow {

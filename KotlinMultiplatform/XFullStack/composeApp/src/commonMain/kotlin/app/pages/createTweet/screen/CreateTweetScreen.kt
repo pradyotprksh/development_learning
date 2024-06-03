@@ -65,7 +65,9 @@ fun CreateTweetScreen(
                 actions = {
                     Button(
                         onClick = {
-                            createTweetViewModel.createTweet()
+                            createTweetViewModel.createTweet(
+                                navigateBack = onNavigateBack,
+                            )
                         },
                     ) {
                         Text(

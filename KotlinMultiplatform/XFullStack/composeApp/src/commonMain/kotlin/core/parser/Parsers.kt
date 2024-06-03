@@ -1,8 +1,12 @@
 package core.parser
 
+import app.pages.createTweet.state.TweetDetails
 import core.models.realm.CurrentUserInfoDB
 import core.models.realm.PollChoicesDB
 import core.models.realm.TweetDB
+import core.models.realm.TweetRequestDB
+import core.models.realm.TweetRequestsDB
+import data.request.TweetRequest
 import data.response.PollChoicesResponse
 import data.response.TweetsResponse
 import data.response.UserInfoResponse
@@ -65,4 +69,70 @@ fun TweetsResponse.parseToTweetsDB() = this.let { info ->
         this.isLikedTweet = info.isLikedTweet
         this.parentTweetId = info.parentTweetId
     }
+}
+
+fun TweetDetails.parseToTweetRequest() = TweetRequest(
+    tweet = this.tweet,
+    media = this.media,
+    gif = this.gifs,
+    isAPoll = this.isAPoll,
+    pollChoices = this.pollChoices,
+    pollHour = this.pollHour,
+    pollMinute = this.pollMinute,
+    pollSeconds = this.pollSeconds,
+    location = this.location,
+    isScheduledTweet = this.isScheduledTweet,
+    scheduledOnTweet = this.scheduledOnTweet,
+    isQuoteTweet = this.isQuoteTweet,
+)
+
+fun List<TweetRequest>.parseToTweetRequestDb() = this.let { tweets ->
+    val tweetDetailsDb = realmListOf<TweetRequestDB>()
+    tweets.forEach { tweetDetails ->
+        val media = realmListOf<String>()
+        tweetDetails.media.forEach { media.add(it) }
+
+        val gif = realmListOf<String>()
+        tweetDetails.gif.forEach { gif.add(it) }
+
+        val pollChoices = realmListOf<String>()
+        tweetDetails.pollChoices.forEach { pollChoices.add(it) }
+
+        TweetRequestDB().apply {
+            this.tweet = tweetDetails.tweet
+            this.media = media
+            this.gif = gif
+            this.isAPoll = tweetDetails.isAPoll
+            this.pollChoices = pollChoices
+            this.pollHour = tweetDetails.pollHour
+            this.pollMinute = tweetDetails.pollMinute
+            this.pollSeconds = tweetDetails.pollSeconds
+            this.location = tweetDetails.location
+            this.isScheduledTweet = tweetDetails.isScheduledTweet
+            this.scheduledOnTweet = tweetDetails.scheduledOnTweet
+            this.isQuoteTweet = tweetDetails.isQuoteTweet
+            this.parentTweetId = tweetDetails.parentTweetId
+        }
+    }
+
+    TweetRequestsDB().apply {
+        this.tweets = tweetDetailsDb
+    }
+}
+
+fun TweetRequestsDB.parseToTweetRequest() = this.tweets.map { db ->
+    TweetRequest(
+        tweet = db.tweet,
+        media = db.media,
+        gif = db.gif,
+        isAPoll = db.isAPoll,
+        pollChoices = db.pollChoices,
+        pollHour = db.pollHour,
+        pollMinute = db.pollMinute,
+        pollSeconds = db.pollSeconds,
+        location = db.location,
+        isScheduledTweet = db.isScheduledTweet,
+        scheduledOnTweet = db.scheduledOnTweet,
+        isQuoteTweet = db.isQuoteTweet,
+    )
 }

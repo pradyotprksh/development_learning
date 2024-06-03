@@ -1,7 +1,10 @@
 package data.device.tweet
 
 import core.models.realm.TweetDB
+import core.models.realm.TweetRequestsDB
+import core.parser.parseToTweetRequestDb
 import core.parser.parseToTweetsDB
+import data.request.TweetRequest
 import data.response.TweetsResponse
 import domain.services.tweet.TweetDBService
 import io.realm.kotlin.Realm
@@ -10,6 +13,7 @@ import io.realm.kotlin.ext.query
 import io.realm.kotlin.notifications.ResultsChange
 import io.realm.kotlin.query.Sort
 import kotlinx.coroutines.flow.Flow
+import utils.Constants.DbKeys.REQUEST_ID
 import utils.Constants.DbKeys.TWEETED_ON_TIMESTAMP
 import utils.Constants.DbKeys.TWEET_ID
 
@@ -34,7 +38,24 @@ class TweetDBServiceImplementation(
         ).asFlow()
     }
 
+    override fun getAllTweetRequests(): Flow<ResultsChange<TweetRequestsDB>> {
+        return realm.query<TweetRequestsDB>().asFlow()
+    }
+
+    override suspend fun deleteTweetRequest(id: String) {
+        realm.write {
+            val requestToDelete = query<TweetRequestsDB>("$REQUEST_ID == $0", id).find().first()
+            delete(requestToDelete)
+        }
+    }
+
     override fun getTweetById(id: String): TweetDB? {
         return realm.query<TweetDB>("$TWEET_ID == $0", id).find().firstOrNull()
     }
+
+    override suspend fun saveTweetRequests(tweetRequest: List<TweetRequest>): TweetRequestsDB =
+        realm.write {
+            val unmanagedObject = tweetRequest.parseToTweetRequestDb()
+            copyToRealm(unmanagedObject, updatePolicy = UpdatePolicy.ALL)
+        }
 }

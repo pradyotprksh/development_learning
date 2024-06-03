@@ -153,5 +153,6 @@ object Constants {
         const val VOTED_ON = "voted_on"
         const val TWEETED_ON_TIMESTAMP = "tweetedOnTimestamp"
         const val TWEET_ID = "tweetId"
+        const val REQUEST_ID = "requestId"
     }
 }

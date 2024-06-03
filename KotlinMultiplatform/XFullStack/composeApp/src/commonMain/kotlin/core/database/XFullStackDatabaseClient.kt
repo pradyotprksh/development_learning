@@ -5,6 +5,8 @@ import core.models.realm.CurrentUserInfoDB
 import core.models.realm.PollChoicesDB
 import core.models.realm.TokenDB
 import core.models.realm.TweetDB
+import core.models.realm.TweetRequestDB
+import core.models.realm.TweetRequestsDB
 import io.realm.kotlin.Realm
 import io.realm.kotlin.RealmConfiguration
 import io.realm.kotlin.log.LogLevel
@@ -20,6 +22,8 @@ object XFullStackDatabaseClient {
                     CurrentUserInfoDB::class,
                     PollChoicesDB::class,
                     TweetDB::class,
+                    TweetRequestsDB::class,
+                    TweetRequestDB::class,
                 )
             )
         RealmLog.level = LogLevel.TRACE

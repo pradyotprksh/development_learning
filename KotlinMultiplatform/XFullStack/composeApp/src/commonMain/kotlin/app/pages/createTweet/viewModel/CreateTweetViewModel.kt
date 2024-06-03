@@ -1,11 +1,15 @@
 package app.pages.createTweet.viewModel
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import app.pages.createTweet.state.CreateTweetState
+import core.parser.parseToTweetRequest
 import di.ModulesDi
+import domain.repositories.tweet.TweetRepository
 import domain.repositories.user.current.CurrentUserRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 import org.kodein.di.instance
 import utils.Constants.ConstValues.MAX_POLL_CHOICE_LENGTH
 import utils.Constants.ConstValues.MAX_TWEET_CREATION_LIMIT
@@ -14,6 +18,7 @@ import utils.Localization
 
 class CreateTweetViewModel : ViewModel() {
     private val currentUserRepository: CurrentUserRepository by ModulesDi.di.instance()
+    private val tweetRepository: TweetRepository by ModulesDi.di.instance()
 
     private val _createTweetState = MutableStateFlow(CreateTweetState())
     val createTweetState = _createTweetState.asStateFlow()
@@ -189,7 +194,15 @@ class CreateTweetViewModel : ViewModel() {
         }
     }
 
-    fun createTweet() {
-
+    fun createTweet(navigateBack: () -> Unit) {
+        val tweetRequests = createTweetState.value.tweets.filter {
+            it.shouldSelectThisTweet()
+        }
+        if (tweetRequests.isNotEmpty()) {
+            viewModelScope.launch {
+                tweetRepository.saveTweetRequests(tweetRequests.map { it.parseToTweetRequest() })
+                navigateBack()
+            }
+        }
     }
 }
