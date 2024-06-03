@@ -19,7 +19,7 @@ import com.pradyotprakash.xfullstack.features.authentication.controllers.registe
 import com.pradyotprakash.xfullstack.features.authentication.controllers.register.RegisterControllerImplementation
 import com.pradyotprakash.xfullstack.features.authentication.controllers.userInfo.UserInfoController
 import com.pradyotprakash.xfullstack.features.authentication.controllers.userInfo.UserInfoControllerImplementation
-import com.pradyotprakash.xfullstack.features.tweet.controllers.TweetUpdateController
+import com.pradyotprakash.xfullstack.features.tweet.controllers.TweetController
 import com.pradyotprakash.xfullstack.features.tweet.controllers.tweetCreationUpdate.TweetCreateUpdateController
 import com.pradyotprakash.xfullstack.features.tweet.controllers.tweetCreationUpdate.TweetCreateUpdateControllerImplementation
 import com.pradyotprakash.xfullstack.features.tweet.controllers.tweetFetch.TweetFetchController
@@ -83,7 +83,7 @@ object ModulesConfig {
 
         bindProvider { VerificationController(instance()) }
 
-        bindProvider { TweetUpdateController(instance(), instance()) }
+        bindProvider { TweetController(instance(), instance()) }
     }
 
     val di = DI {

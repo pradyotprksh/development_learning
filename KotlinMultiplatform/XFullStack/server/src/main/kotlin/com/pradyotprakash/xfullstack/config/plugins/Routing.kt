@@ -8,7 +8,7 @@ import com.pradyotprakash.xfullstack.data.tweet.TweetDataSource
 import com.pradyotprakash.xfullstack.data.user.UserDataSource
 import com.pradyotprakash.xfullstack.features.authentication.authentication
 import com.pradyotprakash.xfullstack.features.authentication.controllers.AuthenticationController
-import com.pradyotprakash.xfullstack.features.tweet.controllers.TweetUpdateController
+import com.pradyotprakash.xfullstack.features.tweet.controllers.TweetController
 import com.pradyotprakash.xfullstack.features.tweet.tweet
 import com.pradyotprakash.xfullstack.features.utils.controllers.UtilsController
 import com.pradyotprakash.xfullstack.features.utils.utils
@@ -30,7 +30,7 @@ fun Application.configureRouting() {
     val authenticationController by ModulesConfig.di.instance<AuthenticationController>()
     val utilsController by ModulesConfig.di.instance<UtilsController>()
     val verificationController by ModulesConfig.di.instance<VerificationController>()
-    val tweetController by ModulesConfig.di.instance<TweetUpdateController>()
+    val tweetController by ModulesConfig.di.instance<TweetController>()
 
     routing {
         authentication(
