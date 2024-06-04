@@ -22,5 +22,7 @@ class TweetRequestDB : RealmObject {
     var isScheduledTweet: Boolean = false
     var scheduledOnTweet: Long? = null
     var isQuoteTweet: Boolean = false
+    var isLikedTweet: Boolean = false
+    var isRepostTweet: Boolean = false
     var parentTweetId: String? = null
 }

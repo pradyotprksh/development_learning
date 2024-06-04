@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import app.pages.home.home.state.HomeState
 import core.models.response.ClientResponse
 import core.parser.parseToTweetRequest
+import data.request.TweetRequest
 import di.ModulesDi
 import domain.repositories.tweet.TweetRepository
 import domain.repositories.websocket.WebsocketRepository
@@ -165,6 +166,30 @@ class HomeViewModel : ViewModel() {
                     is ClientResponse.Success -> {}
                 }
             }
+        }
+    }
+
+    fun onLikeTweet(tweetId: String) {
+        val tweetRequest = TweetRequest(
+            tweet = null,
+            media = emptyList(),
+            gif = emptyList(),
+            isAPoll = false,
+            pollChoices = emptyList(),
+            pollHour = null,
+            pollMinute = null,
+            pollSeconds = null,
+            location = null,
+            isScheduledTweet = false,
+            scheduledOnTweet = null,
+            isQuoteTweet = false,
+            isLikedTweet = true,
+            isRepostTweet = false,
+            isACommentTweet = false,
+            parentTweetId = tweetId,
+        )
+        viewModelScope.launch {
+            tweetRepository.saveTweetRequests(listOf(tweetRequest))
         }
     }
 }

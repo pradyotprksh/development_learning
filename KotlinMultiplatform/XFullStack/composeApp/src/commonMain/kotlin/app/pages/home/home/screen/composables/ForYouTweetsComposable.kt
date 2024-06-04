@@ -54,6 +54,7 @@ fun ForYouTweetsComposable(
                         createdByUsername = tweet.createdBy?.username ?: "",
                         tweetedOn = tweet.tweetedOn,
                         tweet = tweet.tweet,
+                        tweetId = tweet.tweetId,
                         commentCount = "${tweet.commentCount}",
                         retweetCount = "${tweet.retweetCount}",
                         likeCount = "${tweet.likeCount}",

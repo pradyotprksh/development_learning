@@ -32,6 +32,7 @@ fun TweetComposable(
     createdByUsername: String,
     tweetedOn: String,
     tweet: String,
+    tweetId: String,
     commentCount: String,
     retweetCount: String,
     likeCount: String,
@@ -47,8 +48,7 @@ fun TweetComposable(
         modifier = modifier.fillMaxWidth()
     ) {
         ProfileImageComposable(
-            profileImage = createdByProfilePicture,
-            modifier = Modifier.size(40.dp).clickable(
+            profileImage = createdByProfilePicture, modifier = Modifier.size(40.dp).clickable(
                 indication = null,
                 interactionSource = remember { MutableInteractionSource() },
                 onClick = tweetActions.profileImageClick,
@@ -70,8 +70,7 @@ fun TweetComposable(
                 horizontalArrangement = Arrangement.Center,
             ) {
                 Text(
-                    createdByName,
-                    style = MaterialTheme.typography.titleMedium
+                    createdByName, style = MaterialTheme.typography.titleMedium
                 )
                 Spacer(modifier = Modifier.width(2.dp))
                 Text(
@@ -84,8 +83,7 @@ fun TweetComposable(
                 )
                 Spacer(modifier = Modifier.width(4.dp))
                 Text(
-                    tweetedOn,
-                    style = MaterialTheme.typography.bodySmall
+                    tweetedOn, style = MaterialTheme.typography.bodySmall
                 )
             }
             Spacer(modifier = Modifier.height(5.dp))
@@ -108,8 +106,12 @@ fun TweetComposable(
                 retweetCount = retweetCount,
                 likeCount = likeCount,
                 views = views,
-                onBookmark = tweetActions.onBookmark,
-                onShare = tweetActions.onShare,
+                onBookmark = { tweetActions.onBookmark(tweetId) },
+                onShare = { tweetActions.onShare(tweetId) },
+                onAddComment = { tweetActions.onComment(tweetId) },
+                onRepost = { tweetActions.onRepost(tweetId) },
+                onLike = { tweetActions.onLike(tweetId) },
+                onViews = { tweetActions.onViews(tweetId) },
             )
         }
     }

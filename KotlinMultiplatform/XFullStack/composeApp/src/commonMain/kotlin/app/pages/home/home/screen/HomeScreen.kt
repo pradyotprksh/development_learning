@@ -116,6 +116,12 @@ fun HomeScreen(
                                 onPollSelection = { tweetId, optionId ->
                                     homeViewModel.updatePollOption(tweetId, optionId)
                                 },
+                                onComment = {},
+                                onViews = {},
+                                onLike = { tweetId ->
+                                    homeViewModel.onLikeTweet(tweetId)
+                                },
+                                onRepost = {},
                             ),
                         )
                     }
