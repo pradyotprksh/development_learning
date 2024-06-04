@@ -22,8 +22,6 @@ import org.bson.types.ObjectId
 import utils.Constants.ConstValues.API_RESPONSE_DELAY
 import utils.Constants.Keys.USER_ID
 import utils.Localization
-import utils.Logger
-import utils.LoggerLevel
 import utils.UtilsMethod
 import utils.XFullStackResponseStatus
 
@@ -35,15 +33,11 @@ class TweetCreateUpdateControllerImplementation : TweetCreateUpdateController {
 
         val tweetsRequest = call.receive<List<TweetRequest>>()
 
-        Logger.log(LoggerLevel.Info, tweetsRequest.toString())
-
         val principal = call.principal<JWTPrincipal>()
         val createdBy =
             principal?.payload?.getClaim(USER_ID)?.asString() ?: throw UserDetailsNotFound()
 
         userDataSource.getUserByUserId(createdBy) ?: throw UserDetailsNotFound()
-
-        Logger.log(LoggerLevel.Info, "1")
 
         var parentTweetId: ObjectId? = null
 
@@ -118,11 +112,7 @@ class TweetCreateUpdateControllerImplementation : TweetCreateUpdateController {
             tweetDb
         }
 
-        Logger.log(LoggerLevel.Info, "2")
-
         val wasAcknowledged = tweetDataSource.insertNewTweets(tweetsDb)
-
-        Logger.log(LoggerLevel.Info, "3 $wasAcknowledged")
 
         if (!wasAcknowledged) {
             throw DBWriteError()
