@@ -16,3 +16,7 @@ captures
 !*.xcworkspace/contents.xcworkspacedata
 **/xcshareddata/WorkspaceSettings.xcsettings
 /.kotlin/
+/composeApp/default.realm.management/
+/composeApp/*.realm
+/composeApp/*.realm.lock
+/composeApp/*.realm.note

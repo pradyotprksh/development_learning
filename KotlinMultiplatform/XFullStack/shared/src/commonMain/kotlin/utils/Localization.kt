@@ -21,7 +21,7 @@ object Localization {
     }
 
     const val APP_NAME = "X"
-    const val SPLASH_SCREEN_MESSAGE = "See what's happening in the work right now."
+    const val SPLASH_SCREEN_MESSAGE = "See what's happening in the world right now."
     const val CONTINUE_WITH_GOOGLE = "Continue with Google"
     const val CREATE_ACCOUNT = "Create Account"
     const val OR = "or"

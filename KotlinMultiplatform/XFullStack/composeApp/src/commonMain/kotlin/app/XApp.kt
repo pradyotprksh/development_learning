@@ -12,11 +12,19 @@ import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
@@ -44,6 +52,7 @@ import app.pages.splash.screen.SplashScreen
 import kotlinx.coroutines.launch
 import utils.Constants.ConstValues.NO_USERNAME
 import utils.Constants.ConstValues.USERNAME_EMAIL_PHONE
+import utils.Localization
 import utils.extensions.popUpToTop
 
 /**
@@ -52,12 +61,33 @@ import utils.extensions.popUpToTop
 @Composable
 fun XApp(
     navController: NavHostController = rememberNavController(),
+    xAppViewModel: XAppViewModel = viewModel { XAppViewModel() }
 ) {
+    LaunchedEffect(Unit) {
+        xAppViewModel.initSetup()
+    }
+
+    val snackbarHostState = remember { SnackbarHostState() }
+    val xAppState by xAppViewModel.xAppState.collectAsState()
     val scope = rememberCoroutineScope()
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
-
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
+
+    xAppState.snackBarMessage?.let { message ->
+        scope.launch {
+            val result = snackbarHostState.showSnackbar(
+                message = message,
+                actionLabel = Localization.OKAY,
+                duration = SnackbarDuration.Short
+            )
+            when (result) {
+                SnackbarResult.ActionPerformed, SnackbarResult.Dismissed -> {
+                    xAppViewModel.removeSnackBarMessage()
+                }
+            }
+        }
+    }
 
     ModalNavigationDrawer(
         drawerState = drawerState, drawerContent = {
@@ -67,6 +97,9 @@ fun XApp(
         }, gesturesEnabled = showDrawer(currentDestination?.route ?: "")
     ) {
         Scaffold(
+            snackbarHost = {
+                SnackbarHost(hostState = snackbarHostState)
+            },
             topBar = {
                 if (showAppBar(currentDestination?.route ?: "")) {
                     UserAppBarComposable(

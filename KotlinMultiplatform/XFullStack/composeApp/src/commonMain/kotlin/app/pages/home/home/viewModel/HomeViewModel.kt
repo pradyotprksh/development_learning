@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.pages.home.home.state.HomeState
 import core.models.response.ClientResponse
-import core.parser.parseToTweetRequest
 import data.request.TweetRequest
 import di.ModulesDi
 import domain.repositories.tweet.TweetRepository
@@ -14,7 +13,6 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import org.kodein.di.instance
 import utils.Constants.ConstValues.DEFAULT_PAGINATE_LIMIT
-import utils.Constants.ErrorCode.TWEET_VALIDITY_ERROR_CODE
 import utils.Constants.SuccessCode.TWEETS_UPDATE_SUCCESS_CODE
 
 class HomeViewModel : ViewModel() {
@@ -24,39 +22,7 @@ class HomeViewModel : ViewModel() {
     init {
         viewModelScope.launch {
             startTweetUpdateListener()
-            listenToAddTweet()
             getAllTweets()
-        }
-    }
-
-    private fun listenToAddTweet() {
-        viewModelScope.launch {
-            tweetRepository.allTweetRequestChanges().collect { tweetRequestsDb ->
-                tweetRequestsDb.firstOrNull()?.let { requestDb ->
-                    val tweetRequest = requestDb.parseToTweetRequest()
-                    if (tweetRequest.isNotEmpty()) {
-                        tweetRepository.uploadTweets(tweetRequest).collect {
-                            when (it) {
-                                is ClientResponse.Error -> {
-                                    if (it.errorCode == TWEET_VALIDITY_ERROR_CODE) {
-                                        tweetRepository.deleteTweetRequest(requestDb.requestId.toHexString())
-                                    }
-                                    showMessage(it.message)
-                                }
-
-                                is ClientResponse.Success -> {
-                                    tweetRepository.deleteTweetRequest(requestDb.requestId.toHexString())
-                                    it.data.message?.let { message -> showMessage(message) }
-                                }
-
-                                else -> {}
-                            }
-                        }
-                    } else {
-                        tweetRepository.deleteTweetRequest(requestDb.requestId.toHexString())
-                    }
-                }
-            }
         }
     }
 
