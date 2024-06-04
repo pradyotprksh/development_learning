@@ -205,6 +205,11 @@ fun XApp(
                 composable(Routes.Home.path()) {
                     HomeScreen()
                 }
+                composable(Routes.HomeSearch.path()) { }
+                composable(Routes.HomeGrok.path()) { }
+                composable(Routes.HomeCommunities.path()) { }
+                composable(Routes.HomeNotifications.path()) { }
+                composable(Routes.HomeMessages.path()) { }
                 composable(Routes.CreateTweet.path()) {
                     CreateTweetScreen {
                         navController.popBackStack()

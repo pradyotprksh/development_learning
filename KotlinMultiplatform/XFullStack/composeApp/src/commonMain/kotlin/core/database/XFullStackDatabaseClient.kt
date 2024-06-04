@@ -9,8 +9,6 @@ import core.models.realm.TweetRequestDB
 import core.models.realm.TweetRequestsDB
 import io.realm.kotlin.Realm
 import io.realm.kotlin.RealmConfiguration
-import io.realm.kotlin.log.LogLevel
-import io.realm.kotlin.log.RealmLog
 
 object XFullStackDatabaseClient {
     fun createDatabaseClient(): Realm {
@@ -26,7 +24,6 @@ object XFullStackDatabaseClient {
                     TweetRequestDB::class,
                 )
             )
-        RealmLog.level = LogLevel.TRACE
         return Realm.open(config)
     }
 }
