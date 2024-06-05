@@ -113,7 +113,7 @@ object Localization {
     const val SPACES = "Spaces"
     const val MONETISATION = "Monetisation"
     const val INVALID_TWEET_LENGTH =
-        "Tweet length should be in the range 0-$TWEET_MAX_LENGTH characters"
+        "Tweet length should be in the range 1-$TWEET_MAX_LENGTH characters"
     const val INVALID_POLL_CHOICES = "At least one choice is needed for a poll"
     const val INVALID_POLL_TIMING = "Poll timing should be specified or correct"
     const val PARENT_TWEET_NOT_FOUND = "Need the parent tweet for this tweet"

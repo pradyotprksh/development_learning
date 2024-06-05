@@ -11,6 +11,7 @@ import androidx.compose.material.icons.filled.AutoGraph
 import androidx.compose.material.icons.filled.BookmarkBorder
 import androidx.compose.material.icons.filled.Loop
 import androidx.compose.material.icons.filled.Share
+import androidx.compose.material.icons.filled.ThumbUp
 import androidx.compose.material.icons.filled.ThumbsUpDown
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -27,6 +28,7 @@ fun TweetActionsComposable(
     retweetCount: String,
     likeCount: String,
     views: String,
+    isLikedByCurrentUser: Boolean,
     onAddComment: () -> Unit,
     onRepost: () -> Unit,
     onLike: () -> Unit,
@@ -53,7 +55,7 @@ fun TweetActionsComposable(
         Spacer(modifier = Modifier.weight(1f))
         IconTextButtonComposable(
             text = likeCount,
-            icon = Icons.Default.ThumbsUpDown,
+            icon = if (isLikedByCurrentUser) Icons.Default.ThumbUp else Icons.Default.ThumbsUpDown,
             onClick = onLike,
         )
         Spacer(modifier = Modifier.weight(1f))

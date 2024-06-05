@@ -27,5 +27,6 @@ class TweetDB : RealmObject {
     var isQuoteTweet: Boolean = false
     var isRepostTweet: Boolean = false
     var isLikedTweet: Boolean = false
+    var isLikedByCurrentUser: Boolean = false
     var parentTweetId: String? = null
 }

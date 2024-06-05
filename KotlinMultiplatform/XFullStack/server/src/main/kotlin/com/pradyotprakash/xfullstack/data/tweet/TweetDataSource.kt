@@ -20,4 +20,8 @@ interface TweetDataSource {
         tweetId: String,
         choices: List<PollChoices>
     ): Boolean
+
+    suspend fun isLikedByCurrentUser(tweetId: String, userId: String): Boolean
+
+    suspend fun totalNumberOfLikes(tweetId: String): Int
 }

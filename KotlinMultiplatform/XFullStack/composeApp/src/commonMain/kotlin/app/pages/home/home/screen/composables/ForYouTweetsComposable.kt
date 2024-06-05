@@ -70,6 +70,7 @@ fun ForYouTweetsComposable(
                             )
                         },
                         tweetActions = tweetActions,
+                        isLikedByCurrentUser = tweet.isLikedByCurrentUser,
                     )
                     HorizontalDivider()
                 }

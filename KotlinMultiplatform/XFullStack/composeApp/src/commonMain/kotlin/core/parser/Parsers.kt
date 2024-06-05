@@ -68,6 +68,7 @@ fun TweetsResponse.parseToTweetsDB() = this.let { info ->
         this.isRepostTweet = info.isRepostTweet
         this.isLikedTweet = info.isLikedTweet
         this.parentTweetId = info.parentTweetId
+        this.isLikedByCurrentUser = info.isLikedByCurrentUser
     }
 }
 
@@ -138,5 +139,9 @@ fun TweetRequestsDB.parseToTweetRequest() = this.tweets.map { db ->
         isScheduledTweet = db.isScheduledTweet,
         scheduledOnTweet = db.scheduledOnTweet,
         isQuoteTweet = db.isQuoteTweet,
+        isRepostTweet = db.isRepostTweet,
+        isLikedTweet = db.isLikedTweet,
+        isACommentTweet = db.isACommentTweet,
+        parentTweetId = db.parentTweetId
     )
 }

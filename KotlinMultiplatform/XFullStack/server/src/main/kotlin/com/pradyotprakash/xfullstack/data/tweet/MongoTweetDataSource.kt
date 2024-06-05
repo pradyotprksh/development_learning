@@ -6,11 +6,15 @@ import com.mongodb.client.model.Updates
 import com.mongodb.kotlin.client.coroutine.MongoDatabase
 import com.pradyotprakash.xfullstack.data.tweet.data.PollChoices
 import com.pradyotprakash.xfullstack.data.tweet.data.Tweet
+import kotlinx.coroutines.flow.count
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.toList
 import org.bson.types.ObjectId
 import utils.Constants.Database.Collections.TWEET
+import utils.Constants.DbKeys.CREATED_BY
 import utils.Constants.DbKeys.ID
+import utils.Constants.DbKeys.IS_A_LIKED_TWEET
+import utils.Constants.DbKeys.PARENT_TWEET_ID
 import utils.Constants.DbKeys.POLL_CHOICES
 import utils.Constants.DbKeys.TWEETED_ON
 
@@ -47,5 +51,24 @@ class MongoTweetDataSource(
             filter = Filters.eq(ID, ObjectId(tweetId)),
             update = Updates.set(POLL_CHOICES, choices)
         ).wasAcknowledged()
+    }
+
+    override suspend fun isLikedByCurrentUser(tweetId: String, userId: String): Boolean {
+        return tweetCollection.find(
+            Filters.and(
+                Filters.eq(PARENT_TWEET_ID, ObjectId(tweetId)),
+                Filters.eq(CREATED_BY, ObjectId(userId)),
+                Filters.eq(IS_A_LIKED_TWEET, true),
+            ),
+        ).limit(1).firstOrNull() != null
+    }
+
+    override suspend fun totalNumberOfLikes(tweetId: String): Int {
+        return tweetCollection.find(
+            Filters.and(
+                Filters.eq(PARENT_TWEET_ID, ObjectId(tweetId)),
+                Filters.eq(IS_A_LIKED_TWEET, true),
+            ),
+        ).count()
     }
 }

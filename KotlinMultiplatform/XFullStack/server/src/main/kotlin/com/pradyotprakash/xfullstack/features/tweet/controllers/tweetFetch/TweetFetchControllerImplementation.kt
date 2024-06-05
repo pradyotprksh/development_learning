@@ -63,6 +63,8 @@ class TweetFetchControllerImplementation : TweetFetchController {
         tweet: Tweet,
         currentUserId: String,
     ): TweetsResponse {
+        val tweetIdHexStr = tweet.id.toHexString()
+
         val createdByUserDetails = userDataSource.getUserByUserId(tweet.createdBy.toHexString())
             ?: throw UserDetailsNotFound()
 
@@ -86,8 +88,13 @@ class TweetFetchControllerImplementation : TweetFetchController {
         val parentTweetDetails =
             tweet.parentTweetId?.let { tweetDataSource.findTweetById(it.toHexString()) }
 
+        val isLikedByCurrentUser =
+            tweetDataSource.isLikedByCurrentUser(tweetIdHexStr, currentUserId)
+
+        val likesCount = tweetDataSource.totalNumberOfLikes(tweetIdHexStr)
+
         return TweetsResponse(
-            id = tweet.id.toHexString(),
+            id = tweetIdHexStr,
             tweet = tweet.tweet,
             createdBy = createdByUserDetails.parseToUserInfoResponse(),
             tweetedOnTimestamp = tweet.tweetedOn,
@@ -96,7 +103,7 @@ class TweetFetchControllerImplementation : TweetFetchController {
             gif = tweet.gif,
             commentCount = tweet.commentCount,
             retweetCount = tweet.retweetCount,
-            likesCount = tweet.likesCount,
+            likesCount = likesCount,
             views = tweet.views,
             isAPoll = isAPoll,
             pollChoices = tweet.pollChoices.map { pollChoice ->
@@ -115,6 +122,7 @@ class TweetFetchControllerImplementation : TweetFetchController {
             isRepostTweet = tweet.isRepostTweet,
             isLikedTweet = tweet.isLikedTweet,
             parentTweetId = tweet.parentTweetId?.toHexString(),
+            isLikedByCurrentUser = isLikedByCurrentUser,
             parentTweetDetails = parentTweetDetails?.let {
                 convertToTweetResponse(
                     userDataSource, tweetDataSource, it, currentUserId
