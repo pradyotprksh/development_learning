@@ -3,7 +3,6 @@ package data.device.view
 import core.models.realm.ViewDB
 import domain.services.view.ViewDBService
 import io.realm.kotlin.Realm
-import io.realm.kotlin.UpdatePolicy
 import io.realm.kotlin.ext.query
 import io.realm.kotlin.notifications.ResultsChange
 import kotlinx.coroutines.flow.Flow
@@ -14,9 +13,7 @@ class ViewDBServiceImplementation(
 ) : ViewDBService {
     override suspend fun insertViewDetails(view: ViewDB) {
         realm.write {
-            copyToRealm(
-                view, updatePolicy = UpdatePolicy.ALL
-            )
+            copyToRealm(view)
         }
     }
 

@@ -11,6 +11,8 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import utils.Constants
 import utils.Localization
+import utils.Logger
+import utils.LoggerLevel
 import utils.XFullStackResponseStatus
 
 class ViewRepositoryImplementation(
@@ -18,12 +20,16 @@ class ViewRepositoryImplementation(
     private val viewRemoteService: ViewRemoteService,
 ) : ViewRepository {
     override suspend fun saveView(id: String) {
-        viewDBService.insertViewDetails(
-            ViewDB().apply {
-                this.viewedId = id
-                this.isUpdatedOnline = false
-            }
-        )
+        try {
+            viewDBService.insertViewDetails(
+                ViewDB().apply {
+                    this.viewedId = id
+                    this.isUpdatedOnline = false
+                },
+            )
+        } catch (e: Exception) {
+            Logger.log(LoggerLevel.Error, e.message ?: "")
+        }
     }
 
     override suspend fun listenOnViewAdd(): Flow<List<ViewDB>> {
@@ -47,8 +53,7 @@ class ViewRepositoryImplementation(
                     emit(
                         ClientResponse.Error(
                             message = response.message ?: Localization.DEFAULT_ERROR_MESSAGE,
-                            errorCode = response.code
-                                ?: Constants.ErrorCode.DEFAULT_ERROR_CODE,
+                            errorCode = response.code ?: Constants.ErrorCode.DEFAULT_ERROR_CODE,
                         ),
                     )
                 }

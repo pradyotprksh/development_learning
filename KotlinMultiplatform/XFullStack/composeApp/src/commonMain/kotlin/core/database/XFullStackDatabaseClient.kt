@@ -7,6 +7,7 @@ import core.models.realm.TokenDB
 import core.models.realm.TweetDB
 import core.models.realm.TweetRequestDB
 import core.models.realm.TweetRequestsDB
+import core.models.realm.ViewDB
 import io.realm.kotlin.Realm
 import io.realm.kotlin.RealmConfiguration
 
@@ -22,6 +23,7 @@ object XFullStackDatabaseClient {
                     TweetDB::class,
                     TweetRequestsDB::class,
                     TweetRequestDB::class,
+                    ViewDB::class,
                 )
             )
         return Realm.open(config)

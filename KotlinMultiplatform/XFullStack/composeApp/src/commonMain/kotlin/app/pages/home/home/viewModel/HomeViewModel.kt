@@ -7,6 +7,7 @@ import core.models.response.ClientResponse
 import data.request.TweetRequest
 import di.ModulesDi
 import domain.repositories.tweet.TweetRepository
+import domain.repositories.view.ViewRepository
 import domain.repositories.websocket.WebsocketRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -18,6 +19,7 @@ import utils.Constants.SuccessCode.TWEETS_UPDATE_SUCCESS_CODE
 class HomeViewModel : ViewModel() {
     private val tweetRepository: TweetRepository by ModulesDi.di.instance()
     private val websocketRepository: WebsocketRepository by ModulesDi.di.instance()
+    private val viewRepository: ViewRepository by ModulesDi.di.instance()
 
     init {
         viewModelScope.launch {
@@ -156,6 +158,16 @@ class HomeViewModel : ViewModel() {
         )
         viewModelScope.launch {
             tweetRepository.saveTweetRequests(listOf(tweetRequest))
+        }
+    }
+
+    fun updateViewForTweet(tweetId: String) {
+        viewModelScope.launch {
+            val viewedTweets = _homeScreenState.value.viewedTweets
+            if (!viewedTweets.contains(tweetId)) {
+                viewedTweets.add(tweetId)
+                viewRepository.saveView(tweetId)
+            }
         }
     }
 }

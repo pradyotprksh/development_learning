@@ -20,4 +20,5 @@ data class HomeState(
         Localization.FOR_YOU,
         Localization.FOLLOWING,
     ),
+    val viewedTweets: MutableList<String> = mutableListOf(),
 )

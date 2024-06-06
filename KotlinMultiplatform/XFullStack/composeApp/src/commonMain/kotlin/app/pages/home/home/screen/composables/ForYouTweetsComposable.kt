@@ -18,6 +18,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.geometry.Rect
+import androidx.compose.ui.layout.boundsInParent
+import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.unit.dp
 import app.composables.tweet.TweetComposable
 import app.pages.home.home.state.TweetActions
@@ -30,6 +33,7 @@ fun ForYouTweetsComposable(
     showLoading: Boolean = false,
     tweetsLazyColumnState: LazyListState,
     tweetActions: TweetActions,
+    tweetVisibility: (String) -> Unit,
 ) {
     Box {
         LazyColumn(
@@ -40,7 +44,15 @@ fun ForYouTweetsComposable(
                 val tweet = tweets[index]
 
                 Column(
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth().onGloballyPositioned { layoutCoordinates ->
+                            val itemBounds = layoutCoordinates.boundsInParent()
+                            val parentBounds =
+                                layoutCoordinates.parentCoordinates?.boundsInParent() ?: Rect.Zero
+
+                            if (parentBounds.left <= itemBounds.left && parentBounds.top <= itemBounds.top && parentBounds.right >= itemBounds.right && parentBounds.bottom >= itemBounds.bottom) {
+                                tweetVisibility(tweet.tweetId)
+                            }
+                        },
                 ) {
                     if (index != 0) {
                         HorizontalDivider()

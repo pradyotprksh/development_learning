@@ -27,9 +27,7 @@ class XAppViewModel : ViewModel() {
     private fun listenToViewAddition() {
         viewModelScope.launch {
             viewRepository.listenOnViewAdd().collect { viewsDb ->
-                if (viewsDb.size > 10) {
-                    viewRepository.saveViews(viewsDb)
-                }
+                viewRepository.saveViews(viewsDb).collect {}
             }
         }
     }

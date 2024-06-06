@@ -123,6 +123,9 @@ fun HomeScreen(
                                 },
                                 onRepost = {},
                             ),
+                            tweetVisibility = {
+                                homeViewModel.updateViewForTweet(it)
+                            }
                         )
                     }
 
