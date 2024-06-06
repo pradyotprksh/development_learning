@@ -8,6 +8,7 @@ import domain.services.view.ViewDBService
 import domain.services.view.ViewRemoteService
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
 import utils.Constants
 import utils.Localization
 import utils.XFullStackResponseStatus
@@ -23,6 +24,10 @@ class ViewRepositoryImplementation(
                 this.isUpdatedOnline = false
             }
         )
+    }
+
+    override suspend fun listenOnViewAdd(): Flow<List<ViewDB>> {
+        return viewDBService.getListenToViewUpdate().map { it.list }
     }
 
     override suspend fun saveViews(views: List<ViewDB>): Flow<ClientResponse<out XFullStackResponse<Nothing>>> =
