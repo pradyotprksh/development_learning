@@ -2,6 +2,7 @@ package com.pradyotprakash.xfullstack.features.tweet
 
 import com.pradyotprakash.xfullstack.data.tweet.TweetDataSource
 import com.pradyotprakash.xfullstack.data.user.UserDataSource
+import com.pradyotprakash.xfullstack.data.view.ViewDataSource
 import com.pradyotprakash.xfullstack.features.tweet.controllers.TweetController
 import com.pradyotprakash.xfullstack.features.tweet.resource.TweetResource
 import io.ktor.server.auth.authenticate
@@ -13,6 +14,7 @@ fun Routing.tweet(
     tweetController: TweetController,
     tweetDataSource: TweetDataSource,
     userDataSource: UserDataSource,
+    viewDataSource: ViewDataSource,
 ) {
     authenticate {
         get<TweetResource.TweetPaginate> {
@@ -38,6 +40,14 @@ fun Routing.tweet(
                 it,
                 userDataSource,
                 tweetDataSource,
+            )
+        }
+
+        post<TweetResource.TweetViews> {
+            tweetController.updateTweetsViews(
+                this.context,
+                userDataSource,
+                viewDataSource,
             )
         }
     }

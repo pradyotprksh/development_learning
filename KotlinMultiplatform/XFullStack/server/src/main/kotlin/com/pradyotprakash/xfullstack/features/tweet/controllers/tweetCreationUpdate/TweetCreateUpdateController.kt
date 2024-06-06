@@ -2,6 +2,7 @@ package com.pradyotprakash.xfullstack.features.tweet.controllers.tweetCreationUp
 
 import com.pradyotprakash.xfullstack.data.tweet.TweetDataSource
 import com.pradyotprakash.xfullstack.data.user.UserDataSource
+import com.pradyotprakash.xfullstack.data.view.ViewDataSource
 import com.pradyotprakash.xfullstack.features.tweet.resource.TweetResource
 import io.ktor.server.application.ApplicationCall
 
@@ -17,5 +18,11 @@ interface TweetCreateUpdateController {
         resource: TweetResource.TweetVote,
         userDataSource: UserDataSource,
         tweetDataSource: TweetDataSource,
+    )
+
+    suspend fun updateTweetsViews(
+        call: ApplicationCall,
+        userDataSource: UserDataSource,
+        viewDataSource: ViewDataSource,
     )
 }

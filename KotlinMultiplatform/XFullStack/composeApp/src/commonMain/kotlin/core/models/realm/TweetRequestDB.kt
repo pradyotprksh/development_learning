@@ -8,7 +8,7 @@ import org.mongodb.kbson.ObjectId
 
 class TweetRequestDB : RealmObject {
     @PrimaryKey
-    var requestId: ObjectId = ObjectId()
+    var tweetId: ObjectId = ObjectId()
     var tweet: String? = null
     var media: RealmList<String> = realmListOf()
     var gif: RealmList<String> = realmListOf()

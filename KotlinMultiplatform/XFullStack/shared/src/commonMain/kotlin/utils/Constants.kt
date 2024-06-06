@@ -15,6 +15,7 @@ object Constants {
         object Collections {
             const val USERS = "users"
             const val TWEET = "tweet"
+            const val VIEWS = "views"
         }
     }
 
@@ -55,6 +56,7 @@ object Constants {
             const val TWEET = "/tweet"
             const val TWEET_VOTE = "/poll"
             const val PAGINATE = "/paginate"
+            const val VIEWS = "/views"
         }
     }
 
@@ -154,5 +156,8 @@ object Constants {
         const val TWEETED_ON_TIMESTAMP = "tweetedOnTimestamp"
         const val TWEET_ID = "tweetId"
         const val REQUEST_ID = "requestId"
+        const val VIEWED_BY = "viewed_by"
+        const val VIEWED_ON = "viewed_on"
+        const val VIEWED_ID = "viewed_id"
     }
 }

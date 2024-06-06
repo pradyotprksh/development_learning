@@ -5,11 +5,14 @@ import com.pradyotprakash.xfullstack.data.tweet.data.PollChoices
 import com.pradyotprakash.xfullstack.data.tweet.data.PollVoterDetails
 import com.pradyotprakash.xfullstack.data.tweet.data.Tweet
 import com.pradyotprakash.xfullstack.data.user.UserDataSource
+import com.pradyotprakash.xfullstack.data.view.ViewDataSource
+import com.pradyotprakash.xfullstack.data.view.data.View
 import com.pradyotprakash.xfullstack.features.tweet.resource.TweetResource
 import core.exception.DBWriteError
 import core.exception.InvalidTweet
 import core.exception.UserDetailsNotFound
 import data.request.TweetRequest
+import data.request.ViewRequest
 import data.response.XFullStackResponse
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.ApplicationCall
@@ -17,9 +20,7 @@ import io.ktor.server.auth.jwt.JWTPrincipal
 import io.ktor.server.auth.principal
 import io.ktor.server.request.receive
 import io.ktor.server.response.respond
-import kotlinx.coroutines.delay
 import org.bson.types.ObjectId
-import utils.Constants.ConstValues.API_RESPONSE_DELAY
 import utils.Constants.Keys.USER_ID
 import utils.Localization
 import utils.UtilsMethod
@@ -29,8 +30,6 @@ class TweetCreateUpdateControllerImplementation : TweetCreateUpdateController {
     override suspend fun createTweet(
         call: ApplicationCall, userDataSource: UserDataSource, tweetDataSource: TweetDataSource
     ) {
-        delay(API_RESPONSE_DELAY)
-
         val tweetsRequest = call.receive<List<TweetRequest>>()
 
         val principal = call.principal<JWTPrincipal>()
@@ -134,8 +133,6 @@ class TweetCreateUpdateControllerImplementation : TweetCreateUpdateController {
         userDataSource: UserDataSource,
         tweetDataSource: TweetDataSource
     ) {
-        delay(API_RESPONSE_DELAY)
-
         val principal = call.principal<JWTPrincipal>()
         val userId =
             principal?.payload?.getClaim(USER_ID)?.asString() ?: throw UserDetailsNotFound()
@@ -206,6 +203,40 @@ class TweetCreateUpdateControllerImplementation : TweetCreateUpdateController {
                 status = XFullStackResponseStatus.Success,
                 code = null,
                 message = Localization.TWEET_VOTE_CASTED_SUCCESSFULLY,
+                data = null,
+            )
+        )
+    }
+
+    override suspend fun updateTweetsViews(
+        call: ApplicationCall,
+        userDataSource: UserDataSource,
+        viewDataSource: ViewDataSource,
+    ) {
+        val viewRequests = call.receive<List<ViewRequest>>()
+
+        val principal = call.principal<JWTPrincipal>()
+        val userId =
+            principal?.payload?.getClaim(USER_ID)?.asString() ?: throw UserDetailsNotFound()
+
+        userDataSource.getUserByUserId(userId) ?: throw UserDetailsNotFound()
+
+        val viewsDb = viewRequests.map {
+            View(
+                id = ObjectId(),
+                viewedId = ObjectId(it.viewedId),
+                viewedBy = ObjectId(userId),
+                viewedOn = UtilsMethod.Dates.getCurrentTimeStamp(),
+            )
+        }
+
+        viewDataSource.insertViews(viewsDb)
+
+        call.respond(
+            HttpStatusCode.OK, XFullStackResponse(
+                status = XFullStackResponseStatus.Success,
+                code = null,
+                message = Localization.SUCCESS,
                 data = null,
             )
         )

@@ -6,6 +6,7 @@ import com.pradyotprakash.xfullstack.core.security.token.TokenConfig
 import com.pradyotprakash.xfullstack.core.security.token.TokenService
 import com.pradyotprakash.xfullstack.data.tweet.TweetDataSource
 import com.pradyotprakash.xfullstack.data.user.UserDataSource
+import com.pradyotprakash.xfullstack.data.view.ViewDataSource
 import com.pradyotprakash.xfullstack.features.authentication.authentication
 import com.pradyotprakash.xfullstack.features.authentication.controllers.AuthenticationController
 import com.pradyotprakash.xfullstack.features.tweet.controllers.TweetController
@@ -22,6 +23,7 @@ import org.kodein.di.instance
 fun Application.configureRouting() {
     val userDataSource by ModulesConfig.di.instance<UserDataSource>()
     val tweetDataSource by ModulesConfig.di.instance<TweetDataSource>()
+    val viewDataSource by ModulesConfig.di.instance<ViewDataSource>()
 
     val tokenService by ModulesConfig.di.instance<TokenService>()
     val tokenConfig by ModulesConfig.di.instance<TokenConfig>()
@@ -52,6 +54,7 @@ fun Application.configureRouting() {
             tweetController = tweetController,
             tweetDataSource = tweetDataSource,
             userDataSource = userDataSource,
+            viewDataSource = viewDataSource,
         )
         websockets(
             tweetDataSource = tweetDataSource,

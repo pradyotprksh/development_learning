@@ -16,7 +16,9 @@ import utils.Constants.DbKeys.ID
 import utils.Constants.DbKeys.IS_A_LIKED_TWEET
 import utils.Constants.DbKeys.PARENT_TWEET_ID
 import utils.Constants.DbKeys.POLL_CHOICES
+import utils.Constants.DbKeys.SCHEDULED_ON_TWEET
 import utils.Constants.DbKeys.TWEETED_ON
+import utils.UtilsMethod
 
 class MongoTweetDataSource(
     db: MongoDatabase,
@@ -27,7 +29,12 @@ class MongoTweetDataSource(
         limit: Int,
     ): List<Tweet> {
         val skip = (page - 1) * limit
-        return tweetCollection.find().sort(Sorts.descending(TWEETED_ON)).skip(skip).limit(limit)
+        return tweetCollection.find(
+            Filters.and(
+                Filters.lte(SCHEDULED_ON_TWEET, UtilsMethod.Dates.getCurrentTimeStamp()),
+                Filters.lte(IS_A_LIKED_TWEET, false)
+            )
+        ).sort(Sorts.descending(TWEETED_ON)).skip(skip).limit(limit)
             .toList()
     }
 

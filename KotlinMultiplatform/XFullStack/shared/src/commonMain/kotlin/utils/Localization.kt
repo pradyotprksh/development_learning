@@ -173,4 +173,5 @@ object Localization {
     const val ADD_ANOTHER_TWEET = "Add another tweet"
     const val ASK_A_QUESTION = "Ask a question..."
     const val CHOICE = "Choice %s"
+    const val SUCCESS = "Success"
 }

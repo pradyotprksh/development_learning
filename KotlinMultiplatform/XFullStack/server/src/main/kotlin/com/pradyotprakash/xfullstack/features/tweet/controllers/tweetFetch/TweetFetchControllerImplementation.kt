@@ -43,8 +43,6 @@ class TweetFetchControllerImplementation : TweetFetchController {
             convertToTweetResponse(
                 userDataSource, tweetDataSource, tweet, currentUserId
             )
-        }.filter {
-            !UtilsMethod.Dates.isFutureTimeStamp(it.scheduledOnTweet)
         }
 
         call.respond(
@@ -121,8 +119,8 @@ class TweetFetchControllerImplementation : TweetFetchController {
             isQuoteTweet = tweet.isQuoteTweet,
             isRepostTweet = tweet.isRepostTweet,
             isLikedTweet = tweet.isLikedTweet,
-            parentTweetId = tweet.parentTweetId?.toHexString(),
             isLikedByCurrentUser = isLikedByCurrentUser,
+            parentTweetId = tweet.parentTweetId?.toHexString(),
             parentTweetDetails = parentTweetDetails?.let {
                 convertToTweetResponse(
                     userDataSource, tweetDataSource, it, currentUserId
