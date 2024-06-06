@@ -4,7 +4,6 @@ import io.ktor.resources.Resource
 import utils.Constants.Paths.Tweets.PAGINATE
 import utils.Constants.Paths.Tweets.TWEET
 import utils.Constants.Paths.Tweets.TWEET_VOTE
-import utils.Constants.Paths.Tweets.VIEWS
 
 @Resource(TWEET)
 class TweetResource {
@@ -20,10 +19,5 @@ class TweetResource {
         private val parent: TweetResource = TweetResource(),
         val tweetId: String,
         val optionId: String,
-    )
-
-    @Resource(VIEWS)
-    data class TweetViews(
-        private val parent: TweetResource = TweetResource(),
     )
 }

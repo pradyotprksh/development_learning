@@ -21,6 +21,8 @@ import utils.Constants.ErrorCode.PASSWORD_VALIDITY_ERROR_CODE
 import utils.Constants.ErrorCode.PHONE_NUMBER_VALIDITY_ERROR_CODE
 import utils.Constants.ErrorCode.USERNAME_VALIDITY_ERROR_CODE
 import utils.timeago.TimeAgo
+import kotlin.io.encoding.Base64
+import kotlin.io.encoding.ExperimentalEncodingApi
 import kotlin.math.absoluteValue
 
 object UtilsMethod {
@@ -218,6 +220,13 @@ object UtilsMethod {
             }
 
             return "$integerPart${Localization.FULL_STOP}$decimalPart"
+        }
+
+        @OptIn(ExperimentalEncodingApi::class)
+        fun combineByteArrays(bytes1: ByteArray, bytes2: ByteArray, length: Int): String {
+            val xorBytes = ByteArray(12) { i -> (bytes1[i].toInt() xor bytes2[i].toInt()).toByte() }
+            val base64Xor = Base64.encode(xorBytes)
+            return base64Xor.take(length)
         }
     }
 

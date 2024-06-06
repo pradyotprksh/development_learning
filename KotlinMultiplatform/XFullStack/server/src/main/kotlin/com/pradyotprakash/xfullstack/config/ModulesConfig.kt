@@ -34,6 +34,9 @@ import com.pradyotprakash.xfullstack.features.utils.controllers.usernameValid.Us
 import com.pradyotprakash.xfullstack.features.verification.controllers.VerificationController
 import com.pradyotprakash.xfullstack.features.verification.controllers.userVerification.UserVerificationController
 import com.pradyotprakash.xfullstack.features.verification.controllers.userVerification.UserVerificationControllerImplementation
+import com.pradyotprakash.xfullstack.features.view.controllers.ViewController
+import com.pradyotprakash.xfullstack.features.view.controllers.create.ViewCreateController
+import com.pradyotprakash.xfullstack.features.view.controllers.create.ViewCreateControllerImplementation
 import org.kodein.di.DI
 import org.kodein.di.bindProvider
 import org.kodein.di.bindSingleton
@@ -77,6 +80,8 @@ object ModulesConfig {
 
         bindProvider<TweetCreateUpdateController> { TweetCreateUpdateControllerImplementation() }
         bindProvider<TweetFetchController> { TweetFetchControllerImplementation() }
+
+        bindProvider<ViewCreateController> { ViewCreateControllerImplementation() }
     }
 
     private val featuresModule = DI.Module("FEATURES") {
@@ -87,6 +92,8 @@ object ModulesConfig {
         bindProvider { VerificationController(instance()) }
 
         bindProvider { TweetController(instance(), instance()) }
+
+        bindProvider { ViewController(instance()) }
     }
 
     val di = DI {

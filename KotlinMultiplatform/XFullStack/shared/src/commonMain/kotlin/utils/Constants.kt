@@ -56,6 +56,9 @@ object Constants {
             const val TWEET = "/tweet"
             const val TWEET_VOTE = "/poll"
             const val PAGINATE = "/paginate"
+        }
+
+        object Views {
             const val VIEWS = "/views"
         }
     }
@@ -159,5 +162,6 @@ object Constants {
         const val VIEWED_BY = "viewed_by"
         const val VIEWED_ON = "viewed_on"
         const val VIEWED_ID = "viewed_id"
+        const val IS_UPDATED_ONLINE = "isUpdatedOnline"
     }
 }

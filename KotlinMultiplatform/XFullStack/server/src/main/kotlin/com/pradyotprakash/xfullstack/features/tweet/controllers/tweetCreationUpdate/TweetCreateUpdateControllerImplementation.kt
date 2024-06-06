@@ -5,14 +5,11 @@ import com.pradyotprakash.xfullstack.data.tweet.data.PollChoices
 import com.pradyotprakash.xfullstack.data.tweet.data.PollVoterDetails
 import com.pradyotprakash.xfullstack.data.tweet.data.Tweet
 import com.pradyotprakash.xfullstack.data.user.UserDataSource
-import com.pradyotprakash.xfullstack.data.view.ViewDataSource
-import com.pradyotprakash.xfullstack.data.view.data.View
 import com.pradyotprakash.xfullstack.features.tweet.resource.TweetResource
 import core.exception.DBWriteError
 import core.exception.InvalidTweet
 import core.exception.UserDetailsNotFound
 import data.request.TweetRequest
-import data.request.ViewRequest
 import data.response.XFullStackResponse
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.ApplicationCall
@@ -83,8 +80,6 @@ class TweetCreateUpdateControllerImplementation : TweetCreateUpdateController {
                 gif = tweetRequest.gif,
                 commentCount = 0,
                 retweetCount = 0,
-                likesCount = 0,
-                views = 0,
                 isAPoll = tweetRequest.isAPoll,
                 pollChoices = tweetRequest.pollChoices.map {
                     PollChoices(
@@ -203,40 +198,6 @@ class TweetCreateUpdateControllerImplementation : TweetCreateUpdateController {
                 status = XFullStackResponseStatus.Success,
                 code = null,
                 message = Localization.TWEET_VOTE_CASTED_SUCCESSFULLY,
-                data = null,
-            )
-        )
-    }
-
-    override suspend fun updateTweetsViews(
-        call: ApplicationCall,
-        userDataSource: UserDataSource,
-        viewDataSource: ViewDataSource,
-    ) {
-        val viewRequests = call.receive<List<ViewRequest>>()
-
-        val principal = call.principal<JWTPrincipal>()
-        val userId =
-            principal?.payload?.getClaim(USER_ID)?.asString() ?: throw UserDetailsNotFound()
-
-        userDataSource.getUserByUserId(userId) ?: throw UserDetailsNotFound()
-
-        val viewsDb = viewRequests.map {
-            View(
-                id = ObjectId(),
-                viewedId = ObjectId(it.viewedId),
-                viewedBy = ObjectId(userId),
-                viewedOn = UtilsMethod.Dates.getCurrentTimeStamp(),
-            )
-        }
-
-        viewDataSource.insertViews(viewsDb)
-
-        call.respond(
-            HttpStatusCode.OK, XFullStackResponse(
-                status = XFullStackResponseStatus.Success,
-                code = null,
-                message = Localization.SUCCESS,
                 data = null,
             )
         )

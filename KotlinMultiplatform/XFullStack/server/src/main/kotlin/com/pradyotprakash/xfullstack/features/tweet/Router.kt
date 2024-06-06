@@ -23,6 +23,7 @@ fun Routing.tweet(
                 it,
                 userDataSource,
                 tweetDataSource,
+                viewDataSource,
             )
         }
 
@@ -40,14 +41,6 @@ fun Routing.tweet(
                 it,
                 userDataSource,
                 tweetDataSource,
-            )
-        }
-
-        post<TweetResource.TweetViews> {
-            tweetController.updateTweetsViews(
-                this.context,
-                userDataSource,
-                viewDataSource,
             )
         }
     }

@@ -15,6 +15,8 @@ import com.pradyotprakash.xfullstack.features.utils.controllers.UtilsController
 import com.pradyotprakash.xfullstack.features.utils.utils
 import com.pradyotprakash.xfullstack.features.verification.controllers.VerificationController
 import com.pradyotprakash.xfullstack.features.verification.verification
+import com.pradyotprakash.xfullstack.features.view.controllers.ViewController
+import com.pradyotprakash.xfullstack.features.view.views
 import com.pradyotprakash.xfullstack.features.websockets.websockets
 import io.ktor.server.application.Application
 import io.ktor.server.routing.routing
@@ -33,6 +35,7 @@ fun Application.configureRouting() {
     val utilsController by ModulesConfig.di.instance<UtilsController>()
     val verificationController by ModulesConfig.di.instance<VerificationController>()
     val tweetController by ModulesConfig.di.instance<TweetController>()
+    val viewController by ModulesConfig.di.instance<ViewController>()
 
     routing {
         authentication(
@@ -58,6 +61,11 @@ fun Application.configureRouting() {
         )
         websockets(
             tweetDataSource = tweetDataSource,
+        )
+        views(
+            viewController = viewController,
+            viewDataSource = viewDataSource,
+            userDataSource = userDataSource,
         )
     }
 }

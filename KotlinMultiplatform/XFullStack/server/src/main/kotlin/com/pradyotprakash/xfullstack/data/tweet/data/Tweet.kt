@@ -10,7 +10,6 @@ import utils.Constants.DbKeys.IS_A_LIKED_TWEET
 import utils.Constants.DbKeys.IS_A_POLL
 import utils.Constants.DbKeys.IS_A_QUOTE_TWEET
 import utils.Constants.DbKeys.IS_A_REPOST_TWEET
-import utils.Constants.DbKeys.LIKES_COUNT
 import utils.Constants.DbKeys.PARENT_TWEET_ID
 import utils.Constants.DbKeys.POLL_CHOICES
 import utils.Constants.DbKeys.POLL_LENGTH
@@ -28,8 +27,6 @@ data class Tweet(
     val gif: List<String>,
     @BsonProperty(COMMENT_COUNT) val commentCount: Int,
     @BsonProperty(RETWEET_COUNT) val retweetCount: Int,
-    @BsonProperty(LIKES_COUNT) val likesCount: Int,
-    val views: Int,
 
     // Poll tweet details
     @BsonProperty(IS_A_POLL) val isAPoll: Boolean,

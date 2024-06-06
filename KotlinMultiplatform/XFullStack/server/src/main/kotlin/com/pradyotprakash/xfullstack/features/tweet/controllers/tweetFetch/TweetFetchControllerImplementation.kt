@@ -4,6 +4,7 @@ import com.pradyotprakash.xfullstack.core.data.parseToUserInfoResponse
 import com.pradyotprakash.xfullstack.data.tweet.TweetDataSource
 import com.pradyotprakash.xfullstack.data.tweet.data.Tweet
 import com.pradyotprakash.xfullstack.data.user.UserDataSource
+import com.pradyotprakash.xfullstack.data.view.ViewDataSource
 import com.pradyotprakash.xfullstack.features.tweet.resource.TweetResource
 import core.exception.UserDetailsNotFound
 import data.response.PollChoicesResponse
@@ -27,7 +28,8 @@ class TweetFetchControllerImplementation : TweetFetchController {
         call: ApplicationCall,
         tweetPaginate: TweetResource.TweetPaginate,
         userDataSource: UserDataSource,
-        tweetDataSource: TweetDataSource
+        tweetDataSource: TweetDataSource,
+        viewDataSource: ViewDataSource,
     ) {
         delay(API_RESPONSE_DELAY)
 
@@ -41,7 +43,7 @@ class TweetFetchControllerImplementation : TweetFetchController {
 
         val tweetsResponse = tweets.map { tweet ->
             convertToTweetResponse(
-                userDataSource, tweetDataSource, tweet, currentUserId
+                userDataSource, tweetDataSource, viewDataSource, tweet, currentUserId
             )
         }
 
@@ -58,6 +60,7 @@ class TweetFetchControllerImplementation : TweetFetchController {
     private suspend fun convertToTweetResponse(
         userDataSource: UserDataSource,
         tweetDataSource: TweetDataSource,
+        viewDataSource: ViewDataSource,
         tweet: Tweet,
         currentUserId: String,
     ): TweetsResponse {
@@ -90,6 +93,7 @@ class TweetFetchControllerImplementation : TweetFetchController {
             tweetDataSource.isLikedByCurrentUser(tweetIdHexStr, currentUserId)
 
         val likesCount = tweetDataSource.totalNumberOfLikes(tweetIdHexStr)
+        val viewsCount = viewDataSource.getViewsCount(tweetIdHexStr)
 
         return TweetsResponse(
             id = tweetIdHexStr,
@@ -102,7 +106,7 @@ class TweetFetchControllerImplementation : TweetFetchController {
             commentCount = tweet.commentCount,
             retweetCount = tweet.retweetCount,
             likesCount = likesCount,
-            views = tweet.views,
+            views = viewsCount,
             isAPoll = isAPoll,
             pollChoices = tweet.pollChoices.map { pollChoice ->
                 PollChoicesResponse(
@@ -123,7 +127,7 @@ class TweetFetchControllerImplementation : TweetFetchController {
             parentTweetId = tweet.parentTweetId?.toHexString(),
             parentTweetDetails = parentTweetDetails?.let {
                 convertToTweetResponse(
-                    userDataSource, tweetDataSource, it, currentUserId
+                    userDataSource, tweetDataSource, viewDataSource, it, currentUserId
                 )
             },
         )
