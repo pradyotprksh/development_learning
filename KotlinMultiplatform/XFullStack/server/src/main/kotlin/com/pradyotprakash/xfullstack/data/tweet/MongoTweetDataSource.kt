@@ -30,12 +30,8 @@ class MongoTweetDataSource(
     ): List<Tweet> {
         val skip = (page - 1) * limit
         return tweetCollection.find(
-            Filters.and(
-                Filters.lte(SCHEDULED_ON_TWEET, UtilsMethod.Dates.getCurrentTimeStamp()),
-                Filters.lte(IS_A_LIKED_TWEET, false)
-            )
-        ).sort(Sorts.descending(TWEETED_ON)).skip(skip).limit(limit)
-            .toList()
+            Filters.lte(SCHEDULED_ON_TWEET, UtilsMethod.Dates.getCurrentTimeStamp()),
+        ).sort(Sorts.descending(TWEETED_ON)).skip(skip).limit(limit).toList()
     }
 
     override suspend fun watchTweets() = tweetCollection.watch()
@@ -51,12 +47,10 @@ class MongoTweetDataSource(
     }
 
     override suspend fun incrementVotesOnPoll(
-        tweetId: String,
-        choices: List<PollChoices>
+        tweetId: String, choices: List<PollChoices>
     ): Boolean {
         return tweetCollection.updateOne(
-            filter = Filters.eq(ID, ObjectId(tweetId)),
-            update = Updates.set(POLL_CHOICES, choices)
+            filter = Filters.eq(ID, ObjectId(tweetId)), update = Updates.set(POLL_CHOICES, choices)
         ).wasAcknowledged()
     }
 

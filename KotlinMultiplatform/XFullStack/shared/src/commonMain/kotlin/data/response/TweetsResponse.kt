@@ -27,5 +27,6 @@ data class TweetsResponse(
     val isLikedTweet: Boolean,
     val parentTweetId: String?,
     val parentTweetDetails: TweetsResponse?,
+    val parentTweetDetailsNotFound: Boolean,
     val isLikedByCurrentUser: Boolean,
 )

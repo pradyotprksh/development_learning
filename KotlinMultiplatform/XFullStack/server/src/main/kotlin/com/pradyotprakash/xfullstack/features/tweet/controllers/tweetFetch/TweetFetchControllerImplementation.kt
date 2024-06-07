@@ -86,8 +86,14 @@ class TweetFetchControllerImplementation : TweetFetchController {
             }
         } ?: ""
 
-        val parentTweetDetails =
-            tweet.parentTweetId?.let { tweetDataSource.findTweetById(it.toHexString()) }
+        var parentTweetDetailsNotFound = false
+        val parentTweetDetails = tweet.parentTweetId?.let {
+            val result = tweetDataSource.findTweetById(it.toHexString())
+            if (result == null) {
+                parentTweetDetailsNotFound = true
+            }
+            result
+        }
 
         val isLikedByCurrentUser =
             tweetDataSource.isLikedByCurrentUser(tweetIdHexStr, currentUserId)
@@ -125,6 +131,7 @@ class TweetFetchControllerImplementation : TweetFetchController {
             isLikedTweet = tweet.isLikedTweet,
             isLikedByCurrentUser = isLikedByCurrentUser,
             parentTweetId = tweet.parentTweetId?.toHexString(),
+            parentTweetDetailsNotFound = parentTweetDetailsNotFound,
             parentTweetDetails = parentTweetDetails?.let {
                 convertToTweetResponse(
                     userDataSource, tweetDataSource, viewDataSource, it, currentUserId
