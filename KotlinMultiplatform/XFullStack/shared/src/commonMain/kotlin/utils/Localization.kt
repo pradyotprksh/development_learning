@@ -174,4 +174,5 @@ object Localization {
     const val ASK_A_QUESTION = "Ask a question..."
     const val CHOICE = "Choice %s"
     const val SUCCESS = "Success"
+    const val ASKED_SECRET_NOT_PRESENT = "Asked secret is not present."
 }

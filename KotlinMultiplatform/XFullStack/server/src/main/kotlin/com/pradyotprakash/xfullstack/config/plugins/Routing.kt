@@ -9,6 +9,8 @@ import com.pradyotprakash.xfullstack.data.user.UserDataSource
 import com.pradyotprakash.xfullstack.data.view.ViewDataSource
 import com.pradyotprakash.xfullstack.features.authentication.authentication
 import com.pradyotprakash.xfullstack.features.authentication.controllers.AuthenticationController
+import com.pradyotprakash.xfullstack.features.secrets.controllers.SecretsController
+import com.pradyotprakash.xfullstack.features.secrets.secrets
 import com.pradyotprakash.xfullstack.features.tweet.controllers.TweetController
 import com.pradyotprakash.xfullstack.features.tweet.tweet
 import com.pradyotprakash.xfullstack.features.utils.controllers.UtilsController
@@ -36,6 +38,7 @@ fun Application.configureRouting() {
     val verificationController by ModulesConfig.di.instance<VerificationController>()
     val tweetController by ModulesConfig.di.instance<TweetController>()
     val viewController by ModulesConfig.di.instance<ViewController>()
+    val secretsController by ModulesConfig.di.instance<SecretsController>()
 
     routing {
         authentication(
@@ -65,6 +68,10 @@ fun Application.configureRouting() {
         views(
             viewController = viewController,
             viewDataSource = viewDataSource,
+            userDataSource = userDataSource,
+        )
+        secrets(
+            secretsController = secretsController,
             userDataSource = userDataSource,
         )
     }

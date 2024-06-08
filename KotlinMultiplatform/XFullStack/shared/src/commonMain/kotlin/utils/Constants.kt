@@ -61,6 +61,10 @@ object Constants {
         object Views {
             const val VIEWS = "/views"
         }
+
+        object Secrets {
+            const val SECRETS = "/secrets"
+        }
     }
 
     object Keys {
@@ -76,6 +80,9 @@ object Constants {
         const val LIMIT = "limit"
         const val TWEET_ID = "tweetId"
         const val OPTION_ID = "optionId"
+        const val GEMINI_API_KEY = "gemini_api_key"
+        const val GEMINI_API_KEY_1 = "GEMINI_API_KEY_1"
+        const val GEMINI_API_KEY_2 = "GEMINI_API_KEY_2"
     }
 
     object ConstValues {
@@ -122,6 +129,7 @@ object Constants {
         const val BIO_VALIDITY_ERROR_CODE = "EC_XFS019"
         const val TWEET_VALIDITY_ERROR_CODE = "EC_XFS020"
         const val BAD_REQUEST_ERROR_CODE = "EC_XFS021"
+        const val INVALID_REQUEST_ASK = "EC_XFS022"
     }
 
     object SuccessCode {

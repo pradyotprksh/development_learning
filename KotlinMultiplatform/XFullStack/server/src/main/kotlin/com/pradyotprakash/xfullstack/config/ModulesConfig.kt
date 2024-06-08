@@ -21,6 +21,9 @@ import com.pradyotprakash.xfullstack.features.authentication.controllers.registe
 import com.pradyotprakash.xfullstack.features.authentication.controllers.register.RegisterControllerImplementation
 import com.pradyotprakash.xfullstack.features.authentication.controllers.userInfo.UserInfoController
 import com.pradyotprakash.xfullstack.features.authentication.controllers.userInfo.UserInfoControllerImplementation
+import com.pradyotprakash.xfullstack.features.secrets.controllers.SecretsController
+import com.pradyotprakash.xfullstack.features.secrets.controllers.secretsFetch.SecretsFetchController
+import com.pradyotprakash.xfullstack.features.secrets.controllers.secretsFetch.SecretsFetchControllerImplementation
 import com.pradyotprakash.xfullstack.features.tweet.controllers.TweetController
 import com.pradyotprakash.xfullstack.features.tweet.controllers.tweetCreationUpdate.TweetCreateUpdateController
 import com.pradyotprakash.xfullstack.features.tweet.controllers.tweetCreationUpdate.TweetCreateUpdateControllerImplementation
@@ -82,6 +85,8 @@ object ModulesConfig {
         bindProvider<TweetFetchController> { TweetFetchControllerImplementation() }
 
         bindProvider<ViewCreateController> { ViewCreateControllerImplementation() }
+
+        bindProvider<SecretsFetchController> { SecretsFetchControllerImplementation() }
     }
 
     private val featuresModule = DI.Module("FEATURES") {
@@ -94,6 +99,8 @@ object ModulesConfig {
         bindProvider { TweetController(instance(), instance()) }
 
         bindProvider { ViewController(instance()) }
+
+        bindProvider { SecretsController(instance()) }
     }
 
     val di = DI {
