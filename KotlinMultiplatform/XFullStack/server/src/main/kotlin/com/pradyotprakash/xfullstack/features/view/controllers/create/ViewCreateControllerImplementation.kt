@@ -15,6 +15,8 @@ import io.ktor.server.response.respond
 import org.bson.types.ObjectId
 import utils.Constants
 import utils.Localization
+import utils.Logger
+import utils.LoggerLevel
 import utils.UtilsMethod
 import utils.XFullStackResponseStatus
 
@@ -36,13 +38,16 @@ class ViewCreateControllerImplementation : ViewCreateController {
             val viewedId = ObjectId(it.viewedId)
             val userId = ObjectId(currentUserId)
 
+            val id = UtilsMethod.Conversion.combineStrings(
+                viewedId.toHexString(),
+                userId.toHexString(),
+                24,
+            )
+            Logger.log(LoggerLevel.Info, id)
+
             View(
                 id = ObjectId(
-                    UtilsMethod.Conversion.combineByteArrays(
-                        viewedId.toByteArray(),
-                        userId.toByteArray(),
-                        24,
-                    )
+                    id,
                 ),
                 viewedId = viewedId,
                 viewedBy = userId,

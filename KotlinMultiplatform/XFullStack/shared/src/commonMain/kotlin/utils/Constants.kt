@@ -163,5 +163,6 @@ object Constants {
         const val VIEWED_ON = "viewed_on"
         const val VIEWED_ID = "viewed_id"
         const val IS_UPDATED_ONLINE = "isUpdatedOnline"
+        const val VIEWED_ID_CAMELCASE = "viewedId"
     }
 }

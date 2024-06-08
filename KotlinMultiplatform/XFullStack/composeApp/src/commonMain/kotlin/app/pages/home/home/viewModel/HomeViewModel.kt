@@ -166,7 +166,8 @@ class HomeViewModel : ViewModel() {
             val viewedTweets = _homeScreenState.value.viewedTweets
             if (!viewedTweets.contains(tweetId)) {
                 viewedTweets.add(tweetId)
-                viewRepository.saveView(tweetId)
+                // TODO: Need to work on view local storage logic
+                // viewRepository.saveView(tweetId)
             }
         }
     }
