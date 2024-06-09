@@ -87,6 +87,7 @@ object Constants {
         const val GEMINI_API_KEY = "gemini_api_key"
         const val GEMINI_API_KEY_1 = "GEMINI_API_KEY_1"
         const val GEMINI_API_KEY_2 = "GEMINI_API_KEY_2"
+        const val KEY = "key"
     }
 
     object ConstValues {
@@ -114,6 +115,7 @@ object Constants {
         const val GEMINI_HTTP_CLIENT = "gemini_http_client"
         const val XFULLSTACK_NETWORK_CLIENT = "x_full_stack_network_client"
         const val GEMINI_NETWORK_CLIENT = "gemini_network_client"
+        const val TIMEOUT_VALUE = 15000L
     }
 
     object ErrorCode {
@@ -181,5 +183,10 @@ object Constants {
         const val VIEWED_ID = "viewed_id"
         const val IS_UPDATED_ONLINE = "isUpdatedOnline"
         const val VIEWED_ID_CAMELCASE = "viewedId"
+    }
+
+    object GeminiPrompt {
+        const val TWEET_EMOTION =
+            "can you tell the tag for the text %s, like what's the tone or emotion give response in words, separated by comma"
     }
 }

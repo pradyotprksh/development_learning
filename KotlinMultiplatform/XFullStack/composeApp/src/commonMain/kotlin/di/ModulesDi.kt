@@ -7,12 +7,15 @@ import core.network.XFullStackHttpClient
 import data.device.tweet.TweetDBServiceImplementation
 import data.device.user.current.CurrentUserDBServiceImplementation
 import data.device.view.ViewDBServiceImplementation
+import data.remote.gemini.GeminiRemoteServiceImplementation
 import data.remote.server.utils.ServerUtilsRemoteServiceImplementation
 import data.remote.tweet.TweetRemoteServiceImplementation
 import data.remote.user.current.CurrentUserRemoteServiceImplementation
 import data.remote.user.verification.UserVerificationRemoteServiceImplementation
 import data.remote.view.ViewRemoteServiceImplementation
 import data.remote.websocket.WebsocketRemoteServiceImplementation
+import domain.repositories.gemini.GeminiRepository
+import domain.repositories.gemini.GeminiRepositoryImplementation
 import domain.repositories.server.utils.ServerUtilsRepository
 import domain.repositories.server.utils.ServerUtilsRepositoryImplementation
 import domain.repositories.tweet.TweetRepository
@@ -25,6 +28,7 @@ import domain.repositories.view.ViewRepository
 import domain.repositories.view.ViewRepositoryImplementation
 import domain.repositories.websocket.WebsocketRepository
 import domain.repositories.websocket.WebsocketRepositoryImplementation
+import domain.services.gemini.GeminiRemoteService
 import domain.services.server.utils.ServerUtilsRemoteService
 import domain.services.tweet.TweetDBService
 import domain.services.tweet.TweetRemoteService
@@ -80,6 +84,12 @@ object ModulesDi {
         bindProvider<WebsocketRemoteService> { WebsocketRemoteServiceImplementation(instance(tag = XFULLSTACK_NETWORK_CLIENT)) }
 
         bindProvider<ViewRemoteService> { ViewRemoteServiceImplementation(instance(tag = XFULLSTACK_NETWORK_CLIENT)) }
+
+        bindProvider<GeminiRemoteService> {
+            GeminiRemoteServiceImplementation(
+                instance(tag = GEMINI_NETWORK_CLIENT), instance(tag = XFULLSTACK_NETWORK_CLIENT)
+            )
+        }
     }
 
     private val repositoriesModule = DI.Module("REPOSITORIES") {
@@ -106,6 +116,10 @@ object ModulesDi {
 
         bind<ViewRepository>() with singleton {
             ViewRepositoryImplementation(instance(), instance())
+        }
+
+        bind<GeminiRepository>() with singleton {
+            GeminiRepositoryImplementation(instance())
         }
     }
 

@@ -4,6 +4,7 @@ import di.ModulesDi
 import domain.repositories.user.current.CurrentUserRepository
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.DefaultRequest
+import io.ktor.client.plugins.HttpTimeout
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.defaultRequest
 import io.ktor.client.plugins.logging.Logging
@@ -16,6 +17,7 @@ import org.mongodb.kbson.BsonObjectId
 import utils.Constants.ConstValues.APPLICATION_JSON
 import utils.Constants.ConstValues.BASE_URL
 import utils.Constants.ConstValues.BEARER
+import utils.Constants.ConstValues.TIMEOUT_VALUE
 import utils.Constants.Keys.AUTHORIZATION
 import utils.Constants.Keys.CONTENT_TYPE
 import utils.Constants.Keys.REQUEST_IDENTIFIER
@@ -39,6 +41,11 @@ object XFullStackHttpClient {
         install(Logging)
         install(DefaultRequest)
         install(WebSockets)
+        install(HttpTimeout) {
+            requestTimeoutMillis = TIMEOUT_VALUE
+            connectTimeoutMillis = TIMEOUT_VALUE
+            socketTimeoutMillis = TIMEOUT_VALUE
+        }
 
         defaultRequest {
             url("$BASE_URL/")
