@@ -1,6 +1,7 @@
 package di
 
 import core.database.XFullStackDatabaseClient
+import core.network.GeminiHttpClient
 import core.network.NetworkClient
 import core.network.XFullStackHttpClient
 import data.device.tweet.TweetDBServiceImplementation
@@ -39,11 +40,17 @@ import org.kodein.di.bindProvider
 import org.kodein.di.bindSingleton
 import org.kodein.di.instance
 import org.kodein.di.singleton
+import utils.Constants.ConstValues.GEMINI_HTTP_CLIENT
+import utils.Constants.ConstValues.GEMINI_NETWORK_CLIENT
+import utils.Constants.ConstValues.XFULLSTACK_HTTP_CLIENT
+import utils.Constants.ConstValues.XFULLSTACK_NETWORK_CLIENT
 
 object ModulesDi {
     private val networkModule = DI.Module("NETWORK") {
-        bindSingleton { XFullStackHttpClient.createHttpClient() }
-        bindSingleton { NetworkClient(instance()) }
+        bindSingleton(tag = XFULLSTACK_HTTP_CLIENT) { XFullStackHttpClient.createHttpClient() }
+        bindSingleton(tag = GEMINI_HTTP_CLIENT) { GeminiHttpClient.createHttpClient() }
+        bindSingleton(tag = XFULLSTACK_NETWORK_CLIENT) { NetworkClient(instance(tag = XFULLSTACK_HTTP_CLIENT)) }
+        bindSingleton(tag = GEMINI_NETWORK_CLIENT) { NetworkClient(instance(tag = GEMINI_HTTP_CLIENT)) }
     }
 
     private val databaseModule = DI.Module("DATABASE") {
@@ -59,20 +66,20 @@ object ModulesDi {
     }
 
     private val servicesRemoteModule = DI.Module("SERVICES_REMOTE") {
-        bindProvider<CurrentUserRemoteService> { CurrentUserRemoteServiceImplementation(instance()) }
+        bindProvider<CurrentUserRemoteService> { CurrentUserRemoteServiceImplementation(instance(tag = XFULLSTACK_NETWORK_CLIENT)) }
         bindProvider<UserVerificationRemoteService> {
             UserVerificationRemoteServiceImplementation(
-                instance()
+                instance(tag = XFULLSTACK_NETWORK_CLIENT)
             )
         }
 
-        bindProvider<ServerUtilsRemoteService> { ServerUtilsRemoteServiceImplementation(instance()) }
+        bindProvider<ServerUtilsRemoteService> { ServerUtilsRemoteServiceImplementation(instance(tag = XFULLSTACK_NETWORK_CLIENT)) }
 
-        bindProvider<TweetRemoteService> { TweetRemoteServiceImplementation(instance()) }
+        bindProvider<TweetRemoteService> { TweetRemoteServiceImplementation(instance(tag = XFULLSTACK_NETWORK_CLIENT)) }
 
-        bindProvider<WebsocketRemoteService> { WebsocketRemoteServiceImplementation(instance()) }
+        bindProvider<WebsocketRemoteService> { WebsocketRemoteServiceImplementation(instance(tag = XFULLSTACK_NETWORK_CLIENT)) }
 
-        bindProvider<ViewRemoteService> { ViewRemoteServiceImplementation(instance()) }
+        bindProvider<ViewRemoteService> { ViewRemoteServiceImplementation(instance(tag = XFULLSTACK_NETWORK_CLIENT)) }
     }
 
     private val repositoriesModule = DI.Module("REPOSITORIES") {

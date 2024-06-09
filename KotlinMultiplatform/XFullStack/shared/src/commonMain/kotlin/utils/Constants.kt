@@ -21,7 +21,6 @@ object Constants {
 
     object Jwt {
         const val ISSUER = ConstValues.BASE_URL
-        const val DOMAIN = ConstValues.BASE_URL
         const val AUDIENCE = "users"
         const val REALM = "xfullstack ktor app"
     }
@@ -65,6 +64,11 @@ object Constants {
         object Secrets {
             const val SECRETS = "/secrets"
         }
+
+        object Gemini {
+            const val BETA_1_5_MODEL_GENERATE_CONTENT =
+                "v1beta/models/gemini-1.5-flash:generateContent"
+        }
     }
 
     object Keys {
@@ -95,6 +99,8 @@ object Constants {
         const val APPLICATION_JSON = "application/json"
         const val BEARER = "Bearer"
         const val BASE_URL = "http://${Server.HOST}:${Server.PORT}"
+        const val GEMINI_BASE_URL =
+            "https://generativelanguage.googleapis.com/"
         const val OTP_LENGTH = 6
         const val USERNAME_EMAIL_PHONE = "usernameEmailPhone"
         const val NO_USERNAME = "no-username"
@@ -104,6 +110,10 @@ object Constants {
         const val DEFAULT_PAGINATE_LIMIT = 10
         const val MAX_TWEET_CREATION_LIMIT = 25
         const val MAX_POLL_CHOICE_LENGTH = 25
+        const val XFULLSTACK_HTTP_CLIENT = "x_full_stack_http_client"
+        const val GEMINI_HTTP_CLIENT = "gemini_http_client"
+        const val XFULLSTACK_NETWORK_CLIENT = "x_full_stack_network_client"
+        const val GEMINI_NETWORK_CLIENT = "gemini_network_client"
     }
 
     object ErrorCode {
@@ -150,7 +160,6 @@ object Constants {
         const val TWEETED_ON = "tweeted_on"
         const val COMMENT_COUNT = "comment_count"
         const val RETWEET_COUNT = "retweet_count"
-        const val LIKES_COUNT = "likes_count"
         const val IS_A_POLL = "is_a_poll"
         const val POLL_CHOICES = "poll_choices"
         const val POLL_LENGTH = "poll_length"
