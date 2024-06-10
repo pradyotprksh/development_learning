@@ -2,15 +2,14 @@ package app.composables.userAppBar.viewModel
 
 import androidx.lifecycle.ViewModel
 import app.composables.userAppBar.state.UserAppBarState
-import di.ModulesDi
+import di.SharedModulesDi
 import domain.repositories.user.current.CurrentUserRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import org.kodein.di.instance
 
-class UserAppBarViewModel : ViewModel() {
-    private val currentUserRepository: CurrentUserRepository by ModulesDi.di.instance()
-
+class UserAppBarViewModel(
+    private val currentUserRepository: CurrentUserRepository = SharedModulesDi.Instance.currentUserRepository,
+) : ViewModel() {
     private val _userAppBarState = MutableStateFlow(UserAppBarState())
     val userAppBarState = _userAppBarState.asStateFlow()
 

@@ -7,7 +7,7 @@ import core.exception.UnauthorizedAccess
 import core.exception.UserAuthDetailsError
 import core.exception.UserDetailsNotFound
 import core.exception.XFullStackException
-import data.response.XFullStackResponse
+import core.models.response.XFullStackResponse
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.Application
 import io.ktor.server.application.install

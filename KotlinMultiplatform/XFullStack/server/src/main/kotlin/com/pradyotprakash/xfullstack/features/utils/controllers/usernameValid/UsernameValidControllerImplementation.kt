@@ -3,7 +3,7 @@ package com.pradyotprakash.xfullstack.features.utils.controllers.usernameValid
 import com.pradyotprakash.xfullstack.data.user.UserDataSource
 import com.pradyotprakash.xfullstack.features.utils.resource.UtilsResource
 import core.exception.InvalidParameter
-import data.response.XFullStackResponse
+import core.models.response.XFullStackResponse
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.ApplicationCall
 import io.ktor.server.response.respond

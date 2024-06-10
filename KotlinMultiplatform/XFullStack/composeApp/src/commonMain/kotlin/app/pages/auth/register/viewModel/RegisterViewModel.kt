@@ -3,15 +3,14 @@ package app.pages.auth.register.viewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.pages.auth.register.state.RegisterState
+import core.models.request.RegisterRequest
 import core.models.response.ClientResponse
-import data.request.RegisterRequest
-import di.ModulesDi
+import di.SharedModulesDi
 import domain.repositories.user.current.CurrentUserRepository
 import domain.repositories.user.verification.UserVerificationRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import org.kodein.di.instance
 import utils.Constants.ConstValues.NAME_MAX_LENGTH
 import utils.Constants.ConstValues.OTP_LENGTH
 import utils.Constants.ErrorCode.USERNAME_ALREADY_PRESENT_ERROR_CODE
@@ -24,10 +23,10 @@ import utils.TextFieldType
 import utils.UtilsMethod
 import utils.extensions.debounce
 
-class RegisterViewModel : ViewModel() {
-    private val userVerificationRepository: UserVerificationRepository by ModulesDi.di.instance()
-    private val currentUserRepository: CurrentUserRepository by ModulesDi.di.instance()
-
+class RegisterViewModel(
+    private val userVerificationRepository: UserVerificationRepository = SharedModulesDi.Instance.userVerificationRepository,
+    private val currentUserRepository: CurrentUserRepository = SharedModulesDi.Instance.currentUserRepository,
+) : ViewModel() {
     private val _registerScreenState = MutableStateFlow(RegisterState())
     val registerScreenState = _registerScreenState.asStateFlow()
 

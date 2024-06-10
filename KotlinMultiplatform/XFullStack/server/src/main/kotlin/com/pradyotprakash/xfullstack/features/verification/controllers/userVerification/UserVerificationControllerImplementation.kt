@@ -2,9 +2,9 @@ package com.pradyotprakash.xfullstack.features.verification.controllers.userVeri
 
 import com.pradyotprakash.xfullstack.data.user.UserDataSource
 import com.pradyotprakash.xfullstack.features.verification.resource.VerificationResource
-import data.request.OtpVerificationRequest
-import data.response.OTPResponse
-import data.response.XFullStackResponse
+import core.models.request.OtpVerificationRequest
+import core.models.response.OTPResponse
+import core.models.response.XFullStackResponse
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.ApplicationCall
 import io.ktor.server.request.receive

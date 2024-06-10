@@ -1,7 +1,7 @@
 package com.pradyotprakash.xfullstack.features.authentication.controllers.authenticate
 
 import com.pradyotprakash.xfullstack.features.authentication.resource.AuthenticationResource
-import data.response.XFullStackResponse
+import core.models.response.XFullStackResponse
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.ApplicationCall
 import io.ktor.server.response.respond

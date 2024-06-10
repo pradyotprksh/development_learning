@@ -2,15 +2,14 @@ package app.composables.userDrawer.viewModel
 
 import androidx.lifecycle.ViewModel
 import app.composables.userDrawer.state.UserDrawerState
-import di.ModulesDi
+import di.SharedModulesDi
 import domain.repositories.user.current.CurrentUserRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import org.kodein.di.instance
 
-class UserDrawerViewModel : ViewModel() {
-    private val currentUserRepository: CurrentUserRepository by ModulesDi.di.instance()
-
+class UserDrawerViewModel(
+    private val currentUserRepository: CurrentUserRepository = SharedModulesDi.Instance.currentUserRepository,
+) : ViewModel() {
     private val _userDrawerState = MutableStateFlow(UserDrawerState())
     val userDrawerState = _userDrawerState.asStateFlow()
 

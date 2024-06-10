@@ -4,8 +4,8 @@ import com.pradyotprakash.xfullstack.data.user.UserDataSource
 import com.pradyotprakash.xfullstack.data.view.ViewDataSource
 import com.pradyotprakash.xfullstack.data.view.data.View
 import core.exception.UserDetailsNotFound
-import data.request.ViewRequest
-import data.response.XFullStackResponse
+import core.models.request.ViewRequest
+import core.models.response.XFullStackResponse
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.ApplicationCall
 import io.ktor.server.auth.jwt.JWTPrincipal

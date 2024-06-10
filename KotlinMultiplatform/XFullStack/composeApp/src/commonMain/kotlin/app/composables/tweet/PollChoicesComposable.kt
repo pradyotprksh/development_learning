@@ -22,14 +22,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.unit.dp
 import app.composables.CircularDotComposable
-import core.models.realm.PollChoicesDB
+import core.models.response.PollChoicesResponse
 import utils.Localization
 import utils.UtilsMethod
 
 @Composable
 fun PollChoicesComposable(
     modifier: Modifier = Modifier,
-    pollChoices: List<PollChoicesDB>,
+    pollChoices: List<PollChoicesResponse>,
     isPollingAllowed: Boolean,
     pollingEndTime: String,
     totalVotesOnPoll: Int,

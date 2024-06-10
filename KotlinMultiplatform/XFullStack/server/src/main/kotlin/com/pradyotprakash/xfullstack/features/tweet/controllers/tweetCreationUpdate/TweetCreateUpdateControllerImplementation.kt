@@ -9,8 +9,8 @@ import com.pradyotprakash.xfullstack.features.tweet.resource.TweetResource
 import core.exception.DBWriteError
 import core.exception.InvalidTweet
 import core.exception.UserDetailsNotFound
-import data.request.TweetRequest
-import data.response.XFullStackResponse
+import core.models.request.TweetRequest
+import core.models.response.XFullStackResponse
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.ApplicationCall
 import io.ktor.server.auth.jwt.JWTPrincipal

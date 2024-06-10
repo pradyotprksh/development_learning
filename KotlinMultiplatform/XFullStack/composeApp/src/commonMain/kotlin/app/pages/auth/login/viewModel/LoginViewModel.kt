@@ -3,15 +3,14 @@ package app.pages.auth.login.viewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.pages.auth.login.state.LoginState
+import core.models.request.LoginRequest
 import core.models.response.ClientResponse
-import data.request.LoginRequest
-import di.ModulesDi
+import di.SharedModulesDi
 import domain.repositories.user.current.CurrentUserRepository
 import domain.repositories.user.verification.UserVerificationRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import org.kodein.di.instance
 import utils.Constants.ErrorCode.USER_DETAILS_NOT_FOUND_CODE
 import utils.Constants.SuccessCode.EMAIL_PRESENT_SUCCESS_CODE
 import utils.Constants.SuccessCode.PHONE_NUMBER_PRESENT_SUCCESS_CODE
@@ -22,10 +21,10 @@ import utils.TextFieldType
 import utils.UtilsMethod
 import utils.extensions.debounce
 
-class LoginViewModel : ViewModel() {
-    private val userVerificationRepository: UserVerificationRepository by ModulesDi.di.instance()
-    private val currentUserRepository: CurrentUserRepository by ModulesDi.di.instance()
-
+class LoginViewModel(
+    private val userVerificationRepository: UserVerificationRepository = SharedModulesDi.Instance.userVerificationRepository,
+    private val currentUserRepository: CurrentUserRepository = SharedModulesDi.Instance.currentUserRepository,
+) : ViewModel() {
     private val _loginScreenState = MutableStateFlow(LoginState())
     val loginScreenState = _loginScreenState.asStateFlow()
 

@@ -2,8 +2,8 @@ package com.pradyotprakash.xfullstack.core.data
 
 import com.pradyotprakash.xfullstack.core.security.hashing.SaltedHash
 import com.pradyotprakash.xfullstack.data.user.User
-import data.request.RegisterRequest
-import data.response.UserInfoResponse
+import core.models.request.RegisterRequest
+import core.models.response.UserInfoResponse
 
 fun RegisterRequest.parseToUser(saltedHash: SaltedHash) = this.let { registerRequest ->
     User(

@@ -24,12 +24,12 @@ import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.unit.dp
 import app.composables.tweet.TweetComposable
 import app.pages.home.home.state.TweetActions
-import core.models.realm.TweetDB
+import core.models.response.TweetsResponse
 
 @Composable
 fun ForYouTweetsComposable(
     modifier: Modifier = Modifier,
-    tweets: List<TweetDB> = emptyList(),
+    tweets: List<TweetsResponse> = emptyList(),
     showLoading: Boolean = false,
     tweetsLazyColumnState: LazyListState,
     tweetActions: TweetActions,
@@ -45,14 +45,14 @@ fun ForYouTweetsComposable(
 
                 Column(
                     modifier = Modifier.fillMaxWidth().onGloballyPositioned { layoutCoordinates ->
-                            val itemBounds = layoutCoordinates.boundsInParent()
-                            val parentBounds =
-                                layoutCoordinates.parentCoordinates?.boundsInParent() ?: Rect.Zero
+                        val itemBounds = layoutCoordinates.boundsInParent()
+                        val parentBounds =
+                            layoutCoordinates.parentCoordinates?.boundsInParent() ?: Rect.Zero
 
-                            if (parentBounds.left <= itemBounds.left && parentBounds.top <= itemBounds.top && parentBounds.right >= itemBounds.right && parentBounds.bottom >= itemBounds.bottom) {
-                                tweetVisibility(tweet.tweetId)
-                            }
-                        },
+                        if (parentBounds.left <= itemBounds.left && parentBounds.top <= itemBounds.top && parentBounds.right >= itemBounds.right && parentBounds.bottom >= itemBounds.bottom) {
+                            tweetVisibility(tweet.id)
+                        }
+                    },
                 ) {
                     if (index != 0) {
                         HorizontalDivider()
@@ -61,15 +61,15 @@ fun ForYouTweetsComposable(
                         modifier = Modifier.padding(
                             horizontal = 15.dp, vertical = 8.dp
                         ),
-                        createdByProfilePicture = tweet.createdBy?.profilePicture,
-                        createdByName = tweet.createdBy?.name ?: "",
-                        createdByUsername = tweet.createdBy?.username ?: "",
+                        createdByProfilePicture = tweet.createdBy.profilePicture,
+                        createdByName = tweet.createdBy.name,
+                        createdByUsername = tweet.createdBy.username,
                         tweetedOn = tweet.tweetedOn,
                         tweet = tweet.tweet,
-                        tweetId = tweet.tweetId,
+                        tweetId = tweet.id,
                         commentCount = "${tweet.commentCount}",
                         retweetCount = "${tweet.retweetCount}",
-                        likeCount = "${tweet.likeCount}",
+                        likeCount = "${tweet.likesCount}",
                         views = "${tweet.views}",
                         isAPoll = tweet.isAPoll,
                         pollChoices = tweet.pollChoices.toList(),
@@ -77,7 +77,7 @@ fun ForYouTweetsComposable(
                         pollingEndTime = tweet.pollingEndTime,
                         onPollSelection = { optionId ->
                             tweetActions.onPollSelection(
-                                tweet.tweetId,
+                                tweet.id,
                                 optionId,
                             )
                         },

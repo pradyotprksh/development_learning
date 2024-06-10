@@ -7,9 +7,9 @@ import com.pradyotprakash.xfullstack.data.user.UserDataSource
 import com.pradyotprakash.xfullstack.data.view.ViewDataSource
 import com.pradyotprakash.xfullstack.features.tweet.resource.TweetResource
 import core.exception.UserDetailsNotFound
-import data.response.PollChoicesResponse
-import data.response.TweetsResponse
-import data.response.XFullStackResponse
+import core.models.response.PollChoicesResponse
+import core.models.response.TweetsResponse
+import core.models.response.XFullStackResponse
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.ApplicationCall
 import io.ktor.server.auth.jwt.JWTPrincipal

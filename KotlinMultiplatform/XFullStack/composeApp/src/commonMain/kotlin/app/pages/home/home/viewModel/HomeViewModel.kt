@@ -3,24 +3,23 @@ package app.pages.home.home.viewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.pages.home.home.state.HomeState
+import core.models.request.TweetRequest
 import core.models.response.ClientResponse
-import data.request.TweetRequest
-import di.ModulesDi
+import di.SharedModulesDi
 import domain.repositories.tweet.TweetRepository
 import domain.repositories.view.ViewRepository
 import domain.repositories.websocket.WebsocketRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import org.kodein.di.instance
 import utils.Constants.ConstValues.DEFAULT_PAGINATE_LIMIT
 import utils.Constants.SuccessCode.TWEETS_UPDATE_SUCCESS_CODE
 
-class HomeViewModel : ViewModel() {
-    private val tweetRepository: TweetRepository by ModulesDi.di.instance()
-    private val websocketRepository: WebsocketRepository by ModulesDi.di.instance()
-    private val viewRepository: ViewRepository by ModulesDi.di.instance()
-
+class HomeViewModel(
+    private val tweetRepository: TweetRepository = SharedModulesDi.Instance.tweetRepository,
+    private val websocketRepository: WebsocketRepository = SharedModulesDi.Instance.websocketRepository,
+    private val viewRepository: ViewRepository = SharedModulesDi.Instance.viewRepository,
+) : ViewModel() {
     init {
         viewModelScope.launch {
             startTweetUpdateListener()
@@ -163,12 +162,7 @@ class HomeViewModel : ViewModel() {
 
     fun updateViewForTweet(tweetId: String) {
         viewModelScope.launch {
-            val viewedTweets = _homeScreenState.value.viewedTweets
-            if (!viewedTweets.contains(tweetId)) {
-                viewedTweets.add(tweetId)
-                // TODO: Need to work on view local storage logic
-                // viewRepository.saveView(tweetId)
-            }
+            viewRepository.saveView(tweetId)
         }
     }
 }

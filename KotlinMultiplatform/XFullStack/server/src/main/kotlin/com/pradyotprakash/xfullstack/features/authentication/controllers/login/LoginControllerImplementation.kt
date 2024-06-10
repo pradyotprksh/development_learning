@@ -10,9 +10,9 @@ import com.pradyotprakash.xfullstack.features.authentication.resource.Authentica
 import core.exception.InvalidParameter
 import core.exception.UserAuthDetailsError
 import core.exception.UserDetailsNotFound
-import data.request.LoginRequest
-import data.response.AuthenticationResponse
-import data.response.XFullStackResponse
+import core.models.request.LoginRequest
+import core.models.response.AuthenticationResponse
+import core.models.response.XFullStackResponse
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.ApplicationCall
 import io.ktor.server.request.receive

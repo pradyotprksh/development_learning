@@ -21,7 +21,7 @@ import androidx.compose.ui.unit.dp
 import app.composables.CircularDotComposable
 import app.composables.ProfileImageComposable
 import app.pages.home.home.state.TweetActions
-import core.models.realm.PollChoicesDB
+import core.models.response.PollChoicesResponse
 import utils.Constants.ConstValues.USERNAME_PREFIX
 
 @Composable
@@ -39,7 +39,7 @@ fun TweetComposable(
     views: String,
     isAPoll: Boolean,
     isLikedByCurrentUser: Boolean,
-    pollChoices: List<PollChoicesDB>,
+    pollChoices: List<PollChoicesResponse>,
     isPollingAllowed: Boolean,
     pollingEndTime: String,
     onPollSelection: (String) -> Unit,

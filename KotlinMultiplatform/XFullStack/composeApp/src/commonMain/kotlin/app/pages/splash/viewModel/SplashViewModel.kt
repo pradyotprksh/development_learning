@@ -3,18 +3,17 @@ package app.pages.splash.viewModel
 import androidx.lifecycle.ViewModel
 import app.pages.splash.state.SplashState
 import core.models.response.ClientResponse
-import di.ModulesDi
+import di.SharedModulesDi
 import domain.repositories.server.utils.ServerUtilsRepository
 import domain.repositories.user.current.CurrentUserRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.firstOrNull
-import org.kodein.di.instance
 
-class SplashViewModel : ViewModel() {
-    private val currentUserRepository: CurrentUserRepository by ModulesDi.di.instance()
-    private val serverUtilsRepository: ServerUtilsRepository by ModulesDi.di.instance()
-
+class SplashViewModel(
+    private val currentUserRepository: CurrentUserRepository = SharedModulesDi.Instance.currentUserRepository,
+    private val serverUtilsRepository: ServerUtilsRepository = SharedModulesDi.Instance.serverUtilsRepository,
+) : ViewModel() {
     private val _splashScreenState = MutableStateFlow(SplashState())
     val splashScreenState = _splashScreenState.asStateFlow()
 
@@ -38,8 +37,7 @@ class SplashViewModel : ViewModel() {
     }
 
     private suspend fun checkForAuthentication(
-        navigateToAuthOption: () -> Unit,
-        navigateToHome: () -> Unit
+        navigateToAuthOption: () -> Unit, navigateToHome: () -> Unit
     ) {
         val currentUserId = currentUserRepository.getUserId()
         if (currentUserId == null) {
@@ -68,8 +66,7 @@ class SplashViewModel : ViewModel() {
     }
 
     private suspend fun updateCurrentUserInfo(
-        navigateToAuthOption: () -> Unit,
-        navigateToHome: () -> Unit
+        navigateToAuthOption: () -> Unit, navigateToHome: () -> Unit
     ) {
         currentUserRepository.updateUserInfo().collect {
             when (it) {
@@ -96,8 +93,7 @@ class SplashViewModel : ViewModel() {
 
     private suspend fun deleteLocalDbAndRedirectToAuthOption(navigateToAuthOption: () -> Unit) {
         currentUserRepository.deleteUserDetails(
-            fromLocal = true,
-            fromRemote = false
+            fromLocal = true, fromRemote = false
         )
         navigateToAuthOption()
     }

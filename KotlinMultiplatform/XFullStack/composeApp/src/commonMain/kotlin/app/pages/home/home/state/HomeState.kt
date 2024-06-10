@@ -1,6 +1,6 @@
 package app.pages.home.home.state
 
-import core.models.realm.TweetDB
+import core.models.response.TweetsResponse
 import utils.Localization
 
 data class HomeState(
@@ -11,7 +11,7 @@ data class HomeState(
     val username: String = "",
     val following: Int = 0,
     val followers: Int = 0,
-    val forYouTweets: List<TweetDB> = emptyList(),
+    val forYouTweets: List<TweetsResponse> = emptyList(),
     val forYouTweetPage: Int = 1,
     val followingTweetPage: Int = 1,
     val firstLoadDone: Boolean = false,
@@ -20,5 +20,4 @@ data class HomeState(
         Localization.FOR_YOU,
         Localization.FOLLOWING,
     ),
-    val viewedTweets: MutableList<String> = mutableListOf(),
 )
