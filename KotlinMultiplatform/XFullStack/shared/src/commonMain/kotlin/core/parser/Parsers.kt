@@ -10,7 +10,6 @@ import core.models.response.PollChoicesResponse
 import core.models.response.TweetsResponse
 import core.models.response.UserInfoResponse
 import io.realm.kotlin.ext.realmListOf
-import org.mongodb.kbson.ObjectId
 
 fun UserInfoResponse.parseToCurrentUserInfoDB() = this.let { info ->
     CurrentUserInfoDB().apply {
@@ -54,7 +53,7 @@ fun PollChoicesDB.parseToPollChoicesResponse() = PollChoicesResponse(
     voteCount = this.voteCount,
 )
 
-fun TweetsResponse.parseToTweetsDB() = this.let { info ->
+fun TweetsResponse.parseToTweetsDB(): TweetDB = this.let { info ->
     val media = realmListOf<String>()
     info.media.forEach { media.add(it) }
 
@@ -88,14 +87,17 @@ fun TweetsResponse.parseToTweetsDB() = this.let { info ->
         this.isLikedTweet = info.isLikedTweet
         this.parentTweetId = info.parentTweetId
         this.isLikedByCurrentUser = info.isLikedByCurrentUser
+        this.scheduledOnTweet = info.scheduledOnTweet
+        this.parentTweetDetailsNotFound = info.parentTweetDetailsNotFound
+        this.parentTweetDetails = info.parentTweetDetails?.parseToTweetsDB()
     }
 }
 
-fun TweetDB.parseToTweetResponse() = TweetsResponse(
+fun TweetDB.parseToTweetResponse(): TweetsResponse = TweetsResponse(
     id = this.tweetId,
     tweet = this.tweet,
     createdBy = this.createdBy?.parseToCurrentUserResponse() ?: UserInfoResponse(
-        id = ObjectId().toHexString(),
+        id = "",
         name = "",
         username = "",
         bio = "",
@@ -125,9 +127,9 @@ fun TweetDB.parseToTweetResponse() = TweetsResponse(
     isLikedTweet = this.isLikedTweet,
     parentTweetId = this.parentTweetId,
     isLikedByCurrentUser = this.isLikedByCurrentUser,
-    parentTweetDetails = null,
-    scheduledOnTweet = 0,
-    parentTweetDetailsNotFound = false,
+    scheduledOnTweet = this.scheduledOnTweet,
+    parentTweetDetailsNotFound = this.parentTweetDetailsNotFound,
+    parentTweetDetails = this.parentTweetDetails?.parseToTweetResponse(),
 )
 
 fun List<TweetRequest>.parseToTweetRequestDb() = this.let { tweets ->

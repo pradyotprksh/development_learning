@@ -29,4 +29,10 @@ data class TweetsResponse(
     val parentTweetDetails: TweetsResponse?,
     val parentTweetDetailsNotFound: Boolean,
     val isLikedByCurrentUser: Boolean,
-)
+) {
+    val aInnerTweet: Boolean
+        get() = isRepostTweet || isLikedTweet
+
+    val parentTweetNotPresent: Boolean
+        get() = parentTweetDetailsNotFound && parentTweetDetails == null
+}

@@ -11,6 +11,9 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Loop
+import androidx.compose.material.icons.filled.ThumbUp
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
@@ -22,9 +25,11 @@ import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.layout.boundsInParent
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.unit.dp
+import app.composables.tweet.ParentTweetReactionComposable
 import app.composables.tweet.TweetComposable
 import app.pages.home.home.state.TweetActions
 import core.models.response.TweetsResponse
+import utils.Localization
 
 @Composable
 fun ForYouTweetsComposable(
@@ -42,48 +47,63 @@ fun ForYouTweetsComposable(
         ) {
             items(tweets.size) { index ->
                 val tweet = tweets[index]
+                val shownTweet =
+                    if (tweet.aInnerTweet) if (tweet.parentTweetNotPresent) null else tweet.parentTweetDetails else tweet
 
                 Column(
-                    modifier = Modifier.fillMaxWidth().onGloballyPositioned { layoutCoordinates ->
-                        val itemBounds = layoutCoordinates.boundsInParent()
-                        val parentBounds =
-                            layoutCoordinates.parentCoordinates?.boundsInParent() ?: Rect.Zero
+                    modifier = Modifier.fillMaxWidth()
+                        .onGloballyPositioned { layoutCoordinates ->
+                            val itemBounds = layoutCoordinates.boundsInParent()
+                            val parentBounds =
+                                layoutCoordinates.parentCoordinates?.boundsInParent()
+                                    ?: Rect.Zero
 
-                        if (parentBounds.left <= itemBounds.left && parentBounds.top <= itemBounds.top && parentBounds.right >= itemBounds.right && parentBounds.bottom >= itemBounds.bottom) {
-                            tweetVisibility(tweet.id)
-                        }
-                    },
+                            if (parentBounds.left <= itemBounds.left && parentBounds.top <= itemBounds.top && parentBounds.right >= itemBounds.right && parentBounds.bottom >= itemBounds.bottom) {
+                                tweetVisibility(tweet.id)
+                            }
+                        },
                 ) {
                     if (index != 0) {
                         HorizontalDivider()
                     }
-                    TweetComposable(
-                        modifier = Modifier.padding(
-                            horizontal = 15.dp, vertical = 8.dp
-                        ),
-                        createdByProfilePicture = tweet.createdBy.profilePicture,
-                        createdByName = tweet.createdBy.name,
-                        createdByUsername = tweet.createdBy.username,
-                        tweetedOn = tweet.tweetedOn,
-                        tweet = tweet.tweet,
-                        tweetId = tweet.id,
-                        commentCount = "${tweet.commentCount}",
-                        retweetCount = "${tweet.retweetCount}",
-                        likeCount = "${tweet.likesCount}",
-                        views = "${tweet.views}",
-                        isAPoll = tweet.isAPoll,
-                        pollChoices = tweet.pollChoices.toList(),
-                        isPollingAllowed = tweet.isPollingAllowed,
-                        pollingEndTime = tweet.pollingEndTime,
-                        onPollSelection = { optionId ->
-                            tweetActions.onPollSelection(
-                                tweet.id,
-                                optionId,
-                            )
-                        },
-                        tweetActions = tweetActions,
-                        isLikedByCurrentUser = tweet.isLikedByCurrentUser,
-                    )
+                    if (tweet.aInnerTweet) {
+                        ParentTweetReactionComposable(
+                            icon = if (tweet.isLikedTweet) Icons.Default.ThumbUp else Icons.Default.Loop,
+                            text = Localization.format(
+                                if (tweet.isLikedTweet) Localization.LIKED else Localization.REPOSTED,
+                                tweet.createdBy.name,
+                            ),
+                        )
+                    }
+                    if (shownTweet != null) {
+                        TweetComposable(
+                            modifier = Modifier.padding(
+                                horizontal = 15.dp, vertical = 8.dp
+                            ),
+                            createdByProfilePicture = shownTweet.createdBy.profilePicture,
+                            createdByName = shownTweet.createdBy.name,
+                            createdByUsername = shownTweet.createdBy.username,
+                            tweetedOn = shownTweet.tweetedOn,
+                            tweet = shownTweet.tweet,
+                            tweetId = shownTweet.id,
+                            commentCount = "${shownTweet.commentCount}",
+                            retweetCount = "${shownTweet.retweetCount}",
+                            likeCount = "${shownTweet.likesCount}",
+                            views = "${shownTweet.views}",
+                            isAPoll = shownTweet.isAPoll,
+                            pollChoices = shownTweet.pollChoices.toList(),
+                            isPollingAllowed = shownTweet.isPollingAllowed,
+                            pollingEndTime = shownTweet.pollingEndTime,
+                            onPollSelection = { optionId ->
+                                tweetActions.onPollSelection(
+                                    shownTweet.id,
+                                    optionId,
+                                )
+                            },
+                            tweetActions = tweetActions,
+                            isLikedByCurrentUser = shownTweet.isLikedByCurrentUser,
+                        )
+                    }
                     HorizontalDivider()
                 }
             }

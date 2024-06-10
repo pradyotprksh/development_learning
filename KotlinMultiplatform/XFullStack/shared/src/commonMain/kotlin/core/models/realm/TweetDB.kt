@@ -29,4 +29,7 @@ class TweetDB : RealmObject {
     var isLikedTweet: Boolean = false
     var isLikedByCurrentUser: Boolean = false
     var parentTweetId: String? = null
+    var parentTweetDetails: TweetDB? = null
+    var scheduledOnTweet: Long = 0
+    var parentTweetDetailsNotFound: Boolean = false
 }
