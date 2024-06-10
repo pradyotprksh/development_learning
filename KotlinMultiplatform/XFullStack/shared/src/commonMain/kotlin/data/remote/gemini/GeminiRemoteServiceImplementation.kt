@@ -1,11 +1,11 @@
 package data.remote.gemini
 
-import core.models.request.XFullStackClientRequestDetails
-import core.network.NetworkClient
 import core.models.request.Content
 import core.models.request.GeminiRequest
 import core.models.request.Part
+import core.models.request.XFullStackClientRequestDetails
 import core.models.response.GeminiResponse
+import core.network.NetworkClient
 import domain.services.gemini.GeminiRemoteService
 import utils.Constants.GeminiPrompt.TWEET_EMOTION
 import utils.Constants.Keys.KEY
@@ -14,7 +14,6 @@ import utils.Localization
 
 class GeminiRemoteServiceImplementation(
     private val geminiRemoteClient: NetworkClient,
-    private val xFullStackRemoteClient: NetworkClient,
 ) : GeminiRemoteService {
     override suspend fun getTweetEmotion(
         value: String,

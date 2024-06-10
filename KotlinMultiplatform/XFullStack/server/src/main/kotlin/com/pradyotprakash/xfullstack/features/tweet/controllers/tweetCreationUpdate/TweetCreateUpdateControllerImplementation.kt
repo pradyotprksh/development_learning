@@ -11,6 +11,7 @@ import core.exception.InvalidTweet
 import core.exception.UserDetailsNotFound
 import core.models.request.TweetRequest
 import core.models.response.XFullStackResponse
+import domain.repositories.gemini.GeminiRepository
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.ApplicationCall
 import io.ktor.server.auth.jwt.JWTPrincipal
@@ -18,12 +19,16 @@ import io.ktor.server.auth.principal
 import io.ktor.server.request.receive
 import io.ktor.server.response.respond
 import org.bson.types.ObjectId
+import utils.Constants
 import utils.Constants.Keys.USER_ID
 import utils.Localization
 import utils.UtilsMethod
 import utils.XFullStackResponseStatus
+import kotlin.random.Random
 
-class TweetCreateUpdateControllerImplementation : TweetCreateUpdateController {
+class TweetCreateUpdateControllerImplementation(
+    private val geminiRepository: GeminiRepository,
+) : TweetCreateUpdateController {
     override suspend fun createTweet(
         call: ApplicationCall, userDataSource: UserDataSource, tweetDataSource: TweetDataSource
     ) {
@@ -72,6 +77,17 @@ class TweetCreateUpdateControllerImplementation : TweetCreateUpdateController {
                 )
             }
 
+            val emotions =
+                tweetRequest.tweet?.let {
+                    geminiRepository.getTweetEmotion(
+                        it, if (Random.nextBoolean()) {
+                            System.getenv(Constants.Keys.GEMINI_API_KEY_1)
+                        } else {
+                            System.getenv(Constants.Keys.GEMINI_API_KEY_2)
+                        }
+                    )
+                } ?: emptyList()
+
             val tweetDb = Tweet(
                 tweet = tweetRequest.tweet ?: "",
                 createdBy = ObjectId(createdBy),
@@ -99,6 +115,7 @@ class TweetCreateUpdateControllerImplementation : TweetCreateUpdateController {
                 isQuoteTweet = tweetRequest.isQuoteTweet,
                 isRepostTweet = tweetRequest.isRepostTweet,
                 isLikedTweet = tweetRequest.isLikedTweet,
+                emotions = emotions,
             )
 
             parentTweetId = tweetDb.id

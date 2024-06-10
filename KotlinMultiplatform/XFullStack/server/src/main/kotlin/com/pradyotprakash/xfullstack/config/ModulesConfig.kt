@@ -40,6 +40,7 @@ import com.pradyotprakash.xfullstack.features.verification.controllers.userVerif
 import com.pradyotprakash.xfullstack.features.view.controllers.ViewController
 import com.pradyotprakash.xfullstack.features.view.controllers.create.ViewCreateController
 import com.pradyotprakash.xfullstack.features.view.controllers.create.ViewCreateControllerImplementation
+import di.SharedModulesDi
 import org.kodein.di.DI
 import org.kodein.di.bindProvider
 import org.kodein.di.bindSingleton
@@ -81,7 +82,11 @@ object ModulesConfig {
 
         bindProvider<UserVerificationController> { UserVerificationControllerImplementation() }
 
-        bindProvider<TweetCreateUpdateController> { TweetCreateUpdateControllerImplementation() }
+        bindProvider<TweetCreateUpdateController> {
+            TweetCreateUpdateControllerImplementation(
+                SharedModulesDi.Instance.geminiRepository,
+            )
+        }
         bindProvider<TweetFetchController> { TweetFetchControllerImplementation() }
 
         bindProvider<ViewCreateController> { ViewCreateControllerImplementation() }

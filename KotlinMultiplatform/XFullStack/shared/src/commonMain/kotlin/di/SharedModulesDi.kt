@@ -87,7 +87,7 @@ object SharedModulesDi {
 
         bindProvider<GeminiRemoteService> {
             GeminiRemoteServiceImplementation(
-                instance(tag = GEMINI_NETWORK_CLIENT), instance(tag = XFULLSTACK_NETWORK_CLIENT)
+                instance(tag = GEMINI_NETWORK_CLIENT)
             )
         }
     }
@@ -140,5 +140,6 @@ object SharedModulesDi {
         val tweetRepository: TweetRepository by di.instance()
         val websocketRepository: WebsocketRepository by di.instance()
         val viewRepository: ViewRepository by di.instance()
+        val geminiRepository: GeminiRepository by di.instance()
     }
 }

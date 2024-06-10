@@ -51,4 +51,7 @@ data class Tweet(
 
     // For comment, liked and retweet parent id will be required
     @BsonProperty(PARENT_TWEET_ID) val parentTweetId: ObjectId?,
+
+    // Tweet emotions, if tweet has a value
+    val emotions: List<String>,
 )
