@@ -24,4 +24,6 @@ interface TweetDataSource {
     suspend fun isLikedByCurrentUser(tweetId: String, userId: String): Boolean
 
     suspend fun totalNumberOfLikes(tweetId: String): Int
+
+    suspend fun addNewFieldToAll(name: String, value: Any)
 }

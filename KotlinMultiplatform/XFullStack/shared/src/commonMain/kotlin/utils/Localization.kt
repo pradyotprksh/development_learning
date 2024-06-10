@@ -175,4 +175,5 @@ object Localization {
     const val CHOICE = "Choice %s"
     const val SUCCESS = "Success"
     const val ASKED_SECRET_NOT_PRESENT = "Asked secret is not present."
+    const val DB_MIGRATION_SUCCESS = "Database migration was successful"
 }

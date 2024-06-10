@@ -19,6 +19,10 @@ class GeminiRemoteServiceImplementation(
         value: String,
         apiKey: String,
     ): GeminiResponse? {
+        val prompt = Localization.format(
+            TWEET_EMOTION,
+            value,
+        )
         val response = geminiRemoteClient.post<GeminiResponse>(
             details = XFullStackClientRequestDetails(
                 endpoint = BETA_1_5_MODEL_GENERATE_CONTENT,
@@ -30,10 +34,7 @@ class GeminiRemoteServiceImplementation(
                         Content(
                             parts = listOf(
                                 Part(
-                                    text = Localization.format(
-                                        TWEET_EMOTION,
-                                        value,
-                                    ),
+                                    text = prompt,
                                 ),
                             )
                         )

@@ -72,4 +72,11 @@ class MongoTweetDataSource(
             ),
         ).count()
     }
+
+    override suspend fun addNewFieldToAll(name: String, value: Any) {
+        tweetCollection.updateMany(
+            Filters.exists(ID),
+            Updates.set(name, value)
+        )
+    }
 }

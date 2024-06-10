@@ -69,6 +69,10 @@ object Constants {
             const val BETA_1_5_MODEL_GENERATE_CONTENT =
                 "v1beta/models/gemini-1.5-flash:generateContent"
         }
+
+        object Migration {
+            const val MIGRATION = "/migration"
+        }
     }
 
     object Keys {
@@ -149,6 +153,7 @@ object Constants {
         const val EMAIL_PRESENT_SUCCESS_CODE = "SC_XFS002"
         const val PHONE_NUMBER_PRESENT_SUCCESS_CODE = "SC_XFS003"
         const val TWEETS_UPDATE_SUCCESS_CODE = "SC_XFS004"
+        const val DB_MIGRATION_SUCCESS_CODE = "SC_XFS005"
     }
 
     object DbKeys {
@@ -183,10 +188,11 @@ object Constants {
         const val VIEWED_ID = "viewed_id"
         const val IS_UPDATED_ONLINE = "isUpdatedOnline"
         const val VIEWED_ID_CAMELCASE = "viewedId"
+        const val EMOTIONS = "emotions"
     }
 
     object GeminiPrompt {
         const val TWEET_EMOTION =
-            "can you tell the tag for the text %s, like what's the tone or emotion give response in words, separated by comma"
+            "can you tell the tag for the text \"%s\", like what's the tone or emotion give response in words, separated by comma"
     }
 }

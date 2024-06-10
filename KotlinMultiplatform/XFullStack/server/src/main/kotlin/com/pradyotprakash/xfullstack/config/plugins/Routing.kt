@@ -9,6 +9,7 @@ import com.pradyotprakash.xfullstack.data.user.UserDataSource
 import com.pradyotprakash.xfullstack.data.view.ViewDataSource
 import com.pradyotprakash.xfullstack.features.authentication.authentication
 import com.pradyotprakash.xfullstack.features.authentication.controllers.AuthenticationController
+import com.pradyotprakash.xfullstack.features.migration.migration
 import com.pradyotprakash.xfullstack.features.secrets.controllers.SecretsController
 import com.pradyotprakash.xfullstack.features.secrets.secrets
 import com.pradyotprakash.xfullstack.features.tweet.controllers.TweetController
@@ -74,5 +75,6 @@ fun Application.configureRouting() {
             secretsController = secretsController,
             userDataSource = userDataSource,
         )
+        migration()
     }
 }
