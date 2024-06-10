@@ -67,7 +67,6 @@ class TweetFetchControllerImplementation : TweetFetchController {
         val tweetIdHexStr = tweet.id.toHexString()
 
         val createdByUserDetails = userDataSource.getUserByUserId(tweet.createdBy.toHexString())
-            ?: throw UserDetailsNotFound()
 
         val allowCurrentUserVote =
             tweet.createdBy.toHexString() != currentUserId && tweet.pollChoices.find { pollChoice ->
@@ -104,7 +103,7 @@ class TweetFetchControllerImplementation : TweetFetchController {
         return TweetsResponse(
             id = tweetIdHexStr,
             tweet = tweet.tweet,
-            createdBy = createdByUserDetails.parseToUserInfoResponse(),
+            createdBy = createdByUserDetails?.parseToUserInfoResponse(),
             tweetedOnTimestamp = tweet.tweetedOn,
             tweetedOn = UtilsMethod.Dates.convertTimestampToTimeAgo(tweet.tweetedOn),
             media = tweet.media,

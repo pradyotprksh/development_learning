@@ -26,4 +26,8 @@ interface TweetDataSource {
     suspend fun totalNumberOfLikes(tweetId: String): Int
 
     suspend fun addNewFieldToAll(name: String, value: Any)
+
+    suspend fun isTweetAlreadyLiked(tweetId: String, userId: String): Boolean
+
+    suspend fun isTweetAlreadyReposted(tweetId: String, userId: String): Boolean
 }

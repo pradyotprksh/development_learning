@@ -80,9 +80,9 @@ fun ForYouTweetsComposable(
                             modifier = Modifier.padding(
                                 horizontal = 15.dp, vertical = 8.dp
                             ),
-                            createdByProfilePicture = shownTweet.createdBy.profilePicture,
-                            createdByName = shownTweet.createdBy.name,
-                            createdByUsername = shownTweet.createdBy.username,
+                            createdByProfilePicture = shownTweet.createdBy?.profilePicture,
+                            createdByName = shownTweet.createdBy?.name ?: "",
+                            createdByUsername = shownTweet.createdBy?.username ?: "",
                             tweetedOn = shownTweet.tweetedOn,
                             tweet = shownTweet.tweet,
                             tweetId = shownTweet.id,

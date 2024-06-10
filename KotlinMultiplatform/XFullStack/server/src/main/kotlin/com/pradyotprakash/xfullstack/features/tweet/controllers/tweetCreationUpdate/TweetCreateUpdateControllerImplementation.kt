@@ -42,7 +42,19 @@ class TweetCreateUpdateControllerImplementation(
 
         var parentTweetId: ObjectId? = null
 
-        val tweetsDb = tweetsRequest.map { tweetRequest ->
+        val tweetRequestFilter = tweetsRequest.filter { tweetRequest ->
+            val requestParentTweetId = tweetRequest.parentTweetId
+
+            if (tweetRequest.isLikedTweet && requestParentTweetId != null) {
+                !tweetDataSource.isTweetAlreadyLiked(requestParentTweetId, createdBy)
+            } else if (tweetRequest.isRepostTweet && requestParentTweetId != null) {
+                !tweetDataSource.isTweetAlreadyReposted(requestParentTweetId, createdBy)
+            } else {
+                true
+            }
+        }
+
+        val tweetsDb = tweetRequestFilter.map { tweetRequest ->
             if (!tweetRequest.tweetIsOptional) {
                 UtilsMethod.Validation.isTweetValid(tweetRequest.tweet)
             }
@@ -123,10 +135,12 @@ class TweetCreateUpdateControllerImplementation(
             tweetDb
         }
 
-        val wasAcknowledged = tweetDataSource.insertNewTweets(tweetsDb)
+        if (tweetsDb.isNotEmpty()) {
+            val wasAcknowledged = tweetDataSource.insertNewTweets(tweetsDb)
 
-        if (!wasAcknowledged) {
-            throw DBWriteError()
+            if (!wasAcknowledged) {
+                throw DBWriteError()
+            }
         }
 
         call.respond(

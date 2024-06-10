@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 data class TweetsResponse(
     val id: String,
     val tweet: String,
-    val createdBy: UserInfoResponse,
+    val createdBy: UserInfoResponse?,
     val tweetedOnTimestamp: Long,
     val tweetedOn: String,
     val media: List<String>,

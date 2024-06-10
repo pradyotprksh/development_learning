@@ -14,6 +14,7 @@ import utils.Constants.Database.Collections.TWEET
 import utils.Constants.DbKeys.CREATED_BY
 import utils.Constants.DbKeys.ID
 import utils.Constants.DbKeys.IS_A_LIKED_TWEET
+import utils.Constants.DbKeys.IS_A_REPOST_TWEET
 import utils.Constants.DbKeys.PARENT_TWEET_ID
 import utils.Constants.DbKeys.POLL_CHOICES
 import utils.Constants.DbKeys.SCHEDULED_ON_TWEET
@@ -78,5 +79,25 @@ class MongoTweetDataSource(
             Filters.exists(ID),
             Updates.set(name, value)
         )
+    }
+
+    override suspend fun isTweetAlreadyLiked(tweetId: String, userId: String): Boolean {
+        return tweetCollection.findOneAndDelete(
+            Filters.and(
+                Filters.eq(PARENT_TWEET_ID, ObjectId(tweetId)),
+                Filters.eq(CREATED_BY, ObjectId(userId)),
+                Filters.eq(IS_A_LIKED_TWEET, true),
+            ),
+        ) != null
+    }
+
+    override suspend fun isTweetAlreadyReposted(tweetId: String, userId: String): Boolean {
+        return tweetCollection.findOneAndDelete(
+            Filters.and(
+                Filters.eq(PARENT_TWEET_ID, ObjectId(tweetId)),
+                Filters.eq(CREATED_BY, ObjectId(userId)),
+                Filters.eq(IS_A_REPOST_TWEET, true),
+            ),
+        ) != null
     }
 }
