@@ -193,6 +193,6 @@ object Constants {
 
     object GeminiPrompt {
         const val TWEET_EMOTION =
-            "can you tell the tag for the text \"%s\", like what's the tone or emotion give response in words, separated by comma"
+            "can you tell the tag for the text \"%s\", like what's the tone or emotion give response in words, separated by comma. If emotion is not known then say null."
     }
 }
