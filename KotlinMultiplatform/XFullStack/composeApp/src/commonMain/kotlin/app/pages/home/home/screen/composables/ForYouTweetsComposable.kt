@@ -71,7 +71,7 @@ fun ForYouTweetsComposable(
                             icon = if (tweet.isLikedTweet) Icons.Default.ThumbUp else Icons.Default.Loop,
                             text = Localization.format(
                                 if (tweet.isLikedTweet) Localization.LIKED else Localization.REPOSTED,
-                                tweet.createdBy.name,
+                                tweet.createdBy?.name ?: "",
                             ),
                         )
                     }
