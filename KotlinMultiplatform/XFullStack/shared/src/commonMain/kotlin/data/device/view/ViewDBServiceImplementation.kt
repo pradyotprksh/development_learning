@@ -13,13 +13,16 @@ class ViewDBServiceImplementation(
     private val realm: Realm,
 ) : ViewDBService {
     override suspend fun insertViewDetails(view: ViewDB) {
-        val present = realm.query<ViewDB>(
-            "$VIEWED_ID_CAMELCASE == {0}", view.viewedId
-        ).find().firstOrNull() != null
-        realm.write {
-            if (!present) {
-                copyToRealm(view)
+        try {
+            val present = realm.query<ViewDB>(
+                "$VIEWED_ID_CAMELCASE == {0}", view.viewedId
+            ).find().firstOrNull() != null
+            realm.write {
+                if (!present) {
+                    copyToRealm(view)
+                }
             }
+        } catch (_: Exception) {
         }
     }
 
