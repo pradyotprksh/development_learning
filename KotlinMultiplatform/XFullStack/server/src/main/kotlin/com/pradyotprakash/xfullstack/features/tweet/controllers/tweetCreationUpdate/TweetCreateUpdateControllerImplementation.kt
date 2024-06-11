@@ -89,8 +89,8 @@ class TweetCreateUpdateControllerImplementation(
                 )
             }
 
-            val emotions =
-                tweetRequest.tweet?.let {
+            val emotions = tweetRequest.tweet?.let {
+                if (it.isNotBlank()) {
                     geminiRepository.getTweetEmotion(
                         it, if (Random.nextBoolean()) {
                             System.getenv(Constants.Keys.GEMINI_API_KEY_1)
@@ -98,7 +98,10 @@ class TweetCreateUpdateControllerImplementation(
                             System.getenv(Constants.Keys.GEMINI_API_KEY_2)
                         }
                     )
-                } ?: emptyList()
+                } else {
+                    emptyList()
+                }
+            } ?: emptyList()
 
             val tweetDb = Tweet(
                 tweet = tweetRequest.tweet ?: "",

@@ -10,7 +10,7 @@ class GeminiRepositoryImplementation(
         val text =
             response?.candidates?.map { can -> can.content.parts.map { part -> part.text } }
                 ?.flatten()?.joinToString()?.lowercase()?.split(",")?.map { it.trim() }?.toSet()
-                ?.toMutableList()?.filter { it.isNotEmpty() && it != "null" }
+                ?.toMutableList()?.filter { it.isNotEmpty() && it != "null" && !it.contains(" ") }
         text ?: emptyList()
     } catch (_: Exception) {
         emptyList()
