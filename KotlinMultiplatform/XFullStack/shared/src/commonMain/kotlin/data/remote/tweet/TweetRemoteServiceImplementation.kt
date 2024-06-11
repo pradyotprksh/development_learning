@@ -1,10 +1,10 @@
 package data.remote.tweet
 
-import core.models.request.XFullStackClientRequestDetails
-import core.network.NetworkClient
 import core.models.request.TweetRequest
-import core.models.response.TweetsResponse
+import core.models.request.XFullStackClientRequestDetails
+import core.models.response.TweetResponse
 import core.models.response.XFullStackResponse
+import core.network.NetworkClient
 import domain.services.tweet.TweetRemoteService
 import utils.Constants.Keys.LIMIT
 import utils.Constants.Keys.OPTION_ID
@@ -20,8 +20,8 @@ class TweetRemoteServiceImplementation(
     override suspend fun getAllTweets(
         page: Int,
         limit: Int
-    ): XFullStackResponse<List<TweetsResponse>> {
-        val response = networkClient.get<XFullStackResponse<List<TweetsResponse>>>(
+    ): XFullStackResponse<List<TweetResponse>> {
+        val response = networkClient.get<XFullStackResponse<List<TweetResponse>>>(
             details = XFullStackClientRequestDetails(
                 endpoint = "$TWEET$PAGINATE",
                 queries = mapOf(

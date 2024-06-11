@@ -1,5 +1,7 @@
 package app.pages.createTweet.state
 
+import core.models.response.TweetResponse
+
 data class TweetDetails(
     val tweet: String = "",
     val isVisible: Boolean = false,
@@ -17,7 +19,9 @@ data class TweetDetails(
     val isScheduledTweet: Boolean = false,
     val scheduledOnTweet: Long? = null,
     val isQuoteTweet: Boolean = false,
-    val parentTweetId: String? = null
+    val isRepostTweet: Boolean = false,
+    val parentTweetId: String? = null,
+    val parentTweetDetails: TweetResponse? = null,
 ) {
     fun shouldSelectThisTweet(): Boolean {
         return validTweet() && isPollValid() && isLocationValid() && isScheduledValid() && isQuoteValid()

@@ -50,7 +50,8 @@ import app.pages.home.bottomBar.HomeBottomNavItems
 import app.pages.home.home.screen.HomeScreen
 import app.pages.splash.screen.SplashScreen
 import kotlinx.coroutines.launch
-import utils.Constants.ConstValues.NO_USERNAME
+import utils.Constants.ConstValues.NO_NAV_VALUE
+import utils.Constants.ConstValues.PARENT_TWEET_ID
 import utils.Constants.ConstValues.USERNAME_EMAIL_PHONE
 import utils.Localization
 import utils.extensions.popUpToTop
@@ -89,6 +90,32 @@ fun XApp(
         }
     }
 
+    val navigateToAuthOption = {
+        navController.navigate(Routes.AuthenticationOption.path()) {
+            popUpTo(Routes.Splash.path()) {
+                inclusive = true
+            }
+        }
+    }
+    val navigateToHome = {
+        navController.navigate(Routes.Home.path()) {
+            popUpToTop(navController)
+        }
+    }
+    val navigateToLogin = { value: String ->
+        navController.navigate(
+            "${Routes.Login.route}$value",
+        )
+    }
+    val navigateToRegister = {
+        navController.navigate(Routes.Register.path())
+    }
+    val navigateToCreateTweet = { value: String ->
+        navController.navigate(
+            "${Routes.CreateTweet.route}$value",
+        )
+    }
+
     ModalNavigationDrawer(
         drawerState = drawerState, drawerContent = {
             if (showDrawer(currentDestination?.route ?: "")) {
@@ -120,7 +147,7 @@ fun XApp(
                             if (currentDestination?.route == Routes.HomeMessages.path()) {
                                 TODO()
                             } else {
-                                navController.navigate(Routes.CreateTweet.path())
+                                navigateToCreateTweet(NO_NAV_VALUE)
                             }
                         },
                     ) {
@@ -173,27 +200,6 @@ fun XApp(
                 modifier = Modifier.fillMaxSize().padding(innerPadding),
                 startDestination = Routes.Splash.path(),
             ) {
-                val navigateToAuthOption = {
-                    navController.navigate(Routes.AuthenticationOption.path()) {
-                        popUpTo(Routes.Splash.path()) {
-                            inclusive = true
-                        }
-                    }
-                }
-                val navigateToHome = {
-                    navController.navigate(Routes.Home.path()) {
-                        popUpToTop(navController)
-                    }
-                }
-                val navigateToLogin = { value: String ->
-                    navController.navigate(
-                        "${Routes.Login.route}$value",
-                    )
-                }
-                val navigateToRegister = {
-                    navController.navigate(Routes.Register.path())
-                }
-
                 composable(Routes.Splash.path()) {
                     SplashScreen(
                         navigateToAuthOption = navigateToAuthOption, navigateToHome = navigateToHome
@@ -210,13 +216,13 @@ fun XApp(
                     arguments = Routes.Login.arguments.map {
                         navArgument(it) {
                             type = NavType.StringType
-                            defaultValue = NO_USERNAME
+                            defaultValue = NO_NAV_VALUE
                         }
                     },
                 ) {
                     val usernameEmailPhoneArgument = it.arguments?.getString(USERNAME_EMAIL_PHONE)
                     val usernameEmailPhone =
-                        if (usernameEmailPhoneArgument == NO_USERNAME) null else usernameEmailPhoneArgument
+                        if (usernameEmailPhoneArgument == NO_NAV_VALUE) null else usernameEmailPhoneArgument
 
                     LoginScreen(
                         usernameEmailPhoneValue = usernameEmailPhone,
@@ -236,15 +242,33 @@ fun XApp(
                     }
                 }
                 composable(Routes.Home.path()) {
-                    HomeScreen()
+                    HomeScreen(
+                        openCreateTweetWithParentId = {
+                            navigateToCreateTweet(it)
+                        },
+                    )
                 }
                 composable(Routes.HomeSearch.path()) { }
                 composable(Routes.HomeGrok.path()) { }
                 composable(Routes.HomeCommunities.path()) { }
                 composable(Routes.HomeNotifications.path()) { }
                 composable(Routes.HomeMessages.path()) { }
-                composable(Routes.CreateTweet.path()) {
-                    CreateTweetScreen {
+                composable(
+                    Routes.CreateTweet.path(),
+                    arguments = Routes.CreateTweet.arguments.map {
+                        navArgument(it) {
+                            type = NavType.StringType
+                            defaultValue = NO_NAV_VALUE
+                        }
+                    },
+                ) {
+                    val parentTweetIdArgument = it.arguments?.getString(PARENT_TWEET_ID)
+                    val parentTweetId =
+                        if (parentTweetIdArgument == NO_NAV_VALUE) null else parentTweetIdArgument
+
+                    CreateTweetScreen(
+                        parentTweetId = parentTweetId,
+                    ) {
                         navController.popBackStack()
                     }
                 }

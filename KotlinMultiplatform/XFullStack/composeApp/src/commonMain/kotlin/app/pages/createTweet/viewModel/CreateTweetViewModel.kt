@@ -22,8 +22,27 @@ class CreateTweetViewModel(
     private val _createTweetState = MutableStateFlow(CreateTweetState())
     val createTweetState = _createTweetState.asStateFlow()
 
-    suspend fun initialSetup() {
+    suspend fun initialSetup(parentTweetId: String?) {
         getCurrentUserInfo()
+        parentTweetId?.let { getParentTweetDetails(it) }
+    }
+
+    private suspend fun getParentTweetDetails(tweetId: String) {
+        tweetRepository.getTweetDetails(tweetId)?.let { parentTweetDetails ->
+            val tweets = _createTweetState.value.tweets.toMutableList()
+            val firstTweet = tweets.removeAt(0)
+            tweets.add(
+                0,
+                firstTweet.copy(
+                    parentTweetId = tweetId,
+                    parentTweetDetails = parentTweetDetails,
+                    isRepostTweet = true,
+                )
+            )
+            _createTweetState.value = _createTweetState.value.copy(
+                tweets = tweets,
+            )
+        }
     }
 
     private suspend fun getCurrentUserInfo() {
@@ -42,10 +61,14 @@ class CreateTweetViewModel(
         val tweets = _createTweetState.value.tweets.toMutableList()
         if (value.length <= TWEET_MAX_LENGTH) {
             val deletedTweet = tweets.removeAt(index)
+            val isQuoteTweet = deletedTweet.isRepostTweet && value.isNotBlank()
+            val isRepostTweet = deletedTweet.isRepostTweet && !isQuoteTweet
             tweets.add(
                 index,
                 deletedTweet.copy(
                     tweet = value,
+                    isQuoteTweet = isQuoteTweet,
+                    isRepostTweet = isRepostTweet,
                 ),
             )
 

@@ -8,7 +8,7 @@ import com.pradyotprakash.xfullstack.data.view.ViewDataSource
 import com.pradyotprakash.xfullstack.features.tweet.resource.TweetResource
 import core.exception.UserDetailsNotFound
 import core.models.response.PollChoicesResponse
-import core.models.response.TweetsResponse
+import core.models.response.TweetResponse
 import core.models.response.XFullStackResponse
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.ApplicationCall
@@ -63,7 +63,7 @@ class TweetFetchControllerImplementation : TweetFetchController {
         viewDataSource: ViewDataSource,
         tweet: Tweet,
         currentUserId: String,
-    ): TweetsResponse {
+    ): TweetResponse {
         val tweetIdHexStr = tweet.id.toHexString()
 
         val createdByUserDetails = userDataSource.getUserByUserId(tweet.createdBy.toHexString())
@@ -100,7 +100,7 @@ class TweetFetchControllerImplementation : TweetFetchController {
         val likesCount = tweetDataSource.totalNumberOfLikes(tweetIdHexStr)
         val viewsCount = viewDataSource.getViewsCount(tweetIdHexStr)
 
-        return TweetsResponse(
+        return TweetResponse(
             id = tweetIdHexStr,
             tweet = tweet.tweet,
             createdBy = createdByUserDetails?.parseToUserInfoResponse(),

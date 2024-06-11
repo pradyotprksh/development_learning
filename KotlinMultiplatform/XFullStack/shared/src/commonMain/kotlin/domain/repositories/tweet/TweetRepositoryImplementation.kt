@@ -3,7 +3,7 @@ package domain.repositories.tweet
 import core.models.realm.TweetRequestsDB
 import core.models.request.TweetRequest
 import core.models.response.ClientResponse
-import core.models.response.TweetsResponse
+import core.models.response.TweetResponse
 import core.models.response.XFullStackResponse
 import core.parser.parseToTweetRequest
 import core.parser.parseToTweetResponse
@@ -54,7 +54,7 @@ class TweetRepositoryImplementation(
         emit(ClientResponse.Idle)
     }
 
-    override suspend fun allTweetsChanges(): Flow<List<TweetsResponse>> {
+    override suspend fun allTweetsChanges(): Flow<List<TweetResponse>> {
         return tweetDBService.getAllTweets()
             .map { dbResult -> dbResult.list.map { db -> db.parseToTweetResponse() } }
     }
@@ -127,5 +127,9 @@ class TweetRepositoryImplementation(
             )
         }
         emit(ClientResponse.Idle)
+    }
+
+    override suspend fun getTweetDetails(tweetId: String): TweetResponse? {
+        return tweetDBService.getTweetById(tweetId)?.parseToTweetResponse()
     }
 }

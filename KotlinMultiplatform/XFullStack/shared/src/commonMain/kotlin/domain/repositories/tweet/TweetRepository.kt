@@ -3,7 +3,7 @@ package domain.repositories.tweet
 import core.models.realm.TweetRequestsDB
 import core.models.request.TweetRequest
 import core.models.response.ClientResponse
-import core.models.response.TweetsResponse
+import core.models.response.TweetResponse
 import core.models.response.XFullStackResponse
 import kotlinx.coroutines.flow.Flow
 import utils.Constants.ConstValues.DEFAULT_PAGINATE_LIMIT
@@ -14,7 +14,7 @@ interface TweetRepository {
         limit: Int = DEFAULT_PAGINATE_LIMIT,
     ): Flow<ClientResponse<out XFullStackResponse<Nothing>>>
 
-    suspend fun allTweetsChanges(): Flow<List<TweetsResponse>>
+    suspend fun allTweetsChanges(): Flow<List<TweetResponse>>
 
     suspend fun allTweetRequestChanges(): Flow<List<TweetRequestsDB>>
 
@@ -30,4 +30,8 @@ interface TweetRepository {
     suspend fun uploadTweets(
         tweetRequestsDb: TweetRequestsDB
     ): Flow<ClientResponse<out XFullStackResponse<Nothing>>>
+
+    suspend fun getTweetDetails(
+        tweetId: String
+    ): TweetResponse?
 }

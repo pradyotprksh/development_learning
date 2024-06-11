@@ -3,7 +3,7 @@ package core.models.response
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class TweetsResponse(
+data class TweetResponse(
     val id: String,
     val tweet: String,
     val createdBy: UserInfoResponse?,
@@ -26,7 +26,7 @@ data class TweetsResponse(
     val isRepostTweet: Boolean,
     val isLikedTweet: Boolean,
     val parentTweetId: String?,
-    val parentTweetDetails: TweetsResponse?,
+    val parentTweetDetails: TweetResponse?,
     val parentTweetDetailsNotFound: Boolean,
     val isLikedByCurrentUser: Boolean,
 ) {

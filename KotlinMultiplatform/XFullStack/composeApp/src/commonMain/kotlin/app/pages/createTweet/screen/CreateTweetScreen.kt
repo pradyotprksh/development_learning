@@ -40,10 +40,11 @@ import utils.Localization
 @Composable
 fun CreateTweetScreen(
     createTweetViewModel: CreateTweetViewModel = viewModel { CreateTweetViewModel() },
+    parentTweetId: String?,
     onNavigateBack: () -> Unit,
 ) {
     LaunchedEffect(Unit) {
-        createTweetViewModel.initialSetup()
+        createTweetViewModel.initialSetup(parentTweetId)
     }
 
     val createTweetState by createTweetViewModel.createTweetState.collectAsState()

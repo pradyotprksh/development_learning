@@ -21,7 +21,7 @@ import app.composables.TextBetweenDividerComposable
 import app.composables.XAppBarComposable
 import app.pages.auth.authOptions.composables.LoginComposable
 import app.pages.auth.authOptions.composables.SignupLegalDetails
-import utils.Constants.ConstValues.NO_USERNAME
+import utils.Constants.ConstValues.NO_NAV_VALUE
 import utils.Localization
 
 @Composable
@@ -84,7 +84,7 @@ fun AuthOptionsScreen(
             LoginComposable(
                 modifier = Modifier.fillMaxWidth()
             ) {
-                navigateToLogin(NO_USERNAME)
+                navigateToLogin(NO_NAV_VALUE)
             }
         }
     }

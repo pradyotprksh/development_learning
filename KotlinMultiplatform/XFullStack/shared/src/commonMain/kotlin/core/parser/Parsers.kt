@@ -7,7 +7,7 @@ import core.models.realm.TweetRequestDB
 import core.models.realm.TweetRequestsDB
 import core.models.request.TweetRequest
 import core.models.response.PollChoicesResponse
-import core.models.response.TweetsResponse
+import core.models.response.TweetResponse
 import core.models.response.UserInfoResponse
 import io.realm.kotlin.ext.realmListOf
 
@@ -53,7 +53,7 @@ fun PollChoicesDB.parseToPollChoicesResponse() = PollChoicesResponse(
     voteCount = this.voteCount,
 )
 
-fun TweetsResponse.parseToTweetsDB(): TweetDB = this.let { info ->
+fun TweetResponse.parseToTweetsDB(): TweetDB = this.let { info ->
     val media = realmListOf<String>()
     info.media.forEach { media.add(it) }
 
@@ -93,7 +93,7 @@ fun TweetsResponse.parseToTweetsDB(): TweetDB = this.let { info ->
     }
 }
 
-fun TweetDB.parseToTweetResponse(): TweetsResponse = TweetsResponse(
+fun TweetDB.parseToTweetResponse(): TweetResponse = TweetResponse(
     id = this.tweetId,
     tweet = this.tweet,
     createdBy = this.createdBy?.parseToCurrentUserResponse(),

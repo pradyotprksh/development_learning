@@ -28,13 +28,13 @@ import androidx.compose.ui.unit.dp
 import app.composables.tweet.ParentTweetReactionComposable
 import app.composables.tweet.TweetComposable
 import app.pages.home.home.state.TweetActions
-import core.models.response.TweetsResponse
+import core.models.response.TweetResponse
 import utils.Localization
 
 @Composable
 fun ForYouTweetsComposable(
     modifier: Modifier = Modifier,
-    tweets: List<TweetsResponse> = emptyList(),
+    tweets: List<TweetResponse> = emptyList(),
     showLoading: Boolean = false,
     tweetsLazyColumnState: LazyListState,
     tweetActions: TweetActions,
