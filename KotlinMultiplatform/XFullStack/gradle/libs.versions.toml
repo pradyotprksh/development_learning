@@ -1,5 +1,5 @@
 [versions]
-agp = "8.4.1"
+agp = "8.4.2"
 android-compileSdk = "34"
 android-minSdk = "24"
 android-targetSdk = "34"
@@ -7,18 +7,18 @@ androidx-activityCompose = "1.9.0"
 commons_codec = "1.15"
 compose = "1.6.7"
 compose-plugin = "1.6.11"
+io-realm-kotlin = "2.0.0"
+kamel-image = "0.9.4"
 kodein-di = "7.20.1"
 kotlin = "2.0.0"
 kotlin-erialization = "1.9.23"
 kotlinx-coroutines = "1.8.0"
+kotlinx-datetime = "0.6.0"
 ktor = "2.3.10"
 ktor_client = "2.3.11"
 logback = "1.5.6"
 mongodb-driver-kotlin-coroutine = "4.10.1"
 navigation-compose = "2.7.0-alpha07"
-io-realm-kotlin = "2.0.0"
-kotlinx-datetime = "0.6.0"
-kamel-image = "0.9.4"
 
 [libraries]
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activityCompose" }
@@ -59,10 +59,10 @@ ktor-client-websockets = { module = "io.ktor:ktor-client-websockets", version.re
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 androidLibrary = { id = "com.android.library", version.ref = "agp" }
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+io-realm-kotlin = { id = "io.realm.kotlin", version.ref = "io-realm-kotlin" }
 jetbrainsCompose = { id = "org.jetbrains.compose", version.ref = "compose-plugin" }
 kotlinJvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
-ktor = { id = "io.ktor.plugin", version.ref = "ktor" }
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 kotlinSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin-erialization" }
-io-realm-kotlin = { id = "io.realm.kotlin", version.ref = "io-realm-kotlin" }
-compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+ktor = { id = "io.ktor.plugin", version.ref = "ktor" }
