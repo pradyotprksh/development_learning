@@ -13,6 +13,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import utils.Constants.ErrorCode.DEFAULT_ERROR_CODE
+import utils.Constants.Keys.FOR_YOU_SCROLL_POSITION
 import utils.Localization.DEFAULT_ERROR_MESSAGE
 import utils.XFullStackResponseStatus
 
@@ -161,6 +162,20 @@ class CurrentUserRepositoryImplementation(
     override suspend fun userInfoChanges(userId: String): Flow<UserInfoResponse?> =
         currentUserDBService.getUserInfo(userId)
             .map { it.list.firstOrNull()?.parseToCurrentUserResponse() }
+
+    override suspend fun updateScrollPosition(key: String, scrollPosition: Int) {
+        if (listOf(FOR_YOU_SCROLL_POSITION).contains(key)) {
+            currentUserDBService.updateScrollPosition(key, scrollPosition)
+        }
+    }
+
+    override fun getScrollPosition(key: String): Int =
+        if (listOf(FOR_YOU_SCROLL_POSITION).contains(key)) {
+            currentUserDBService.getScrollPosition(key) ?: 0
+        } else {
+            0
+        }
+
 
     override suspend fun deleteUserDetails(fromLocal: Boolean, fromRemote: Boolean) {
         if (fromLocal) {

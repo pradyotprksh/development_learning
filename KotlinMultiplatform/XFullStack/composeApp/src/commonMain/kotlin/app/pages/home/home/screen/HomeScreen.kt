@@ -24,15 +24,19 @@ import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import app.pages.home.home.screen.composables.ForYouTweetsComposable
 import app.pages.home.home.state.TweetActions
 import app.pages.home.home.viewModel.HomeViewModel
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.launch
 import utils.Localization
 
-@OptIn(ExperimentalFoundationApi::class)
+@OptIn(ExperimentalFoundationApi::class, FlowPreview::class)
 @Composable
 fun HomeScreen(
     homeViewModel: HomeViewModel = viewModel { HomeViewModel() },
@@ -42,20 +46,29 @@ fun HomeScreen(
         homeViewModel.initialSetup()
     }
 
-    val scope = rememberCoroutineScope()
-    val tweetsLazyColumnState = rememberLazyListState()
-    val snackbarHostState = remember { SnackbarHostState() }
     val homeScreenState by homeViewModel.homeScreenState.collectAsState()
+    val scope = rememberCoroutineScope()
+    val forYouLazyListState = rememberLazyListState(
+        initialFirstVisibleItemIndex = homeViewModel.getForYouScrollPosition()
+    )
+    val snackbarHostState = remember { SnackbarHostState() }
     val shouldStartPaginate = remember {
         derivedStateOf {
-            homeScreenState.canPaginate && (tweetsLazyColumnState.layoutInfo.visibleItemsInfo.lastOrNull()?.index
-                ?: -9) >= (tweetsLazyColumnState.layoutInfo.totalItemsCount - 6)
+            homeScreenState.canPaginate && (forYouLazyListState.layoutInfo.visibleItemsInfo.lastOrNull()?.index
+                ?: -9) >= (forYouLazyListState.layoutInfo.totalItemsCount - 6)
         }
     }
 
     LaunchedEffect(key1 = shouldStartPaginate.value) {
-        if (shouldStartPaginate.value)
-            homeViewModel.updateTweetsPage()
+        if (shouldStartPaginate.value) homeViewModel.updateTweetsPage()
+    }
+
+    LaunchedEffect(forYouLazyListState) {
+        snapshotFlow {
+            forYouLazyListState.firstVisibleItemIndex
+        }.debounce(500).collectLatest { index ->
+            homeViewModel.updateForYouScrollPosition(index)
+        }
     }
 
     val tabPagerState = rememberPagerState(pageCount = { homeScreenState.tabsDetails.size })
@@ -105,10 +118,9 @@ fun HomeScreen(
             ) { page ->
                 when (page) {
                     0 -> {
-                        ForYouTweetsComposable(
-                            tweets = homeScreenState.forYouTweets,
+                        ForYouTweetsComposable(tweets = homeScreenState.forYouTweets,
                             showLoading = homeScreenState.showLoading,
-                            tweetsLazyColumnState = tweetsLazyColumnState,
+                            tweetsLazyColumnState = forYouLazyListState,
                             tweetActions = TweetActions(
                                 profileImageClick = {},
                                 onTweetClick = {},
@@ -124,8 +136,7 @@ fun HomeScreen(
                             ),
                             tweetVisibility = {
                                 homeViewModel.updateViewForTweet(it)
-                            }
-                        )
+                            })
                     }
 
                     1 -> {}

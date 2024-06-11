@@ -26,4 +26,8 @@ interface CurrentUserRepository {
     suspend fun updateUserInfo(): Flow<ClientResponse<out XFullStackResponse<UserInfoResponse>>>
 
     suspend fun userInfoChanges(userId: String): Flow<UserInfoResponse?>
+
+    suspend fun updateScrollPosition(key: String, scrollPosition: Int)
+
+    fun getScrollPosition(key: String): Int
 }

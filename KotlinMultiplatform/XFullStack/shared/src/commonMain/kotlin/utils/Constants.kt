@@ -92,6 +92,7 @@ object Constants {
         const val GEMINI_API_KEY_1 = "GEMINI_API_KEY_1"
         const val GEMINI_API_KEY_2 = "GEMINI_API_KEY_2"
         const val KEY = "key"
+        const val FOR_YOU_SCROLL_POSITION = "for_you_scroll_position"
     }
 
     object ConstValues {
@@ -159,6 +160,7 @@ object Constants {
 
     object DbKeys {
         const val ID = "_id"
+        const val ID_WITHOUT_UNDERSCORE = "id"
         const val EMAIL_ADDRESS = "email_address"
         const val PHONE_NUMBER = "phone_number"
         const val PROFILE_PICTURE = "profile_picture"
@@ -189,7 +191,6 @@ object Constants {
         const val VIEWED_ID = "viewed_id"
         const val IS_UPDATED_ONLINE = "isUpdatedOnline"
         const val VIEWED_ID_CAMELCASE = "viewedId"
-        const val EMOTIONS = "emotions"
     }
 
     object GeminiPrompt {

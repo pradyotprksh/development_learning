@@ -7,15 +7,18 @@ import core.models.request.TweetRequest
 import core.models.response.ClientResponse
 import di.SharedModulesDi
 import domain.repositories.tweet.TweetRepository
+import domain.repositories.user.current.CurrentUserRepository
 import domain.repositories.view.ViewRepository
 import domain.repositories.websocket.WebsocketRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import utils.Constants.ConstValues.DEFAULT_PAGINATE_LIMIT
+import utils.Constants.Keys.FOR_YOU_SCROLL_POSITION
 import utils.Constants.SuccessCode.TWEETS_UPDATE_SUCCESS_CODE
 
 class HomeViewModel(
+    private val currentUserRepository: CurrentUserRepository = SharedModulesDi.Instance.currentUserRepository,
     private val tweetRepository: TweetRepository = SharedModulesDi.Instance.tweetRepository,
     private val websocketRepository: WebsocketRepository = SharedModulesDi.Instance.websocketRepository,
     private val viewRepository: ViewRepository = SharedModulesDi.Instance.viewRepository,
@@ -168,4 +171,13 @@ class HomeViewModel(
             viewRepository.saveView(tweetId)
         }
     }
+
+    suspend fun updateForYouScrollPosition(index: Int) {
+        currentUserRepository.updateScrollPosition(
+            FOR_YOU_SCROLL_POSITION,
+            index,
+        )
+    }
+
+    fun getForYouScrollPosition() = currentUserRepository.getScrollPosition(FOR_YOU_SCROLL_POSITION)
 }

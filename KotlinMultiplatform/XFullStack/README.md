@@ -20,3 +20,7 @@ This is a Kotlin Multiplatform project targeting Android, iOS, Desktop, Server.
 
 Learn more
 about [Kotlin Multiplatform](https://www.jetbrains.com/help/kotlin-multiplatform-dev/get-started.html)…
+
+Links:
+
+* [Project updates](https://x.com/pradyotprksh4/status/1799002745414004997)

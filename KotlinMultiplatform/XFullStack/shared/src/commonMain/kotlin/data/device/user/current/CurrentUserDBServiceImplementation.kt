@@ -2,9 +2,10 @@ package data.device.user.current
 
 import core.models.realm.CurrentUserIdDB
 import core.models.realm.CurrentUserInfoDB
+import core.models.realm.ScrollPositionDB
 import core.models.realm.TokenDB
-import core.parser.parseToCurrentUserInfoDB
 import core.models.response.UserInfoResponse
+import core.parser.parseToCurrentUserInfoDB
 import domain.services.user.current.CurrentUserDBService
 import io.realm.kotlin.Realm
 import io.realm.kotlin.UpdatePolicy
@@ -12,6 +13,7 @@ import io.realm.kotlin.ext.isManaged
 import io.realm.kotlin.ext.query
 import io.realm.kotlin.notifications.ResultsChange
 import kotlinx.coroutines.flow.Flow
+import utils.Constants.DbKeys.ID_WITHOUT_UNDERSCORE
 import utils.Constants.DbKeys.USER_ID
 
 class CurrentUserDBServiceImplementation(
@@ -62,5 +64,22 @@ class CurrentUserDBServiceImplementation(
 
     override suspend fun getUserInfo(userId: String): Flow<ResultsChange<CurrentUserInfoDB>> {
         return realm.query<CurrentUserInfoDB>("$USER_ID == $0", userId).find().asFlow()
+    }
+
+    override suspend fun updateScrollPosition(id: String, scrollPosition: Int) {
+        realm.write {
+            val unmanagedObject = ScrollPositionDB().apply {
+                this.id = id
+                this.postion = scrollPosition
+            }
+            copyToRealm(
+                unmanagedObject, updatePolicy = UpdatePolicy.ALL
+            )
+        }
+    }
+
+    override fun getScrollPosition(key: String): Int? {
+        return realm.query<ScrollPositionDB>("$ID_WITHOUT_UNDERSCORE == $0", key).find()
+            .firstOrNull()?.postion
     }
 }

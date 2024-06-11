@@ -21,4 +21,8 @@ interface CurrentUserDBService {
     suspend fun saveUserInfo(userInfoResponse: UserInfoResponse): CurrentUserInfoDB
 
     suspend fun getUserInfo(userId: String): Flow<ResultsChange<CurrentUserInfoDB>>
+
+    suspend fun updateScrollPosition(id: String, scrollPosition: Int)
+
+    fun getScrollPosition(key: String): Int?
 }

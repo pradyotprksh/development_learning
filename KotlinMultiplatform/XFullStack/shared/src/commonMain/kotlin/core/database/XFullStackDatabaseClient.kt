@@ -3,6 +3,7 @@ package core.database
 import core.models.realm.CurrentUserIdDB
 import core.models.realm.CurrentUserInfoDB
 import core.models.realm.PollChoicesDB
+import core.models.realm.ScrollPositionDB
 import core.models.realm.TokenDB
 import core.models.realm.TweetDB
 import core.models.realm.TweetRequestDB
@@ -24,6 +25,7 @@ object XFullStackDatabaseClient {
                     TweetRequestsDB::class,
                     TweetRequestDB::class,
                     ViewDB::class,
+                    ScrollPositionDB::class,
                 )
             )
         return Realm.open(config)
