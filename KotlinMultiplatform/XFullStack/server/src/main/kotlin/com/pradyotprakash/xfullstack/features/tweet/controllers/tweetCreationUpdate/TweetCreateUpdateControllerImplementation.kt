@@ -122,7 +122,6 @@ class TweetCreateUpdateControllerImplementation(
                 media = tweetRequest.media,
                 gif = tweetRequest.gif,
                 commentCount = 0,
-                retweetCount = 0,
                 isAPoll = tweetRequest.isAPoll,
                 pollChoices = tweetRequest.pollChoices.map {
                     PollChoices(

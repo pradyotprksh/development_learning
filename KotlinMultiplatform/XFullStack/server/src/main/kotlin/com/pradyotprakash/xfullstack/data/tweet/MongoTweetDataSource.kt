@@ -14,6 +14,7 @@ import utils.Constants.Database.Collections.TWEET
 import utils.Constants.DbKeys.CREATED_BY
 import utils.Constants.DbKeys.ID
 import utils.Constants.DbKeys.IS_A_LIKED_TWEET
+import utils.Constants.DbKeys.IS_A_QUOTE_TWEET
 import utils.Constants.DbKeys.IS_A_REPOST_TWEET
 import utils.Constants.DbKeys.PARENT_TWEET_ID
 import utils.Constants.DbKeys.POLL_CHOICES
@@ -74,6 +75,18 @@ class MongoTweetDataSource(
         ).count()
     }
 
+    override suspend fun totalNumberOfRetweets(tweetId: String): Int {
+        return tweetCollection.find(
+            Filters.and(
+                Filters.eq(PARENT_TWEET_ID, ObjectId(tweetId)),
+                Filters.or(
+                    Filters.eq(IS_A_QUOTE_TWEET, true),
+                    Filters.eq(IS_A_REPOST_TWEET, true),
+                )
+            ),
+        ).count()
+    }
+
     override suspend fun addNewFieldToAll(name: String, value: Any) {
         tweetCollection.updateMany(
             Filters.exists(ID),
@@ -99,5 +112,12 @@ class MongoTweetDataSource(
                 Filters.eq(IS_A_REPOST_TWEET, true),
             ),
         )?.id?.toHexString()
+    }
+
+    override suspend fun removeKeyFromAll(key: String) {
+        tweetCollection.updateMany(
+            Filters.exists(ID),
+            Updates.unset(key)
+        )
     }
 }
