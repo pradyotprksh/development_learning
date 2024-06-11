@@ -54,6 +54,15 @@ class TweetDBServiceImplementation(
         return realm.query<TweetDB>("$TWEET_ID == $0", id).find().firstOrNull()
     }
 
+    override suspend fun deleteTweetById(id: String) {
+        val tweet = getTweetById(id)
+        realm.write {
+            if (tweet != null) {
+                findLatest(tweet)?.also { delete(it) }
+            }
+        }
+    }
+
     override suspend fun saveTweetRequests(tweetRequest: List<TweetRequest>): TweetRequestsDB =
         realm.write {
             val unmanagedObject = tweetRequest.parseToTweetRequestDb()

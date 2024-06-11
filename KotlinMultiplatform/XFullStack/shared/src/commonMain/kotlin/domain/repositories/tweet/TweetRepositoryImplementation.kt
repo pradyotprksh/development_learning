@@ -132,4 +132,8 @@ class TweetRepositoryImplementation(
     override suspend fun getTweetDetails(tweetId: String): TweetResponse? {
         return tweetDBService.getTweetById(tweetId)?.parseToTweetResponse()
     }
+
+    override suspend fun deleteTweetById(id: String) {
+        tweetDBService.deleteTweetById(id)
+    }
 }

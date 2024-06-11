@@ -12,9 +12,11 @@ import domain.repositories.view.ViewRepository
 import domain.repositories.websocket.WebsocketRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.launch
 import utils.Constants.ConstValues.DEFAULT_PAGINATE_LIMIT
 import utils.Constants.Keys.FOR_YOU_SCROLL_POSITION
+import utils.Constants.SuccessCode.TWEETS_DELETED_SUCCESS_CODE
 import utils.Constants.SuccessCode.TWEETS_UPDATE_SUCCESS_CODE
 
 class HomeViewModel(
@@ -35,12 +37,19 @@ class HomeViewModel(
 
     private fun startTweetUpdateListener() {
         viewModelScope.launch {
-            websocketRepository.connectAndListen().collect {
+            websocketRepository.connectAndListen().mapNotNull { it }.collect {
                 if (it == TWEETS_UPDATE_SUCCESS_CODE) {
                     updateForYouAllTweets(
                         1,
                         _homeScreenState.value.forYouTweets.size,
                     )
+                } else if (it.contains(TWEETS_DELETED_SUCCESS_CODE)) {
+                    val split = it.split(" ")
+                    if (split.size == 2) {
+                        if (split.first() == TWEETS_DELETED_SUCCESS_CODE) {
+                            tweetRepository.deleteTweetById(split[1])
+                        }
+                    }
                 }
             }
         }

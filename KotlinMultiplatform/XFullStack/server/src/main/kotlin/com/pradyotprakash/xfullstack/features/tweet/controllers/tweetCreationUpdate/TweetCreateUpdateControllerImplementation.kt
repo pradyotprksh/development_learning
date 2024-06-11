@@ -6,6 +6,7 @@ import com.pradyotprakash.xfullstack.data.tweet.data.PollVoterDetails
 import com.pradyotprakash.xfullstack.data.tweet.data.Tweet
 import com.pradyotprakash.xfullstack.data.user.UserDataSource
 import com.pradyotprakash.xfullstack.features.tweet.resource.TweetResource
+import com.pradyotprakash.xfullstack.features.websockets.Connections
 import core.exception.DBWriteError
 import core.exception.InvalidTweet
 import core.exception.UserDetailsNotFound
@@ -21,6 +22,7 @@ import io.ktor.server.response.respond
 import org.bson.types.ObjectId
 import utils.Constants
 import utils.Constants.Keys.USER_ID
+import utils.Constants.SuccessCode.TWEETS_DELETED_SUCCESS_CODE
 import utils.Localization
 import utils.UtilsMethod
 import utils.XFullStackResponseStatus
@@ -45,10 +47,20 @@ class TweetCreateUpdateControllerImplementation(
         val tweetRequestFilter = tweetsRequest.filter { tweetRequest ->
             val requestParentTweetId = tweetRequest.parentTweetId
 
-            if (tweetRequest.isLikedTweet && requestParentTweetId != null) {
-                !tweetDataSource.isTweetAlreadyLiked(requestParentTweetId, createdBy)
+            val deletedTweetId = if (tweetRequest.isLikedTweet && requestParentTweetId != null) {
+                tweetDataSource.isTweetAlreadyLiked(requestParentTweetId, createdBy)
             } else if (tweetRequest.isRepostTweet && requestParentTweetId != null) {
-                !tweetDataSource.isTweetAlreadyReposted(requestParentTweetId, createdBy)
+                tweetDataSource.isTweetAlreadyReposted(requestParentTweetId, createdBy)
+            } else {
+                null
+            }
+
+            if (deletedTweetId != null) {
+                Connections.sendMessageToAll(
+                    "$TWEETS_DELETED_SUCCESS_CODE $deletedTweetId",
+                )
+
+                false
             } else {
                 true
             }

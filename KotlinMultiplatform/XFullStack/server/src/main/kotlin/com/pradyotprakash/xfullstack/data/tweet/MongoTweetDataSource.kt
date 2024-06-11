@@ -81,23 +81,23 @@ class MongoTweetDataSource(
         )
     }
 
-    override suspend fun isTweetAlreadyLiked(tweetId: String, userId: String): Boolean {
+    override suspend fun isTweetAlreadyLiked(tweetId: String, userId: String): String? {
         return tweetCollection.findOneAndDelete(
             Filters.and(
                 Filters.eq(PARENT_TWEET_ID, ObjectId(tweetId)),
                 Filters.eq(CREATED_BY, ObjectId(userId)),
                 Filters.eq(IS_A_LIKED_TWEET, true),
             ),
-        ) != null
+        )?.id?.toHexString()
     }
 
-    override suspend fun isTweetAlreadyReposted(tweetId: String, userId: String): Boolean {
+    override suspend fun isTweetAlreadyReposted(tweetId: String, userId: String): String? {
         return tweetCollection.findOneAndDelete(
             Filters.and(
                 Filters.eq(PARENT_TWEET_ID, ObjectId(tweetId)),
                 Filters.eq(CREATED_BY, ObjectId(userId)),
                 Filters.eq(IS_A_REPOST_TWEET, true),
             ),
-        ) != null
+        )?.id?.toHexString()
     }
 }

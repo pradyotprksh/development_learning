@@ -34,4 +34,6 @@ interface TweetRepository {
     suspend fun getTweetDetails(
         tweetId: String
     ): TweetResponse?
+
+    suspend fun deleteTweetById(id: String)
 }

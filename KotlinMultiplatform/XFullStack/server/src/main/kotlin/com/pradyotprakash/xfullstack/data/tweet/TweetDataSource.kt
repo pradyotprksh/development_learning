@@ -27,7 +27,7 @@ interface TweetDataSource {
 
     suspend fun addNewFieldToAll(name: String, value: Any)
 
-    suspend fun isTweetAlreadyLiked(tweetId: String, userId: String): Boolean
+    suspend fun isTweetAlreadyLiked(tweetId: String, userId: String): String?
 
-    suspend fun isTweetAlreadyReposted(tweetId: String, userId: String): Boolean
+    suspend fun isTweetAlreadyReposted(tweetId: String, userId: String): String?
 }

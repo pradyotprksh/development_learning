@@ -1,6 +1,7 @@
 package com.pradyotprakash.xfullstack.features.websockets
 
 import io.ktor.server.websocket.DefaultWebSocketServerSession
+import io.ktor.websocket.Frame
 import java.util.Collections
 
 object Connections {
@@ -12,7 +13,17 @@ object Connections {
         connections.add(userId to session)
     }
 
-    fun getAllSessions() = connections.map { it.second }
+    private fun getAllSessions() = connections.map { it.second }
 
     fun removeSession(userId: String) = connections.removeIf { it.first == userId }
+
+    fun sendMessageToAll(message: String) {
+        getAllSessions().forEach {
+            it.outgoing.trySend(
+                Frame.Text(
+                    message
+                ),
+            )
+        }
+    }
 }

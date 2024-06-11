@@ -18,5 +18,7 @@ interface TweetDBService {
 
     fun getTweetById(id: String): TweetDB?
 
+    suspend fun deleteTweetById(id: String)
+
     suspend fun saveTweetRequests(tweetRequest: List<TweetRequest>): TweetRequestsDB
 }
