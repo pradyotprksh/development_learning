@@ -11,6 +11,7 @@ import io.realm.kotlin.Realm
 import io.realm.kotlin.UpdatePolicy
 import io.realm.kotlin.ext.query
 import io.realm.kotlin.notifications.ResultsChange
+import io.realm.kotlin.notifications.SingleQueryChange
 import io.realm.kotlin.query.Sort
 import kotlinx.coroutines.flow.Flow
 import org.mongodb.kbson.ObjectId
@@ -41,6 +42,12 @@ class TweetDBServiceImplementation(
 
     override fun getAllTweetRequests(): Flow<ResultsChange<TweetRequestsDB>> {
         return realm.query<TweetRequestsDB>().asFlow()
+    }
+
+    override fun getTweetChanges(id: String): Flow<SingleQueryChange<TweetDB>> {
+        return realm.query<TweetDB>(
+            "$TWEET_ID == $0", id
+        ).first().asFlow()
     }
 
     override suspend fun deleteTweetRequest(id: String) {

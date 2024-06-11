@@ -16,6 +16,8 @@ interface TweetRepository {
 
     suspend fun allTweetsChanges(): Flow<List<TweetResponse>>
 
+    suspend fun getTweetChanges(id: String): Flow<TweetResponse?>
+
     suspend fun allTweetRequestChanges(): Flow<List<TweetRequestsDB>>
 
     suspend fun deleteTweetRequest(id: String)
@@ -28,11 +30,11 @@ interface TweetRepository {
     suspend fun saveTweetRequests(tweets: List<TweetRequest>)
 
     suspend fun uploadTweets(
-        tweetRequestsDb: TweetRequestsDB
+        tweetRequestsDb: TweetRequestsDB,
     ): Flow<ClientResponse<out XFullStackResponse<Nothing>>>
 
     suspend fun getTweetDetails(
-        tweetId: String
+        tweetId: String,
     ): TweetResponse?
 
     suspend fun deleteTweetById(id: String)

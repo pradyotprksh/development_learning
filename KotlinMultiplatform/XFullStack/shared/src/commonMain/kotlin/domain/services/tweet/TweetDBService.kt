@@ -5,6 +5,7 @@ import core.models.realm.TweetRequestsDB
 import core.models.request.TweetRequest
 import core.models.response.TweetResponse
 import io.realm.kotlin.notifications.ResultsChange
+import io.realm.kotlin.notifications.SingleQueryChange
 import kotlinx.coroutines.flow.Flow
 
 interface TweetDBService {
@@ -13,6 +14,8 @@ interface TweetDBService {
     fun getAllTweets(): Flow<ResultsChange<TweetDB>>
 
     fun getAllTweetRequests(): Flow<ResultsChange<TweetRequestsDB>>
+
+    fun getTweetChanges(id: String): Flow<SingleQueryChange<TweetDB>>
 
     suspend fun deleteTweetRequest(id: String)
 

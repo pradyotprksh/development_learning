@@ -59,6 +59,11 @@ class TweetRepositoryImplementation(
             .map { dbResult -> dbResult.list.map { db -> db.parseToTweetResponse() } }
     }
 
+    override suspend fun getTweetChanges(id: String): Flow<TweetResponse?> {
+        return tweetDBService.getTweetChanges(id)
+            .map { dbResult -> dbResult.obj?.parseToTweetResponse() }
+    }
+
     override suspend fun allTweetRequestChanges(): Flow<List<TweetRequestsDB>> {
         return tweetDBService.getAllTweetRequests().map { it.list }
     }
