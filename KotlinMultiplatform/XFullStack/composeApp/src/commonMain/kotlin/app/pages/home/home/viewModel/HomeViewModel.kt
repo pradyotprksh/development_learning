@@ -20,6 +20,9 @@ class HomeViewModel(
     private val websocketRepository: WebsocketRepository = SharedModulesDi.Instance.websocketRepository,
     private val viewRepository: ViewRepository = SharedModulesDi.Instance.viewRepository,
 ) : ViewModel() {
+    private val _homeScreenState = MutableStateFlow(HomeState())
+    val homeScreenState = _homeScreenState.asStateFlow()
+
     init {
         viewModelScope.launch {
             startTweetUpdateListener()
@@ -30,8 +33,8 @@ class HomeViewModel(
     private fun startTweetUpdateListener() {
         viewModelScope.launch {
             websocketRepository.connectAndListen().collect {
-                when (it) {
-                    TWEETS_UPDATE_SUCCESS_CODE -> updateForYouAllTweets(
+                if (it == TWEETS_UPDATE_SUCCESS_CODE) {
+                    updateForYouAllTweets(
                         1,
                         _homeScreenState.value.forYouTweets.size,
                     )
@@ -39,9 +42,6 @@ class HomeViewModel(
             }
         }
     }
-
-    private val _homeScreenState = MutableStateFlow(HomeState())
-    val homeScreenState = _homeScreenState.asStateFlow()
 
     private fun showMessage(message: String) {
         _homeScreenState.value = _homeScreenState.value.copy(
@@ -69,14 +69,16 @@ class HomeViewModel(
     }
 
     fun updateTweetsPage() {
-        viewModelScope.launch {
-            _homeScreenState.value = _homeScreenState.value.copy(
-                forYouTweetPage = _homeScreenState.value.forYouTweetPage + 1,
-            )
-            updateForYouAllTweets(
-                page = _homeScreenState.value.forYouTweetPage,
-                limit = 10,
-            )
+        if (_homeScreenState.value.isNewTweetFound) {
+            viewModelScope.launch {
+                _homeScreenState.value = _homeScreenState.value.copy(
+                    forYouTweetPage = _homeScreenState.value.forYouTweetPage + 1,
+                )
+                updateForYouAllTweets(
+                    page = _homeScreenState.value.forYouTweetPage,
+                    limit = 10,
+                )
+            }
         }
     }
 
@@ -118,7 +120,8 @@ class HomeViewModel(
     private suspend fun getAllTweets() {
         tweetRepository.allTweetsChanges().collect {
             _homeScreenState.value = _homeScreenState.value.copy(
-                forYouTweets = it
+                forYouTweets = it,
+                isNewTweetFound = it.size != _homeScreenState.value.forYouTweets.size,
             )
         }
     }

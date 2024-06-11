@@ -9,13 +9,10 @@ import io.ktor.server.routing.post
 import utils.Constants.Paths.Migration.MIGRATION
 import utils.Constants.SuccessCode.DB_MIGRATION_SUCCESS_CODE
 import utils.Localization
-import utils.Logger
-import utils.LoggerLevel
 import utils.XFullStackResponseStatus
 
 fun Routing.migration() {
     post(MIGRATION) {
-        Logger.log(LoggerLevel.Info, "Migrating database")
         // DONE: tweetDataSource.addNewFieldToAll(EMOTIONS, emptyList<String>())
         call.respond(
             HttpStatusCode.OK,

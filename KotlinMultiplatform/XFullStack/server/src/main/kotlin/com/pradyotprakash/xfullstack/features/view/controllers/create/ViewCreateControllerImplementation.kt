@@ -15,8 +15,6 @@ import io.ktor.server.response.respond
 import org.bson.types.ObjectId
 import utils.Constants
 import utils.Localization
-import utils.Logger
-import utils.LoggerLevel
 import utils.UtilsMethod
 import utils.XFullStackResponseStatus
 
@@ -43,7 +41,6 @@ class ViewCreateControllerImplementation : ViewCreateController {
                 userId.toHexString(),
                 24,
             )
-            Logger.log(LoggerLevel.Info, id)
 
             View(
                 id = ObjectId(

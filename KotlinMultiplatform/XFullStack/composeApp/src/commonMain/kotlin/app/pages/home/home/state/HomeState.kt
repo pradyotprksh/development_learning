@@ -12,6 +12,7 @@ data class HomeState(
     val following: Int = 0,
     val followers: Int = 0,
     val forYouTweets: List<TweetResponse> = emptyList(),
+    val isNewTweetFound: Boolean = true,
     val forYouTweetPage: Int = 1,
     val followingTweetPage: Int = 1,
     val firstLoadDone: Boolean = false,

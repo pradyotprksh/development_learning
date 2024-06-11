@@ -11,6 +11,8 @@ import io.ktor.websocket.Frame
 import utils.Constants.Keys.USER_ID
 import utils.Constants.Paths.Websockets.WEBSOCKETS
 import utils.Constants.SuccessCode.TWEETS_UPDATE_SUCCESS_CODE
+import utils.Logger
+import utils.LoggerLevel
 
 fun Routing.websockets(
     tweetDataSource: TweetDataSource,
@@ -31,6 +33,7 @@ fun Routing.websockets(
                     }
                 }
             } catch (e: Exception) {
+                Logger.log(LoggerLevel.Error, e.localizedMessage ?: e.toString())
                 Connections.removeSession(connectionBy)
             }
         }
