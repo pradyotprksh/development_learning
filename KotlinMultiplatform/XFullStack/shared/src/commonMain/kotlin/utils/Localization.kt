@@ -178,4 +178,5 @@ object Localization {
     const val DB_MIGRATION_SUCCESS = "Database migration was successful"
     const val LIKED = "%s liked"
     const val REPOSTED = "%s reposted"
+    const val ADD_A_COMMENT = "Add a comment..."
 }

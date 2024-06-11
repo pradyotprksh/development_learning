@@ -106,6 +106,7 @@ fun CreateTweetScreen(
                             tweet = tweet,
                             showCloseButton = tweet.index > 0,
                             showPoll = createTweetState.currentFocusedTweetIndex == tweet.index,
+                            parentTweetDetails = tweet.parentTweetDetails,
                             onTweetValueChange = { value ->
                                 createTweetViewModel.updateTweet(value, tweet.index)
                             },

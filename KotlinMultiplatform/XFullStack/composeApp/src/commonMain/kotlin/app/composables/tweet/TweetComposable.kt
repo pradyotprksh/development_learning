@@ -1,5 +1,6 @@
 package app.composables.tweet
 
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
@@ -11,17 +12,20 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import app.composables.CircularDotComposable
 import app.composables.ProfileImageComposable
 import app.pages.home.home.state.TweetActions
 import core.models.response.PollChoicesResponse
+import core.models.response.TweetResponse
 import utils.Constants.ConstValues.USERNAME_PREFIX
 
 @Composable
@@ -38,12 +42,15 @@ fun TweetComposable(
     likeCount: String,
     views: String,
     isAPoll: Boolean,
+    isQuoteTweet: Boolean,
     isLikedByCurrentUser: Boolean,
     pollChoices: List<PollChoicesResponse>,
     isPollingAllowed: Boolean,
     pollingEndTime: String,
+    showTweetActions: Boolean,
+    parentTweetDetails: TweetResponse?,
     onPollSelection: (String) -> Unit,
-    tweetActions: TweetActions,
+    tweetActions: TweetActions?,
 ) {
     Row(
         modifier = modifier.fillMaxWidth()
@@ -52,7 +59,9 @@ fun TweetComposable(
             profileImage = createdByProfilePicture, modifier = Modifier.size(40.dp).clickable(
                 indication = null,
                 interactionSource = remember { MutableInteractionSource() },
-                onClick = tweetActions.profileImageClick,
+                onClick = {
+                    tweetActions?.profileImageClick?.invoke()
+                },
             )
         )
 
@@ -63,7 +72,9 @@ fun TweetComposable(
             ).weight(1f).clickable(
                 indication = null,
                 interactionSource = remember { MutableInteractionSource() },
-                onClick = tweetActions.onTweetClick,
+                onClick = {
+                    tweetActions?.onTweetClick?.invoke()
+                },
             )
         ) {
             Row(
@@ -102,19 +113,53 @@ fun TweetComposable(
                     onPollSelection = onPollSelection,
                 )
             }
-            TweetActionsComposable(
-                commentCount = commentCount,
-                retweetCount = retweetCount,
-                likeCount = likeCount,
-                views = views,
-                isLikedByCurrentUser = isLikedByCurrentUser,
-                onBookmark = { tweetActions.onBookmark(tweetId) },
-                onShare = { tweetActions.onShare(tweetId) },
-                onAddComment = { tweetActions.onComment(tweetId) },
-                onRepost = { tweetActions.onRepost(tweetId) },
-                onLike = { tweetActions.onLike(tweetId) },
-                onViews = { tweetActions.onViews(tweetId) },
-            )
+            if (parentTweetDetails != null && isQuoteTweet) {
+                Spacer(modifier = Modifier.height(10.dp))
+                TweetComposable(
+                    modifier = Modifier.border(
+                        width = Dp.Hairline,
+                        color = MaterialTheme.colorScheme.outlineVariant,
+                        shape = RoundedCornerShape(10.dp)
+                    ).padding(
+                        horizontal = 15.dp, vertical = 8.dp
+                    ),
+                    createdByProfilePicture = parentTweetDetails.createdBy?.profilePicture,
+                    createdByName = parentTweetDetails.createdBy?.name ?: "",
+                    createdByUsername = parentTweetDetails.createdBy?.username ?: "",
+                    tweetedOn = parentTweetDetails.tweetedOn,
+                    tweet = parentTweetDetails.tweet,
+                    tweetId = parentTweetDetails.id,
+                    commentCount = "${parentTweetDetails.commentCount}",
+                    retweetCount = "${parentTweetDetails.retweetCount}",
+                    likeCount = "${parentTweetDetails.likesCount}",
+                    views = "${parentTweetDetails.views}",
+                    isAPoll = parentTweetDetails.isAPoll,
+                    pollChoices = parentTweetDetails.pollChoices.toList(),
+                    isPollingAllowed = parentTweetDetails.isPollingAllowed,
+                    pollingEndTime = parentTweetDetails.pollingEndTime,
+                    showTweetActions = false,
+                    onPollSelection = {},
+                    tweetActions = null,
+                    isLikedByCurrentUser = parentTweetDetails.isLikedByCurrentUser,
+                    parentTweetDetails = null,
+                    isQuoteTweet = false,
+                )
+            }
+            if (showTweetActions) {
+                TweetActionsComposable(
+                    commentCount = commentCount,
+                    retweetCount = retweetCount,
+                    likeCount = likeCount,
+                    views = views,
+                    isLikedByCurrentUser = isLikedByCurrentUser,
+                    onBookmark = { tweetActions?.onBookmark?.invoke(tweetId) },
+                    onShare = { tweetActions?.onShare?.invoke(tweetId) },
+                    onAddComment = { tweetActions?.onComment?.invoke(tweetId) },
+                    onRepost = { tweetActions?.onRepost?.invoke(tweetId) },
+                    onLike = { tweetActions?.onLike?.invoke(tweetId) },
+                    onViews = { tweetActions?.onViews?.invoke(tweetId) },
+                )
+            }
         }
     }
 }

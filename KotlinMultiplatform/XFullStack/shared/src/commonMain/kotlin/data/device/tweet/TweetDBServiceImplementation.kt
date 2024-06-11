@@ -13,6 +13,7 @@ import io.realm.kotlin.ext.query
 import io.realm.kotlin.notifications.ResultsChange
 import io.realm.kotlin.query.Sort
 import kotlinx.coroutines.flow.Flow
+import org.mongodb.kbson.ObjectId
 import utils.Constants.DbKeys.REQUEST_ID
 import utils.Constants.DbKeys.TWEETED_ON_TIMESTAMP
 import utils.Constants.DbKeys.TWEET_ID
@@ -44,9 +45,8 @@ class TweetDBServiceImplementation(
 
     override suspend fun deleteTweetRequest(id: String) {
         realm.write {
-            val requestToDelete =
-                query<TweetRequestsDB>("$REQUEST_ID == $0", ObjectId(id)).find().first()
-            delete(requestToDelete)
+            query<TweetRequestsDB>("$REQUEST_ID == $0", ObjectId(id)).find().firstOrNull()
+                ?.let { delete(it) }
         }
     }
 

@@ -103,7 +103,6 @@ class TweetRepositoryImplementation(
             if (tweetRequest.isNotEmpty()) {
                 val response = tweetRemoteService.uploadTweets(tweetRequest)
                 if (response.status == XFullStackResponseStatus.Success) {
-                    deleteTweetRequest(tweetRequestsDb.requestId.toHexString())
                     emit(
                         ClientResponse.Success(response)
                     )
@@ -126,6 +125,7 @@ class TweetRepositoryImplementation(
                 ),
             )
         }
+        deleteTweetRequest(tweetRequestsDb.requestId.toHexString())
         emit(ClientResponse.Idle)
     }
 

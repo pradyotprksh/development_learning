@@ -3,7 +3,7 @@ package app.pages.createTweet.viewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.pages.createTweet.state.CreateTweetState
-import core.parser.parseToTweetRequest
+import core.models.request.TweetRequest
 import di.SharedModulesDi
 import domain.repositories.tweet.TweetRepository
 import domain.repositories.user.current.CurrentUserRepository
@@ -22,9 +22,11 @@ class CreateTweetViewModel(
     private val _createTweetState = MutableStateFlow(CreateTweetState())
     val createTweetState = _createTweetState.asStateFlow()
 
-    suspend fun initialSetup(parentTweetId: String?) {
-        getCurrentUserInfo()
-        parentTweetId?.let { getParentTweetDetails(it) }
+    fun initialSetup(parentTweetId: String?) {
+        viewModelScope.launch {
+            parentTweetId?.let { getParentTweetDetails(it) }
+            getCurrentUserInfo()
+        }
     }
 
     private suspend fun getParentTweetDetails(tweetId: String) {
@@ -32,15 +34,16 @@ class CreateTweetViewModel(
             val tweets = _createTweetState.value.tweets.toMutableList()
             val firstTweet = tweets.removeAt(0)
             tweets.add(
-                0,
-                firstTweet.copy(
+                0, firstTweet.copy(
                     parentTweetId = tweetId,
                     parentTweetDetails = parentTweetDetails,
                     isRepostTweet = true,
+                    label = Localization.ADD_A_COMMENT,
                 )
             )
             _createTweetState.value = _createTweetState.value.copy(
                 tweets = tweets,
+                enableAddNewTweetButton = true,
             )
         }
     }
@@ -61,8 +64,10 @@ class CreateTweetViewModel(
         val tweets = _createTweetState.value.tweets.toMutableList()
         if (value.length <= TWEET_MAX_LENGTH) {
             val deletedTweet = tweets.removeAt(index)
-            val isQuoteTweet = deletedTweet.isRepostTweet && value.isNotBlank()
-            val isRepostTweet = deletedTweet.isRepostTweet && !isQuoteTweet
+            val isQuoteTweet =
+                deletedTweet.parentTweetId != null && deletedTweet.parentTweetDetails != null && value.isNotBlank()
+            val isRepostTweet =
+                deletedTweet.parentTweetId != null && deletedTweet.parentTweetDetails != null && value.isBlank()
             tweets.add(
                 index,
                 deletedTweet.copy(
@@ -222,7 +227,26 @@ class CreateTweetViewModel(
         }
         if (tweetRequests.isNotEmpty()) {
             viewModelScope.launch {
-                tweetRepository.saveTweetRequests(tweetRequests.map { it.parseToTweetRequest() })
+                tweetRepository.saveTweetRequests(
+                    tweetRequests.map {
+                        TweetRequest(
+                            tweet = it.tweet.trim(),
+                            media = it.media,
+                            gif = it.gifs,
+                            isAPoll = it.isAPoll,
+                            pollChoices = it.pollChoices,
+                            pollHour = it.pollHour,
+                            pollMinute = it.pollMinute,
+                            pollSeconds = it.pollSeconds,
+                            location = it.location,
+                            isScheduledTweet = it.isScheduledTweet,
+                            scheduledOnTweet = it.scheduledOnTweet,
+                            isQuoteTweet = it.isQuoteTweet,
+                            isRepostTweet = it.isRepostTweet,
+                            parentTweetId = it.parentTweetId,
+                        )
+                    },
+                )
                 navigateBack()
             }
         }

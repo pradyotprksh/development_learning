@@ -91,9 +91,11 @@ fun ForYouTweetsComposable(
                             likeCount = "${shownTweet.likesCount}",
                             views = "${shownTweet.views}",
                             isAPoll = shownTweet.isAPoll,
+                            isQuoteTweet = shownTweet.isQuoteTweet,
                             pollChoices = shownTweet.pollChoices.toList(),
                             isPollingAllowed = shownTweet.isPollingAllowed,
                             pollingEndTime = shownTweet.pollingEndTime,
+                            showTweetActions = true,
                             onPollSelection = { optionId ->
                                 tweetActions.onPollSelection(
                                     shownTweet.id,
@@ -102,6 +104,7 @@ fun ForYouTweetsComposable(
                             },
                             tweetActions = tweetActions,
                             isLikedByCurrentUser = shownTweet.isLikedByCurrentUser,
+                            parentTweetDetails = tweet.parentTweetDetails,
                         )
                     }
                     HorizontalDivider()

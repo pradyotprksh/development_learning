@@ -1,6 +1,7 @@
 package app.pages.createTweet.screen.composables
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -8,12 +9,15 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
@@ -22,9 +26,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import app.composables.ProfileImageComposable
+import app.composables.tweet.TweetComposable
 import app.pages.createTweet.state.TweetDetails
+import core.models.response.TweetResponse
 
 @Composable
 fun TweetTextFieldComposable(
@@ -33,6 +40,7 @@ fun TweetTextFieldComposable(
     tweet: TweetDetails,
     showCloseButton: Boolean,
     showPoll: Boolean,
+    parentTweetDetails: TweetResponse?,
     onTweetValueChange: (String) -> Unit,
     onFocusChange: () -> Unit,
     deleteTweet: () -> Unit,
@@ -102,6 +110,42 @@ fun TweetTextFieldComposable(
                         contentDescription = Icons.Default.Close.name,
                     )
                 }
+            }
+        }
+        if (parentTweetDetails != null) {
+            Spacer(modifier = Modifier.height(5.dp))
+            Column(
+                modifier = modifier.border(
+                    width = Dp.Hairline,
+                    color = MaterialTheme.colorScheme.outlineVariant,
+                    shape = RoundedCornerShape(10.dp)
+                ).fillMaxWidth(),
+            ) {
+                TweetComposable(
+                    modifier = Modifier.padding(
+                        horizontal = 15.dp, vertical = 8.dp
+                    ),
+                    createdByProfilePicture = parentTweetDetails.createdBy?.profilePicture,
+                    createdByName = parentTweetDetails.createdBy?.name ?: "",
+                    createdByUsername = parentTweetDetails.createdBy?.username ?: "",
+                    tweetedOn = parentTweetDetails.tweetedOn,
+                    tweet = parentTweetDetails.tweet,
+                    tweetId = parentTweetDetails.id,
+                    commentCount = "${parentTweetDetails.commentCount}",
+                    retweetCount = "${parentTweetDetails.retweetCount}",
+                    likeCount = "${parentTweetDetails.likesCount}",
+                    views = "${parentTweetDetails.views}",
+                    isAPoll = parentTweetDetails.isAPoll,
+                    pollChoices = parentTweetDetails.pollChoices.toList(),
+                    isPollingAllowed = parentTweetDetails.isPollingAllowed,
+                    pollingEndTime = parentTweetDetails.pollingEndTime,
+                    showTweetActions = false,
+                    onPollSelection = {},
+                    tweetActions = null,
+                    isLikedByCurrentUser = parentTweetDetails.isLikedByCurrentUser,
+                    parentTweetDetails = null,
+                    isQuoteTweet = false,
+                )
             }
         }
         Spacer(modifier = Modifier.height(10.dp))

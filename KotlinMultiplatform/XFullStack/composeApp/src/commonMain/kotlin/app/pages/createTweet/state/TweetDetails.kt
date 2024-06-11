@@ -24,11 +24,15 @@ data class TweetDetails(
     val parentTweetDetails: TweetResponse? = null,
 ) {
     fun shouldSelectThisTweet(): Boolean {
-        return validTweet() && isPollValid() && isLocationValid() && isScheduledValid() && isQuoteValid()
+        if (isRepostTweet) {
+            return isRepostValid()
+        } else {
+            return validTweet() && isPollValid() && isLocationValid() && isScheduledValid() && isQuoteValid()
+        }
     }
 
     private fun validTweet(): Boolean {
-        return isVisible && tweet.isNotBlank()
+        return isVisible && tweet.trim().isNotBlank()
     }
 
     private fun isPollValid(): Boolean {
@@ -55,8 +59,16 @@ data class TweetDetails(
 
     private fun isQuoteValid(): Boolean {
         if (isQuoteTweet) {
+            return parentTweetId != null && validTweet()
+        }
+        return true
+    }
+
+    private fun isRepostValid(): Boolean {
+        if (isRepostTweet) {
             return parentTweetId != null
         }
+
         return true
     }
 }
