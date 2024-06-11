@@ -1,6 +1,7 @@
 package app.navigation
 
 import utils.Constants.ConstValues.PARENT_TWEET_ID
+import utils.Constants.ConstValues.TWEET_ID
 import utils.Constants.ConstValues.USERNAME_EMAIL_PHONE
 
 fun Routes.path(): String {
@@ -29,5 +30,6 @@ enum class Routes(
     HomeCommunities("home/communities/"),
     HomeNotifications("home/notifications/"),
     HomeMessages("home/messages/"),
-    CreateTweet("create-tweet/", listOf(PARENT_TWEET_ID))
+    CreateTweet("create-tweet/", listOf(PARENT_TWEET_ID)),
+    TweetDetails("tweet-details/", listOf(TWEET_ID)),
 }

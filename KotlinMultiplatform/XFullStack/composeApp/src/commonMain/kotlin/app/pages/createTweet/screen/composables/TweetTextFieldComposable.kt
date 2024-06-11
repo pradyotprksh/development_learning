@@ -31,6 +31,7 @@ import androidx.compose.ui.unit.dp
 import app.composables.ProfileImageComposable
 import app.composables.tweet.TweetComposable
 import app.pages.createTweet.state.TweetDetails
+import app.pages.home.home.state.TweetActions
 import core.models.response.TweetResponse
 
 @Composable
@@ -141,7 +142,7 @@ fun TweetTextFieldComposable(
                     pollingEndTime = parentTweetDetails.pollingEndTime,
                     showTweetActions = false,
                     onPollSelection = {},
-                    tweetActions = null,
+                    tweetActions = TweetActions(),
                     isLikedByCurrentUser = parentTweetDetails.isLikedByCurrentUser,
                     parentTweetDetails = null,
                     isQuoteTweet = false,

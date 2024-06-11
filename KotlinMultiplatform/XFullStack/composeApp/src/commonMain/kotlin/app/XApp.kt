@@ -49,9 +49,11 @@ import app.pages.createTweet.screen.CreateTweetScreen
 import app.pages.home.bottomBar.HomeBottomNavItems
 import app.pages.home.home.screen.HomeScreen
 import app.pages.splash.screen.SplashScreen
+import app.pages.tweetDetails.screen.TweetDetailsScreen
 import kotlinx.coroutines.launch
 import utils.Constants.ConstValues.NO_NAV_VALUE
 import utils.Constants.ConstValues.PARENT_TWEET_ID
+import utils.Constants.ConstValues.TWEET_ID
 import utils.Constants.ConstValues.USERNAME_EMAIL_PHONE
 import utils.Localization
 import utils.extensions.popUpToTop
@@ -62,7 +64,7 @@ import utils.extensions.popUpToTop
 @Composable
 fun XApp(
     navController: NavHostController = rememberNavController(),
-    xAppViewModel: XAppViewModel = viewModel { XAppViewModel() }
+    xAppViewModel: XAppViewModel = viewModel { XAppViewModel() },
 ) {
     LaunchedEffect(Unit) {
         xAppViewModel.initSetup()
@@ -113,6 +115,11 @@ fun XApp(
     val navigateToCreateTweet = { value: String ->
         navController.navigate(
             "${Routes.CreateTweet.route}$value",
+        )
+    }
+    val navigateToTweetDetails = { value: String ->
+        navController.navigate(
+            "${Routes.TweetDetails.route}$value",
         )
     }
 
@@ -246,6 +253,9 @@ fun XApp(
                         openCreateTweetWithParentId = {
                             navigateToCreateTweet(it)
                         },
+                        openTweetDetails = {
+                            navigateToTweetDetails(it)
+                        },
                     )
                 }
                 composable(Routes.HomeSearch.path()) { }
@@ -268,6 +278,25 @@ fun XApp(
 
                     CreateTweetScreen(
                         parentTweetId = parentTweetId,
+                    ) {
+                        navController.popBackStack()
+                    }
+                }
+                composable(
+                    Routes.TweetDetails.path(),
+                    arguments = Routes.TweetDetails.arguments.map {
+                        navArgument(it) {
+                            type = NavType.StringType
+                            defaultValue = NO_NAV_VALUE
+                        }
+                    },
+                ) {
+                    val tweetIdArgument = it.arguments?.getString(TWEET_ID)
+                    val tweetId =
+                        if (tweetIdArgument == NO_NAV_VALUE) null else tweetIdArgument
+
+                    TweetDetailsScreen(
+                        tweetId = tweetId ?: "",
                     ) {
                         navController.popBackStack()
                     }

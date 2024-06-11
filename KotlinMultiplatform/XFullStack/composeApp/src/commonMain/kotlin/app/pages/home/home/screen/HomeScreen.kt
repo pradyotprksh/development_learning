@@ -41,6 +41,7 @@ import utils.Localization
 fun HomeScreen(
     homeViewModel: HomeViewModel = viewModel { HomeViewModel() },
     openCreateTweetWithParentId: (String) -> Unit,
+    openTweetDetails: (String) -> Unit,
 ) {
     LaunchedEffect(homeViewModel) {
         homeViewModel.initialSetup()
@@ -118,12 +119,15 @@ fun HomeScreen(
             ) { page ->
                 when (page) {
                     0 -> {
-                        ForYouTweetsComposable(tweets = homeScreenState.forYouTweets,
+                        ForYouTweetsComposable(
+                            tweets = homeScreenState.forYouTweets,
                             showLoading = homeScreenState.showLoading,
                             tweetsLazyColumnState = forYouLazyListState,
                             tweetActions = TweetActions(
                                 profileImageClick = {},
-                                onTweetClick = {},
+                                onTweetClick = {
+                                    openTweetDetails(it)
+                                },
                                 onBookmark = {},
                                 onShare = {},
                                 onPollSelection = { tweetId, optionId ->
@@ -136,7 +140,8 @@ fun HomeScreen(
                             ),
                             tweetVisibility = {
                                 homeViewModel.updateViewForTweet(it)
-                            })
+                            },
+                        )
                     }
 
                     1 -> {}
