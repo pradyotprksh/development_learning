@@ -3,7 +3,6 @@ package com.pradyotprakash.xfullstack.data.tweet.data
 import org.bson.codecs.pojo.annotations.BsonId
 import org.bson.codecs.pojo.annotations.BsonProperty
 import org.bson.types.ObjectId
-import utils.Constants.DbKeys.COMMENT_COUNT
 import utils.Constants.DbKeys.CREATED_BY
 import utils.Constants.DbKeys.IS_A_COMMENT_TWEET
 import utils.Constants.DbKeys.IS_A_LIKED_TWEET
@@ -24,7 +23,6 @@ data class Tweet(
     @BsonProperty(TWEETED_ON) val tweetedOn: Long,
     val media: List<String>,
     val gif: List<String>,
-    @BsonProperty(COMMENT_COUNT) val commentCount: Int,
 
     // Poll tweet details
     @BsonProperty(IS_A_POLL) val isAPoll: Boolean,

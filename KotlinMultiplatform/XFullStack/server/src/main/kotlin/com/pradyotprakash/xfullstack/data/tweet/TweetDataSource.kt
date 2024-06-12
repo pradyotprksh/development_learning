@@ -25,6 +25,8 @@ interface TweetDataSource {
 
     suspend fun totalNumberOfLikes(tweetId: String): Int
 
+    suspend fun totalNumberOfReplies(tweetId: String): Int
+
     suspend fun totalNumberOfReposts(tweetId: String): Int
 
     suspend fun totalNumberOfQuotes(tweetId: String): Int

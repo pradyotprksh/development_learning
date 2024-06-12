@@ -32,7 +32,7 @@ class TweetCreateUpdateControllerImplementation(
     private val geminiRepository: GeminiRepository,
 ) : TweetCreateUpdateController {
     override suspend fun createTweet(
-        call: ApplicationCall, userDataSource: UserDataSource, tweetDataSource: TweetDataSource
+        call: ApplicationCall, userDataSource: UserDataSource, tweetDataSource: TweetDataSource,
     ) {
         val tweetsRequest = call.receive<List<TweetRequest>>()
 
@@ -121,7 +121,6 @@ class TweetCreateUpdateControllerImplementation(
                 tweetedOn = UtilsMethod.Dates.getCurrentTimeStamp(),
                 media = tweetRequest.media,
                 gif = tweetRequest.gif,
-                commentCount = 0,
                 isAPoll = tweetRequest.isAPoll,
                 pollChoices = tweetRequest.pollChoices.map {
                     PollChoices(
@@ -171,7 +170,7 @@ class TweetCreateUpdateControllerImplementation(
         call: ApplicationCall,
         resource: TweetResource.TweetVote,
         userDataSource: UserDataSource,
-        tweetDataSource: TweetDataSource
+        tweetDataSource: TweetDataSource,
     ) {
         val principal = call.principal<JWTPrincipal>()
         val userId =

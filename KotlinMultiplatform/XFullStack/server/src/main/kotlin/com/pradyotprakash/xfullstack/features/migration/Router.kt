@@ -18,6 +18,7 @@ fun Routing.migration(
     post(MIGRATION) {
         // DONE: tweetDataSource.addNewFieldToAll(EMOTIONS, emptyList<String>())
         // DONE: tweetDataSource.removeKeyFromAll(RETWEET_COUNT)
+        // DONE: tweetDataSource.removeKeyFromAll(COMMENT_COUNT)
         call.respond(
             HttpStatusCode.OK,
             XFullStackResponse(
