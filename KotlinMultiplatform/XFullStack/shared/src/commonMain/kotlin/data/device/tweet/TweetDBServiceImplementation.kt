@@ -15,6 +15,8 @@ import io.realm.kotlin.notifications.SingleQueryChange
 import io.realm.kotlin.query.Sort
 import kotlinx.coroutines.flow.Flow
 import org.mongodb.kbson.ObjectId
+import utils.Constants.DbKeys.IS_A_COMMENT_TWEET_CAMELCASE
+import utils.Constants.DbKeys.PARENT_TWEET_ID_CAMELCASE
 import utils.Constants.DbKeys.REQUEST_ID
 import utils.Constants.DbKeys.TWEETED_ON_TIMESTAMP
 import utils.Constants.DbKeys.TWEET_ID
@@ -48,6 +50,17 @@ class TweetDBServiceImplementation(
         return realm.query<TweetDB>(
             "$TWEET_ID == $0", id
         ).first().asFlow()
+    }
+
+    override fun getAllTweetsReplyFor(tweetId: String): Flow<ResultsChange<TweetDB>> {
+        return realm.query<TweetDB>(
+            "$PARENT_TWEET_ID_CAMELCASE == $0 AND $IS_A_COMMENT_TWEET_CAMELCASE == $1",
+            tweetId,
+            true,
+        ).sort(
+            property = TWEETED_ON_TIMESTAMP,
+            sortOrder = Sort.DESCENDING,
+        ).asFlow()
     }
 
     override suspend fun deleteTweetRequest(id: String) {

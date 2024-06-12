@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -204,6 +205,8 @@ fun TweetDetailsScreen(
                                         onPollSelection = { },
                                         tweetActions = TweetActions(),
                                         isACommentTweet = tweet.isACommentTweet,
+                                        isLikedTweet = tweet.isLikedTweet,
+                                        aInnerTweet = tweet.aInnerTweet,
                                     )
                                 }
                             }
@@ -251,6 +254,40 @@ fun TweetDetailsScreen(
                                 onRepost = { },
                                 onLike = { },
                                 onViews = { },
+                            )
+                            HorizontalDivider()
+                        }
+                    }
+
+                    items(tweetDetailsScreenState.replies) { replyTweet ->
+                        Column {
+                            TweetComposable(
+                                modifier = Modifier.padding(
+                                    horizontal = 15.dp, vertical = 8.dp
+                                ),
+                                createdByProfilePicture = replyTweet.createdBy?.profilePicture,
+                                createdByName = replyTweet.createdBy?.name ?: "",
+                                createdByUsername = replyTweet.createdBy?.username ?: "",
+                                tweetedOn = replyTweet.tweetedOn,
+                                tweet = replyTweet.tweet,
+                                tweetId = replyTweet.id,
+                                commentCount = "${replyTweet.commentCount}",
+                                retweetCount = "${replyTweet.retweetCount}",
+                                likeCount = "${replyTweet.likesCount}",
+                                views = "${replyTweet.views}",
+                                isAPoll = replyTweet.isAPoll,
+                                isQuoteTweet = replyTweet.isQuoteTweet,
+                                isLikedByCurrentUser = replyTweet.isLikedByCurrentUser,
+                                pollChoices = replyTweet.pollChoices.toList(),
+                                isPollingAllowed = replyTweet.isPollingAllowed,
+                                pollingEndTime = replyTweet.pollingEndTime,
+                                showTweetActions = true,
+                                parentTweetDetails = replyTweet.parentTweetDetails,
+                                onPollSelection = { },
+                                tweetActions = TweetActions(),
+                                isACommentTweet = replyTweet.isACommentTweet,
+                                isLikedTweet = replyTweet.isLikedTweet,
+                                aInnerTweet = replyTweet.aInnerTweet,
                             )
                             HorizontalDivider()
                         }

@@ -147,6 +147,8 @@ fun TweetTextFieldComposable(
                     onPollSelection = {},
                     tweetActions = TweetActions(),
                     isACommentTweet = parentTweetDetails.isACommentTweet,
+                    isLikedTweet = parentTweetDetails.isLikedTweet,
+                    aInnerTweet = parentTweetDetails.aInnerTweet,
                 )
             }
         }

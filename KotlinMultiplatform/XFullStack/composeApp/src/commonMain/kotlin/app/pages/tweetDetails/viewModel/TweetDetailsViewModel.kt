@@ -17,15 +17,28 @@ class TweetDetailsViewModel(
     private val _tweetDetailsScreenState = MutableStateFlow(TweetDetailsState())
     val tweetDetailsScreen = _tweetDetailsScreenState.asStateFlow()
 
-    suspend fun initialSetup(tweetId: String) {
+    fun initialSetup(tweetId: String) {
         listenToTweetDetails(tweetId)
+        listenToTweetReplies(tweetId)
     }
 
-    private suspend fun listenToTweetDetails(tweetId: String) {
-        tweetRepository.getTweetChanges(tweetId).collect {
-            _tweetDetailsScreenState.value = tweetDetailsScreen.value.copy(
-                tweet = it,
-            )
+    private fun listenToTweetDetails(tweetId: String) {
+        viewModelScope.launch {
+            tweetRepository.getTweetChanges(tweetId).collect {
+                _tweetDetailsScreenState.value = tweetDetailsScreen.value.copy(
+                    tweet = it,
+                )
+            }
+        }
+    }
+
+    private fun listenToTweetReplies(tweetId: String) {
+        viewModelScope.launch {
+            tweetRepository.getAllTweetsReplyFor(tweetId).collect {
+                _tweetDetailsScreenState.value = tweetDetailsScreen.value.copy(
+                    replies = it,
+                )
+            }
         }
     }
 

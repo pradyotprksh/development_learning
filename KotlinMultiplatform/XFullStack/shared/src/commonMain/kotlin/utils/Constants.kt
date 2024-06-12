@@ -193,6 +193,8 @@ object Constants {
         const val VIEWED_ID = "viewed_id"
         const val IS_UPDATED_ONLINE = "isUpdatedOnline"
         const val VIEWED_ID_CAMELCASE = "viewedId"
+        const val PARENT_TWEET_ID_CAMELCASE = "parentTweetId"
+        const val IS_A_COMMENT_TWEET_CAMELCASE = "isACommentTweet"
     }
 
     object GeminiPrompt {

@@ -17,6 +17,8 @@ interface TweetDBService {
 
     fun getTweetChanges(id: String): Flow<SingleQueryChange<TweetDB>>
 
+    fun getAllTweetsReplyFor(tweetId: String): Flow<ResultsChange<TweetDB>>
+
     suspend fun deleteTweetRequest(id: String)
 
     fun getTweetById(id: String): TweetDB?

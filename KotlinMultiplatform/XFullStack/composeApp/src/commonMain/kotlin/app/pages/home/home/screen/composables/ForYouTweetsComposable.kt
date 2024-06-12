@@ -11,9 +11,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Loop
-import androidx.compose.material.icons.filled.ThumbUp
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
@@ -25,11 +22,9 @@ import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.layout.boundsInParent
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.unit.dp
-import app.composables.tweet.ParentTweetReactionComposable
 import app.composables.tweet.TweetComposable
 import app.pages.home.home.state.TweetActions
 import core.models.response.TweetResponse
-import utils.Localization
 
 @Composable
 fun ForYouTweetsComposable(
@@ -66,15 +61,6 @@ fun ForYouTweetsComposable(
                     if (index != 0) {
                         HorizontalDivider()
                     }
-                    if (tweet.aInnerTweet) {
-                        ParentTweetReactionComposable(
-                            icon = if (tweet.isLikedTweet) Icons.Default.ThumbUp else Icons.Default.Loop,
-                            text = Localization.format(
-                                if (tweet.isLikedTweet) Localization.LIKED else Localization.REPOSTED,
-                                tweet.createdBy?.name ?: "",
-                            ),
-                        )
-                    }
                     if (shownTweet != null) {
                         TweetComposable(
                             modifier = Modifier.padding(
@@ -106,6 +92,8 @@ fun ForYouTweetsComposable(
                             isLikedByCurrentUser = shownTweet.isLikedByCurrentUser,
                             parentTweetDetails = tweet.parentTweetDetails,
                             isACommentTweet = tweet.isACommentTweet,
+                            isLikedTweet = tweet.isLikedTweet,
+                            aInnerTweet = tweet.aInnerTweet,
                         )
                     }
                     HorizontalDivider()
