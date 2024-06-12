@@ -99,7 +99,8 @@ class TweetFetchControllerImplementation : TweetFetchController {
 
         val likesCount = tweetDataSource.totalNumberOfLikes(tweetIdHexStr)
         val viewsCount = viewDataSource.getViewsCount(tweetIdHexStr)
-        val retweetCount = tweetDataSource.totalNumberOfRetweets(tweetIdHexStr)
+        val repostsCount = tweetDataSource.totalNumberOfReposts(tweetIdHexStr)
+        val quoteCount = tweetDataSource.totalNumberOfQuotes(tweetIdHexStr)
 
         return TweetResponse(
             id = tweetIdHexStr,
@@ -110,8 +111,10 @@ class TweetFetchControllerImplementation : TweetFetchController {
             media = tweet.media,
             gif = tweet.gif,
             commentCount = tweet.commentCount,
-            retweetCount = retweetCount,
             likesCount = likesCount,
+            repostsCount = repostsCount,
+            quotesCount = quoteCount,
+            bookmarksCount = 0,
             views = viewsCount,
             isAPoll = isAPoll,
             pollChoices = tweet.pollChoices.map { pollChoice ->

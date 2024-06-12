@@ -5,7 +5,7 @@ import io.realm.kotlin.notifications.ResultsChange
 import kotlinx.coroutines.flow.Flow
 
 interface ViewDBService {
-    suspend fun insertViewDetails(view: ViewDB)
+    suspend fun insertViewDetails(id: String)
 
     suspend fun updateViewsOnlineUpdate(views: List<ViewDB>)
 

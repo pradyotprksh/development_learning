@@ -179,4 +179,9 @@ object Localization {
     const val LIKED = "%s liked"
     const val REPOSTED = "%s reposted"
     const val ADD_A_COMMENT = "Add a comment..."
+    const val POST_YOUR_REPLY = "Post your reply"
+    const val VIEWS = "Views"
+    const val REPOSTS = "Reposts"
+    const val QUOTES = "Quotes"
+    const val LIKES = "Likes"
 }

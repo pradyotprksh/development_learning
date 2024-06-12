@@ -12,7 +12,9 @@ data class TweetResponse(
     val media: List<String>,
     val gif: List<String>,
     val commentCount: Int,
-    val retweetCount: Int,
+    val repostsCount: Int,
+    val quotesCount: Int,
+    val bookmarksCount: Int,
     val likesCount: Int,
     val views: Int,
     val isAPoll: Boolean,
@@ -35,4 +37,7 @@ data class TweetResponse(
 
     val parentTweetNotPresent: Boolean
         get() = parentTweetDetailsNotFound && parentTweetDetails == null
+
+    val retweetCount: Int
+        get() = repostsCount + quotesCount
 }

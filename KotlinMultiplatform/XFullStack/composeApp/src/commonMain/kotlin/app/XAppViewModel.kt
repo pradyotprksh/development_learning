@@ -6,8 +6,10 @@ import core.models.response.ClientResponse
 import di.SharedModulesDi
 import domain.repositories.tweet.TweetRepository
 import domain.repositories.view.ViewRepository
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.launch
 
 class XAppViewModel(
@@ -22,9 +24,10 @@ class XAppViewModel(
         listenToViewAddition()
     }
 
+    @OptIn(FlowPreview::class)
     private fun listenToViewAddition() {
         viewModelScope.launch {
-            viewRepository.listenOnViewAdd().collect { viewsDb ->
+            viewRepository.listenOnViewAdd().debounce(1000).collect { viewsDb ->
                 viewRepository.saveViews(viewsDb)
             }
         }

@@ -15,9 +15,11 @@ class TweetDB : RealmObject {
     var media: RealmList<String> = realmListOf()
     var gif: RealmList<String> = realmListOf()
     var commentCount: Int = 0
-    var retweetCount: Int = 0
     var likeCount: Int = 0
     var views: Int = 0
+    var repostsCount: Int = 0
+    var quotesCount: Int = 0
+    var bookmarksCount: Int = 0
     var isAPoll: Boolean = false
     var pollChoices: RealmList<PollChoicesDB> = realmListOf()
     var pollingEndTime: String = ""

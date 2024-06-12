@@ -8,21 +8,28 @@ import io.realm.kotlin.notifications.ResultsChange
 import kotlinx.coroutines.flow.Flow
 import utils.Constants.DbKeys.IS_UPDATED_ONLINE
 import utils.Constants.DbKeys.VIEWED_ID_CAMELCASE
+import utils.Logger
+import utils.LoggerLevel
 
 class ViewDBServiceImplementation(
     private val realm: Realm,
 ) : ViewDBService {
-    override suspend fun insertViewDetails(view: ViewDB) {
+    override suspend fun insertViewDetails(id: String) {
         try {
             val present = realm.query<ViewDB>(
-                "$VIEWED_ID_CAMELCASE == {0}", view.viewedId
+                "$VIEWED_ID_CAMELCASE == $0", id
             ).find().firstOrNull() != null
             realm.write {
                 if (!present) {
-                    copyToRealm(view)
+                    val unmanagedObject = ViewDB().apply {
+                        this.viewedId = id
+                        this.isUpdatedOnline = false
+                    }
+                    copyToRealm(unmanagedObject)
                 }
             }
-        } catch (_: Exception) {
+        } catch (e: Exception) {
+            Logger.log(LoggerLevel.Error, "insertViewDetails ${e.message ?: ""}")
         }
     }
 
@@ -36,7 +43,7 @@ class ViewDBServiceImplementation(
 
     override fun getListenToViewUpdate(): Flow<ResultsChange<ViewDB>> {
         return realm.query<ViewDB>().query(
-            "$IS_UPDATED_ONLINE == {0}", false,
+            "$IS_UPDATED_ONLINE == $0", false,
         ).asFlow()
     }
 }

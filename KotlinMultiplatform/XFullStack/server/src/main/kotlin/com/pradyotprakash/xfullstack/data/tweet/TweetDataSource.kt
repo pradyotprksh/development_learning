@@ -18,14 +18,16 @@ interface TweetDataSource {
 
     suspend fun incrementVotesOnPoll(
         tweetId: String,
-        choices: List<PollChoices>
+        choices: List<PollChoices>,
     ): Boolean
 
     suspend fun isLikedByCurrentUser(tweetId: String, userId: String): Boolean
 
     suspend fun totalNumberOfLikes(tweetId: String): Int
 
-    suspend fun totalNumberOfRetweets(tweetId: String): Int
+    suspend fun totalNumberOfReposts(tweetId: String): Int
+
+    suspend fun totalNumberOfQuotes(tweetId: String): Int
 
     suspend fun addNewFieldToAll(name: String, value: Any)
 

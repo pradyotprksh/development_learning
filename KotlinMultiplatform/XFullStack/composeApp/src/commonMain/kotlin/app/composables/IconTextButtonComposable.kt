@@ -26,19 +26,26 @@ fun IconTextButtonComposable(
         onClick = onClick,
         modifier = modifier,
     ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Center,
-        ) {
+        if (text.isNotBlank()) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Center,
+            ) {
+                Icon(
+                    imageVector = icon,
+                    contentDescription = icon.name,
+                    modifier = Modifier.size(15.dp),
+                )
+                Spacer(modifier = Modifier.width(2.dp))
+                Text(
+                    text,
+                    style = MaterialTheme.typography.bodyMedium,
+                )
+            }
+        } else {
             Icon(
                 imageVector = icon,
                 contentDescription = icon.name,
-                modifier = Modifier.size(15.dp),
-            )
-            Spacer(modifier = Modifier.width(2.dp))
-            Text(
-                text,
-                style = MaterialTheme.typography.bodyMedium,
             )
         }
     }

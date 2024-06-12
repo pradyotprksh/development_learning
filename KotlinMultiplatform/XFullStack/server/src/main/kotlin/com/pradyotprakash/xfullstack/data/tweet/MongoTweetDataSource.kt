@@ -49,7 +49,7 @@ class MongoTweetDataSource(
     }
 
     override suspend fun incrementVotesOnPoll(
-        tweetId: String, choices: List<PollChoices>
+        tweetId: String, choices: List<PollChoices>,
     ): Boolean {
         return tweetCollection.updateOne(
             filter = Filters.eq(ID, ObjectId(tweetId)), update = Updates.set(POLL_CHOICES, choices)
@@ -75,14 +75,20 @@ class MongoTweetDataSource(
         ).count()
     }
 
-    override suspend fun totalNumberOfRetweets(tweetId: String): Int {
+    override suspend fun totalNumberOfReposts(tweetId: String): Int {
         return tweetCollection.find(
             Filters.and(
                 Filters.eq(PARENT_TWEET_ID, ObjectId(tweetId)),
-                Filters.or(
-                    Filters.eq(IS_A_QUOTE_TWEET, true),
-                    Filters.eq(IS_A_REPOST_TWEET, true),
-                )
+                Filters.eq(IS_A_REPOST_TWEET, true),
+            ),
+        ).count()
+    }
+
+    override suspend fun totalNumberOfQuotes(tweetId: String): Int {
+        return tweetCollection.find(
+            Filters.and(
+                Filters.eq(PARENT_TWEET_ID, ObjectId(tweetId)),
+                Filters.eq(IS_A_QUOTE_TWEET, true),
             ),
         ).count()
     }
