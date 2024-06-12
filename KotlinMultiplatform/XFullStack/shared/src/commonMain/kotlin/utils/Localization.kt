@@ -184,4 +184,6 @@ object Localization {
     const val REPOSTS = "Reposts"
     const val QUOTES = "Quotes"
     const val LIKES = "Likes"
+    const val REPLYING_TO = "Replying to"
+    const val REPLY = "Reply"
 }

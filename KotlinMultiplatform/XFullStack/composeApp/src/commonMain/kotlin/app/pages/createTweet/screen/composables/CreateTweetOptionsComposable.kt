@@ -31,6 +31,7 @@ import androidx.compose.ui.unit.dp
 fun CreateTweetOptionsComposable(
     progress: Float,
     enableAddNewTweetButton: Boolean,
+    tweetAction: (@Composable () -> Unit)? = null,
     onImageClick: () -> Unit,
     onGifClick: () -> Unit,
     onPollClick: () -> Unit,
@@ -93,15 +94,19 @@ fun CreateTweetOptionsComposable(
                 color = DividerDefaults.color,
             ),
         )
-        IconButton(
-            onClick = onAddTweetClick,
-            enabled = enableAddNewTweetButton,
-        ) {
-            Icon(
-                imageVector = Icons.Default.AddCircle,
-                contentDescription = Icons.Default.AddCircle.name,
-                tint = if (enableAddNewTweetButton) MaterialTheme.colorScheme.primary else LocalContentColor.current,
-            )
+        if (tweetAction != null) {
+            tweetAction()
+        } else {
+            IconButton(
+                onClick = onAddTweetClick,
+                enabled = enableAddNewTweetButton,
+            ) {
+                Icon(
+                    imageVector = Icons.Default.AddCircle,
+                    contentDescription = Icons.Default.AddCircle.name,
+                    tint = if (enableAddNewTweetButton) MaterialTheme.colorScheme.primary else LocalContentColor.current,
+                )
+            }
         }
     }
 }

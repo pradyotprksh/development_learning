@@ -20,4 +20,8 @@ enum class Tags(
         key = "log_in",
         value = ""
     ),
+    CreatedBy(
+        key = "created_by",
+        value = ""
+    ),
 }

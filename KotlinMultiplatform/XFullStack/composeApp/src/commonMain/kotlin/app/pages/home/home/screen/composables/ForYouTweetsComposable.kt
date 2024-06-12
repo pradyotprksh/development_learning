@@ -105,6 +105,7 @@ fun ForYouTweetsComposable(
                             tweetActions = tweetActions,
                             isLikedByCurrentUser = shownTweet.isLikedByCurrentUser,
                             parentTweetDetails = tweet.parentTweetDetails,
+                            isACommentTweet = tweet.isACommentTweet,
                         )
                     }
                     HorizontalDivider()

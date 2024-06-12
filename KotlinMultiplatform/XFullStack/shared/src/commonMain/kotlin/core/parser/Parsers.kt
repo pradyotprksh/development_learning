@@ -150,6 +150,7 @@ fun List<TweetRequest>.parseToTweetRequestDb() = this.let { tweets ->
             this.scheduledOnTweet = tweetDetails.scheduledOnTweet
             this.isQuoteTweet = tweetDetails.isQuoteTweet
             this.isRepostTweet = tweetDetails.isRepostTweet
+            this.isACommentTweet = tweetDetails.isACommentTweet
             this.isLikedTweet = tweetDetails.isLikedTweet
             this.parentTweetId = tweetDetails.parentTweetId
         }

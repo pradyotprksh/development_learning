@@ -19,14 +19,20 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import app.composables.CircularDotComposable
 import app.composables.ProfileImageComposable
+import app.composables.richText.RichTextComposable
+import app.composables.richText.RichTextDetails
+import app.composables.richText.TextDetails
 import app.pages.home.home.state.TweetActions
 import core.models.response.PollChoicesResponse
 import core.models.response.TweetResponse
 import utils.Constants.ConstValues.USERNAME_PREFIX
+import utils.Localization
+import utils.Tags
 
 @Composable
 fun TweetComposable(
@@ -44,6 +50,7 @@ fun TweetComposable(
     isAPoll: Boolean,
     isQuoteTweet: Boolean,
     isLikedByCurrentUser: Boolean,
+    isACommentTweet: Boolean,
     pollChoices: List<PollChoicesResponse>,
     isPollingAllowed: Boolean,
     pollingEndTime: String,
@@ -100,6 +107,33 @@ fun TweetComposable(
                     )
                 }
             }
+            if (isACommentTweet) {
+                parentTweetDetails?.createdBy?.let { createdBy ->
+                    Spacer(modifier = Modifier.height(5.dp))
+                    RichTextComposable(
+                        richTextDetails = RichTextDetails(
+                            texts = listOf(
+                                TextDetails(
+                                    text = Localization.REPLYING_TO,
+                                ),
+                                TextDetails(
+                                    text = Localization.WHITE_SPACE,
+                                ),
+                                TextDetails(text = "$USERNAME_PREFIX${createdBy.username}",
+                                    isClickable = true,
+                                    spanStyle = SpanStyle(
+                                        color = MaterialTheme.colorScheme.primary,
+                                    ),
+                                    tag = Tags.CreatedBy,
+                                    actions = {}),
+                            ),
+                            textStyle = MaterialTheme.typography.labelMedium.copy(
+                                color = MaterialTheme.colorScheme.onBackground
+                            ),
+                        ),
+                    )
+                }
+            }
             Spacer(modifier = Modifier.height(5.dp))
             Text(
                 tweet,
@@ -136,15 +170,16 @@ fun TweetComposable(
                     likeCount = "${parentTweetDetails.likesCount}",
                     views = "${parentTweetDetails.views}",
                     isAPoll = parentTweetDetails.isAPoll,
+                    isQuoteTweet = false,
+                    isLikedByCurrentUser = parentTweetDetails.isLikedByCurrentUser,
                     pollChoices = parentTweetDetails.pollChoices.toList(),
                     isPollingAllowed = parentTweetDetails.isPollingAllowed,
                     pollingEndTime = parentTweetDetails.pollingEndTime,
                     showTweetActions = false,
+                    parentTweetDetails = null,
                     onPollSelection = {},
                     tweetActions = TweetActions(),
-                    isLikedByCurrentUser = parentTweetDetails.isLikedByCurrentUser,
-                    parentTweetDetails = null,
-                    isQuoteTweet = false,
+                    isACommentTweet = parentTweetDetails.isACommentTweet,
                 )
             }
             if (showTweetActions) {

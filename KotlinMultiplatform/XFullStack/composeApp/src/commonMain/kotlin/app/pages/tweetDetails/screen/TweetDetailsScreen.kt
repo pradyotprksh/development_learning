@@ -1,29 +1,24 @@
 package app.pages.tweetDetails.screen
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Camera
-import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.Expand
+import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarDuration
@@ -40,22 +35,29 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import app.composables.CircularDotComposable
-import app.composables.ProfileImageComposable
+import app.composables.richText.RichTextComposable
+import app.composables.richText.RichTextDetails
+import app.composables.richText.TextDetails
 import app.composables.tweet.PollChoicesComposable
 import app.composables.tweet.TweetActionsComposable
 import app.composables.tweet.TweetComposable
+import app.pages.createTweet.screen.composables.CreateTweetOptionsComposable
 import app.pages.home.home.state.TweetActions
+import app.pages.tweetDetails.screen.composables.TweetCreatorDetailsComposable
+import app.pages.tweetDetails.screen.composables.TweetPopularityDetailsComposable
+import app.pages.tweetDetails.screen.composables.TweetTimeViewComposable
 import app.pages.tweetDetails.viewModel.TweetDetailsViewModel
 import kotlinx.coroutines.launch
+import utils.Constants.ConstValues.TWEET_MAX_LENGTH
 import utils.Constants.ConstValues.USERNAME_PREFIX
 import utils.Localization
+import utils.Tags
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -70,8 +72,8 @@ fun TweetDetailsScreen(
 
     val scope = rememberCoroutineScope()
     val snackbarHostState = remember { SnackbarHostState() }
-    val tweetDetailsScreen by tweetDetailsViewModel.tweetDetailsScreen.collectAsState()
-    tweetDetailsScreen.snackBarMessage?.let { message ->
+    val tweetDetailsScreenState by tweetDetailsViewModel.tweetDetailsScreen.collectAsState()
+    tweetDetailsScreenState.snackBarMessage?.let { message ->
         scope.launch {
             val result = snackbarHostState.showSnackbar(
                 message = message,
@@ -123,51 +125,21 @@ fun TweetDetailsScreen(
             LazyColumn(
                 modifier = Modifier.weight(1f)
             ) {
-                tweetDetailsScreen.tweet?.let { tweet ->
+                tweetDetailsScreenState.tweet?.let { tweet ->
                     item {
                         tweet.createdBy?.let { createdBy ->
-                            Row(
+                            TweetCreatorDetailsComposable(
                                 modifier = Modifier.fillMaxWidth().padding(
                                     all = 10.dp,
                                 ),
-                                verticalAlignment = Alignment.CenterVertically,
-                            ) {
-                                ProfileImageComposable(
-                                    profileImage = createdBy.profilePicture,
-                                    modifier = Modifier.size(40.dp).clickable(
-                                        indication = null,
-                                        interactionSource = remember { MutableInteractionSource() },
-                                        onClick = {},
-                                    )
-                                )
-                                Spacer(modifier = Modifier.width(5.dp))
-                                Column {
-                                    Text(
-                                        createdBy.name,
-                                        style = MaterialTheme.typography.titleMedium
-                                    )
-                                    Text(
-                                        "${USERNAME_PREFIX}${createdBy.username}",
-                                        style = MaterialTheme.typography.bodySmall
-                                    )
-                                }
-                                Spacer(modifier = Modifier.weight(1f))
-                                IconButton(
-                                    onClick = {}
-                                ) {
-                                    Icon(
-                                        imageVector = Icons.Default.Menu,
-                                        contentDescription = Icons.Default.Menu.name,
-                                    )
-                                }
-                            }
+                                createdBy = createdBy,
+                            )
                         }
                     }
 
                     item {
                         Text(
-                            tweet.tweet,
-                            modifier = Modifier.fillMaxWidth().padding(
+                            tweet.tweet, modifier = Modifier.fillMaxWidth().padding(
                                 start = 10.dp,
                                 end = 10.dp,
                                 bottom = 10.dp,
@@ -223,14 +195,15 @@ fun TweetDetailsScreen(
                                         views = "${parentTweetDetails.views}",
                                         isAPoll = parentTweetDetails.isAPoll,
                                         isQuoteTweet = parentTweetDetails.isQuoteTweet,
+                                        isLikedByCurrentUser = parentTweetDetails.isLikedByCurrentUser,
                                         pollChoices = parentTweetDetails.pollChoices.toList(),
                                         isPollingAllowed = parentTweetDetails.isPollingAllowed,
                                         pollingEndTime = parentTweetDetails.pollingEndTime,
                                         showTweetActions = false,
+                                        parentTweetDetails = tweet.parentTweetDetails,
                                         onPollSelection = { },
                                         tweetActions = TweetActions(),
-                                        isLikedByCurrentUser = parentTweetDetails.isLikedByCurrentUser,
-                                        parentTweetDetails = tweet.parentTweetDetails,
+                                        isACommentTweet = tweet.isACommentTweet,
                                     )
                                 }
                             }
@@ -238,95 +211,24 @@ fun TweetDetailsScreen(
                     }
 
                     item {
-                        Row(
+                        TweetTimeViewComposable(
                             modifier = Modifier.fillMaxWidth().padding(
                                 start = 10.dp,
                                 end = 10.dp,
                                 bottom = 10.dp,
                             ),
-                            verticalAlignment = Alignment.CenterVertically,
-                        ) {
-                            Text(
-                                tweet.tweetedOn,
-                                style = MaterialTheme.typography.bodySmall,
-                            )
-                            Spacer(modifier = Modifier.width(4.dp))
-                            CircularDotComposable(
-                                modifier = Modifier.size(3.dp),
-                            )
-                            Spacer(modifier = Modifier.width(4.dp))
-                            Text(
-                                tweet.views.toString(),
-                                style = LocalTextStyle.current.copy(
-                                    fontWeight = FontWeight.Bold
-                                )
-                            )
-                            Spacer(modifier = Modifier.width(2.dp))
-                            Text(
-                                Localization.VIEWS,
-                                style = MaterialTheme.typography.bodySmall,
-                            )
-                        }
+                            tweetedOn = tweet.tweetedOn,
+                            views = tweet.views.toString(),
+                        )
                     }
 
                     item {
-                        Column {
-                            HorizontalDivider()
-                            Row(
-                                modifier = Modifier.fillMaxWidth().padding(
-                                    all = 10.dp,
-                                ),
-                                verticalAlignment = Alignment.CenterVertically,
-                            ) {
-                                Text(
-                                    tweet.repostsCount.toString(),
-                                    style = LocalTextStyle.current.copy(
-                                        fontWeight = FontWeight.Bold
-                                    )
-                                )
-                                Spacer(modifier = Modifier.width(2.dp))
-                                Text(
-                                    Localization.REPOSTS,
-                                    style = MaterialTheme.typography.bodySmall,
-                                )
-                                Spacer(modifier = Modifier.weight(1f))
-                                Text(
-                                    tweet.quotesCount.toString(),
-                                    style = LocalTextStyle.current.copy(
-                                        fontWeight = FontWeight.Bold
-                                    )
-                                )
-                                Spacer(modifier = Modifier.width(2.dp))
-                                Text(
-                                    Localization.QUOTES,
-                                    style = MaterialTheme.typography.bodySmall,
-                                )
-                                Spacer(modifier = Modifier.weight(1f))
-                                Text(
-                                    tweet.likesCount.toString(),
-                                    style = LocalTextStyle.current.copy(
-                                        fontWeight = FontWeight.Bold
-                                    )
-                                )
-                                Spacer(modifier = Modifier.width(2.dp))
-                                Text(
-                                    Localization.LIKES,
-                                    style = MaterialTheme.typography.bodySmall,
-                                )
-                                Spacer(modifier = Modifier.weight(1f))
-                                Text(
-                                    tweet.bookmarksCount.toString(),
-                                    style = LocalTextStyle.current.copy(
-                                        fontWeight = FontWeight.Bold
-                                    )
-                                )
-                                Spacer(modifier = Modifier.width(2.dp))
-                                Text(
-                                    Localization.BOOKMARKS,
-                                    style = MaterialTheme.typography.bodySmall,
-                                )
-                            }
-                        }
+                        TweetPopularityDetailsComposable(
+                            repostsCount = tweet.repostsCount.toString(),
+                            quotesCount = tweet.quotesCount.toString(),
+                            likesCount = tweet.likesCount.toString(),
+                            bookmarksCount = tweet.bookmarksCount.toString(),
+                        )
                     }
 
                     item {
@@ -356,26 +258,92 @@ fun TweetDetailsScreen(
                 }
             }
             HorizontalDivider()
+            tweetDetailsScreenState.tweet?.createdBy?.let { createdBy ->
+                AnimatedVisibility(
+                    visible = tweetDetailsScreenState.isReplyTweetFocused
+                ) {
+                    RichTextComposable(
+                        modifier = Modifier.padding(
+                            all = 10.dp,
+                        ),
+                        richTextDetails = RichTextDetails(
+                            texts = listOf(
+                                TextDetails(
+                                    text = Localization.REPLYING_TO,
+                                ),
+                                TextDetails(
+                                    text = Localization.WHITE_SPACE,
+                                ),
+                                TextDetails(text = "${USERNAME_PREFIX}${createdBy.username}",
+                                    isClickable = true,
+                                    spanStyle = SpanStyle(
+                                        color = MaterialTheme.colorScheme.primary,
+                                    ),
+                                    tag = Tags.CreatedBy,
+                                    actions = {}),
+                            ),
+                            textStyle = MaterialTheme.typography.labelMedium.copy(
+                                color = MaterialTheme.colorScheme.onBackground
+                            ),
+                        ),
+                    )
+                }
+            }
             TextField(
-                value = "",
-                onValueChange = {},
-                modifier = Modifier.fillMaxWidth().padding(5.dp),
+                value = tweetDetailsScreenState.replyTweet,
+                onValueChange = { value ->
+                    tweetDetailsViewModel.updateTweetReply(value)
+                },
+                modifier = Modifier.fillMaxWidth().padding(5.dp).onFocusChanged { focus ->
+                    tweetDetailsViewModel.replyTextFieldFocusChanged(focus.isFocused)
+                },
                 placeholder = {
                     Text(
                         Localization.POST_YOUR_REPLY,
                     )
                 },
                 trailingIcon = {
-                    IconButton(
-                        onClick = {}
-                    ) {
+                    IconButton(onClick = {}) {
+                        val icon =
+                            if (tweetDetailsScreenState.isReplyTweetFocused) Icons.Default.Expand else Icons.Default.Camera
                         Icon(
-                            imageVector = Icons.Default.Camera,
-                            contentDescription = Icons.Default.Camera.name,
+                            imageVector = icon,
+                            contentDescription = icon.name,
                         )
                     }
                 },
             )
+            AnimatedVisibility(
+                visible = tweetDetailsScreenState.isReplyTweetFocused
+            ) {
+                CreateTweetOptionsComposable(
+                    progress = tweetDetailsScreenState.replyTweet.length.toFloat() / TWEET_MAX_LENGTH,
+                    enableAddNewTweetButton = true,
+                    tweetAction = {
+                        Button(
+                            onClick = {
+                                tweetDetailsScreenState.tweet?.id?.let { tweetId ->
+                                    tweetDetailsViewModel.replyToTweet(tweetId)
+                                }
+                            },
+                            enabled = tweetDetailsScreenState.replyTweet.isNotBlank(),
+                            modifier = Modifier.padding(
+                                start = 10.dp,
+                                end = 10.dp,
+                            )
+                        ) {
+                            Text(
+                                Localization.REPLY,
+                            )
+                        }
+                    },
+                    onImageClick = {},
+                    onGifClick = {},
+                    onPollClick = {},
+                    onLocationClick = {},
+                    onAddTweetClick = {},
+                )
+            }
         }
     }
 }

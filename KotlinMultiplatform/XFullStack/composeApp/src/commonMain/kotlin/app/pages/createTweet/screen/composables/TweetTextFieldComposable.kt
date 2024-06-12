@@ -137,15 +137,16 @@ fun TweetTextFieldComposable(
                     likeCount = "${parentTweetDetails.likesCount}",
                     views = "${parentTweetDetails.views}",
                     isAPoll = parentTweetDetails.isAPoll,
+                    isQuoteTweet = false,
+                    isLikedByCurrentUser = parentTweetDetails.isLikedByCurrentUser,
                     pollChoices = parentTweetDetails.pollChoices.toList(),
                     isPollingAllowed = parentTweetDetails.isPollingAllowed,
                     pollingEndTime = parentTweetDetails.pollingEndTime,
                     showTweetActions = false,
+                    parentTweetDetails = null,
                     onPollSelection = {},
                     tweetActions = TweetActions(),
-                    isLikedByCurrentUser = parentTweetDetails.isLikedByCurrentUser,
-                    parentTweetDetails = null,
-                    isQuoteTweet = false,
+                    isACommentTweet = parentTweetDetails.isACommentTweet,
                 )
             }
         }
