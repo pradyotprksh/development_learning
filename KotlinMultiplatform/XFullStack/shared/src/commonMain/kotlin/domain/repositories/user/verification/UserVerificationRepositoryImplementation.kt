@@ -70,7 +70,7 @@ class UserVerificationRepositoryImplementation(
 
     override suspend fun validateOtp(
         value: String,
-        otp: String
+        otp: String,
     ): Flow<ClientResponse<out XFullStackResponse<Nothing>>> =
         flow {
             emit(ClientResponse.Loading)

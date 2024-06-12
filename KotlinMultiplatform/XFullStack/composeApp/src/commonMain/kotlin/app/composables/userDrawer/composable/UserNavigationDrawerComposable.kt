@@ -48,7 +48,7 @@ import utils.Localization.SPACES
 @Composable
 fun UserNavigationDrawerComposable(
     modifier: Modifier = Modifier,
-    userDrawerViewModel: UserDrawerViewModel = viewModel { UserDrawerViewModel() }
+    userDrawerViewModel: UserDrawerViewModel = viewModel { UserDrawerViewModel() },
 ) {
     LaunchedEffect(Unit) {
         userDrawerViewModel.initialSetup()

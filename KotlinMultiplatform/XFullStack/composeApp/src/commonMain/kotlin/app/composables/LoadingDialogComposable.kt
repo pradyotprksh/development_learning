@@ -20,7 +20,7 @@ import utils.Localization
 
 @Composable
 fun LoadingDialogComposable(
-    message: String = Localization.LOADING
+    message: String = Localization.LOADING,
 ) {
     Dialog(
         content = {

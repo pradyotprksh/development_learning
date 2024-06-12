@@ -20,7 +20,7 @@ import utils.Resources
 fun AppIconComposable(
     boxModifier: Modifier = Modifier,
     imageModifier: Modifier = Modifier,
-    showCircularProgressIndicator: Boolean = false
+    showCircularProgressIndicator: Boolean = false,
 ) {
     Box(
         modifier = boxModifier

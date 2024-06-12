@@ -1,10 +1,10 @@
 package data.remote.user.verification
 
-import core.models.request.XFullStackClientRequestDetails
-import core.network.NetworkClient
 import core.models.request.OtpVerificationRequest
+import core.models.request.XFullStackClientRequestDetails
 import core.models.response.OTPResponse
 import core.models.response.XFullStackResponse
+import core.network.NetworkClient
 import domain.services.user.verification.UserVerificationRemoteService
 import utils.Constants.Keys.VALUE
 import utils.Constants.Paths.Utils.USERNAME_VALID
@@ -42,7 +42,7 @@ class UserVerificationRemoteServiceImplementation(
     }
 
     override suspend fun validateOtp(
-        otpVerificationRequest: OtpVerificationRequest
+        otpVerificationRequest: OtpVerificationRequest,
     ): XFullStackResponse<Nothing> {
         val response = networkClient.post<XFullStackResponse<Nothing>>(
             details = XFullStackClientRequestDetails(

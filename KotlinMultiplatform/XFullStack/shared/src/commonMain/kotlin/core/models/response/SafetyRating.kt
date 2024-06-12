@@ -4,5 +4,5 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class SafetyRating(
-    val category: String, val probability: String
+    val category: String, val probability: String,
 )

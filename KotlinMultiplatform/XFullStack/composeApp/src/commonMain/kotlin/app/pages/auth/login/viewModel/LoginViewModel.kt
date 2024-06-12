@@ -171,7 +171,7 @@ class LoginViewModel(
     private suspend fun afterLoginSuccessOperation(
         userId: String,
         token: String,
-        navigateToHome: () -> Unit
+        navigateToHome: () -> Unit,
     ) {
         currentUserRepository.saveUserDetails(
             userId,

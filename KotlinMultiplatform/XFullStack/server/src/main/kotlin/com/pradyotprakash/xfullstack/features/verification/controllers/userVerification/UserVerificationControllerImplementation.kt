@@ -25,7 +25,7 @@ import utils.XFullStackResponseStatus
 class UserVerificationControllerImplementation : UserVerificationController {
     override suspend fun generateOtp(
         call: ApplicationCall,
-        resource: VerificationResource.GenerateOtp
+        resource: VerificationResource.GenerateOtp,
     ) {
         delay(API_RESPONSE_DELAY)
         try {
@@ -59,7 +59,7 @@ class UserVerificationControllerImplementation : UserVerificationController {
 
     override suspend fun validateOtp(
         call: ApplicationCall,
-        resource: VerificationResource.ValidateOtp
+        resource: VerificationResource.ValidateOtp,
     ) {
         delay(API_RESPONSE_DELAY)
         val otpVerificationRequest = call.receive<OtpVerificationRequest>()
@@ -107,7 +107,7 @@ class UserVerificationControllerImplementation : UserVerificationController {
     override suspend fun userPresent(
         call: ApplicationCall,
         resource: VerificationResource.UserPresent,
-        userDataSource: UserDataSource
+        userDataSource: UserDataSource,
     ) {
         if (userDataSource.isUsernamePresent(resource.value)) {
             call.respond(

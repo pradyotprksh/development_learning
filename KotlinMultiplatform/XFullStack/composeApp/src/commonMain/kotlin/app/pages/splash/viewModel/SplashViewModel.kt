@@ -37,7 +37,7 @@ class SplashViewModel(
     }
 
     private suspend fun checkForAuthentication(
-        navigateToAuthOption: () -> Unit, navigateToHome: () -> Unit
+        navigateToAuthOption: () -> Unit, navigateToHome: () -> Unit,
     ) {
         val currentUserId = currentUserRepository.getUserId()
         if (currentUserId == null) {
@@ -66,7 +66,7 @@ class SplashViewModel(
     }
 
     private suspend fun updateCurrentUserInfo(
-        navigateToAuthOption: () -> Unit, navigateToHome: () -> Unit
+        navigateToAuthOption: () -> Unit, navigateToHome: () -> Unit,
     ) {
         currentUserRepository.updateUserInfo().collect {
             when (it) {

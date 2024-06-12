@@ -1,8 +1,8 @@
 package data.remote.server.utils
 
 import core.models.request.XFullStackClientRequestDetails
-import core.network.NetworkClient
 import core.models.response.XFullStackResponse
+import core.network.NetworkClient
 import domain.services.server.utils.ServerUtilsRemoteService
 import utils.Constants.Paths.Utils.SERVER_AVAILABLE
 import utils.Constants.Paths.Utils.UTILS

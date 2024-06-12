@@ -20,7 +20,7 @@ class UserInfoControllerImplementation : UserInfoController {
     override suspend fun getUserInfo(
         call: ApplicationCall,
         resource: AuthenticationResource.UserInfo,
-        userDataSource: UserDataSource
+        userDataSource: UserDataSource,
     ) {
         delay(API_RESPONSE_DELAY)
 

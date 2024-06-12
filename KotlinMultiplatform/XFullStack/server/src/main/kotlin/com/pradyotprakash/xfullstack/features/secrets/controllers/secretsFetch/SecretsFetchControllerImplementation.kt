@@ -21,7 +21,7 @@ import kotlin.random.Random
 
 class SecretsFetchControllerImplementation : SecretsFetchController {
     override suspend fun getSecrets(
-        call: ApplicationCall, resource: SecretsResource, userDataSource: UserDataSource
+        call: ApplicationCall, resource: SecretsResource, userDataSource: UserDataSource,
     ) {
         val principal = call.principal<JWTPrincipal>()
         val createdBy =

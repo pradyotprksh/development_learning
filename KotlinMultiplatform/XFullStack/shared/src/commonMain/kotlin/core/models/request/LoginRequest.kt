@@ -7,5 +7,5 @@ data class LoginRequest(
     val username: String?,
     val phoneNumber: String?,
     val emailAddress: String?,
-    val password: String
+    val password: String,
 )

@@ -28,7 +28,7 @@ class RegisterControllerImplementation : RegisterController {
         call: ApplicationCall,
         resource: AuthenticationResource.Register,
         hashingService: HashingService,
-        userDataSource: UserDataSource
+        userDataSource: UserDataSource,
     ) {
         delay(API_RESPONSE_DELAY)
 

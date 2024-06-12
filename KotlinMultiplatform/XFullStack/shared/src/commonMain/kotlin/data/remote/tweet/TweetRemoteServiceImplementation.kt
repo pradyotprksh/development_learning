@@ -19,7 +19,7 @@ class TweetRemoteServiceImplementation(
 ) : TweetRemoteService {
     override suspend fun getAllTweets(
         page: Int,
-        limit: Int
+        limit: Int,
     ): XFullStackResponse<List<TweetResponse>> {
         val response = networkClient.get<XFullStackResponse<List<TweetResponse>>>(
             details = XFullStackClientRequestDetails(
@@ -36,7 +36,7 @@ class TweetRemoteServiceImplementation(
 
     override suspend fun updateTweetPoll(
         tweetId: String,
-        optionId: String
+        optionId: String,
     ): XFullStackResponse<Nothing> {
         val response = networkClient.post<XFullStackResponse<Nothing>>(
             details = XFullStackClientRequestDetails(

@@ -5,5 +5,5 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class Content(
     val parts: List<Part>,
-    val role: String
+    val role: String,
 )

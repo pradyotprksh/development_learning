@@ -11,7 +11,7 @@ import utils.XFullStackResponseStatus
 class ServerDetailsControllerImplementation : ServerDetailsController {
     override suspend fun isServerAvailable(
         call: ApplicationCall,
-        resource: UtilsResource.ServerAvailable
+        resource: UtilsResource.ServerAvailable,
     ) {
         call.respond(
             HttpStatusCode.OK,

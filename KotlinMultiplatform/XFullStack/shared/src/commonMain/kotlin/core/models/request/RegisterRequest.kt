@@ -11,5 +11,5 @@ data class RegisterRequest(
     val emailAddress: String?,
     val phoneNumber: String?,
     val profilePicture: String?,
-    val dateOfBirth: Long
+    val dateOfBirth: Long,
 )

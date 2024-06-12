@@ -17,6 +17,6 @@ interface TweetRemoteService {
     ): XFullStackResponse<Nothing>
 
     suspend fun uploadTweets(
-        tweets: List<TweetRequest>
+        tweets: List<TweetRequest>,
     ): XFullStackResponse<Nothing>
 }

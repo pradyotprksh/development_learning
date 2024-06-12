@@ -20,7 +20,7 @@ import utils.Constants.Server.PORT
 fun setup(): BaseApplicationEngine = server(Netty)
 
 private fun server(
-    engine: ApplicationEngineFactory<BaseApplicationEngine, out ApplicationEngine.Configuration>
+    engine: ApplicationEngineFactory<BaseApplicationEngine, out ApplicationEngine.Configuration>,
 ): BaseApplicationEngine {
     return embeddedServer(
         engine, host = HOST, port = PORT, module = Application::mainModule

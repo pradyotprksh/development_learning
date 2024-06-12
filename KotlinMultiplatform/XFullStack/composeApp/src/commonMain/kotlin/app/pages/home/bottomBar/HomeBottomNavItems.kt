@@ -12,7 +12,7 @@ import app.navigation.Routes
 import app.navigation.path
 
 sealed class HomeBottomNavItems(
-    val route: String, val icon: ImageVector
+    val route: String, val icon: ImageVector,
 ) {
     data object Home : HomeBottomNavItems(Routes.Home.path(), Icons.Default.Home)
     data object Search : HomeBottomNavItems(Routes.HomeSearch.path(), Icons.Default.Search)

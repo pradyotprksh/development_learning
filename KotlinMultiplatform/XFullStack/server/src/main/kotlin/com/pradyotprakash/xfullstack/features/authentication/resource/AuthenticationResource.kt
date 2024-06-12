@@ -1,11 +1,11 @@
 package com.pradyotprakash.xfullstack.features.authentication.resource
 
+import io.ktor.resources.Resource
 import utils.Constants.Paths.Authentication.AUTH
 import utils.Constants.Paths.Authentication.AUTHENTICATE
 import utils.Constants.Paths.Authentication.LOGIN
 import utils.Constants.Paths.Authentication.REGISTER
 import utils.Constants.Paths.Authentication.USER_INFO
-import io.ktor.resources.Resource
 
 @Resource(AUTH)
 class AuthenticationResource {

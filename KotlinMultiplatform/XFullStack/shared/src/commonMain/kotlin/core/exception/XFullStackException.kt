@@ -8,7 +8,7 @@ import utils.Constants.ErrorCode.USER_DETAILS_NOT_FOUND_CODE
 import utils.Localization
 
 sealed class XFullStackException(
-    message: String
+    message: String,
 ) : Throwable(message = message)
 
 data class InvalidParameter(override val message: String, val errorCode: String) :
