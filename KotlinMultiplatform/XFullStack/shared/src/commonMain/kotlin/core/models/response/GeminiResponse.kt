@@ -8,7 +8,13 @@ data class GeminiResponse(
 ) {
     val response: List<String>
         get() = candidates.map { can -> can.content.parts.map { part -> part.text } }.flatten()
-            .joinToString().lowercase().split(",").map { it.trim() }.toSet().toMutableList()
-            .filter { it.isNotEmpty() && !it.contains(" ") }
+            .joinToString().lowercase().split(",").asSequence()
+            .map { removeSpaces -> removeSpaces.trim() }.toSet().toMutableList()
+            .filter { removeSentence -> removeSentence.isNotEmpty() && !removeSentence.contains(" ") }
+            .map { removeFormatters ->
+                removeFormatters.filterNot { removeSpecialCharacters ->
+                        !removeSpecialCharacters.isLetterOrDigit() && removeSpecialCharacters.isWhitespace()
+                    }
+            }.toList()
 }
 
