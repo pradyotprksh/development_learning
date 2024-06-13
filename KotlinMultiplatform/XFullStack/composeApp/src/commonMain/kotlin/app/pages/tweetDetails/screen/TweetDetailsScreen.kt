@@ -11,6 +11,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Camera
@@ -44,6 +46,7 @@ import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.layout.boundsInParent
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -219,11 +222,7 @@ fun TweetDetailsScreen(
                                             onBookmark = {},
                                             onShare = {},
                                             onPollSelection = { _, _ -> },
-                                            onComment = {
-                                                scope.launch {
-                                                    replyFocusRequester.requestFocus()
-                                                }
-                                            },
+                                            onComment = { },
                                             onViews = {},
                                             onLike = { id -> tweetDetailsViewModel.onLikeTweet(id) },
                                             onRepost = { id -> openCreateTweetWithParentId(id) },
@@ -274,7 +273,11 @@ fun TweetDetailsScreen(
                                 isLikedByCurrentUser = tweet.isLikedByCurrentUser,
                                 onBookmark = { },
                                 onShare = { },
-                                onAddComment = { },
+                                onAddComment = {
+                                    scope.launch {
+                                        replyFocusRequester.requestFocus()
+                                    }
+                                },
                                 onRepost = { openCreateTweetWithParentId(tweetId) },
                                 onLike = { tweetDetailsViewModel.onLikeTweet(tweetId) },
                                 onViews = { },
@@ -286,8 +289,8 @@ fun TweetDetailsScreen(
                     items(tweetDetailsScreenState.replies) { replyTweet ->
                         Column(modifier = Modifier.onGloballyPositioned { layoutCoordinates ->
                             val itemBounds = layoutCoordinates.boundsInParent()
-                            val parentBounds = layoutCoordinates.parentCoordinates?.boundsInParent()
-                                ?: Rect.Zero
+                            val parentBounds =
+                                layoutCoordinates.parentCoordinates?.boundsInParent() ?: Rect.Zero
 
                             if (parentBounds.left <= itemBounds.left && parentBounds.top <= itemBounds.top && parentBounds.right >= itemBounds.right && parentBounds.bottom >= itemBounds.bottom) {
                                 tweetDetailsViewModel.updateViewForTweet(replyTweet.id)
@@ -397,6 +400,17 @@ fun TweetDetailsScreen(
                         )
                     }
                 },
+                keyboardOptions = KeyboardOptions(
+                    imeAction = ImeAction.Send,
+                ),
+                keyboardActions = KeyboardActions(
+                    onSend = {
+                        scope.launch {
+                            replyFocusRequester.freeFocus()
+                        }
+                        tweetDetailsViewModel.replyToTweet(tweetId)
+                    }
+                )
             )
             AnimatedVisibility(
                 visible = tweetDetailsScreenState.isReplyTweetFocused
@@ -408,6 +422,9 @@ fun TweetDetailsScreen(
                         Button(
                             onClick = {
                                 tweetDetailsScreenState.tweet?.id?.let { tweetId ->
+                                    scope.launch {
+                                        replyFocusRequester.freeFocus()
+                                    }
                                     tweetDetailsViewModel.replyToTweet(tweetId)
                                 }
                             },
