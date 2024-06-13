@@ -16,6 +16,7 @@ import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.launch
 import utils.Constants.ConstValues.DEFAULT_PAGINATE_LIMIT
 import utils.Constants.Keys.FOR_YOU_SCROLL_POSITION
+import utils.Constants.SuccessCode.FOLLOW_UPDATE_SUCCESS
 import utils.Constants.SuccessCode.TWEETS_DELETED_SUCCESS_CODE
 import utils.Constants.SuccessCode.TWEETS_UPDATE_SUCCESS_CODE
 
@@ -50,7 +51,18 @@ class HomeViewModel(
                             tweetRepository.deleteTweetById(split[1])
                         }
                     }
+                } else if (it == FOLLOW_UPDATE_SUCCESS) {
+                    updateUserInfo()
                 }
+            }
+        }
+    }
+
+    private suspend fun updateUserInfo() {
+        currentUserRepository.updateUserInfo().collect {
+            when (it) {
+                is ClientResponse.Error -> showMessage(it.message)
+                else -> {}
             }
         }
     }

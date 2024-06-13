@@ -4,6 +4,7 @@ import com.pradyotprakash.xfullstack.data.follow.Follow
 import com.pradyotprakash.xfullstack.data.follow.FollowDataSource
 import com.pradyotprakash.xfullstack.data.user.UserDataSource
 import com.pradyotprakash.xfullstack.features.follow.resource.FollowResource
+import com.pradyotprakash.xfullstack.features.websockets.Connections
 import core.exception.DBWriteError
 import core.exception.InvalidParameter
 import core.exception.UserDetailsNotFound
@@ -16,6 +17,7 @@ import io.ktor.server.response.respond
 import org.bson.types.ObjectId
 import utils.Constants
 import utils.Constants.ErrorCode.SAME_FOLLOW_FOLLOWING_ID
+import utils.Constants.SuccessCode.FOLLOW_UPDATE_SUCCESS
 import utils.Localization
 import utils.UtilsMethod
 import utils.XFullStackResponseStatus
@@ -75,5 +77,8 @@ class FollowUpdateControllerImplementation : FollowUpdateController {
                 )
             )
         }
+
+        Connections.sendMessageTo(followerId, FOLLOW_UPDATE_SUCCESS)
+        Connections.sendMessageTo(resource.followingId, FOLLOW_UPDATE_SUCCESS)
     }
 }
