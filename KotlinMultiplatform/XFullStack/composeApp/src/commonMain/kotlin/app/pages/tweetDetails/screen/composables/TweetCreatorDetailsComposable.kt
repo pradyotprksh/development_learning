@@ -34,6 +34,7 @@ fun TweetCreatorDetailsComposable(
     isSameUser: Boolean,
     isFollowedByCurrentUser: Boolean,
     isFollowingCurrentUser: Boolean,
+    followUpdate: () -> Unit,
 ) {
     Row(
         modifier = modifier,
@@ -59,12 +60,10 @@ fun TweetCreatorDetailsComposable(
         Spacer(modifier = Modifier.weight(1f))
         if (!isSameUser) {
             Button(
-                onClick = {},
-                colors = ButtonDefaults.buttonColors(
+                onClick = followUpdate, colors = ButtonDefaults.buttonColors(
                     containerColor = if (isFollowingCurrentUser) Color.Transparent else MaterialTheme.colorScheme.primary,
                     contentColor = if (isFollowingCurrentUser) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onPrimary,
-                ),
-                border = if (isFollowingCurrentUser) BorderStroke(
+                ), border = if (isFollowingCurrentUser) BorderStroke(
                     width = 2.dp,
                     color = MaterialTheme.colorScheme.primary,
                 ) else null

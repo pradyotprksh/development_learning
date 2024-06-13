@@ -148,6 +148,9 @@ fun TweetDetailsScreen(
                                 isSameUser = createdBy.isSameUser,
                                 isFollowedByCurrentUser = createdBy.isFollowedByCurrentUser,
                                 isFollowingCurrentUser = createdBy.isFollowingCurrentUser,
+                                followUpdate = {
+                                    tweetDetailsViewModel.followUpdate(createdBy.id)
+                                }
                             )
                         }
                     }

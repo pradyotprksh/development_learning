@@ -7,6 +7,7 @@ import core.models.request.TweetRequest
 import core.models.response.ClientResponse
 import di.SharedModulesDi
 import domain.repositories.tweet.TweetRepository
+import domain.repositories.user.follow.UserFollowRepository
 import domain.repositories.view.ViewRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -16,6 +17,7 @@ import utils.Constants.ConstValues.TWEET_MAX_LENGTH
 class TweetDetailsViewModel(
     private val tweetRepository: TweetRepository = SharedModulesDi.Instance.tweetRepository,
     private val viewRepository: ViewRepository = SharedModulesDi.Instance.viewRepository,
+    private val followRepository: UserFollowRepository = SharedModulesDi.Instance.followRepository,
 ) : ViewModel() {
     private val _tweetDetailsScreenState = MutableStateFlow(TweetDetailsState())
     val tweetDetailsScreen = _tweetDetailsScreenState.asStateFlow()
@@ -128,5 +130,16 @@ class TweetDetailsViewModel(
         _tweetDetailsScreenState.value = _tweetDetailsScreenState.value.copy(
             snackBarMessage = message,
         )
+    }
+
+    fun followUpdate(followingId: String) {
+        viewModelScope.launch {
+            followRepository.followUpdateStatus(followingId).collect {
+                when (it) {
+                    is ClientResponse.Error -> showMessage(it.message)
+                    else -> {}
+                }
+            }
+        }
     }
 }

@@ -99,6 +99,7 @@ object Constants {
         const val GEMINI_API_KEY_2 = "GEMINI_API_KEY_2"
         const val KEY = "key"
         const val FOR_YOU_SCROLL_POSITION = "for_you_scroll_position"
+        const val FOLLOWING_ID = "followingId"
     }
 
     object ConstValues {

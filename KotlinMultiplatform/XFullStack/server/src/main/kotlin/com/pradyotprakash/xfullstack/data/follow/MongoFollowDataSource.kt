@@ -44,8 +44,8 @@ class MongoFollowDataSource(
     override suspend fun isFollowingCurrentUser(currentUserId: String, createdBy: String): Boolean {
         return followCollection.find(
             Filters.and(
-                Filters.eq(FOLLOWING_ID, ObjectId(currentUserId)),
-                Filters.eq(FOLLOWER_ID, ObjectId(createdBy)),
+                Filters.eq(FOLLOWING_ID, ObjectId(createdBy)),
+                Filters.eq(FOLLOWER_ID, ObjectId(currentUserId)),
             )
         ).firstOrNull() != null
     }
@@ -56,8 +56,8 @@ class MongoFollowDataSource(
     ): Boolean {
         return followCollection.find(
             Filters.and(
-                Filters.eq(FOLLOWING_ID, ObjectId(createdBy)),
-                Filters.eq(FOLLOWER_ID, ObjectId(currentUserId)),
+                Filters.eq(FOLLOWING_ID, ObjectId(currentUserId)),
+                Filters.eq(FOLLOWER_ID, ObjectId(createdBy)),
             )
         ).firstOrNull() != null
     }
