@@ -172,8 +172,6 @@ object Constants {
         const val USER_ID = "userId"
         const val CREATED_BY = "created_by"
         const val TWEETED_ON = "tweeted_on"
-        const val COMMENT_COUNT = "comment_count"
-        const val RETWEET_COUNT = "retweet_count"
         const val IS_A_POLL = "is_a_poll"
         const val POLL_CHOICES = "poll_choices"
         const val POLL_LENGTH = "poll_length"
