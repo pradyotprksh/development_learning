@@ -186,4 +186,7 @@ object Localization {
     const val LIKES = "Likes"
     const val REPLYING_TO = "Replying to"
     const val REPLY = "Reply"
+    const val FOLLOWER_REMOVED_SUCCESSFULLY = "Follower removed successfully"
+    const val FOLLOWER_ADDED_SUCCESSFULLY = "Follower added successfully"
+    const val CANNOT_FOLLOW_YOURSELF = "You cannot follow yourself."
 }

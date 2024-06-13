@@ -53,6 +53,7 @@ fun Application.configureRouting() {
             tokenService = tokenService,
             userDataSource = userDataSource,
             tokenConfig = tokenConfig,
+            followDataSource = followDataSource,
         )
         utils(
             userDataSource = userDataSource,
@@ -69,7 +70,9 @@ fun Application.configureRouting() {
             viewDataSource = viewDataSource,
         )
         websockets(
+            userDataSource = userDataSource,
             tweetDataSource = tweetDataSource,
+            followDataSource = followDataSource,
         )
         views(
             viewController = viewController,

@@ -26,4 +26,10 @@ object Connections {
             )
         }
     }
+
+    fun sendMessageTo(userId: String, message: String) {
+        connections.find { it.first == userId }?.second?.outgoing?.trySend(
+            Frame.Text(message)
+        )
+    }
 }

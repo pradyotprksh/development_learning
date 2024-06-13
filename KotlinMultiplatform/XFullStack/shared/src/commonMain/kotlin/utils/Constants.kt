@@ -157,6 +157,7 @@ object Constants {
         const val TWEET_VALIDITY_ERROR_CODE = "EC_XFS020"
         const val BAD_REQUEST_ERROR_CODE = "EC_XFS021"
         const val INVALID_REQUEST_ASK = "EC_XFS022"
+        const val SAME_FOLLOW_FOLLOWING_ID = "EC_XFS023"
     }
 
     object SuccessCode {
@@ -166,6 +167,7 @@ object Constants {
         const val TWEETS_UPDATE_SUCCESS_CODE = "SC_XFS004"
         const val TWEETS_DELETED_SUCCESS_CODE = "SC_XFS004"
         const val DB_MIGRATION_SUCCESS_CODE = "SC_XFS005"
+        const val FOLLOW_UPDATE_SUCCESS = "SC_XFS006"
     }
 
     object DbKeys {

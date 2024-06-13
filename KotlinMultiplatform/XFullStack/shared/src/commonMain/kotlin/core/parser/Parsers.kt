@@ -5,6 +5,7 @@ import core.models.realm.PollChoicesDB
 import core.models.realm.TweetDB
 import core.models.realm.TweetRequestDB
 import core.models.realm.TweetRequestsDB
+import core.models.realm.UserInfoDB
 import core.models.request.TweetRequest
 import core.models.response.PollChoicesResponse
 import core.models.response.TweetResponse
@@ -26,7 +27,35 @@ fun UserInfoResponse.parseToCurrentUserInfoDB() = this.let { info ->
     }
 }
 
+fun UserInfoResponse.parseToUserInfoDB() = this.let { info ->
+    UserInfoDB().apply {
+        this.userId = info.id
+        this.name = info.name
+        this.username = info.username
+        this.bio = info.bio
+        this.emailAddress = info.emailAddress
+        this.phoneNumber = info.phoneNumber
+        this.profilePicture = info.profilePicture
+        this.dateOfBirth = info.dateOfBirth
+        this.following = info.following
+        this.followers = info.followers
+    }
+}
+
 fun CurrentUserInfoDB.parseToCurrentUserResponse() = UserInfoResponse(
+    id = this.userId,
+    name = this.name,
+    username = this.username,
+    bio = this.bio,
+    emailAddress = this.emailAddress,
+    phoneNumber = this.phoneNumber,
+    profilePicture = this.profilePicture,
+    dateOfBirth = this.dateOfBirth,
+    following = this.following,
+    followers = this.followers
+)
+
+fun UserInfoDB.parseToCurrentUserResponse() = UserInfoResponse(
     id = this.userId,
     name = this.name,
     username = this.username,
@@ -67,7 +96,7 @@ fun TweetResponse.parseToTweetsDB(): TweetDB = this.let { info ->
     TweetDB().apply {
         this.tweetId = info.id
         this.tweet = info.tweet
-        this.createdBy = info.createdBy?.parseToCurrentUserInfoDB()
+        this.createdBy = info.createdBy?.parseToUserInfoDB()
         this.tweetedOnTimestamp = info.tweetedOnTimestamp
         this.tweetedOn = info.tweetedOn
         this.media = media

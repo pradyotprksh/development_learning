@@ -9,7 +9,7 @@ class TweetDB : RealmObject {
     @PrimaryKey
     var tweetId: String = ""
     var tweet: String = ""
-    var createdBy: CurrentUserInfoDB? = null
+    var createdBy: UserInfoDB? = null
     var tweetedOnTimestamp: Long = 0
     var tweetedOn: String = ""
     var media: RealmList<String> = realmListOf()

@@ -3,6 +3,7 @@ package com.pradyotprakash.xfullstack.features.authentication
 import com.pradyotprakash.xfullstack.core.security.hashing.HashingService
 import com.pradyotprakash.xfullstack.core.security.token.TokenConfig
 import com.pradyotprakash.xfullstack.core.security.token.TokenService
+import com.pradyotprakash.xfullstack.data.follow.FollowDataSource
 import com.pradyotprakash.xfullstack.data.user.UserDataSource
 import com.pradyotprakash.xfullstack.features.authentication.controllers.AuthenticationController
 import com.pradyotprakash.xfullstack.features.authentication.resource.AuthenticationResource
@@ -17,6 +18,7 @@ fun Routing.authentication(
     tokenService: TokenService,
     userDataSource: UserDataSource,
     tokenConfig: TokenConfig,
+    followDataSource: FollowDataSource,
 ) {
     post<AuthenticationResource.Register> {
         authenticationController.registerUser(
@@ -45,14 +47,13 @@ fun Routing.authentication(
                 resource = it,
             )
         }
-    }
 
-    authenticate {
         get<AuthenticationResource.UserInfo> {
             authenticationController.getUserInfo(
                 call = this.context,
                 resource = it,
                 userDataSource = userDataSource,
+                followDataSource = followDataSource,
             )
         }
     }

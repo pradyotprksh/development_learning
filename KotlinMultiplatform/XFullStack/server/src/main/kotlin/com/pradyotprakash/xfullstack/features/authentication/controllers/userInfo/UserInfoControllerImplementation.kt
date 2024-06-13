@@ -1,6 +1,7 @@
 package com.pradyotprakash.xfullstack.features.authentication.controllers.userInfo
 
 import com.pradyotprakash.xfullstack.core.data.parseToUserInfoResponse
+import com.pradyotprakash.xfullstack.data.follow.FollowDataSource
 import com.pradyotprakash.xfullstack.data.user.UserDataSource
 import com.pradyotprakash.xfullstack.features.authentication.resource.AuthenticationResource
 import core.exception.UserDetailsNotFound
@@ -21,6 +22,7 @@ class UserInfoControllerImplementation : UserInfoController {
         call: ApplicationCall,
         resource: AuthenticationResource.UserInfo,
         userDataSource: UserDataSource,
+        followDataSource: FollowDataSource,
     ) {
         delay(API_RESPONSE_DELAY)
 
@@ -30,9 +32,12 @@ class UserInfoControllerImplementation : UserInfoController {
             principal?.payload?.getClaim(USER_ID)?.asString() ?: throw UserDetailsNotFound()
         val user = userDataSource.getUserByUserId(userId) ?: throw UserDetailsNotFound()
 
+        val followersCount = followDataSource.getFollowerCount(userId)
+        val followingCount = followDataSource.getFollowingCount(userId)
+
         val response = user.parseToUserInfoResponse(
-            followers = 0,
-            following = 0,
+            followers = followersCount,
+            following = followingCount,
         )
 
         call.respond(
