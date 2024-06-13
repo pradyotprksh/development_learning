@@ -297,9 +297,16 @@ fun XApp(
 
                     TweetDetailsScreen(
                         tweetId = tweetId ?: "",
-                    ) {
-                        navController.popBackStack()
-                    }
+                        onNavigateBack = {
+                            navController.popBackStack()
+                        },
+                        openCreateTweetWithParentId = {
+                            navigateToCreateTweet(it)
+                        },
+                        openTweetDetails = {
+                            navigateToTweetDetails(it)
+                        },
+                    )
                 }
             }
         }

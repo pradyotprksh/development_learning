@@ -37,7 +37,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.geometry.Rect
+import androidx.compose.ui.layout.boundsInParent
+import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -66,12 +71,15 @@ fun TweetDetailsScreen(
     tweetDetailsViewModel: TweetDetailsViewModel = viewModel { TweetDetailsViewModel() },
     tweetId: String,
     onNavigateBack: () -> Unit,
+    openCreateTweetWithParentId: (String) -> Unit,
+    openTweetDetails: (String) -> Unit,
 ) {
     LaunchedEffect(Unit) {
         tweetDetailsViewModel.initialSetup(tweetId)
     }
 
     val scope = rememberCoroutineScope()
+    val replyFocusRequester = remember { FocusRequester() }
     val snackbarHostState = remember { SnackbarHostState() }
     val tweetDetailsScreenState by tweetDetailsViewModel.tweetDetailsScreen.collectAsState()
     tweetDetailsScreenState.snackBarMessage?.let { message ->
@@ -115,11 +123,11 @@ fun TweetDetailsScreen(
         snackbarHost = {
             SnackbarHost(hostState = snackbarHostState)
         },
-    ) {
+    ) { paddingValues ->
         Column(
             modifier = Modifier.fillMaxSize().padding(
-                top = it.calculateTopPadding(),
-                bottom = it.calculateBottomPadding() + 25.dp,
+                top = paddingValues.calculateTopPadding(),
+                bottom = paddingValues.calculateBottomPadding() + 25.dp,
             ).imePadding()
         ) {
             HorizontalDivider()
@@ -201,9 +209,25 @@ fun TweetDetailsScreen(
                                         isPollingAllowed = parentTweetDetails.isPollingAllowed,
                                         pollingEndTime = parentTweetDetails.pollingEndTime,
                                         showTweetActions = false,
-                                        parentTweetDetails = tweet.parentTweetDetails,
+                                        parentTweetDetails = null,
                                         onPollSelection = { },
-                                        tweetActions = TweetActions(),
+                                        tweetActions = TweetActions(
+                                            profileImageClick = {},
+                                            onTweetClick = { tweetId ->
+                                                openTweetDetails(tweetId)
+                                            },
+                                            onBookmark = {},
+                                            onShare = {},
+                                            onPollSelection = { _, _ -> },
+                                            onComment = {
+                                                scope.launch {
+                                                    replyFocusRequester.requestFocus()
+                                                }
+                                            },
+                                            onViews = {},
+                                            onLike = { id -> tweetDetailsViewModel.onLikeTweet(id) },
+                                            onRepost = { id -> openCreateTweetWithParentId(id) },
+                                        ),
                                         isACommentTweet = tweet.isACommentTweet,
                                         isLikedTweet = tweet.isLikedTweet,
                                         aInnerTweet = tweet.aInnerTweet,
@@ -251,8 +275,8 @@ fun TweetDetailsScreen(
                                 onBookmark = { },
                                 onShare = { },
                                 onAddComment = { },
-                                onRepost = { },
-                                onLike = { },
+                                onRepost = { openCreateTweetWithParentId(tweetId) },
+                                onLike = { tweetDetailsViewModel.onLikeTweet(tweetId) },
                                 onViews = { },
                             )
                             HorizontalDivider()
@@ -260,7 +284,15 @@ fun TweetDetailsScreen(
                     }
 
                     items(tweetDetailsScreenState.replies) { replyTweet ->
-                        Column {
+                        Column(modifier = Modifier.onGloballyPositioned { layoutCoordinates ->
+                            val itemBounds = layoutCoordinates.boundsInParent()
+                            val parentBounds = layoutCoordinates.parentCoordinates?.boundsInParent()
+                                ?: Rect.Zero
+
+                            if (parentBounds.left <= itemBounds.left && parentBounds.top <= itemBounds.top && parentBounds.right >= itemBounds.right && parentBounds.bottom >= itemBounds.bottom) {
+                                tweetDetailsViewModel.updateViewForTweet(replyTweet.id)
+                            }
+                        }) {
                             TweetComposable(
                                 modifier = Modifier.padding(
                                     horizontal = 15.dp, vertical = 8.dp
@@ -283,8 +315,22 @@ fun TweetDetailsScreen(
                                 pollingEndTime = replyTweet.pollingEndTime,
                                 showTweetActions = true,
                                 parentTweetDetails = replyTweet.parentTweetDetails,
-                                onPollSelection = { },
-                                tweetActions = TweetActions(),
+                                onPollSelection = { optionId ->
+                                    tweetDetailsViewModel.updatePollOption(replyTweet.id, optionId)
+                                },
+                                tweetActions = TweetActions(
+                                    profileImageClick = {},
+                                    onTweetClick = { tweetId ->
+                                        openTweetDetails(tweetId)
+                                    },
+                                    onBookmark = {},
+                                    onShare = {},
+                                    onPollSelection = { _, _ -> },
+                                    onComment = {},
+                                    onViews = {},
+                                    onLike = { id -> tweetDetailsViewModel.onLikeTweet(id) },
+                                    onRepost = { id -> openCreateTweetWithParentId(id) },
+                                ),
                                 isACommentTweet = replyTweet.isACommentTweet,
                                 isLikedTweet = replyTweet.isLikedTweet,
                                 aInnerTweet = replyTweet.aInnerTweet,
@@ -335,7 +381,7 @@ fun TweetDetailsScreen(
                 },
                 modifier = Modifier.fillMaxWidth().padding(5.dp).onFocusChanged { focus ->
                     tweetDetailsViewModel.replyTextFieldFocusChanged(focus.isFocused)
-                },
+                }.focusRequester(replyFocusRequester),
                 placeholder = {
                     Text(
                         Localization.POST_YOUR_REPLY,

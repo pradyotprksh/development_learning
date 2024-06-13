@@ -56,11 +56,19 @@ class SplashViewModel(
         navigateToHome: () -> Unit,
     ) {
         currentUserRepository.authenticateUser().collect {
-            if (it is ClientResponse.Error || it is ClientResponse.Success) {
-                updateCurrentUserInfo(
-                    navigateToAuthOption,
-                    navigateToHome,
-                )
+            when (it) {
+                is ClientResponse.Error -> {
+                    deleteLocalDbAndRedirectToAuthOption(navigateToAuthOption)
+                }
+
+                is ClientResponse.Success -> {
+                    updateCurrentUserInfo(
+                        navigateToAuthOption,
+                        navigateToHome,
+                    )
+                }
+
+                else -> {}
             }
         }
     }
@@ -107,12 +115,6 @@ class SplashViewModel(
     fun removeSnackBarMessage() {
         _splashScreenState.value = _splashScreenState.value.copy(
             snackBarMessage = null
-        )
-    }
-
-    private fun updateLoaderState(showLoader: Boolean) {
-        _splashScreenState.value = _splashScreenState.value.copy(
-            showLoading = showLoader
         )
     }
 }

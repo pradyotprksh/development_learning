@@ -4,8 +4,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.pages.tweetDetails.state.TweetDetailsState
 import core.models.request.TweetRequest
+import core.models.response.ClientResponse
 import di.SharedModulesDi
 import domain.repositories.tweet.TweetRepository
+import domain.repositories.view.ViewRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
@@ -13,6 +15,7 @@ import utils.Constants.ConstValues.TWEET_MAX_LENGTH
 
 class TweetDetailsViewModel(
     private val tweetRepository: TweetRepository = SharedModulesDi.Instance.tweetRepository,
+    private val viewRepository: ViewRepository = SharedModulesDi.Instance.viewRepository,
 ) : ViewModel() {
     private val _tweetDetailsScreenState = MutableStateFlow(TweetDetailsState())
     val tweetDetailsScreen = _tweetDetailsScreenState.asStateFlow()
@@ -78,5 +81,52 @@ class TweetDetailsViewModel(
                 updateTweetReply("")
             }
         }
+    }
+
+    fun onLikeTweet(tweetId: String) {
+        val tweetRequest = TweetRequest(
+            tweet = null,
+            media = emptyList(),
+            gif = emptyList(),
+            isAPoll = false,
+            pollChoices = emptyList(),
+            pollHour = null,
+            pollMinute = null,
+            pollSeconds = null,
+            location = null,
+            isScheduledTweet = false,
+            scheduledOnTweet = null,
+            isQuoteTweet = false,
+            isLikedTweet = true,
+            isRepostTweet = false,
+            isACommentTweet = false,
+            parentTweetId = tweetId,
+        )
+        viewModelScope.launch {
+            tweetRepository.saveTweetRequests(listOf(tweetRequest))
+        }
+    }
+
+    fun updateViewForTweet(tweetId: String) {
+        viewModelScope.launch {
+            viewRepository.saveView(tweetId)
+        }
+    }
+
+    fun updatePollOption(tweetId: String, optionId: String) {
+        viewModelScope.launch {
+            tweetRepository.updateTweetPoll(tweetId, optionId).collect {
+                when (it) {
+                    is ClientResponse.Error -> showMessage(it.message)
+                    else -> {}
+                }
+            }
+        }
+    }
+
+    private fun showMessage(message: String) {
+        _tweetDetailsScreenState.value = _tweetDetailsScreenState.value.copy(
+            snackBarMessage = message,
+        )
     }
 }
