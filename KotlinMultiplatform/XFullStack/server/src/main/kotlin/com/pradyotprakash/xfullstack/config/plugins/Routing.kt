@@ -4,11 +4,14 @@ import com.pradyotprakash.xfullstack.config.ModulesConfig
 import com.pradyotprakash.xfullstack.core.security.hashing.HashingService
 import com.pradyotprakash.xfullstack.core.security.token.TokenConfig
 import com.pradyotprakash.xfullstack.core.security.token.TokenService
+import com.pradyotprakash.xfullstack.data.follow.FollowDataSource
 import com.pradyotprakash.xfullstack.data.tweet.TweetDataSource
 import com.pradyotprakash.xfullstack.data.user.UserDataSource
 import com.pradyotprakash.xfullstack.data.view.ViewDataSource
 import com.pradyotprakash.xfullstack.features.authentication.authentication
 import com.pradyotprakash.xfullstack.features.authentication.controllers.AuthenticationController
+import com.pradyotprakash.xfullstack.features.follow.controllers.FollowController
+import com.pradyotprakash.xfullstack.features.follow.follow
 import com.pradyotprakash.xfullstack.features.migration.migration
 import com.pradyotprakash.xfullstack.features.secrets.controllers.SecretsController
 import com.pradyotprakash.xfullstack.features.secrets.secrets
@@ -29,6 +32,7 @@ fun Application.configureRouting() {
     val userDataSource by ModulesConfig.di.instance<UserDataSource>()
     val tweetDataSource by ModulesConfig.di.instance<TweetDataSource>()
     val viewDataSource by ModulesConfig.di.instance<ViewDataSource>()
+    val followDataSource by ModulesConfig.di.instance<FollowDataSource>()
 
     val tokenService by ModulesConfig.di.instance<TokenService>()
     val tokenConfig by ModulesConfig.di.instance<TokenConfig>()
@@ -40,6 +44,7 @@ fun Application.configureRouting() {
     val tweetController by ModulesConfig.di.instance<TweetController>()
     val viewController by ModulesConfig.di.instance<ViewController>()
     val secretsController by ModulesConfig.di.instance<SecretsController>()
+    val followController by ModulesConfig.di.instance<FollowController>()
 
     routing {
         authentication(
@@ -78,6 +83,11 @@ fun Application.configureRouting() {
         migration(
             tweetDataSource = tweetDataSource,
             userDataSource = userDataSource,
+        )
+        follow(
+            userDataSource = userDataSource,
+            followDataSource = followDataSource,
+            followController = followController,
         )
     }
 }

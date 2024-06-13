@@ -16,6 +16,7 @@ object Constants {
             const val USERS = "users"
             const val TWEET = "tweet"
             const val VIEWS = "views"
+            const val FOLLOW = "follow"
         }
     }
 
@@ -72,6 +73,11 @@ object Constants {
 
         object Migration {
             const val MIGRATION = "/migration"
+        }
+
+        object Follow {
+            const val FOLLOW = "/follow"
+            const val UPDATE = "/update"
         }
     }
 
@@ -195,6 +201,9 @@ object Constants {
         const val VIEWED_ID_CAMELCASE = "viewedId"
         const val PARENT_TWEET_ID_CAMELCASE = "parentTweetId"
         const val IS_A_COMMENT_TWEET_CAMELCASE = "isACommentTweet"
+        const val FOLLOWER_ID = "follower_id"
+        const val FOLLOWING_ID = "following_id"
+        const val FOLLOWED_AT = "follower_at"
     }
 
     object GeminiPrompt {

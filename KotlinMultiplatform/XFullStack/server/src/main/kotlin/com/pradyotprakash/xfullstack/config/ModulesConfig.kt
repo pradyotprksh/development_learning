@@ -6,6 +6,8 @@ import com.pradyotprakash.xfullstack.core.security.hashing.SHA256HashingService
 import com.pradyotprakash.xfullstack.core.security.token.JwtTokenService
 import com.pradyotprakash.xfullstack.core.security.token.TokenConfig
 import com.pradyotprakash.xfullstack.core.security.token.TokenService
+import com.pradyotprakash.xfullstack.data.follow.FollowDataSource
+import com.pradyotprakash.xfullstack.data.follow.MongoFollowDataSource
 import com.pradyotprakash.xfullstack.data.tweet.MongoTweetDataSource
 import com.pradyotprakash.xfullstack.data.tweet.TweetDataSource
 import com.pradyotprakash.xfullstack.data.user.MongoUserDataSource
@@ -21,6 +23,9 @@ import com.pradyotprakash.xfullstack.features.authentication.controllers.registe
 import com.pradyotprakash.xfullstack.features.authentication.controllers.register.RegisterControllerImplementation
 import com.pradyotprakash.xfullstack.features.authentication.controllers.userInfo.UserInfoController
 import com.pradyotprakash.xfullstack.features.authentication.controllers.userInfo.UserInfoControllerImplementation
+import com.pradyotprakash.xfullstack.features.follow.controllers.FollowController
+import com.pradyotprakash.xfullstack.features.follow.controllers.followUpdate.FollowUpdateController
+import com.pradyotprakash.xfullstack.features.follow.controllers.followUpdate.FollowUpdateControllerImplementation
 import com.pradyotprakash.xfullstack.features.secrets.controllers.SecretsController
 import com.pradyotprakash.xfullstack.features.secrets.controllers.secretsFetch.SecretsFetchController
 import com.pradyotprakash.xfullstack.features.secrets.controllers.secretsFetch.SecretsFetchControllerImplementation
@@ -56,6 +61,7 @@ object ModulesConfig {
         bindProvider<UserDataSource> { MongoUserDataSource(instance()) }
         bindProvider<TweetDataSource> { MongoTweetDataSource(instance()) }
         bindProvider<ViewDataSource> { MongoViewDataSource(instance()) }
+        bindProvider<FollowDataSource> { MongoFollowDataSource(instance()) }
     }
 
     private val securityModule = DI.Module("SECURITY") {
@@ -92,6 +98,8 @@ object ModulesConfig {
         bindProvider<ViewCreateController> { ViewCreateControllerImplementation() }
 
         bindProvider<SecretsFetchController> { SecretsFetchControllerImplementation() }
+
+        bindProvider<FollowUpdateController> { FollowUpdateControllerImplementation() }
     }
 
     private val featuresModule = DI.Module("FEATURES") {
@@ -106,6 +114,8 @@ object ModulesConfig {
         bindProvider { ViewController(instance()) }
 
         bindProvider { SecretsController(instance()) }
+
+        bindProvider { FollowController(instance()) }
     }
 
     val di = DI {
