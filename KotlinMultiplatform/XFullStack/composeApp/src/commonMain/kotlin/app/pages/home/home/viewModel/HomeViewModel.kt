@@ -52,6 +52,10 @@ class HomeViewModel(
                         }
                     }
                 } else if (it == FOLLOW_UPDATE_SUCCESS) {
+                    updateForYouAllTweets(
+                        1,
+                        _homeScreenState.value.forYouTweets.size,
+                    )
                     updateUserInfo()
                 }
             }
