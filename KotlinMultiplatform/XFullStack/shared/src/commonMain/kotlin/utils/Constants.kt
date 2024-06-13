@@ -207,10 +207,13 @@ object Constants {
         const val FOLLOWER_ID = "follower_id"
         const val FOLLOWING_ID = "following_id"
         const val FOLLOWED_AT = "follower_at"
+        const val NATURE = "nature"
     }
 
     object GeminiPrompt {
         const val TWEET_EMOTION =
-            "can you tell the tag for the text \"%s\", like what's the tone or emotion give response in words, separated by comma. If emotion is not known then say null."
+            "can you tell the tag for the text \"%s\", like what's the tone or emotion give response in words, separated by comma."
+        const val USER_NATURE =
+            "user created posts with emotions \"%s\". can you tell what kind of nature this person has. give response in words, separated by comma."
     }
 }

@@ -22,4 +22,5 @@ data class User(
     @BsonProperty(PHONE_NUMBER) val phoneNumber: String?,
     @BsonProperty(PROFILE_PICTURE) val profilePicture: String?,
     @BsonProperty(DATE_OF_BIRTH) val dateOfBirth: Long,
+    val nature: List<String>,
 )

@@ -156,6 +156,20 @@ class TweetCreateUpdateControllerImplementation(
             }
         }
 
+        val allTweetsEmotions = tweetDataSource.getUserTweetsEmotions(createdBy)
+
+        val humanNature = geminiRepository.getHumanNature(
+            allTweetsEmotions.joinToString(", "), if (Random.nextBoolean()) {
+                System.getenv(Constants.Keys.GEMINI_API_KEY_1)
+            } else {
+                System.getenv(Constants.Keys.GEMINI_API_KEY_2)
+            }
+        )
+
+        if (humanNature.isNotEmpty()) {
+            userDataSource.updateHumanNature(createdBy, humanNature)
+        }
+
         call.respond(
             HttpStatusCode.Created, XFullStackResponse(
                 status = XFullStackResponseStatus.Success,

@@ -105,8 +105,7 @@ class MongoTweetDataSource(
 
     override suspend fun addNewFieldToAll(name: String, value: Any) {
         tweetCollection.updateMany(
-            Filters.exists(ID),
-            Updates.set(name, value)
+            Filters.exists(ID), Updates.set(name, value)
         )
     }
 
@@ -132,8 +131,14 @@ class MongoTweetDataSource(
 
     override suspend fun removeKeyFromAll(key: String) {
         tweetCollection.updateMany(
-            Filters.exists(ID),
-            Updates.unset(key)
+            Filters.exists(ID), Updates.unset(key)
         )
+    }
+
+    override suspend fun getUserTweetsEmotions(userId: String): List<String> {
+        return tweetCollection.find(
+            Filters.eq(CREATED_BY, ObjectId(userId)),
+        ).toList().asSequence().map { it.emotions }.flatten().toSet().toMutableList()
+            .filter { it.isNotEmpty() && !it.contains(" ") }.toList()
     }
 }

@@ -18,14 +18,14 @@ fun Routing.migration(
     userDataSource: UserDataSource,
 ) {
     post(MIGRATION) {
-        // DONE: tweetDataSource.addNewFieldToAll(EMOTIONS, emptyList<String>())
-        // DONE: tweetDataSource.removeKeyFromAll(RETWEET_COUNT)
-        // DONE: tweetDataSource.removeKeyFromAll(COMMENT_COUNT)
+        // DONE: tweetDataSource.addNewFieldToAll("emotions", emptyList<String>())
+        // DONE: tweetDataSource.removeKeyFromAll("retweet_count")
+        // DONE: tweetDataSource.removeKeyFromAll("comment_count")
         // DONE: userDataSource.removeKeyFromAll("followers")
         // DONE: userDataSource.removeKeyFromAll("following")
+        // userDataSource.addNewFieldToAll("nature", emptyList<String>())
         call.respond(
-            HttpStatusCode.OK,
-            XFullStackResponse(
+            HttpStatusCode.OK, XFullStackResponse(
                 status = XFullStackResponseStatus.Success,
                 code = DB_MIGRATION_SUCCESS_CODE,
                 message = Localization.DB_MIGRATION_SUCCESS,

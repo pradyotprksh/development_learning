@@ -16,6 +16,7 @@ fun RegisterRequest.parseToUser(saltedHash: SaltedHash) = this.let { registerReq
         dateOfBirth = registerRequest.dateOfBirth,
         emailAddress = registerRequest.emailAddress,
         phoneNumber = registerRequest.phoneNumber,
+        nature = emptyList(),
     )
 }
 

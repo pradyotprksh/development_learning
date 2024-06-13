@@ -8,6 +8,7 @@ import core.models.response.GeminiResponse
 import core.network.NetworkClient
 import domain.services.gemini.GeminiRemoteService
 import utils.Constants.GeminiPrompt.TWEET_EMOTION
+import utils.Constants.GeminiPrompt.USER_NATURE
 import utils.Constants.Keys.KEY
 import utils.Constants.Paths.Gemini.BETA_1_5_MODEL_GENERATE_CONTENT
 import utils.Localization
@@ -21,6 +22,34 @@ class GeminiRemoteServiceImplementation(
     ): GeminiResponse? {
         val prompt = Localization.format(
             TWEET_EMOTION,
+            value,
+        )
+        val response = geminiRemoteClient.post<GeminiResponse>(
+            details = XFullStackClientRequestDetails(
+                endpoint = BETA_1_5_MODEL_GENERATE_CONTENT,
+                queries = mapOf(
+                    KEY to apiKey,
+                ),
+                body = GeminiRequest(
+                    contents = listOf(
+                        Content(
+                            parts = listOf(
+                                Part(
+                                    text = prompt,
+                                ),
+                            )
+                        )
+                    )
+                ),
+            )
+        )
+
+        return response.getOrNull()
+    }
+
+    override suspend fun getHumanNature(value: String, apiKey: String): GeminiResponse? {
+        val prompt = Localization.format(
+            USER_NATURE,
             value,
         )
         val response = geminiRemoteClient.post<GeminiResponse>(

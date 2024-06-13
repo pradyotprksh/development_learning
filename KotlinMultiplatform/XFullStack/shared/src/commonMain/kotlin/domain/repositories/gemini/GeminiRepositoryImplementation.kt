@@ -7,11 +7,14 @@ class GeminiRepositoryImplementation(
 ) : GeminiRepository {
     override suspend fun getTweetEmotion(value: String, apiKey: String) = try {
         val response = geminiRemoteService.getTweetEmotion(value, apiKey)
-        val text =
-            response?.candidates?.map { can -> can.content.parts.map { part -> part.text } }
-                ?.flatten()?.joinToString()?.lowercase()?.split(",")?.map { it.trim() }?.toSet()
-                ?.toMutableList()?.filter { it.isNotEmpty() && it != "null" && !it.contains(" ") }
-        text ?: emptyList()
+        response?.response ?: emptyList()
+    } catch (_: Exception) {
+        emptyList()
+    }
+
+    override suspend fun getHumanNature(value: String, apiKey: String) = try {
+        val response = geminiRemoteService.getHumanNature(value, apiKey)
+        response?.response ?: emptyList()
     } catch (_: Exception) {
         emptyList()
     }

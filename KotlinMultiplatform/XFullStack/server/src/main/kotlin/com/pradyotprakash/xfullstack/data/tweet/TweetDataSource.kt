@@ -38,4 +38,6 @@ interface TweetDataSource {
     suspend fun isTweetAlreadyReposted(tweetId: String, userId: String): String?
 
     suspend fun removeKeyFromAll(key: String)
+
+    suspend fun getUserTweetsEmotions(userId: String): List<String>
 }

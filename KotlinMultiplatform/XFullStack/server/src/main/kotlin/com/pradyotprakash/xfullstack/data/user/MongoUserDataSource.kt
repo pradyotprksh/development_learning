@@ -10,6 +10,7 @@ import org.bson.types.ObjectId
 import utils.Constants.Database.Collections.USERS
 import utils.Constants.DbKeys.EMAIL_ADDRESS
 import utils.Constants.DbKeys.ID
+import utils.Constants.DbKeys.NATURE
 import utils.Constants.DbKeys.PHONE_NUMBER
 
 class MongoUserDataSource(
@@ -74,6 +75,13 @@ class MongoUserDataSource(
         usersCollection.updateMany(
             Filters.exists(ID),
             Updates.set(name, value)
+        )
+    }
+
+    override suspend fun updateHumanNature(userId: String, nature: List<String>) {
+        usersCollection.findOneAndUpdate(
+            eq(ID, ObjectId(userId)),
+            Updates.set(NATURE, nature)
         )
     }
 }
