@@ -311,13 +311,15 @@ fun TweetDetailsScreen(
                                 TextDetails(
                                     text = Localization.WHITE_SPACE,
                                 ),
-                                TextDetails(text = "${USERNAME_PREFIX}${createdBy.username}",
+                                TextDetails(
+                                    text = "${USERNAME_PREFIX}${createdBy.username}",
                                     isClickable = true,
                                     spanStyle = SpanStyle(
                                         color = MaterialTheme.colorScheme.primary,
                                     ),
                                     tag = Tags.CreatedBy,
-                                    actions = {}),
+                                    actions = {},
+                                ),
                             ),
                             textStyle = MaterialTheme.typography.labelMedium.copy(
                                 color = MaterialTheme.colorScheme.onBackground
