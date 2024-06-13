@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -21,19 +22,22 @@ import androidx.compose.ui.unit.dp
 import app.composables.ProfileImageComposable
 import core.models.response.UserInfoResponse
 import utils.Constants
+import utils.Localization
 
 @Composable
 fun TweetCreatorDetailsComposable(
     modifier: Modifier = Modifier,
     createdBy: UserInfoResponse,
+    isSameUser: Boolean,
+    isFollowedByCurrentUser: Boolean,
+    isFollowingCurrentUser: Boolean,
 ) {
     Row(
         modifier = modifier,
         verticalAlignment = Alignment.CenterVertically,
     ) {
         ProfileImageComposable(
-            profileImage = createdBy.profilePicture,
-            modifier = Modifier.size(40.dp).clickable(
+            profileImage = createdBy.profilePicture, modifier = Modifier.size(40.dp).clickable(
                 indication = null,
                 interactionSource = remember { MutableInteractionSource() },
                 onClick = {},
@@ -42,8 +46,7 @@ fun TweetCreatorDetailsComposable(
         Spacer(modifier = Modifier.width(5.dp))
         Column {
             Text(
-                createdBy.name,
-                style = MaterialTheme.typography.titleMedium
+                createdBy.name, style = MaterialTheme.typography.titleMedium
             )
             Text(
                 "${Constants.ConstValues.USERNAME_PREFIX}${createdBy.username}",
@@ -51,9 +54,17 @@ fun TweetCreatorDetailsComposable(
             )
         }
         Spacer(modifier = Modifier.weight(1f))
-        IconButton(
-            onClick = {}
-        ) {
+        if (!isSameUser) {
+            Button(
+                onClick = {},
+            ) {
+                Text(
+                    if (isFollowingCurrentUser) Localization.FOLLOWING else if (isFollowedByCurrentUser) Localization.FOLLOW_BACK else Localization.FOLLOW
+                )
+            }
+            Spacer(modifier = Modifier.width(2.dp))
+        }
+        IconButton(onClick = {}) {
             Icon(
                 imageVector = Icons.Default.Menu,
                 contentDescription = Icons.Default.Menu.name,

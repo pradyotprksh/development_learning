@@ -189,4 +189,6 @@ object Localization {
     const val FOLLOWER_REMOVED_SUCCESSFULLY = "Follower removed successfully"
     const val FOLLOWER_ADDED_SUCCESSFULLY = "Follower added successfully"
     const val CANNOT_FOLLOW_YOURSELF = "You cannot follow yourself."
+    const val FOLLOW = "Follow"
+    const val FOLLOW_BACK = "Follow Back"
 }

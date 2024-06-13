@@ -145,6 +145,9 @@ fun TweetDetailsScreen(
                                     all = 10.dp,
                                 ),
                                 createdBy = createdBy,
+                                isSameUser = createdBy.isSameUser,
+                                isFollowedByCurrentUser = createdBy.isFollowedByCurrentUser,
+                                isFollowingCurrentUser = createdBy.isFollowingCurrentUser,
                             )
                         }
                     }
