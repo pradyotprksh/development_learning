@@ -51,6 +51,8 @@ import app.pages.home.home.screen.HomeScreen
 import app.pages.splash.screen.SplashScreen
 import app.pages.tweetDetails.screen.TweetDetailsScreen
 import kotlinx.coroutines.launch
+import utils.Constants.ConstValues.IS_REPLY
+import utils.Constants.ConstValues.IS_RETWEET
 import utils.Constants.ConstValues.NO_NAV_VALUE
 import utils.Constants.ConstValues.PARENT_TWEET_ID
 import utils.Constants.ConstValues.TWEET_ID
@@ -112,9 +114,9 @@ fun XApp(
     val navigateToRegister = {
         navController.navigate(Routes.Register.path())
     }
-    val navigateToCreateTweet = { value: String ->
+    val navigateToCreateTweet = { value: String, isRetweet: Boolean, isReply: Boolean ->
         navController.navigate(
-            "${Routes.CreateTweet.route}$value",
+            "${Routes.CreateTweet.route}$value/$isRetweet/$isReply",
         )
     }
     val navigateToTweetDetails = { value: String ->
@@ -154,7 +156,7 @@ fun XApp(
                             if (currentDestination?.route == Routes.HomeMessages.path()) {
                                 TODO()
                             } else {
-                                navigateToCreateTweet(NO_NAV_VALUE)
+                                navigateToCreateTweet(NO_NAV_VALUE, false, false)
                             }
                         },
                     ) {
@@ -250,8 +252,8 @@ fun XApp(
                 }
                 composable(Routes.Home.path()) {
                     HomeScreen(
-                        openCreateTweetWithParentId = {
-                            navigateToCreateTweet(it)
+                        openCreateTweetWithParentId = { id, isRetweet, isReply ->
+                            navigateToCreateTweet(id, isRetweet, isReply)
                         },
                         openTweetDetails = {
                             navigateToTweetDetails(it)
@@ -266,6 +268,12 @@ fun XApp(
                 composable(
                     Routes.CreateTweet.path(),
                     arguments = Routes.CreateTweet.arguments.map {
+                        if (it == IS_RETWEET || it == IS_REPLY) {
+                            navArgument(it) {
+                                type = NavType.BoolType
+                                defaultValue = false
+                            }
+                        }
                         navArgument(it) {
                             type = NavType.StringType
                             defaultValue = NO_NAV_VALUE
@@ -273,11 +281,16 @@ fun XApp(
                     },
                 ) {
                     val parentTweetIdArgument = it.arguments?.getString(PARENT_TWEET_ID)
+                    val isRetweet = it.arguments?.getBoolean(IS_RETWEET) ?: false
+                    val isReply = it.arguments?.getBoolean(IS_REPLY) ?: false
+
                     val parentTweetId =
                         if (parentTweetIdArgument == NO_NAV_VALUE) null else parentTweetIdArgument
 
                     CreateTweetScreen(
                         parentTweetId = parentTweetId,
+                        isRetweet = isRetweet,
+                        isReply = isReply,
                     ) {
                         navController.popBackStack()
                     }
@@ -300,11 +313,11 @@ fun XApp(
                         onNavigateBack = {
                             navController.popBackStack()
                         },
-                        openCreateTweetWithParentId = {
-                            navigateToCreateTweet(it)
+                        openCreateTweetWithParentId = { id, isRetweet, isReply ->
+                            navigateToCreateTweet(id, isRetweet, isReply)
                         },
-                        openTweetDetails = {
-                            navigateToTweetDetails(it)
+                        openTweetDetails = { id ->
+                            navigateToTweetDetails(id)
                         },
                     )
                 }

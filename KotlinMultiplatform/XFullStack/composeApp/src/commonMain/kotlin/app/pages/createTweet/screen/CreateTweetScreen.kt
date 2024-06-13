@@ -41,6 +41,8 @@ import utils.Localization
 fun CreateTweetScreen(
     createTweetViewModel: CreateTweetViewModel = viewModel { CreateTweetViewModel() },
     parentTweetId: String?,
+    isRetweet: Boolean = false,
+    isReply: Boolean = false,
     onNavigateBack: () -> Unit,
 ) {
     LaunchedEffect(Unit) {

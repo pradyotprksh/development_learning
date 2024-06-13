@@ -74,7 +74,7 @@ fun TweetDetailsScreen(
     tweetDetailsViewModel: TweetDetailsViewModel = viewModel { TweetDetailsViewModel() },
     tweetId: String,
     onNavigateBack: () -> Unit,
-    openCreateTweetWithParentId: (String) -> Unit,
+    openCreateTweetWithParentId: (String, Boolean, Boolean) -> Unit,
     openTweetDetails: (String) -> Unit,
 ) {
     LaunchedEffect(Unit) {
@@ -225,7 +225,13 @@ fun TweetDetailsScreen(
                                             onComment = { },
                                             onViews = {},
                                             onLike = { id -> tweetDetailsViewModel.onLikeTweet(id) },
-                                            onRepost = { id -> openCreateTweetWithParentId(id) },
+                                            onRepost = { id ->
+                                                openCreateTweetWithParentId(
+                                                    id,
+                                                    true,
+                                                    false
+                                                )
+                                            },
                                         ),
                                         isACommentTweet = tweet.isACommentTweet,
                                         isLikedTweet = tweet.isLikedTweet,
@@ -278,7 +284,7 @@ fun TweetDetailsScreen(
                                         replyFocusRequester.requestFocus()
                                     }
                                 },
-                                onRepost = { openCreateTweetWithParentId(tweetId) },
+                                onRepost = { openCreateTweetWithParentId(tweetId, true, false) },
                                 onLike = { tweetDetailsViewModel.onLikeTweet(tweetId) },
                                 onViews = { },
                             )
@@ -332,7 +338,13 @@ fun TweetDetailsScreen(
                                     onComment = {},
                                     onViews = {},
                                     onLike = { id -> tweetDetailsViewModel.onLikeTweet(id) },
-                                    onRepost = { id -> openCreateTweetWithParentId(id) },
+                                    onRepost = { id ->
+                                        openCreateTweetWithParentId(
+                                            id,
+                                            true,
+                                            false
+                                        )
+                                    },
                                 ),
                                 isACommentTweet = replyTweet.isACommentTweet,
                                 isLikedTweet = replyTweet.isLikedTweet,
@@ -391,7 +403,15 @@ fun TweetDetailsScreen(
                     )
                 },
                 trailingIcon = {
-                    IconButton(onClick = {}) {
+                    IconButton(
+                        onClick = {
+                            openCreateTweetWithParentId(
+                                tweetId,
+                                false,
+                                true
+                            )
+                        },
+                    ) {
                         val icon =
                             if (tweetDetailsScreenState.isReplyTweetFocused) Icons.Default.Expand else Icons.Default.Camera
                         Icon(

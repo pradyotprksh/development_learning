@@ -110,6 +110,8 @@ object Constants {
         const val OTP_LENGTH = 6
         const val USERNAME_EMAIL_PHONE = "usernameEmailPhone"
         const val PARENT_TWEET_ID = "parentTweetId"
+        const val IS_RETWEET = "isRetweet"
+        const val IS_REPLY = "isReply"
         const val TWEET_ID = "tweetId"
         const val NO_NAV_VALUE = "no-nav-value"
         const val BIO_MAX_LENGTH = 50

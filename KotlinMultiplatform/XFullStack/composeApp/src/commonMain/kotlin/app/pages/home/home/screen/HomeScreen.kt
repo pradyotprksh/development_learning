@@ -40,7 +40,7 @@ import utils.Localization
 @Composable
 fun HomeScreen(
     homeViewModel: HomeViewModel = viewModel { HomeViewModel() },
-    openCreateTweetWithParentId: (String) -> Unit,
+    openCreateTweetWithParentId: (String, Boolean, Boolean) -> Unit,
     openTweetDetails: (String) -> Unit,
 ) {
     LaunchedEffect(homeViewModel) {
@@ -136,7 +136,7 @@ fun HomeScreen(
                                 onComment = {},
                                 onViews = {},
                                 onLike = { homeViewModel.onLikeTweet(it) },
-                                onRepost = { openCreateTweetWithParentId(it) },
+                                onRepost = { openCreateTweetWithParentId(it, true, false) },
                             ),
                             tweetVisibility = {
                                 homeViewModel.updateViewForTweet(it)

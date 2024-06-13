@@ -1,5 +1,7 @@
 package app.navigation
 
+import utils.Constants.ConstValues.IS_REPLY
+import utils.Constants.ConstValues.IS_RETWEET
 import utils.Constants.ConstValues.PARENT_TWEET_ID
 import utils.Constants.ConstValues.TWEET_ID
 import utils.Constants.ConstValues.USERNAME_EMAIL_PHONE
@@ -30,6 +32,13 @@ enum class Routes(
     HomeCommunities("home/communities/"),
     HomeNotifications("home/notifications/"),
     HomeMessages("home/messages/"),
-    CreateTweet("create-tweet/", listOf(PARENT_TWEET_ID)),
+    CreateTweet(
+        "create-tweet/",
+        listOf(
+            PARENT_TWEET_ID,
+            IS_RETWEET,
+            IS_REPLY,
+        )
+    ),
     TweetDetails("tweet-details/", listOf(TWEET_ID)),
 }
