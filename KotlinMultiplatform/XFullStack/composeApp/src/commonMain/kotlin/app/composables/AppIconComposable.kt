@@ -11,11 +11,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.unit.dp
-import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 import utils.Resources
 
-@OptIn(ExperimentalResourceApi::class)
 @Composable
 fun AppIconComposable(
     boxModifier: Modifier = Modifier,

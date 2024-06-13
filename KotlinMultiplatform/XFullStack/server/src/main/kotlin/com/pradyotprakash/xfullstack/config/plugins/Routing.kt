@@ -82,10 +82,7 @@ fun Application.configureRouting() {
             secretsController = secretsController,
             userDataSource = userDataSource,
         )
-        migration(
-            tweetDataSource = tweetDataSource,
-            userDataSource = userDataSource,
-        )
+        migration()
         follow(
             userDataSource = userDataSource,
             followDataSource = followDataSource,

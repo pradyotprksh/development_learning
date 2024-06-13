@@ -6,7 +6,6 @@ import com.pradyotprakash.xfullstack.core.security.token.TokenClaim
 import com.pradyotprakash.xfullstack.core.security.token.TokenConfig
 import com.pradyotprakash.xfullstack.core.security.token.TokenService
 import com.pradyotprakash.xfullstack.data.user.UserDataSource
-import com.pradyotprakash.xfullstack.features.authentication.resource.AuthenticationResource
 import core.exception.InvalidParameter
 import core.exception.UserAuthDetailsError
 import core.exception.UserDetailsNotFound
@@ -28,7 +27,6 @@ import utils.XFullStackResponseStatus
 class LoginControllerImplementation : LoginController {
     override suspend fun loginUser(
         call: ApplicationCall,
-        resource: AuthenticationResource.Login,
         hashingService: HashingService,
         tokenService: TokenService,
         userDataSource: UserDataSource,

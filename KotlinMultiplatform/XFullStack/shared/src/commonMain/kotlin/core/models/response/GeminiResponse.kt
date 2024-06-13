@@ -13,8 +13,8 @@ data class GeminiResponse(
             .filter { removeSentence -> removeSentence.isNotEmpty() && !removeSentence.contains(" ") }
             .map { removeFormatters ->
                 removeFormatters.filterNot { removeSpecialCharacters ->
-                        !removeSpecialCharacters.isLetterOrDigit() && removeSpecialCharacters.isWhitespace()
-                    }
+                    !removeSpecialCharacters.isLetterOrDigit() && removeSpecialCharacters.isWhitespace()
+                }
             }.toList()
 }
 

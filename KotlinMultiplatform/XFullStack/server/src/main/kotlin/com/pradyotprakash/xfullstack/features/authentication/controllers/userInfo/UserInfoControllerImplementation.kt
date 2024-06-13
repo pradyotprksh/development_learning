@@ -3,7 +3,6 @@ package com.pradyotprakash.xfullstack.features.authentication.controllers.userIn
 import com.pradyotprakash.xfullstack.core.data.parseToUserInfoResponse
 import com.pradyotprakash.xfullstack.data.follow.FollowDataSource
 import com.pradyotprakash.xfullstack.data.user.UserDataSource
-import com.pradyotprakash.xfullstack.features.authentication.resource.AuthenticationResource
 import core.exception.UserDetailsNotFound
 import core.models.response.XFullStackResponse
 import io.ktor.http.HttpStatusCode
@@ -20,7 +19,6 @@ import utils.XFullStackResponseStatus
 class UserInfoControllerImplementation : UserInfoController {
     override suspend fun getUserInfo(
         call: ApplicationCall,
-        resource: AuthenticationResource.UserInfo,
         userDataSource: UserDataSource,
         followDataSource: FollowDataSource,
     ) {

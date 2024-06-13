@@ -1,6 +1,5 @@
 package com.pradyotprakash.xfullstack.features.authentication.controllers.authenticate
 
-import com.pradyotprakash.xfullstack.features.authentication.resource.AuthenticationResource
 import core.models.response.XFullStackResponse
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.ApplicationCall
@@ -13,7 +12,6 @@ import utils.XFullStackResponseStatus
 class AuthenticateControllerImplementation : AuthenticateController {
     override suspend fun authenticateUser(
         call: ApplicationCall,
-        resource: AuthenticationResource.Authenticate,
     ) {
         delay(API_RESPONSE_DELAY)
 

@@ -1,7 +1,5 @@
 package com.pradyotprakash.xfullstack.features.migration
 
-import com.pradyotprakash.xfullstack.data.tweet.TweetDataSource
-import com.pradyotprakash.xfullstack.data.user.UserDataSource
 import core.models.response.XFullStackResponse
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.call
@@ -13,10 +11,7 @@ import utils.Constants.SuccessCode.DB_MIGRATION_SUCCESS_CODE
 import utils.Localization
 import utils.XFullStackResponseStatus
 
-fun Routing.migration(
-    tweetDataSource: TweetDataSource,
-    userDataSource: UserDataSource,
-) {
+fun Routing.migration() {
     post(MIGRATION) {
         // DONE: tweetDataSource.addNewFieldToAll("emotions", emptyList<String>())
         // DONE: tweetDataSource.removeKeyFromAll("retweet_count")

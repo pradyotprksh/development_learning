@@ -34,8 +34,7 @@ class UserVerificationControllerImplementation : UserVerificationController {
                 length = OTP_LENGTH,
             )
             call.respond(
-                HttpStatusCode.OK,
-                XFullStackResponse(
+                HttpStatusCode.OK, XFullStackResponse(
                     status = XFullStackResponseStatus.Success,
                     code = null,
                     message = Localization.OTP_GENERATE_SUCCESSFULLY,
@@ -46,8 +45,7 @@ class UserVerificationControllerImplementation : UserVerificationController {
             )
         } catch (e: Exception) {
             call.respond(
-                HttpStatusCode.InternalServerError,
-                XFullStackResponse(
+                HttpStatusCode.InternalServerError, XFullStackResponse(
                     status = XFullStackResponseStatus.Error,
                     code = OTP_GENERATION_ERROR_CODE,
                     message = Localization.OTP_GENERATION_ERROR,
@@ -59,7 +57,6 @@ class UserVerificationControllerImplementation : UserVerificationController {
 
     override suspend fun validateOtp(
         call: ApplicationCall,
-        resource: VerificationResource.ValidateOtp,
     ) {
         delay(API_RESPONSE_DELAY)
         val otpVerificationRequest = call.receive<OtpVerificationRequest>()
@@ -72,8 +69,7 @@ class UserVerificationControllerImplementation : UserVerificationController {
 
             if (otp == otpVerificationRequest.otp) {
                 call.respond(
-                    HttpStatusCode.OK,
-                    XFullStackResponse(
+                    HttpStatusCode.OK, XFullStackResponse(
                         status = XFullStackResponseStatus.Success,
                         code = null,
                         message = Localization.OTP_VERIFICATION_SUCCESS,
@@ -82,8 +78,7 @@ class UserVerificationControllerImplementation : UserVerificationController {
                 )
             } else {
                 call.respond(
-                    HttpStatusCode.Conflict,
-                    XFullStackResponse(
+                    HttpStatusCode.Conflict, XFullStackResponse(
                         status = XFullStackResponseStatus.Error,
                         code = OTP_VALIDATION_ERROR_CODE,
                         message = Localization.OTP_VERIFICATION_INVALID,
@@ -93,8 +88,7 @@ class UserVerificationControllerImplementation : UserVerificationController {
             }
         } catch (e: Exception) {
             call.respond(
-                HttpStatusCode.InternalServerError,
-                XFullStackResponse(
+                HttpStatusCode.InternalServerError, XFullStackResponse(
                     status = XFullStackResponseStatus.Error,
                     code = OTP_VALIDATION_ERROR_CODE,
                     message = Localization.OTP_VERIFICATION_ERROR,
@@ -111,8 +105,7 @@ class UserVerificationControllerImplementation : UserVerificationController {
     ) {
         if (userDataSource.isUsernamePresent(resource.value)) {
             call.respond(
-                HttpStatusCode.OK,
-                XFullStackResponse(
+                HttpStatusCode.OK, XFullStackResponse(
                     status = XFullStackResponseStatus.Success,
                     code = USERNAME_PRESENT_SUCCESS_CODE,
                     message = Localization.USER_PRESENT,
@@ -124,8 +117,7 @@ class UserVerificationControllerImplementation : UserVerificationController {
 
         if (userDataSource.isEmailPresent(resource.value)) {
             call.respond(
-                HttpStatusCode.OK,
-                XFullStackResponse(
+                HttpStatusCode.OK, XFullStackResponse(
                     status = XFullStackResponseStatus.Success,
                     code = EMAIL_PRESENT_SUCCESS_CODE,
                     message = Localization.USER_PRESENT,
@@ -137,8 +129,7 @@ class UserVerificationControllerImplementation : UserVerificationController {
 
         if (userDataSource.isPhoneNumberPresent(resource.value)) {
             call.respond(
-                HttpStatusCode.OK,
-                XFullStackResponse(
+                HttpStatusCode.OK, XFullStackResponse(
                     status = XFullStackResponseStatus.Success,
                     code = PHONE_NUMBER_PRESENT_SUCCESS_CODE,
                     message = Localization.USER_PRESENT,
@@ -149,8 +140,7 @@ class UserVerificationControllerImplementation : UserVerificationController {
         }
 
         call.respond(
-            HttpStatusCode.Conflict,
-            XFullStackResponse(
+            HttpStatusCode.Conflict, XFullStackResponse(
                 status = XFullStackResponseStatus.Error,
                 code = USER_DETAILS_NOT_FOUND_CODE,
                 message = Localization.USER_DETAILS_NOT_FOUND,

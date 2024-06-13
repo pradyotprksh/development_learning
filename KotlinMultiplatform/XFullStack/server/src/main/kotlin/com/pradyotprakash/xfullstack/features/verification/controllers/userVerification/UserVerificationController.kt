@@ -12,7 +12,6 @@ interface UserVerificationController {
 
     suspend fun validateOtp(
         call: ApplicationCall,
-        resource: VerificationResource.ValidateOtp,
     )
 
     suspend fun userPresent(

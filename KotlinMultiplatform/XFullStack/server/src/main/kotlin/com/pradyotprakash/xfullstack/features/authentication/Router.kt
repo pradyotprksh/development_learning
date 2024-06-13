@@ -23,7 +23,6 @@ fun Routing.authentication(
     post<AuthenticationResource.Register> {
         authenticationController.registerUser(
             call = this.context,
-            resource = it,
             hashingService = hashingService,
             userDataSource = userDataSource,
         )
@@ -32,7 +31,6 @@ fun Routing.authentication(
     post<AuthenticationResource.Login> {
         authenticationController.loginUser(
             call = this.context,
-            resource = it,
             hashingService = hashingService,
             tokenService = tokenService,
             userDataSource = userDataSource,
@@ -44,14 +42,12 @@ fun Routing.authentication(
         get<AuthenticationResource.Authenticate> {
             authenticationController.authenticateUser(
                 call = this.context,
-                resource = it,
             )
         }
 
         get<AuthenticationResource.UserInfo> {
             authenticationController.getUserInfo(
                 call = this.context,
-                resource = it,
                 userDataSource = userDataSource,
                 followDataSource = followDataSource,
             )

@@ -3,7 +3,6 @@ package com.pradyotprakash.xfullstack.features.authentication.controllers.regist
 import com.pradyotprakash.xfullstack.core.data.parseToUser
 import com.pradyotprakash.xfullstack.core.security.hashing.HashingService
 import com.pradyotprakash.xfullstack.data.user.UserDataSource
-import com.pradyotprakash.xfullstack.features.authentication.resource.AuthenticationResource
 import core.exception.DBWriteError
 import core.exception.InvalidParameter
 import core.models.request.RegisterRequest
@@ -26,7 +25,6 @@ import utils.XFullStackResponseStatus
 class RegisterControllerImplementation : RegisterController {
     override suspend fun registerUser(
         call: ApplicationCall,
-        resource: AuthenticationResource.Register,
         hashingService: HashingService,
         userDataSource: UserDataSource,
     ) {
