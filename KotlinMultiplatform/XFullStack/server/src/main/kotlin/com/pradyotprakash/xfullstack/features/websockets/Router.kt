@@ -9,6 +9,7 @@ import io.ktor.server.auth.jwt.JWTPrincipal
 import io.ktor.server.auth.principal
 import io.ktor.server.routing.Routing
 import io.ktor.server.websocket.webSocket
+import kotlinx.coroutines.launch
 import utils.Constants.Keys.USER_ID
 import utils.Constants.Paths.Websockets.WEBSOCKETS
 import utils.Constants.SuccessCode.FOLLOW_UPDATE_SUCCESS
@@ -34,11 +35,15 @@ fun Routing.websockets(
             Connections.addConnections(userId = connectionBy, session = this)
 
             try {
-                tweetDataSource.watchTweets().collect {
-                    Connections.sendMessageToAll(TWEETS_UPDATE_SUCCESS_CODE)
+                launch {
+                    tweetDataSource.watchTweets().collect {
+                        Connections.sendMessageToAll(TWEETS_UPDATE_SUCCESS_CODE)
+                    }
                 }
-                followDataSource.watchFollowUpdate(connectionBy).collect {
-                    Connections.sendMessageTo(connectionBy, FOLLOW_UPDATE_SUCCESS)
+                launch {
+                    followDataSource.watchFollowUpdate().collect {
+                        Connections.sendMessageToAll(FOLLOW_UPDATE_SUCCESS)
+                    }
                 }
             } catch (e: Exception) {
                 Logger.log(LoggerLevel.Error, e.localizedMessage ?: e.toString())

@@ -38,12 +38,5 @@ class MongoFollowDataSource(
         ).count()
     }
 
-    override suspend fun watchFollowUpdate(userId: String) = followCollection.watch(
-        listOf(
-            Filters.or(
-                Filters.eq(FOLLOWER_ID, ObjectId(userId)),
-                Filters.eq(FOLLOWING_ID, ObjectId(userId)),
-            )
-        )
-    )
+    override suspend fun watchFollowUpdate() = followCollection.watch()
 }

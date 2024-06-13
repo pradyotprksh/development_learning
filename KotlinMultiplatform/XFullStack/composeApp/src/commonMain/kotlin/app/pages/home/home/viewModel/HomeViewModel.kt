@@ -30,12 +30,12 @@ class HomeViewModel(
 
     init {
         viewModelScope.launch {
-            startTweetUpdateListener()
+            startSocketListener()
             getAllTweets()
         }
     }
 
-    private fun startTweetUpdateListener() {
+    private fun startSocketListener() {
         viewModelScope.launch {
             websocketRepository.connectAndListen().mapNotNull { it }.collect {
                 if (it == TWEETS_UPDATE_SUCCESS_CODE) {

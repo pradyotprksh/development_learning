@@ -11,5 +11,5 @@ interface FollowDataSource {
 
     suspend fun getFollowingCount(userId: String): Int
 
-    suspend fun watchFollowUpdate(userId: String): ChangeStreamFlow<Follow>
+    suspend fun watchFollowUpdate(): ChangeStreamFlow<Follow>
 }
