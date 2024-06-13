@@ -115,8 +115,10 @@ fun XApp(
         navController.navigate(Routes.Register.path())
     }
     val navigateToCreateTweet = { value: String, isRetweet: Boolean, isReply: Boolean ->
+        val route = "${Routes.CreateTweet.route}${value}/${isRetweet}/${isReply}"
+
         navController.navigate(
-            "${Routes.CreateTweet.route}$value/$isRetweet/$isReply",
+            "${Routes.CreateTweet.route}${value}/${isRetweet}/${isReply}",
         )
     }
     val navigateToTweetDetails = { value: String ->
@@ -268,12 +270,6 @@ fun XApp(
                 composable(
                     Routes.CreateTweet.path(),
                     arguments = Routes.CreateTweet.arguments.map {
-                        if (it == IS_RETWEET || it == IS_REPLY) {
-                            navArgument(it) {
-                                type = NavType.BoolType
-                                defaultValue = false
-                            }
-                        }
                         navArgument(it) {
                             type = NavType.StringType
                             defaultValue = NO_NAV_VALUE
@@ -281,8 +277,10 @@ fun XApp(
                     },
                 ) {
                     val parentTweetIdArgument = it.arguments?.getString(PARENT_TWEET_ID)
-                    val isRetweet = it.arguments?.getBoolean(IS_RETWEET) ?: false
-                    val isReply = it.arguments?.getBoolean(IS_REPLY) ?: false
+                    val isRetweet =
+                        it.arguments?.getString(IS_RETWEET)?.toBooleanStrictOrNull() ?: false
+                    val isReply =
+                        it.arguments?.getString(IS_REPLY)?.toBooleanStrictOrNull() ?: false
 
                     val parentTweetId =
                         if (parentTweetIdArgument == NO_NAV_VALUE) null else parentTweetIdArgument

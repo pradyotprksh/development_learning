@@ -20,6 +20,7 @@ data class TweetDetails(
     val scheduledOnTweet: Long? = null,
     val isQuoteTweet: Boolean = false,
     val isRepostTweet: Boolean = false,
+    val isReplyTweet: Boolean = false,
     val parentTweetId: String? = null,
     val parentTweetDetails: TweetResponse? = null,
 ) {

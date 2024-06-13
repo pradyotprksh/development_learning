@@ -46,7 +46,7 @@ fun CreateTweetScreen(
     onNavigateBack: () -> Unit,
 ) {
     LaunchedEffect(Unit) {
-        createTweetViewModel.initialSetup(parentTweetId)
+        createTweetViewModel.initialSetup(parentTweetId, isRetweet, isReply)
     }
 
     val createTweetState by createTweetViewModel.createTweetState.collectAsState()
@@ -109,6 +109,8 @@ fun CreateTweetScreen(
                             showCloseButton = tweet.index > 0,
                             showPoll = createTweetState.currentFocusedTweetIndex == tweet.index,
                             parentTweetDetails = tweet.parentTweetDetails,
+                            isRetweet = isRetweet,
+                            isReply = isReply,
                             onTweetValueChange = { value ->
                                 createTweetViewModel.updateTweet(value, tweet.index)
                             },

@@ -42,6 +42,8 @@ fun TweetTextFieldComposable(
     showCloseButton: Boolean,
     showPoll: Boolean,
     parentTweetDetails: TweetResponse?,
+    isRetweet: Boolean,
+    isReply: Boolean,
     onTweetValueChange: (String) -> Unit,
     onFocusChange: () -> Unit,
     deleteTweet: () -> Unit,
@@ -53,6 +55,45 @@ fun TweetTextFieldComposable(
     Column(
         modifier = modifier.fillMaxWidth(),
     ) {
+        if (parentTweetDetails != null && isReply) {
+            Column(
+                modifier = modifier.border(
+                    width = Dp.Hairline,
+                    color = MaterialTheme.colorScheme.outlineVariant,
+                    shape = RoundedCornerShape(10.dp)
+                ).fillMaxWidth(),
+            ) {
+                TweetComposable(
+                    modifier = Modifier.padding(
+                        horizontal = 15.dp, vertical = 8.dp
+                    ),
+                    createdByProfilePicture = parentTweetDetails.createdBy?.profilePicture,
+                    createdByName = parentTweetDetails.createdBy?.name ?: "",
+                    createdByUsername = parentTweetDetails.createdBy?.username ?: "",
+                    tweetedOn = parentTweetDetails.tweetedOn,
+                    tweet = parentTweetDetails.tweet,
+                    tweetId = parentTweetDetails.id,
+                    commentCount = "${parentTweetDetails.commentCount}",
+                    retweetCount = "${parentTweetDetails.retweetCount}",
+                    likeCount = "${parentTweetDetails.likesCount}",
+                    views = "${parentTweetDetails.views}",
+                    isAPoll = parentTweetDetails.isAPoll,
+                    isQuoteTweet = false,
+                    isLikedByCurrentUser = parentTweetDetails.isLikedByCurrentUser,
+                    pollChoices = parentTweetDetails.pollChoices.toList(),
+                    isPollingAllowed = parentTweetDetails.isPollingAllowed,
+                    pollingEndTime = parentTweetDetails.pollingEndTime,
+                    showTweetActions = false,
+                    parentTweetDetails = null,
+                    onPollSelection = {},
+                    tweetActions = TweetActions(),
+                    isACommentTweet = parentTweetDetails.isACommentTweet,
+                    isLikedTweet = parentTweetDetails.isLikedTweet,
+                    aInnerTweet = parentTweetDetails.aInnerTweet,
+                )
+                Spacer(modifier = Modifier.height(5.dp))
+            }
+        }
         Row(
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically,
@@ -113,7 +154,7 @@ fun TweetTextFieldComposable(
                 }
             }
         }
-        if (parentTweetDetails != null) {
+        if (parentTweetDetails != null && isRetweet) {
             Spacer(modifier = Modifier.height(5.dp))
             Column(
                 modifier = modifier.border(
