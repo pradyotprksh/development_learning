@@ -14,4 +14,7 @@ data class UserInfoResponse(
     val dateOfBirth: Long,
     val following: Int,
     val followers: Int,
+    val isFollowedByCurrentUser: Boolean,
+    val isFollowingCurrentUser: Boolean,
+    val isSameUser: Boolean,
 )

@@ -3,6 +3,7 @@ package com.pradyotprakash.xfullstack.data.follow
 import com.mongodb.client.model.Filters
 import com.mongodb.kotlin.client.coroutine.MongoDatabase
 import kotlinx.coroutines.flow.count
+import kotlinx.coroutines.flow.firstOrNull
 import org.bson.types.ObjectId
 import utils.Constants.Database.Collections.FOLLOW
 import utils.Constants.DbKeys.FOLLOWER_ID
@@ -39,4 +40,25 @@ class MongoFollowDataSource(
     }
 
     override suspend fun watchFollowUpdate() = followCollection.watch()
+
+    override suspend fun isFollowingCurrentUser(currentUserId: String, createdBy: String): Boolean {
+        return followCollection.find(
+            Filters.and(
+                Filters.eq(FOLLOWING_ID, ObjectId(currentUserId)),
+                Filters.eq(FOLLOWER_ID, ObjectId(createdBy)),
+            )
+        ).firstOrNull() != null
+    }
+
+    override suspend fun isFollowedByCurrentUser(
+        currentUserId: String,
+        createdBy: String,
+    ): Boolean {
+        return followCollection.find(
+            Filters.and(
+                Filters.eq(FOLLOWING_ID, ObjectId(createdBy)),
+                Filters.eq(FOLLOWER_ID, ObjectId(currentUserId)),
+            )
+        ).firstOrNull() != null
+    }
 }

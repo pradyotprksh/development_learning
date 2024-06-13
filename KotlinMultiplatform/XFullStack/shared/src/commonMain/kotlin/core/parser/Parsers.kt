@@ -24,6 +24,7 @@ fun UserInfoResponse.parseToCurrentUserInfoDB() = this.let { info ->
         this.dateOfBirth = info.dateOfBirth
         this.following = info.following
         this.followers = info.followers
+        this.followers = info.followers
     }
 }
 
@@ -39,6 +40,9 @@ fun UserInfoResponse.parseToUserInfoDB() = this.let { info ->
         this.dateOfBirth = info.dateOfBirth
         this.following = info.following
         this.followers = info.followers
+        this.isFollowingCurrentUser = info.isFollowingCurrentUser
+        this.isFollowedByCurrentUser = info.isFollowedByCurrentUser
+        this.isSameUser = info.isSameUser
     }
 }
 
@@ -52,7 +56,10 @@ fun CurrentUserInfoDB.parseToCurrentUserResponse() = UserInfoResponse(
     profilePicture = this.profilePicture,
     dateOfBirth = this.dateOfBirth,
     following = this.following,
-    followers = this.followers
+    followers = this.followers,
+    isFollowedByCurrentUser = false,
+    isFollowingCurrentUser = false,
+    isSameUser = true,
 )
 
 fun UserInfoDB.parseToCurrentUserResponse() = UserInfoResponse(
@@ -65,7 +72,10 @@ fun UserInfoDB.parseToCurrentUserResponse() = UserInfoResponse(
     profilePicture = this.profilePicture,
     dateOfBirth = this.dateOfBirth,
     following = this.following,
-    followers = this.followers
+    followers = this.followers,
+    isFollowingCurrentUser = this.isFollowingCurrentUser,
+    isFollowedByCurrentUser = this.isFollowedByCurrentUser,
+    isSameUser = this.isSameUser,
 )
 
 fun PollChoicesResponse.parseToPollChoicesDB() = this.let { info ->

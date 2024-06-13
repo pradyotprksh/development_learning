@@ -15,4 +15,7 @@ class UserInfoDB : RealmObject {
     var dateOfBirth: Long = 0
     var following: Int = 0
     var followers: Int = 0
+    var isFollowedByCurrentUser: Boolean = false
+    var isFollowingCurrentUser: Boolean = false
+    var isSameUser: Boolean = false
 }

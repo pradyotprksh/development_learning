@@ -22,6 +22,9 @@ fun RegisterRequest.parseToUser(saltedHash: SaltedHash) = this.let { registerReq
 fun User.parseToUserInfoResponse(
     followers: Int,
     following: Int,
+    isFollowingCurrentUser: Boolean,
+    isFollowedByCurrentUser: Boolean,
+    isSameUser: Boolean,
 ) = this.let { user ->
     UserInfoResponse(
         id = user.id.toHexString(),
@@ -34,5 +37,8 @@ fun User.parseToUserInfoResponse(
         dateOfBirth = user.dateOfBirth,
         followers = followers,
         following = following,
+        isFollowedByCurrentUser = isFollowedByCurrentUser,
+        isFollowingCurrentUser = isFollowingCurrentUser,
+        isSameUser = isSameUser,
     )
 }

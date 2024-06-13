@@ -68,6 +68,7 @@ fun Application.configureRouting() {
             tweetDataSource = tweetDataSource,
             userDataSource = userDataSource,
             viewDataSource = viewDataSource,
+            followDataSource = followDataSource,
         )
         websockets(
             tweetDataSource = tweetDataSource,

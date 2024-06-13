@@ -38,6 +38,9 @@ class UserInfoControllerImplementation : UserInfoController {
         val response = user.parseToUserInfoResponse(
             followers = followersCount,
             following = followingCount,
+            isFollowingCurrentUser = false,
+            isFollowedByCurrentUser = false,
+            isSameUser = true,
         )
 
         call.respond(

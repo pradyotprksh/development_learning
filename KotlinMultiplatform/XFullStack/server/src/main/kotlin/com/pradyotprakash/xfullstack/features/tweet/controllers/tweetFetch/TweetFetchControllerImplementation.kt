@@ -1,6 +1,7 @@
 package com.pradyotprakash.xfullstack.features.tweet.controllers.tweetFetch
 
 import com.pradyotprakash.xfullstack.core.data.parseToUserInfoResponse
+import com.pradyotprakash.xfullstack.data.follow.FollowDataSource
 import com.pradyotprakash.xfullstack.data.tweet.TweetDataSource
 import com.pradyotprakash.xfullstack.data.tweet.data.Tweet
 import com.pradyotprakash.xfullstack.data.user.UserDataSource
@@ -30,6 +31,7 @@ class TweetFetchControllerImplementation : TweetFetchController {
         userDataSource: UserDataSource,
         tweetDataSource: TweetDataSource,
         viewDataSource: ViewDataSource,
+        followDataSource: FollowDataSource,
     ) {
         delay(API_RESPONSE_DELAY)
 
@@ -43,7 +45,12 @@ class TweetFetchControllerImplementation : TweetFetchController {
 
         val tweetsResponse = tweets.map { tweet ->
             convertToTweetResponse(
-                userDataSource, tweetDataSource, viewDataSource, tweet, currentUserId
+                userDataSource,
+                tweetDataSource,
+                viewDataSource,
+                followDataSource,
+                tweet,
+                currentUserId
             )
         }
 
@@ -61,6 +68,7 @@ class TweetFetchControllerImplementation : TweetFetchController {
         userDataSource: UserDataSource,
         tweetDataSource: TweetDataSource,
         viewDataSource: ViewDataSource,
+        followDataSource: FollowDataSource,
         tweet: Tweet,
         currentUserId: String,
     ): TweetResponse {
@@ -102,13 +110,22 @@ class TweetFetchControllerImplementation : TweetFetchController {
         val repostsCount = tweetDataSource.totalNumberOfReposts(tweetIdHexStr)
         val quoteCount = tweetDataSource.totalNumberOfQuotes(tweetIdHexStr)
         val replyCount = tweetDataSource.totalNumberOfReplies(tweetIdHexStr)
+        val isFollowingCurrentUser =
+            followDataSource.isFollowingCurrentUser(currentUserId, tweet.createdBy.toHexString())
+        val isFollowedByCurrentUser =
+            followDataSource.isFollowedByCurrentUser(currentUserId, tweet.createdBy.toHexString())
+        val followersCount = followDataSource.getFollowerCount(tweet.createdBy.toHexString())
+        val followingCount = followDataSource.getFollowingCount(tweet.createdBy.toHexString())
 
         return TweetResponse(
             id = tweetIdHexStr,
             tweet = tweet.tweet,
             createdBy = createdByUserDetails?.parseToUserInfoResponse(
-                followers = 0,
-                following = 0,
+                followers = followersCount,
+                following = followingCount,
+                isFollowingCurrentUser = isFollowingCurrentUser,
+                isFollowedByCurrentUser = isFollowedByCurrentUser,
+                isSameUser = currentUserId == tweet.createdBy.toHexString(),
             ),
             tweetedOnTimestamp = tweet.tweetedOn,
             tweetedOn = UtilsMethod.Dates.convertTimestampToTimeAgo(tweet.tweetedOn),
@@ -141,7 +158,12 @@ class TweetFetchControllerImplementation : TweetFetchController {
             parentTweetDetailsNotFound = parentTweetDetailsNotFound,
             parentTweetDetails = parentTweetDetails?.let {
                 convertToTweetResponse(
-                    userDataSource, tweetDataSource, viewDataSource, it, currentUserId
+                    userDataSource,
+                    tweetDataSource,
+                    viewDataSource,
+                    followDataSource,
+                    it,
+                    currentUserId
                 )
             },
         )
