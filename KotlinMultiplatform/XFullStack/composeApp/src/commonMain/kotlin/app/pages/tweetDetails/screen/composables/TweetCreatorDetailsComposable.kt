@@ -35,6 +35,7 @@ fun TweetCreatorDetailsComposable(
     isFollowedByCurrentUser: Boolean,
     isFollowingCurrentUser: Boolean,
     followUpdate: () -> Unit,
+    openProfileDetails: () -> Unit,
 ) {
     Row(
         modifier = modifier,
@@ -44,7 +45,9 @@ fun TweetCreatorDetailsComposable(
             profileImage = createdBy.profilePicture, modifier = Modifier.size(40.dp).clickable(
                 indication = null,
                 interactionSource = remember { MutableInteractionSource() },
-                onClick = {},
+                onClick = {
+                    openProfileDetails()
+                },
             )
         )
         Spacer(modifier = Modifier.width(5.dp))

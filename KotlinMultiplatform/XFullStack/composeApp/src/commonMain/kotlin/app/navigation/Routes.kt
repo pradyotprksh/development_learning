@@ -5,6 +5,7 @@ import utils.Constants.ConstValues.IS_RETWEET
 import utils.Constants.ConstValues.PARENT_TWEET_ID
 import utils.Constants.ConstValues.TWEET_ID
 import utils.Constants.ConstValues.USERNAME_EMAIL_PHONE
+import utils.Constants.ConstValues.USER_ID
 
 fun Routes.path(): String {
     if (arguments.isEmpty()) return route
@@ -41,4 +42,5 @@ enum class Routes(
         )
     ),
     TweetDetails("tweet-details/", listOf(TWEET_ID)),
+    ProfileDetails("profile-details/", listOf(USER_ID)),
 }

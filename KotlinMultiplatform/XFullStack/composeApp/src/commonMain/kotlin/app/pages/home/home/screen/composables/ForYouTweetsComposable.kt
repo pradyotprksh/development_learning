@@ -46,17 +46,15 @@ fun ForYouTweetsComposable(
                     if (tweet.aInnerTweet) if (tweet.parentTweetNotPresent) null else tweet.parentTweetDetails else tweet
 
                 Column(
-                    modifier = Modifier.fillMaxWidth()
-                        .onGloballyPositioned { layoutCoordinates ->
-                            val itemBounds = layoutCoordinates.boundsInParent()
-                            val parentBounds =
-                                layoutCoordinates.parentCoordinates?.boundsInParent()
-                                    ?: Rect.Zero
+                    modifier = Modifier.fillMaxWidth().onGloballyPositioned { layoutCoordinates ->
+                        val itemBounds = layoutCoordinates.boundsInParent()
+                        val parentBounds =
+                            layoutCoordinates.parentCoordinates?.boundsInParent() ?: Rect.Zero
 
-                            if (parentBounds.left <= itemBounds.left && parentBounds.top <= itemBounds.top && parentBounds.right >= itemBounds.right && parentBounds.bottom >= itemBounds.bottom) {
-                                tweetVisibility(tweet.id)
-                            }
-                        },
+                        if (parentBounds.left <= itemBounds.left && parentBounds.top <= itemBounds.top && parentBounds.right >= itemBounds.right && parentBounds.bottom >= itemBounds.bottom) {
+                            tweetVisibility(tweet.id)
+                        }
+                    },
                 ) {
                     if (index != 0) {
                         HorizontalDivider()
@@ -69,6 +67,7 @@ fun ForYouTweetsComposable(
                             createdByProfilePicture = shownTweet.createdBy?.profilePicture,
                             createdByName = shownTweet.createdBy?.name ?: "",
                             createdByUsername = shownTweet.createdBy?.username ?: "",
+                            createdByUserId = shownTweet.createdBy?.id ?: "",
                             tweetedOn = shownTweet.tweetedOn,
                             tweet = shownTweet.tweet,
                             tweetId = shownTweet.id,

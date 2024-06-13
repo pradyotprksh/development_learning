@@ -29,7 +29,6 @@ fun Routing.verification(
     post<VerificationResource.ValidateOtp> {
         verificationController.validateOtp(
             call = this.context,
-            resource = it,
         )
     }
 }

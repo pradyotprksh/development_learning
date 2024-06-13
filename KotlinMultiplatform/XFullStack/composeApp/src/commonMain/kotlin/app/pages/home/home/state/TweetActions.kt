@@ -1,7 +1,7 @@
 package app.pages.home.home.state
 
 data class TweetActions(
-    val profileImageClick: () -> Unit,
+    val profileImageClick: (String) -> Unit,
     val onTweetClick: (String) -> Unit,
     val onBookmark: (String) -> Unit,
     val onShare: (String) -> Unit,

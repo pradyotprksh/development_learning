@@ -23,6 +23,7 @@ class UserDrawerViewModel(
                 if (it != null) {
                     _userDrawerState.value = _userDrawerState.value.copy(
                         profileImage = it.profilePicture,
+                        userId = it.id,
                         name = it.name,
                         username = it.username,
                         following = it.following,

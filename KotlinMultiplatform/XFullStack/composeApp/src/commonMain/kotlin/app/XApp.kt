@@ -1,5 +1,6 @@
 package app
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -48,6 +49,7 @@ import app.pages.auth.register.screen.RegisterScreen
 import app.pages.createTweet.screen.CreateTweetScreen
 import app.pages.home.bottomBar.HomeBottomNavItems
 import app.pages.home.home.screen.HomeScreen
+import app.pages.profileDetails.screen.ProfileDetailsScreen
 import app.pages.splash.screen.SplashScreen
 import app.pages.tweetDetails.screen.TweetDetailsScreen
 import kotlinx.coroutines.launch
@@ -57,6 +59,7 @@ import utils.Constants.ConstValues.NO_NAV_VALUE
 import utils.Constants.ConstValues.PARENT_TWEET_ID
 import utils.Constants.ConstValues.TWEET_ID
 import utils.Constants.ConstValues.USERNAME_EMAIL_PHONE
+import utils.Constants.ConstValues.USER_ID
 import utils.Localization
 import utils.extensions.popUpToTop
 
@@ -115,8 +118,6 @@ fun XApp(
         navController.navigate(Routes.Register.path())
     }
     val navigateToCreateTweet = { value: String, isRetweet: Boolean, isReply: Boolean ->
-        val route = "${Routes.CreateTweet.route}${value}/${isRetweet}/${isReply}"
-
         navController.navigate(
             "${Routes.CreateTweet.route}${value}/${isRetweet}/${isReply}",
         )
@@ -126,11 +127,27 @@ fun XApp(
             "${Routes.TweetDetails.route}$value",
         )
     }
+    val navigateToProfileDetails = { value: String ->
+        navController.navigate(
+            "${Routes.ProfileDetails.route}$value",
+        )
+    }
 
     ModalNavigationDrawer(
         drawerState = drawerState, drawerContent = {
-            if (showDrawer(currentDestination?.route ?: "")) {
-                UserNavigationDrawerComposable()
+            AnimatedVisibility(
+                showDrawer(currentDestination?.route ?: "")
+            ) {
+                UserNavigationDrawerComposable(
+                    openProfileDetails = { id ->
+                        scope.launch {
+                            drawerState.apply {
+                                close()
+                            }
+                        }
+                        navigateToProfileDetails(id)
+                    },
+                )
             }
         }, gesturesEnabled = showDrawer(currentDestination?.route ?: "")
     ) {
@@ -139,7 +156,9 @@ fun XApp(
                 SnackbarHost(hostState = snackbarHostState)
             },
             topBar = {
-                if (showAppBar(currentDestination?.route ?: "")) {
+                AnimatedVisibility(
+                    showAppBar(currentDestination?.route ?: "")
+                ) {
                     UserAppBarComposable(
                         toggleNavDrawer = {
                             scope.launch {
@@ -152,7 +171,9 @@ fun XApp(
                 }
             },
             floatingActionButton = {
-                if (showFloatingActionButton(currentDestination?.route ?: "")) {
+                AnimatedVisibility(
+                    showFloatingActionButton(currentDestination?.route ?: "")
+                ) {
                     FloatingActionButton(
                         onClick = {
                             if (currentDestination?.route == Routes.HomeMessages.path()) {
@@ -170,7 +191,9 @@ fun XApp(
                 }
             },
             bottomBar = {
-                if (showBottomNavBar(currentDestination?.route ?: "")) {
+                AnimatedVisibility(
+                    showBottomNavBar(currentDestination?.route ?: "")
+                ) {
                     NavigationBar {
                         listOf(
                             HomeBottomNavItems.Home,
@@ -260,6 +283,9 @@ fun XApp(
                         openTweetDetails = {
                             navigateToTweetDetails(it)
                         },
+                        openProfileDetails = {
+                            navigateToProfileDetails(it)
+                        },
                     )
                 }
                 composable(Routes.HomeSearch.path()) { }
@@ -303,19 +329,34 @@ fun XApp(
                     },
                 ) {
                     val tweetIdArgument = it.arguments?.getString(TWEET_ID)
-                    val tweetId =
-                        if (tweetIdArgument == NO_NAV_VALUE) null else tweetIdArgument
+                    val tweetId = if (tweetIdArgument == NO_NAV_VALUE) null else tweetIdArgument
 
-                    TweetDetailsScreen(
-                        tweetId = tweetId ?: "",
+                    TweetDetailsScreen(tweetId = tweetId ?: "", onNavigateBack = {
+                        navController.popBackStack()
+                    }, openCreateTweetWithParentId = { id, isRetweet, isReply ->
+                        navigateToCreateTweet(id, isRetweet, isReply)
+                    }, openTweetDetails = { id ->
+                        navigateToTweetDetails(id)
+                    }, openProfileDetails = { id ->
+                        navigateToProfileDetails(id)
+                    })
+                }
+                composable(
+                    Routes.ProfileDetails.path(),
+                    arguments = Routes.ProfileDetails.arguments.map {
+                        navArgument(it) {
+                            type = NavType.StringType
+                            defaultValue = NO_NAV_VALUE
+                        }
+                    },
+                ) {
+                    val userIdArgument = it.arguments?.getString(USER_ID)
+                    val userId = if (userIdArgument == NO_NAV_VALUE) null else userIdArgument
+
+                    ProfileDetailsScreen(
+                        userId = userId,
                         onNavigateBack = {
                             navController.popBackStack()
-                        },
-                        openCreateTweetWithParentId = { id, isRetweet, isReply ->
-                            navigateToCreateTweet(id, isRetweet, isReply)
-                        },
-                        openTweetDetails = { id ->
-                            navigateToTweetDetails(id)
                         },
                     )
                 }

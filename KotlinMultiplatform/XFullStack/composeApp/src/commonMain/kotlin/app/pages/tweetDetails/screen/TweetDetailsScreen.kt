@@ -76,6 +76,7 @@ fun TweetDetailsScreen(
     onNavigateBack: () -> Unit,
     openCreateTweetWithParentId: (String, Boolean, Boolean) -> Unit,
     openTweetDetails: (String) -> Unit,
+    openProfileDetails: (String) -> Unit,
 ) {
     LaunchedEffect(Unit) {
         tweetDetailsViewModel.initialSetup(tweetId)
@@ -150,6 +151,9 @@ fun TweetDetailsScreen(
                                 isFollowingCurrentUser = createdBy.isFollowingCurrentUser,
                                 followUpdate = {
                                     tweetDetailsViewModel.followUpdate(createdBy.id)
+                                },
+                                openProfileDetails = {
+                                    openProfileDetails(createdBy.id)
                                 }
                             )
                         }
@@ -202,6 +206,7 @@ fun TweetDetailsScreen(
                                         ),
                                         createdByProfilePicture = parentTweetDetails.createdBy?.profilePicture,
                                         createdByName = parentTweetDetails.createdBy?.name ?: "",
+                                        createdByUserId = parentTweetDetails.createdBy?.id ?: "",
                                         createdByUsername = parentTweetDetails.createdBy?.username
                                             ?: "",
                                         tweetedOn = parentTweetDetails.tweetedOn,
@@ -299,15 +304,18 @@ fun TweetDetailsScreen(
                     }
 
                     items(tweetDetailsScreenState.replies) { replyTweet ->
-                        Column(modifier = Modifier.onGloballyPositioned { layoutCoordinates ->
-                            val itemBounds = layoutCoordinates.boundsInParent()
-                            val parentBounds =
-                                layoutCoordinates.parentCoordinates?.boundsInParent() ?: Rect.Zero
+                        Column(
+                            modifier = Modifier.onGloballyPositioned { layoutCoordinates ->
+                                val itemBounds = layoutCoordinates.boundsInParent()
+                                val parentBounds =
+                                    layoutCoordinates.parentCoordinates?.boundsInParent()
+                                        ?: Rect.Zero
 
-                            if (parentBounds.left <= itemBounds.left && parentBounds.top <= itemBounds.top && parentBounds.right >= itemBounds.right && parentBounds.bottom >= itemBounds.bottom) {
-                                tweetDetailsViewModel.updateViewForTweet(replyTweet.id)
-                            }
-                        }) {
+                                if (parentBounds.left <= itemBounds.left && parentBounds.top <= itemBounds.top && parentBounds.right >= itemBounds.right && parentBounds.bottom >= itemBounds.bottom) {
+                                    tweetDetailsViewModel.updateViewForTweet(replyTweet.id)
+                                }
+                            },
+                        ) {
                             TweetComposable(
                                 modifier = Modifier.padding(
                                     horizontal = 15.dp, vertical = 8.dp
@@ -315,6 +323,7 @@ fun TweetDetailsScreen(
                                 createdByProfilePicture = replyTweet.createdBy?.profilePicture,
                                 createdByName = replyTweet.createdBy?.name ?: "",
                                 createdByUsername = replyTweet.createdBy?.username ?: "",
+                                createdByUserId = replyTweet.createdBy?.id ?: "",
                                 tweetedOn = replyTweet.tweetedOn,
                                 tweet = replyTweet.tweet,
                                 tweetId = replyTweet.id,
@@ -334,7 +343,9 @@ fun TweetDetailsScreen(
                                     tweetDetailsViewModel.updatePollOption(replyTweet.id, optionId)
                                 },
                                 tweetActions = TweetActions(
-                                    profileImageClick = {},
+                                    profileImageClick = {
+                                        openProfileDetails(replyTweet.createdBy?.id ?: "")
+                                    },
                                     onTweetClick = { tweetId ->
                                         openTweetDetails(tweetId)
                                     },
@@ -385,7 +396,9 @@ fun TweetDetailsScreen(
                                         color = MaterialTheme.colorScheme.primary,
                                     ),
                                     tag = Tags.CreatedBy,
-                                    actions = {},
+                                    actions = {
+                                        openProfileDetails(createdBy.id)
+                                    },
                                 ),
                             ),
                             textStyle = MaterialTheme.typography.labelMedium.copy(

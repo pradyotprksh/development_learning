@@ -42,6 +42,7 @@ fun HomeScreen(
     homeViewModel: HomeViewModel = viewModel { HomeViewModel() },
     openCreateTweetWithParentId: (String, Boolean, Boolean) -> Unit,
     openTweetDetails: (String) -> Unit,
+    openProfileDetails: (String) -> Unit,
 ) {
     LaunchedEffect(homeViewModel) {
         homeViewModel.initialSetup()
@@ -124,7 +125,9 @@ fun HomeScreen(
                             showLoading = homeScreenState.showLoading,
                             tweetsLazyColumnState = forYouLazyListState,
                             tweetActions = TweetActions(
-                                profileImageClick = {},
+                                profileImageClick = { id ->
+                                    openProfileDetails(id)
+                                },
                                 onTweetClick = {
                                     openTweetDetails(it)
                                 },

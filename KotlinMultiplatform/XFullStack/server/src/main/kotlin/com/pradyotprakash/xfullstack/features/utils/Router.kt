@@ -21,7 +21,6 @@ fun Routing.utils(
     get<UtilsResource.ServerAvailable> {
         utilsController.isServerAvailable(
             call = this.context,
-            resource = it,
         )
     }
 }

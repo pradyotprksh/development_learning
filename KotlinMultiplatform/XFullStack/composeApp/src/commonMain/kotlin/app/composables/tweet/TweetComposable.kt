@@ -41,6 +41,7 @@ import utils.Tags
 fun TweetComposable(
     modifier: Modifier = Modifier,
     createdByProfilePicture: String?,
+    createdByUserId: String?,
     createdByName: String,
     createdByUsername: String,
     tweetedOn: String,
@@ -84,7 +85,7 @@ fun TweetComposable(
                     indication = null,
                     interactionSource = remember { MutableInteractionSource() },
                     onClick = {
-                        tweetActions.profileImageClick()
+                        tweetActions.profileImageClick(createdByUserId ?: "")
                     },
                 )
             )
@@ -136,13 +137,17 @@ fun TweetComposable(
                                     TextDetails(
                                         text = Localization.WHITE_SPACE,
                                     ),
-                                    TextDetails(text = "$USERNAME_PREFIX${createdBy.username}",
+                                    TextDetails(
+                                        text = "$USERNAME_PREFIX${createdBy.username}",
                                         isClickable = true,
                                         spanStyle = SpanStyle(
                                             color = MaterialTheme.colorScheme.primary,
                                         ),
                                         tag = Tags.CreatedBy,
-                                        actions = {}),
+                                        actions = {
+                                            tweetActions.profileImageClick(createdBy.id)
+                                        },
+                                    ),
                                 ),
                                 textStyle = MaterialTheme.typography.labelMedium.copy(
                                     color = MaterialTheme.colorScheme.onBackground
@@ -178,6 +183,7 @@ fun TweetComposable(
                         ),
                         createdByProfilePicture = parentTweetDetails.createdBy?.profilePicture,
                         createdByName = parentTweetDetails.createdBy?.name ?: "",
+                        createdByUserId = parentTweetDetails.createdBy?.id ?: "",
                         createdByUsername = parentTweetDetails.createdBy?.username ?: "",
                         tweetedOn = "",
                         tweet = parentTweetDetails.tweet,

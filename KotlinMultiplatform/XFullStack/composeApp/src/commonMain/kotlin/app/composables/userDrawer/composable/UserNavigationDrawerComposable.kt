@@ -1,5 +1,6 @@
 package app.composables.userDrawer.composable
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -49,6 +50,7 @@ import utils.Localization.SPACES
 fun UserNavigationDrawerComposable(
     modifier: Modifier = Modifier,
     userDrawerViewModel: UserDrawerViewModel = viewModel { UserDrawerViewModel() },
+    openProfileDetails: (String) -> Unit,
 ) {
     LaunchedEffect(Unit) {
         userDrawerViewModel.initialSetup()
@@ -71,7 +73,9 @@ fun UserNavigationDrawerComposable(
             ) {
                 ProfileImageComposable(
                     profileImage = userDrawerState.profileImage,
-                    modifier = Modifier.size(45.dp),
+                    modifier = Modifier.size(45.dp).clickable {
+                        openProfileDetails(userDrawerState.userId ?: "")
+                    },
                 )
                 IconButton(onClick = {}) {
                     Icon(
@@ -110,7 +114,9 @@ fun UserNavigationDrawerComposable(
                             contentDescription = Icons.Default.Person.name,
                         )
                     },
-                    onClick = {},
+                    onClick = {
+                        openProfileDetails(userDrawerState.userId ?: "")
+                    },
                 )
             }
             item {
@@ -218,8 +224,7 @@ fun UserNavigationDrawerComposable(
         Spacer(modifier = Modifier.weight(1f))
         HorizontalDivider()
         IconButton(
-            onClick = {},
-            modifier = Modifier.padding(
+            onClick = {}, modifier = Modifier.padding(
                 all = 10.dp
             )
         ) {
