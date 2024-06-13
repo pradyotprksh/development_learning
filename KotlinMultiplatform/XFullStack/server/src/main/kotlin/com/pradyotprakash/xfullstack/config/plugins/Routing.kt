@@ -77,6 +77,7 @@ fun Application.configureRouting() {
         )
         migration(
             tweetDataSource = tweetDataSource,
+            userDataSource = userDataSource,
         )
     }
 }

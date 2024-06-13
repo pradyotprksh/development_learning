@@ -1,6 +1,8 @@
 package com.pradyotprakash.xfullstack.data.user
 
+import com.mongodb.client.model.Filters
 import com.mongodb.client.model.Filters.eq
+import com.mongodb.client.model.Updates
 import com.mongodb.kotlin.client.coroutine.MongoDatabase
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.toList
@@ -59,5 +61,19 @@ class MongoUserDataSource(
         return usersCollection.find(
             eq(PHONE_NUMBER, phoneNumber)
         ).toList().isNotEmpty()
+    }
+
+    override suspend fun removeKeyFromAll(key: String) {
+        usersCollection.updateMany(
+            Filters.exists(ID),
+            Updates.unset(key)
+        )
+    }
+
+    override suspend fun addNewFieldToAll(name: String, value: Any) {
+        usersCollection.updateMany(
+            Filters.exists(ID),
+            Updates.set(name, value)
+        )
     }
 }

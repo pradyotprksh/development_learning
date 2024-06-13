@@ -28,4 +28,8 @@ interface UserDataSource {
     suspend fun isEmailPresent(email: String): Boolean
 
     suspend fun isPhoneNumberPresent(phoneNumber: String): Boolean
+
+    suspend fun removeKeyFromAll(key: String)
+
+    suspend fun addNewFieldToAll(name: String, value: Any)
 }

@@ -106,7 +106,10 @@ class TweetFetchControllerImplementation : TweetFetchController {
         return TweetResponse(
             id = tweetIdHexStr,
             tweet = tweet.tweet,
-            createdBy = createdByUserDetails?.parseToUserInfoResponse(),
+            createdBy = createdByUserDetails?.parseToUserInfoResponse(
+                followers = 0,
+                following = 0,
+            ),
             tweetedOnTimestamp = tweet.tweetedOn,
             tweetedOn = UtilsMethod.Dates.convertTimestampToTimeAgo(tweet.tweetedOn),
             media = tweet.media,

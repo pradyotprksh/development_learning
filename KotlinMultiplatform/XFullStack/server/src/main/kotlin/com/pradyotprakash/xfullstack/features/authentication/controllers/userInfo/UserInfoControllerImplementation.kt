@@ -30,7 +30,10 @@ class UserInfoControllerImplementation : UserInfoController {
             principal?.payload?.getClaim(USER_ID)?.asString() ?: throw UserDetailsNotFound()
         val user = userDataSource.getUserByUserId(userId) ?: throw UserDetailsNotFound()
 
-        val response = user.parseToUserInfoResponse()
+        val response = user.parseToUserInfoResponse(
+            followers = 0,
+            following = 0,
+        )
 
         call.respond(
             HttpStatusCode.OK,

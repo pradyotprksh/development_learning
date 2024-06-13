@@ -16,12 +16,13 @@ fun RegisterRequest.parseToUser(saltedHash: SaltedHash) = this.let { registerReq
         dateOfBirth = registerRequest.dateOfBirth,
         emailAddress = registerRequest.emailAddress,
         phoneNumber = registerRequest.phoneNumber,
-        following = 0,
-        followers = 0,
     )
 }
 
-fun User.parseToUserInfoResponse() = this.let { user ->
+fun User.parseToUserInfoResponse(
+    followers: Int,
+    following: Int,
+) = this.let { user ->
     UserInfoResponse(
         id = user.id.toHexString(),
         name = user.name,
@@ -31,7 +32,7 @@ fun User.parseToUserInfoResponse() = this.let { user ->
         phoneNumber = user.phoneNumber,
         profilePicture = user.profilePicture,
         dateOfBirth = user.dateOfBirth,
-        followers = user.followers,
-        following = user.following,
+        followers = followers,
+        following = following,
     )
 }
