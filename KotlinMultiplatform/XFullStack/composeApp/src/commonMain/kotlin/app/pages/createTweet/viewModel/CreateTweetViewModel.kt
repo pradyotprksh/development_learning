@@ -3,6 +3,7 @@ package app.pages.createTweet.viewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.pages.createTweet.state.CreateTweetState
+import app.pages.createTweet.state.TweetDetails
 import core.models.request.TweetRequest
 import di.SharedModulesDi
 import domain.repositories.tweet.TweetRepository
@@ -68,6 +69,7 @@ class CreateTweetViewModel(
 
     fun updateTweet(value: String, index: Int) {
         val tweets = _createTweetState.value.tweets.toMutableList()
+        val repostTweets = mutableListOf<TweetDetails>()
         if (value.length <= TWEET_MAX_LENGTH) {
             val deletedTweet = tweets.removeAt(index)
             val isQuoteTweet =
@@ -83,9 +85,17 @@ class CreateTweetViewModel(
                 ),
             )
 
+            if (isRepostTweet) {
+                repostTweets.add(tweets[0])
+                repeat((1..<MAX_TWEET_CREATION_LIMIT).count()) {
+                    repostTweets.add(TweetDetails())
+                }
+            }
+
             _createTweetState.value = _createTweetState.value.copy(
-                tweets = tweets,
+                tweets = if (isRepostTweet) repostTweets else tweets,
                 currentSelectedTweetLength = value.length,
+                showAddNewTweetButton = !isRepostTweet,
             )
 
             multipleTweetsToTweet()
