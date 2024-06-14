@@ -13,7 +13,7 @@ import io.realm.kotlin.ext.isManaged
 import io.realm.kotlin.ext.query
 import io.realm.kotlin.notifications.ResultsChange
 import kotlinx.coroutines.flow.Flow
-import utils.Constants.DbKeys.ID_WITHOUT_UNDERSCORE
+import utils.Constants.DbKeys.ID
 import utils.Constants.DbKeys.USER_ID
 
 class CurrentUserDBServiceImplementation(
@@ -79,7 +79,7 @@ class CurrentUserDBServiceImplementation(
     }
 
     override fun getScrollPosition(key: String): Int? {
-        return realm.query<ScrollPositionDB>("$ID_WITHOUT_UNDERSCORE == $0", key).find()
+        return realm.query<ScrollPositionDB>("$ID == $0", key).find()
             .firstOrNull()?.postion
     }
 }

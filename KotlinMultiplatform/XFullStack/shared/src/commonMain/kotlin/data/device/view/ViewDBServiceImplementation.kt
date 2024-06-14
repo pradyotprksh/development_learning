@@ -7,7 +7,7 @@ import io.realm.kotlin.ext.query
 import io.realm.kotlin.notifications.ResultsChange
 import kotlinx.coroutines.flow.Flow
 import utils.Constants.DbKeys.IS_UPDATED_ONLINE
-import utils.Constants.DbKeys.VIEWED_ID_CAMELCASE
+import utils.Constants.DbKeys.VIEWED_ID
 import utils.Logger
 import utils.LoggerLevel
 
@@ -17,7 +17,7 @@ class ViewDBServiceImplementation(
     override suspend fun insertViewDetails(id: String) {
         try {
             val present = realm.query<ViewDB>(
-                "$VIEWED_ID_CAMELCASE == $0", id
+                "$VIEWED_ID == $0", id
             ).find().firstOrNull() != null
             realm.write {
                 if (!present) {

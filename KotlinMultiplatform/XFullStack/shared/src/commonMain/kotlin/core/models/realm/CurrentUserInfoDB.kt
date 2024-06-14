@@ -1,17 +1,32 @@
 package core.models.realm
 
 import io.realm.kotlin.types.RealmObject
+import io.realm.kotlin.types.annotations.PersistedName
 import io.realm.kotlin.types.annotations.PrimaryKey
+import utils.Constants.DbKeys.DATE_OF_BIRTH
+import utils.Constants.DbKeys.EMAIL_ADDRESS
+import utils.Constants.DbKeys.PHONE_NUMBER
+import utils.Constants.DbKeys.PROFILE_PICTURE
+import utils.Constants.DbKeys.USER_ID
 
 class CurrentUserInfoDB : RealmObject {
     @PrimaryKey
+    @PersistedName(USER_ID)
     var userId: String = ""
     var name: String = ""
     var username: String = ""
     var bio: String? = null
+
+    @PersistedName(EMAIL_ADDRESS)
     var emailAddress: String? = null
+
+    @PersistedName(PHONE_NUMBER)
     var phoneNumber: String? = null
+
+    @PersistedName(PROFILE_PICTURE)
     var profilePicture: String? = null
+
+    @PersistedName(DATE_OF_BIRTH)
     var dateOfBirth: Long = 0
     var following: Int = 0
     var followers: Int = 0

@@ -125,7 +125,7 @@ class TweetRepositoryImplementation(
                     )
                 }
             } else {
-                deleteTweetRequest(tweetRequestsDb.requestId.toHexString())
+                deleteTweetRequest(tweetRequestsDb.requestId)
             }
         } catch (e: Exception) {
             emit(
@@ -135,7 +135,7 @@ class TweetRepositoryImplementation(
                 ),
             )
         }
-        deleteTweetRequest(tweetRequestsDb.requestId.toHexString())
+        deleteTweetRequest(tweetRequestsDb.requestId)
         emit(ClientResponse.Idle)
     }
 

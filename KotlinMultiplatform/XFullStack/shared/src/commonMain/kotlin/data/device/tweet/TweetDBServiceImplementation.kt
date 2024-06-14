@@ -14,16 +14,15 @@ import io.realm.kotlin.notifications.ResultsChange
 import io.realm.kotlin.notifications.SingleQueryChange
 import io.realm.kotlin.query.Sort
 import kotlinx.coroutines.flow.Flow
-import org.mongodb.kbson.ObjectId
-import utils.Constants.DbKeys.CREATED_BY_CAMEL_CASE
+import utils.Constants.DbKeys.CREATED_BY
 import utils.Constants.DbKeys.GIF
-import utils.Constants.DbKeys.IS_A_COMMENT_TWEET_CAMELCASE
-import utils.Constants.DbKeys.IS_A_POLL_CAMEL_CASE
-import utils.Constants.DbKeys.IS_A_QUOTE_TWEET_CAMEL_CASE
-import utils.Constants.DbKeys.IS_LIKED_TWEET
-import utils.Constants.DbKeys.IS_REPOST_TWEET_CAMEL_CASE
+import utils.Constants.DbKeys.IS_A_COMMENT_TWEET
+import utils.Constants.DbKeys.IS_A_LIKED_TWEET
+import utils.Constants.DbKeys.IS_A_POLL
+import utils.Constants.DbKeys.IS_A_QUOTE_TWEET
+import utils.Constants.DbKeys.IS_A_REPOST_TWEET
 import utils.Constants.DbKeys.MEDIA
-import utils.Constants.DbKeys.PARENT_TWEET_ID_CAMELCASE
+import utils.Constants.DbKeys.PARENT_TWEET_ID
 import utils.Constants.DbKeys.REQUEST_ID
 import utils.Constants.DbKeys.TWEETED_ON_TIMESTAMP
 import utils.Constants.DbKeys.TWEET_ID
@@ -62,7 +61,7 @@ class TweetDBServiceImplementation(
 
     override fun getAllTweetsReplyFor(tweetId: String): Flow<ResultsChange<TweetDB>> {
         return realm.query<TweetDB>(
-            "$PARENT_TWEET_ID_CAMELCASE == $0 AND $IS_A_COMMENT_TWEET_CAMELCASE == $1",
+            "$PARENT_TWEET_ID == $0 AND $IS_A_COMMENT_TWEET == $1",
             tweetId,
             true,
         ).sort(
@@ -73,7 +72,7 @@ class TweetDBServiceImplementation(
 
     override suspend fun deleteTweetRequest(id: String) {
         realm.write {
-            query<TweetRequestsDB>("$REQUEST_ID == $0", ObjectId(id)).find().firstOrNull()
+            query<TweetRequestsDB>("$REQUEST_ID == $0", id).find().firstOrNull()
                 ?.let { delete(it) }
         }
     }
@@ -99,7 +98,7 @@ class TweetDBServiceImplementation(
 
     override suspend fun getAllUserPosts(userId: String): Flow<ResultsChange<TweetDB>> {
         return realm.query<TweetDB>(
-            "$CREATED_BY_CAMEL_CASE.$USER_ID == $0 AND ($IS_A_POLL_CAMEL_CASE == $1 OR $IS_A_QUOTE_TWEET_CAMEL_CASE == $2 OR $IS_REPOST_TWEET_CAMEL_CASE == $2)",
+            "$CREATED_BY.$USER_ID == $0 AND ($IS_A_POLL == $1 OR $IS_A_QUOTE_TWEET == $2 OR $IS_A_REPOST_TWEET == $2)",
             userId,
             true,
             true,
@@ -112,7 +111,7 @@ class TweetDBServiceImplementation(
 
     override suspend fun getAllUserLikes(userId: String): Flow<ResultsChange<TweetDB>> {
         return realm.query<TweetDB>(
-            "$CREATED_BY_CAMEL_CASE.$USER_ID == $0 AND $IS_LIKED_TWEET == $1",
+            "$CREATED_BY.$USER_ID == $0 AND $IS_A_LIKED_TWEET == $1",
             userId,
             true,
         ).sort(
@@ -123,7 +122,7 @@ class TweetDBServiceImplementation(
 
     override suspend fun getAllUserReplies(userId: String): Flow<ResultsChange<TweetDB>> {
         return realm.query<TweetDB>(
-            "$CREATED_BY_CAMEL_CASE.$USER_ID == $0 AND $IS_A_COMMENT_TWEET_CAMELCASE == $0",
+            "$CREATED_BY.$USER_ID == $0 AND $IS_A_COMMENT_TWEET == $0",
             userId,
             true,
         ).sort(
@@ -134,7 +133,7 @@ class TweetDBServiceImplementation(
 
     override suspend fun getAllUserMedia(userId: String): Flow<ResultsChange<TweetDB>> {
         return realm.query<TweetDB>(
-            "$CREATED_BY_CAMEL_CASE.$USER_ID == $0 AND ($MEDIA.@size > $1 OR $GIF.@size > $2 )",
+            "$CREATED_BY.$USER_ID == $0 AND ($MEDIA.@size > $1 OR $GIF.@size > $2 )",
             userId,
             0,
             1,
