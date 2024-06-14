@@ -15,7 +15,7 @@ object Connections {
 
     private fun getAllSessions() = connections.map { it.second }
 
-    fun removeSession(userId: String) = connections.removeIf { it.first == userId }
+    private fun removeSession(userId: String) = connections.removeIf { it.first == userId }
 
     fun sendMessageToAll(message: String) {
         getAllSessions().forEach {

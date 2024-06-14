@@ -130,7 +130,7 @@ object Constants {
         const val BIO_MAX_LENGTH = 50
         const val USERNAME_PREFIX = "@"
         const val TWEET_MAX_LENGTH = 250
-        const val DEFAULT_PAGINATE_LIMIT = 10
+        const val DEFAULT_PAGINATE_LIMIT = 100
         const val MAX_TWEET_CREATION_LIMIT = 25
         const val MAX_POLL_CHOICE_LENGTH = 25
         const val XFULLSTACK_HTTP_CLIENT = "x_full_stack_http_client"
@@ -215,7 +215,7 @@ object Constants {
         const val VOTER_DETAILS = "voter_details"
         const val VOTED_ON = "voted_on"
         const val TWEETED_ON_TIMESTAMP = "tweeted_on_timestamp"
-        const val TWEET_ID = "tweet_dd"
+        const val TWEET_ID = "tweet_id"
         const val VIEWED_BY = "viewed_by"
         const val VIEWED_ON = "viewed_on"
         const val VIEWED_ID = "viewed_id"

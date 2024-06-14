@@ -23,6 +23,7 @@ import org.bson.types.ObjectId
 import utils.Constants
 import utils.Constants.Keys.USER_ID
 import utils.Constants.SuccessCode.TWEETS_DELETED_SUCCESS_CODE
+import utils.Constants.SuccessCode.TWEETS_UPDATE_SUCCESS_CODE
 import utils.Localization
 import utils.UtilsMethod
 import utils.XFullStackResponseStatus
@@ -155,6 +156,8 @@ class TweetCreateUpdateControllerImplementation(
                 throw DBWriteError()
             }
         }
+
+        Connections.sendMessageToAll(TWEETS_UPDATE_SUCCESS_CODE)
 
         val allTweetsEmotions = tweetDataSource.getUserTweetsEmotions(createdBy)
 

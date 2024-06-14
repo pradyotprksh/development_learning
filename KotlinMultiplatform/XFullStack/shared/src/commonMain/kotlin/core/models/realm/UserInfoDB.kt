@@ -10,9 +10,11 @@ import utils.Constants.DbKeys.IS_FOLLOWING_CURRENT_USER
 import utils.Constants.DbKeys.IS_SAME_USER
 import utils.Constants.DbKeys.PHONE_NUMBER
 import utils.Constants.DbKeys.PROFILE_PICTURE
+import utils.Constants.DbKeys.USER_ID
 
 class UserInfoDB : RealmObject {
     @PrimaryKey
+    @PersistedName(USER_ID)
     var userId: String = ""
     var name: String = ""
     var username: String = ""

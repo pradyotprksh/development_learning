@@ -3,10 +3,12 @@ package core.models.realm
 import io.realm.kotlin.types.RealmObject
 import io.realm.kotlin.types.annotations.PersistedName
 import io.realm.kotlin.types.annotations.PrimaryKey
+import utils.Constants.DbKeys.ID
 import utils.Constants.DbKeys.VOTE_COUNT
 
 class PollChoicesDB : RealmObject {
     @PrimaryKey
+    @PersistedName(ID)
     var id: String = ""
     var choice: String = ""
 

@@ -72,9 +72,7 @@ fun Application.configureRouting() {
             viewDataSource = viewDataSource,
             followDataSource = followDataSource,
         )
-        websockets(
-            tweetDataSource = tweetDataSource,
-        )
+        websockets()
         views(
             viewController = viewController,
             viewDataSource = viewDataSource,
