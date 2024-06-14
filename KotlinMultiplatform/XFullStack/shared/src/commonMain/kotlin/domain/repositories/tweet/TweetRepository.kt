@@ -40,4 +40,12 @@ interface TweetRepository {
     ): TweetResponse?
 
     suspend fun deleteTweetById(id: String)
+
+    suspend fun getAllUserPosts(userId: String): Flow<List<TweetResponse>>
+
+    suspend fun getAllUserLikes(userId: String): Flow<List<TweetResponse>>
+
+    suspend fun getAllUserReplies(userId: String): Flow<List<TweetResponse>>
+
+    suspend fun getAllUserMedia(userId: String): Flow<List<TweetResponse>>
 }

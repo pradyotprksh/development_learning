@@ -26,4 +26,12 @@ interface TweetDBService {
     suspend fun deleteTweetById(id: String)
 
     suspend fun saveTweetRequests(tweetRequest: List<TweetRequest>): TweetRequestsDB
+
+    suspend fun getAllUserPosts(userId: String): Flow<ResultsChange<TweetDB>>
+
+    suspend fun getAllUserLikes(userId: String): Flow<ResultsChange<TweetDB>>
+
+    suspend fun getAllUserReplies(userId: String): Flow<ResultsChange<TweetDB>>
+
+    suspend fun getAllUserMedia(userId: String): Flow<ResultsChange<TweetDB>>
 }

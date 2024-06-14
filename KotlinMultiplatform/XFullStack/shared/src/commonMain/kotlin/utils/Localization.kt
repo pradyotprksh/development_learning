@@ -195,4 +195,5 @@ object Localization {
     const val MEDIA = "Media"
     const val HIGHLIGHTS = "Highlights"
     const val REPLIES = "Replies"
+    const val ARTICLES = "Articles"
 }

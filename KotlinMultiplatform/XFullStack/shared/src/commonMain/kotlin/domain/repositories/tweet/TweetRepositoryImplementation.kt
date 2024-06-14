@@ -146,4 +146,24 @@ class TweetRepositoryImplementation(
     override suspend fun deleteTweetById(id: String) {
         tweetDBService.deleteTweetById(id)
     }
+
+    override suspend fun getAllUserPosts(userId: String): Flow<List<TweetResponse>> {
+        return tweetDBService.getAllUserPosts(userId)
+            .map { dbResult -> dbResult.list.map { db -> db.parseToTweetResponse() } }
+    }
+
+    override suspend fun getAllUserLikes(userId: String): Flow<List<TweetResponse>> {
+        return tweetDBService.getAllUserLikes(userId)
+            .map { dbResult -> dbResult.list.map { db -> db.parseToTweetResponse() } }
+    }
+
+    override suspend fun getAllUserReplies(userId: String): Flow<List<TweetResponse>> {
+        return tweetDBService.getAllUserReplies(userId)
+            .map { dbResult -> dbResult.list.map { db -> db.parseToTweetResponse() } }
+    }
+
+    override suspend fun getAllUserMedia(userId: String): Flow<List<TweetResponse>> {
+        return tweetDBService.getAllUserMedia(userId)
+            .map { dbResult -> dbResult.list.map { db -> db.parseToTweetResponse() } }
+    }
 }

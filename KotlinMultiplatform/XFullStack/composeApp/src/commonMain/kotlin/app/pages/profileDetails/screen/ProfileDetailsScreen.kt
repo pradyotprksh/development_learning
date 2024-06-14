@@ -31,12 +31,12 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.ScrollableTabRow
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Tab
-import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
@@ -75,6 +75,13 @@ fun ProfileDetailsScreen(
     val scope = rememberCoroutineScope()
     val snackbarHostState = remember { SnackbarHostState() }
     val profileDetailsState by profileDetailsViewModel.profileDetailsState.collectAsState()
+
+    profileDetailsState.userInfoResponse?.let { details ->
+        LaunchedEffect(details.isSameUser) {
+            profileDetailsViewModel.listenToLikes(details.id)
+        }
+    }
+
     val tabPagerState = rememberPagerState(pageCount = { profileDetailsState.tabsDetails.size })
     if (profileDetailsState.showLoading) {
         LoadingDialogComposable()
@@ -235,39 +242,36 @@ fun ProfileDetailsScreen(
             }
 
             stickyHeader {
-                TabRow(
-                    selectedTabIndex = tabPagerState.currentPage,
-                    divider = { HorizontalDivider() },
-                    modifier = Modifier.fillMaxWidth().wrapContentHeight()
-                ) {
-                    profileDetailsState.tabsDetails.forEachIndexed { index, tab ->
-                        Tab(
-                            selected = tabPagerState.currentPage == index,
-                            onClick = {
-                                scope.launch {
-                                    tabPagerState.animateScrollToPage(index)
-                                }
-                            },
-                            text = {
-                                Text(text = tab)
-                            },
-                            unselectedContentColor = MaterialTheme.colorScheme.onBackground,
-                        )
+                Column {
+                    ScrollableTabRow(
+                        selectedTabIndex = tabPagerState.currentPage,
+                        edgePadding = 0.dp,
+                        modifier = Modifier.fillMaxWidth().wrapContentHeight(),
+                        divider = {},
+                    ) {
+                        profileDetailsState.tabsDetails.forEachIndexed { index, tab ->
+                            Tab(
+                                selected = tabPagerState.currentPage == index,
+                                onClick = {
+                                    scope.launch {
+                                        tabPagerState.animateScrollToPage(index)
+                                    }
+                                },
+                                text = {
+                                    Text(text = tab)
+                                },
+                                unselectedContentColor = MaterialTheme.colorScheme.onBackground,
+                            )
+                        }
                     }
+                    HorizontalDivider()
                 }
             }
 
             item {
                 HorizontalPager(
                     state = tabPagerState,
-                ) { page ->
-                    when (page) {
-                        0 -> {}
-                        1 -> {}
-                        2 -> {}
-                        3 -> {}
-                    }
-                }
+                ) {}
             }
         }
     }

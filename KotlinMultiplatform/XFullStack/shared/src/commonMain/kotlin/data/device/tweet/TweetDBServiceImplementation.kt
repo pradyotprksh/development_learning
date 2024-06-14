@@ -15,11 +15,19 @@ import io.realm.kotlin.notifications.SingleQueryChange
 import io.realm.kotlin.query.Sort
 import kotlinx.coroutines.flow.Flow
 import org.mongodb.kbson.ObjectId
+import utils.Constants.DbKeys.CREATED_BY_CAMEL_CASE
+import utils.Constants.DbKeys.GIF
 import utils.Constants.DbKeys.IS_A_COMMENT_TWEET_CAMELCASE
+import utils.Constants.DbKeys.IS_A_POLL_CAMEL_CASE
+import utils.Constants.DbKeys.IS_A_QUOTE_TWEET_CAMEL_CASE
+import utils.Constants.DbKeys.IS_LIKED_TWEET
+import utils.Constants.DbKeys.IS_REPOST_TWEET_CAMEL_CASE
+import utils.Constants.DbKeys.MEDIA
 import utils.Constants.DbKeys.PARENT_TWEET_ID_CAMELCASE
 import utils.Constants.DbKeys.REQUEST_ID
 import utils.Constants.DbKeys.TWEETED_ON_TIMESTAMP
 import utils.Constants.DbKeys.TWEET_ID
+import utils.Constants.DbKeys.USER_ID
 
 class TweetDBServiceImplementation(
     private val realm: Realm,
@@ -88,4 +96,51 @@ class TweetDBServiceImplementation(
             val unmanagedObject = tweetRequest.parseToTweetRequestDb()
             copyToRealm(unmanagedObject, updatePolicy = UpdatePolicy.ALL)
         }
+
+    override suspend fun getAllUserPosts(userId: String): Flow<ResultsChange<TweetDB>> {
+        return realm.query<TweetDB>(
+            "$CREATED_BY_CAMEL_CASE.$USER_ID == $0 AND ($IS_A_POLL_CAMEL_CASE == $1 OR $IS_A_QUOTE_TWEET_CAMEL_CASE == $2 OR $IS_REPOST_TWEET_CAMEL_CASE == $2)",
+            userId,
+            true,
+            true,
+            true,
+        ).sort(
+            property = TWEETED_ON_TIMESTAMP,
+            sortOrder = Sort.DESCENDING,
+        ).asFlow()
+    }
+
+    override suspend fun getAllUserLikes(userId: String): Flow<ResultsChange<TweetDB>> {
+        return realm.query<TweetDB>(
+            "$CREATED_BY_CAMEL_CASE.$USER_ID == $0 AND $IS_LIKED_TWEET == $1",
+            userId,
+            true,
+        ).sort(
+            property = TWEETED_ON_TIMESTAMP,
+            sortOrder = Sort.DESCENDING,
+        ).asFlow()
+    }
+
+    override suspend fun getAllUserReplies(userId: String): Flow<ResultsChange<TweetDB>> {
+        return realm.query<TweetDB>(
+            "$CREATED_BY_CAMEL_CASE.$USER_ID == $0 AND $IS_A_COMMENT_TWEET_CAMELCASE == $0",
+            userId,
+            true,
+        ).sort(
+            property = TWEETED_ON_TIMESTAMP,
+            sortOrder = Sort.DESCENDING,
+        ).asFlow()
+    }
+
+    override suspend fun getAllUserMedia(userId: String): Flow<ResultsChange<TweetDB>> {
+        return realm.query<TweetDB>(
+            "$CREATED_BY_CAMEL_CASE.$USER_ID == $0 AND ($MEDIA.@size > $1 OR $GIF.@size > $2 )",
+            userId,
+            0,
+            1,
+        ).sort(
+            property = TWEETED_ON_TIMESTAMP,
+            sortOrder = Sort.DESCENDING,
+        ).asFlow()
+    }
 }

@@ -1,5 +1,6 @@
 package app.pages.profileDetails.state
 
+import core.models.response.TweetResponse
 import core.models.response.UserInfoResponse
 import utils.Localization
 
@@ -13,4 +14,9 @@ data class ProfileDetailsState(
         Localization.HIGHLIGHTS,
         Localization.MEDIA,
     ),
+    val posts: List<TweetResponse> = emptyList(),
+    val replies: List<TweetResponse> = emptyList(),
+    val highlights: List<TweetResponse> = emptyList(),
+    val media: List<TweetResponse> = emptyList(),
+    val likes: List<TweetResponse> = emptyList(),
 )

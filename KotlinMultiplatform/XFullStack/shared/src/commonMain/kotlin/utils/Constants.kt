@@ -209,6 +209,13 @@ object Constants {
         const val FOLLOWING_ID = "following_id"
         const val FOLLOWED_AT = "follower_at"
         const val NATURE = "nature"
+        const val CREATED_BY_CAMEL_CASE = "createdBy"
+        const val IS_A_POLL_CAMEL_CASE = "isAPoll"
+        const val IS_A_QUOTE_TWEET_CAMEL_CASE = "isQuoteTweet"
+        const val IS_REPOST_TWEET_CAMEL_CASE = "isRepostTweet"
+        const val MEDIA = "media"
+        const val GIF = "gif"
+        const val IS_LIKED_TWEET = "isLikedTweet"
     }
 
     object GeminiPrompt {
