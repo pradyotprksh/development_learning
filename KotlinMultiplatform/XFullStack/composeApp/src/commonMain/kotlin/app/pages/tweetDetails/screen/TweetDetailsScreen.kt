@@ -425,6 +425,7 @@ fun TweetDetailsScreen(
                 CreateTweetOptionsComposable(
                     progress = tweetDetailsScreenState.replyTweet.length.toFloat() / TWEET_MAX_LENGTH,
                     enableAddNewTweetButton = true,
+                    showAddNewTweetButton = false,
                     tweetAction = {
                         Button(
                             onClick = {

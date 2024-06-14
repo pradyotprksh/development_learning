@@ -134,7 +134,7 @@ class TweetCreateUpdateControllerImplementation(
                 ) else 0,
                 scheduledOnTweet = tweetRequest.scheduledOnTweet ?: 0,
                 location = tweetRequest.location ?: "",
-                isACommentTweet = tweetRequest.isACommentTweet,
+                isACommentTweet = if (parentTweetId == null) tweetRequest.isACommentTweet else true,
                 parentTweetId = tweetRequest.parentTweetId?.let { ObjectId(tweetRequest.parentTweetId) }
                     ?: parentTweetId,
                 isQuoteTweet = tweetRequest.isQuoteTweet,

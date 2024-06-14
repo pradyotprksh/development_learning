@@ -21,6 +21,7 @@ data class CreateTweetState(
     val currentSelectedTweetLength: Int = 0,
     val currentFocusedTweetIndex: Int = -1,
     val enableAddNewTweetButton: Boolean = false,
+    val showAddNewTweetButton: Boolean = true,
     val currentPostLength: Int = 0,
     val profileImage: String? = null,
 )

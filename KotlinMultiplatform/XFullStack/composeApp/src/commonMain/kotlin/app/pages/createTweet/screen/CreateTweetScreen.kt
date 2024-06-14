@@ -148,6 +148,7 @@ fun CreateTweetScreen(
             CreateTweetOptionsComposable(
                 progress = createTweetState.currentSelectedTweetLength.toFloat() / TWEET_MAX_LENGTH,
                 enableAddNewTweetButton = createTweetState.enableAddNewTweetButton,
+                showAddNewTweetButton = createTweetState.showAddNewTweetButton,
                 onImageClick = {},
                 onGifClick = {},
                 onPollClick = {

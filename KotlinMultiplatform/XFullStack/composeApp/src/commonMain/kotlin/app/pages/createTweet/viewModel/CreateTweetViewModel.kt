@@ -49,6 +49,7 @@ class CreateTweetViewModel(
             _createTweetState.value = _createTweetState.value.copy(
                 tweets = tweets,
                 enableAddNewTweetButton = isRetweet,
+                showAddNewTweetButton = !isRetweet,
             )
         }
     }
