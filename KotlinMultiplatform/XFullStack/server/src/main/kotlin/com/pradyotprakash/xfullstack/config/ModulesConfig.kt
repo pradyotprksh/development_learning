@@ -23,6 +23,9 @@ import com.pradyotprakash.xfullstack.features.authentication.controllers.registe
 import com.pradyotprakash.xfullstack.features.authentication.controllers.register.RegisterControllerImplementation
 import com.pradyotprakash.xfullstack.features.authentication.controllers.userInfo.UserInfoController
 import com.pradyotprakash.xfullstack.features.authentication.controllers.userInfo.UserInfoControllerImplementation
+import com.pradyotprakash.xfullstack.features.bookmark.controllers.BookmarkController
+import com.pradyotprakash.xfullstack.features.bookmark.controllers.bookmarkUpdate.BookmarkUpdateController
+import com.pradyotprakash.xfullstack.features.bookmark.controllers.bookmarkUpdate.BookmarkUpdateControllerImplementation
 import com.pradyotprakash.xfullstack.features.follow.controllers.FollowController
 import com.pradyotprakash.xfullstack.features.follow.controllers.followUpdate.FollowUpdateController
 import com.pradyotprakash.xfullstack.features.follow.controllers.followUpdate.FollowUpdateControllerImplementation
@@ -100,6 +103,8 @@ object ModulesConfig {
         bindProvider<SecretsFetchController> { SecretsFetchControllerImplementation() }
 
         bindProvider<FollowUpdateController> { FollowUpdateControllerImplementation() }
+
+        bindProvider<BookmarkUpdateController> { BookmarkUpdateControllerImplementation() }
     }
 
     private val featuresModule = DI.Module("FEATURES") {
@@ -116,6 +121,8 @@ object ModulesConfig {
         bindProvider { SecretsController(instance()) }
 
         bindProvider { FollowController(instance()) }
+
+        bindProvider { BookmarkController(instance()) }
     }
 
     val di = DI {

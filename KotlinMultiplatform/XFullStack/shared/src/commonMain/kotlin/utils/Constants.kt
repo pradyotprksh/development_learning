@@ -79,6 +79,11 @@ object Constants {
             const val FOLLOW = "/follow"
             const val UPDATE = "/update"
         }
+
+        object Bookmarks {
+            const val BOOKMARK = "/bookmark"
+            const val UPDATE = "/update"
+        }
     }
 
     object Keys {

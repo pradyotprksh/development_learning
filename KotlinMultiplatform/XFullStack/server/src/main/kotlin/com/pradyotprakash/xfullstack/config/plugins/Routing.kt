@@ -10,6 +10,7 @@ import com.pradyotprakash.xfullstack.data.user.UserDataSource
 import com.pradyotprakash.xfullstack.data.view.ViewDataSource
 import com.pradyotprakash.xfullstack.features.authentication.authentication
 import com.pradyotprakash.xfullstack.features.authentication.controllers.AuthenticationController
+import com.pradyotprakash.xfullstack.features.bookmark.controllers.BookmarkController
 import com.pradyotprakash.xfullstack.features.follow.controllers.FollowController
 import com.pradyotprakash.xfullstack.features.follow.follow
 import com.pradyotprakash.xfullstack.features.migration.migration
@@ -45,6 +46,7 @@ fun Application.configureRouting() {
     val viewController by ModulesConfig.di.instance<ViewController>()
     val secretsController by ModulesConfig.di.instance<SecretsController>()
     val followController by ModulesConfig.di.instance<FollowController>()
+    val bookmarkController by ModulesConfig.di.instance<BookmarkController>()
 
     routing {
         authentication(
