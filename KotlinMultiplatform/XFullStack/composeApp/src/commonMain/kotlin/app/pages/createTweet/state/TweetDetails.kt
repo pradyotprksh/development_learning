@@ -25,10 +25,10 @@ data class TweetDetails(
     val parentTweetDetails: TweetResponse? = null,
 ) {
     fun shouldSelectThisTweet(): Boolean {
-        if (isRepostTweet) {
-            return isRepostValid()
+        return if (isRepostTweet) {
+            isRepostValid()
         } else {
-            return validTweet() && isPollValid() && isLocationValid() && isScheduledValid() && isQuoteValid()
+            validTweet() && isPollValid() && isLocationValid() && isScheduledValid() && isQuoteValid()
         }
     }
 
