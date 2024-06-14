@@ -191,4 +191,8 @@ object Localization {
     const val CANNOT_FOLLOW_YOURSELF = "You cannot follow yourself."
     const val FOLLOW = "Follow"
     const val FOLLOW_BACK = "Follow Back"
+    const val POSTS = "Posts"
+    const val MEDIA = "Media"
+    const val HIGHLIGHTS = "Highlights"
+    const val REPLIES = "Replies"
 }

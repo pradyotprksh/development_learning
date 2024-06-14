@@ -19,4 +19,5 @@ fun showFloatingActionButton(route: String) = listOf(
     Routes.HomeCommunities.path(),
     Routes.HomeNotifications.path(),
     Routes.HomeMessages.path(),
+    Routes.ProfileDetails.path(),
 ).contains(route)

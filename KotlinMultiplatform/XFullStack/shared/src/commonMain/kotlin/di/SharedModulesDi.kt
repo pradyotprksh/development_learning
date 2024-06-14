@@ -6,6 +6,7 @@ import core.network.NetworkClient
 import core.network.XFullStackHttpClient
 import data.device.tweet.TweetDBServiceImplementation
 import data.device.user.current.CurrentUserDBServiceImplementation
+import data.device.user.user.UserDBServiceImplementation
 import data.device.view.ViewDBServiceImplementation
 import data.remote.gemini.GeminiRemoteServiceImplementation
 import data.remote.server.utils.ServerUtilsRemoteServiceImplementation
@@ -25,6 +26,8 @@ import domain.repositories.user.current.CurrentUserRepository
 import domain.repositories.user.current.CurrentUserRepositoryImplementation
 import domain.repositories.user.follow.UserFollowRepository
 import domain.repositories.user.follow.UserFollowRepositoryImplementation
+import domain.repositories.user.user.UserRepository
+import domain.repositories.user.user.UserRepositoryImplementation
 import domain.repositories.user.verification.UserVerificationRepository
 import domain.repositories.user.verification.UserVerificationRepositoryImplementation
 import domain.repositories.view.ViewRepository
@@ -38,6 +41,7 @@ import domain.services.tweet.TweetRemoteService
 import domain.services.user.current.CurrentUserDBService
 import domain.services.user.current.CurrentUserRemoteService
 import domain.services.user.follow.UserFollowRemoteService
+import domain.services.user.user.UserDBService
 import domain.services.user.verification.UserVerificationRemoteService
 import domain.services.view.ViewDBService
 import domain.services.view.ViewRemoteService
@@ -71,6 +75,8 @@ object SharedModulesDi {
         bindProvider<TweetDBService> { TweetDBServiceImplementation(instance()) }
 
         bindProvider<ViewDBService> { ViewDBServiceImplementation(instance()) }
+
+        bindProvider<UserDBService> { UserDBServiceImplementation(instance()) }
     }
 
     private val servicesRemoteModule = DI.Module("SERVICES_REMOTE") {
@@ -135,6 +141,10 @@ object SharedModulesDi {
         bind<UserFollowRepository>() with singleton {
             UserFollowRepositoryImplementation(instance())
         }
+
+        bind<UserRepository>() with singleton {
+            UserRepositoryImplementation(instance())
+        }
     }
 
     val di = DI {
@@ -156,5 +166,6 @@ object SharedModulesDi {
         val viewRepository: ViewRepository by di.instance()
         val geminiRepository: GeminiRepository by di.instance()
         val followRepository: UserFollowRepository by di.instance()
+        val userRepository: UserRepository by di.instance()
     }
 }
