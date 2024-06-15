@@ -7,7 +7,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AddComment
 import androidx.compose.material.icons.filled.AutoGraph
-import androidx.compose.material.icons.filled.BookmarkBorder
+import androidx.compose.material.icons.filled.BookmarkAdd
+import androidx.compose.material.icons.filled.BookmarkAdded
 import androidx.compose.material.icons.filled.Loop
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.material.icons.filled.ThumbUp
@@ -27,6 +28,7 @@ fun TweetActionsComposable(
     likeCount: String,
     views: String,
     isLikedByCurrentUser: Boolean,
+    isBookmarkedByCurrentUser: Boolean,
     showViews: Boolean = true,
     bookmarkModifier: Modifier = Modifier,
     shareModifier: Modifier = Modifier,
@@ -71,9 +73,11 @@ fun TweetActionsComposable(
         IconButton(
             onClick = onBookmark,
         ) {
+            val icon =
+                if (isBookmarkedByCurrentUser) Icons.Default.BookmarkAdded else Icons.Default.BookmarkAdd
             Icon(
-                imageVector = Icons.Default.BookmarkBorder,
-                contentDescription = Icons.Default.BookmarkBorder.name,
+                imageVector = icon,
+                contentDescription = icon.name,
                 modifier = bookmarkModifier,
             )
         }

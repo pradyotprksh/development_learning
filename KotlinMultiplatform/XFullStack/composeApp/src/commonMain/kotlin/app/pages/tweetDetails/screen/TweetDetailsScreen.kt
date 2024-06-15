@@ -215,6 +215,7 @@ fun TweetDetailsScreen(
                                         isAPoll = parentTweetDetails.isAPoll,
                                         isQuoteTweet = parentTweetDetails.isQuoteTweet,
                                         isLikedByCurrentUser = parentTweetDetails.isLikedByCurrentUser,
+                                        isBookmarkedByCurrentUser = parentTweetDetails.isBookmarkedByCurrentUser,
                                         pollChoices = parentTweetDetails.pollChoices.toList(),
                                         isPollingAllowed = parentTweetDetails.isPollingAllowed,
                                         pollingEndTime = parentTweetDetails.pollingEndTime,
@@ -282,6 +283,7 @@ fun TweetDetailsScreen(
                                 views = "",
                                 showViews = false,
                                 isLikedByCurrentUser = tweet.isLikedByCurrentUser,
+                                isBookmarkedByCurrentUser = tweet.isBookmarkedByCurrentUser,
                                 onBookmark = { },
                                 onShare = { },
                                 onAddComment = {
@@ -328,6 +330,7 @@ fun TweetDetailsScreen(
                                 isAPoll = replyTweet.isAPoll,
                                 isQuoteTweet = replyTweet.isQuoteTweet,
                                 isLikedByCurrentUser = replyTweet.isLikedByCurrentUser,
+                                isBookmarkedByCurrentUser = replyTweet.isBookmarkedByCurrentUser,
                                 pollChoices = replyTweet.pollChoices.toList(),
                                 isPollingAllowed = replyTweet.isPollingAllowed,
                                 pollingEndTime = replyTweet.pollingEndTime,

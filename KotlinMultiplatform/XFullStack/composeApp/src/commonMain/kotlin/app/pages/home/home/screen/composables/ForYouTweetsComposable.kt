@@ -89,6 +89,7 @@ fun ForYouTweetsComposable(
                             },
                             tweetActions = tweetActions,
                             isLikedByCurrentUser = shownTweet.isLikedByCurrentUser,
+                            isBookmarkedByCurrentUser = shownTweet.isBookmarkedByCurrentUser,
                             parentTweetDetails = tweet.parentTweetDetails,
                             isACommentTweet = tweet.isACommentTweet,
                             isLikedTweet = tweet.isLikedTweet,
