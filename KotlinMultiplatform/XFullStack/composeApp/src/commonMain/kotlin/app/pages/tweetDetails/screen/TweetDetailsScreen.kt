@@ -137,8 +137,7 @@ fun TweetDetailsScreen(
                     item {
                         tweet.createdBy?.let { createdBy ->
                             TweetCreatorDetailsComposable(
-                                modifier = Modifier.fillMaxWidth()
-                                    .padding(
+                                modifier = Modifier.fillMaxWidth().padding(
                                         all = 10.dp,
                                     ),
                                 createdBy = createdBy,
@@ -227,7 +226,11 @@ fun TweetDetailsScreen(
                                             onTweetClick = { tweetId ->
                                                 openTweetDetails(tweetId)
                                             },
-                                            onBookmark = {},
+                                            onBookmark = { tweetId ->
+                                                tweetDetailsViewModel.bookmarkUpdate(
+                                                    tweetId
+                                                )
+                                            },
                                             onShare = {},
                                             onPollSelection = { _, _ -> },
                                             onComment = { },
@@ -284,7 +287,9 @@ fun TweetDetailsScreen(
                                 showViews = false,
                                 isLikedByCurrentUser = tweet.isLikedByCurrentUser,
                                 isBookmarkedByCurrentUser = tweet.isBookmarkedByCurrentUser,
-                                onBookmark = { },
+                                onBookmark = {
+                                    tweetDetailsViewModel.bookmarkUpdate(tweetId)
+                                },
                                 onShare = { },
                                 onAddComment = {
                                     scope.launch {
@@ -383,46 +388,39 @@ fun TweetDetailsScreen(
                     )
                 }
             }
-            TextField(
-                value = tweetDetailsScreenState.replyTweet,
-                onValueChange = { value ->
-                    tweetDetailsViewModel.updateTweetReply(value)
-                },
-                modifier = Modifier.fillMaxWidth().padding(5.dp).onFocusChanged { focus ->
-                    tweetDetailsViewModel.replyTextFieldFocusChanged(focus.isFocused)
-                }.focusRequester(replyFocusRequester),
-                placeholder = {
-                    Text(
-                        Localization.POST_YOUR_REPLY,
-                    )
-                },
-                trailingIcon = {
-                    IconButton(
-                        onClick = {
-                            openCreateTweetWithParentId(
-                                tweetId, false, true
-                            )
-                        },
-                    ) {
-                        val icon =
-                            if (tweetDetailsScreenState.isReplyTweetFocused) Icons.Default.Expand else Icons.Default.Camera
-                        Icon(
-                            imageVector = icon,
-                            contentDescription = icon.name,
-                        )
-                    }
-                },
-                keyboardOptions = KeyboardOptions(
-                    imeAction = ImeAction.Send,
-                ),
-                keyboardActions = KeyboardActions(
-                    onSend = {
-                        scope.launch {
-                            replyFocusRequester.freeFocus()
-                        }
-                        tweetDetailsViewModel.replyToTweet(tweetId)
-                    },
+            TextField(value = tweetDetailsScreenState.replyTweet, onValueChange = { value ->
+                tweetDetailsViewModel.updateTweetReply(value)
+            }, modifier = Modifier.fillMaxWidth().padding(5.dp).onFocusChanged { focus ->
+                tweetDetailsViewModel.replyTextFieldFocusChanged(focus.isFocused)
+            }.focusRequester(replyFocusRequester), placeholder = {
+                Text(
+                    Localization.POST_YOUR_REPLY,
                 )
+            }, trailingIcon = {
+                IconButton(
+                    onClick = {
+                        openCreateTweetWithParentId(
+                            tweetId, false, true
+                        )
+                    },
+                ) {
+                    val icon =
+                        if (tweetDetailsScreenState.isReplyTweetFocused) Icons.Default.Expand else Icons.Default.Camera
+                    Icon(
+                        imageVector = icon,
+                        contentDescription = icon.name,
+                    )
+                }
+            }, keyboardOptions = KeyboardOptions(
+                imeAction = ImeAction.Send,
+            ), keyboardActions = KeyboardActions(
+                onSend = {
+                    scope.launch {
+                        replyFocusRequester.freeFocus()
+                    }
+                    tweetDetailsViewModel.replyToTweet(tweetId)
+                },
+            )
             )
             AnimatedVisibility(
                 visible = tweetDetailsScreenState.isReplyTweetFocused

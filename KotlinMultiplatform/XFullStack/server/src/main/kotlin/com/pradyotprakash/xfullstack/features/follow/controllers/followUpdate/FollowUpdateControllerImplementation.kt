@@ -47,6 +47,9 @@ class FollowUpdateControllerImplementation : FollowUpdateController {
                 followerId = followerId, followingId = resource.followingId
             )
         ) {
+            Connections.sendMessageTo(followerId, FOLLOW_UPDATE_SUCCESS)
+            Connections.sendMessageTo(resource.followingId, FOLLOW_UPDATE_SUCCESS)
+
             call.respond(
                 HttpStatusCode.OK, XFullStackResponse(
                     status = XFullStackResponseStatus.Success,
@@ -68,6 +71,9 @@ class FollowUpdateControllerImplementation : FollowUpdateController {
                 throw DBWriteError()
             }
 
+            Connections.sendMessageTo(followerId, FOLLOW_UPDATE_SUCCESS)
+            Connections.sendMessageTo(resource.followingId, FOLLOW_UPDATE_SUCCESS)
+
             call.respond(
                 HttpStatusCode.Created, XFullStackResponse(
                     status = XFullStackResponseStatus.Success,
@@ -77,8 +83,5 @@ class FollowUpdateControllerImplementation : FollowUpdateController {
                 )
             )
         }
-
-        Connections.sendMessageTo(followerId, FOLLOW_UPDATE_SUCCESS)
-        Connections.sendMessageTo(resource.followingId, FOLLOW_UPDATE_SUCCESS)
     }
 }

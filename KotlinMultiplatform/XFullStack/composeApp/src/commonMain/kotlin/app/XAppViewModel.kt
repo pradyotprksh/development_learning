@@ -2,6 +2,7 @@ package app
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import core.models.response.ClientResponse
 import di.SharedModulesDi
 import domain.repositories.request.RequestRepository
 import domain.repositories.tweet.TweetRepository
@@ -38,7 +39,16 @@ class XAppViewModel(
         viewModelScope.launch {
             requestRepository.onRequestChanges().collect { requestsDb ->
                 requestsDb.forEach { requestDb ->
-                    requestRepository.initiateRequest(requestDb)
+                    requestRepository.initiateRequest(requestDb).collect {
+                        when (it) {
+                            is ClientResponse.Error -> showMessage(it.message)
+                            is ClientResponse.Success -> {
+                                it.data.message?.let { message -> showMessage(message) }
+                            }
+
+                            else -> {}
+                        }
+                    }
                 }
             }
         }

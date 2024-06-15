@@ -11,6 +11,7 @@ import core.models.response.PollChoicesResponse
 import core.models.response.TweetResponse
 import core.models.response.UserInfoResponse
 import io.realm.kotlin.ext.realmListOf
+import utils.Constants.Keys.TWEET_REQUEST
 
 fun UserInfoResponse.parseToCurrentUserInfoDB() = this.let { info ->
     CurrentUserInfoDB().apply {
@@ -201,6 +202,7 @@ fun List<TweetRequest>.parseToRequestDb() = this.let { tweets ->
     tweetDetailsDb.addAll(tweetsParse)
 
     RequestsDB().apply {
+        this.requestType = TWEET_REQUEST
         this.tweets = tweetDetailsDb
     }
 }

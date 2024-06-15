@@ -77,7 +77,7 @@ class TweetDBServiceImplementation(
 
     override suspend fun getAllUserPosts(userId: String): Flow<ResultsChange<TweetDB>> {
         return realm.query<TweetDB>(
-            "$CREATED_BY.$USER_ID == $0 AND ($IS_A_POLL == $1 OR $IS_A_QUOTE_TWEET == $2 OR $IS_A_REPOST_TWEET == $2)",
+            "$CREATED_BY.$USER_ID == $0 AND ($IS_A_POLL == $1 OR $IS_A_QUOTE_TWEET == $2 OR $IS_A_REPOST_TWEET == $3)",
             userId,
             true,
             true,
@@ -101,7 +101,7 @@ class TweetDBServiceImplementation(
 
     override suspend fun getAllUserReplies(userId: String): Flow<ResultsChange<TweetDB>> {
         return realm.query<TweetDB>(
-            "$CREATED_BY.$USER_ID == $0 AND $IS_A_COMMENT_TWEET == $0",
+            "$CREATED_BY.$USER_ID == $0 AND $IS_A_COMMENT_TWEET == $1",
             userId,
             true,
         ).sort(
@@ -112,7 +112,7 @@ class TweetDBServiceImplementation(
 
     override suspend fun getAllUserMedia(userId: String): Flow<ResultsChange<TweetDB>> {
         return realm.query<TweetDB>(
-            "$CREATED_BY.$USER_ID == $0 AND ($MEDIA.@size > $1 OR $GIF.@size > $2 )",
+            "$CREATED_BY.$USER_ID == $0 AND ($MEDIA.@size > $1 OR $GIF.@size > $2)",
             userId,
             0,
             1,

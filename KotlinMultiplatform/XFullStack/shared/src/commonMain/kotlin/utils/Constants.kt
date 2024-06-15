@@ -106,6 +106,9 @@ object Constants {
         const val KEY = "key"
         const val FOR_YOU_SCROLL_POSITION = "for_you_scroll_position"
         const val FOLLOWING_ID = "followingId"
+        const val TWEET_REQUEST = "tweetRequest"
+        const val FOLLOW_REQUEST = "followRequest"
+        const val BOOKMARK_REQUEST = "bookmarkRequest"
     }
 
     object ConstValues {

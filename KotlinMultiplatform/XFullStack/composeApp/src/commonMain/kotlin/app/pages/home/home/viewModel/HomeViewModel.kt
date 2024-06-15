@@ -207,4 +207,10 @@ class HomeViewModel(
     }
 
     fun getForYouScrollPosition() = currentUserRepository.getScrollPosition(FOR_YOU_SCROLL_POSITION)
+
+    fun bookmarkUpdate(tweetId: String) {
+        viewModelScope.launch {
+            requestRepository.saveBookmarkRequest(tweetId)
+        }
+    }
 }
