@@ -132,6 +132,13 @@ fun XApp(
             "${Routes.ProfileDetails.route}$value",
         )
     }
+    val drawerOpenClose = {
+        scope.launch {
+            drawerState.apply {
+                if (isClosed) open() else close()
+            }
+        }
+    }
 
     ModalNavigationDrawer(
         drawerState = drawerState, drawerContent = {
@@ -140,13 +147,12 @@ fun XApp(
             ) {
                 UserNavigationDrawerComposable(
                     openProfileDetails = { id ->
-                        scope.launch {
-                            drawerState.apply {
-                                close()
-                            }
-                        }
+                        drawerOpenClose()
                         navigateToProfileDetails(id)
                     },
+                    openBookmarkPage = {
+                        drawerOpenClose()
+                    }
                 )
             }
         }, gesturesEnabled = showDrawer(currentDestination?.route ?: "")
@@ -161,11 +167,7 @@ fun XApp(
                 ) {
                     UserAppBarComposable(
                         toggleNavDrawer = {
-                            scope.launch {
-                                drawerState.apply {
-                                    if (isClosed) open() else close()
-                                }
-                            }
+                            drawerOpenClose()
                         },
                     )
                 }

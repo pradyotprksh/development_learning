@@ -51,6 +51,7 @@ fun UserNavigationDrawerComposable(
     modifier: Modifier = Modifier,
     userDrawerViewModel: UserDrawerViewModel = viewModel { UserDrawerViewModel() },
     openProfileDetails: (String) -> Unit,
+    openBookmarkPage: () -> Unit,
 ) {
     LaunchedEffect(Unit) {
         userDrawerViewModel.initialSetup()
@@ -166,7 +167,7 @@ fun UserNavigationDrawerComposable(
                             contentDescription = Icons.Default.ShoppingCart.name,
                         )
                     },
-                    onClick = {},
+                    onClick = openBookmarkPage,
                 )
             }
             item {
