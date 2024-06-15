@@ -6,6 +6,7 @@ import app.pages.tweetDetails.state.TweetDetailsState
 import core.models.request.TweetRequest
 import core.models.response.ClientResponse
 import di.SharedModulesDi
+import domain.repositories.request.RequestRepository
 import domain.repositories.tweet.TweetRepository
 import domain.repositories.user.follow.UserFollowRepository
 import domain.repositories.view.ViewRepository
@@ -18,6 +19,7 @@ class TweetDetailsViewModel(
     private val tweetRepository: TweetRepository = SharedModulesDi.Instance.tweetRepository,
     private val viewRepository: ViewRepository = SharedModulesDi.Instance.viewRepository,
     private val followRepository: UserFollowRepository = SharedModulesDi.Instance.followRepository,
+    private val requestRepository: RequestRepository = SharedModulesDi.Instance.requestRepository,
 ) : ViewModel() {
     private val _tweetDetailsScreenState = MutableStateFlow(TweetDetailsState())
     val tweetDetailsScreen = _tweetDetailsScreenState.asStateFlow()
@@ -71,7 +73,7 @@ class TweetDetailsViewModel(
         val replyTweet = _tweetDetailsScreenState.value.replyTweet
         if (replyTweet.isNotBlank()) {
             viewModelScope.launch {
-                tweetRepository.saveTweetRequests(
+                requestRepository.saveTweetRequests(
                     listOf(
                         TweetRequest(
                             tweet = replyTweet.trim(),
@@ -105,7 +107,7 @@ class TweetDetailsViewModel(
             parentTweetId = tweetId,
         )
         viewModelScope.launch {
-            tweetRepository.saveTweetRequests(listOf(tweetRequest))
+            requestRepository.saveTweetRequests(listOf(tweetRequest))
         }
     }
 

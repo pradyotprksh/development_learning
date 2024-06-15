@@ -4,6 +4,7 @@ import core.database.XFullStackDatabaseClient
 import core.network.GeminiHttpClient
 import core.network.NetworkClient
 import core.network.XFullStackHttpClient
+import data.device.request.RequestDBServiceImplementation
 import data.device.tweet.TweetDBServiceImplementation
 import data.device.user.current.CurrentUserDBServiceImplementation
 import data.device.user.user.UserDBServiceImplementation
@@ -18,6 +19,8 @@ import data.remote.view.ViewRemoteServiceImplementation
 import data.remote.websocket.WebsocketRemoteServiceImplementation
 import domain.repositories.gemini.GeminiRepository
 import domain.repositories.gemini.GeminiRepositoryImplementation
+import domain.repositories.request.RequestRepository
+import domain.repositories.request.RequestRepositoryImplementation
 import domain.repositories.server.utils.ServerUtilsRepository
 import domain.repositories.server.utils.ServerUtilsRepositoryImplementation
 import domain.repositories.tweet.TweetRepository
@@ -35,6 +38,7 @@ import domain.repositories.view.ViewRepositoryImplementation
 import domain.repositories.websocket.WebsocketRepository
 import domain.repositories.websocket.WebsocketRepositoryImplementation
 import domain.services.gemini.GeminiRemoteService
+import domain.services.request.RequestDBService
 import domain.services.server.utils.ServerUtilsRemoteService
 import domain.services.tweet.TweetDBService
 import domain.services.tweet.TweetRemoteService
@@ -77,6 +81,8 @@ object SharedModulesDi {
         bindProvider<ViewDBService> { ViewDBServiceImplementation(instance()) }
 
         bindProvider<UserDBService> { UserDBServiceImplementation(instance()) }
+
+        bindProvider<RequestDBService> { RequestDBServiceImplementation(instance()) }
     }
 
     private val servicesRemoteModule = DI.Module("SERVICES_REMOTE") {
@@ -145,6 +151,10 @@ object SharedModulesDi {
         bind<UserRepository>() with singleton {
             UserRepositoryImplementation(instance())
         }
+
+        bind<RequestRepository>() with singleton {
+            RequestRepositoryImplementation(instance())
+        }
     }
 
     val di = DI {
@@ -167,5 +177,6 @@ object SharedModulesDi {
         val geminiRepository: GeminiRepository by di.instance()
         val followRepository: UserFollowRepository by di.instance()
         val userRepository: UserRepository by di.instance()
+        val requestRepository: RequestRepository by di.instance()
     }
 }

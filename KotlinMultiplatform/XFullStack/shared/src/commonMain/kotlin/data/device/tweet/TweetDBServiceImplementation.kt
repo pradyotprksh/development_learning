@@ -1,10 +1,7 @@
 package data.device.tweet
 
 import core.models.realm.TweetDB
-import core.models.realm.TweetRequestsDB
-import core.models.request.TweetRequest
 import core.models.response.TweetResponse
-import core.parser.parseToTweetRequestDb
 import core.parser.parseToTweetsDB
 import domain.services.tweet.TweetDBService
 import io.realm.kotlin.Realm
@@ -23,7 +20,6 @@ import utils.Constants.DbKeys.IS_A_QUOTE_TWEET
 import utils.Constants.DbKeys.IS_A_REPOST_TWEET
 import utils.Constants.DbKeys.MEDIA
 import utils.Constants.DbKeys.PARENT_TWEET_ID
-import utils.Constants.DbKeys.REQUEST_ID
 import utils.Constants.DbKeys.TWEETED_ON_TIMESTAMP
 import utils.Constants.DbKeys.TWEET_ID
 import utils.Constants.DbKeys.USER_ID
@@ -49,10 +45,6 @@ class TweetDBServiceImplementation(
         ).asFlow()
     }
 
-    override fun getAllTweetRequests(): Flow<ResultsChange<TweetRequestsDB>> {
-        return realm.query<TweetRequestsDB>().asFlow()
-    }
-
     override fun getTweetChanges(id: String): Flow<SingleQueryChange<TweetDB>> {
         return realm.query<TweetDB>(
             "$TWEET_ID == $0", id
@@ -70,13 +62,6 @@ class TweetDBServiceImplementation(
         ).asFlow()
     }
 
-    override suspend fun deleteTweetRequest(id: String) {
-        realm.write {
-            query<TweetRequestsDB>("$REQUEST_ID == $0", id).find().firstOrNull()
-                ?.let { delete(it) }
-        }
-    }
-
     override fun getTweetById(id: String): TweetDB? {
         return realm.query<TweetDB>("$TWEET_ID == $0", id).find().firstOrNull()
     }
@@ -89,12 +74,6 @@ class TweetDBServiceImplementation(
             }
         }
     }
-
-    override suspend fun saveTweetRequests(tweetRequest: List<TweetRequest>): TweetRequestsDB =
-        realm.write {
-            val unmanagedObject = tweetRequest.parseToTweetRequestDb()
-            copyToRealm(unmanagedObject, updatePolicy = UpdatePolicy.ALL)
-        }
 
     override suspend fun getAllUserPosts(userId: String): Flow<ResultsChange<TweetDB>> {
         return realm.query<TweetDB>(

@@ -1,7 +1,5 @@
 package domain.repositories.tweet
 
-import core.models.realm.TweetRequestsDB
-import core.models.request.TweetRequest
 import core.models.response.ClientResponse
 import core.models.response.TweetResponse
 import core.models.response.XFullStackResponse
@@ -20,19 +18,9 @@ interface TweetRepository {
 
     suspend fun getAllTweetsReplyFor(id: String): Flow<List<TweetResponse>>
 
-    suspend fun allTweetRequestChanges(): Flow<List<TweetRequestsDB>>
-
-    suspend fun deleteTweetRequest(id: String)
-
     suspend fun updateTweetPoll(
         tweetId: String,
         pollId: String,
-    ): Flow<ClientResponse<out XFullStackResponse<Nothing>>>
-
-    suspend fun saveTweetRequests(tweets: List<TweetRequest>)
-
-    suspend fun uploadTweets(
-        tweetRequestsDb: TweetRequestsDB,
     ): Flow<ClientResponse<out XFullStackResponse<Nothing>>>
 
     suspend fun getTweetDetails(

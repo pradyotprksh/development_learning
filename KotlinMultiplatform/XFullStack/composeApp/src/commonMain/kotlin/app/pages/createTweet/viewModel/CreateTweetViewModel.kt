@@ -6,6 +6,7 @@ import app.pages.createTweet.state.CreateTweetState
 import app.pages.createTweet.state.TweetDetails
 import core.models.request.TweetRequest
 import di.SharedModulesDi
+import domain.repositories.request.RequestRepository
 import domain.repositories.tweet.TweetRepository
 import domain.repositories.user.current.CurrentUserRepository
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -19,6 +20,7 @@ import utils.Localization
 class CreateTweetViewModel(
     private val currentUserRepository: CurrentUserRepository = SharedModulesDi.Instance.currentUserRepository,
     private val tweetRepository: TweetRepository = SharedModulesDi.Instance.tweetRepository,
+    private val requestRepository: RequestRepository = SharedModulesDi.Instance.requestRepository,
 ) : ViewModel() {
     private val _createTweetState = MutableStateFlow(CreateTweetState())
     val createTweetState = _createTweetState.asStateFlow()
@@ -243,7 +245,7 @@ class CreateTweetViewModel(
         }
         if (tweetRequests.isNotEmpty()) {
             viewModelScope.launch {
-                tweetRepository.saveTweetRequests(
+                requestRepository.saveTweetRequests(
                     tweetRequests.map {
                         TweetRequest(
                             tweet = it.tweet.trim(),

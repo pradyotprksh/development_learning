@@ -229,6 +229,7 @@ object Constants {
         const val MEDIA = "media"
         const val GIF = "gif"
         const val REQUEST_ID = "request_id"
+        const val REQUEST_TYPE = "request_type"
         const val IS_UPDATED_ONLINE = "is_updated_online"
         const val IS_FOLLOWED_BY_CURRENT_USER = "is_followed_by_current_user"
         const val IS_FOLLOWING_CURRENT_USER = "is_following_current_user"

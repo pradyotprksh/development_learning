@@ -6,6 +6,7 @@ import app.pages.home.home.state.HomeState
 import core.models.request.TweetRequest
 import core.models.response.ClientResponse
 import di.SharedModulesDi
+import domain.repositories.request.RequestRepository
 import domain.repositories.tweet.TweetRepository
 import domain.repositories.user.current.CurrentUserRepository
 import domain.repositories.view.ViewRepository
@@ -23,6 +24,7 @@ import utils.Constants.SuccessCode.TWEETS_UPDATE_SUCCESS_CODE
 class HomeViewModel(
     private val currentUserRepository: CurrentUserRepository = SharedModulesDi.Instance.currentUserRepository,
     private val tweetRepository: TweetRepository = SharedModulesDi.Instance.tweetRepository,
+    private val requestRepository: RequestRepository = SharedModulesDi.Instance.requestRepository,
     private val websocketRepository: WebsocketRepository = SharedModulesDi.Instance.websocketRepository,
     private val viewRepository: ViewRepository = SharedModulesDi.Instance.viewRepository,
 ) : ViewModel() {
@@ -187,7 +189,7 @@ class HomeViewModel(
             parentTweetId = tweetId,
         )
         viewModelScope.launch {
-            tweetRepository.saveTweetRequests(listOf(tweetRequest))
+            requestRepository.saveTweetRequests(listOf(tweetRequest))
         }
     }
 

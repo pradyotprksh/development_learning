@@ -2,9 +2,9 @@ package core.parser
 
 import core.models.realm.CurrentUserInfoDB
 import core.models.realm.PollChoicesDB
+import core.models.realm.RequestsDB
 import core.models.realm.TweetDB
 import core.models.realm.TweetRequestDB
-import core.models.realm.TweetRequestsDB
 import core.models.realm.UserInfoDB
 import core.models.request.TweetRequest
 import core.models.response.PollChoicesResponse
@@ -166,7 +166,7 @@ fun TweetDB.parseToTweetResponse(): TweetResponse = TweetResponse(
     parentTweetDetails = this.parentTweetDetails?.parseToTweetResponse(),
 )
 
-fun List<TweetRequest>.parseToTweetRequestDb() = this.let { tweets ->
+fun List<TweetRequest>.parseToRequestDb() = this.let { tweets ->
     val tweetsParse = tweets.map { tweetDetails ->
         val media = realmListOf<String>()
         tweetDetails.media.forEach { media.add(it) }
@@ -200,12 +200,12 @@ fun List<TweetRequest>.parseToTweetRequestDb() = this.let { tweets ->
     val tweetDetailsDb = realmListOf<TweetRequestDB>()
     tweetDetailsDb.addAll(tweetsParse)
 
-    TweetRequestsDB().apply {
+    RequestsDB().apply {
         this.tweets = tweetDetailsDb
     }
 }
 
-fun TweetRequestsDB.parseToTweetRequest() = this.tweets.map { db ->
+fun RequestsDB.parseToTweetRequest() = this.tweets.map { db ->
     TweetRequest(
         tweet = db.tweet,
         media = db.media,
