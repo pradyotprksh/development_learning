@@ -11,7 +11,7 @@ io-realm-kotlin = "2.0.0"
 kamel-image = "0.9.4"
 kodein-di = "7.20.1"
 kotlin = "2.0.0"
-kotlin-erialization = "1.9.23"
+kotlin-serialization = "1.9.23"
 kotlinx-coroutines = "1.8.0"
 kotlinx-datetime = "0.6.0"
 ktor = "2.3.10"
@@ -64,5 +64,5 @@ io-realm-kotlin = { id = "io.realm.kotlin", version.ref = "io-realm-kotlin" }
 jetbrainsCompose = { id = "org.jetbrains.compose", version.ref = "compose-plugin" }
 kotlinJvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
-kotlinSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin-erialization" }
+kotlinSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin-serialization" }
 ktor = { id = "io.ktor.plugin", version.ref = "ktor" }
