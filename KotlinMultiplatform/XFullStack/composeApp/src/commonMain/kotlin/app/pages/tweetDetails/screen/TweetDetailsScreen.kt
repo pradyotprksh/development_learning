@@ -346,7 +346,9 @@ fun TweetDetailsScreen(
                                     onTweetClick = { tweetId ->
                                         openTweetDetails(tweetId)
                                     },
-                                    onBookmark = {},
+                                    onBookmark = { id ->
+                                        tweetDetailsViewModel.bookmarkUpdate(id)
+                                    },
                                     onShare = {},
                                     onPollSelection = { _, _ -> },
                                     onComment = {},

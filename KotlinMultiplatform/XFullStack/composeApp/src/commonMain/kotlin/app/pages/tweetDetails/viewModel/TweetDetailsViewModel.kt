@@ -142,4 +142,8 @@ class TweetDetailsViewModel(
             }
         }
     }
+
+    fun bookmarkUpdate(tweetId: String) {
+        TODO("Not yet implemented")
+    }
 }
