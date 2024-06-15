@@ -6,6 +6,8 @@ import com.pradyotprakash.xfullstack.core.security.hashing.SHA256HashingService
 import com.pradyotprakash.xfullstack.core.security.token.JwtTokenService
 import com.pradyotprakash.xfullstack.core.security.token.TokenConfig
 import com.pradyotprakash.xfullstack.core.security.token.TokenService
+import com.pradyotprakash.xfullstack.data.bookmark.BookmarkDataSource
+import com.pradyotprakash.xfullstack.data.bookmark.MongoBookmarkDataSource
 import com.pradyotprakash.xfullstack.data.follow.FollowDataSource
 import com.pradyotprakash.xfullstack.data.follow.MongoFollowDataSource
 import com.pradyotprakash.xfullstack.data.tweet.MongoTweetDataSource
@@ -65,6 +67,7 @@ object ModulesConfig {
         bindProvider<TweetDataSource> { MongoTweetDataSource(instance()) }
         bindProvider<ViewDataSource> { MongoViewDataSource(instance()) }
         bindProvider<FollowDataSource> { MongoFollowDataSource(instance()) }
+        bindProvider<BookmarkDataSource> { MongoBookmarkDataSource(instance()) }
     }
 
     private val securityModule = DI.Module("SECURITY") {

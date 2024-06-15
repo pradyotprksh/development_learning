@@ -39,8 +39,6 @@ class MongoFollowDataSource(
         ).count()
     }
 
-    override suspend fun watchFollowUpdate() = followCollection.watch()
-
     override suspend fun isFollowingCurrentUser(currentUserId: String, createdBy: String): Boolean {
         return followCollection.find(
             Filters.and(

@@ -188,6 +188,8 @@ object Localization {
     const val REPLY = "Reply"
     const val FOLLOWER_REMOVED_SUCCESSFULLY = "Follower removed successfully"
     const val FOLLOWER_ADDED_SUCCESSFULLY = "Follower added successfully"
+    const val BOOKMARK_REMOVED_SUCCESSFULLY = "Bookmark removed successfully"
+    const val BOOKMARK_ADDED_SUCCESSFULLY = "Bookmark added successfully"
     const val CANNOT_FOLLOW_YOURSELF = "You cannot follow yourself."
     const val FOLLOW = "Follow"
     const val FOLLOW_BACK = "Follow Back"
@@ -196,4 +198,5 @@ object Localization {
     const val HIGHLIGHTS = "Highlights"
     const val REPLIES = "Replies"
     const val ARTICLES = "Articles"
+    const val TWEET_NOT_FOUND = "Tweet not found"
 }

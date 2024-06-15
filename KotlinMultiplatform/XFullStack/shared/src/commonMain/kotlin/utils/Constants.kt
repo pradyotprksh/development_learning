@@ -17,6 +17,7 @@ object Constants {
             const val TWEET = "tweet"
             const val VIEWS = "views"
             const val FOLLOW = "follow"
+            const val BOOKMARK = "bookmark"
         }
     }
 
@@ -184,6 +185,7 @@ object Constants {
         const val PROFILE_PICTURE = "profile_picture"
         const val DATE_OF_BIRTH = "date_of_birth"
         const val USER_ID = "user_id"
+        const val BOOKMARKED_AT = "bookmarked_at"
         const val CREATED_BY = "created_by"
         const val TWEETED_ON = "tweeted_on"
         const val IS_A_POLL = "is_a_poll"
@@ -210,6 +212,7 @@ object Constants {
         const val IS_A_REPOST_TWEET = "is_a_repost_tweet"
         const val IS_A_LIKED_TWEET = "is_a_liked_tweet"
         const val IS_LIKED_BY_CURRENT_USER = "is_liked_by_current_user"
+        const val IS_BOOKMARKED_BY_CURRENT_USER = "is_bookmarked_by_current_user"
         const val VOTE_COUNT = "vote_count"
         const val VOTED_BY = "voted_by"
         const val VOTER_DETAILS = "voter_details"

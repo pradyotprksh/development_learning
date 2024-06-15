@@ -31,6 +31,7 @@ data class TweetResponse(
     val parentTweetDetails: TweetResponse?,
     val parentTweetDetailsNotFound: Boolean,
     val isLikedByCurrentUser: Boolean,
+    val isBookmarkedByCurrentUser: Boolean,
 ) {
     val aInnerTweet: Boolean
         get() = isRepostTweet || isLikedTweet

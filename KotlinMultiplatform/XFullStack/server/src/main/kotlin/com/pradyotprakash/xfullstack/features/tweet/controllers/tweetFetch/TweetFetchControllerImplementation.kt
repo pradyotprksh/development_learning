@@ -1,6 +1,7 @@
 package com.pradyotprakash.xfullstack.features.tweet.controllers.tweetFetch
 
 import com.pradyotprakash.xfullstack.core.data.parseToUserInfoResponse
+import com.pradyotprakash.xfullstack.data.bookmark.BookmarkDataSource
 import com.pradyotprakash.xfullstack.data.follow.FollowDataSource
 import com.pradyotprakash.xfullstack.data.tweet.TweetDataSource
 import com.pradyotprakash.xfullstack.data.tweet.data.Tweet
@@ -32,6 +33,7 @@ class TweetFetchControllerImplementation : TweetFetchController {
         tweetDataSource: TweetDataSource,
         viewDataSource: ViewDataSource,
         followDataSource: FollowDataSource,
+        bookmarkDataSource: BookmarkDataSource,
     ) {
         delay(API_RESPONSE_DELAY)
 
@@ -49,6 +51,7 @@ class TweetFetchControllerImplementation : TweetFetchController {
                 tweetDataSource,
                 viewDataSource,
                 followDataSource,
+                bookmarkDataSource,
                 tweet,
                 currentUserId
             )
@@ -69,6 +72,7 @@ class TweetFetchControllerImplementation : TweetFetchController {
         tweetDataSource: TweetDataSource,
         viewDataSource: ViewDataSource,
         followDataSource: FollowDataSource,
+        bookmarkDataSource: BookmarkDataSource,
         tweet: Tweet,
         currentUserId: String,
     ): TweetResponse {
@@ -116,6 +120,9 @@ class TweetFetchControllerImplementation : TweetFetchController {
             followDataSource.isFollowedByCurrentUser(currentUserId, tweet.createdBy.toHexString())
         val followersCount = followDataSource.getFollowerCount(tweet.createdBy.toHexString())
         val followingCount = followDataSource.getFollowingCount(tweet.createdBy.toHexString())
+        val isBookmarkedByCurrentUser =
+            bookmarkDataSource.isBookmarkedCurrentUser(currentUserId, tweetIdHexStr)
+        val bookmarkCount = bookmarkDataSource.getBookmarkCount(tweetIdHexStr)
 
         return TweetResponse(
             id = tweetIdHexStr,
@@ -135,7 +142,7 @@ class TweetFetchControllerImplementation : TweetFetchController {
             likesCount = likesCount,
             repostsCount = repostsCount,
             quotesCount = quoteCount,
-            bookmarksCount = 0,
+            bookmarksCount = bookmarkCount,
             views = viewsCount,
             isAPoll = isAPoll,
             pollChoices = tweet.pollChoices.map { pollChoice ->
@@ -154,6 +161,7 @@ class TweetFetchControllerImplementation : TweetFetchController {
             isRepostTweet = tweet.isRepostTweet,
             isLikedTweet = tweet.isLikedTweet,
             isLikedByCurrentUser = isLikedByCurrentUser,
+            isBookmarkedByCurrentUser = isBookmarkedByCurrentUser,
             parentTweetId = tweet.parentTweetId?.toHexString(),
             parentTweetDetailsNotFound = parentTweetDetailsNotFound,
             parentTweetDetails = parentTweetDetails?.let {
@@ -162,6 +170,7 @@ class TweetFetchControllerImplementation : TweetFetchController {
                     tweetDataSource,
                     viewDataSource,
                     followDataSource,
+                    bookmarkDataSource,
                     it,
                     currentUserId
                 )

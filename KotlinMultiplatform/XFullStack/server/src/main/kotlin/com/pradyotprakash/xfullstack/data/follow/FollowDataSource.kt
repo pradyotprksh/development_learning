@@ -1,7 +1,5 @@
 package com.pradyotprakash.xfullstack.data.follow
 
-import com.mongodb.kotlin.client.coroutine.ChangeStreamFlow
-
 interface FollowDataSource {
     suspend fun addFollower(follow: Follow): Boolean
 
@@ -10,8 +8,6 @@ interface FollowDataSource {
     suspend fun getFollowerCount(userId: String): Int
 
     suspend fun getFollowingCount(userId: String): Int
-
-    suspend fun watchFollowUpdate(): ChangeStreamFlow<Follow>
 
     suspend fun isFollowingCurrentUser(currentUserId: String, createdBy: String): Boolean
 

@@ -4,12 +4,14 @@ import com.pradyotprakash.xfullstack.config.ModulesConfig
 import com.pradyotprakash.xfullstack.core.security.hashing.HashingService
 import com.pradyotprakash.xfullstack.core.security.token.TokenConfig
 import com.pradyotprakash.xfullstack.core.security.token.TokenService
+import com.pradyotprakash.xfullstack.data.bookmark.BookmarkDataSource
 import com.pradyotprakash.xfullstack.data.follow.FollowDataSource
 import com.pradyotprakash.xfullstack.data.tweet.TweetDataSource
 import com.pradyotprakash.xfullstack.data.user.UserDataSource
 import com.pradyotprakash.xfullstack.data.view.ViewDataSource
 import com.pradyotprakash.xfullstack.features.authentication.authentication
 import com.pradyotprakash.xfullstack.features.authentication.controllers.AuthenticationController
+import com.pradyotprakash.xfullstack.features.bookmark.bookmark
 import com.pradyotprakash.xfullstack.features.bookmark.controllers.BookmarkController
 import com.pradyotprakash.xfullstack.features.follow.controllers.FollowController
 import com.pradyotprakash.xfullstack.features.follow.follow
@@ -34,6 +36,7 @@ fun Application.configureRouting() {
     val tweetDataSource by ModulesConfig.di.instance<TweetDataSource>()
     val viewDataSource by ModulesConfig.di.instance<ViewDataSource>()
     val followDataSource by ModulesConfig.di.instance<FollowDataSource>()
+    val bookmarkDataSource by ModulesConfig.di.instance<BookmarkDataSource>()
 
     val tokenService by ModulesConfig.di.instance<TokenService>()
     val tokenConfig by ModulesConfig.di.instance<TokenConfig>()
@@ -71,6 +74,7 @@ fun Application.configureRouting() {
             userDataSource = userDataSource,
             viewDataSource = viewDataSource,
             followDataSource = followDataSource,
+            bookmarkDataSource = bookmarkDataSource,
         )
         websockets()
         views(
@@ -87,6 +91,12 @@ fun Application.configureRouting() {
             userDataSource = userDataSource,
             followDataSource = followDataSource,
             followController = followController,
+        )
+        bookmark(
+            userDataSource = userDataSource,
+            tweetDataSource = tweetDataSource,
+            bookmarkDataSource = bookmarkDataSource,
+            bookmarkController = bookmarkController,
         )
     }
 }

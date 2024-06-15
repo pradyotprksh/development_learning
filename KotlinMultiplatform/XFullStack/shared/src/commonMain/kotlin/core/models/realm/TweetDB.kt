@@ -14,6 +14,7 @@ import utils.Constants.DbKeys.IS_A_LIKED_TWEET
 import utils.Constants.DbKeys.IS_A_POLL
 import utils.Constants.DbKeys.IS_A_QUOTE_TWEET
 import utils.Constants.DbKeys.IS_A_REPOST_TWEET
+import utils.Constants.DbKeys.IS_BOOKMARKED_BY_CURRENT_USER
 import utils.Constants.DbKeys.IS_LIKED_BY_CURRENT_USER
 import utils.Constants.DbKeys.IS_POLLING_ALLOWED
 import utils.Constants.DbKeys.LIKE_COUNT
@@ -94,6 +95,9 @@ class TweetDB : RealmObject {
 
     @PersistedName(IS_LIKED_BY_CURRENT_USER)
     var isLikedByCurrentUser: Boolean = false
+
+    @PersistedName(IS_BOOKMARKED_BY_CURRENT_USER)
+    var isBookmarkedByCurrentUser: Boolean = false
 
     @PersistedName(PARENT_TWEET_ID)
     var parentTweetId: String? = null

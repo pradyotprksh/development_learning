@@ -1,5 +1,6 @@
 package com.pradyotprakash.xfullstack.features.bookmark.controllers.bookmarkUpdate
 
+import com.pradyotprakash.xfullstack.data.bookmark.BookmarkDataSource
 import com.pradyotprakash.xfullstack.data.tweet.TweetDataSource
 import com.pradyotprakash.xfullstack.data.user.UserDataSource
 import com.pradyotprakash.xfullstack.features.bookmark.resource.BookmarkResource
@@ -11,5 +12,6 @@ interface BookmarkUpdateController {
         resource: BookmarkResource.Update,
         userDataSource: UserDataSource,
         tweetDataSource: TweetDataSource,
+        bookmarkDataSource: BookmarkDataSource,
     )
 }

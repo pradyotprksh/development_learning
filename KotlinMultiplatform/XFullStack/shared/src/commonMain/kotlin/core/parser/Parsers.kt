@@ -128,6 +128,7 @@ fun TweetResponse.parseToTweetsDB(): TweetDB = this.let { info ->
         this.isLikedTweet = info.isLikedTweet
         this.parentTweetId = info.parentTweetId
         this.isLikedByCurrentUser = info.isLikedByCurrentUser
+        this.isBookmarkedByCurrentUser = info.isBookmarkedByCurrentUser
         this.scheduledOnTweet = info.scheduledOnTweet
         this.parentTweetDetailsNotFound = info.parentTweetDetailsNotFound
         this.parentTweetDetails = info.parentTweetDetails?.parseToTweetsDB()
@@ -161,6 +162,7 @@ fun TweetDB.parseToTweetResponse(): TweetResponse = TweetResponse(
     isLikedByCurrentUser = this.isLikedByCurrentUser,
     scheduledOnTweet = this.scheduledOnTweet,
     parentTweetDetailsNotFound = this.parentTweetDetailsNotFound,
+    isBookmarkedByCurrentUser = this.isBookmarkedByCurrentUser,
     parentTweetDetails = this.parentTweetDetails?.parseToTweetResponse(),
 )
 
