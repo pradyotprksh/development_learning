@@ -13,6 +13,8 @@ import io.ktor.websocket.readText
 import kotlinx.coroutines.flow.flow
 import utils.Constants.ErrorCode.DEFAULT_ERROR_CODE
 import utils.Constants.Paths.Websockets.WEBSOCKETS
+import utils.Logger
+import utils.LoggerLevel
 
 class NetworkClient(
     val httpClient: HttpClient,
@@ -57,6 +59,7 @@ class NetworkClient(
                         emit(incomingMessage)
                     }
                 } catch (e: Exception) {
+                    Logger.log(LoggerLevel.Error, e.message ?: "")
                     emit(DEFAULT_ERROR_CODE)
                 }
             }

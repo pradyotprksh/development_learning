@@ -44,7 +44,7 @@ class BookmarkUpdateControllerImplementation : BookmarkUpdateController {
                 tweetId = resource.tweetId, userId = userId,
             )
         ) {
-            Connections.sendMessageTo(userId, TWEETS_UPDATE_SUCCESS_CODE)
+            Connections.sendMessageToAll(TWEETS_UPDATE_SUCCESS_CODE)
 
             call.respond(
                 HttpStatusCode.OK, XFullStackResponse(
@@ -67,7 +67,7 @@ class BookmarkUpdateControllerImplementation : BookmarkUpdateController {
                 throw DBWriteError()
             }
 
-            Connections.sendMessageTo(userId, TWEETS_UPDATE_SUCCESS_CODE)
+            Connections.sendMessageToAll(TWEETS_UPDATE_SUCCESS_CODE)
 
             call.respond(
                 HttpStatusCode.Created, XFullStackResponse(
