@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.pages.profileDetails.state.ProfileDetailsState
 import core.models.request.TweetRequest
-import core.models.response.ClientResponse
 import di.SharedModulesDi
 import domain.repositories.request.RequestRepository
 import domain.repositories.tweet.TweetRepository
@@ -132,14 +131,7 @@ class ProfileDetailsViewModel(
 
     fun updatePollOption(tweetId: String, optionId: String) {
         viewModelScope.launch {
-            tweetRepository.updateTweetPoll(tweetId, optionId).collect {
-                when (it) {
-                    is ClientResponse.Error -> showMessage(it.message)
-                    ClientResponse.Idle -> updateLoaderState(false)
-                    ClientResponse.Loading -> updateLoaderState(true)
-                    is ClientResponse.Success -> {}
-                }
-            }
+            requestRepository.savePollOptionRequest(tweetId, optionId)
         }
     }
 

@@ -16,4 +16,6 @@ interface RequestRepository {
     suspend fun saveFollowRequest(followingId: String)
 
     suspend fun saveBookmarkRequest(tweetId: String)
+
+    suspend fun savePollOptionRequest(tweetId: String, optionId: String)
 }

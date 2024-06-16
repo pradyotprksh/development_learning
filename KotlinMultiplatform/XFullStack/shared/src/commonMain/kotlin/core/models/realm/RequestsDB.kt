@@ -9,6 +9,7 @@ import utils.Constants.DbKeys.FOLLOWING_ID
 import utils.Constants.DbKeys.REQUEST_ID
 import utils.Constants.DbKeys.REQUEST_TYPE
 import utils.Constants.DbKeys.TWEET_ID
+import utils.Constants.Keys.OPTION_ID
 
 class RequestsDB : RealmObject {
     @PrimaryKey
@@ -20,6 +21,9 @@ class RequestsDB : RealmObject {
 
     @PersistedName(TWEET_ID)
     var tweetId: String = ""
+
+    @PersistedName(OPTION_ID)
+    var optionId: String = ""
 
     @PersistedName(FOLLOWING_ID)
     var followingId: String = ""

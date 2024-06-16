@@ -13,11 +13,11 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.List
 import androidx.compose.material.icons.filled.AccountBox
+import androidx.compose.material.icons.filled.Bookmarks
 import androidx.compose.material.icons.filled.Build
 import androidx.compose.material.icons.filled.Call
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -163,8 +163,8 @@ fun UserNavigationDrawerComposable(
                     selected = false,
                     icon = {
                         Icon(
-                            imageVector = Icons.Default.ShoppingCart,
-                            contentDescription = Icons.Default.ShoppingCart.name,
+                            imageVector = Icons.Default.Bookmarks,
+                            contentDescription = Icons.Default.Bookmarks.name,
                         )
                     },
                     onClick = openBookmarkPage,

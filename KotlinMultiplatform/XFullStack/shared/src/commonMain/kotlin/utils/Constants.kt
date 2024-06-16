@@ -110,6 +110,7 @@ object Constants {
         const val TWEET_REQUEST = "tweetRequest"
         const val FOLLOW_REQUEST = "followRequest"
         const val BOOKMARK_REQUEST = "bookmarkRequest"
+        const val POLL_REQUEST = "pollRequest"
     }
 
     object ConstValues {

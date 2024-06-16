@@ -199,4 +199,8 @@ object Localization {
     const val REPLIES = "Replies"
     const val ARTICLES = "Articles"
     const val TWEET_NOT_FOUND = "Tweet not found"
+    const val CLEAR_ALL_BOOKMARKS = "Clear all Bookmarks"
+    const val SAVE_POSTS_FOR_LATER = "Save posts for later"
+    const val BOOKMARKS_POSTS_TO_EASILY_FIND =
+        "Bookmarks posts to easily find them again in the future"
 }

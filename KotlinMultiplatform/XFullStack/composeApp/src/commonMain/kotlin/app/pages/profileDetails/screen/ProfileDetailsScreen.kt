@@ -339,6 +339,7 @@ fun ProfileDetailsScreen(
                                     },
                                 ),
                             )
+                            HorizontalDivider()
                         }
                     }
                 }

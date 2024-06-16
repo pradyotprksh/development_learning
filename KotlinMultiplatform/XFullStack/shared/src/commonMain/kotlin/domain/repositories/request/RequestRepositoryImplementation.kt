@@ -16,6 +16,7 @@ import kotlinx.coroutines.flow.map
 import utils.Constants.ErrorCode.DEFAULT_ERROR_CODE
 import utils.Constants.Keys.BOOKMARK_REQUEST
 import utils.Constants.Keys.FOLLOW_REQUEST
+import utils.Constants.Keys.POLL_REQUEST
 import utils.Constants.Keys.TWEET_REQUEST
 import utils.Localization
 import utils.XFullStackResponseStatus
@@ -50,6 +51,8 @@ class RequestRepositoryImplementation(
                     userFollowRemoteService.updateFollowStatus(requestDb.followingId)
                 } else if (requestDb.requestType == BOOKMARK_REQUEST) {
                     userBookmarkRemoteService.updateBookmarkStatus(requestDb.tweetId)
+                } else if (requestDb.requestType == POLL_REQUEST) {
+                    tweetRemoteService.updateTweetPoll(requestDb.tweetId, requestDb.optionId)
                 } else {
                     null
                 }
@@ -95,6 +98,16 @@ class RequestRepositoryImplementation(
             RequestsDB().apply {
                 this.requestType = BOOKMARK_REQUEST
                 this.tweetId = tweetId
+            },
+        )
+    }
+
+    override suspend fun savePollOptionRequest(tweetId: String, optionId: String) {
+        requestDBService.saveRequests(
+            RequestsDB().apply {
+                this.requestType = POLL_REQUEST
+                this.tweetId = tweetId
+                this.optionId = optionId
             },
         )
     }

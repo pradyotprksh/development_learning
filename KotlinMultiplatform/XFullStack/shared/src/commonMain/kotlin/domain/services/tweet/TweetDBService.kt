@@ -11,6 +11,8 @@ interface TweetDBService {
 
     fun getAllTweets(): Flow<ResultsChange<TweetDB>>
 
+    fun allBookmarksTweetsChanges(userId: String): Flow<ResultsChange<TweetDB>>
+
     fun allFollowingTweetsChanges(userId: String): Flow<ResultsChange<TweetDB>>
 
     fun getTweetChanges(id: String): Flow<SingleQueryChange<TweetDB>>

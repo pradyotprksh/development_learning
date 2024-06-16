@@ -173,14 +173,7 @@ class HomeViewModel(
 
     fun updatePollOption(tweetId: String, optionId: String) {
         viewModelScope.launch {
-            tweetRepository.updateTweetPoll(tweetId, optionId).collect {
-                when (it) {
-                    is ClientResponse.Error -> showMessage(it.message)
-                    ClientResponse.Idle -> updateLoaderState(false)
-                    ClientResponse.Loading -> updateLoaderState(true)
-                    is ClientResponse.Success -> {}
-                }
-            }
+            requestRepository.savePollOptionRequest(tweetId, optionId)
         }
     }
 

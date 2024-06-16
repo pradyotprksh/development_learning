@@ -16,14 +16,11 @@ interface TweetRepository {
 
     suspend fun allFollowingTweetsChanges(userId: String): Flow<List<TweetResponse>>
 
+    suspend fun allBookmarksTweetsChanges(userId: String): Flow<List<TweetResponse>>
+
     suspend fun getTweetChanges(id: String): Flow<TweetResponse?>
 
     suspend fun getAllTweetsReplyFor(id: String): Flow<List<TweetResponse>>
-
-    suspend fun updateTweetPoll(
-        tweetId: String,
-        pollId: String,
-    ): Flow<ClientResponse<out XFullStackResponse<Nothing>>>
 
     suspend fun getTweetDetails(
         tweetId: String,

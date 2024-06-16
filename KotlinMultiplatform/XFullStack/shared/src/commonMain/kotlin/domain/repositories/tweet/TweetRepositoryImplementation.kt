@@ -56,6 +56,11 @@ class TweetRepositoryImplementation(
             .map { dbResult -> dbResult.list.map { db -> db.parseToTweetResponse() } }
     }
 
+    override suspend fun allBookmarksTweetsChanges(userId: String): Flow<List<TweetResponse>> {
+        return tweetDBService.allBookmarksTweetsChanges(userId)
+            .map { dbResult -> dbResult.list.map { db -> db.parseToTweetResponse() } }
+    }
+
     override suspend fun allFollowingTweetsChanges(userId: String): Flow<List<TweetResponse>> {
         return tweetDBService.allFollowingTweetsChanges(userId)
             .map { dbResult -> dbResult.list.map { db -> db.parseToTweetResponse() } }
@@ -69,32 +74,6 @@ class TweetRepositoryImplementation(
     override suspend fun getAllTweetsReplyFor(id: String): Flow<List<TweetResponse>> {
         return tweetDBService.getAllTweetsReplyFor(id)
             .map { dbResult -> dbResult.list.map { db -> db.parseToTweetResponse() } }
-    }
-
-    override suspend fun updateTweetPoll(tweetId: String, pollId: String) = flow {
-        try {
-            val response = tweetRemoteService.updateTweetPoll(tweetId, pollId)
-            if (response.status == XFullStackResponseStatus.Success) {
-                emit(
-                    ClientResponse.Success(response)
-                )
-            } else {
-                emit(
-                    ClientResponse.Error(
-                        message = response.message ?: Localization.DEFAULT_ERROR_MESSAGE,
-                        errorCode = response.code ?: DEFAULT_ERROR_CODE,
-                    )
-                )
-            }
-        } catch (e: Exception) {
-            emit(
-                ClientResponse.Error(
-                    message = e.message ?: Localization.DEFAULT_ERROR_MESSAGE,
-                    errorCode = DEFAULT_ERROR_CODE,
-                ),
-            )
-        }
-        emit(ClientResponse.Idle)
     }
 
     override suspend fun getTweetDetails(tweetId: String): TweetResponse? {

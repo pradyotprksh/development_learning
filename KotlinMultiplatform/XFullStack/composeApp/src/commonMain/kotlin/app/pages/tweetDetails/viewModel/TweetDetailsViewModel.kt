@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.pages.tweetDetails.state.TweetDetailsState
 import core.models.request.TweetRequest
-import core.models.response.ClientResponse
 import di.SharedModulesDi
 import domain.repositories.request.RequestRepository
 import domain.repositories.tweet.TweetRepository
@@ -117,19 +116,8 @@ class TweetDetailsViewModel(
 
     fun updatePollOption(tweetId: String, optionId: String) {
         viewModelScope.launch {
-            tweetRepository.updateTweetPoll(tweetId, optionId).collect {
-                when (it) {
-                    is ClientResponse.Error -> showMessage(it.message)
-                    else -> {}
-                }
-            }
+            requestRepository.savePollOptionRequest(tweetId, optionId)
         }
-    }
-
-    private fun showMessage(message: String) {
-        _tweetDetailsScreenState.value = _tweetDetailsScreenState.value.copy(
-            snackBarMessage = message,
-        )
     }
 
     fun followUpdate(followingId: String) {

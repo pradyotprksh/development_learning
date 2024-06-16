@@ -46,6 +46,7 @@ import app.navigation.showFloatingActionButton
 import app.pages.auth.authOptions.screen.AuthOptionsScreen
 import app.pages.auth.login.screen.LoginScreen
 import app.pages.auth.register.screen.RegisterScreen
+import app.pages.bookmarks.screen.BookmarksScreen
 import app.pages.createTweet.screen.CreateTweetScreen
 import app.pages.home.bottomBar.HomeBottomNavItems
 import app.pages.home.home.screen.HomeScreen
@@ -132,6 +133,9 @@ fun XApp(
             "${Routes.ProfileDetails.route}$value",
         )
     }
+    val navigateToBookmarks = {
+        navController.navigate(Routes.Bookmarks.path())
+    }
     val drawerOpenClose = {
         scope.launch {
             drawerState.apply {
@@ -152,7 +156,8 @@ fun XApp(
                     },
                     openBookmarkPage = {
                         drawerOpenClose()
-                    }
+                        navigateToBookmarks()
+                    },
                 )
             }
         }, gesturesEnabled = showDrawer(currentDestination?.route ?: "")
@@ -295,6 +300,22 @@ fun XApp(
                 composable(Routes.HomeCommunities.path()) { }
                 composable(Routes.HomeNotifications.path()) { }
                 composable(Routes.HomeMessages.path()) { }
+                composable(Routes.Bookmarks.path()) {
+                    BookmarksScreen(
+                        onNavigateBack = {
+                            navController.popBackStack()
+                        },
+                        openCreateTweetWithParentId = { id, isRetweet, isReply ->
+                            navigateToCreateTweet(id, isRetweet, isReply)
+                        },
+                        openTweetDetails = { id ->
+                            navigateToTweetDetails(id)
+                        },
+                        openProfileDetails = { id ->
+                            navigateToProfileDetails(id)
+                        },
+                    )
+                }
                 composable(
                     Routes.CreateTweet.path(),
                     arguments = Routes.CreateTweet.arguments.map {
