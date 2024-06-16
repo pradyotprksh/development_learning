@@ -28,7 +28,6 @@ import app.composables.CircularDotComposable
 import app.composables.ProfileImageComposable
 import app.composables.UsernameClickableComposable
 import app.pages.home.home.state.TweetActions
-import core.models.response.PollChoicesResponse
 import core.models.response.TweetResponse
 import utils.Constants.ConstValues.USERNAME_PREFIX
 import utils.Localization
@@ -36,56 +35,43 @@ import utils.Localization
 @Composable
 fun TweetComposable(
     modifier: Modifier = Modifier,
-    createdByProfilePicture: String?,
-    createdByUserId: String?,
-    createdByName: String,
-    createdByUsername: String,
-    tweetedOn: String,
-    tweet: String,
-    tweetId: String,
-    commentCount: String,
-    retweetCount: String,
-    likeCount: String,
-    views: String,
-    isAPoll: Boolean,
-    aInnerTweet: Boolean,
-    isLikedTweet: Boolean,
-    isQuoteTweet: Boolean,
-    isLikedByCurrentUser: Boolean,
-    isBookmarkedByCurrentUser: Boolean,
-    isACommentTweet: Boolean,
-    pollChoices: List<PollChoicesResponse>,
-    isPollingAllowed: Boolean,
-    pollingEndTime: String,
+    tweet: TweetResponse,
     showTweetActions: Boolean,
-    parentTweetDetails: TweetResponse?,
-    onPollSelection: (String) -> Unit,
-    tweetActions: TweetActions,
+    tweetActions: TweetActions = TweetActions(),
 ) {
+    val parentTweetDetails = tweet.parentTweetDetails
+    val shownTweet = if (tweet.aInnerTweet) parentTweetDetails else tweet
+    val shownTweetCreatedBy = shownTweet?.createdBy
+
     Column(
         modifier = Modifier.fillMaxWidth(),
     ) {
-        if (aInnerTweet) {
-            ParentTweetReactionComposable(
-                icon = if (isLikedTweet) Icons.Default.ThumbUp else Icons.Default.Loop,
-                text = Localization.format(
-                    if (isLikedTweet) Localization.LIKED else Localization.REPOSTED,
-                    createdByName,
-                ),
-            )
+        if (tweet.aInnerTweet) {
+            tweet.createdBy?.name?.let { name ->
+                ParentTweetReactionComposable(
+                    icon = if (tweet.isLikedTweet) Icons.Default.ThumbUp else Icons.Default.Loop,
+                    text = Localization.format(
+                        if (tweet.isLikedTweet) Localization.LIKED else Localization.REPOSTED,
+                        name,
+                    ),
+                )
+            }
         }
         Row(
             modifier = modifier.fillMaxWidth()
         ) {
-            ProfileImageComposable(
-                profileImage = createdByProfilePicture, modifier = Modifier.size(40.dp).clickable(
-                    indication = null,
-                    interactionSource = remember { MutableInteractionSource() },
-                    onClick = {
-                        tweetActions.profileImageClick(createdByUserId ?: "")
-                    },
+            shownTweetCreatedBy?.let {
+                ProfileImageComposable(
+                    profileImage = shownTweetCreatedBy.profilePicture,
+                    modifier = Modifier.size(40.dp).clickable(
+                        indication = null,
+                        interactionSource = remember { MutableInteractionSource() },
+                        onClick = {
+                            tweetActions.profileImageClick(shownTweetCreatedBy.id)
+                        },
+                    )
                 )
-            )
+            }
 
             Column(
                 modifier = Modifier.padding(
@@ -95,34 +81,34 @@ fun TweetComposable(
                     indication = null,
                     interactionSource = remember { MutableInteractionSource() },
                     onClick = {
-                        tweetActions.onTweetClick(tweetId)
+                        tweetActions.onTweetClick(shownTweet?.id ?: "")
                     },
                 )
             ) {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Center,
-                ) {
-                    Text(
-                        createdByName, style = MaterialTheme.typography.titleMedium
-                    )
-                    Spacer(modifier = Modifier.width(2.dp))
-                    Text(
-                        "${USERNAME_PREFIX}${createdByUsername}",
-                        style = MaterialTheme.typography.bodySmall
-                    )
-                    Spacer(modifier = Modifier.width(4.dp))
-                    if (tweetedOn.isNotBlank()) {
+                shownTweetCreatedBy?.let {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.Center,
+                    ) {
+                        Text(
+                            shownTweetCreatedBy.name, style = MaterialTheme.typography.titleMedium
+                        )
+                        Spacer(modifier = Modifier.width(2.dp))
+                        Text(
+                            "${USERNAME_PREFIX}${shownTweetCreatedBy.username}",
+                            style = MaterialTheme.typography.bodySmall
+                        )
+                        Spacer(modifier = Modifier.width(4.dp))
                         CircularDotComposable(
                             modifier = Modifier.size(3.dp),
                         )
                         Spacer(modifier = Modifier.width(4.dp))
                         Text(
-                            tweetedOn, style = MaterialTheme.typography.bodySmall
+                            shownTweet.tweetedOn, style = MaterialTheme.typography.bodySmall
                         )
                     }
                 }
-                if (isACommentTweet) {
+                if (tweet.isACommentTweet) {
                     parentTweetDetails?.createdBy?.let { createdBy ->
                         Spacer(modifier = Modifier.height(5.dp))
                         UsernameClickableComposable(
@@ -135,74 +121,57 @@ fun TweetComposable(
                     }
                 }
                 Spacer(modifier = Modifier.height(5.dp))
-                Text(
-                    tweet,
-                )
-                if (isAPoll) {
-                    Spacer(modifier = Modifier.height(10.dp))
-                    PollChoicesComposable(
-                        modifier = Modifier.fillMaxWidth(),
-                        pollChoices = pollChoices,
-                        isPollingAllowed = isPollingAllowed,
-                        pollingEndTime = pollingEndTime,
-                        totalVotesOnPoll = pollChoices.sumOf { it.voteCount },
-                        onPollSelection = onPollSelection,
+                shownTweet?.let {
+                    Text(
+                        shownTweet.tweet,
                     )
-                }
-                if (parentTweetDetails != null && isQuoteTweet) {
-                    Spacer(modifier = Modifier.height(10.dp))
-                    TweetComposable(
-                        modifier = Modifier.border(
-                            width = Dp.Hairline,
-                            color = MaterialTheme.colorScheme.outlineVariant,
-                            shape = RoundedCornerShape(10.dp)
-                        ).padding(
-                            horizontal = 15.dp, vertical = 8.dp
-                        ),
-                        createdByProfilePicture = parentTweetDetails.createdBy?.profilePicture,
-                        createdByName = parentTweetDetails.createdBy?.name ?: "",
-                        createdByUserId = parentTweetDetails.createdBy?.id ?: "",
-                        createdByUsername = parentTweetDetails.createdBy?.username ?: "",
-                        tweetedOn = "",
-                        tweet = parentTweetDetails.tweet,
-                        tweetId = parentTweetDetails.id,
-                        commentCount = "${parentTweetDetails.commentCount}",
-                        retweetCount = "${parentTweetDetails.retweetCount}",
-                        likeCount = "${parentTweetDetails.likesCount}",
-                        views = "${parentTweetDetails.views}",
-                        isAPoll = parentTweetDetails.isAPoll,
-                        isQuoteTweet = false,
-                        isLikedByCurrentUser = parentTweetDetails.isLikedByCurrentUser,
-                        isBookmarkedByCurrentUser = parentTweetDetails.isBookmarkedByCurrentUser,
-                        pollChoices = parentTweetDetails.pollChoices.toList(),
-                        isPollingAllowed = parentTweetDetails.isPollingAllowed,
-                        pollingEndTime = parentTweetDetails.pollingEndTime,
-                        showTweetActions = false,
-                        parentTweetDetails = null,
-                        onPollSelection = {},
-                        tweetActions = TweetActions(),
-                        isACommentTweet = parentTweetDetails.isACommentTweet,
-                        isLikedTweet = parentTweetDetails.isLikedTweet,
-                        aInnerTweet = parentTweetDetails.aInnerTweet,
-                    )
+                    if (shownTweet.isAPoll) {
+                        Spacer(modifier = Modifier.height(10.dp))
+                        PollChoicesComposable(
+                            modifier = Modifier.fillMaxWidth(),
+                            tweetId = shownTweet.id,
+                            pollChoices = shownTweet.pollChoices,
+                            isPollingAllowed = shownTweet.isPollingAllowed,
+                            pollingEndTime = shownTweet.pollingEndTime,
+                            totalVotesOnPoll = shownTweet.pollChoices.sumOf { it.voteCount },
+                            onPollSelection = tweetActions.onPollSelection,
+                        )
+                    }
+
+                    if (parentTweetDetails != null && tweet.isQuoteTweet) {
+                        Spacer(modifier = Modifier.height(10.dp))
+                        TweetComposable(
+                            modifier = Modifier.border(
+                                width = Dp.Hairline,
+                                color = MaterialTheme.colorScheme.outlineVariant,
+                                shape = RoundedCornerShape(10.dp)
+                            ).padding(
+                                horizontal = 15.dp, vertical = 8.dp
+                            ),
+                            tweet = parentTweetDetails,
+                            showTweetActions = false,
+                        )
+                    }
                 }
                 if (showTweetActions) {
-                    TweetActionsComposable(
-                        commentCount = commentCount,
-                        retweetCount = retweetCount,
-                        likeCount = likeCount,
-                        views = views,
-                        isLikedByCurrentUser = isLikedByCurrentUser,
-                        isBookmarkedByCurrentUser = isBookmarkedByCurrentUser,
-                        bookmarkModifier = Modifier.size(15.dp),
-                        shareModifier = Modifier.size(15.dp),
-                        onBookmark = { tweetActions.onBookmark(tweetId) },
-                        onShare = { tweetActions.onShare(tweetId) },
-                        onAddComment = { tweetActions.onComment(tweetId) },
-                        onRepost = { tweetActions.onRepost(tweetId) },
-                        onLike = { tweetActions.onLike(tweetId) },
-                        onViews = { tweetActions.onViews(tweetId) },
-                    )
+                    shownTweet?.let {
+                        TweetActionsComposable(
+                            commentCount = shownTweet.commentCount.toString(),
+                            retweetCount = shownTweet.retweetCount.toString(),
+                            likeCount = shownTweet.likesCount.toString(),
+                            views = shownTweet.views.toString(),
+                            isLikedByCurrentUser = shownTweet.isLikedByCurrentUser,
+                            isBookmarkedByCurrentUser = shownTweet.isBookmarkedByCurrentUser,
+                            bookmarkModifier = Modifier.size(15.dp),
+                            shareModifier = Modifier.size(15.dp),
+                            onBookmark = { tweetActions.onBookmark(shownTweet.id) },
+                            onShare = { tweetActions.onShare(shownTweet.id) },
+                            onAddComment = { tweetActions.onComment(shownTweet.id) },
+                            onRepost = { tweetActions.onRepost(shownTweet.id) },
+                            onLike = { tweetActions.onLike(shownTweet.id) },
+                            onViews = { tweetActions.onViews(shownTweet.id) },
+                        )
+                    }
                 }
             }
         }

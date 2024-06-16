@@ -61,7 +61,7 @@ fun TweetCreatorDetailsComposable(
             isFollowingCurrentUser = isFollowingCurrentUser,
             isFollowedByCurrentUser = isFollowedByCurrentUser,
             isCurrentUser = isSameUser,
-            onClick = {},
+            onClick = followUpdate,
         )
         Spacer(modifier = Modifier.width(2.dp))
         IconButton(onClick = {}) {

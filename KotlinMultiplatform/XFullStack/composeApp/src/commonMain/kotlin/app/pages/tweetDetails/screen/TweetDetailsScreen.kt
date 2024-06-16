@@ -138,8 +138,8 @@ fun TweetDetailsScreen(
                         tweet.createdBy?.let { createdBy ->
                             TweetCreatorDetailsComposable(
                                 modifier = Modifier.fillMaxWidth().padding(
-                                        all = 10.dp,
-                                    ),
+                                    all = 10.dp,
+                                ),
                                 createdBy = createdBy,
                                 isSameUser = createdBy.isSameUser,
                                 isFollowedByCurrentUser = createdBy.isFollowedByCurrentUser,
@@ -172,11 +172,12 @@ fun TweetDetailsScreen(
                                     end = 10.dp,
                                     bottom = 10.dp,
                                 ),
+                                tweetId = tweet.id,
                                 pollChoices = tweet.pollChoices,
                                 isPollingAllowed = tweet.isPollingAllowed,
                                 pollingEndTime = tweet.pollingEndTime,
                                 totalVotesOnPoll = tweet.pollChoices.sumOf { choice -> choice.voteCount },
-                                onPollSelection = { },
+                                onPollSelection = { _, _ -> },
                             )
                         }
                     }
@@ -199,28 +200,8 @@ fun TweetDetailsScreen(
                                         ).padding(
                                             horizontal = 15.dp, vertical = 8.dp
                                         ),
-                                        createdByProfilePicture = parentTweetDetails.createdBy?.profilePicture,
-                                        createdByName = parentTweetDetails.createdBy?.name ?: "",
-                                        createdByUserId = parentTweetDetails.createdBy?.id ?: "",
-                                        createdByUsername = parentTweetDetails.createdBy?.username
-                                            ?: "",
-                                        tweetedOn = parentTweetDetails.tweetedOn,
-                                        tweet = parentTweetDetails.tweet,
-                                        tweetId = parentTweetDetails.id,
-                                        commentCount = "${parentTweetDetails.commentCount}",
-                                        retweetCount = "${parentTweetDetails.retweetCount}",
-                                        likeCount = "${parentTweetDetails.likesCount}",
-                                        views = "${parentTweetDetails.views}",
-                                        isAPoll = parentTweetDetails.isAPoll,
-                                        isQuoteTweet = parentTweetDetails.isQuoteTweet,
-                                        isLikedByCurrentUser = parentTweetDetails.isLikedByCurrentUser,
-                                        isBookmarkedByCurrentUser = parentTweetDetails.isBookmarkedByCurrentUser,
-                                        pollChoices = parentTweetDetails.pollChoices.toList(),
-                                        isPollingAllowed = parentTweetDetails.isPollingAllowed,
-                                        pollingEndTime = parentTweetDetails.pollingEndTime,
+                                        tweet = parentTweetDetails,
                                         showTweetActions = false,
-                                        parentTweetDetails = null,
-                                        onPollSelection = { },
                                         tweetActions = TweetActions(
                                             profileImageClick = {},
                                             onTweetClick = { tweetId ->
@@ -242,9 +223,6 @@ fun TweetDetailsScreen(
                                                 )
                                             },
                                         ),
-                                        isACommentTweet = tweet.isACommentTweet,
-                                        isLikedTweet = tweet.isLikedTweet,
-                                        aInnerTweet = tweet.aInnerTweet,
                                     )
                                 }
                             }
@@ -321,29 +299,8 @@ fun TweetDetailsScreen(
                                 modifier = Modifier.padding(
                                     horizontal = 15.dp, vertical = 8.dp
                                 ),
-                                createdByProfilePicture = replyTweet.createdBy?.profilePicture,
-                                createdByName = replyTweet.createdBy?.name ?: "",
-                                createdByUsername = replyTweet.createdBy?.username ?: "",
-                                createdByUserId = replyTweet.createdBy?.id ?: "",
-                                tweetedOn = replyTweet.tweetedOn,
-                                tweet = replyTweet.tweet,
-                                tweetId = replyTweet.id,
-                                commentCount = "${replyTweet.commentCount}",
-                                retweetCount = "${replyTweet.retweetCount}",
-                                likeCount = "${replyTweet.likesCount}",
-                                views = "${replyTweet.views}",
-                                isAPoll = replyTweet.isAPoll,
-                                isQuoteTweet = replyTweet.isQuoteTweet,
-                                isLikedByCurrentUser = replyTweet.isLikedByCurrentUser,
-                                isBookmarkedByCurrentUser = replyTweet.isBookmarkedByCurrentUser,
-                                pollChoices = replyTweet.pollChoices.toList(),
-                                isPollingAllowed = replyTweet.isPollingAllowed,
-                                pollingEndTime = replyTweet.pollingEndTime,
+                                tweet = replyTweet,
                                 showTweetActions = true,
-                                parentTweetDetails = replyTweet.parentTweetDetails,
-                                onPollSelection = { optionId ->
-                                    tweetDetailsViewModel.updatePollOption(replyTweet.id, optionId)
-                                },
                                 tweetActions = TweetActions(
                                     profileImageClick = {
                                         openProfileDetails(replyTweet.createdBy?.id ?: "")
@@ -355,7 +312,9 @@ fun TweetDetailsScreen(
                                         tweetDetailsViewModel.bookmarkUpdate(id)
                                     },
                                     onShare = {},
-                                    onPollSelection = { _, _ -> },
+                                    onPollSelection = { tweetId, optionId ->
+                                        tweetDetailsViewModel.updatePollOption(tweetId, optionId)
+                                    },
                                     onComment = {},
                                     onViews = {},
                                     onLike = { id -> tweetDetailsViewModel.onLikeTweet(id) },
@@ -365,9 +324,6 @@ fun TweetDetailsScreen(
                                         )
                                     },
                                 ),
-                                isACommentTweet = replyTweet.isACommentTweet,
-                                isLikedTweet = replyTweet.isLikedTweet,
-                                aInnerTweet = replyTweet.aInnerTweet,
                             )
                             HorizontalDivider()
                         }

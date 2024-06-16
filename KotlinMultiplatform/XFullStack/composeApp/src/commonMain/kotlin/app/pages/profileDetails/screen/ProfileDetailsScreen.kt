@@ -290,41 +290,14 @@ fun ProfileDetailsScreen(
                         modifier = Modifier.fillMaxWidth(),
                     ) {
                         posts.forEach { post ->
-                            val shownTweet =
-                                if (post.aInnerTweet) if (post.parentTweetNotPresent) null else post.parentTweetDetails else post
-
-                            if (shownTweet != null) {
-                                TweetComposable(
-                                    modifier = Modifier.padding(
-                                        horizontal = 15.dp, vertical = 8.dp
-                                    ),
-                                    createdByProfilePicture = shownTweet.createdBy?.profilePicture,
-                                    createdByName = shownTweet.createdBy?.name ?: "",
-                                    createdByUsername = shownTweet.createdBy?.username ?: "",
-                                    createdByUserId = shownTweet.createdBy?.id ?: "",
-                                    tweetedOn = shownTweet.tweetedOn,
-                                    tweet = shownTweet.tweet,
-                                    tweetId = shownTweet.id,
-                                    commentCount = "${shownTweet.commentCount}",
-                                    retweetCount = "${shownTweet.retweetCount}",
-                                    likeCount = "${shownTweet.likesCount}",
-                                    views = "${shownTweet.views}",
-                                    isAPoll = shownTweet.isAPoll,
-                                    isQuoteTweet = shownTweet.isQuoteTweet,
-                                    pollChoices = shownTweet.pollChoices.toList(),
-                                    isPollingAllowed = shownTweet.isPollingAllowed,
-                                    pollingEndTime = shownTweet.pollingEndTime,
-                                    showTweetActions = true,
-                                    onPollSelection = { },
-                                    tweetActions = TweetActions(),
-                                    isLikedByCurrentUser = shownTweet.isLikedByCurrentUser,
-                                    isBookmarkedByCurrentUser = shownTweet.isBookmarkedByCurrentUser,
-                                    parentTweetDetails = shownTweet.parentTweetDetails,
-                                    isACommentTweet = shownTweet.isACommentTweet,
-                                    isLikedTweet = post.isLikedTweet,
-                                    aInnerTweet = shownTweet.aInnerTweet,
-                                )
-                            }
+                            TweetComposable(
+                                modifier = Modifier.padding(
+                                    horizontal = 15.dp, vertical = 8.dp
+                                ),
+                                tweet = post,
+                                showTweetActions = true,
+                                tweetActions = TweetActions(),
+                            )
                         }
                     }
                 }

@@ -179,6 +179,7 @@ object Constants {
         const val TWEETS_DELETED_SUCCESS_CODE = "SC_XFS004"
         const val DB_MIGRATION_SUCCESS_CODE = "SC_XFS005"
         const val FOLLOW_UPDATE_SUCCESS = "SC_XFS006"
+        const val WEBSOCKET_CONNECTION_SUCCESS = "SC_XFS007"
     }
 
     object DbKeys {

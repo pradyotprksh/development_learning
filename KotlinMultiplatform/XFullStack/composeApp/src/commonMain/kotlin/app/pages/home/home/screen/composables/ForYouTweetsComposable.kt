@@ -42,8 +42,6 @@ fun ForYouTweetsComposable(
         ) {
             items(tweets.size) { index ->
                 val tweet = tweets[index]
-                val shownTweet =
-                    if (tweet.aInnerTweet) if (tweet.parentTweetNotPresent) null else tweet.parentTweetDetails else tweet
 
                 Column(
                     modifier = Modifier.fillMaxWidth().onGloballyPositioned { layoutCoordinates ->
@@ -59,43 +57,14 @@ fun ForYouTweetsComposable(
                     if (index != 0) {
                         HorizontalDivider()
                     }
-                    if (shownTweet != null) {
-                        TweetComposable(
-                            modifier = Modifier.padding(
-                                horizontal = 15.dp, vertical = 8.dp
-                            ),
-                            createdByProfilePicture = shownTweet.createdBy?.profilePicture,
-                            createdByName = shownTweet.createdBy?.name ?: "",
-                            createdByUsername = shownTweet.createdBy?.username ?: "",
-                            createdByUserId = shownTweet.createdBy?.id ?: "",
-                            tweetedOn = shownTweet.tweetedOn,
-                            tweet = shownTweet.tweet,
-                            tweetId = shownTweet.id,
-                            commentCount = "${shownTweet.commentCount}",
-                            retweetCount = "${shownTweet.retweetCount}",
-                            likeCount = "${shownTweet.likesCount}",
-                            views = "${shownTweet.views}",
-                            isAPoll = shownTweet.isAPoll,
-                            isQuoteTweet = shownTweet.isQuoteTweet,
-                            pollChoices = shownTweet.pollChoices.toList(),
-                            isPollingAllowed = shownTweet.isPollingAllowed,
-                            pollingEndTime = shownTweet.pollingEndTime,
-                            showTweetActions = true,
-                            onPollSelection = { optionId ->
-                                tweetActions.onPollSelection(
-                                    shownTweet.id,
-                                    optionId,
-                                )
-                            },
-                            tweetActions = tweetActions,
-                            isLikedByCurrentUser = shownTweet.isLikedByCurrentUser,
-                            isBookmarkedByCurrentUser = shownTweet.isBookmarkedByCurrentUser,
-                            parentTweetDetails = tweet.parentTweetDetails,
-                            isACommentTweet = shownTweet.isACommentTweet,
-                            isLikedTweet = tweet.isLikedTweet,
-                            aInnerTweet = tweet.aInnerTweet,
-                        )
-                    }
+                    TweetComposable(
+                        modifier = Modifier.padding(
+                            horizontal = 15.dp, vertical = 8.dp
+                        ),
+                        tweet = tweet,
+                        showTweetActions = true,
+                        tweetActions = tweetActions,
+                    )
                     HorizontalDivider()
                 }
             }

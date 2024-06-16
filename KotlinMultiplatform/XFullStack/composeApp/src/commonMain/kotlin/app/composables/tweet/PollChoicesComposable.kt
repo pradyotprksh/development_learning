@@ -29,11 +29,12 @@ import utils.UtilsMethod
 @Composable
 fun PollChoicesComposable(
     modifier: Modifier = Modifier,
+    tweetId: String,
     pollChoices: List<PollChoicesResponse>,
     isPollingAllowed: Boolean,
     pollingEndTime: String,
     totalVotesOnPoll: Int,
-    onPollSelection: (String) -> Unit,
+    onPollSelection: (String, String) -> Unit,
 ) {
     Column(
         modifier = modifier,
@@ -50,7 +51,7 @@ fun PollChoicesComposable(
                     interactionSource = remember { MutableInteractionSource() },
                 ) {
                     if (isPollingAllowed) {
-                        onPollSelection(pollChoice.id)
+                        onPollSelection(tweetId, pollChoice.id)
                     }
                 },
             ) {

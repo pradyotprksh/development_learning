@@ -31,7 +31,6 @@ import androidx.compose.ui.unit.dp
 import app.composables.ProfileImageComposable
 import app.composables.tweet.TweetComposable
 import app.pages.createTweet.state.TweetDetails
-import app.pages.home.home.state.TweetActions
 import core.models.response.TweetResponse
 
 @Composable
@@ -67,31 +66,8 @@ fun TweetTextFieldComposable(
                     modifier = Modifier.padding(
                         horizontal = 15.dp, vertical = 8.dp
                     ),
-                    createdByProfilePicture = parentTweetDetails.createdBy?.profilePicture,
-                    createdByName = parentTweetDetails.createdBy?.name ?: "",
-                    createdByUsername = parentTweetDetails.createdBy?.username ?: "",
-                    createdByUserId = parentTweetDetails.createdBy?.id ?: "",
-                    tweetedOn = parentTweetDetails.tweetedOn,
-                    tweet = parentTweetDetails.tweet,
-                    tweetId = parentTweetDetails.id,
-                    commentCount = "${parentTweetDetails.commentCount}",
-                    retweetCount = "${parentTweetDetails.retweetCount}",
-                    likeCount = "${parentTweetDetails.likesCount}",
-                    views = "${parentTweetDetails.views}",
-                    isAPoll = parentTweetDetails.isAPoll,
-                    isQuoteTweet = false,
-                    isLikedByCurrentUser = parentTweetDetails.isLikedByCurrentUser,
-                    isBookmarkedByCurrentUser = parentTweetDetails.isBookmarkedByCurrentUser,
-                    pollChoices = parentTweetDetails.pollChoices.toList(),
-                    isPollingAllowed = parentTweetDetails.isPollingAllowed,
-                    pollingEndTime = parentTweetDetails.pollingEndTime,
+                    tweet = parentTweetDetails,
                     showTweetActions = false,
-                    parentTweetDetails = null,
-                    onPollSelection = {},
-                    tweetActions = TweetActions(),
-                    isACommentTweet = parentTweetDetails.isACommentTweet,
-                    isLikedTweet = parentTweetDetails.isLikedTweet,
-                    aInnerTweet = parentTweetDetails.aInnerTweet,
                 )
                 Spacer(modifier = Modifier.height(5.dp))
             }
@@ -169,31 +145,8 @@ fun TweetTextFieldComposable(
                     modifier = Modifier.padding(
                         horizontal = 15.dp, vertical = 8.dp
                     ),
-                    createdByProfilePicture = parentTweetDetails.createdBy?.profilePicture,
-                    createdByName = parentTweetDetails.createdBy?.name ?: "",
-                    createdByUsername = parentTweetDetails.createdBy?.username ?: "",
-                    createdByUserId = parentTweetDetails.createdBy?.id ?: "",
-                    tweetedOn = parentTweetDetails.tweetedOn,
-                    tweet = parentTweetDetails.tweet,
-                    tweetId = parentTweetDetails.id,
-                    commentCount = "${parentTweetDetails.commentCount}",
-                    retweetCount = "${parentTweetDetails.retweetCount}",
-                    likeCount = "${parentTweetDetails.likesCount}",
-                    views = "${parentTweetDetails.views}",
-                    isAPoll = parentTweetDetails.isAPoll,
-                    isQuoteTweet = false,
-                    isLikedByCurrentUser = parentTweetDetails.isLikedByCurrentUser,
-                    isBookmarkedByCurrentUser = parentTweetDetails.isBookmarkedByCurrentUser,
-                    pollChoices = parentTweetDetails.pollChoices.toList(),
-                    isPollingAllowed = parentTweetDetails.isPollingAllowed,
-                    pollingEndTime = parentTweetDetails.pollingEndTime,
+                    tweet = parentTweetDetails,
                     showTweetActions = false,
-                    parentTweetDetails = null,
-                    onPollSelection = {},
-                    tweetActions = TweetActions(),
-                    isACommentTweet = parentTweetDetails.isACommentTweet,
-                    isLikedTweet = parentTweetDetails.isLikedTweet,
-                    aInnerTweet = parentTweetDetails.aInnerTweet,
                 )
             }
         }
