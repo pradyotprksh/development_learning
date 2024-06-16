@@ -27,7 +27,7 @@ import app.pages.home.home.state.TweetActions
 import core.models.response.TweetResponse
 
 @Composable
-fun ForYouTweetsComposable(
+fun ForYouFollowingTweetsComposable(
     modifier: Modifier = Modifier,
     tweets: List<TweetResponse> = emptyList(),
     showLoading: Boolean = false,

@@ -27,7 +27,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
-import app.pages.home.home.screen.composables.ForYouTweetsComposable
+import app.pages.home.home.screen.composables.ForYouFollowingTweetsComposable
 import app.pages.home.home.state.TweetActions
 import app.pages.home.home.viewModel.HomeViewModel
 import kotlinx.coroutines.FlowPreview
@@ -132,7 +132,7 @@ fun HomeScreen(
             ) { page ->
                 when (page) {
                     0 -> {
-                        ForYouTweetsComposable(
+                        ForYouFollowingTweetsComposable(
                             tweets = homeScreenState.forYouTweets,
                             showLoading = homeScreenState.showLoading,
                             tweetsLazyColumnState = forYouLazyListState,
@@ -162,7 +162,7 @@ fun HomeScreen(
                     }
 
                     1 -> {
-                        ForYouTweetsComposable(
+                        ForYouFollowingTweetsComposable(
                             tweets = homeScreenState.followingTweets,
                             showLoading = homeScreenState.showLoading,
                             tweetsLazyColumnState = followingLazyListState,
