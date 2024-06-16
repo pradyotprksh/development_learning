@@ -18,6 +18,9 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.rememberDrawerState
+import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
+import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -67,6 +70,7 @@ import utils.extensions.popUpToTop
 /**
  * XApp
  */
+@OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 @Composable
 fun XApp(
     navController: NavHostController = rememberNavController(),
@@ -75,6 +79,11 @@ fun XApp(
     LaunchedEffect(Unit) {
         xAppViewModel.initSetup()
     }
+
+    val windowSizeClass = calculateWindowSizeClass()
+    val isPhone =
+        windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact || windowSizeClass.widthSizeClass == WindowWidthSizeClass.Medium
+    val isTablet = windowSizeClass.widthSizeClass == WindowWidthSizeClass.Expanded
 
     val snackbarHostState = remember { SnackbarHostState() }
     val xAppState by xAppViewModel.xAppState.collectAsState()
@@ -248,6 +257,7 @@ fun XApp(
                 }
                 composable(Routes.AuthenticationOption.path()) {
                     AuthOptionsScreen(
+                        isPhone = isPhone,
                         navigateToLogin = navigateToLogin,
                         navigateToRegister = navigateToRegister,
                     )

@@ -1,4 +1,4 @@
-package app.pages.auth.authOptions.composables
+package app.pages.auth.authOptions.screen.composables
 
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable

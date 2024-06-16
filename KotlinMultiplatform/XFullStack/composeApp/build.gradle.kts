@@ -51,6 +51,7 @@ kotlin {
             implementation(projects.shared)
             implementation(libs.kotlinx.coroutines.core)
             implementation(libs.kamel.image)
+            api(libs.compose.window.size)
         }
 
         desktopMain.dependencies {
