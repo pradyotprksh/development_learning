@@ -333,15 +333,21 @@ fun XApp(
                     val tweetIdArgument = it.arguments?.getString(TWEET_ID)
                     val tweetId = if (tweetIdArgument == NO_NAV_VALUE) null else tweetIdArgument
 
-                    TweetDetailsScreen(tweetId = tweetId ?: "", onNavigateBack = {
-                        navController.popBackStack()
-                    }, openCreateTweetWithParentId = { id, isRetweet, isReply ->
-                        navigateToCreateTweet(id, isRetweet, isReply)
-                    }, openTweetDetails = { id ->
-                        navigateToTweetDetails(id)
-                    }, openProfileDetails = { id ->
-                        navigateToProfileDetails(id)
-                    })
+                    TweetDetailsScreen(
+                        tweetId = tweetId ?: "",
+                        onNavigateBack = {
+                            navController.popBackStack()
+                        },
+                        openCreateTweetWithParentId = { id, isRetweet, isReply ->
+                            navigateToCreateTweet(id, isRetweet, isReply)
+                        },
+                        openTweetDetails = { id ->
+                            navigateToTweetDetails(id)
+                        },
+                        openProfileDetails = { id ->
+                            navigateToProfileDetails(id)
+                        },
+                    )
                 }
                 composable(
                     Routes.ProfileDetails.path(),
@@ -359,6 +365,15 @@ fun XApp(
                         userId = userId,
                         onNavigateBack = {
                             navController.popBackStack()
+                        },
+                        openCreateTweetWithParentId = { id, isRetweet, isReply ->
+                            navigateToCreateTweet(id, isRetweet, isReply)
+                        },
+                        openTweetDetails = { id ->
+                            navigateToTweetDetails(id)
+                        },
+                        openProfileDetails = { id ->
+                            navigateToProfileDetails(id)
                         },
                     )
                 }

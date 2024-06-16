@@ -49,6 +49,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Rect
+import androidx.compose.ui.layout.boundsInParent
+import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -69,6 +72,9 @@ fun ProfileDetailsScreen(
     profileDetailsViewModel: ProfileDetailsViewModel = viewModel { ProfileDetailsViewModel() },
     userId: String?,
     onNavigateBack: () -> Unit,
+    openCreateTweetWithParentId: (String, Boolean, Boolean) -> Unit,
+    openTweetDetails: (String) -> Unit,
+    openProfileDetails: (String) -> Unit,
 ) {
     LaunchedEffect(userId) {
         profileDetailsViewModel.initialSetup(userId)
@@ -293,10 +299,43 @@ fun ProfileDetailsScreen(
                             TweetComposable(
                                 modifier = Modifier.padding(
                                     horizontal = 15.dp, vertical = 8.dp
-                                ),
+                                ).onGloballyPositioned { layoutCoordinates ->
+                                    val itemBounds = layoutCoordinates.boundsInParent()
+                                    val parentBounds =
+                                        layoutCoordinates.parentCoordinates?.boundsInParent()
+                                            ?: Rect.Zero
+
+                                    if (parentBounds.left <= itemBounds.left && parentBounds.top <= itemBounds.top && parentBounds.right >= itemBounds.right && parentBounds.bottom >= itemBounds.bottom) {
+                                        profileDetailsViewModel.updateViewForTweet(post.id)
+                                    }
+                                },
                                 tweet = post,
                                 showTweetActions = true,
-                                tweetActions = TweetActions(),
+                                tweetActions = TweetActions(
+                                    profileImageClick = { id ->
+                                        openProfileDetails(id)
+                                    },
+                                    onTweetClick = { id ->
+                                        openTweetDetails(id)
+                                    },
+                                    onBookmark = { tweetId ->
+                                        profileDetailsViewModel.bookmarkUpdate(tweetId)
+                                    },
+                                    onShare = {},
+                                    onPollSelection = { tweetId, optionId ->
+                                        profileDetailsViewModel.updatePollOption(tweetId, optionId)
+                                    },
+                                    onComment = {},
+                                    onViews = {},
+                                    onLike = { id -> profileDetailsViewModel.onLikeTweet(id) },
+                                    onRepost = { id ->
+                                        openCreateTweetWithParentId(
+                                            id,
+                                            true,
+                                            false
+                                        )
+                                    },
+                                ),
                             )
                         }
                     }
