@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.CircleShape
@@ -48,7 +49,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -57,6 +57,8 @@ import app.composables.FollowingFollowerComposable
 import app.composables.LoadingDialogComposable
 import app.composables.ProfileImageComposable
 import app.composables.UsernameClickableComposable
+import app.composables.tweet.TweetComposable
+import app.pages.home.home.state.TweetActions
 import app.pages.profileDetails.viewModel.ProfileDetailsViewModel
 import kotlinx.coroutines.launch
 import utils.Localization
@@ -146,7 +148,7 @@ fun ProfileDetailsScreen(
                     }
                 },
                 colors = TopAppBarDefaults.centerAlignedTopAppBarColors().copy(
-                    containerColor = Color.Transparent,
+                    containerColor = MaterialTheme.colorScheme.primary,
                 ),
             )
         },
@@ -159,8 +161,10 @@ fun ProfileDetailsScreen(
 
         LazyColumn(
             modifier = Modifier.fillMaxSize().padding(
-                bottom = paddingValues.calculateBottomPadding() + 25.dp,
-            )
+                top = paddingValues.calculateTopPadding(),
+                bottom = paddingValues.calculateBottomPadding(),
+            ),
+            state = rememberLazyListState(),
         ) {
             profileDetailsState.userInfoResponse?.let { userDetails ->
                 item {
@@ -271,7 +275,59 @@ fun ProfileDetailsScreen(
             item {
                 HorizontalPager(
                     state = tabPagerState,
-                ) {}
+                ) {
+                    val pageTitle = profileDetailsState.tabsDetails[it]
+                    val posts = when (pageTitle) {
+                        Localization.POSTS -> profileDetailsState.posts
+                        Localization.REPLIES -> profileDetailsState.replies
+                        Localization.HIGHLIGHTS -> profileDetailsState.highlights
+                        Localization.MEDIA -> profileDetailsState.media
+                        Localization.LIKES -> profileDetailsState.likes
+                        else -> emptyList()
+                    }
+
+                    Column(
+                        modifier = Modifier.fillMaxWidth(),
+                    ) {
+                        posts.forEach { post ->
+                            val shownTweet =
+                                if (post.aInnerTweet) if (post.parentTweetNotPresent) null else post.parentTweetDetails else post
+
+                            if (shownTweet != null) {
+                                TweetComposable(
+                                    modifier = Modifier.padding(
+                                        horizontal = 15.dp, vertical = 8.dp
+                                    ),
+                                    createdByProfilePicture = shownTweet.createdBy?.profilePicture,
+                                    createdByName = shownTweet.createdBy?.name ?: "",
+                                    createdByUsername = shownTweet.createdBy?.username ?: "",
+                                    createdByUserId = shownTweet.createdBy?.id ?: "",
+                                    tweetedOn = shownTweet.tweetedOn,
+                                    tweet = shownTweet.tweet,
+                                    tweetId = shownTweet.id,
+                                    commentCount = "${shownTweet.commentCount}",
+                                    retweetCount = "${shownTweet.retweetCount}",
+                                    likeCount = "${shownTweet.likesCount}",
+                                    views = "${shownTweet.views}",
+                                    isAPoll = shownTweet.isAPoll,
+                                    isQuoteTweet = shownTweet.isQuoteTweet,
+                                    pollChoices = shownTweet.pollChoices.toList(),
+                                    isPollingAllowed = shownTweet.isPollingAllowed,
+                                    pollingEndTime = shownTweet.pollingEndTime,
+                                    showTweetActions = true,
+                                    onPollSelection = { },
+                                    tweetActions = TweetActions(),
+                                    isLikedByCurrentUser = shownTweet.isLikedByCurrentUser,
+                                    isBookmarkedByCurrentUser = shownTweet.isBookmarkedByCurrentUser,
+                                    parentTweetDetails = shownTweet.parentTweetDetails,
+                                    isACommentTweet = shownTweet.isACommentTweet,
+                                    isLikedTweet = post.isLikedTweet,
+                                    aInnerTweet = shownTweet.aInnerTweet,
+                                )
+                            }
+                        }
+                    }
+                }
             }
         }
     }
