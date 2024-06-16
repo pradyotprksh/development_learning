@@ -53,11 +53,15 @@ fun HomeScreen(
     val forYouLazyListState = rememberLazyListState(
         initialFirstVisibleItemIndex = homeViewModel.getForYouScrollPosition()
     )
+    val followingLazyListState = rememberLazyListState(
+        initialFirstVisibleItemIndex = homeViewModel.getFollowingScrollPosition()
+    )
     val snackbarHostState = remember { SnackbarHostState() }
     val shouldStartPaginate = remember {
         derivedStateOf {
-            homeScreenState.canPaginate && (forYouLazyListState.layoutInfo.visibleItemsInfo.lastOrNull()?.index
-                ?: -9) >= (forYouLazyListState.layoutInfo.totalItemsCount - 6)
+            homeScreenState.canPaginate && ((forYouLazyListState.layoutInfo.visibleItemsInfo.lastOrNull()?.index
+                ?: -9) >= (forYouLazyListState.layoutInfo.totalItemsCount - 6) || (followingLazyListState.layoutInfo.visibleItemsInfo.lastOrNull()?.index
+                ?: -9) >= (followingLazyListState.layoutInfo.totalItemsCount - 6))
         }
     }
 
@@ -70,6 +74,14 @@ fun HomeScreen(
             forYouLazyListState.firstVisibleItemIndex
         }.debounce(500).collectLatest { index ->
             homeViewModel.updateForYouScrollPosition(index)
+        }
+    }
+
+    LaunchedEffect(followingLazyListState) {
+        snapshotFlow {
+            followingLazyListState.firstVisibleItemIndex
+        }.debounce(500).collectLatest { index ->
+            homeViewModel.updateFollowingScrollPosition(index)
         }
     }
 
@@ -149,7 +161,35 @@ fun HomeScreen(
                         )
                     }
 
-                    1 -> {}
+                    1 -> {
+                        ForYouTweetsComposable(
+                            tweets = homeScreenState.followingTweets,
+                            showLoading = homeScreenState.showLoading,
+                            tweetsLazyColumnState = followingLazyListState,
+                            tweetActions = TweetActions(
+                                profileImageClick = { id ->
+                                    openProfileDetails(id)
+                                },
+                                onTweetClick = {
+                                    openTweetDetails(it)
+                                },
+                                onBookmark = { tweetId ->
+                                    homeViewModel.bookmarkUpdate(tweetId)
+                                },
+                                onShare = {},
+                                onPollSelection = { tweetId, optionId ->
+                                    homeViewModel.updatePollOption(tweetId, optionId)
+                                },
+                                onComment = {},
+                                onViews = {},
+                                onLike = { homeViewModel.onLikeTweet(it) },
+                                onRepost = { openCreateTweetWithParentId(it, true, false) },
+                            ),
+                            tweetVisibility = {
+                                homeViewModel.updateViewForTweet(it)
+                            },
+                        )
+                    }
                 }
             }
         }

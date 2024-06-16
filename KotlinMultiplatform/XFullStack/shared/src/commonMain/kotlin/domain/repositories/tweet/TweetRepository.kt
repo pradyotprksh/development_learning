@@ -14,6 +14,8 @@ interface TweetRepository {
 
     suspend fun allTweetsChanges(): Flow<List<TweetResponse>>
 
+    suspend fun allFollowingTweetsChanges(userId: String): Flow<List<TweetResponse>>
+
     suspend fun getTweetChanges(id: String): Flow<TweetResponse?>
 
     suspend fun getAllTweetsReplyFor(id: String): Flow<List<TweetResponse>>

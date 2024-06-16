@@ -226,7 +226,9 @@ fun ProfileDetailsScreen(
                                 isFollowingCurrentUser = userDetails.isFollowingCurrentUser,
                                 isFollowedByCurrentUser = userDetails.isFollowedByCurrentUser,
                                 isCurrentUser = userDetails.isSameUser,
-                                onClick = {},
+                                onClick = {
+                                    profileDetailsViewModel.followUpdate(userDetails.id)
+                                },
                             )
                         }
                         UsernameClickableComposable(

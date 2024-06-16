@@ -18,6 +18,7 @@ import utils.Constants.DbKeys.IS_A_LIKED_TWEET
 import utils.Constants.DbKeys.IS_A_POLL
 import utils.Constants.DbKeys.IS_A_QUOTE_TWEET
 import utils.Constants.DbKeys.IS_A_REPOST_TWEET
+import utils.Constants.DbKeys.IS_FOLLOWING_CURRENT_USER
 import utils.Constants.DbKeys.MEDIA
 import utils.Constants.DbKeys.PARENT_TWEET_ID
 import utils.Constants.DbKeys.TWEETED_ON_TIMESTAMP
@@ -40,6 +41,15 @@ class TweetDBServiceImplementation(
 
     override fun getAllTweets(): Flow<ResultsChange<TweetDB>> {
         return realm.query<TweetDB>().sort(
+            property = TWEETED_ON_TIMESTAMP,
+            sortOrder = Sort.DESCENDING,
+        ).asFlow()
+    }
+
+    override fun allFollowingTweetsChanges(userId: String): Flow<ResultsChange<TweetDB>> {
+        return realm.query<TweetDB>(
+            "$CREATED_BY.$IS_FOLLOWING_CURRENT_USER == $0", true,
+        ).sort(
             property = TWEETED_ON_TIMESTAMP,
             sortOrder = Sort.DESCENDING,
         ).asFlow()

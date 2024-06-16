@@ -16,6 +16,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.launch
 import utils.Constants.ConstValues.DEFAULT_PAGINATE_LIMIT
+import utils.Constants.Keys.FOLLOWING_SCROLL_POSITION
 import utils.Constants.Keys.FOR_YOU_SCROLL_POSITION
 import utils.Constants.SuccessCode.FOLLOW_UPDATE_SUCCESS
 import utils.Constants.SuccessCode.TWEETS_DELETED_SUCCESS_CODE
@@ -32,17 +33,16 @@ class HomeViewModel(
     val homeScreenState = _homeScreenState.asStateFlow()
 
     init {
-        viewModelScope.launch {
-            startSocketListener()
-            getAllTweets()
-        }
+        startSocketListener()
+        getAllTweets()
+        getAllFollowingTweets()
     }
 
     private fun startSocketListener() {
         viewModelScope.launch {
             websocketRepository.connectAndListen().mapNotNull { it }.collect {
                 if (it == TWEETS_UPDATE_SUCCESS_CODE) {
-                    updateForYouAllTweets(
+                    updateAllTweets(
                         1,
                         _homeScreenState.value.forYouTweets.size,
                     )
@@ -54,7 +54,7 @@ class HomeViewModel(
                         }
                     }
                 } else if (it == FOLLOW_UPDATE_SUCCESS) {
-                    updateForYouAllTweets(
+                    updateAllTweets(
                         1,
                         _homeScreenState.value.forYouTweets.size,
                     )
@@ -92,27 +92,27 @@ class HomeViewModel(
     }
 
     suspend fun initialSetup() {
-        updateForYouAllTweets(
-            page = _homeScreenState.value.forYouTweetPage,
+        updateAllTweets(
+            page = _homeScreenState.value.tweetPage,
             limit = DEFAULT_PAGINATE_LIMIT,
         )
     }
 
     fun updateTweetsPage() {
-        if (_homeScreenState.value.isNewTweetFound) {
+        if (_homeScreenState.value.isForYouNewTweetFound) {
             viewModelScope.launch {
                 _homeScreenState.value = _homeScreenState.value.copy(
-                    forYouTweetPage = _homeScreenState.value.forYouTweetPage + 1,
+                    tweetPage = _homeScreenState.value.tweetPage + 1,
                 )
-                updateForYouAllTweets(
-                    page = _homeScreenState.value.forYouTweetPage,
+                updateAllTweets(
+                    page = _homeScreenState.value.tweetPage,
                     limit = 10,
                 )
             }
         }
     }
 
-    private suspend fun updateForYouAllTweets(
+    private suspend fun updateAllTweets(
         page: Int,
         limit: Int,
     ) {
@@ -147,12 +147,27 @@ class HomeViewModel(
         )
     }
 
-    private suspend fun getAllTweets() {
-        tweetRepository.allTweetsChanges().collect {
-            _homeScreenState.value = _homeScreenState.value.copy(
-                forYouTweets = it,
-                isNewTweetFound = it.size != _homeScreenState.value.forYouTweets.size,
-            )
+    private fun getAllTweets() {
+        viewModelScope.launch {
+            tweetRepository.allTweetsChanges().collect {
+                _homeScreenState.value = _homeScreenState.value.copy(
+                    forYouTweets = it,
+                    isForYouNewTweetFound = it.size != _homeScreenState.value.forYouTweets.size,
+                )
+            }
+        }
+    }
+
+    private fun getAllFollowingTweets() {
+        viewModelScope.launch {
+            currentUserRepository.getUserId()?.let { userId ->
+                tweetRepository.allFollowingTweetsChanges(userId).collect {
+                    _homeScreenState.value = _homeScreenState.value.copy(
+                        followingTweets = it,
+                        isFollowingNewTweetFound = it.size != _homeScreenState.value.followingTweets.size,
+                    )
+                }
+            }
         }
     }
 
@@ -207,6 +222,16 @@ class HomeViewModel(
     }
 
     fun getForYouScrollPosition() = currentUserRepository.getScrollPosition(FOR_YOU_SCROLL_POSITION)
+
+    suspend fun updateFollowingScrollPosition(index: Int) {
+        currentUserRepository.updateScrollPosition(
+            FOLLOWING_SCROLL_POSITION,
+            index,
+        )
+    }
+
+    fun getFollowingScrollPosition() =
+        currentUserRepository.getScrollPosition(FOLLOWING_SCROLL_POSITION)
 
     fun bookmarkUpdate(tweetId: String) {
         viewModelScope.launch {

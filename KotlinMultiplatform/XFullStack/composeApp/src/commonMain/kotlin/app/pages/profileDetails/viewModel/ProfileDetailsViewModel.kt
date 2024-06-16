@@ -172,4 +172,10 @@ class ProfileDetailsViewModel(
             viewRepository.saveView(tweetId)
         }
     }
+
+    fun followUpdate(followingId: String) {
+        viewModelScope.launch {
+            requestRepository.saveFollowRequest(followingId)
+        }
+    }
 }
