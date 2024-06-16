@@ -15,6 +15,8 @@ import androidx.compose.material.icons.filled.ThumbUp
 import androidx.compose.material.icons.filled.ThumbsUpDown
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.LocalContentColor
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -60,6 +62,7 @@ fun TweetActionsComposable(
             text = likeCount,
             icon = if (isLikedByCurrentUser) Icons.Default.ThumbUp else Icons.Default.ThumbsUpDown,
             onClick = onLike,
+            tint = if (isLikedByCurrentUser) MaterialTheme.colorScheme.primary else null
         )
         if (showViews) {
             Spacer(modifier = Modifier.weight(1f))
@@ -79,6 +82,7 @@ fun TweetActionsComposable(
                 imageVector = icon,
                 contentDescription = icon.name,
                 modifier = bookmarkModifier,
+                tint = if (isBookmarkedByCurrentUser) MaterialTheme.colorScheme.primary else LocalContentColor.current
             )
         }
         Spacer(modifier = Modifier.weight(1f))

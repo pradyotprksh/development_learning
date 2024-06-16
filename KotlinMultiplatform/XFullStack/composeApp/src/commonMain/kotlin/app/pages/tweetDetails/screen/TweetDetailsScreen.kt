@@ -336,6 +336,9 @@ fun TweetDetailsScreen(
                     visible = tweetDetailsScreenState.isReplyTweetFocused
                 ) {
                     UsernameClickableComposable(
+                        modifier = Modifier.padding(
+                            all = 10.dp,
+                        ),
                         text = Localization.REPLYING_TO,
                         username = createdBy.username,
                         onClick = {
