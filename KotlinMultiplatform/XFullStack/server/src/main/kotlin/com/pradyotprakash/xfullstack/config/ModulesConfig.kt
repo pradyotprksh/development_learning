@@ -10,12 +10,14 @@ import com.pradyotprakash.xfullstack.data.bookmark.BookmarkDataSource
 import com.pradyotprakash.xfullstack.data.bookmark.MongoBookmarkDataSource
 import com.pradyotprakash.xfullstack.data.follow.FollowDataSource
 import com.pradyotprakash.xfullstack.data.follow.MongoFollowDataSource
+import com.pradyotprakash.xfullstack.data.tags.MongoTagsDataSource
+import com.pradyotprakash.xfullstack.data.tags.TagsDataSource
 import com.pradyotprakash.xfullstack.data.tweet.MongoTweetDataSource
 import com.pradyotprakash.xfullstack.data.tweet.TweetDataSource
 import com.pradyotprakash.xfullstack.data.user.MongoUserDataSource
 import com.pradyotprakash.xfullstack.data.user.UserDataSource
+import com.pradyotprakash.xfullstack.data.view.MongoViewDataSource
 import com.pradyotprakash.xfullstack.data.view.ViewDataSource
-import com.pradyotprakash.xfullstack.data.view.data.MongoViewDataSource
 import com.pradyotprakash.xfullstack.features.authentication.controllers.AuthenticationController
 import com.pradyotprakash.xfullstack.features.authentication.controllers.authenticate.AuthenticateController
 import com.pradyotprakash.xfullstack.features.authentication.controllers.authenticate.AuthenticateControllerImplementation
@@ -68,6 +70,7 @@ object ModulesConfig {
         bindProvider<ViewDataSource> { MongoViewDataSource(instance()) }
         bindProvider<FollowDataSource> { MongoFollowDataSource(instance()) }
         bindProvider<BookmarkDataSource> { MongoBookmarkDataSource(instance()) }
+        bindProvider<TagsDataSource> { MongoTagsDataSource(instance()) }
     }
 
     private val securityModule = DI.Module("SECURITY") {

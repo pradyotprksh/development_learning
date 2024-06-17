@@ -1,5 +1,6 @@
 package com.pradyotprakash.xfullstack.features.tweet.controllers.tweetCreationUpdate
 
+import com.pradyotprakash.xfullstack.data.tags.TagsDataSource
 import com.pradyotprakash.xfullstack.data.tweet.TweetDataSource
 import com.pradyotprakash.xfullstack.data.tweet.data.PollChoices
 import com.pradyotprakash.xfullstack.data.tweet.data.PollVoterDetails
@@ -33,7 +34,10 @@ class TweetCreateUpdateControllerImplementation(
     private val geminiRepository: GeminiRepository,
 ) : TweetCreateUpdateController {
     override suspend fun createTweet(
-        call: ApplicationCall, userDataSource: UserDataSource, tweetDataSource: TweetDataSource,
+        call: ApplicationCall,
+        userDataSource: UserDataSource,
+        tweetDataSource: TweetDataSource,
+        tagsDataSource: TagsDataSource,
     ) {
         val tweetsRequest = call.receive<List<TweetRequest>>()
 
@@ -44,6 +48,8 @@ class TweetCreateUpdateControllerImplementation(
         userDataSource.getUserByUserId(createdBy) ?: throw UserDetailsNotFound()
 
         var parentTweetId: ObjectId? = null
+
+        val tagsMap = mutableListOf<Map<String, Int>>()
 
         val tweetRequestFilter = tweetsRequest.filter { tweetRequest ->
             val requestParentTweetId = tweetRequest.parentTweetId
@@ -116,6 +122,11 @@ class TweetCreateUpdateControllerImplementation(
                 }
             } ?: emptyList()
 
+            val tags = UtilsMethod.Conversion.getAllTagsInTweet(tweetRequest.tweet)
+            if (tags.isNotEmpty()) {
+                tagsMap.add(tags)
+            }
+
             val tweetDb = Tweet(
                 tweet = tweetRequest.tweet ?: "",
                 createdBy = ObjectId(createdBy),
@@ -142,6 +153,7 @@ class TweetCreateUpdateControllerImplementation(
                 isRepostTweet = tweetRequest.isRepostTweet,
                 isLikedTweet = tweetRequest.isLikedTweet,
                 emotions = emotions,
+                tags = tags.keys.toList(),
             )
 
             parentTweetId = tweetDb.id
@@ -171,6 +183,10 @@ class TweetCreateUpdateControllerImplementation(
 
         if (humanNature.isNotEmpty()) {
             userDataSource.updateHumanNature(createdBy, humanNature)
+        }
+
+        if (tagsMap.isNotEmpty()) {
+            tagsDataSource.addTags(tagsMap)
         }
 
         call.respond(

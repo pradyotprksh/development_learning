@@ -226,6 +226,23 @@ object UtilsMethod {
             val secondPart = str2.substring(eachLength)
             return "$firstPart$secondPart"
         }
+
+        fun getAllTagsInTweet(tweet: String?): Map<String, Int> {
+            if (tweet.isNullOrBlank()) {
+                return emptyMap()
+            }
+
+            val regex = Regex("#[a-zA-Z0-9]+")
+            val tags = regex.findAll(tweet).map { it.value }.toList()
+            val tagMap = mutableMapOf<String, Int>()
+
+            tags.forEach { tag ->
+                val count = tagMap[tag] ?: 0
+                tagMap[tag] = count + 1
+            }
+
+            return tagMap
+        }
     }
 
     object Dates {

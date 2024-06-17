@@ -8,8 +8,6 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.unit.dp
 import org.jetbrains.compose.resources.painterResource
 import utils.Resources
@@ -23,13 +21,12 @@ fun AppIconComposable(
     Box(
         modifier = boxModifier
     ) {
+        val icon = if (isSystemInDarkTheme()) Resources.LogoLight else Resources.LogoDark
+
         Image(
-            painter = painterResource(Resources.Logo.resource),
-            Resources.Logo.contentDescription,
+            painter = painterResource(icon.resource),
+            contentDescription = icon.contentDescription,
             modifier = imageModifier.align(Alignment.Center),
-            colorFilter = ColorFilter.tint(
-                color = if (isSystemInDarkTheme()) Color.White else Color.Black
-            )
         )
         if (showCircularProgressIndicator)
             CircularProgressIndicator(

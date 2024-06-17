@@ -1,8 +1,8 @@
 package com.pradyotprakash.xfullstack.features.view.controllers.create
 
 import com.pradyotprakash.xfullstack.data.user.UserDataSource
+import com.pradyotprakash.xfullstack.data.view.View
 import com.pradyotprakash.xfullstack.data.view.ViewDataSource
-import com.pradyotprakash.xfullstack.data.view.data.View
 import core.exception.UserDetailsNotFound
 import core.models.request.ViewRequest
 import core.models.response.XFullStackResponse

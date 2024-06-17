@@ -35,6 +35,9 @@ data class Tweet(
     // Location tweet details
     val location: String,
 
+    // Tags related to this tweet
+    val tags: List<String>,
+
     // Comment tweet details
     @BsonProperty(IS_A_COMMENT_TWEET) val isACommentTweet: Boolean,
 

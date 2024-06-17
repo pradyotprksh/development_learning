@@ -1,8 +1,7 @@
-package com.pradyotprakash.xfullstack.data.view.data
+package com.pradyotprakash.xfullstack.data.view
 
 import com.mongodb.client.model.Filters
 import com.mongodb.kotlin.client.coroutine.MongoDatabase
-import com.pradyotprakash.xfullstack.data.view.ViewDataSource
 import kotlinx.coroutines.flow.count
 import org.bson.types.ObjectId
 import utils.Constants.Database.Collections.VIEWS

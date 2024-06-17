@@ -1,5 +1,6 @@
 package com.pradyotprakash.xfullstack.features.tweet.controllers.tweetCreationUpdate
 
+import com.pradyotprakash.xfullstack.data.tags.TagsDataSource
 import com.pradyotprakash.xfullstack.data.tweet.TweetDataSource
 import com.pradyotprakash.xfullstack.data.user.UserDataSource
 import com.pradyotprakash.xfullstack.features.tweet.resource.TweetResource
@@ -10,6 +11,7 @@ interface TweetCreateUpdateController {
         call: ApplicationCall,
         userDataSource: UserDataSource,
         tweetDataSource: TweetDataSource,
+        tagsDataSource: TagsDataSource,
     )
 
     suspend fun voteOnTweet(

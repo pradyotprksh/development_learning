@@ -6,6 +6,7 @@ import com.pradyotprakash.xfullstack.core.security.token.TokenConfig
 import com.pradyotprakash.xfullstack.core.security.token.TokenService
 import com.pradyotprakash.xfullstack.data.bookmark.BookmarkDataSource
 import com.pradyotprakash.xfullstack.data.follow.FollowDataSource
+import com.pradyotprakash.xfullstack.data.tags.TagsDataSource
 import com.pradyotprakash.xfullstack.data.tweet.TweetDataSource
 import com.pradyotprakash.xfullstack.data.user.UserDataSource
 import com.pradyotprakash.xfullstack.data.view.ViewDataSource
@@ -37,6 +38,7 @@ fun Application.configureRouting() {
     val viewDataSource by ModulesConfig.di.instance<ViewDataSource>()
     val followDataSource by ModulesConfig.di.instance<FollowDataSource>()
     val bookmarkDataSource by ModulesConfig.di.instance<BookmarkDataSource>()
+    val tagsDataSource by ModulesConfig.di.instance<TagsDataSource>()
 
     val tokenService by ModulesConfig.di.instance<TokenService>()
     val tokenConfig by ModulesConfig.di.instance<TokenConfig>()
@@ -75,6 +77,7 @@ fun Application.configureRouting() {
             viewDataSource = viewDataSource,
             followDataSource = followDataSource,
             bookmarkDataSource = bookmarkDataSource,
+            tagsDataSource = tagsDataSource,
         )
         websockets()
         views(
@@ -86,7 +89,9 @@ fun Application.configureRouting() {
             secretsController = secretsController,
             userDataSource = userDataSource,
         )
-        migration()
+        migration(
+            tweetDataSource = tweetDataSource,
+        )
         follow(
             userDataSource = userDataSource,
             followDataSource = followDataSource,

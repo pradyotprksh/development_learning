@@ -17,6 +17,7 @@ object Constants {
             const val TWEET = "tweet"
             const val VIEWS = "views"
             const val FOLLOW = "follow"
+            const val TAGS = "tags"
             const val BOOKMARK = "bookmark"
         }
     }
@@ -144,6 +145,7 @@ object Constants {
         const val XFULLSTACK_NETWORK_CLIENT = "x_full_stack_network_client"
         const val GEMINI_NETWORK_CLIENT = "gemini_network_client"
         const val TIMEOUT_VALUE = 15000L
+        const val ENABLE_GEMINI = false
     }
 
     object ErrorCode {
@@ -240,6 +242,7 @@ object Constants {
         const val IS_FOLLOWED_BY_CURRENT_USER = "is_followed_by_current_user"
         const val IS_FOLLOWING_CURRENT_USER = "is_following_current_user"
         const val IS_SAME_USER = "is_same_user"
+        const val COUNT = "count"
     }
 
     object GeminiPrompt {

@@ -1,4 +1,4 @@
-package com.pradyotprakash.xfullstack.data.view.data
+package com.pradyotprakash.xfullstack.data.view
 
 import org.bson.codecs.pojo.annotations.BsonId
 import org.bson.codecs.pojo.annotations.BsonProperty
