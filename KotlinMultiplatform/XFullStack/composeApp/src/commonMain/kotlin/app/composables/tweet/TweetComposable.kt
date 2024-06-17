@@ -31,6 +31,8 @@ import app.pages.home.home.state.TweetActions
 import core.models.response.TweetResponse
 import utils.Constants.ConstValues.USERNAME_PREFIX
 import utils.Localization
+import utils.Logger
+import utils.LoggerLevel
 
 @Composable
 fun TweetComposable(
@@ -122,8 +124,11 @@ fun TweetComposable(
                 }
                 Spacer(modifier = Modifier.height(5.dp))
                 shownTweet?.let {
-                    Text(
-                        shownTweet.tweet,
+                    TweetTextComposable(
+                        tweet = shownTweet.tweet,
+                        onTagClick = { tag ->
+                            Logger.log(LoggerLevel.Info, "Tag clicked $tag")
+                        }
                     )
                     if (shownTweet.isAPoll) {
                         Spacer(modifier = Modifier.height(10.dp))

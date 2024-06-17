@@ -7,10 +7,12 @@ import androidx.compose.ui.text.SpanStyle
 import app.composables.richText.RichTextComposable
 import app.composables.richText.RichTextDetails
 import app.composables.richText.TextDetails
+import utils.Constants.ConstValues.COOKIE_USE
+import utils.Constants.ConstValues.PRIVACY_POLICY
+import utils.Constants.ConstValues.TERMS
 import utils.Localization
 import utils.Logger
 import utils.LoggerLevel
-import utils.Tags
 
 @Composable
 fun SignupLegalDetails(modifier: Modifier = Modifier) {
@@ -29,11 +31,11 @@ fun SignupLegalDetails(modifier: Modifier = Modifier) {
                     spanStyle = SpanStyle(
                         color = MaterialTheme.colorScheme.primary,
                     ),
-                    tag = Tags.Terms,
+                    tag = TERMS,
                     actions = {
                         Logger.log(
                             loggerLevel = LoggerLevel.Info,
-                            message = "${Tags.Terms.key} tapped"
+                            message = "$TERMS tapped"
                         )
                     }
                 ),
@@ -49,11 +51,11 @@ fun SignupLegalDetails(modifier: Modifier = Modifier) {
                     spanStyle = SpanStyle(
                         color = MaterialTheme.colorScheme.primary,
                     ),
-                    tag = Tags.PrivacyPolicy,
+                    tag = PRIVACY_POLICY,
                     actions = {
                         Logger.log(
                             loggerLevel = LoggerLevel.Info,
-                            message = "${Tags.PrivacyPolicy.key} tapped"
+                            message = "$PRIVACY_POLICY tapped"
                         )
                     }
                 ),
@@ -75,11 +77,11 @@ fun SignupLegalDetails(modifier: Modifier = Modifier) {
                     spanStyle = SpanStyle(
                         color = MaterialTheme.colorScheme.primary,
                     ),
-                    tag = Tags.CookieUse,
+                    tag = COOKIE_USE,
                     actions = {
                         Logger.log(
                             loggerLevel = LoggerLevel.Info,
-                            message = "${Tags.CookieUse.key} tapped"
+                            message = "$COOKIE_USE tapped"
                         )
                     }
                 ),

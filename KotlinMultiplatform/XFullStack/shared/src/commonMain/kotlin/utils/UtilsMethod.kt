@@ -12,6 +12,7 @@ import utils.Constants.ConstValues.BIO_MAX_LENGTH
 import utils.Constants.ConstValues.NAME_MAX_LENGTH
 import utils.Constants.ConstValues.NAME_MIN_LENGTH
 import utils.Constants.ConstValues.PASSWORD_MIN_LENGTH
+import utils.Constants.ConstValues.TAG_REGEX
 import utils.Constants.ConstValues.TWEET_MAX_LENGTH
 import utils.Constants.ConstValues.USERNAME_MIN_LENGTH
 import utils.Constants.ErrorCode.BIO_VALIDITY_ERROR_CODE
@@ -232,7 +233,7 @@ object UtilsMethod {
                 return emptyMap()
             }
 
-            val regex = Regex("#[a-zA-Z0-9]+")
+            val regex = Regex(TAG_REGEX)
             val tags = regex.findAll(tweet).map { it.value }.toList()
             val tagMap = mutableMapOf<String, Int>()
 
@@ -242,6 +243,50 @@ object UtilsMethod {
             }
 
             return tagMap
+        }
+
+        fun getTweetWithTags(tweet: String): List<Pair<String, TextType>> {
+            val regex = Regex(TAG_REGEX)
+            val tagsDetails = regex.findAll(tweet).map {
+                Triple(it.value, it.range.first, it.range.last + 1)
+            }.toList()
+
+            if (tagsDetails.isEmpty()) {
+                return emptyList()
+            }
+
+            val subStrings = mutableListOf<Pair<String, TextType>>()
+
+            for (i in tagsDetails.indices) {
+                val tagDetails = tagsDetails[i]
+                if (subStrings.isEmpty()) {
+                    subStrings.add(Pair(tweet.substring(0, tagDetails.second), TextType.Normal))
+                }
+                subStrings.add(
+                    Pair(
+                        tweet.substring(tagDetails.second, tagDetails.third), TextType.Tag
+                    )
+                )
+
+                if (i < tagsDetails.lastIndex) {
+                    val nextTag = tagsDetails[i + 1]
+                    subStrings.add(
+                        Pair(
+                            tweet.substring(tagDetails.third, nextTag.second), TextType.Normal
+                        )
+                    )
+                }
+            }
+
+            if (tagsDetails.last().third < tweet.length) {
+                subStrings.add(
+                    Pair(
+                        tweet.substring(tagsDetails.last().third), TextType.Normal
+                    )
+                )
+            }
+
+            return subStrings
         }
     }
 

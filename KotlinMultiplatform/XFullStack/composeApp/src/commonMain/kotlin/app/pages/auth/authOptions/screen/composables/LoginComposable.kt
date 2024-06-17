@@ -7,8 +7,8 @@ import androidx.compose.ui.text.SpanStyle
 import app.composables.richText.RichTextComposable
 import app.composables.richText.RichTextDetails
 import app.composables.richText.TextDetails
+import utils.Constants.ConstValues.LOG_IN
 import utils.Localization
-import utils.Tags
 
 @Composable
 fun LoginComposable(
@@ -30,7 +30,7 @@ fun LoginComposable(
                     spanStyle = SpanStyle(
                         color = MaterialTheme.colorScheme.primary,
                     ),
-                    tag = Tags.LogIn,
+                    tag = LOG_IN,
                     actions = onClick
                 ),
             ),

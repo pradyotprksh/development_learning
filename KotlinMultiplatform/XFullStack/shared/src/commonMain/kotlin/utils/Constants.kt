@@ -146,6 +146,12 @@ object Constants {
         const val GEMINI_NETWORK_CLIENT = "gemini_network_client"
         const val TIMEOUT_VALUE = 15000L
         const val ENABLE_GEMINI = false
+        const val TAG_REGEX = "#[a-zA-Z0-9]+"
+        const val TERMS = "terms"
+        const val PRIVACY_POLICY = "privacy_policy"
+        const val COOKIE_USE = "cookie_use"
+        const val LOG_IN = "log_in"
+        const val CREATED_BY = "created_by"
     }
 
     object ErrorCode {

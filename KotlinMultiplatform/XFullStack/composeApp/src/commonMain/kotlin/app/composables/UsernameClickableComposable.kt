@@ -7,9 +7,9 @@ import androidx.compose.ui.text.SpanStyle
 import app.composables.richText.RichTextComposable
 import app.composables.richText.RichTextDetails
 import app.composables.richText.TextDetails
+import utils.Constants.ConstValues.CREATED_BY
 import utils.Constants.ConstValues.USERNAME_PREFIX
 import utils.Localization
-import utils.Tags
 
 @Composable
 fun UsernameClickableComposable(
@@ -38,7 +38,7 @@ fun UsernameClickableComposable(
             spanStyle = SpanStyle(
                 color = MaterialTheme.colorScheme.primary,
             ),
-            tag = Tags.CreatedBy,
+            tag = CREATED_BY,
             actions = {
                 onClick()
             },

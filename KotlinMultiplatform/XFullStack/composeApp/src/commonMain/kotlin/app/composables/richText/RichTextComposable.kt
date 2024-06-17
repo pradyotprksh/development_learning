@@ -23,8 +23,8 @@ fun RichTextComposable(
             for (text in richTextDetails.texts) {
                 if (text.haveClickProperty()) {
                     pushStringAnnotation(
-                        tag = text.tag?.key ?: "",
-                        annotation = text.tag?.value ?: "",
+                        tag = text.tag ?: "",
+                        annotation = text.tag ?: "",
                     )
                     withStyle(
                         style = text.spanStyle ?: SpanStyle(),
@@ -43,7 +43,7 @@ fun RichTextComposable(
                 for (text in richTextDetails.texts) {
                     if (text.haveClickProperty()) {
                         annotatedString.getStringAnnotations(
-                            tag = text.tag?.key ?: "",
+                            tag = text.tag ?: "",
                             start = offset,
                             end = offset
                         ).firstOrNull()?.let {
