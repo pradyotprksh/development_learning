@@ -19,6 +19,8 @@ import com.pradyotprakash.xfullstack.features.follow.follow
 import com.pradyotprakash.xfullstack.features.migration.migration
 import com.pradyotprakash.xfullstack.features.secrets.controllers.SecretsController
 import com.pradyotprakash.xfullstack.features.secrets.secrets
+import com.pradyotprakash.xfullstack.features.tags.controllers.TagsController
+import com.pradyotprakash.xfullstack.features.tags.tags
 import com.pradyotprakash.xfullstack.features.tweet.controllers.TweetController
 import com.pradyotprakash.xfullstack.features.tweet.tweet
 import com.pradyotprakash.xfullstack.features.utils.controllers.UtilsController
@@ -52,6 +54,7 @@ fun Application.configureRouting() {
     val secretsController by ModulesConfig.di.instance<SecretsController>()
     val followController by ModulesConfig.di.instance<FollowController>()
     val bookmarkController by ModulesConfig.di.instance<BookmarkController>()
+    val tagsController by ModulesConfig.di.instance<TagsController>()
 
     routing {
         authentication(
@@ -102,6 +105,12 @@ fun Application.configureRouting() {
             tweetDataSource = tweetDataSource,
             bookmarkDataSource = bookmarkDataSource,
             bookmarkController = bookmarkController,
+        )
+        tags(
+            userDataSource = userDataSource,
+            tweetDataSource = tweetDataSource,
+            tagsController = tagsController,
+            tagsDataSource = tagsDataSource,
         )
     }
 }

@@ -36,6 +36,9 @@ import com.pradyotprakash.xfullstack.features.follow.controllers.followUpdate.Fo
 import com.pradyotprakash.xfullstack.features.secrets.controllers.SecretsController
 import com.pradyotprakash.xfullstack.features.secrets.controllers.secretsFetch.SecretsFetchController
 import com.pradyotprakash.xfullstack.features.secrets.controllers.secretsFetch.SecretsFetchControllerImplementation
+import com.pradyotprakash.xfullstack.features.tags.controllers.TagsController
+import com.pradyotprakash.xfullstack.features.tags.controllers.tagsFetch.TagsFetchController
+import com.pradyotprakash.xfullstack.features.tags.controllers.tagsFetch.TagsFetchControllerImplementation
 import com.pradyotprakash.xfullstack.features.tweet.controllers.TweetController
 import com.pradyotprakash.xfullstack.features.tweet.controllers.tweetCreationUpdate.TweetCreateUpdateController
 import com.pradyotprakash.xfullstack.features.tweet.controllers.tweetCreationUpdate.TweetCreateUpdateControllerImplementation
@@ -111,6 +114,8 @@ object ModulesConfig {
         bindProvider<FollowUpdateController> { FollowUpdateControllerImplementation() }
 
         bindProvider<BookmarkUpdateController> { BookmarkUpdateControllerImplementation() }
+
+        bindProvider<TagsFetchController> { TagsFetchControllerImplementation() }
     }
 
     private val featuresModule = DI.Module("FEATURES") {
@@ -129,6 +134,8 @@ object ModulesConfig {
         bindProvider { FollowController(instance()) }
 
         bindProvider { BookmarkController(instance()) }
+
+        bindProvider { TagsController(instance()) }
     }
 
     val di = DI {

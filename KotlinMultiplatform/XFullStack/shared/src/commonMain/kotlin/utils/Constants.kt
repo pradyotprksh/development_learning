@@ -86,6 +86,11 @@ object Constants {
             const val BOOKMARK = "/bookmark"
             const val UPDATE = "/update"
         }
+
+        object Tags {
+            const val TAGS = "/tags"
+            const val TRENDING = "/trending"
+        }
     }
 
     object Keys {
@@ -212,6 +217,7 @@ object Constants {
         const val IS_A_LOCATION = "is_a_location"
         const val POLL_LENGTH = "poll_length"
         const val SCHEDULED_ON_TWEET = "scheduled_on_tweet"
+        const val TAGS = "tags"
         const val IS_SCHEDULED_TWEET = "is_scheduled_tweet"
         const val PARENT_TWEET_DETAILS_NOT_FOUND = "parent_tweet_details_not_found"
         const val IS_A_COMMENT_TWEET = "is_a_comment_tweet"

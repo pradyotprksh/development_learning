@@ -40,4 +40,6 @@ interface TweetDataSource {
     suspend fun removeKeyFromAll(key: String)
 
     suspend fun getUserTweetsEmotions(userId: String): List<String>
+
+    suspend fun countTweetsWithTag(tag: String): Int
 }

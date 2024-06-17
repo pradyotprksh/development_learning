@@ -13,6 +13,7 @@ import utils.Constants.DbKeys.PARENT_TWEET_ID
 import utils.Constants.DbKeys.POLL_CHOICES
 import utils.Constants.DbKeys.POLL_LENGTH
 import utils.Constants.DbKeys.SCHEDULED_ON_TWEET
+import utils.Constants.DbKeys.TAGS
 import utils.Constants.DbKeys.TWEETED_ON
 
 data class Tweet(
@@ -36,7 +37,7 @@ data class Tweet(
     val location: String,
 
     // Tags related to this tweet
-    val tags: List<String>,
+    @BsonProperty(TAGS) val tags: List<String>,
 
     // Comment tweet details
     @BsonProperty(IS_A_COMMENT_TWEET) val isACommentTweet: Boolean,

@@ -20,6 +20,7 @@ import utils.Constants.DbKeys.IS_A_REPOST_TWEET
 import utils.Constants.DbKeys.PARENT_TWEET_ID
 import utils.Constants.DbKeys.POLL_CHOICES
 import utils.Constants.DbKeys.SCHEDULED_ON_TWEET
+import utils.Constants.DbKeys.TAGS
 import utils.Constants.DbKeys.TWEETED_ON
 import utils.UtilsMethod
 
@@ -140,5 +141,17 @@ class MongoTweetDataSource(
             Filters.eq(CREATED_BY, ObjectId(userId)),
         ).toList().asSequence().map { it.emotions }.flatten().toSet().toMutableList()
             .filter { it.isNotEmpty() && !it.contains(" ") }.toList()
+    }
+
+    /**
+     * https://www.mongodb.com/docs/drivers/kotlin/coroutine/current/fundamentals/builders/filters/#arrays
+     */
+    override suspend fun countTweetsWithTag(tag: String): Int {
+        return tweetCollection.find(
+            Filters.all(
+                TAGS,
+                listOf(tag),
+            ),
+        ).count()
     }
 }
