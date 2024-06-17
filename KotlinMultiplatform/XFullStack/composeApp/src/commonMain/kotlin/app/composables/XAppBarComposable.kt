@@ -14,11 +14,12 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun XAppBarComposable(
     modifier: Modifier = Modifier,
+    title: @Composable (() -> Unit)? = null,
     navigationIcon: @Composable () -> Unit = {},
     actions: @Composable (RowScope.() -> Unit) = {},
 ) {
     CenterAlignedTopAppBar(
-        title = {
+        title = title ?: {
             AppIconComposable(
                 imageModifier = Modifier
                     .size(25.dp)

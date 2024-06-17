@@ -21,3 +21,9 @@ fun showFloatingActionButton(route: String) = listOf(
     Routes.HomeMessages.path(),
     Routes.ProfileDetails.path(),
 ).contains(route)
+
+fun isSearchRoute(route: String) = Routes.HomeSearch.path() == route
+
+fun isMessageRoute(route: String) = Routes.HomeMessages.path() == route
+
+fun showSearchBar(route: String) = isSearchRoute(route) || isMessageRoute(route)

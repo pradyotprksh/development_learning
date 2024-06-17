@@ -21,6 +21,7 @@ import app.composables.userAppBar.viewModel.UserAppBarViewModel
 fun UserAppBarComposable(
     modifier: Modifier = Modifier,
     userAppBarViewModel: UserAppBarViewModel = viewModel { UserAppBarViewModel() },
+    title: @Composable (() -> Unit)? = null,
     toggleNavDrawer: () -> Unit,
 ) {
     LaunchedEffect(Unit) {
@@ -31,6 +32,7 @@ fun UserAppBarComposable(
 
     XAppBarComposable(
         modifier = modifier,
+        title = title,
         navigationIcon = {
             ProfileImageComposable(
                 profileImage = userAppBarState.profileImage,

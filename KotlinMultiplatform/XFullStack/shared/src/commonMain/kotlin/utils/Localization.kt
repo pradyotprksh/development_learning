@@ -205,4 +205,6 @@ object Localization {
     const val BOOKMARKS_POSTS_TO_EASILY_FIND =
         "Bookmarks posts to easily find them again in the future"
     const val CREATE_TWEET = "Create Tweet"
+    const val SEARCH = "Search %s"
+    const val DIRECT_MESSAGES = "Direct Messages"
 }

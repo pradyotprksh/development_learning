@@ -2,13 +2,17 @@ package app
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Message
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.DrawerValue
+import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -17,6 +21,7 @@ import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarResult
+import androidx.compose.material3.Text
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
@@ -28,6 +33,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -41,11 +47,14 @@ import androidx.navigation.navArgument
 import app.composables.userAppBar.composable.UserAppBarComposable
 import app.composables.userDrawer.composable.UserNavigationDrawerComposable
 import app.navigation.Routes
+import app.navigation.isMessageRoute
+import app.navigation.isSearchRoute
 import app.navigation.path
 import app.navigation.showAppBar
 import app.navigation.showBottomNavBar
 import app.navigation.showDrawer
 import app.navigation.showFloatingActionButton
+import app.navigation.showSearchBar
 import app.pages.auth.authOptions.screen.AuthOptionsScreen
 import app.pages.auth.login.screen.LoginScreen
 import app.pages.auth.register.screen.RegisterScreen
@@ -186,6 +195,34 @@ fun XApp(
                     UserAppBarComposable(
                         toggleNavDrawer = {
                             drawerOpenClose()
+                        },
+                        title = if (showSearchBar(currentDestination?.route ?: "")) {
+                            {
+                                FilledTonalButton(
+                                    onClick = {},
+                                    modifier = Modifier.fillMaxWidth().height(30.dp),
+                                ) {
+                                    if (isSearchRoute(currentDestination?.route ?: "")) {
+                                        Text(
+                                            Localization.format(
+                                                Localization.SEARCH,
+                                                Localization.APP_NAME,
+                                            ),
+                                            style = MaterialTheme.typography.bodySmall,
+                                        )
+                                    } else if (isMessageRoute(currentDestination?.route ?: "")) {
+                                        Text(
+                                            Localization.format(
+                                                Localization.SEARCH,
+                                                Localization.DIRECT_MESSAGES,
+                                            ),
+                                            style = MaterialTheme.typography.bodySmall,
+                                        )
+                                    }
+                                }
+                            }
+                        } else {
+                            null
                         },
                     )
                 }
