@@ -12,12 +12,13 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.List
-import androidx.compose.material.icons.filled.AccountBox
 import androidx.compose.material.icons.filled.Bookmarks
-import androidx.compose.material.icons.filled.Build
-import androidx.compose.material.icons.filled.Call
+import androidx.compose.material.icons.filled.DarkMode
 import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.MonetizationOn
+import androidx.compose.material.icons.filled.People
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.SpatialAudio
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -146,8 +147,8 @@ fun UserNavigationDrawerComposable(
                     selected = false,
                     icon = {
                         Icon(
-                            imageVector = Icons.Default.AccountBox,
-                            contentDescription = Icons.Default.AccountBox.name,
+                            imageVector = Icons.Default.People,
+                            contentDescription = Icons.Default.People.name,
                         )
                     },
                     onClick = {},
@@ -197,8 +198,8 @@ fun UserNavigationDrawerComposable(
                     selected = false,
                     icon = {
                         Icon(
-                            imageVector = Icons.Default.Call,
-                            contentDescription = Icons.Default.Call.name,
+                            imageVector = Icons.Default.SpatialAudio,
+                            contentDescription = Icons.Default.SpatialAudio.name,
                         )
                     },
                     onClick = {},
@@ -214,8 +215,8 @@ fun UserNavigationDrawerComposable(
                     selected = false,
                     icon = {
                         Icon(
-                            imageVector = Icons.Default.AccountBox,
-                            contentDescription = Icons.Default.AccountBox.name,
+                            imageVector = Icons.Default.MonetizationOn,
+                            contentDescription = Icons.Default.MonetizationOn.name,
                         )
                     },
                     onClick = {},
@@ -230,8 +231,8 @@ fun UserNavigationDrawerComposable(
             )
         ) {
             Icon(
-                imageVector = Icons.Default.Build,
-                contentDescription = Icons.Default.Build.name,
+                imageVector = Icons.Default.DarkMode,
+                contentDescription = Icons.Default.DarkMode.name,
             )
         }
     }
