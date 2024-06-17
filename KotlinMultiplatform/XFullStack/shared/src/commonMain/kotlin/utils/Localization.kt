@@ -207,4 +207,8 @@ object Localization {
     const val CREATE_TWEET = "Create Tweet"
     const val SEARCH = "Search %s"
     const val DIRECT_MESSAGES = "Direct Messages"
+    const val TRENDING = "Trending"
+    const val NEWS = "News"
+    const val SPORTS = "Sports"
+    const val ENTERTAINMENT = "Entertainment"
 }
