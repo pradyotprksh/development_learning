@@ -12,10 +12,11 @@ import utils.TextType
 import utils.UtilsMethod
 
 @Composable
-fun TweetTextComposable(
+fun TweetWithTagComposable(
     modifier: Modifier = Modifier,
     tweet: String,
     onTagClick: (String) -> Unit,
+    onOtherPartClick: () -> Unit,
 ) {
     val tags = UtilsMethod.Conversion.getTweetWithTags(tweet)
     if (tags.isEmpty()) {
@@ -40,6 +41,9 @@ fun TweetTextComposable(
                     } else {
                         TextDetails(
                             text = it.first,
+                            tag = it.first,
+                            isClickable = true,
+                            actions = onOtherPartClick
                         )
                     }
                 },

@@ -124,10 +124,13 @@ fun TweetComposable(
                 }
                 Spacer(modifier = Modifier.height(5.dp))
                 shownTweet?.let {
-                    TweetTextComposable(
+                    TweetWithTagComposable(
                         tweet = shownTweet.tweet,
                         onTagClick = { tag ->
                             Logger.log(LoggerLevel.Info, "Tag clicked $tag")
+                        },
+                        onOtherPartClick = {
+                            tweetActions.onTweetClick(shownTweet.id)
                         }
                     )
                     if (shownTweet.isAPoll) {

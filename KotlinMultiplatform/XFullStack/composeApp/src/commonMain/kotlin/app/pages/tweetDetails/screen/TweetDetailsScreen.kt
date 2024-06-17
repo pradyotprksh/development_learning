@@ -53,6 +53,7 @@ import app.composables.UsernameClickableComposable
 import app.composables.tweet.PollChoicesComposable
 import app.composables.tweet.TweetActionsComposable
 import app.composables.tweet.TweetComposable
+import app.composables.tweet.TweetWithTagComposable
 import app.pages.createTweet.screen.composables.CreateTweetOptionsComposable
 import app.pages.home.home.state.TweetActions
 import app.pages.tweetDetails.screen.composables.TweetCreatorDetailsComposable
@@ -62,6 +63,8 @@ import app.pages.tweetDetails.viewModel.TweetDetailsViewModel
 import kotlinx.coroutines.launch
 import utils.Constants.ConstValues.TWEET_MAX_LENGTH
 import utils.Localization
+import utils.Logger
+import utils.LoggerLevel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -155,12 +158,17 @@ fun TweetDetailsScreen(
                     }
 
                     item {
-                        Text(
-                            tweet.tweet, modifier = Modifier.fillMaxWidth().padding(
+                        TweetWithTagComposable(
+                            modifier = Modifier.fillMaxWidth().padding(
                                 start = 10.dp,
                                 end = 10.dp,
                                 bottom = 10.dp,
-                            )
+                            ),
+                            tweet = tweet.tweet,
+                            onTagClick = { tag ->
+                                Logger.log(LoggerLevel.Info, "Tag clicked $tag")
+                            },
+                            onOtherPartClick = {}
                         )
                     }
 
