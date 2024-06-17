@@ -11,6 +11,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.launch
+import utils.Localization
+import utils.OSLevelMethods
 
 class XAppViewModel(
     private val viewRepository: ViewRepository = SharedModulesDi.Instance.viewRepository,
@@ -41,7 +43,12 @@ class XAppViewModel(
                         when (it) {
                             is ClientResponse.Error -> showMessage(it.message)
                             is ClientResponse.Success -> {
-                                it.data.message?.let { message -> showMessage(message) }
+                                it.data.message?.let { message ->
+                                    showMessage(message)
+                                    OSLevelMethods.showDesktopNotification?.invoke(
+                                        Localization.APP_NAME, message
+                                    )
+                                }
                             }
 
                             else -> {}

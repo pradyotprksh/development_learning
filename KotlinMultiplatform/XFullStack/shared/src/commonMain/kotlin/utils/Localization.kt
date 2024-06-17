@@ -204,4 +204,5 @@ object Localization {
     const val EXIT = "Exit"
     const val BOOKMARKS_POSTS_TO_EASILY_FIND =
         "Bookmarks posts to easily find them again in the future"
+    const val CREATE_TWEET = "Create Tweet"
 }

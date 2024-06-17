@@ -65,6 +65,7 @@ import utils.Constants.ConstValues.TWEET_ID
 import utils.Constants.ConstValues.USERNAME_EMAIL_PHONE
 import utils.Constants.ConstValues.USER_ID
 import utils.Localization
+import utils.OSLevelMethods
 import utils.extensions.popUpToTop
 
 /**
@@ -83,7 +84,6 @@ fun XApp(
     val windowSizeClass = calculateWindowSizeClass()
     val isPhone =
         windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact || windowSizeClass.widthSizeClass == WindowWidthSizeClass.Medium
-    val isTablet = windowSizeClass.widthSizeClass == WindowWidthSizeClass.Expanded
 
     val snackbarHostState = remember { SnackbarHostState() }
     val xAppState by xAppViewModel.xAppState.collectAsState()
@@ -151,6 +151,10 @@ fun XApp(
                 if (isClosed) open() else close()
             }
         }
+    }
+
+    OSLevelMethods.createTweet = {
+        navigateToCreateTweet(NO_NAV_VALUE, false, false)
     }
 
     ModalNavigationDrawer(
