@@ -21,12 +21,6 @@ fun main() = application {
             Item(
                 text = Localization.EXIT, onClick = ::exitApplication
             )
-            Item(
-                text = Localization.CREATE_TWEET,
-                onClick = {
-                    OSLevelMethods.createTweet?.invoke()
-                },
-            )
         },
     )
 
