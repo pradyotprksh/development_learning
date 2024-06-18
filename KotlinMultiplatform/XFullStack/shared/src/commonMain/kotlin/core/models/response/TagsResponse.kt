@@ -7,4 +7,5 @@ data class TagsResponse(
     val tag: String,
     val totalTweets: Int,
     val count: Int,
+    val isTrending: Boolean,
 )

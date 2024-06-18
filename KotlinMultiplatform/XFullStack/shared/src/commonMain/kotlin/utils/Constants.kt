@@ -255,6 +255,8 @@ object Constants {
         const val IS_FOLLOWING_CURRENT_USER = "is_following_current_user"
         const val IS_SAME_USER = "is_same_user"
         const val COUNT = "count"
+        const val TOTAL_TWEETS_COUNT = "total_tweets_count"
+        const val IS_TRENDING = "is_trending"
     }
 
     object GeminiPrompt {

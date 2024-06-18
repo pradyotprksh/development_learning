@@ -35,7 +35,8 @@ class TagsFetchControllerImplementation : TagsFetchController {
             TagsResponse(
                 tag = tag.id,
                 count = tag.count,
-                totalTweets = tweetDataSource.countTweetsWithTag(tag.id)
+                totalTweets = tweetDataSource.countTweetsWithTag(tag.id),
+                isTrending = true,
             )
         }
 

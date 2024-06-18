@@ -5,12 +5,14 @@ import core.network.GeminiHttpClient
 import core.network.NetworkClient
 import core.network.XFullStackHttpClient
 import data.device.request.RequestDBServiceImplementation
+import data.device.tags.TagsDBServiceImplementation
 import data.device.tweet.TweetDBServiceImplementation
 import data.device.user.current.CurrentUserDBServiceImplementation
 import data.device.user.user.UserDBServiceImplementation
 import data.device.view.ViewDBServiceImplementation
 import data.remote.gemini.GeminiRemoteServiceImplementation
 import data.remote.server.utils.ServerUtilsRemoteServiceImplementation
+import data.remote.tags.TagsRemoteServiceImplementation
 import data.remote.tweet.TweetRemoteServiceImplementation
 import data.remote.user.bookmark.UserBookmarkRemoteServiceImplementation
 import data.remote.user.current.CurrentUserRemoteServiceImplementation
@@ -24,6 +26,8 @@ import domain.repositories.request.RequestRepository
 import domain.repositories.request.RequestRepositoryImplementation
 import domain.repositories.server.utils.ServerUtilsRepository
 import domain.repositories.server.utils.ServerUtilsRepositoryImplementation
+import domain.repositories.tags.TagsRepository
+import domain.repositories.tags.TagsRepositoryImplementation
 import domain.repositories.tweet.TweetRepository
 import domain.repositories.tweet.TweetRepositoryImplementation
 import domain.repositories.user.current.CurrentUserRepository
@@ -39,6 +43,8 @@ import domain.repositories.websocket.WebsocketRepositoryImplementation
 import domain.services.gemini.GeminiRemoteService
 import domain.services.request.RequestDBService
 import domain.services.server.utils.ServerUtilsRemoteService
+import domain.services.tags.TagsDBService
+import domain.services.tags.TagsRemoteService
 import domain.services.tweet.TweetDBService
 import domain.services.tweet.TweetRemoteService
 import domain.services.user.bookmark.UserBookmarkRemoteService
@@ -83,6 +89,8 @@ object SharedModulesDi {
         bindProvider<UserDBService> { UserDBServiceImplementation(instance()) }
 
         bindProvider<RequestDBService> { RequestDBServiceImplementation(instance()) }
+
+        bindProvider<TagsDBService> { TagsDBServiceImplementation(instance()) }
     }
 
     private val servicesRemoteModule = DI.Module("SERVICES_REMOTE") {
@@ -118,6 +126,8 @@ object SharedModulesDi {
                 instance(tag = XFULLSTACK_NETWORK_CLIENT)
             )
         }
+
+        bindProvider<TagsRemoteService> { TagsRemoteServiceImplementation(instance(tag = XFULLSTACK_NETWORK_CLIENT)) }
     }
 
     private val repositoriesModule = DI.Module("REPOSITORIES") {
@@ -162,6 +172,10 @@ object SharedModulesDi {
                 instance(),
             )
         }
+
+        bind<TagsRepository>() with singleton {
+            TagsRepositoryImplementation(instance(), instance())
+        }
     }
 
     val di = DI {
@@ -184,5 +198,6 @@ object SharedModulesDi {
         val geminiRepository: GeminiRepository by di.instance()
         val userRepository: UserRepository by di.instance()
         val requestRepository: RequestRepository by di.instance()
+        val tagsRepository: TagsRepository by di.instance()
     }
 }

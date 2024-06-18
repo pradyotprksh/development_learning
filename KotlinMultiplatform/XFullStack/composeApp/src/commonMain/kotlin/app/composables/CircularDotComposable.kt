@@ -12,7 +12,9 @@ import androidx.compose.ui.draw.clip
 fun CircularDotComposable(modifier: Modifier = Modifier) {
     Box(
         modifier = modifier.clip(CircleShape).background(
-            color = MaterialTheme.colorScheme.onBackground
+            color = MaterialTheme.colorScheme.onBackground.copy(
+                alpha = 0.4f,
+            )
         )
     )
 }

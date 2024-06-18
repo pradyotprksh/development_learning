@@ -3,11 +3,13 @@ package core.parser
 import core.models.realm.CurrentUserInfoDB
 import core.models.realm.PollChoicesDB
 import core.models.realm.RequestsDB
+import core.models.realm.TagsDB
 import core.models.realm.TweetDB
 import core.models.realm.TweetRequestDB
 import core.models.realm.UserInfoDB
 import core.models.request.TweetRequest
 import core.models.response.PollChoicesResponse
+import core.models.response.TagsResponse
 import core.models.response.TweetResponse
 import core.models.response.UserInfoResponse
 import io.realm.kotlin.ext.realmListOf
@@ -227,3 +229,19 @@ fun RequestsDB.parseToTweetRequest() = this.tweets.map { db ->
         parentTweetId = db.parentTweetId
     )
 }
+
+fun TagsResponse.parseToTagsDB() = this.let { tag ->
+    TagsDB().apply {
+        this.id = tag.tag
+        this.count = tag.count
+        this.totalTweets = tag.totalTweets
+        this.isTrending = tag.isTrending
+    }
+}
+
+fun TagsDB.parseToTagsResponse() = TagsResponse(
+    tag = this.id,
+    count = this.count,
+    totalTweets = this.totalTweets,
+    isTrending = this.isTrending
+)

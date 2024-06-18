@@ -211,4 +211,5 @@ object Localization {
     const val NEWS = "News"
     const val SPORTS = "Sports"
     const val ENTERTAINMENT = "Entertainment"
+    const val TRENDS = "Trends"
 }
