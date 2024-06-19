@@ -450,6 +450,7 @@ fun XApp(
                         openProfileDetails = { id ->
                             navigateToProfileDetails(id)
                         },
+                        openDirectMessage = { id -> }
                     )
                 }
             }

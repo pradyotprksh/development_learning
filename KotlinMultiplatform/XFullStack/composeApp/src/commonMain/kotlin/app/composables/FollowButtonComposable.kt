@@ -1,9 +1,9 @@
 package app.composables
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -20,9 +20,9 @@ fun FollowButtonComposable(
     onClick: () -> Unit,
 ) {
     if (!isCurrentUser) {
-        Button(
+        OutlinedButton(
             onClick = onClick,
-            colors = ButtonDefaults.buttonColors(
+            colors = ButtonDefaults.outlinedButtonColors(
                 containerColor = if (isFollowingCurrentUser) Color.Transparent else MaterialTheme.colorScheme.primary,
                 contentColor = if (isFollowingCurrentUser) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onPrimary,
             ),

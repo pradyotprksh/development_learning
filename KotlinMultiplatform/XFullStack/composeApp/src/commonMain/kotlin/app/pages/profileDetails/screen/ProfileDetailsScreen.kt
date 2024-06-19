@@ -3,7 +3,6 @@ package app.pages.profileDetails.screen
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -23,6 +22,7 @@ import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.Chat
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -75,6 +75,7 @@ fun ProfileDetailsScreen(
     openCreateTweetWithParentId: (String, Boolean, Boolean) -> Unit,
     openTweetDetails: (String) -> Unit,
     openProfileDetails: (String) -> Unit,
+    openDirectMessage: (String) -> Unit,
 ) {
     LaunchedEffect(userId) {
         profileDetailsViewModel.initialSetup(userId)
@@ -215,13 +216,25 @@ fun ProfileDetailsScreen(
                     ) {
                         Row(
                             verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.SpaceBetween,
                             modifier = Modifier.fillMaxWidth(),
                         ) {
                             Text(
                                 userDetails.name,
                                 style = MaterialTheme.typography.headlineSmall,
                             )
+                            Spacer(modifier = Modifier.weight(1f))
+                            if (!userDetails.isSameUser) {
+                                IconButton(
+                                    onClick = {
+                                        openDirectMessage(userDetails.id)
+                                    }
+                                ) {
+                                    Icon(
+                                        imageVector = Icons.AutoMirrored.Filled.Chat,
+                                        contentDescription = Icons.AutoMirrored.Filled.Chat.name,
+                                    )
+                                }
+                            }
                             FollowButtonComposable(
                                 isFollowingCurrentUser = userDetails.isFollowingCurrentUser,
                                 isFollowedByCurrentUser = userDetails.isFollowedByCurrentUser,
