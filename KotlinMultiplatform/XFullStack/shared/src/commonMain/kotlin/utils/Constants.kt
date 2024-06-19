@@ -19,6 +19,8 @@ object Constants {
             const val FOLLOW = "follow"
             const val TAGS = "tags"
             const val BOOKMARK = "bookmark"
+            const val CHAT = "chat"
+            const val MESSAGE = "message"
         }
     }
 
@@ -258,6 +260,21 @@ object Constants {
         const val COUNT = "count"
         const val TOTAL_TWEETS_COUNT = "total_tweets_count"
         const val IS_TRENDING = "is_trending"
+        const val USERS = "users"
+        const val IS_GROUP_MESSAGE = "is_group_message"
+        const val IS_DIRECT_MESSAGE = "is_direct_message"
+        const val CREATED_ON = "created_on"
+        const val IS_GROUP = "is_group"
+        const val IS_DIRECT = "is_direct"
+        const val CHAT_ID = "chat_id"
+        const val MESSAGE = "message"
+        const val MESSAGE_BY = "message_by"
+        const val MESSAGE_TO = "message_to"
+        const val MESSAGE_ON = "message_on"
+        const val IS_READ = "is_read"
+        const val REPLY_MESSAGE_ID = "reply_message_id"
+        const val NOTIFICATION_MESSAGE = "notification_message"
+        const val IS_FORWARD_MESSAGE = "is_forward_message"
     }
 
     object GeminiPrompt {

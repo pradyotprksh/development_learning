@@ -8,8 +8,12 @@ import com.pradyotprakash.xfullstack.core.security.token.TokenConfig
 import com.pradyotprakash.xfullstack.core.security.token.TokenService
 import com.pradyotprakash.xfullstack.data.bookmark.BookmarkDataSource
 import com.pradyotprakash.xfullstack.data.bookmark.MongoBookmarkDataSource
+import com.pradyotprakash.xfullstack.data.chat.ChatDataSource
+import com.pradyotprakash.xfullstack.data.chat.MongoChatDataSource
 import com.pradyotprakash.xfullstack.data.follow.FollowDataSource
 import com.pradyotprakash.xfullstack.data.follow.MongoFollowDataSource
+import com.pradyotprakash.xfullstack.data.message.MessageDataSource
+import com.pradyotprakash.xfullstack.data.message.MongoMessageDataSource
 import com.pradyotprakash.xfullstack.data.tags.MongoTagsDataSource
 import com.pradyotprakash.xfullstack.data.tags.TagsDataSource
 import com.pradyotprakash.xfullstack.data.tweet.MongoTweetDataSource
@@ -74,6 +78,8 @@ object ModulesConfig {
         bindProvider<FollowDataSource> { MongoFollowDataSource(instance()) }
         bindProvider<BookmarkDataSource> { MongoBookmarkDataSource(instance()) }
         bindProvider<TagsDataSource> { MongoTagsDataSource(instance()) }
+        bindProvider<ChatDataSource> { MongoChatDataSource(instance()) }
+        bindProvider<MessageDataSource> { MongoMessageDataSource(instance()) }
     }
 
     private val securityModule = DI.Module("SECURITY") {
