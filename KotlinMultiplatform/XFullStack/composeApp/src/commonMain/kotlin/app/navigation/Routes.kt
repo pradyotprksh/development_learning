@@ -44,4 +44,5 @@ enum class Routes(
     TweetDetails("tweet-details/", listOf(TWEET_ID)),
     ProfileDetails("profile-details/", listOf(USER_ID)),
     Bookmarks("bookmarks/"),
+    DirectMessage("direct-message/", listOf(USER_ID)),
 }
