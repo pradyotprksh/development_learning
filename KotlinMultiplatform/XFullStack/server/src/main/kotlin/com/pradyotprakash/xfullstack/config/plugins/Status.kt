@@ -1,6 +1,7 @@
 package com.pradyotprakash.xfullstack.config.plugins
 
 import core.exception.DBWriteError
+import core.exception.InvalidMessage
 import core.exception.InvalidParameter
 import core.exception.InvalidTweet
 import core.exception.UnauthorizedAccess
@@ -110,6 +111,16 @@ fun Application.configureStatusPages() {
                 )
 
                 is InvalidTweet -> call.respond(
+                    HttpStatusCode.Conflict,
+                    XFullStackResponse(
+                        status = XFullStackResponseStatus.Error,
+                        code = cause.errorCode,
+                        message = cause.message,
+                        data = null
+                    )
+                )
+
+                is InvalidMessage -> call.respond(
                     HttpStatusCode.Conflict,
                     XFullStackResponse(
                         status = XFullStackResponseStatus.Error,

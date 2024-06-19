@@ -5,7 +5,9 @@ import com.pradyotprakash.xfullstack.core.security.hashing.HashingService
 import com.pradyotprakash.xfullstack.core.security.token.TokenConfig
 import com.pradyotprakash.xfullstack.core.security.token.TokenService
 import com.pradyotprakash.xfullstack.data.bookmark.BookmarkDataSource
+import com.pradyotprakash.xfullstack.data.chat.ChatDataSource
 import com.pradyotprakash.xfullstack.data.follow.FollowDataSource
+import com.pradyotprakash.xfullstack.data.message.MessageDataSource
 import com.pradyotprakash.xfullstack.data.tags.TagsDataSource
 import com.pradyotprakash.xfullstack.data.tweet.TweetDataSource
 import com.pradyotprakash.xfullstack.data.user.UserDataSource
@@ -14,6 +16,8 @@ import com.pradyotprakash.xfullstack.features.authentication.authentication
 import com.pradyotprakash.xfullstack.features.authentication.controllers.AuthenticationController
 import com.pradyotprakash.xfullstack.features.bookmark.bookmark
 import com.pradyotprakash.xfullstack.features.bookmark.controllers.BookmarkController
+import com.pradyotprakash.xfullstack.features.chat.chat
+import com.pradyotprakash.xfullstack.features.chat.controllers.ChatController
 import com.pradyotprakash.xfullstack.features.follow.controllers.FollowController
 import com.pradyotprakash.xfullstack.features.follow.follow
 import com.pradyotprakash.xfullstack.features.migration.migration
@@ -41,6 +45,8 @@ fun Application.configureRouting() {
     val followDataSource by ModulesConfig.di.instance<FollowDataSource>()
     val bookmarkDataSource by ModulesConfig.di.instance<BookmarkDataSource>()
     val tagsDataSource by ModulesConfig.di.instance<TagsDataSource>()
+    val chatDataSource by ModulesConfig.di.instance<ChatDataSource>()
+    val messageDataSource by ModulesConfig.di.instance<MessageDataSource>()
 
     val tokenService by ModulesConfig.di.instance<TokenService>()
     val tokenConfig by ModulesConfig.di.instance<TokenConfig>()
@@ -55,6 +61,7 @@ fun Application.configureRouting() {
     val followController by ModulesConfig.di.instance<FollowController>()
     val bookmarkController by ModulesConfig.di.instance<BookmarkController>()
     val tagsController by ModulesConfig.di.instance<TagsController>()
+    val chatController by ModulesConfig.di.instance<ChatController>()
 
     routing {
         authentication(
@@ -111,6 +118,13 @@ fun Application.configureRouting() {
             tweetDataSource = tweetDataSource,
             tagsController = tagsController,
             tagsDataSource = tagsDataSource,
+        )
+        chat(
+            userDataSource = userDataSource,
+            chatDataSource = chatDataSource,
+            messageDataSource = messageDataSource,
+            chatController = chatController,
+            tweetDataSource = tweetDataSource,
         )
     }
 }

@@ -1,6 +1,7 @@
 package core.exception
 
 import utils.Constants.ErrorCode.DB_WRITE_ERROR_CODE
+import utils.Constants.ErrorCode.MESSAGE_VALIDITY_ERROR_CODE
 import utils.Constants.ErrorCode.TWEET_VALIDITY_ERROR_CODE
 import utils.Constants.ErrorCode.UNAUTHORIZED_ERROR_CODE
 import utils.Constants.ErrorCode.USER_AUTH_DETAILS_ERROR_CODE
@@ -28,5 +29,10 @@ data class DBWriteError(val errorCode: String = DB_WRITE_ERROR_CODE) :
 
 data class InvalidTweet(
     val errorCode: String = TWEET_VALIDITY_ERROR_CODE,
+    override val message: String,
+) : XFullStackException(message = message)
+
+data class InvalidMessage(
+    val errorCode: String = MESSAGE_VALIDITY_ERROR_CODE,
     override val message: String,
 ) : XFullStackException(message = message)

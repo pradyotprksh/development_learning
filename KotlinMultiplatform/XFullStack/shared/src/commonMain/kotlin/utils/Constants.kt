@@ -93,6 +93,11 @@ object Constants {
             const val TAGS = "/tags"
             const val TRENDING = "/trending"
         }
+
+        object Chat {
+            const val CHAT = "/chat"
+            const val SEND_MESSAGE = "/send-message"
+        }
     }
 
     object Keys {
@@ -187,6 +192,7 @@ object Constants {
         const val BAD_REQUEST_ERROR_CODE = "EC_XFS021"
         const val INVALID_REQUEST_ASK = "EC_XFS022"
         const val SAME_FOLLOW_FOLLOWING_ID = "EC_XFS023"
+        const val MESSAGE_VALIDITY_ERROR_CODE = "EC_XFS024"
     }
 
     object SuccessCode {
@@ -274,6 +280,7 @@ object Constants {
         const val IS_READ = "is_read"
         const val REPLY_MESSAGE_ID = "reply_message_id"
         const val NOTIFICATION_MESSAGE = "notification_message"
+        const val FORWARD_MESSAGE_ID = "forward_message_id"
         const val IS_FORWARD_MESSAGE = "is_forward_message"
     }
 
