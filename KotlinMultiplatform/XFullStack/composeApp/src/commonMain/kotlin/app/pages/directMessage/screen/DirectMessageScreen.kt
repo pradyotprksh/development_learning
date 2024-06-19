@@ -7,6 +7,10 @@ import app.pages.directMessage.viewModel.DirectMessageViewModel
 @Composable
 fun DirectMessageScreen(
     directMessageViewModel: DirectMessageViewModel = viewModel { DirectMessageViewModel() },
+    userId: String?,
+    chatId: String?,
+    openProfileDetails: (String) -> Unit,
+    onNavigateBack: () -> Unit,
 ) {
 
 }

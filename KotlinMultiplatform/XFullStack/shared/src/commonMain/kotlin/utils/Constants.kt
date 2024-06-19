@@ -138,6 +138,7 @@ object Constants {
         const val IS_REPLY = "isReply"
         const val TWEET_ID = "tweetId"
         const val USER_ID = "userId"
+        const val CHAT_ID = "chatId"
         const val NO_NAV_VALUE = "no-nav-value"
         const val BIO_MAX_LENGTH = 50
         const val USERNAME_PREFIX = "@"

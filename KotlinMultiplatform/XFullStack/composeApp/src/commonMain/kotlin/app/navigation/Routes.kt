@@ -1,5 +1,6 @@
 package app.navigation
 
+import utils.Constants.ConstValues.CHAT_ID
 import utils.Constants.ConstValues.IS_REPLY
 import utils.Constants.ConstValues.IS_RETWEET
 import utils.Constants.ConstValues.PARENT_TWEET_ID
@@ -44,5 +45,5 @@ enum class Routes(
     TweetDetails("tweet-details/", listOf(TWEET_ID)),
     ProfileDetails("profile-details/", listOf(USER_ID)),
     Bookmarks("bookmarks/"),
-    DirectMessage("direct-message/", listOf(USER_ID)),
+    DirectMessage("direct-message/", listOf(USER_ID, CHAT_ID)),
 }

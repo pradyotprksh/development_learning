@@ -60,6 +60,7 @@ import app.pages.auth.login.screen.LoginScreen
 import app.pages.auth.register.screen.RegisterScreen
 import app.pages.bookmarks.screen.BookmarksScreen
 import app.pages.createTweet.screen.CreateTweetScreen
+import app.pages.directMessage.screen.DirectMessageScreen
 import app.pages.home.bottomBar.HomeBottomNavItems
 import app.pages.home.home.screen.HomeScreen
 import app.pages.home.search.screen.HomeSearchScreen
@@ -67,6 +68,7 @@ import app.pages.profileDetails.screen.ProfileDetailsScreen
 import app.pages.splash.screen.SplashScreen
 import app.pages.tweetDetails.screen.TweetDetailsScreen
 import kotlinx.coroutines.launch
+import utils.Constants.ConstValues.CHAT_ID
 import utils.Constants.ConstValues.IS_REPLY
 import utils.Constants.ConstValues.IS_RETWEET
 import utils.Constants.ConstValues.NO_NAV_VALUE
@@ -75,7 +77,6 @@ import utils.Constants.ConstValues.TWEET_ID
 import utils.Constants.ConstValues.USERNAME_EMAIL_PHONE
 import utils.Constants.ConstValues.USER_ID
 import utils.Localization
-import utils.OSLevelMethods
 import utils.extensions.popUpToTop
 
 /**
@@ -155,16 +156,17 @@ fun XApp(
     val navigateToBookmarks = {
         navController.navigate(Routes.Bookmarks.path())
     }
+    val navigateToDirectMessage = { userId: String, chatId: String ->
+        navController.navigate(
+            "${Routes.DirectMessage.route}${userId}/${chatId}",
+        )
+    }
     val drawerOpenClose = {
         scope.launch {
             drawerState.apply {
                 if (isClosed) open() else close()
             }
         }
-    }
-
-    OSLevelMethods.createTweet = {
-        navigateToCreateTweet(NO_NAV_VALUE, false, false)
     }
 
     ModalNavigationDrawer(
@@ -450,7 +452,36 @@ fun XApp(
                         openProfileDetails = { id ->
                             navigateToProfileDetails(id)
                         },
-                        openDirectMessage = { id -> }
+                        openDirectMessage = { id ->
+                            navigateToDirectMessage(id, NO_NAV_VALUE)
+                        }
+                    )
+                }
+                composable(
+                    Routes.DirectMessage.path(),
+                    arguments = Routes.DirectMessage.arguments.map {
+                        navArgument(it) {
+                            type = NavType.StringType
+                            defaultValue = NO_NAV_VALUE
+                        }
+                    },
+                ) {
+                    val userIdArgument = it.arguments?.getString(USER_ID)
+                    val userId =
+                        if (userIdArgument == NO_NAV_VALUE) null else userIdArgument
+                    val chatIdArgument = it.arguments?.getString(CHAT_ID)
+                    val chatId =
+                        if (chatIdArgument == NO_NAV_VALUE) null else chatIdArgument
+
+                    DirectMessageScreen(
+                        userId = userId,
+                        chatId = chatId,
+                        openProfileDetails = { id ->
+                            navigateToProfileDetails(id)
+                        },
+                        onNavigateBack = {
+                            navController.popBackStack()
+                        },
                     )
                 }
             }
