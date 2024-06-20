@@ -5,8 +5,6 @@ import org.bson.codecs.pojo.annotations.BsonProperty
 import org.bson.types.ObjectId
 import utils.Constants.DbKeys.CHAT_ID
 import utils.Constants.DbKeys.FORWARD_MESSAGE_ID
-import utils.Constants.DbKeys.IS_DIRECT_MESSAGE
-import utils.Constants.DbKeys.IS_GROUP_MESSAGE
 import utils.Constants.DbKeys.IS_READ
 import utils.Constants.DbKeys.MESSAGE
 import utils.Constants.DbKeys.MESSAGE_BY
@@ -30,8 +28,6 @@ data class Message(
     @BsonProperty(NOTIFICATION_MESSAGE) val notificationMessage: Boolean,
     @BsonProperty(FORWARD_MESSAGE_ID) val forwardMessageId: ObjectId?,
     val reaction: List<String>,
-    @BsonProperty(IS_DIRECT_MESSAGE) val isDirectMessage: Boolean,
-    @BsonProperty(IS_GROUP_MESSAGE) val isGroupMessage: Boolean,
     val audio: String,
     @BsonProperty(TWEET_ID) val tweetId: ObjectId?,
 )

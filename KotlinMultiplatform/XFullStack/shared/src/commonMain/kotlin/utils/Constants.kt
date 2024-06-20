@@ -267,8 +267,6 @@ object Constants {
         const val TOTAL_TWEETS_COUNT = "total_tweets_count"
         const val IS_TRENDING = "is_trending"
         const val USERS = "users"
-        const val IS_GROUP_MESSAGE = "is_group_message"
-        const val IS_DIRECT_MESSAGE = "is_direct_message"
         const val CREATED_ON = "created_on"
         const val IS_GROUP = "is_group"
         const val IS_DIRECT = "is_direct"
@@ -281,7 +279,6 @@ object Constants {
         const val REPLY_MESSAGE_ID = "reply_message_id"
         const val NOTIFICATION_MESSAGE = "notification_message"
         const val FORWARD_MESSAGE_ID = "forward_message_id"
-        const val IS_FORWARD_MESSAGE = "is_forward_message"
     }
 
     object GeminiPrompt {

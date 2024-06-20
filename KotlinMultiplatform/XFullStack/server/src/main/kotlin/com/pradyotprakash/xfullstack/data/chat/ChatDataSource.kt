@@ -7,5 +7,5 @@ interface ChatDataSource {
 
     suspend fun chatDetails(id: String): Chat?
 
-    suspend fun isChatAlreadyExists(users: List<ObjectId>): Boolean
+    suspend fun chatDetailsByUsers(users: List<ObjectId>): Chat?
 }

@@ -22,7 +22,7 @@ class MongoChatDataSource(
         ).firstOrNull()
     }
 
-    override suspend fun isChatAlreadyExists(users: List<ObjectId>): Boolean {
+    override suspend fun chatDetailsByUsers(users: List<ObjectId>): Chat? {
         return chatCollection.find(
             Filters.and(
                 Filters.size(
@@ -34,6 +34,6 @@ class MongoChatDataSource(
                     users,
                 ),
             )
-        ).firstOrNull() != null
+        ).firstOrNull()
     }
 }

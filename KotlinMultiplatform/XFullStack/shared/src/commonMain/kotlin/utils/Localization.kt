@@ -120,6 +120,7 @@ object Localization {
     const val SCHEDULED_TWEET_IS_NOT_CORRECT =
         "Scheduled tweet time is not correct. Please select a valid time for."
     const val TWEET_CREATED_SUCCESSFULLY = "Your tweet is flying now."
+    const val MESSAGE_SENT_SUCCESSFULLY = "Message sent successfully"
     const val VALID_TWEET_NOT_FOUND = "Valid tweet not found. Please try again with a valid tweet."
     const val TWEET_VOTE_CASTED_SUCCESSFULLY = "Tweet vote casted successfully"
     const val VOTE_ALREADY_CASTED = "You have already casted your vote."
@@ -215,4 +216,5 @@ object Localization {
     const val NEED_TWO_USERS = "Need at least 2 users to start the conversation"
     const val NOT_ABLE_TO_FIND_CHAT = "Chat details were not found"
     const val MESSAGE_IS_REQUIRED = "Message content is required"
+    const val MESSAGE_DETAILS_NOT_FOUND = "Message details not found"
 }
