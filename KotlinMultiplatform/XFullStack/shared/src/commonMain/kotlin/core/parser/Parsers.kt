@@ -1,12 +1,14 @@
 package core.parser
 
 import core.models.realm.CurrentUserInfoDB
+import core.models.realm.MessageRequestDB
 import core.models.realm.PollChoicesDB
 import core.models.realm.RequestsDB
 import core.models.realm.TagsDB
 import core.models.realm.TweetDB
 import core.models.realm.TweetRequestDB
 import core.models.realm.UserInfoDB
+import core.models.request.MessageRequest
 import core.models.request.TweetRequest
 import core.models.response.PollChoicesResponse
 import core.models.response.TagsResponse
@@ -168,6 +170,41 @@ fun TweetDB.parseToTweetResponse(): TweetResponse = TweetResponse(
     isBookmarkedByCurrentUser = this.isBookmarkedByCurrentUser,
     parentTweetDetails = this.parentTweetDetails?.parseToTweetResponse(),
 )
+
+fun MessageRequest.parseToRequestDb() = this.let { message ->
+    RequestsDB().apply {
+        this.requestType = TWEET_REQUEST
+        this.message = MessageRequestDB().apply {
+            this.chatId = message.chatId
+            this.message = message.message
+            this.messageTo = message.messageTo
+            this.users = message.users
+            this.media = message.media
+            this.gif = message.gif
+            this.replyMessageId = message.replyMessageId
+            this.forwardMessageId = message.forwardMessageId
+            this.reaction = message.reaction
+            this.audio = message.audio
+            this.tweetId = message.tweetId
+        }
+    }
+}
+
+fun RequestsDB.parseToMessageRequest() = this.message?.let { message ->
+    MessageRequest(
+        chatId = message.chatId,
+        message = message.message,
+        messageTo = message.messageTo,
+        users = message.users,
+        media = message.media,
+        gif = message.gif,
+        replyMessageId = message.replyMessageId,
+        forwardMessageId = message.forwardMessageId,
+        reaction = message.reaction,
+        audio = message.audio,
+        tweetId = message.tweetId,
+    )
+}
 
 fun List<TweetRequest>.parseToRequestDb() = this.let { tweets ->
     val tweetsParse = tweets.map { tweetDetails ->

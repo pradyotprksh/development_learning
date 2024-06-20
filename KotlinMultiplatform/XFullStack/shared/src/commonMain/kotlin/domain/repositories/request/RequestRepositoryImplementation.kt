@@ -1,11 +1,14 @@
 package domain.repositories.request
 
 import core.models.realm.RequestsDB
+import core.models.request.MessageRequest
 import core.models.request.TweetRequest
 import core.models.response.ClientResponse
 import core.models.response.XFullStackResponse
+import core.parser.parseToMessageRequest
 import core.parser.parseToRequestDb
 import core.parser.parseToTweetRequest
+import domain.services.chat.ChatRemoteService
 import domain.services.request.RequestDBService
 import domain.services.tweet.TweetRemoteService
 import domain.services.user.bookmark.UserBookmarkRemoteService
@@ -16,6 +19,7 @@ import kotlinx.coroutines.flow.map
 import utils.Constants.ErrorCode.DEFAULT_ERROR_CODE
 import utils.Constants.Keys.BOOKMARK_REQUEST
 import utils.Constants.Keys.FOLLOW_REQUEST
+import utils.Constants.Keys.MESSAGE_REQUEST
 import utils.Constants.Keys.POLL_REQUEST
 import utils.Constants.Keys.TWEET_REQUEST
 import utils.Localization
@@ -26,6 +30,7 @@ class RequestRepositoryImplementation(
     private val tweetRemoteService: TweetRemoteService,
     private val userFollowRemoteService: UserFollowRemoteService,
     private val userBookmarkRemoteService: UserBookmarkRemoteService,
+    private val chatRemoteService: ChatRemoteService,
 ) : RequestRepository {
     override suspend fun saveTweetRequests(requests: List<TweetRequest>) {
         val request = requests.parseToRequestDb()
@@ -53,6 +58,8 @@ class RequestRepositoryImplementation(
                     userBookmarkRemoteService.updateBookmarkStatus(requestDb.tweetId)
                 } else if (requestDb.requestType == POLL_REQUEST) {
                     tweetRemoteService.updateTweetPoll(requestDb.tweetId, requestDb.optionId)
+                } else if (requestDb.requestType == MESSAGE_REQUEST) {
+                    requestDb.parseToMessageRequest()?.let { chatRemoteService.sendMessage(it) }
                 } else {
                     null
                 }
@@ -110,5 +117,10 @@ class RequestRepositoryImplementation(
                 this.optionId = optionId
             },
         )
+    }
+
+    override suspend fun saveMessageRequests(requests: MessageRequest) {
+        val request = requests.parseToRequestDb()
+        requestDBService.saveRequests(request)
     }
 }

@@ -1,6 +1,7 @@
 package domain.repositories.request
 
 import core.models.realm.RequestsDB
+import core.models.request.MessageRequest
 import core.models.request.TweetRequest
 import core.models.response.ClientResponse
 import core.models.response.XFullStackResponse
@@ -18,4 +19,6 @@ interface RequestRepository {
     suspend fun saveBookmarkRequest(tweetId: String)
 
     suspend fun savePollOptionRequest(tweetId: String, optionId: String)
+
+    suspend fun saveMessageRequests(requests: MessageRequest)
 }

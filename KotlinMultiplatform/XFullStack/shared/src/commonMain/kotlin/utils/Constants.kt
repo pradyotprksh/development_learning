@@ -121,6 +121,7 @@ object Constants {
         const val FOLLOWING_SCROLL_POSITION = "following_scroll_position"
         const val FOLLOWING_ID = "followingId"
         const val TWEET_REQUEST = "tweetRequest"
+        const val MESSAGE_REQUEST = "messageRequest"
         const val FOLLOW_REQUEST = "followRequest"
         const val BOOKMARK_REQUEST = "bookmarkRequest"
         const val POLL_REQUEST = "pollRequest"

@@ -10,6 +10,7 @@ import data.device.tweet.TweetDBServiceImplementation
 import data.device.user.current.CurrentUserDBServiceImplementation
 import data.device.user.user.UserDBServiceImplementation
 import data.device.view.ViewDBServiceImplementation
+import data.remote.chat.ChatRemoteServiceImplementation
 import data.remote.gemini.GeminiRemoteServiceImplementation
 import data.remote.server.utils.ServerUtilsRemoteServiceImplementation
 import data.remote.tags.TagsRemoteServiceImplementation
@@ -20,6 +21,8 @@ import data.remote.user.follow.UserFollowRemoteServiceImplementation
 import data.remote.user.verification.UserVerificationRemoteServiceImplementation
 import data.remote.view.ViewRemoteServiceImplementation
 import data.remote.websocket.WebsocketRemoteServiceImplementation
+import domain.repositories.chat.ChatRepository
+import domain.repositories.chat.ChatRepositoryImplementation
 import domain.repositories.gemini.GeminiRepository
 import domain.repositories.gemini.GeminiRepositoryImplementation
 import domain.repositories.request.RequestRepository
@@ -40,6 +43,7 @@ import domain.repositories.view.ViewRepository
 import domain.repositories.view.ViewRepositoryImplementation
 import domain.repositories.websocket.WebsocketRepository
 import domain.repositories.websocket.WebsocketRepositoryImplementation
+import domain.services.chat.ChatRemoteService
 import domain.services.gemini.GeminiRemoteService
 import domain.services.request.RequestDBService
 import domain.services.server.utils.ServerUtilsRemoteService
@@ -128,6 +132,8 @@ object SharedModulesDi {
         }
 
         bindProvider<TagsRemoteService> { TagsRemoteServiceImplementation(instance(tag = XFULLSTACK_NETWORK_CLIENT)) }
+
+        bindProvider<ChatRemoteService> { ChatRemoteServiceImplementation(instance(tag = XFULLSTACK_NETWORK_CLIENT)) }
     }
 
     private val repositoriesModule = DI.Module("REPOSITORIES") {
@@ -170,11 +176,16 @@ object SharedModulesDi {
                 instance(),
                 instance(),
                 instance(),
+                instance(),
             )
         }
 
         bind<TagsRepository>() with singleton {
             TagsRepositoryImplementation(instance(), instance())
+        }
+
+        bind<ChatRepository>() with singleton {
+            ChatRepositoryImplementation()
         }
     }
 
@@ -199,5 +210,6 @@ object SharedModulesDi {
         val userRepository: UserRepository by di.instance()
         val requestRepository: RequestRepository by di.instance()
         val tagsRepository: TagsRepository by di.instance()
+        val chatRepository: ChatRepository by di.instance()
     }
 }

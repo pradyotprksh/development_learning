@@ -29,4 +29,6 @@ class RequestsDB : RealmObject {
     var followingId: String = ""
 
     var tweets: RealmList<TweetRequestDB> = realmListOf()
+
+    var message: MessageRequestDB? = null
 }
