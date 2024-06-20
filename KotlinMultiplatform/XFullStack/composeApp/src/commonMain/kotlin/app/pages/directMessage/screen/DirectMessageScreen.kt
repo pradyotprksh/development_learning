@@ -1,6 +1,7 @@
 package app.pages.directMessage.screen
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.lifecycle.viewmodel.compose.viewModel
 import app.pages.directMessage.viewModel.DirectMessageViewModel
 
@@ -12,5 +13,7 @@ fun DirectMessageScreen(
     openProfileDetails: (String) -> Unit,
     onNavigateBack: () -> Unit,
 ) {
-
+    LaunchedEffect(userId, chatId) {
+        directMessageViewModel.loadDetails(userId, chatId)
+    }
 }
