@@ -11,6 +11,7 @@ import core.exception.InvalidMessage
 import core.exception.InvalidTweet
 import core.exception.UserDetailsNotFound
 import core.models.request.MessageRequest
+import core.models.response.SendMessageResponse
 import core.models.response.XFullStackResponse
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.ApplicationCall
@@ -160,7 +161,9 @@ class SendMessageControllerImplementation : SendMessageController {
                 status = XFullStackResponseStatus.Success,
                 code = null,
                 message = Localization.MESSAGE_SENT_SUCCESSFULLY,
-                data = null,
+                data = SendMessageResponse(
+                    chatId = chatId,
+                ),
             )
         )
     }

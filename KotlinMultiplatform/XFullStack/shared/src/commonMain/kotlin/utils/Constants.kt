@@ -97,6 +97,7 @@ object Constants {
         object Chat {
             const val CHAT = "/chat"
             const val SEND_MESSAGE = "/send-message"
+            const val GET_MESSAGES = "/get-messages"
         }
     }
 

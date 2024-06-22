@@ -125,6 +125,9 @@ fun Application.configureRouting() {
             messageDataSource = messageDataSource,
             chatController = chatController,
             tweetDataSource = tweetDataSource,
+            viewDataSource = viewDataSource,
+            followDataSource = followDataSource,
+            bookmarkDataSource = bookmarkDataSource,
         )
     }
 }

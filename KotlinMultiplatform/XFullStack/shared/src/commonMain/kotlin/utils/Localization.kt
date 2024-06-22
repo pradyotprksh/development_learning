@@ -217,4 +217,6 @@ object Localization {
     const val NOT_ABLE_TO_FIND_CHAT = "Chat details were not found"
     const val MESSAGE_IS_REQUIRED = "Message content is required"
     const val MESSAGE_DETAILS_NOT_FOUND = "Message details not found"
+    const val PM = "PM"
+    const val AM = "AM"
 }

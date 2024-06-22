@@ -35,6 +35,8 @@ import com.pradyotprakash.xfullstack.features.bookmark.controllers.BookmarkContr
 import com.pradyotprakash.xfullstack.features.bookmark.controllers.bookmarkUpdate.BookmarkUpdateController
 import com.pradyotprakash.xfullstack.features.bookmark.controllers.bookmarkUpdate.BookmarkUpdateControllerImplementation
 import com.pradyotprakash.xfullstack.features.chat.controllers.ChatController
+import com.pradyotprakash.xfullstack.features.chat.controllers.fetchMessages.FetchMessagesController
+import com.pradyotprakash.xfullstack.features.chat.controllers.fetchMessages.FetchMessagesControllerImplementation
 import com.pradyotprakash.xfullstack.features.chat.controllers.sendMessage.SendMessageController
 import com.pradyotprakash.xfullstack.features.chat.controllers.sendMessage.SendMessageControllerImplementation
 import com.pradyotprakash.xfullstack.features.follow.controllers.FollowController
@@ -127,6 +129,7 @@ object ModulesConfig {
         bindProvider<TagsFetchController> { TagsFetchControllerImplementation() }
 
         bindProvider<SendMessageController> { SendMessageControllerImplementation() }
+        bindProvider<FetchMessagesController> { FetchMessagesControllerImplementation() }
     }
 
     private val featuresModule = DI.Module("FEATURES") {
@@ -148,7 +151,7 @@ object ModulesConfig {
 
         bindProvider { TagsController(instance()) }
 
-        bindProvider { ChatController(instance()) }
+        bindProvider { ChatController(instance(), instance()) }
     }
 
     val di = DI {

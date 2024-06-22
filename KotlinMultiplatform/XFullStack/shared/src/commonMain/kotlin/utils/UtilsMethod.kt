@@ -5,7 +5,11 @@ import core.exception.InvalidTweet
 import kotlinx.datetime.Clock
 import kotlinx.datetime.DateTimeUnit
 import kotlinx.datetime.Instant
+import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.TimeZone
+import kotlinx.datetime.format.MonthNames
+import kotlinx.datetime.format.Padding
+import kotlinx.datetime.format.char
 import kotlinx.datetime.plus
 import kotlinx.datetime.toLocalDateTime
 import utils.Constants.ConstValues.BIO_MAX_LENGTH
@@ -292,10 +296,34 @@ object UtilsMethod {
 
     object Dates {
         fun convertLongToReadableDate(date: Long): String {
-            val localDate = Instant.fromEpochMilliseconds(date)
-                .toLocalDateTime(TimeZone.currentSystemDefault()).date
-            val monthName = localDate.month.name.lowercase().replaceFirstChar { it.uppercase() }
-            return "${localDate.dayOfMonth} $monthName ${localDate.year}"
+            val dateFormat = LocalDateTime.Format {
+                monthName(
+                    MonthNames.ENGLISH_FULL,
+                )
+                char(' ')
+                dayOfMonth(padding = Padding.ZERO)
+                char(',')
+                char(' ')
+                year()
+            }
+
+            val localDate =
+                Instant.fromEpochSeconds(date).toLocalDateTime(TimeZone.currentSystemDefault())
+            return dateFormat.format(localDate)
+        }
+
+        fun convertLongToReadableTime(date: Long): String {
+            val dateFormat = LocalDateTime.Format {
+                amPmHour(padding = Padding.NONE)
+                char(':')
+                minute(padding = Padding.ZERO)
+                char(' ')
+                amPmMarker(am = Localization.AM.lowercase(), pm = Localization.PM.lowercase())
+            }
+
+            val localDate =
+                Instant.fromEpochSeconds(date).toLocalDateTime(TimeZone.currentSystemDefault())
+            return dateFormat.format(localDate)
         }
 
         fun getCurrentTimeStamp(): Long = Clock.System.now().epochSeconds
