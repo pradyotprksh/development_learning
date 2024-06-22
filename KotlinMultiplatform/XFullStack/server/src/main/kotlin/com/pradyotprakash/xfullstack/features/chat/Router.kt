@@ -48,5 +48,18 @@ fun Routing.chat(
                 bookmarkDataSource,
             )
         }
+
+        get<ChatResource.GetChats> {
+            chatController.getChats(
+                this.context,
+                userDataSource,
+                tweetDataSource,
+                chatDataSource,
+                messageDataSource,
+                viewDataSource,
+                followDataSource,
+                bookmarkDataSource,
+            )
+        }
     }
 }

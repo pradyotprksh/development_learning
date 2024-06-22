@@ -87,6 +87,59 @@ class FetchMessagesControllerImplementation : FetchMessagesController {
         )
     }
 
+    override suspend fun getChats(
+        call: ApplicationCall,
+        userDataSource: UserDataSource,
+        tweetDataSource: TweetDataSource,
+        chatDataSource: ChatDataSource,
+        messageDataSource: MessageDataSource,
+        viewDataSource: ViewDataSource,
+        followDataSource: FollowDataSource,
+        bookmarkDataSource: BookmarkDataSource,
+    ) {
+        val principal = call.principal<JWTPrincipal>()
+        val currentUserId =
+            principal?.payload?.getClaim(USER_ID)?.asString() ?: throw UserDetailsNotFound()
+
+        userDataSource.getUserByUserId(currentUserId) ?: throw UserDetailsNotFound()
+
+        val chats = chatDataSource.getChats(currentUserId).map { chatDetails ->
+            val lastMessage = messageDataSource.getLastMessage(chatDetails.id.toHexString())
+                ?.let { lastMessage ->
+                    parseMessageToMessageResponse(
+                        lastMessage,
+                        currentUserId,
+                        userDataSource,
+                        tweetDataSource,
+                        chatDataSource,
+                        messageDataSource,
+                        viewDataSource,
+                        followDataSource,
+                        bookmarkDataSource,
+                    )
+                }
+
+            ChatResponse(
+                chatId = chatDetails.id.toHexString(),
+                users = chatDetails.users.map { it.toHexString() },
+                createdBy = chatDetails.createdBy.toHexString(),
+                createdOn = chatDetails.createdOn,
+                isGroup = chatDetails.isGroup,
+                isDirect = chatDetails.isDirect,
+                lastMessageDetails = lastMessage,
+            )
+        }
+
+        call.respond(
+            HttpStatusCode.OK, XFullStackResponse(
+                status = XFullStackResponseStatus.Success,
+                code = null,
+                message = Localization.DETAILS_FOUND,
+                data = chats
+            )
+        )
+    }
+
     private suspend fun parseMessageToMessageResponse(
         message: Message,
         currentUserId: String,

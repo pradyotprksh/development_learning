@@ -6,4 +6,6 @@ interface MessageDataSource {
     suspend fun messageDetails(id: String): Message?
 
     suspend fun getMessages(chatId: String): List<Message>
+
+    suspend fun getLastMessage(chatId: String): Message?
 }

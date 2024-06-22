@@ -1,8 +1,10 @@
 package com.pradyotprakash.xfullstack.data.chat
 
 import com.mongodb.client.model.Filters
+import com.mongodb.client.model.Filters.`in`
 import com.mongodb.kotlin.client.coroutine.MongoDatabase
 import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.toList
 import org.bson.types.ObjectId
 import utils.Constants.Database.Collections.CHAT
 import utils.Constants.DbKeys.ID
@@ -35,5 +37,14 @@ class MongoChatDataSource(
                 ),
             )
         ).firstOrNull()
+    }
+
+    override suspend fun getChats(userId: String): List<Chat> {
+        return chatCollection.find(
+            `in`(
+                USERS,
+                ObjectId(userId),
+            ),
+        ).toList()
     }
 }

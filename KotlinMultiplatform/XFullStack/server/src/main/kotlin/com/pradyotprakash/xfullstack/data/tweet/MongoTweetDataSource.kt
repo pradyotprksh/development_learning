@@ -1,6 +1,7 @@
 package com.pradyotprakash.xfullstack.data.tweet
 
 import com.mongodb.client.model.Filters
+import com.mongodb.client.model.Filters.`in`
 import com.mongodb.client.model.Sorts
 import com.mongodb.client.model.Updates
 import com.mongodb.kotlin.client.coroutine.MongoDatabase
@@ -143,14 +144,11 @@ class MongoTweetDataSource(
             .filter { it.isNotEmpty() && !it.contains(" ") }.toList()
     }
 
-    /**
-     * https://www.mongodb.com/docs/drivers/kotlin/coroutine/current/fundamentals/builders/filters/#arrays
-     */
     override suspend fun countTweetsWithTag(tag: String): Int {
         return tweetCollection.find(
-            Filters.all(
+            `in`(
                 TAGS,
-                listOf(tag),
+                tag,
             ),
         ).count()
     }

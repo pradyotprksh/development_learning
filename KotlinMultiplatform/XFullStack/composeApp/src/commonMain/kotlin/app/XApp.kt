@@ -63,6 +63,7 @@ import app.pages.createTweet.screen.CreateTweetScreen
 import app.pages.directMessage.screen.DirectMessageScreen
 import app.pages.home.bottomBar.HomeBottomNavItems
 import app.pages.home.home.screen.HomeScreen
+import app.pages.home.message.screen.HomeMessageScreen
 import app.pages.home.search.screen.HomeSearchScreen
 import app.pages.profileDetails.screen.ProfileDetailsScreen
 import app.pages.splash.screen.SplashScreen
@@ -355,7 +356,9 @@ fun XApp(
                 composable(Routes.HomeGrok.path()) { }
                 composable(Routes.HomeCommunities.path()) { }
                 composable(Routes.HomeNotifications.path()) { }
-                composable(Routes.HomeMessages.path()) { }
+                composable(Routes.HomeMessages.path()) {
+                    HomeMessageScreen()
+                }
                 composable(Routes.Bookmarks.path()) {
                     BookmarksScreen(
                         onNavigateBack = {

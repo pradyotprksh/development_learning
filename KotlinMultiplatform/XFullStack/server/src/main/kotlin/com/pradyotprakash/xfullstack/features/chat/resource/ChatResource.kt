@@ -2,6 +2,7 @@ package com.pradyotprakash.xfullstack.features.chat.resource
 
 import io.ktor.resources.Resource
 import utils.Constants.Paths.Chat.CHAT
+import utils.Constants.Paths.Chat.GET_CHATS
 import utils.Constants.Paths.Chat.GET_MESSAGES
 import utils.Constants.Paths.Chat.SEND_MESSAGE
 
@@ -17,5 +18,10 @@ class ChatResource {
     data class GetMessages(
         private val parent: ChatResource = ChatResource(),
         val chatId: String,
+    )
+
+    @Resource(GET_CHATS)
+    data class GetChats(
+        private val parent: ChatResource = ChatResource(),
     )
 }

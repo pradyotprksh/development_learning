@@ -8,4 +8,6 @@ interface ChatDataSource {
     suspend fun chatDetails(id: String): Chat?
 
     suspend fun chatDetailsByUsers(users: List<ObjectId>): Chat?
+
+    suspend fun getChats(userId: String): List<Chat>
 }

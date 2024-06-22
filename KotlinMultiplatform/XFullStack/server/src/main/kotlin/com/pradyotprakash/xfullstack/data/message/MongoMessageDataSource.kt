@@ -30,4 +30,10 @@ class MongoMessageDataSource(
             Filters.eq(CHAT_ID, ObjectId(chatId))
         ).sort(Sorts.descending(MESSAGE_ON)).toList()
     }
+
+    override suspend fun getLastMessage(chatId: String): Message? {
+        return messageCollection.find(
+            Filters.eq(CHAT_ID, ObjectId(chatId))
+        ).sort(Sorts.descending(MESSAGE_ON)).firstOrNull()
+    }
 }

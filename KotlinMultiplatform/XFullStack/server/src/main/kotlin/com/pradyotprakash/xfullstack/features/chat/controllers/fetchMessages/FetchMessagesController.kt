@@ -22,4 +22,15 @@ interface FetchMessagesController {
         followDataSource: FollowDataSource,
         bookmarkDataSource: BookmarkDataSource,
     )
+
+    suspend fun getChats(
+        call: ApplicationCall,
+        userDataSource: UserDataSource,
+        tweetDataSource: TweetDataSource,
+        chatDataSource: ChatDataSource,
+        messageDataSource: MessageDataSource,
+        viewDataSource: ViewDataSource,
+        followDataSource: FollowDataSource,
+        bookmarkDataSource: BookmarkDataSource,
+    )
 }
