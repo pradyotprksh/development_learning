@@ -38,7 +38,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -180,9 +179,7 @@ fun DirectMessageScreen(
             }
 
             stickyHeader {
-                HorizontalDivider(
-                    color = Color.Red
-                )
+                HorizontalDivider()
             }
         }
     }
