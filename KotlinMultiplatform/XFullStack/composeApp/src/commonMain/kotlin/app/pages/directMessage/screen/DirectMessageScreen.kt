@@ -1,14 +1,25 @@
 package app.pages.directMessage.screen
 
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.calculateEndPadding
+import androidx.compose.foundation.layout.calculateStartPadding
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Call
 import androidx.compose.material.icons.filled.VideoCall
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -27,6 +38,8 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import app.composables.LoadingDialogComposable
@@ -35,7 +48,7 @@ import app.pages.directMessage.viewModel.DirectMessageViewModel
 import kotlinx.coroutines.launch
 import utils.Localization
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
 fun DirectMessageScreen(
     directMessageViewModel: DirectMessageViewModel = viewModel { DirectMessageViewModel() },
@@ -120,5 +133,57 @@ fun DirectMessageScreen(
                 }
             )
         }
-    ) { }
+    ) { paddingValues ->
+        val startEndPaddingModifier = Modifier.padding(
+            start = paddingValues.calculateStartPadding(LocalLayoutDirection.current) + 25.dp,
+            end = paddingValues.calculateEndPadding(LocalLayoutDirection.current) + 25.dp,
+        )
+        LazyColumn(
+            modifier = Modifier.fillMaxSize().padding(
+                top = paddingValues.calculateTopPadding(),
+                bottom = paddingValues.calculateBottomPadding(),
+            ),
+            state = rememberLazyListState(),
+        ) {
+            directMessageStateState.userInfo?.let { userInfo ->
+                item {
+                    Column(
+                        modifier = startEndPaddingModifier.fillMaxWidth(),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                    ) {
+                        ProfileImageComposable(
+                            profileImage = userInfo.profilePicture,
+                            modifier = Modifier.size(60.dp),
+                        )
+                        Text(
+                            text = userInfo.name,
+                            style = MaterialTheme.typography.titleMedium,
+                        )
+                        Text(
+                            text = userInfo.username,
+                            style = MaterialTheme.typography.bodySmall,
+                        )
+                        userInfo.bio?.let { bio ->
+                            Spacer(modifier = Modifier.height(10.dp))
+                            Text(
+                                text = bio,
+                            )
+                        }
+                        Spacer(modifier = Modifier.height(10.dp))
+                        Text(
+                            text = "${userInfo.followers} ${Localization.FOLLOWERS}",
+                            style = MaterialTheme.typography.bodySmall,
+                        )
+                        Spacer(modifier = Modifier.height(20.dp))
+                    }
+                }
+            }
+
+            stickyHeader {
+                HorizontalDivider(
+                    color = Color.Red
+                )
+            }
+        }
+    }
 }
