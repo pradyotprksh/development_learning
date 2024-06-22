@@ -7,6 +7,7 @@ import di.SharedModulesDi
 import domain.repositories.user.user.UserRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class DirectMessageViewModel(
@@ -26,11 +27,21 @@ class DirectMessageViewModel(
 
     private fun userInfoChanges(userId: String) {
         viewModelScope.launch {
-            userRepository.getUserInfoChanges(userId).collect {
-                _directMessageStateState.value = _directMessageStateState.value.copy(
-                    userInfo = it,
-                )
+            userRepository.getUserInfoChanges(userId).collect { userInfo ->
+                _directMessageStateState.update {
+                    it.copy(
+                        userInfo = userInfo,
+                    )
+                }
             }
+        }
+    }
+
+    fun removeSnackBarMessage() {
+        _directMessageStateState.update {
+            it.copy(
+                snackBarMessage = null
+            )
         }
     }
 }

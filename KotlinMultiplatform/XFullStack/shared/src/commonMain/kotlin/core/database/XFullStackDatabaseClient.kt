@@ -2,6 +2,7 @@ package core.database
 
 import core.models.realm.CurrentUserIdDB
 import core.models.realm.CurrentUserInfoDB
+import core.models.realm.MessageRequestDB
 import core.models.realm.PollChoicesDB
 import core.models.realm.RequestsDB
 import core.models.realm.ScrollPositionDB
@@ -30,6 +31,7 @@ object XFullStackDatabaseClient {
                     ViewDB::class,
                     ScrollPositionDB::class,
                     TagsDB::class,
+                    MessageRequestDB::class,
                 )
             )
         return Realm.open(config)

@@ -14,7 +14,7 @@ import core.models.response.PollChoicesResponse
 import core.models.response.TagsResponse
 import core.models.response.TweetResponse
 import core.models.response.UserInfoResponse
-import io.realm.kotlin.ext.realmListOf
+import io.realm.kotlin.ext.toRealmList
 import utils.Constants.Keys.TWEET_REQUEST
 
 fun UserInfoResponse.parseToCurrentUserInfoDB() = this.let { info ->
@@ -98,24 +98,14 @@ fun PollChoicesDB.parseToPollChoicesResponse() = PollChoicesResponse(
 )
 
 fun TweetResponse.parseToTweetsDB(): TweetDB = this.let { info ->
-    val media = realmListOf<String>()
-    info.media.forEach { media.add(it) }
-
-    val gif = realmListOf<String>()
-    info.gif.forEach { gif.add(it) }
-
-    val pollChoicesDB = info.pollChoices.map { it.parseToPollChoicesDB() }
-    val pollChoices = realmListOf<PollChoicesDB>()
-    pollChoicesDB.forEach { pollChoices.add(it) }
-
     TweetDB().apply {
         this.tweetId = info.id
         this.tweet = info.tweet
         this.createdBy = info.createdBy?.parseToUserInfoDB()
         this.tweetedOnTimestamp = info.tweetedOnTimestamp
         this.tweetedOn = info.tweetedOn
-        this.media = media
-        this.gif = gif
+        this.media = info.media.toRealmList()
+        this.gif = info.gif.toRealmList()
         this.commentCount = info.commentCount
         this.likeCount = info.likesCount
         this.repostsCount = info.repostsCount
@@ -123,7 +113,7 @@ fun TweetResponse.parseToTweetsDB(): TweetDB = this.let { info ->
         this.bookmarkCount = info.bookmarksCount
         this.views = info.views
         this.isAPoll = info.isAPoll
-        this.pollChoices = pollChoices
+        this.pollChoices = info.pollChoices.map { it.parseToPollChoicesDB() }.toRealmList()
         this.pollingEndTime = info.pollingEndTime
         this.isPollingAllowed = info.isPollingAllowed
         this.location = info.location
@@ -178,9 +168,9 @@ fun MessageRequest.parseToRequestDb() = this.let { message ->
             this.chatId = message.chatId
             this.message = message.message
             this.messageTo = message.messageTo
-            this.users = message.users
-            this.media = message.media
-            this.gif = message.gif
+            this.users = message.users.toRealmList()
+            this.media = message.media.toRealmList()
+            this.gif = message.gif.toRealmList()
             this.replyMessageId = message.replyMessageId
             this.forwardMessageId = message.forwardMessageId
             this.reaction = message.reaction
@@ -208,21 +198,12 @@ fun RequestsDB.parseToMessageRequest() = this.message?.let { message ->
 
 fun List<TweetRequest>.parseToRequestDb() = this.let { tweets ->
     val tweetsParse = tweets.map { tweetDetails ->
-        val media = realmListOf<String>()
-        tweetDetails.media.forEach { media.add(it) }
-
-        val gif = realmListOf<String>()
-        tweetDetails.gif.forEach { gif.add(it) }
-
-        val pollChoices = realmListOf<String>()
-        tweetDetails.pollChoices.forEach { pollChoices.add(it) }
-
         TweetRequestDB().apply {
             this.tweet = tweetDetails.tweet
-            this.media = media
-            this.gif = gif
+            this.media = tweetDetails.media.toRealmList()
+            this.gif = tweetDetails.gif.toRealmList()
             this.isAPoll = tweetDetails.isAPoll
-            this.pollChoices = pollChoices
+            this.pollChoices = tweetDetails.pollChoices.toRealmList()
             this.pollHour = tweetDetails.pollHour
             this.pollMinute = tweetDetails.pollMinute
             this.pollSeconds = tweetDetails.pollSeconds
@@ -237,12 +218,9 @@ fun List<TweetRequest>.parseToRequestDb() = this.let { tweets ->
         }
     }
 
-    val tweetDetailsDb = realmListOf<TweetRequestDB>()
-    tweetDetailsDb.addAll(tweetsParse)
-
     RequestsDB().apply {
         this.requestType = TWEET_REQUEST
-        this.tweets = tweetDetailsDb
+        this.tweets = tweetsParse.toRealmList()
     }
 }
 
