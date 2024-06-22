@@ -17,4 +17,5 @@ data class UserInfoResponse(
     val isFollowedByCurrentUser: Boolean,
     val isFollowingCurrentUser: Boolean,
     val isSameUser: Boolean,
+    val chatId: String?,
 )

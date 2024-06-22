@@ -3,6 +3,7 @@ package core.models.realm
 import io.realm.kotlin.types.RealmObject
 import io.realm.kotlin.types.annotations.PersistedName
 import io.realm.kotlin.types.annotations.PrimaryKey
+import utils.Constants.DbKeys.CHAT_ID
 import utils.Constants.DbKeys.DATE_OF_BIRTH
 import utils.Constants.DbKeys.EMAIL_ADDRESS
 import utils.Constants.DbKeys.PHONE_NUMBER
@@ -30,4 +31,7 @@ class CurrentUserInfoDB : RealmObject {
     var dateOfBirth: Long = 0
     var following: Int = 0
     var followers: Int = 0
+
+    @PersistedName(CHAT_ID)
+    var chatId: String? = null
 }

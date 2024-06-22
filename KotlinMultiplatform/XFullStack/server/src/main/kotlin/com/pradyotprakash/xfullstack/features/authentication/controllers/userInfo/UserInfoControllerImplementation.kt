@@ -39,6 +39,7 @@ class UserInfoControllerImplementation : UserInfoController {
             isFollowingCurrentUser = false,
             isFollowedByCurrentUser = false,
             isSameUser = true,
+            chatId = null,
         )
 
         call.respond(

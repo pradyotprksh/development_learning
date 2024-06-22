@@ -452,8 +452,8 @@ fun XApp(
                         openProfileDetails = { id ->
                             navigateToProfileDetails(id)
                         },
-                        openDirectMessage = { id ->
-                            navigateToDirectMessage(id, NO_NAV_VALUE)
+                        openDirectMessage = { id, chatId ->
+                            navigateToDirectMessage(id, chatId)
                         }
                     )
                 }

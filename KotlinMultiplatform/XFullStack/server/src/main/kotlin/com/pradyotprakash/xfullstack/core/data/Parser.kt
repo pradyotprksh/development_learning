@@ -26,6 +26,7 @@ fun User.parseToUserInfoResponse(
     isFollowingCurrentUser: Boolean,
     isFollowedByCurrentUser: Boolean,
     isSameUser: Boolean,
+    chatId: String?,
 ) = this.let { user ->
     UserInfoResponse(
         id = user.id.toHexString(),
@@ -41,5 +42,6 @@ fun User.parseToUserInfoResponse(
         isFollowedByCurrentUser = isFollowedByCurrentUser,
         isFollowingCurrentUser = isFollowingCurrentUser,
         isSameUser = isSameUser,
+        chatId = chatId,
     )
 }

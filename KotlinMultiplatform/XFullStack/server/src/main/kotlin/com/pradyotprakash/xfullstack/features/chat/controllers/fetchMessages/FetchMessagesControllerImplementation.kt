@@ -137,6 +137,7 @@ class FetchMessagesControllerImplementation : FetchMessagesController {
                         viewDataSource,
                         followDataSource,
                         bookmarkDataSource,
+                        chatDataSource,
                         tweet,
                         currentUserId
                     )

@@ -30,6 +30,7 @@ fun UserInfoResponse.parseToCurrentUserInfoDB() = this.let { info ->
         this.following = info.following
         this.followers = info.followers
         this.followers = info.followers
+        this.chatId = info.chatId
     }
 }
 
@@ -48,6 +49,7 @@ fun UserInfoResponse.parseToUserInfoDB() = this.let { info ->
         this.isFollowingCurrentUser = info.isFollowingCurrentUser
         this.isFollowedByCurrentUser = info.isFollowedByCurrentUser
         this.isSameUser = info.isSameUser
+        this.chatId = info.chatId
     }
 }
 
@@ -65,6 +67,7 @@ fun CurrentUserInfoDB.parseToCurrentUserResponse() = UserInfoResponse(
     isFollowedByCurrentUser = false,
     isFollowingCurrentUser = false,
     isSameUser = true,
+    chatId = this.chatId,
 )
 
 fun UserInfoDB.parseToCurrentUserResponse() = UserInfoResponse(
@@ -81,6 +84,7 @@ fun UserInfoDB.parseToCurrentUserResponse() = UserInfoResponse(
     isFollowingCurrentUser = this.isFollowingCurrentUser,
     isFollowedByCurrentUser = this.isFollowedByCurrentUser,
     isSameUser = this.isSameUser,
+    chatId = this.chatId,
 )
 
 fun PollChoicesResponse.parseToPollChoicesDB() = this.let { info ->

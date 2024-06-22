@@ -64,6 +64,7 @@ import app.composables.tweet.TweetComposable
 import app.pages.home.home.state.TweetActions
 import app.pages.profileDetails.viewModel.ProfileDetailsViewModel
 import kotlinx.coroutines.launch
+import utils.Constants.ConstValues.NO_NAV_VALUE
 import utils.Localization
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
@@ -75,7 +76,7 @@ fun ProfileDetailsScreen(
     openCreateTweetWithParentId: (String, Boolean, Boolean) -> Unit,
     openTweetDetails: (String) -> Unit,
     openProfileDetails: (String) -> Unit,
-    openDirectMessage: (String) -> Unit,
+    openDirectMessage: (String, String) -> Unit,
 ) {
     LaunchedEffect(userId) {
         profileDetailsViewModel.initialSetup(userId)
@@ -226,7 +227,10 @@ fun ProfileDetailsScreen(
                             if (!userDetails.isSameUser) {
                                 IconButton(
                                     onClick = {
-                                        openDirectMessage(userDetails.id)
+                                        openDirectMessage(
+                                            userDetails.id,
+                                            userDetails.chatId ?: NO_NAV_VALUE
+                                        )
                                     }
                                 ) {
                                     Icon(

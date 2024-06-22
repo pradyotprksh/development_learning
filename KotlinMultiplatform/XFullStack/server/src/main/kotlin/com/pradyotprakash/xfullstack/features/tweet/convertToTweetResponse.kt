@@ -2,6 +2,7 @@ package com.pradyotprakash.xfullstack.features.tweet
 
 import com.pradyotprakash.xfullstack.core.data.parseToUserInfoResponse
 import com.pradyotprakash.xfullstack.data.bookmark.BookmarkDataSource
+import com.pradyotprakash.xfullstack.data.chat.ChatDataSource
 import com.pradyotprakash.xfullstack.data.follow.FollowDataSource
 import com.pradyotprakash.xfullstack.data.tweet.TweetDataSource
 import com.pradyotprakash.xfullstack.data.tweet.data.Tweet
@@ -19,6 +20,7 @@ suspend fun convertToTweetResponse(
     viewDataSource: ViewDataSource,
     followDataSource: FollowDataSource,
     bookmarkDataSource: BookmarkDataSource,
+    chatDataSource: ChatDataSource,
     tweet: Tweet,
     currentUserId: String,
 ): TweetResponse {
@@ -67,6 +69,13 @@ suspend fun convertToTweetResponse(
     val isBookmarkedByCurrentUser =
         bookmarkDataSource.isBookmarkedCurrentUser(currentUserId, tweetIdHexStr)
     val bookmarkCount = bookmarkDataSource.getBookmarkCount(tweetIdHexStr)
+    val isSameUser = currentUserId == tweet.createdBy.toHexString()
+    val chatId = if (isSameUser) null else chatDataSource.chatDetailsByUsers(
+        listOf(
+            tweet.createdBy,
+            ObjectId(currentUserId),
+        )
+    )?.id?.toHexString()
 
     return TweetResponse(
         id = tweetIdHexStr,
@@ -76,7 +85,8 @@ suspend fun convertToTweetResponse(
             following = followingCount,
             isFollowingCurrentUser = isFollowingCurrentUser,
             isFollowedByCurrentUser = isFollowedByCurrentUser,
-            isSameUser = currentUserId == tweet.createdBy.toHexString(),
+            isSameUser = isSameUser,
+            chatId = chatId,
         ),
         tweetedOnTimestamp = tweet.tweetedOn,
         tweetedOn = UtilsMethod.Dates.convertTimestampToTimeAgo(tweet.tweetedOn),
@@ -115,6 +125,7 @@ suspend fun convertToTweetResponse(
                 viewDataSource,
                 followDataSource,
                 bookmarkDataSource,
+                chatDataSource,
                 it,
                 currentUserId
             )

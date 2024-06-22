@@ -2,10 +2,13 @@ package data.remote.chat
 
 import core.models.request.MessageRequest
 import core.models.request.XFullStackClientRequestDetails
+import core.models.response.FetchMessageResponse
 import core.models.response.XFullStackResponse
 import core.network.NetworkClient
 import domain.services.chat.ChatRemoteService
+import utils.Constants.ConstValues.CHAT_ID
 import utils.Constants.Paths.Chat.CHAT
+import utils.Constants.Paths.Chat.GET_MESSAGES
 import utils.Constants.Paths.Chat.SEND_MESSAGE
 
 class ChatRemoteServiceImplementation(
@@ -16,6 +19,18 @@ class ChatRemoteServiceImplementation(
             details = XFullStackClientRequestDetails(
                 endpoint = "$CHAT$SEND_MESSAGE",
                 body = messageRequest,
+            )
+        )
+
+        return response.getOrThrow()
+    }
+
+    override suspend fun getMessages(chatId: String): XFullStackResponse<FetchMessageResponse> {
+        val response = networkClient.get<XFullStackResponse<FetchMessageResponse>>(
+            details = XFullStackClientRequestDetails(
+                endpoint = "$CHAT$GET_MESSAGES", queries = mapOf(
+                    CHAT_ID to chatId,
+                )
             )
         )
 

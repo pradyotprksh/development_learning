@@ -1,6 +1,7 @@
 package com.pradyotprakash.xfullstack.features.tweet
 
 import com.pradyotprakash.xfullstack.data.bookmark.BookmarkDataSource
+import com.pradyotprakash.xfullstack.data.chat.ChatDataSource
 import com.pradyotprakash.xfullstack.data.follow.FollowDataSource
 import com.pradyotprakash.xfullstack.data.tags.TagsDataSource
 import com.pradyotprakash.xfullstack.data.tweet.TweetDataSource
@@ -21,6 +22,7 @@ fun Routing.tweet(
     followDataSource: FollowDataSource,
     bookmarkDataSource: BookmarkDataSource,
     tagsDataSource: TagsDataSource,
+    chatDataSource: ChatDataSource,
 ) {
     authenticate {
         get<TweetResource.TweetPaginate> {
@@ -32,6 +34,7 @@ fun Routing.tweet(
                 viewDataSource,
                 followDataSource,
                 bookmarkDataSource,
+                chatDataSource,
             )
         }
 

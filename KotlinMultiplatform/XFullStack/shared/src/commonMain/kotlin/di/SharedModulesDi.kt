@@ -185,7 +185,7 @@ object SharedModulesDi {
         }
 
         bind<ChatRepository>() with singleton {
-            ChatRepositoryImplementation()
+            ChatRepositoryImplementation(instance())
         }
     }
 

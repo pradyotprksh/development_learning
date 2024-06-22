@@ -1,6 +1,7 @@
 package com.pradyotprakash.xfullstack.features.tweet.controllers.tweetFetch
 
 import com.pradyotprakash.xfullstack.data.bookmark.BookmarkDataSource
+import com.pradyotprakash.xfullstack.data.chat.ChatDataSource
 import com.pradyotprakash.xfullstack.data.follow.FollowDataSource
 import com.pradyotprakash.xfullstack.data.tweet.TweetDataSource
 import com.pradyotprakash.xfullstack.data.user.UserDataSource
@@ -17,5 +18,6 @@ interface TweetFetchController {
         viewDataSource: ViewDataSource,
         followDataSource: FollowDataSource,
         bookmarkDataSource: BookmarkDataSource,
+        chatDataSource: ChatDataSource,
     )
 }

@@ -3,7 +3,9 @@ package app.pages.directMessage.viewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.pages.directMessage.state.DirectMessageState
+import core.models.response.ClientResponse
 import di.SharedModulesDi
+import domain.repositories.chat.ChatRepository
 import domain.repositories.user.user.UserRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -12,6 +14,7 @@ import kotlinx.coroutines.launch
 
 class DirectMessageViewModel(
     private val userRepository: UserRepository = SharedModulesDi.Instance.userRepository,
+    private val chatRepository: ChatRepository = SharedModulesDi.Instance.chatRepository,
 ) : ViewModel() {
     private val _directMessageStateState = MutableStateFlow(DirectMessageState())
     val directMessageStateState = _directMessageStateState.asStateFlow()
@@ -22,7 +25,16 @@ class DirectMessageViewModel(
     }
 
     private fun chatDetails(chatId: String) {
-        TODO("Not yet implemented")
+        viewModelScope.launch {
+            chatRepository.getMessages(chatId).collect {
+                when (it) {
+                    is ClientResponse.Error -> showMessage(it.message)
+                    ClientResponse.Idle -> updateLoaderState(false)
+                    ClientResponse.Loading -> updateLoaderState(true)
+                    is ClientResponse.Success -> {}
+                }
+            }
+        }
     }
 
     private fun userInfoChanges(userId: String) {
@@ -37,10 +49,26 @@ class DirectMessageViewModel(
         }
     }
 
+    private fun showMessage(message: String) {
+        _directMessageStateState.update {
+            it.copy(
+                snackBarMessage = message,
+            )
+        }
+    }
+
     fun removeSnackBarMessage() {
         _directMessageStateState.update {
             it.copy(
                 snackBarMessage = null
+            )
+        }
+    }
+
+    private fun updateLoaderState(showLoader: Boolean) {
+        _directMessageStateState.update {
+            it.copy(
+                showLoading = showLoader,
             )
         }
     }

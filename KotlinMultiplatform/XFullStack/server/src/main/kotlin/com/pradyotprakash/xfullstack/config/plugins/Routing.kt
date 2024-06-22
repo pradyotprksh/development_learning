@@ -88,6 +88,7 @@ fun Application.configureRouting() {
             followDataSource = followDataSource,
             bookmarkDataSource = bookmarkDataSource,
             tagsDataSource = tagsDataSource,
+            chatDataSource = chatDataSource,
         )
         websockets()
         views(

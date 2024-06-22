@@ -3,6 +3,7 @@ package core.models.realm
 import io.realm.kotlin.types.RealmObject
 import io.realm.kotlin.types.annotations.PersistedName
 import io.realm.kotlin.types.annotations.PrimaryKey
+import utils.Constants.DbKeys.CHAT_ID
 import utils.Constants.DbKeys.DATE_OF_BIRTH
 import utils.Constants.DbKeys.EMAIL_ADDRESS
 import utils.Constants.DbKeys.IS_FOLLOWED_BY_CURRENT_USER
@@ -42,4 +43,7 @@ class UserInfoDB : RealmObject {
 
     @PersistedName(IS_SAME_USER)
     var isSameUser: Boolean = false
+
+    @PersistedName(CHAT_ID)
+    var chatId: String? = null
 }
