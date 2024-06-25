@@ -1,27 +1,21 @@
 package app.pages.home.home.screen.composables
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.layout.boundsInParent
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.unit.dp
+import app.composables.BoxedCircularProgressBarIndicator
 import app.composables.tweet.TweetComposable
 import app.pages.home.home.state.TweetActions
 import core.models.response.TweetResponse
@@ -70,23 +64,9 @@ fun ForYouFollowingTweetsComposable(
             }
         }
 
-        AnimatedVisibility(
-            visible = showLoading, modifier = Modifier.align(Alignment.TopCenter)
-        ) {
-            Box(
-                modifier = Modifier.padding(top = 15.dp)
-            ) {
-                Box(
-                    modifier = Modifier.size(40.dp).clip(CircleShape).background(
-                        color = MaterialTheme.colorScheme.background
-                    )
-                ) {
-                    CircularProgressIndicator(
-                        modifier = Modifier.align(Alignment.Center).size(25.dp),
-                        strokeWidth = 2.dp,
-                    )
-                }
-            }
-        }
+        BoxedCircularProgressBarIndicator(
+            modifier = Modifier.align(Alignment.TopCenter),
+            visible = showLoading,
+        )
     }
 }

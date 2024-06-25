@@ -8,6 +8,7 @@ data class MessageResponse(
     val message: String,
     val messageOn: Long,
     val messageTime: String,
+    val messageTimeAgo: String,
     val messageBy: String,
     val messageGroup: String,
     val isRead: Boolean,

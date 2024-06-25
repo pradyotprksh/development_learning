@@ -1,6 +1,5 @@
-package com.pradyotprakash.xfullstack.features.tweet
+package com.pradyotprakash.xfullstack.core.converter
 
-import com.pradyotprakash.xfullstack.core.data.parseToUserInfoResponse
 import com.pradyotprakash.xfullstack.data.bookmark.BookmarkDataSource
 import com.pradyotprakash.xfullstack.data.chat.ChatDataSource
 import com.pradyotprakash.xfullstack.data.follow.FollowDataSource
@@ -60,34 +59,21 @@ suspend fun convertToTweetResponse(
     val repostsCount = tweetDataSource.totalNumberOfReposts(tweetIdHexStr)
     val quoteCount = tweetDataSource.totalNumberOfQuotes(tweetIdHexStr)
     val replyCount = tweetDataSource.totalNumberOfReplies(tweetIdHexStr)
-    val isFollowingCurrentUser =
-        followDataSource.isFollowingCurrentUser(currentUserId, tweet.createdBy.toHexString())
-    val isFollowedByCurrentUser =
-        followDataSource.isFollowedByCurrentUser(currentUserId, tweet.createdBy.toHexString())
-    val followersCount = followDataSource.getFollowerCount(tweet.createdBy.toHexString())
-    val followingCount = followDataSource.getFollowingCount(tweet.createdBy.toHexString())
     val isBookmarkedByCurrentUser =
         bookmarkDataSource.isBookmarkedCurrentUser(currentUserId, tweetIdHexStr)
     val bookmarkCount = bookmarkDataSource.getBookmarkCount(tweetIdHexStr)
-    val isSameUser = currentUserId == tweet.createdBy.toHexString()
-    val chatId = if (isSameUser) null else chatDataSource.chatDetailsByUsers(
-        listOf(
-            tweet.createdBy,
-            ObjectId(currentUserId),
-        )
-    )?.id?.toHexString()
 
     return TweetResponse(
         id = tweetIdHexStr,
         tweet = tweet.tweet,
-        createdBy = createdByUserDetails?.parseToUserInfoResponse(
-            followers = followersCount,
-            following = followingCount,
-            isFollowingCurrentUser = isFollowingCurrentUser,
-            isFollowedByCurrentUser = isFollowedByCurrentUser,
-            isSameUser = isSameUser,
-            chatId = chatId,
-        ),
+        createdBy = createdByUserDetails?.let {
+            convertToUserResponse(
+                followDataSource,
+                chatDataSource,
+                it,
+                currentUserId,
+            )
+        },
         tweetedOnTimestamp = tweet.tweetedOn,
         tweetedOn = UtilsMethod.Dates.convertTimestampToTimeAgo(tweet.tweetedOn),
         media = tweet.media,

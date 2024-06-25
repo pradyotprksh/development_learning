@@ -1,5 +1,7 @@
 package com.pradyotprakash.xfullstack.features.chat.controllers.fetchMessages
 
+import com.pradyotprakash.xfullstack.core.converter.convertToTweetResponse
+import com.pradyotprakash.xfullstack.core.converter.convertToUserResponse
 import com.pradyotprakash.xfullstack.data.bookmark.BookmarkDataSource
 import com.pradyotprakash.xfullstack.data.chat.ChatDataSource
 import com.pradyotprakash.xfullstack.data.follow.FollowDataSource
@@ -9,7 +11,6 @@ import com.pradyotprakash.xfullstack.data.tweet.TweetDataSource
 import com.pradyotprakash.xfullstack.data.user.UserDataSource
 import com.pradyotprakash.xfullstack.data.view.ViewDataSource
 import com.pradyotprakash.xfullstack.features.chat.resource.ChatResource
-import com.pradyotprakash.xfullstack.features.tweet.convertToTweetResponse
 import core.exception.InvalidMessage
 import core.exception.UserDetailsNotFound
 import core.models.response.ChatResponse
@@ -66,7 +67,16 @@ class FetchMessagesControllerImplementation : FetchMessagesController {
 
         val chatResponse = ChatResponse(
             chatId = chatDetails.id.toHexString(),
-            users = chatDetails.users.map { it.toHexString() },
+            users = chatDetails.users.mapNotNull {
+                userDataSource.getUserByUserId(it.toHexString())?.let { user ->
+                    convertToUserResponse(
+                        followDataSource,
+                        chatDataSource,
+                        user,
+                        currentUserId,
+                    )
+                }
+            },
             createdBy = chatDetails.createdBy.toHexString(),
             createdOn = chatDetails.createdOn,
             isGroup = chatDetails.isGroup,
@@ -104,8 +114,8 @@ class FetchMessagesControllerImplementation : FetchMessagesController {
         userDataSource.getUserByUserId(currentUserId) ?: throw UserDetailsNotFound()
 
         val chats = chatDataSource.getChats(currentUserId).map { chatDetails ->
-            val lastMessage = messageDataSource.getLastMessage(chatDetails.id.toHexString())
-                ?.let { lastMessage ->
+            val lastMessage =
+                messageDataSource.getLastMessage(chatDetails.id.toHexString())?.let { lastMessage ->
                     parseMessageToMessageResponse(
                         lastMessage,
                         currentUserId,
@@ -121,7 +131,16 @@ class FetchMessagesControllerImplementation : FetchMessagesController {
 
             ChatResponse(
                 chatId = chatDetails.id.toHexString(),
-                users = chatDetails.users.map { it.toHexString() },
+                users = chatDetails.users.mapNotNull {
+                    userDataSource.getUserByUserId(it.toHexString())?.let { user ->
+                        convertToUserResponse(
+                            followDataSource,
+                            chatDataSource,
+                            user,
+                            currentUserId,
+                        )
+                    }
+                },
                 createdBy = chatDetails.createdBy.toHexString(),
                 createdOn = chatDetails.createdOn,
                 isGroup = chatDetails.isGroup,
@@ -201,6 +220,7 @@ class FetchMessagesControllerImplementation : FetchMessagesController {
             message = message.message,
             messageOn = message.messageOn,
             messageTime = UtilsMethod.Dates.convertLongToReadableTime(message.messageOn),
+            messageTimeAgo = UtilsMethod.Dates.convertTimestampToTimeAgo(message.messageOn),
             messageBy = message.messageBy.toHexString(),
             messageGroup = UtilsMethod.Dates.convertLongToReadableDate(message.messageOn),
             isRead = message.isRead,

@@ -357,7 +357,11 @@ fun XApp(
                 composable(Routes.HomeCommunities.path()) { }
                 composable(Routes.HomeNotifications.path()) { }
                 composable(Routes.HomeMessages.path()) {
-                    HomeMessageScreen()
+                    HomeMessageScreen(
+                        openDirectMessage = { id, chatId ->
+                            navigateToDirectMessage(id ?: NO_NAV_VALUE, chatId)
+                        }
+                    )
                 }
                 composable(Routes.Bookmarks.path()) {
                     BookmarksScreen(
