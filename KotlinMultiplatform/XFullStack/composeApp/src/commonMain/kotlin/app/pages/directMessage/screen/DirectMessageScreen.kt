@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -39,6 +40,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import app.composables.GroupUserImagesComposable
@@ -175,6 +177,19 @@ fun DirectMessageScreen(
 
             stickyHeader {
                 HorizontalDivider()
+            }
+
+            items(directMessageStateState.messages) { message ->
+                message.group?.let {
+                    Text(
+                        it,
+                        style = MaterialTheme.typography.titleSmall,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.fillMaxWidth().padding(
+                            vertical = 5.dp,
+                        ),
+                    )
+                }
             }
         }
     }

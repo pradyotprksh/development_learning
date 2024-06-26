@@ -3,8 +3,10 @@ package app.pages.directMessage.viewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.pages.directMessage.state.DirectMessageState
+import app.pages.directMessage.state.MessageDetails
 import core.models.response.ChatResponse
 import core.models.response.ClientResponse
+import core.models.response.MessageResponse
 import core.models.response.UserInfoResponse
 import di.SharedModulesDi
 import domain.repositories.chat.ChatRepository
@@ -35,9 +37,39 @@ class DirectMessageViewModel(
                     ClientResponse.Loading -> updateLoaderState(true)
                     is ClientResponse.Success -> {
                         updateChatResponse(it.data.data?.chat)
+                        updateMessages(it.data.data?.messages ?: emptyList())
                     }
                 }
             }
+        }
+    }
+
+    private fun updateMessages(messageResponses: List<MessageResponse>) {
+        val messageDetails = mutableListOf<MessageDetails>()
+        var addGroup: Boolean
+        var lastAdded = ""
+
+        for (message in messageResponses) {
+            addGroup = if (messageDetails.isEmpty()) {
+                true
+            } else {
+                message.messageGroup != lastAdded
+            }
+            if (addGroup) {
+                lastAdded = message.messageGroup
+                messageDetails.add(
+                    MessageDetails(
+                        group = message.messageGroup,
+                    )
+                )
+            }
+            messageDetails.add(MessageDetails(messageResponse = message))
+        }
+
+        _directMessageStateState.update {
+            it.copy(
+                messages = messageDetails,
+            )
         }
     }
 

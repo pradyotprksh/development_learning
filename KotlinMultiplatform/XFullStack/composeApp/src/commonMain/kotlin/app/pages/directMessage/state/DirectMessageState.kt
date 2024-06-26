@@ -7,4 +7,5 @@ data class DirectMessageState(
     val snackBarMessage: String? = null,
     val chatId: String? = null,
     val usersInfo: List<UserInfoResponse> = emptyList(),
+    val messages: List<MessageDetails> = emptyList(),
 )
