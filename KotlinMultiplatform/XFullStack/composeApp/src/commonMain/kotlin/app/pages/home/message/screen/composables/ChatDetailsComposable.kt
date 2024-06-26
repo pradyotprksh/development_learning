@@ -16,7 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import app.composables.CircularDotComposable
-import app.composables.ProfileImageComposable
+import app.composables.GroupUserImagesComposable
 import utils.Constants.ConstValues.USERNAME_PREFIX
 
 @Composable
@@ -35,16 +35,10 @@ fun ChatDetailsComposable(
             openDirectMessage()
         },
     ) {
-        if (usersProfilePicture.size < 2) {
-            ProfileImageComposable(
-                profileImage = usersProfilePicture.firstOrNull(),
-                modifier = Modifier.size(60.dp),
-            )
-        } else {
-            GroupProfileImagesComposable(
-                usersProfilePicture = usersProfilePicture,
-            )
-        }
+        GroupUserImagesComposable(
+            modifier = Modifier.size(60.dp),
+            images = usersProfilePicture,
+        )
 
         Spacer(modifier = Modifier.width(10.dp))
 

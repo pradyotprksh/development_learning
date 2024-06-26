@@ -41,8 +41,8 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import app.composables.GroupUserImagesComposable
 import app.composables.LoadingDialogComposable
-import app.composables.ProfileImageComposable
 import app.pages.directMessage.viewModel.DirectMessageViewModel
 import kotlinx.coroutines.launch
 import utils.Localization
@@ -82,57 +82,52 @@ fun DirectMessageScreen(
         }
     }
 
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                navigationIcon = {
-                    IconButton(
-                        onClick = {},
-                    ) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = Icons.AutoMirrored.Filled.ArrowBack.name,
-                        )
-                    }
-                },
-                title = {
-                    directMessageStateState.userInfo?.let { userInfo ->
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically,
-                        ) {
-                            ProfileImageComposable(
-                                profileImage = userInfo.profilePicture,
-                                modifier = Modifier.size(30.dp),
-                            )
-                            Spacer(modifier = Modifier.width(5.dp))
-                            Text(
-                                text = userInfo.name,
-                                style = MaterialTheme.typography.titleMedium,
-                            )
-                        }
-                    }
-                },
-                actions = {
-                    IconButton(
-                        onClick = {},
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.VideoCall,
-                            contentDescription = Icons.Default.VideoCall.name,
-                        )
-                    }
-                    IconButton(
-                        onClick = {},
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.Call,
-                            contentDescription = Icons.Default.Call.name,
-                        )
-                    }
-                }
-            )
-        }
-    ) { paddingValues ->
+    val otherUsers = directMessageStateState.usersInfo.filter { !it.isSameUser }
+    val usersProfilePicture = otherUsers.map { it.profilePicture ?: "" }
+    val userNames = otherUsers.joinToString(", ") { it.name }
+
+    Scaffold(topBar = {
+        TopAppBar(navigationIcon = {
+            IconButton(
+                onClick = {},
+            ) {
+                Icon(
+                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                    contentDescription = Icons.AutoMirrored.Filled.ArrowBack.name,
+                )
+            }
+        }, title = {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                GroupUserImagesComposable(
+                    modifier = Modifier.size(30.dp),
+                    images = usersProfilePicture,
+                )
+                Spacer(modifier = Modifier.width(5.dp))
+                Text(
+                    userNames, style = MaterialTheme.typography.titleMedium
+                )
+            }
+        }, actions = {
+            IconButton(
+                onClick = {},
+            ) {
+                Icon(
+                    imageVector = Icons.Default.VideoCall,
+                    contentDescription = Icons.Default.VideoCall.name,
+                )
+            }
+            IconButton(
+                onClick = {},
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Call,
+                    contentDescription = Icons.Default.Call.name,
+                )
+            }
+        })
+    }) { paddingValues ->
         val startEndPaddingModifier = Modifier.padding(
             start = paddingValues.calculateStartPadding(LocalLayoutDirection.current) + 25.dp,
             end = paddingValues.calculateEndPadding(LocalLayoutDirection.current) + 25.dp,
@@ -144,25 +139,25 @@ fun DirectMessageScreen(
             ),
             state = rememberLazyListState(),
         ) {
-            directMessageStateState.userInfo?.let { userInfo ->
-                item {
-                    Column(
-                        modifier = startEndPaddingModifier.fillMaxWidth(),
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                    ) {
-                        ProfileImageComposable(
-                            profileImage = userInfo.profilePicture,
-                            modifier = Modifier.size(60.dp),
-                        )
+            item {
+                Column(
+                    modifier = startEndPaddingModifier.fillMaxWidth(),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                ) {
+                    GroupUserImagesComposable(
+                        modifier = Modifier.size(60.dp),
+                        images = usersProfilePicture,
+                    )
+                    Text(
+                        text = userNames,
+                        style = MaterialTheme.typography.titleMedium,
+                    )
+                    if (otherUsers.size == 1) {
                         Text(
-                            text = userInfo.name,
-                            style = MaterialTheme.typography.titleMedium,
-                        )
-                        Text(
-                            text = userInfo.username,
+                            text = otherUsers.first().username,
                             style = MaterialTheme.typography.bodySmall,
                         )
-                        userInfo.bio?.let { bio ->
+                        otherUsers.first().bio?.let { bio ->
                             Spacer(modifier = Modifier.height(10.dp))
                             Text(
                                 text = bio,
@@ -170,11 +165,11 @@ fun DirectMessageScreen(
                         }
                         Spacer(modifier = Modifier.height(10.dp))
                         Text(
-                            text = "${userInfo.followers} ${Localization.FOLLOWERS}",
+                            text = "${otherUsers.first().followers} ${Localization.FOLLOWERS}",
                             style = MaterialTheme.typography.bodySmall,
                         )
-                        Spacer(modifier = Modifier.height(20.dp))
                     }
+                    Spacer(modifier = Modifier.height(20.dp))
                 }
             }
 
