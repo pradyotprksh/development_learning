@@ -6,6 +6,7 @@ import com.pradyotprakash.xfullstack.data.message.Message
 import com.pradyotprakash.xfullstack.data.message.MessageDataSource
 import com.pradyotprakash.xfullstack.data.tweet.TweetDataSource
 import com.pradyotprakash.xfullstack.data.user.UserDataSource
+import com.pradyotprakash.xfullstack.features.websockets.Connections
 import core.exception.DBWriteError
 import core.exception.InvalidMessage
 import core.exception.InvalidTweet
@@ -21,6 +22,7 @@ import io.ktor.server.request.receive
 import io.ktor.server.response.respond
 import org.bson.types.ObjectId
 import utils.Constants.Keys.USER_ID
+import utils.Constants.SuccessCode.MESSAGE_UPDATE_SUCCESS
 import utils.Localization
 import utils.UtilsMethod
 import utils.XFullStackResponseStatus
@@ -154,6 +156,10 @@ class SendMessageControllerImplementation : SendMessageController {
 
         if (!wasAcknowledged) {
             throw DBWriteError()
+        }
+
+        chatDetails.users.map { it.toHexString() }.forEach {
+            Connections.sendMessageTo(it, "$MESSAGE_UPDATE_SUCCESS $chatId")
         }
 
         call.respond(

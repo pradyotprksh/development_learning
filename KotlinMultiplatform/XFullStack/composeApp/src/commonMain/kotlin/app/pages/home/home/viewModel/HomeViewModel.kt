@@ -6,6 +6,7 @@ import app.pages.home.home.state.HomeState
 import core.models.request.TweetRequest
 import core.models.response.ClientResponse
 import di.SharedModulesDi
+import domain.repositories.chat.ChatRepository
 import domain.repositories.request.RequestRepository
 import domain.repositories.tweet.TweetRepository
 import domain.repositories.user.current.CurrentUserRepository
@@ -19,6 +20,7 @@ import utils.Constants.ConstValues.DEFAULT_PAGINATE_LIMIT
 import utils.Constants.Keys.FOLLOWING_SCROLL_POSITION
 import utils.Constants.Keys.FOR_YOU_SCROLL_POSITION
 import utils.Constants.SuccessCode.FOLLOW_UPDATE_SUCCESS
+import utils.Constants.SuccessCode.MESSAGE_UPDATE_SUCCESS
 import utils.Constants.SuccessCode.TWEETS_DELETED_SUCCESS_CODE
 import utils.Constants.SuccessCode.TWEETS_UPDATE_SUCCESS_CODE
 
@@ -28,6 +30,7 @@ class HomeViewModel(
     private val requestRepository: RequestRepository = SharedModulesDi.Instance.requestRepository,
     private val websocketRepository: WebsocketRepository = SharedModulesDi.Instance.websocketRepository,
     private val viewRepository: ViewRepository = SharedModulesDi.Instance.viewRepository,
+    private val chatRepository: ChatRepository = SharedModulesDi.Instance.chatRepository,
 ) : ViewModel() {
     private val _homeScreenState = MutableStateFlow(HomeState())
     val homeScreenState = _homeScreenState.asStateFlow()
@@ -48,10 +51,10 @@ class HomeViewModel(
                     )
                 } else if (it.contains(TWEETS_DELETED_SUCCESS_CODE)) {
                     val split = it.split(" ")
-                    if (split.size == 2) {
-                        if (split.first() == TWEETS_DELETED_SUCCESS_CODE) {
-                            tweetRepository.deleteTweetById(split[1])
-                        }
+                    val code = split.getOrNull(0)
+                    val tweetId = split.getOrNull(1)
+                    if (code == TWEETS_DELETED_SUCCESS_CODE) {
+                        tweetId?.let { tweetRepository.deleteTweetById(tweetId) }
                     }
                 } else if (it == FOLLOW_UPDATE_SUCCESS) {
                     updateAllTweets(
@@ -59,6 +62,13 @@ class HomeViewModel(
                         _homeScreenState.value.forYouTweets.size,
                     )
                     updateUserInfo()
+                } else if (it == MESSAGE_UPDATE_SUCCESS) {
+                    val split = it.split(" ")
+                    val code = split.getOrNull(0)
+                    val chatId = split.getOrNull(1)
+                    if (code == MESSAGE_UPDATE_SUCCESS) {
+                        chatId?.let { chatRepository.updateMessage(chatId) }
+                    }
                 }
             }
         }

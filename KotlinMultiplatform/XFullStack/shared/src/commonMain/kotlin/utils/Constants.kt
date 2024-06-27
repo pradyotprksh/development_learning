@@ -203,10 +203,11 @@ object Constants {
         const val EMAIL_PRESENT_SUCCESS_CODE = "SC_XFS002"
         const val PHONE_NUMBER_PRESENT_SUCCESS_CODE = "SC_XFS003"
         const val TWEETS_UPDATE_SUCCESS_CODE = "SC_XFS004"
-        const val TWEETS_DELETED_SUCCESS_CODE = "SC_XFS004"
-        const val DB_MIGRATION_SUCCESS_CODE = "SC_XFS005"
-        const val FOLLOW_UPDATE_SUCCESS = "SC_XFS006"
-        const val WEBSOCKET_CONNECTION_SUCCESS = "SC_XFS007"
+        const val TWEETS_DELETED_SUCCESS_CODE = "SC_XFS005"
+        const val DB_MIGRATION_SUCCESS_CODE = "SC_XFS006"
+        const val FOLLOW_UPDATE_SUCCESS = "SC_XFS007"
+        const val WEBSOCKET_CONNECTION_SUCCESS = "SC_XFS008"
+        const val MESSAGE_UPDATE_SUCCESS = "SC_XFS009"
     }
 
     object DbKeys {
