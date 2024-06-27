@@ -25,21 +25,38 @@ class DirectMessageViewModel(
 
     fun loadDetails(userId: String?, chatId: String?) {
         userId?.let { userInfoChanges(it) }
-        chatId?.let { chatDetails(it) }
+        chatId?.let {
+            listenToChatChanges(chatId)
+            listenToMessages(chatId)
+            updateChatAndMessages(it)
+        }
     }
 
-    private fun chatDetails(chatId: String) {
+    private fun updateChatAndMessages(chatId: String) {
         viewModelScope.launch {
-            chatRepository.getMessages(chatId).collect {
+            chatRepository.updateMessage(chatId).collect {
                 when (it) {
                     is ClientResponse.Error -> showMessage(it.message)
                     ClientResponse.Idle -> updateLoaderState(false)
                     ClientResponse.Loading -> updateLoaderState(true)
-                    is ClientResponse.Success -> {
-                        updateChatResponse(it.data.data?.chat)
-                        updateMessages(it.data.data?.messages ?: emptyList())
-                    }
+                    is ClientResponse.Success -> {}
                 }
+            }
+        }
+    }
+
+    private fun listenToChatChanges(chatId: String) {
+        viewModelScope.launch {
+            chatRepository.getChatChanges(chatId).collect {
+                updateChatResponse(it)
+            }
+        }
+    }
+
+    private fun listenToMessages(chatId: String) {
+        viewModelScope.launch {
+            chatRepository.allMessagesChanges(chatId).collect {
+                updateMessages(it)
             }
         }
     }

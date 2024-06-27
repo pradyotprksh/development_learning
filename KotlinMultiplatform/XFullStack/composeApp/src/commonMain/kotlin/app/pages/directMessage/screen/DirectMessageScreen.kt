@@ -91,7 +91,7 @@ fun DirectMessageScreen(
     Scaffold(topBar = {
         TopAppBar(navigationIcon = {
             IconButton(
-                onClick = {},
+                onClick = onNavigateBack,
             ) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,

@@ -282,6 +282,13 @@ object Constants {
         const val REPLY_MESSAGE_ID = "reply_message_id"
         const val NOTIFICATION_MESSAGE = "notification_message"
         const val FORWARD_MESSAGE_ID = "forward_message_id"
+        const val TWEET_DETAILS = "tweet_details"
+        const val FORWARD_MESSAGE_DETAILS = "forward_message_details"
+        const val REPLY_MESSAGE_DETAILS = "reply_message_details"
+        const val MESSAGE_GROUP = "message_group"
+        const val MESSAGE_TIME_AGO = "message_time_ago"
+        const val MESSAGE_TIME = "message_time"
+        const val LAST_MESSAGE_DETAILS = "last_message_details"
     }
 
     object GeminiPrompt {

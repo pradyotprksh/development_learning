@@ -1,7 +1,9 @@
 package core.parser
 
+import core.models.realm.ChatResponseDB
 import core.models.realm.CurrentUserInfoDB
 import core.models.realm.MessageRequestDB
+import core.models.realm.MessageResponseDB
 import core.models.realm.PollChoicesDB
 import core.models.realm.RequestsDB
 import core.models.realm.TagsDB
@@ -10,6 +12,8 @@ import core.models.realm.TweetRequestDB
 import core.models.realm.UserInfoDB
 import core.models.request.MessageRequest
 import core.models.request.TweetRequest
+import core.models.response.ChatResponse
+import core.models.response.MessageResponse
 import core.models.response.PollChoicesResponse
 import core.models.response.TagsResponse
 import core.models.response.TweetResponse
@@ -259,8 +263,69 @@ fun TagsResponse.parseToTagsDB() = this.let { tag ->
 }
 
 fun TagsDB.parseToTagsResponse() = TagsResponse(
-    tag = this.id,
-    count = this.count,
-    totalTweets = this.totalTweets,
-    isTrending = this.isTrending
+    tag = this.id, count = this.count, totalTweets = this.totalTweets, isTrending = this.isTrending
+)
+
+fun ChatResponse.parseToChatResponseDB() = this.let { chat ->
+    ChatResponseDB().apply {
+        this.chatId = chat.chatId
+        this.users = chat.users.map { it.parseToUserInfoDB() }.toRealmList()
+        this.createdOn = chat.createdOn
+        this.createdBy = chat.createdBy
+        this.isGroup = chat.isGroup
+        this.isDirect = chat.isDirect
+        this.lastMessageDetails = chat.lastMessageDetails?.parseToMessageResponseDB()
+    }
+}
+
+fun ChatResponseDB.parseToChatResponse() = ChatResponse(
+    chatId = this.chatId,
+    users = this.users.map { it.parseToCurrentUserResponse() },
+    createdOn = this.createdOn,
+    createdBy = this.createdBy,
+    isGroup = this.isGroup,
+    isDirect = this.isDirect,
+    lastMessageDetails = this.lastMessageDetails?.parseToMessageResponse(),
+)
+
+fun MessageResponse.parseToMessageResponseDB(): MessageResponseDB = this.let { message ->
+    MessageResponseDB().apply {
+        this.id = message.id
+        this.chatId = message.chatId
+        this.message = message.message
+        this.messageOn = message.messageOn
+        this.messageTime = message.messageTime
+        this.messageTimeAgo = message.messageTimeAgo
+        this.messageBy = message.messageBy
+        this.messageGroup = message.messageGroup
+        this.isRead = message.isRead
+        this.media = message.media.toRealmList()
+        this.gif = message.gif.toRealmList()
+        this.replyMessageDetails = message.replyMessageDetails?.parseToMessageResponseDB()
+        this.notificationMessage = message.notificationMessage
+        this.forwardMessageDetails = message.forwardMessageDetails?.parseToMessageResponseDB()
+        this.reaction = message.reaction.toRealmList()
+        this.audio = message.audio
+        this.tweetDetails = message.tweetDetails?.parseToTweetsDB()
+    }
+}
+
+fun MessageResponseDB.parseToMessageResponse(): MessageResponse = MessageResponse(
+    id = this.id,
+    chatId = this.chatId,
+    message = this.message,
+    messageOn = this.messageOn,
+    messageTime = this.messageTime,
+    messageTimeAgo = this.messageTimeAgo,
+    messageBy = this.messageBy,
+    messageGroup = this.messageGroup,
+    isRead = this.isRead,
+    media = this.media,
+    gif = this.gif,
+    replyMessageDetails = this.replyMessageDetails?.parseToMessageResponse(),
+    notificationMessage = this.notificationMessage,
+    forwardMessageDetails = this.forwardMessageDetails?.parseToMessageResponse(),
+    reaction = this.reaction,
+    audio = this.audio,
+    tweetDetails = this.tweetDetails?.parseToTweetResponse(),
 )

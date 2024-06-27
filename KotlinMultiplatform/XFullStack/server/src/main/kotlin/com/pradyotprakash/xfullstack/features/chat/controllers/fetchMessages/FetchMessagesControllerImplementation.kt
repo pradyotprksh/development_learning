@@ -54,6 +54,7 @@ class FetchMessagesControllerImplementation : FetchMessagesController {
         val messagesResponse = messageDataSource.getMessages(chatId).map { message ->
             parseMessageToMessageResponse(
                 message,
+                chatId,
                 currentUserId,
                 userDataSource,
                 tweetDataSource,
@@ -114,10 +115,12 @@ class FetchMessagesControllerImplementation : FetchMessagesController {
         userDataSource.getUserByUserId(currentUserId) ?: throw UserDetailsNotFound()
 
         val chats = chatDataSource.getChats(currentUserId).map { chatDetails ->
+            val chatId = chatDetails.id.toHexString()
             val lastMessage =
-                messageDataSource.getLastMessage(chatDetails.id.toHexString())?.let { lastMessage ->
+                messageDataSource.getLastMessage(chatId)?.let { lastMessage ->
                     parseMessageToMessageResponse(
                         lastMessage,
+                        chatId,
                         currentUserId,
                         userDataSource,
                         tweetDataSource,
@@ -161,6 +164,7 @@ class FetchMessagesControllerImplementation : FetchMessagesController {
 
     private suspend fun parseMessageToMessageResponse(
         message: Message,
+        chatId: String,
         currentUserId: String,
         userDataSource: UserDataSource,
         tweetDataSource: TweetDataSource,
@@ -175,6 +179,7 @@ class FetchMessagesControllerImplementation : FetchMessagesController {
                 ?.let {
                     parseMessageToMessageResponse(
                         it,
+                        chatId,
                         currentUserId,
                         userDataSource,
                         tweetDataSource,
@@ -191,6 +196,7 @@ class FetchMessagesControllerImplementation : FetchMessagesController {
                     parseMessageToMessageResponse(
                         it,
                         currentUserId,
+                        chatId,
                         userDataSource,
                         tweetDataSource,
                         chatDataSource,
@@ -217,6 +223,7 @@ class FetchMessagesControllerImplementation : FetchMessagesController {
 
         return MessageResponse(
             id = message.id.toHexString(),
+            chatId = chatId,
             message = message.message,
             messageOn = message.messageOn,
             messageTime = UtilsMethod.Dates.convertLongToReadableTime(message.messageOn),

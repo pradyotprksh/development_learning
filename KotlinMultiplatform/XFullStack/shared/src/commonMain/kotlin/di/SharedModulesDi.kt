@@ -4,6 +4,7 @@ import core.database.XFullStackDatabaseClient
 import core.network.GeminiHttpClient
 import core.network.NetworkClient
 import core.network.XFullStackHttpClient
+import data.device.chat.ChatDBServiceImplementation
 import data.device.request.RequestDBServiceImplementation
 import data.device.tags.TagsDBServiceImplementation
 import data.device.tweet.TweetDBServiceImplementation
@@ -43,6 +44,7 @@ import domain.repositories.view.ViewRepository
 import domain.repositories.view.ViewRepositoryImplementation
 import domain.repositories.websocket.WebsocketRepository
 import domain.repositories.websocket.WebsocketRepositoryImplementation
+import domain.services.chat.ChatDBService
 import domain.services.chat.ChatRemoteService
 import domain.services.gemini.GeminiRemoteService
 import domain.services.request.RequestDBService
@@ -95,6 +97,8 @@ object SharedModulesDi {
         bindProvider<RequestDBService> { RequestDBServiceImplementation(instance()) }
 
         bindProvider<TagsDBService> { TagsDBServiceImplementation(instance()) }
+
+        bindProvider<ChatDBService> { ChatDBServiceImplementation(instance()) }
     }
 
     private val servicesRemoteModule = DI.Module("SERVICES_REMOTE") {
@@ -185,7 +189,7 @@ object SharedModulesDi {
         }
 
         bind<ChatRepository>() with singleton {
-            ChatRepositoryImplementation(instance())
+            ChatRepositoryImplementation(instance(), instance())
         }
     }
 

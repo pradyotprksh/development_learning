@@ -5,6 +5,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class MessageResponse(
     val id: String,
+    val chatId: String,
     val message: String,
     val messageOn: Long,
     val messageTime: String,

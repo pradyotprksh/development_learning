@@ -22,23 +22,30 @@ class HomeMessageViewModel(
     }
 
     private fun initialSetup() {
+        listToChats()
+        updateChats()
+    }
+
+    private fun listToChats() {
         viewModelScope.launch {
-            getChats()
+            chatRepository.allChatsChanges().collect { chats ->
+                _homeMessageState.update {
+                    it.copy(
+                        chats = chats,
+                    )
+                }
+            }
         }
     }
 
-    private suspend fun getChats() {
-        chatRepository.getChats().collect { response ->
-            when (response) {
-                is ClientResponse.Error -> showMessage(response.message)
-                ClientResponse.Idle -> updateLoaderState(false)
-                ClientResponse.Loading -> updateLoaderState(true)
-                is ClientResponse.Success -> {
-                    _homeMessageState.update {
-                        it.copy(
-                            chats = response.data.data ?: emptyList(),
-                        )
-                    }
+    private fun updateChats() {
+        viewModelScope.launch {
+            chatRepository.updateChats().collect { response ->
+                when (response) {
+                    is ClientResponse.Error -> showMessage(response.message)
+                    ClientResponse.Idle -> updateLoaderState(false)
+                    ClientResponse.Loading -> updateLoaderState(true)
+                    is ClientResponse.Success -> {}
                 }
             }
         }

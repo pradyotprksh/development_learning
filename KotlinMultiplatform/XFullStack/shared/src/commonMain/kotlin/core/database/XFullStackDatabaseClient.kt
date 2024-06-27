@@ -1,8 +1,10 @@
 package core.database
 
+import core.models.realm.ChatResponseDB
 import core.models.realm.CurrentUserIdDB
 import core.models.realm.CurrentUserInfoDB
 import core.models.realm.MessageRequestDB
+import core.models.realm.MessageResponseDB
 import core.models.realm.PollChoicesDB
 import core.models.realm.RequestsDB
 import core.models.realm.ScrollPositionDB
@@ -32,6 +34,8 @@ object XFullStackDatabaseClient {
                     ScrollPositionDB::class,
                     TagsDB::class,
                     MessageRequestDB::class,
+                    MessageResponseDB::class,
+                    ChatResponseDB::class,
                 )
             )
         return Realm.open(config)
