@@ -62,7 +62,7 @@ class HomeViewModel(
                         _homeScreenState.value.forYouTweets.size,
                     )
                     updateUserInfo()
-                } else if (it == MESSAGE_UPDATE_SUCCESS) {
+                } else if (it.contains(MESSAGE_UPDATE_SUCCESS)) {
                     val split = it.split(" ")
                     val code = split.getOrNull(0)
                     val chatId = split.getOrNull(1)
