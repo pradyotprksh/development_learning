@@ -26,7 +26,7 @@ data class RegisterState(
     val profileImageValue: String? = null,
     val usernameValue: String = "",
     val isUsernameValid: Boolean = false,
-    val showUsernameProfileImage: Boolean = false,
+    val showUsernameProfileImage: Boolean = true,
     val bioValue: String? = null,
     val isBioValid: Boolean = false,
 ) {

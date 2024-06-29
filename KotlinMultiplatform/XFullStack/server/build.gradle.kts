@@ -33,4 +33,5 @@ dependencies {
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kodein.di)
     implementation(libs.ktor.server.websockets)
+    implementation(libs.supabase.storage.kt)
 }

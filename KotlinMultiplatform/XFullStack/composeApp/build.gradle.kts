@@ -52,6 +52,7 @@ kotlin {
             implementation(libs.kotlinx.coroutines.core)
             implementation(libs.kamel.image)
             api(libs.compose.window.size)
+            implementation(libs.filekt)
         }
 
         desktopMain.dependencies {

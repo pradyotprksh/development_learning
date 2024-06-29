@@ -8,6 +8,9 @@ import core.models.response.ClientResponse
 import di.SharedModulesDi
 import domain.repositories.user.current.CurrentUserRepository
 import domain.repositories.user.verification.UserVerificationRepository
+import io.github.vinceglb.filekit.core.FileKit
+import io.github.vinceglb.filekit.core.PickerMode
+import io.github.vinceglb.filekit.core.PickerType
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
@@ -387,5 +390,15 @@ class RegisterViewModel(
             showLoading = false,
             snackBarMessage = null,
         )
+    }
+
+    fun openFilePicker(message: String) {
+        viewModelScope.launch {
+            val file = FileKit.pickFile(
+                type = PickerType.Image,
+                mode = PickerMode.Single,
+                title = message,
+            )
+        }
     }
 }

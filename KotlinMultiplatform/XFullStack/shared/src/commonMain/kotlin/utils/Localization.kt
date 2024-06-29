@@ -220,4 +220,5 @@ object Localization {
     const val PM = "PM"
     const val AM = "AM"
     const val SEND_A_MESSAGE = "Send a message"
+    const val SELECT_PROFILE_IMAGE = "Select your profile image"
 }

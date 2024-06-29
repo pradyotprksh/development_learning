@@ -104,6 +104,9 @@ object Constants {
 
     object Keys {
         const val USER_ID = "userId"
+        const val EMAIL_ID = "emailId"
+        const val USERNAME = "username"
+        const val PHONE_NUMBER = "phoneNumber"
         const val JWT_SECRET = "JWT_SECRET"
         const val CONTENT_TYPE = "Content-Type"
         const val AUTHORIZATION = "Authorization"
@@ -168,6 +171,7 @@ object Constants {
         const val COOKIE_USE = "cookie_use"
         const val LOG_IN = "log_in"
         const val CREATED_BY = "created_by"
+        const val SALTED_LENGTH = 32
     }
 
     object ErrorCode {
