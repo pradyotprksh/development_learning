@@ -46,6 +46,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import app.composables.GroupUserImagesComposable
 import app.composables.LoadingDialogComposable
 import app.pages.directMessage.screen.composables.MessageComposable
+import app.pages.directMessage.screen.composables.MessageFieldComposable
 import app.pages.directMessage.viewModel.DirectMessageViewModel
 import kotlinx.coroutines.launch
 import utils.Localization
@@ -149,6 +150,24 @@ fun DirectMessageScreen(
             state = rememberLazyListState(),
             reverseLayout = true,
         ) {
+            item {
+                MessageFieldComposable(
+                    value = directMessageStateState.message,
+                    isFocused = directMessageStateState.isFocused,
+                    onValueChange = { value -> directMessageViewModel.messageValueChange(value) },
+                    onFocusChange = { isFocused -> directMessageViewModel.changeFocusValue(isFocused) },
+                    onImageOptionSelect = {},
+                    onGifOptionSelect = {},
+                    onAudioOptionSelect = {},
+                    sendMessage = {
+                        directMessageViewModel.sendMessage()
+                    },
+                    modifier = Modifier.padding(
+                        horizontal = 10.dp,
+                    ),
+                )
+            }
+
             item {
                 Spacer(modifier = Modifier.height(20.dp))
             }

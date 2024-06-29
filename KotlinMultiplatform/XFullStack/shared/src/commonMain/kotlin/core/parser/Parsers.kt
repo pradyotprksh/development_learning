@@ -19,6 +19,7 @@ import core.models.response.TagsResponse
 import core.models.response.TweetResponse
 import core.models.response.UserInfoResponse
 import io.realm.kotlin.ext.toRealmList
+import utils.Constants.Keys.MESSAGE_REQUEST
 import utils.Constants.Keys.TWEET_REQUEST
 
 fun UserInfoResponse.parseToCurrentUserInfoDB() = this.let { info ->
@@ -171,7 +172,7 @@ fun TweetDB.parseToTweetResponse(): TweetResponse = TweetResponse(
 
 fun MessageRequest.parseToRequestDb() = this.let { message ->
     RequestsDB().apply {
-        this.requestType = TWEET_REQUEST
+        this.requestType = MESSAGE_REQUEST
         this.message = MessageRequestDB().apply {
             this.chatId = message.chatId
             this.message = message.message

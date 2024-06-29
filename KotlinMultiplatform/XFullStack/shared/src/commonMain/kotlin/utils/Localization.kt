@@ -219,4 +219,5 @@ object Localization {
     const val MESSAGE_DETAILS_NOT_FOUND = "Message details not found"
     const val PM = "PM"
     const val AM = "AM"
+    const val SEND_A_MESSAGE = "Send a message"
 }

@@ -59,7 +59,15 @@ class RequestRepositoryImplementation(
                 } else if (requestDb.requestType == POLL_REQUEST) {
                     tweetRemoteService.updateTweetPoll(requestDb.tweetId, requestDb.optionId)
                 } else if (requestDb.requestType == MESSAGE_REQUEST) {
-                    requestDb.parseToMessageRequest()?.let { chatRemoteService.sendMessage(it) }
+                    val response =
+                        requestDb.parseToMessageRequest()?.let { chatRemoteService.sendMessage(it) }
+
+                    XFullStackResponse(
+                        status = response?.status ?: XFullStackResponseStatus.Error,
+                        code = response?.code,
+                        message = response?.message,
+                        data = null,
+                    )
                 } else {
                     null
                 }
@@ -119,8 +127,7 @@ class RequestRepositoryImplementation(
         )
     }
 
-    override suspend fun saveMessageRequests(requests: MessageRequest) {
-        val request = requests.parseToRequestDb()
-        requestDBService.saveRequests(request)
+    override suspend fun saveMessageRequests(request: MessageRequest) {
+        requestDBService.saveRequests(request.parseToRequestDb())
     }
 }

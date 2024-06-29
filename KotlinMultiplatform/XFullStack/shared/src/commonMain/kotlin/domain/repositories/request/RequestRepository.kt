@@ -20,5 +20,5 @@ interface RequestRepository {
 
     suspend fun savePollOptionRequest(tweetId: String, optionId: String)
 
-    suspend fun saveMessageRequests(requests: MessageRequest)
+    suspend fun saveMessageRequests(request: MessageRequest)
 }

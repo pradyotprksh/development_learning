@@ -4,12 +4,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.pages.directMessage.state.DirectMessageState
 import app.pages.directMessage.state.MessageDetails
+import core.models.request.MessageRequest
 import core.models.response.ChatResponse
 import core.models.response.ClientResponse
 import core.models.response.MessageResponse
 import core.models.response.UserInfoResponse
 import di.SharedModulesDi
 import domain.repositories.chat.ChatRepository
+import domain.repositories.request.RequestRepository
 import domain.repositories.user.user.UserRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -19,6 +21,7 @@ import kotlinx.coroutines.launch
 class DirectMessageViewModel(
     private val userRepository: UserRepository = SharedModulesDi.Instance.userRepository,
     private val chatRepository: ChatRepository = SharedModulesDi.Instance.chatRepository,
+    private val requestRepository: RequestRepository = SharedModulesDi.Instance.requestRepository,
 ) : ViewModel() {
     private val _directMessageStateState = MutableStateFlow(DirectMessageState())
     val directMessageStateState = _directMessageStateState.asStateFlow()
@@ -143,6 +146,51 @@ class DirectMessageViewModel(
             it.copy(
                 showLoading = showLoader,
             )
+        }
+    }
+
+    fun messageValueChange(value: String) {
+        _directMessageStateState.update {
+            it.copy(
+                message = value,
+            )
+        }
+    }
+
+    fun changeFocusValue(isFocused: Boolean) {
+        _directMessageStateState.update {
+            it.copy(
+                isFocused = isFocused,
+            )
+        }
+    }
+
+    fun sendMessage() {
+        viewModelScope.launch {
+            val messageTo =
+                if (_directMessageStateState.value.usersInfo.size > 1) _directMessageStateState.value.chatId else _directMessageStateState.value.usersInfo.first().id
+
+            requestRepository.saveMessageRequests(
+                request = MessageRequest(
+                    chatId = _directMessageStateState.value.chatId ?: "",
+                    message = _directMessageStateState.value.message,
+                    messageTo = messageTo ?: "",
+                    users = emptyList(),
+                    media = emptyList(),
+                    gif = emptyList(),
+                    replyMessageId = "",
+                    forwardMessageId = "",
+                    reaction = "",
+                    audio = "",
+                    tweetId = "",
+                )
+            )
+
+            _directMessageStateState.update {
+                it.copy(
+                    message = "",
+                )
+            }
         }
     }
 }
