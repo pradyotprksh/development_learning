@@ -67,9 +67,18 @@ class HomeViewModel(
                     val code = split.getOrNull(0)
                     val chatId = split.getOrNull(1)
                     if (code == MESSAGE_UPDATE_SUCCESS) {
-                        chatId?.let { chatRepository.updateMessage(chatId) }
+                        chatId?.let { updateChatDetails(chatId) }
                     }
                 }
+            }
+        }
+    }
+
+    private suspend fun updateChatDetails(chatId: String) {
+        chatRepository.updateMessage(chatId).collect {
+            when (it) {
+                is ClientResponse.Error -> showMessage(it.message)
+                else -> {}
             }
         }
     }

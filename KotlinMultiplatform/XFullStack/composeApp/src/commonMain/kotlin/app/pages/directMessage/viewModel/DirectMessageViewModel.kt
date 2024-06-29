@@ -63,24 +63,26 @@ class DirectMessageViewModel(
 
     private fun updateMessages(messageResponses: List<MessageResponse>) {
         val messageDetails = mutableListOf<MessageDetails>()
-        var addGroup: Boolean
-        var lastAdded = ""
+        var groupAdding = messageResponses.firstOrNull()?.messageGroup
 
         for (message in messageResponses) {
-            addGroup = if (messageDetails.isEmpty()) {
-                true
-            } else {
-                message.messageGroup != lastAdded
-            }
-            if (addGroup) {
-                lastAdded = message.messageGroup
+            if (groupAdding != message.messageGroup) {
                 messageDetails.add(
                     MessageDetails(
-                        group = message.messageGroup,
+                        group = groupAdding,
                     )
                 )
+                groupAdding = message.messageGroup
             }
             messageDetails.add(MessageDetails(messageResponse = message))
+        }
+
+        if (groupAdding != null) {
+            messageDetails.add(
+                MessageDetails(
+                    group = groupAdding,
+                )
+            )
         }
 
         _directMessageStateState.update {

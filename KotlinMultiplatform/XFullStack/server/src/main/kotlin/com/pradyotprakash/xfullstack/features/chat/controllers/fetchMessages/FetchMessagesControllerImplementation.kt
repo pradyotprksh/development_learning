@@ -220,6 +220,17 @@ class FetchMessagesControllerImplementation : FetchMessagesController {
                         currentUserId
                     )
                 }
+        val messageById = message.messageBy.toHexString()
+        val isSendByCurrentUser = messageById == currentUserId
+        val messageByUserDetails =
+            userDataSource.getUserByUserId(messageById)?.let { user ->
+                convertToUserResponse(
+                    followDataSource,
+                    chatDataSource,
+                    user,
+                    currentUserId,
+                )
+            }
 
         return MessageResponse(
             id = message.id.toHexString(),
@@ -228,7 +239,8 @@ class FetchMessagesControllerImplementation : FetchMessagesController {
             messageOn = message.messageOn,
             messageTime = UtilsMethod.Dates.convertLongToReadableTime(message.messageOn),
             messageTimeAgo = UtilsMethod.Dates.convertTimestampToTimeAgo(message.messageOn),
-            messageBy = message.messageBy.toHexString(),
+            messageBy = messageByUserDetails,
+            isSendByCurrentUser = isSendByCurrentUser,
             messageGroup = UtilsMethod.Dates.convertLongToReadableDate(message.messageOn),
             isRead = message.isRead,
             media = message.media,

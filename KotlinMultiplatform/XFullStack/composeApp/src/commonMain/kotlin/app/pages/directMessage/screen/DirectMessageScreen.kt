@@ -45,6 +45,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import app.composables.GroupUserImagesComposable
 import app.composables.LoadingDialogComposable
+import app.pages.directMessage.screen.composables.MessageComposable
 import app.pages.directMessage.viewModel.DirectMessageViewModel
 import kotlinx.coroutines.launch
 import utils.Localization
@@ -88,48 +89,54 @@ fun DirectMessageScreen(
     val usersProfilePicture = otherUsers.map { it.profilePicture ?: "" }
     val userNames = otherUsers.joinToString(", ") { it.name }
 
-    Scaffold(topBar = {
-        TopAppBar(navigationIcon = {
-            IconButton(
-                onClick = onNavigateBack,
-            ) {
-                Icon(
-                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                    contentDescription = Icons.AutoMirrored.Filled.ArrowBack.name,
-                )
-            }
-        }, title = {
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                GroupUserImagesComposable(
-                    modifier = Modifier.size(30.dp),
-                    images = usersProfilePicture,
-                )
-                Spacer(modifier = Modifier.width(5.dp))
-                Text(
-                    userNames, style = MaterialTheme.typography.titleMedium
-                )
-            }
-        }, actions = {
-            IconButton(
-                onClick = {},
-            ) {
-                Icon(
-                    imageVector = Icons.Default.VideoCall,
-                    contentDescription = Icons.Default.VideoCall.name,
-                )
-            }
-            IconButton(
-                onClick = {},
-            ) {
-                Icon(
-                    imageVector = Icons.Default.Call,
-                    contentDescription = Icons.Default.Call.name,
-                )
-            }
-        })
-    }) { paddingValues ->
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                navigationIcon = {
+                    IconButton(
+                        onClick = onNavigateBack,
+                    ) {
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                            contentDescription = Icons.AutoMirrored.Filled.ArrowBack.name,
+                        )
+                    }
+                },
+                title = {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        GroupUserImagesComposable(
+                            modifier = Modifier.size(30.dp),
+                            images = usersProfilePicture,
+                        )
+                        Spacer(modifier = Modifier.width(5.dp))
+                        Text(
+                            userNames, style = MaterialTheme.typography.titleMedium
+                        )
+                    }
+                },
+                actions = {
+                    IconButton(
+                        onClick = {},
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.VideoCall,
+                            contentDescription = Icons.Default.VideoCall.name,
+                        )
+                    }
+                    IconButton(
+                        onClick = {},
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Call,
+                            contentDescription = Icons.Default.Call.name,
+                        )
+                    }
+                },
+            )
+        },
+    ) { paddingValues ->
         val startEndPaddingModifier = Modifier.padding(
             start = paddingValues.calculateStartPadding(LocalLayoutDirection.current) + 25.dp,
             end = paddingValues.calculateEndPadding(LocalLayoutDirection.current) + 25.dp,
@@ -140,7 +147,35 @@ fun DirectMessageScreen(
                 bottom = paddingValues.calculateBottomPadding(),
             ),
             state = rememberLazyListState(),
+            reverseLayout = true,
         ) {
+            item {
+                Spacer(modifier = Modifier.height(20.dp))
+            }
+
+            items(directMessageStateState.messages) { message ->
+                message.group?.let {
+                    Text(
+                        it,
+                        style = MaterialTheme.typography.titleSmall,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.fillMaxWidth().padding(
+                            vertical = 5.dp,
+                        ),
+                    )
+                }
+
+                message.messageResponse?.let {
+                    MessageComposable(
+                        messageResponse = it,
+                    )
+                }
+            }
+
+            stickyHeader {
+                HorizontalDivider()
+            }
+
             item {
                 Column(
                     modifier = startEndPaddingModifier.fillMaxWidth(),
@@ -172,23 +207,6 @@ fun DirectMessageScreen(
                         )
                     }
                     Spacer(modifier = Modifier.height(20.dp))
-                }
-            }
-
-            stickyHeader {
-                HorizontalDivider()
-            }
-
-            items(directMessageStateState.messages) { message ->
-                message.group?.let {
-                    Text(
-                        it,
-                        style = MaterialTheme.typography.titleSmall,
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier.fillMaxWidth().padding(
-                            vertical = 5.dp,
-                        ),
-                    )
                 }
             }
         }

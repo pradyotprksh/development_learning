@@ -9,6 +9,7 @@ import utils.Constants.DbKeys.CHAT_ID
 import utils.Constants.DbKeys.FORWARD_MESSAGE_DETAILS
 import utils.Constants.DbKeys.ID
 import utils.Constants.DbKeys.IS_READ
+import utils.Constants.DbKeys.IS_SEND_BY_CURRENT_USER
 import utils.Constants.DbKeys.MESSAGE_BY
 import utils.Constants.DbKeys.MESSAGE_GROUP
 import utils.Constants.DbKeys.MESSAGE_ON
@@ -37,7 +38,7 @@ class MessageResponseDB : RealmObject {
     var messageTimeAgo: String = ""
 
     @PersistedName(MESSAGE_BY)
-    var messageBy: String = ""
+    var messageBy: UserInfoDB? = null
 
     @PersistedName(MESSAGE_GROUP)
     var messageGroup: String = ""
@@ -60,4 +61,7 @@ class MessageResponseDB : RealmObject {
 
     @PersistedName(TWEET_DETAILS)
     var tweetDetails: TweetDB? = null
+
+    @PersistedName(IS_SEND_BY_CURRENT_USER)
+    var isSendByCurrentUser: Boolean = false
 }

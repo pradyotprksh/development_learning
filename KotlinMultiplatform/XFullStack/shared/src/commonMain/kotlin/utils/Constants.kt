@@ -290,6 +290,7 @@ object Constants {
         const val MESSAGE_TIME_AGO = "message_time_ago"
         const val MESSAGE_TIME = "message_time"
         const val LAST_MESSAGE_DETAILS = "last_message_details"
+        const val IS_SEND_BY_CURRENT_USER = "is_send_by_current_user"
     }
 
     object GeminiPrompt {

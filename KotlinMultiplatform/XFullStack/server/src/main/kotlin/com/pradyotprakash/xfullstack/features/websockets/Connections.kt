@@ -27,8 +27,12 @@ object Connections {
         }
     }
 
+    private fun getSessionFor(userId: String): DefaultWebSocketServerSession? {
+        return connections.find { it.first == userId }?.second
+    }
+
     fun sendMessageTo(userId: String, message: String) {
-        connections.find { it.first == userId }?.second?.outgoing?.trySend(
+        getSessionFor(userId)?.outgoing?.trySend(
             Frame.Text(message)
         )
     }
