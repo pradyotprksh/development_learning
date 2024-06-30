@@ -4,6 +4,7 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -13,7 +14,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
@@ -54,6 +54,7 @@ fun TweetTextFieldComposable(
     onAddNewPollClick: () -> Unit,
     onPollChoiceChange: (Int, String) -> Unit,
     onPollTimeChange: (Long?, Long?, Long?) -> Unit,
+    removeMedia: (Int) -> Unit,
 ) {
     Column(
         modifier = modifier.fillMaxWidth(),
@@ -146,13 +147,26 @@ fun TweetTextFieldComposable(
                 LazyRow(
                     modifier = Modifier.fillMaxWidth().height(220.dp)
                 ) {
-                    items(tweet.media) {
+                    items(tweet.media.size) {
                         Row {
-                            NetworkImageComposable(
-                                url = it,
-                                modifier = Modifier
-                                    .width(80.dp).height(120.dp),
-                            )
+                            Box {
+                                NetworkImageComposable(
+                                    url = tweet.media[it],
+                                    modifier = Modifier
+                                        .width(80.dp).height(120.dp),
+                                )
+                                IconButton(
+                                    onClick = {
+                                        removeMedia(it)
+                                    },
+                                    modifier = Modifier.align(Alignment.TopEnd)
+                                ) {
+                                    Icon(
+                                        imageVector = Icons.Default.Close,
+                                        contentDescription = Icons.Default.Close.name,
+                                    )
+                                }
+                            }
                             Spacer(modifier = Modifier.width(5.dp))
                         }
                     }

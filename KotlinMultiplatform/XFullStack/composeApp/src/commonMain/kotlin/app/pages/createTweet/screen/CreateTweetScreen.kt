@@ -137,7 +137,13 @@ fun CreateTweetScreen(
                                 createTweetViewModel.updatePollTime(
                                     tweet.index, hour, minute, seconds,
                                 )
-                            }
+                            },
+                            removeMedia = { index ->
+                                createTweetViewModel.removeMediaUrl(
+                                    createTweetState.currentFocusedTweetIndex,
+                                    index,
+                                )
+                            },
                         )
                     }
                 }

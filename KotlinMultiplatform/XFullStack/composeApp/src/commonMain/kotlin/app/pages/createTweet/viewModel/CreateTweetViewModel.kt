@@ -353,7 +353,7 @@ class CreateTweetViewModel(
         }
     }
 
-    private fun removeMediaUrl(currentFocusedTweetIndex: Int, index: Int) {
+    fun removeMediaUrl(currentFocusedTweetIndex: Int, index: Int) {
         val tweets = _createTweetState.value.tweets.toMutableList()
         val deletedTweet = tweets.removeAt(currentFocusedTweetIndex)
 

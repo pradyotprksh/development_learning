@@ -56,6 +56,9 @@ class FileUploadControllerImplementation : FileUploadController {
 
         val url = fileDataSource.uploadFile(bucket, uploadFile.name, uploadFile)
 
+        // Delete the file from server storage
+        uploadFile.delete()
+
         call.respond(
             HttpStatusCode.OK, XFullStackResponse(
                 status = XFullStackResponseStatus.Success,
