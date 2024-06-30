@@ -20,7 +20,10 @@ fun TweetWithTagComposable(
 ) {
     val tags = UtilsMethod.Conversion.getTweetWithTags(tweet)
     if (tags.isEmpty()) {
-        Text(tweet)
+        Text(
+            tweet,
+            modifier = modifier,
+        )
     } else {
         RichTextComposable(
             modifier = modifier,

@@ -9,6 +9,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import io.kamel.image.KamelImage
@@ -27,18 +28,18 @@ fun NetworkImageComposable(
                 topEnd = 10.dp,
                 bottomStart = 10.dp,
                 bottomEnd = 10.dp,
+            ),
+        ).clip(
+            RoundedCornerShape(
+                topStart = 10.dp,
+                topEnd = 10.dp,
+                bottomStart = 10.dp,
+                bottomEnd = 10.dp,
             )
         ),
         resource = asyncPainterResource(data = url ?: ""),
         contentDescription = url,
         onLoading = {
-            Icon(
-                imageVector = Icons.Default.Downloading,
-                contentDescription = Icons.Default.Downloading.name,
-                modifier = modifier,
-            )
-        },
-        onFailure = {
             Icon(
                 imageVector = Icons.Default.Downloading,
                 contentDescription = Icons.Default.Downloading.name,

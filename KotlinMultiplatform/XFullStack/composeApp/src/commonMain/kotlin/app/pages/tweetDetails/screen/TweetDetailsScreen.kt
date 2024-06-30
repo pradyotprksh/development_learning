@@ -4,11 +4,17 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
@@ -49,6 +55,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import app.composables.NetworkImageComposable
 import app.composables.UsernameClickableComposable
 import app.composables.tweet.PollChoicesComposable
 import app.composables.tweet.TweetActionsComposable
@@ -170,6 +177,28 @@ fun TweetDetailsScreen(
                             },
                             onOtherPartClick = {}
                         )
+                    }
+
+                    item {
+                        if (tweet.media.isNotEmpty()) {
+                            Spacer(modifier = Modifier.height(10.dp))
+                            LazyRow(
+                                modifier = Modifier.fillMaxWidth().height(120.dp)
+                            ) {
+                                items(tweet.media.size) {
+                                    Row {
+                                        if (it == 0) {
+                                            Spacer(modifier = Modifier.width(10.dp))
+                                        }
+                                        NetworkImageComposable(
+                                            url = tweet.media[it],
+                                            modifier = Modifier.width(80.dp).fillMaxHeight(),
+                                        )
+                                        Spacer(modifier = Modifier.width(10.dp))
+                                    }
+                                }
+                            }
+                        }
                     }
 
                     if (tweet.isAPoll) {

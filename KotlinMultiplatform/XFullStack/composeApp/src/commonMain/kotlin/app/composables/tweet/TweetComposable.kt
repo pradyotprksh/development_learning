@@ -7,11 +7,13 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Loop
@@ -25,6 +27,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import app.composables.CircularDotComposable
+import app.composables.NetworkImageComposable
 import app.composables.ProfileImageComposable
 import app.composables.UsernameClickableComposable
 import app.pages.home.home.state.TweetActions
@@ -131,8 +134,26 @@ fun TweetComposable(
                         },
                         onOtherPartClick = {
                             tweetActions.onTweetClick(shownTweet.id)
-                        }
+                        },
                     )
+
+                    if (shownTweet.media.isNotEmpty()) {
+                        Spacer(modifier = Modifier.height(10.dp))
+                        LazyRow(
+                            modifier = Modifier.fillMaxWidth().height(120.dp)
+                        ) {
+                            items(tweet.media.size) {
+                                Row {
+                                    NetworkImageComposable(
+                                        url = tweet.media[it],
+                                        modifier = Modifier.width(80.dp).fillMaxHeight(),
+                                    )
+                                    Spacer(modifier = Modifier.width(5.dp))
+                                }
+                            }
+                        }
+                    }
+
                     if (shownTweet.isAPoll) {
                         Spacer(modifier = Modifier.height(10.dp))
                         PollChoicesComposable(

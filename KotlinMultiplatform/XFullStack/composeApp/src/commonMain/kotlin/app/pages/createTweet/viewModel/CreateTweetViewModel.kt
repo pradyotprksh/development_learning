@@ -305,7 +305,7 @@ class CreateTweetViewModel(
         if (currentFocusedTweetIndex >= 0) {
             viewModelScope.launch {
                 FileKit.pickFile(
-                    type = PickerType.Image, mode = PickerMode.Multiple, title = message
+                    type = PickerType.ImageAndVideo, mode = PickerMode.Multiple, title = message
                 )?.let { files ->
                     updateMediaWithEmptyLinks(files.size, currentFocusedTweetIndex)
                     files.fastForEachIndexed { index, file ->
@@ -322,7 +322,7 @@ class CreateTweetViewModel(
         tweets.add(
             currentFocusedTweetIndex,
             deletedTweet.copy(
-                media = List(size, init = { "" })
+                media = deletedTweet.media + List(size, init = { "" })
             ),
         )
         _createTweetState.update {
@@ -341,8 +341,7 @@ class CreateTweetViewModel(
         mediaUrls.add(index, url)
 
         tweets.add(
-            currentFocusedTweetIndex,
-            deletedTweet.copy(
+            currentFocusedTweetIndex, deletedTweet.copy(
                 media = mediaUrls,
             )
         )
@@ -361,8 +360,7 @@ class CreateTweetViewModel(
         mediaUrls.removeAt(index)
 
         tweets.add(
-            currentFocusedTweetIndex,
-            deletedTweet.copy(
+            currentFocusedTweetIndex, deletedTweet.copy(
                 media = mediaUrls,
             )
         )
