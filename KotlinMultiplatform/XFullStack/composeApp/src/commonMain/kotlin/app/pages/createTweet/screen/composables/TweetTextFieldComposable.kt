@@ -12,6 +12,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
@@ -28,6 +30,7 @@ import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import app.composables.NetworkImageComposable
 import app.composables.ProfileImageComposable
 import app.composables.tweet.TweetComposable
 import app.pages.createTweet.state.TweetDetails
@@ -40,6 +43,7 @@ fun TweetTextFieldComposable(
     tweet: TweetDetails,
     showCloseButton: Boolean,
     showPoll: Boolean,
+    showMedia: Boolean,
     parentTweetDetails: TweetResponse?,
     isRetweet: Boolean,
     isReply: Boolean,
@@ -129,6 +133,29 @@ fun TweetTextFieldComposable(
                         imageVector = Icons.Default.Close,
                         contentDescription = Icons.Default.Close.name,
                     )
+                }
+            }
+        }
+        AnimatedVisibility(
+            visible = showMedia && tweet.media.isNotEmpty(),
+        ) {
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+            ) {
+                Spacer(modifier = Modifier.height(5.dp))
+                LazyRow(
+                    modifier = Modifier.fillMaxWidth().height(220.dp)
+                ) {
+                    items(tweet.media) {
+                        Row {
+                            NetworkImageComposable(
+                                url = it,
+                                modifier = Modifier
+                                    .width(80.dp).height(120.dp),
+                            )
+                            Spacer(modifier = Modifier.width(5.dp))
+                        }
+                    }
                 }
             }
         }

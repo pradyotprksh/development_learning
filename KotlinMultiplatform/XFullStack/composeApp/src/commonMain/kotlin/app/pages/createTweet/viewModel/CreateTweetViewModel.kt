@@ -1,16 +1,25 @@
 package app.pages.createTweet.viewModel
 
+import androidx.compose.ui.util.fastForEachIndexed
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.pages.createTweet.state.CreateTweetState
 import app.pages.createTweet.state.TweetDetails
 import core.models.request.TweetRequest
+import core.models.response.ClientResponse
 import di.SharedModulesDi
+import domain.repositories.file.FileRepository
 import domain.repositories.request.RequestRepository
 import domain.repositories.tweet.TweetRepository
 import domain.repositories.user.current.CurrentUserRepository
+import io.github.vinceglb.filekit.core.FileKit
+import io.github.vinceglb.filekit.core.PickerMode
+import io.github.vinceglb.filekit.core.PickerType
+import io.github.vinceglb.filekit.core.PlatformFile
+import io.github.vinceglb.filekit.core.extension
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import utils.Constants.ConstValues.MAX_POLL_CHOICE_LENGTH
 import utils.Constants.ConstValues.MAX_TWEET_CREATION_LIMIT
@@ -21,6 +30,7 @@ class CreateTweetViewModel(
     private val currentUserRepository: CurrentUserRepository = SharedModulesDi.Instance.currentUserRepository,
     private val tweetRepository: TweetRepository = SharedModulesDi.Instance.tweetRepository,
     private val requestRepository: RequestRepository = SharedModulesDi.Instance.requestRepository,
+    private val fileRepository: FileRepository = SharedModulesDi.Instance.fileRepository,
 ) : ViewModel() {
     private val _createTweetState = MutableStateFlow(CreateTweetState())
     val createTweetState = _createTweetState.asStateFlow()
@@ -285,5 +295,111 @@ class CreateTweetViewModel(
         _createTweetState.value = _createTweetState.value.copy(
             tweets = tweets,
         )
+    }
+
+    fun openImageSelector(
+        message: String,
+        bucket: String,
+    ) {
+        val currentFocusedTweetIndex = _createTweetState.value.currentFocusedTweetIndex
+        if (currentFocusedTweetIndex >= 0) {
+            viewModelScope.launch {
+                FileKit.pickFile(
+                    type = PickerType.Image, mode = PickerMode.Multiple, title = message
+                )?.let { files ->
+                    updateMediaWithEmptyLinks(files.size, currentFocusedTweetIndex)
+                    files.fastForEachIndexed { index, file ->
+                        uploadFiles(bucket, currentFocusedTweetIndex, index, file)
+                    }
+                }
+            }
+        }
+    }
+
+    private fun updateMediaWithEmptyLinks(size: Int, currentFocusedTweetIndex: Int) {
+        val tweets = _createTweetState.value.tweets.toMutableList()
+        val deletedTweet = tweets.removeAt(currentFocusedTweetIndex)
+        tweets.add(
+            currentFocusedTweetIndex,
+            deletedTweet.copy(
+                media = List(size, init = { "" })
+            ),
+        )
+        _createTweetState.update {
+            it.copy(
+                tweets = tweets,
+            )
+        }
+    }
+
+    private fun updateMediaUrl(currentFocusedTweetIndex: Int, index: Int, url: String) {
+        val tweets = _createTweetState.value.tweets.toMutableList()
+        val deletedTweet = tweets.removeAt(currentFocusedTweetIndex)
+
+        val mediaUrls = deletedTweet.media.toMutableList()
+        mediaUrls.removeAt(index)
+        mediaUrls.add(index, url)
+
+        tweets.add(
+            currentFocusedTweetIndex,
+            deletedTweet.copy(
+                media = mediaUrls,
+            )
+        )
+        _createTweetState.update {
+            it.copy(
+                tweets = tweets,
+            )
+        }
+    }
+
+    private fun removeMediaUrl(currentFocusedTweetIndex: Int, index: Int) {
+        val tweets = _createTweetState.value.tweets.toMutableList()
+        val deletedTweet = tweets.removeAt(currentFocusedTweetIndex)
+
+        val mediaUrls = deletedTweet.media.toMutableList()
+        mediaUrls.removeAt(index)
+
+        tweets.add(
+            currentFocusedTweetIndex,
+            deletedTweet.copy(
+                media = mediaUrls,
+            )
+        )
+        _createTweetState.update {
+            it.copy(
+                tweets = tweets,
+            )
+        }
+    }
+
+    private fun uploadFiles(
+        bucket: String,
+        currentFocusedTweetIndex: Int,
+        index: Int,
+        file: PlatformFile,
+    ) {
+        viewModelScope.launch {
+            fileRepository.uploadFile(
+                bucket = bucket,
+                name = file.name,
+                extension = file.extension,
+                byteArray = file.readBytes(),
+            ).collect { response ->
+                when (response) {
+                    is ClientResponse.Success -> {
+                        response.data.data?.second?.let {
+                            updateMediaUrl(currentFocusedTweetIndex, index, it)
+                        }
+                    }
+
+                    is ClientResponse.Error -> {
+                        removeMediaUrl(currentFocusedTweetIndex, index)
+                    }
+
+                    else -> {}
+                }
+            }
+        }
     }
 }

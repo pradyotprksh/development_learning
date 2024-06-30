@@ -180,6 +180,7 @@ object Constants {
         const val CREATED_BY = "created_by"
         const val SALTED_LENGTH = 32
         const val USER_PROFILE_IMAGE = "userProfileImage"
+        const val TWEET_MEDIA = "tweetMedia"
     }
 
     object ErrorCode {

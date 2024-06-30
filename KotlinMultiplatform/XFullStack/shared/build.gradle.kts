@@ -41,6 +41,7 @@ kotlin {
             implementation(libs.ktor.client.websockets)
             implementation(libs.kodein.di)
             implementation(libs.ktor.client.core)
+            implementation(libs.filekt)
         }
 
         jvmMain.dependencies {

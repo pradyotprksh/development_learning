@@ -34,6 +34,7 @@ import app.pages.createTweet.screen.composables.TweetTextFieldComposable
 import app.pages.createTweet.screen.composables.TweetVisibilityComposable
 import app.pages.createTweet.viewModel.CreateTweetViewModel
 import utils.Constants.ConstValues.TWEET_MAX_LENGTH
+import utils.Constants.ConstValues.TWEET_MEDIA
 import utils.Localization
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -108,6 +109,7 @@ fun CreateTweetScreen(
                             tweet = tweet,
                             showCloseButton = tweet.index > 0,
                             showPoll = createTweetState.currentFocusedTweetIndex == tweet.index,
+                            showMedia = createTweetState.currentFocusedTweetIndex == tweet.index,
                             parentTweetDetails = tweet.parentTweetDetails,
                             isRetweet = isRetweet,
                             isReply = isReply,
@@ -149,7 +151,12 @@ fun CreateTweetScreen(
                 progress = createTweetState.currentSelectedTweetLength.toFloat() / TWEET_MAX_LENGTH,
                 enableAddNewTweetButton = createTweetState.enableAddNewTweetButton,
                 showAddNewTweetButton = createTweetState.showAddNewTweetButton,
-                onImageClick = {},
+                onImageClick = {
+                    createTweetViewModel.openImageSelector(
+                        Localization.SELECT_MEDIA,
+                        TWEET_MEDIA,
+                    )
+                },
                 onGifClick = {},
                 onPollClick = {
                     createTweetViewModel.updateCurrentTweetPollStatus(isAPoll = true)
