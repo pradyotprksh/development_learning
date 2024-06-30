@@ -6,13 +6,16 @@ import app.pages.auth.register.state.RegisterState
 import core.models.request.RegisterRequest
 import core.models.response.ClientResponse
 import di.SharedModulesDi
+import domain.repositories.file.FileRepository
 import domain.repositories.user.current.CurrentUserRepository
 import domain.repositories.user.verification.UserVerificationRepository
 import io.github.vinceglb.filekit.core.FileKit
 import io.github.vinceglb.filekit.core.PickerMode
 import io.github.vinceglb.filekit.core.PickerType
+import io.github.vinceglb.filekit.core.extension
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import utils.Constants.ConstValues.NAME_MAX_LENGTH
 import utils.Constants.ConstValues.OTP_LENGTH
@@ -29,6 +32,7 @@ import utils.extensions.debounce
 class RegisterViewModel(
     private val userVerificationRepository: UserVerificationRepository = SharedModulesDi.Instance.userVerificationRepository,
     private val currentUserRepository: CurrentUserRepository = SharedModulesDi.Instance.currentUserRepository,
+    private val fileRepository: FileRepository = SharedModulesDi.Instance.fileRepository,
 ) : ViewModel() {
     private val _registerScreenState = MutableStateFlow(RegisterState())
     val registerScreenState = _registerScreenState.asStateFlow()
@@ -392,12 +396,53 @@ class RegisterViewModel(
         )
     }
 
-    fun openFilePicker(message: String) {
+    fun openFilePicker(
+        message: String,
+        bucket: String,
+    ) {
         viewModelScope.launch {
-            val file = FileKit.pickFile(
+            FileKit.pickFile(
                 type = PickerType.Image,
                 mode = PickerMode.Single,
                 title = message,
+            )?.let { file ->
+                uploadFile(bucket, file.name, file.extension, file.readBytes())
+            }
+        }
+    }
+
+    private fun uploadFile(bucket: String, name: String, extension: String, byteArray: ByteArray) {
+        viewModelScope.launch {
+            fileRepository.uploadFile(
+                bucket = bucket,
+                name = name,
+                extension = extension,
+                byteArray = byteArray,
+            ).collect { response ->
+                when (response) {
+                    is ClientResponse.Error -> {
+                        updateProfileImageProgress(0, null)
+                        showMessage(response.message)
+                    }
+
+                    is ClientResponse.Success -> {
+                        updateProfileImageProgress(
+                            response.data.data?.first ?: 0,
+                            response.data.data?.second,
+                        )
+                    }
+
+                    else -> {}
+                }
+            }
+        }
+    }
+
+    private fun updateProfileImageProgress(value: Long, imageUrl: String?) {
+        _registerScreenState.update {
+            it.copy(
+                profileImageProgress = value,
+                profileImageValue = imageUrl,
             )
         }
     }

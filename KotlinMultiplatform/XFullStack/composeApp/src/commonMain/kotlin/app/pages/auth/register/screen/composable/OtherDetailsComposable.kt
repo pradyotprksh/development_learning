@@ -10,8 +10,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.CheckCircle
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
@@ -24,10 +24,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import app.composables.ProfileImageComposable
 import app.composables.UsernameTextFieldComposable
 import app.pages.auth.register.state.RegisterState
 import app.pages.auth.register.viewModel.RegisterViewModel
 import utils.Constants.ConstValues.BIO_MAX_LENGTH
+import utils.Constants.ConstValues.USER_PROFILE_IMAGE
 import utils.Localization
 import utils.TextFieldType
 
@@ -48,18 +50,27 @@ fun OtherDetailsComposable(
         )
         Spacer(modifier = Modifier.height(10.dp))
         Box(modifier = Modifier.fillMaxWidth()) {
-            Icon(
-                imageVector = Icons.Default.AccountCircle,
-                contentDescription = Icons.Default.AccountCircle.name,
+            ProfileImageComposable(
+                profileImage = registerScreenState.profileImageValue,
                 modifier = Modifier.size(
                     120.dp,
                 ).align(Alignment.Center).clickable(
                     indication = null,
                     interactionSource = remember { MutableInteractionSource() },
                     onClick = {
-                        registerViewModel.openFilePicker(Localization.SELECT_PROFILE_IMAGE)
+                        registerViewModel.openFilePicker(
+                            Localization.SELECT_PROFILE_IMAGE,
+                            USER_PROFILE_IMAGE,
+                        )
                     },
                 ),
+            )
+
+            CircularProgressIndicator(
+                modifier = Modifier.size(
+                    120.dp,
+                ).align(Alignment.Center),
+                progress = { registerScreenState.profileImageProgress.toFloat() }
             )
         }
         Spacer(modifier = Modifier.height(10.dp))

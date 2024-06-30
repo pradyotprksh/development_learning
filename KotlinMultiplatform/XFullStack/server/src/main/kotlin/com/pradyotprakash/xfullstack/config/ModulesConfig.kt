@@ -6,10 +6,13 @@ import com.pradyotprakash.xfullstack.core.security.hashing.SHA256HashingService
 import com.pradyotprakash.xfullstack.core.security.token.JwtTokenService
 import com.pradyotprakash.xfullstack.core.security.token.TokenConfig
 import com.pradyotprakash.xfullstack.core.security.token.TokenService
+import com.pradyotprakash.xfullstack.core.storage.XFullStackSupabaseClient
 import com.pradyotprakash.xfullstack.data.bookmark.BookmarkDataSource
 import com.pradyotprakash.xfullstack.data.bookmark.MongoBookmarkDataSource
 import com.pradyotprakash.xfullstack.data.chat.ChatDataSource
 import com.pradyotprakash.xfullstack.data.chat.MongoChatDataSource
+import com.pradyotprakash.xfullstack.data.file.FileDataSource
+import com.pradyotprakash.xfullstack.data.file.SupabaseFileDataSource
 import com.pradyotprakash.xfullstack.data.follow.FollowDataSource
 import com.pradyotprakash.xfullstack.data.follow.MongoFollowDataSource
 import com.pradyotprakash.xfullstack.data.message.MessageDataSource
@@ -39,6 +42,9 @@ import com.pradyotprakash.xfullstack.features.chat.controllers.fetchMessages.Fet
 import com.pradyotprakash.xfullstack.features.chat.controllers.fetchMessages.FetchMessagesControllerImplementation
 import com.pradyotprakash.xfullstack.features.chat.controllers.sendMessage.SendMessageController
 import com.pradyotprakash.xfullstack.features.chat.controllers.sendMessage.SendMessageControllerImplementation
+import com.pradyotprakash.xfullstack.features.file.controllers.FileController
+import com.pradyotprakash.xfullstack.features.file.controllers.upload.FileUploadController
+import com.pradyotprakash.xfullstack.features.file.controllers.upload.FileUploadControllerImplementation
 import com.pradyotprakash.xfullstack.features.follow.controllers.FollowController
 import com.pradyotprakash.xfullstack.features.follow.controllers.followUpdate.FollowUpdateController
 import com.pradyotprakash.xfullstack.features.follow.controllers.followUpdate.FollowUpdateControllerImplementation
@@ -87,6 +93,12 @@ object ModulesConfig {
         bindProvider<MessageDataSource> { MongoMessageDataSource(instance()) }
     }
 
+    private val pluginsModule = DI.Module("PLUGINS") {
+        bindSingleton { XFullStackSupabaseClient.getStorage() }
+
+        bindProvider<FileDataSource> { SupabaseFileDataSource(instance()) }
+    }
+
     private val securityModule = DI.Module("SECURITY") {
         bindProvider<TokenService> { JwtTokenService() }
         bindProvider<HashingService> { SHA256HashingService() }
@@ -130,6 +142,8 @@ object ModulesConfig {
 
         bindProvider<SendMessageController> { SendMessageControllerImplementation() }
         bindProvider<FetchMessagesController> { FetchMessagesControllerImplementation() }
+
+        bindProvider<FileUploadController> { FileUploadControllerImplementation() }
     }
 
     private val featuresModule = DI.Module("FEATURES") {
@@ -152,11 +166,14 @@ object ModulesConfig {
         bindProvider { TagsController(instance()) }
 
         bindProvider { ChatController(instance(), instance()) }
+
+        bindProvider { FileController(instance()) }
     }
 
     val di = DI {
         importAll(
             databaseModule,
+            pluginsModule,
             securityModule,
             controllersModule,
             featuresModule,

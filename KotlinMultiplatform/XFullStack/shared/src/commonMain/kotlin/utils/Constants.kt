@@ -100,13 +100,15 @@ object Constants {
             const val GET_MESSAGES = "/get-messages"
             const val GET_CHATS = "/get-chats"
         }
+
+        object File {
+            const val FILE = "/file"
+            const val UPLOAD = "/upload"
+        }
     }
 
     object Keys {
         const val USER_ID = "userId"
-        const val EMAIL_ID = "emailId"
-        const val USERNAME = "username"
-        const val PHONE_NUMBER = "phoneNumber"
         const val JWT_SECRET = "JWT_SECRET"
         const val CONTENT_TYPE = "Content-Type"
         const val AUTHORIZATION = "Authorization"
@@ -130,6 +132,11 @@ object Constants {
         const val FOLLOW_REQUEST = "followRequest"
         const val BOOKMARK_REQUEST = "bookmarkRequest"
         const val POLL_REQUEST = "pollRequest"
+        const val UPLOAD_BUCKET = "uploadBucket"
+        const val FILE = "file"
+        const val SUPABASE_API_KEY = "SUPABASE_API_KEY"
+        const val SUPABASE_URL = "SUPABASE_URL"
+        const val FILE_UPLOAD_BOUNDARY = "XFullStackBoundary"
     }
 
     object ConstValues {
@@ -172,6 +179,7 @@ object Constants {
         const val LOG_IN = "log_in"
         const val CREATED_BY = "created_by"
         const val SALTED_LENGTH = 32
+        const val USER_PROFILE_IMAGE = "userProfileImage"
     }
 
     object ErrorCode {

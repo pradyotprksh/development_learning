@@ -6,6 +6,7 @@ import com.pradyotprakash.xfullstack.core.security.token.TokenConfig
 import com.pradyotprakash.xfullstack.core.security.token.TokenService
 import com.pradyotprakash.xfullstack.data.bookmark.BookmarkDataSource
 import com.pradyotprakash.xfullstack.data.chat.ChatDataSource
+import com.pradyotprakash.xfullstack.data.file.FileDataSource
 import com.pradyotprakash.xfullstack.data.follow.FollowDataSource
 import com.pradyotprakash.xfullstack.data.message.MessageDataSource
 import com.pradyotprakash.xfullstack.data.tags.TagsDataSource
@@ -18,6 +19,8 @@ import com.pradyotprakash.xfullstack.features.bookmark.bookmark
 import com.pradyotprakash.xfullstack.features.bookmark.controllers.BookmarkController
 import com.pradyotprakash.xfullstack.features.chat.chat
 import com.pradyotprakash.xfullstack.features.chat.controllers.ChatController
+import com.pradyotprakash.xfullstack.features.file.controllers.FileController
+import com.pradyotprakash.xfullstack.features.file.file
 import com.pradyotprakash.xfullstack.features.follow.controllers.FollowController
 import com.pradyotprakash.xfullstack.features.follow.follow
 import com.pradyotprakash.xfullstack.features.migration.migration
@@ -47,6 +50,7 @@ fun Application.configureRouting() {
     val tagsDataSource by ModulesConfig.di.instance<TagsDataSource>()
     val chatDataSource by ModulesConfig.di.instance<ChatDataSource>()
     val messageDataSource by ModulesConfig.di.instance<MessageDataSource>()
+    val fileDataSource by ModulesConfig.di.instance<FileDataSource>()
 
     val tokenService by ModulesConfig.di.instance<TokenService>()
     val tokenConfig by ModulesConfig.di.instance<TokenConfig>()
@@ -62,6 +66,7 @@ fun Application.configureRouting() {
     val bookmarkController by ModulesConfig.di.instance<BookmarkController>()
     val tagsController by ModulesConfig.di.instance<TagsController>()
     val chatController by ModulesConfig.di.instance<ChatController>()
+    val fileController by ModulesConfig.di.instance<FileController>()
 
     routing {
         authentication(
@@ -129,6 +134,10 @@ fun Application.configureRouting() {
             viewDataSource = viewDataSource,
             followDataSource = followDataSource,
             bookmarkDataSource = bookmarkDataSource,
+        )
+        file(
+            fileController = fileController,
+            fileDataSource = fileDataSource,
         )
     }
 }

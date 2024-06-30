@@ -29,6 +29,7 @@ data class RegisterState(
     val showUsernameProfileImage: Boolean = true,
     val bioValue: String? = null,
     val isBioValid: Boolean = false,
+    val profileImageProgress: Long = 0,
 ) {
     val userDetailsForm: Boolean
         get() = !showOtpOption && !showPasswordOption && !showUsernameProfileImage
