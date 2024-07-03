@@ -1,5 +1,7 @@
 package com.pradyotprakash.xfullstack.features.tweet.controllers.tweetCreationUpdate
 
+import com.pradyotprakash.xfullstack.core.helpers.TagsHelper
+import com.pradyotprakash.xfullstack.core.helpers.UserHelper
 import com.pradyotprakash.xfullstack.data.tags.TagsDataSource
 import com.pradyotprakash.xfullstack.data.tweet.TweetDataSource
 import com.pradyotprakash.xfullstack.data.tweet.data.PollChoices
@@ -32,6 +34,8 @@ import kotlin.random.Random
 
 class TweetCreateUpdateControllerImplementation(
     private val geminiRepository: GeminiRepository,
+    private val userHelper: UserHelper,
+    private val tagsHelper: TagsHelper,
 ) : TweetCreateUpdateController {
     override suspend fun createTweet(
         call: ApplicationCall,
@@ -86,8 +90,10 @@ class TweetCreateUpdateControllerImplementation(
                 )
             }
 
+            var parentTweetDetails: Tweet? = null
+
             if (tweetRequest.parentTweetIdIsRequired) {
-                tweetRequest.parentTweetId?.let {
+                parentTweetDetails = tweetRequest.parentTweetId?.let {
                     tweetDataSource.findTweetById(it) ?: throw InvalidTweet(
                         message = Localization.PARENT_TWEET_NOT_FOUND,
                     )
@@ -108,7 +114,7 @@ class TweetCreateUpdateControllerImplementation(
                 )
             }
 
-            val emotions = tweetRequest.tweet?.let {
+            val emotions = (tweetRequest.tweet ?: parentTweetDetails?.tweet)?.let {
                 if (it.isNotBlank()) {
                     geminiRepository.getTweetEmotion(
                         it, if (Random.nextBoolean()) {
@@ -171,23 +177,8 @@ class TweetCreateUpdateControllerImplementation(
 
         Connections.sendMessageToAll(TWEETS_UPDATE_SUCCESS_CODE)
 
-        val allTweetsEmotions = tweetDataSource.getUserTweetsEmotions(createdBy)
-
-        val humanNature = geminiRepository.getHumanNature(
-            allTweetsEmotions.joinToString(", "), if (Random.nextBoolean()) {
-                System.getenv(Constants.Keys.GEMINI_API_KEY_1)
-            } else {
-                System.getenv(Constants.Keys.GEMINI_API_KEY_2)
-            }
-        )
-
-        if (humanNature.isNotEmpty()) {
-            userDataSource.updateHumanNature(createdBy, humanNature)
-        }
-
-        if (tagsMap.isNotEmpty()) {
-            tagsDataSource.addTags(tagsMap)
-        }
+        userHelper.updateUserNature(createdBy)
+        tagsHelper.updateTags(tagsMap)
 
         call.respond(
             HttpStatusCode.Created, XFullStackResponse(

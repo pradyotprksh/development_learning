@@ -1,6 +1,8 @@
 package com.pradyotprakash.xfullstack.config
 
 import com.pradyotprakash.xfullstack.core.database.XFullStackMongoDBClient
+import com.pradyotprakash.xfullstack.core.helpers.TagsHelper
+import com.pradyotprakash.xfullstack.core.helpers.UserHelper
 import com.pradyotprakash.xfullstack.core.security.hashing.HashingService
 import com.pradyotprakash.xfullstack.core.security.hashing.SHA256HashingService
 import com.pradyotprakash.xfullstack.core.security.token.JwtTokenService
@@ -99,6 +101,12 @@ object ModulesConfig {
         bindProvider<FileDataSource> { SupabaseFileDataSource(instance()) }
     }
 
+    private val helpersModule = DI.Module("HELPERS") {
+        bindProvider { UserHelper(instance(), instance()) }
+
+        bindProvider { TagsHelper(instance()) }
+    }
+
     private val securityModule = DI.Module("SECURITY") {
         bindProvider<TokenService> { JwtTokenService() }
         bindProvider<HashingService> { SHA256HashingService() }
@@ -126,6 +134,8 @@ object ModulesConfig {
         bindProvider<TweetCreateUpdateController> {
             TweetCreateUpdateControllerImplementation(
                 SharedModulesDi.Instance.geminiRepository,
+                instance(),
+                instance(),
             )
         }
         bindProvider<TweetFetchController> { TweetFetchControllerImplementation() }
@@ -174,6 +184,7 @@ object ModulesConfig {
         importAll(
             databaseModule,
             pluginsModule,
+            helpersModule,
             securityModule,
             controllersModule,
             featuresModule,
