@@ -105,6 +105,11 @@ object Constants {
             const val FILE = "/file"
             const val UPLOAD = "/upload"
         }
+
+        object Grok {
+            const val GROK = "/grok"
+            const val CHAT = "/chat"
+        }
     }
 
     object Keys {
@@ -170,7 +175,7 @@ object Constants {
         const val XFULLSTACK_NETWORK_CLIENT = "x_full_stack_network_client"
         const val GEMINI_NETWORK_CLIENT = "gemini_network_client"
         const val TIMEOUT_VALUE = 15000L
-        const val ENABLE_GEMINI = false
+        const val ENABLE_GEMINI = true
         const val TAG_REGEX = "#[a-zA-Z0-9]+"
         const val TERMS = "terms"
         const val PRIVACY_POLICY = "privacy_policy"
@@ -310,5 +315,7 @@ object Constants {
             "can you tell the tag for the text \"%s\", like what's the tone or emotion give response in words, separated by comma."
         const val USER_NATURE =
             "user created posts with emotions \"%s\". can you tell what kind of nature this person has. give response in words, separated by comma."
+        const val GROK_PROMPT =
+            "your name is grok. a user, full name \"%s\" username \"%s\" born in \"%s\" with human nature \"%s\". is asking \"%s\""
     }
 }

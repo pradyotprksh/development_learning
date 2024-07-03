@@ -16,5 +16,8 @@ data class GeminiResponse(
                     !removeSpecialCharacters.isLetterOrDigit() && removeSpecialCharacters.isWhitespace()
                 }
             }.toList()
+
+    val grokReply: List<String>
+        get() = candidates.map { can -> can.content.parts.map { part -> part.text } }.flatten()
 }
 

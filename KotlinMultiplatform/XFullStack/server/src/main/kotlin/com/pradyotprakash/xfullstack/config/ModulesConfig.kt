@@ -1,6 +1,7 @@
 package com.pradyotprakash.xfullstack.config
 
 import com.pradyotprakash.xfullstack.core.database.XFullStackMongoDBClient
+import com.pradyotprakash.xfullstack.core.helpers.GeminiHelper
 import com.pradyotprakash.xfullstack.core.helpers.TagsHelper
 import com.pradyotprakash.xfullstack.core.helpers.UserHelper
 import com.pradyotprakash.xfullstack.core.security.hashing.HashingService
@@ -50,6 +51,9 @@ import com.pradyotprakash.xfullstack.features.file.controllers.upload.FileUpload
 import com.pradyotprakash.xfullstack.features.follow.controllers.FollowController
 import com.pradyotprakash.xfullstack.features.follow.controllers.followUpdate.FollowUpdateController
 import com.pradyotprakash.xfullstack.features.follow.controllers.followUpdate.FollowUpdateControllerImplementation
+import com.pradyotprakash.xfullstack.features.grok.controllers.GrokController
+import com.pradyotprakash.xfullstack.features.grok.controllers.grokChatController.GrokChatController
+import com.pradyotprakash.xfullstack.features.grok.controllers.grokChatController.GrokChatControllerImplementation
 import com.pradyotprakash.xfullstack.features.secrets.controllers.SecretsController
 import com.pradyotprakash.xfullstack.features.secrets.controllers.secretsFetch.SecretsFetchController
 import com.pradyotprakash.xfullstack.features.secrets.controllers.secretsFetch.SecretsFetchControllerImplementation
@@ -102,9 +106,11 @@ object ModulesConfig {
     }
 
     private val helpersModule = DI.Module("HELPERS") {
-        bindProvider { UserHelper(instance(), instance()) }
+        bindProvider { UserHelper(instance(), instance(), instance()) }
 
         bindProvider { TagsHelper(instance()) }
+
+        bindProvider { GeminiHelper() }
     }
 
     private val securityModule = DI.Module("SECURITY") {
@@ -136,6 +142,7 @@ object ModulesConfig {
                 SharedModulesDi.Instance.geminiRepository,
                 instance(),
                 instance(),
+                instance(),
             )
         }
         bindProvider<TweetFetchController> { TweetFetchControllerImplementation() }
@@ -154,6 +161,13 @@ object ModulesConfig {
         bindProvider<FetchMessagesController> { FetchMessagesControllerImplementation() }
 
         bindProvider<FileUploadController> { FileUploadControllerImplementation() }
+
+        bindProvider<GrokChatController> {
+            GrokChatControllerImplementation(
+                SharedModulesDi.Instance.geminiRepository,
+                instance(),
+            )
+        }
     }
 
     private val featuresModule = DI.Module("FEATURES") {
@@ -178,6 +192,8 @@ object ModulesConfig {
         bindProvider { ChatController(instance(), instance()) }
 
         bindProvider { FileController(instance()) }
+
+        bindProvider { GrokController(instance()) }
     }
 
     val di = DI {

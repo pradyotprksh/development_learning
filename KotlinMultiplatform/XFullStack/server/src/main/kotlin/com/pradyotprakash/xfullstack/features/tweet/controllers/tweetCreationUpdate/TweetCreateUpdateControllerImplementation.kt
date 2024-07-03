@@ -1,5 +1,6 @@
 package com.pradyotprakash.xfullstack.features.tweet.controllers.tweetCreationUpdate
 
+import com.pradyotprakash.xfullstack.core.helpers.GeminiHelper
 import com.pradyotprakash.xfullstack.core.helpers.TagsHelper
 import com.pradyotprakash.xfullstack.core.helpers.UserHelper
 import com.pradyotprakash.xfullstack.data.tags.TagsDataSource
@@ -23,19 +24,18 @@ import io.ktor.server.auth.principal
 import io.ktor.server.request.receive
 import io.ktor.server.response.respond
 import org.bson.types.ObjectId
-import utils.Constants
 import utils.Constants.Keys.USER_ID
 import utils.Constants.SuccessCode.TWEETS_DELETED_SUCCESS_CODE
 import utils.Constants.SuccessCode.TWEETS_UPDATE_SUCCESS_CODE
 import utils.Localization
 import utils.UtilsMethod
 import utils.XFullStackResponseStatus
-import kotlin.random.Random
 
 class TweetCreateUpdateControllerImplementation(
     private val geminiRepository: GeminiRepository,
     private val userHelper: UserHelper,
     private val tagsHelper: TagsHelper,
+    private val geminiHelper: GeminiHelper,
 ) : TweetCreateUpdateController {
     override suspend fun createTweet(
         call: ApplicationCall,
@@ -117,11 +117,7 @@ class TweetCreateUpdateControllerImplementation(
             val emotions = (tweetRequest.tweet ?: parentTweetDetails?.tweet)?.let {
                 if (it.isNotBlank()) {
                     geminiRepository.getTweetEmotion(
-                        it, if (Random.nextBoolean()) {
-                            System.getenv(Constants.Keys.GEMINI_API_KEY_1)
-                        } else {
-                            System.getenv(Constants.Keys.GEMINI_API_KEY_2)
-                        }
+                        it, geminiHelper.getGeminiAPIKey(),
                     )
                 } else {
                     emptyList()

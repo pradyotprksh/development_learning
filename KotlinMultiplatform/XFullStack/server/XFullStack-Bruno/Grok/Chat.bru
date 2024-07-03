@@ -1,0 +1,15 @@
+meta {
+  name: Chat
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{BASE_URL}}/grok/chat?prompt=hello
+  body: none
+  auth: none
+}
+
+query {
+  prompt: hello
+}

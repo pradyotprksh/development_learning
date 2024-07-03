@@ -222,4 +222,6 @@ object Localization {
     const val SEND_A_MESSAGE = "Send a message"
     const val SELECT_PROFILE_IMAGE = "Select your profile image"
     const val SELECT_MEDIA = "Select media for your tweet"
+    const val GROK_NOT_AVAILABLE =
+        "Grok is not available at the moment. Please try again after sometime."
 }

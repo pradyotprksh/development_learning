@@ -23,6 +23,8 @@ import com.pradyotprakash.xfullstack.features.file.controllers.FileController
 import com.pradyotprakash.xfullstack.features.file.file
 import com.pradyotprakash.xfullstack.features.follow.controllers.FollowController
 import com.pradyotprakash.xfullstack.features.follow.follow
+import com.pradyotprakash.xfullstack.features.grok.controllers.GrokController
+import com.pradyotprakash.xfullstack.features.grok.grok
 import com.pradyotprakash.xfullstack.features.migration.migration
 import com.pradyotprakash.xfullstack.features.secrets.controllers.SecretsController
 import com.pradyotprakash.xfullstack.features.secrets.secrets
@@ -67,6 +69,7 @@ fun Application.configureRouting() {
     val tagsController by ModulesConfig.di.instance<TagsController>()
     val chatController by ModulesConfig.di.instance<ChatController>()
     val fileController by ModulesConfig.di.instance<FileController>()
+    val grokController by ModulesConfig.di.instance<GrokController>()
 
     routing {
         authentication(
@@ -138,6 +141,10 @@ fun Application.configureRouting() {
         file(
             fileController = fileController,
             fileDataSource = fileDataSource,
+        )
+        grok(
+            grokController = grokController,
+            userDataSource = userDataSource,
         )
     }
 }

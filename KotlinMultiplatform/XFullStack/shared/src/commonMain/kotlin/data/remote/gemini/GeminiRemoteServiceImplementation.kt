@@ -74,4 +74,28 @@ class GeminiRemoteServiceImplementation(
 
         return response.getOrNull()
     }
+
+    override suspend fun getGrokReply(value: String, apiKey: String): GeminiResponse? {
+        val response = geminiRemoteClient.post<GeminiResponse>(
+            details = XFullStackClientRequestDetails(
+                endpoint = BETA_1_5_MODEL_GENERATE_CONTENT,
+                queries = mapOf(
+                    KEY to apiKey,
+                ),
+                body = GeminiRequest(
+                    contents = listOf(
+                        Content(
+                            parts = listOf(
+                                Part(
+                                    text = value,
+                                ),
+                            )
+                        )
+                    )
+                ),
+            )
+        )
+
+        return response.getOrNull()
+    }
 }
