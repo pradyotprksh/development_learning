@@ -24,6 +24,10 @@ fun showFloatingActionButton(route: String) = listOf(
 
 fun isSearchRoute(route: String) = Routes.HomeSearch.path() == route
 
+fun isGrokRoute(route: String) = Routes.HomeGrok.path() == route
+
 fun isMessageRoute(route: String) = Routes.HomeMessages.path() == route
 
 fun showSearchBar(route: String) = isSearchRoute(route) || isMessageRoute(route)
+
+fun showSettingOption(route: String) = !isGrokRoute(route)

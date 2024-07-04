@@ -21,6 +21,7 @@ import app.composables.userAppBar.viewModel.UserAppBarViewModel
 fun UserAppBarComposable(
     modifier: Modifier = Modifier,
     userAppBarViewModel: UserAppBarViewModel = viewModel { UserAppBarViewModel() },
+    showSettingButton: Boolean = true,
     title: @Composable (() -> Unit)? = null,
     toggleNavDrawer: () -> Unit,
 ) {
@@ -42,13 +43,15 @@ fun UserAppBarComposable(
             )
         },
         actions = {
-            IconButton(
-                onClick = {},
-            ) {
-                Icon(
-                    imageVector = Icons.Default.Settings,
-                    contentDescription = Icons.Default.Settings.name,
-                )
+            if (showSettingButton) {
+                IconButton(
+                    onClick = {},
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Settings,
+                        contentDescription = Icons.Default.Settings.name,
+                    )
+                }
             }
         },
     )

@@ -55,6 +55,7 @@ import app.navigation.showBottomNavBar
 import app.navigation.showDrawer
 import app.navigation.showFloatingActionButton
 import app.navigation.showSearchBar
+import app.navigation.showSettingOption
 import app.pages.auth.authOptions.screen.AuthOptionsScreen
 import app.pages.auth.login.screen.LoginScreen
 import app.pages.auth.register.screen.RegisterScreen
@@ -62,6 +63,7 @@ import app.pages.bookmarks.screen.BookmarksScreen
 import app.pages.createTweet.screen.CreateTweetScreen
 import app.pages.directMessage.screen.DirectMessageScreen
 import app.pages.home.bottomBar.HomeBottomNavItems
+import app.pages.home.grok.screen.HomeGrokScreen
 import app.pages.home.home.screen.HomeScreen
 import app.pages.home.message.screen.HomeMessageScreen
 import app.pages.home.search.screen.HomeSearchScreen
@@ -200,6 +202,7 @@ fun XApp(
                         toggleNavDrawer = {
                             drawerOpenClose()
                         },
+                        showSettingButton = showSettingOption(currentDestination?.route ?: ""),
                         title = if (showSearchBar(currentDestination?.route ?: "")) {
                             {
                                 FilledTonalButton(
@@ -353,7 +356,9 @@ fun XApp(
                 composable(Routes.HomeSearch.path()) {
                     HomeSearchScreen()
                 }
-                composable(Routes.HomeGrok.path()) { }
+                composable(Routes.HomeGrok.path()) {
+                    HomeGrokScreen()
+                }
                 composable(Routes.HomeCommunities.path()) { }
                 composable(Routes.HomeNotifications.path()) { }
                 composable(Routes.HomeMessages.path()) {
