@@ -3,14 +3,20 @@ package com.pradyotprakash.xfullstack.features.grok.controllers.grokChatControll
 import com.pradyotprakash.xfullstack.core.helpers.GeminiHelper
 import com.pradyotprakash.xfullstack.data.user.UserDataSource
 import com.pradyotprakash.xfullstack.features.grok.resource.GrokResource
+import core.exception.InvalidParameter
 import core.exception.UserDetailsNotFound
+import core.models.request.GrokRequest
 import core.models.response.XFullStackResponse
 import domain.repositories.gemini.GeminiRepository
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.ApplicationCall
 import io.ktor.server.auth.jwt.JWTPrincipal
 import io.ktor.server.auth.principal
+import io.ktor.server.request.receive
 import io.ktor.server.response.respond
+import utils.Constants.ConstValues.MODEL
+import utils.Constants.ConstValues.USER
+import utils.Constants.ErrorCode.INVALID_ROLE_FOR_GROK_ERROR_CODE
 import utils.Constants.GeminiPrompt.GROK_PROMPT
 import utils.Constants.Keys.USER_ID
 import utils.Localization
@@ -26,6 +32,19 @@ class GrokChatControllerImplementation(
         resource: GrokResource.Chat,
         userDataSource: UserDataSource,
     ) {
+        val grokRequest = call.receive<GrokRequest>()
+
+        grokRequest.conversation.forEach {
+            if (!listOf(USER, MODEL).contains(it.role)) {
+                throw InvalidParameter(
+                    errorCode = INVALID_ROLE_FOR_GROK_ERROR_CODE, message = Localization.format(
+                        Localization.INVALID_ROLE,
+                        it.role,
+                    )
+                )
+            }
+        }
+
         val principal = call.principal<JWTPrincipal>()
         val userId =
             principal?.payload?.getClaim(USER_ID)?.asString() ?: throw UserDetailsNotFound()
@@ -38,11 +57,13 @@ class GrokChatControllerImplementation(
             userDetails.username,
             UtilsMethod.Dates.convertLongToReadableDate(userDetails.dateOfBirth),
             userDetails.nature.joinToString(", "),
-            resource.prompt,
+            grokRequest.prompt,
         )
 
         val grokReply = geminiRepository.getGrokReply(
-            prompt, geminiHelper.getGeminiAPIKey(),
+            prompt,
+            grokRequest.conversation,
+            geminiHelper.getGeminiAPIKey(),
         )
 
         call.respond(

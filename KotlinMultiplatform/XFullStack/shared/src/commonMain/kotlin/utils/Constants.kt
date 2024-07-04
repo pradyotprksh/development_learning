@@ -185,6 +185,8 @@ object Constants {
         const val SALTED_LENGTH = 32
         const val USER_PROFILE_IMAGE = "userProfileImage"
         const val TWEET_MEDIA = "tweetMedia"
+        const val USER = "user"
+        const val MODEL = "model"
     }
 
     object ErrorCode {
@@ -213,6 +215,7 @@ object Constants {
         const val INVALID_REQUEST_ASK = "EC_XFS022"
         const val SAME_FOLLOW_FOLLOWING_ID = "EC_XFS023"
         const val MESSAGE_VALIDITY_ERROR_CODE = "EC_XFS024"
+        const val INVALID_ROLE_FOR_GROK_ERROR_CODE = "EC_XFS025"
     }
 
     object SuccessCode {

@@ -224,4 +224,5 @@ object Localization {
     const val SELECT_MEDIA = "Select media for your tweet"
     const val GROK_NOT_AVAILABLE =
         "Grok is not available at the moment. Please try again after sometime."
+    const val INVALID_ROLE = "%s is an invalid role."
 }

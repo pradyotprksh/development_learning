@@ -10,6 +10,5 @@ class GrokResource {
     @Resource(CHAT)
     data class Chat(
         private val parent: GrokResource = GrokResource(),
-        val prompt: String,
     )
 }

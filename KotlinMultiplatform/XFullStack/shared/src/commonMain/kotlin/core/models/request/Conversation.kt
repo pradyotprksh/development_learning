@@ -3,7 +3,7 @@ package core.models.request
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Content(
+data class Conversation(
     val role: String,
-    val parts: List<Part>,
+    val prompt: String,
 )

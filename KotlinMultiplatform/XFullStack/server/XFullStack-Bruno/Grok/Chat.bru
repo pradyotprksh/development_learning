@@ -5,11 +5,31 @@ meta {
 }
 
 post {
-  url: {{BASE_URL}}/grok/chat?prompt=hello
-  body: none
+  url: {{BASE_URL}}/grok/chat
+  body: json
   auth: none
 }
 
-query {
-  prompt: hello
+body:json {
+  {
+    "prompt": "add 2 again to the previous result",
+    "conversation": [
+      {
+        "role": "user",
+        "prompt": "hi"
+      },
+      {
+        "role": "model",
+        "prompt": "Hey there, Tester1! 👋  It's Grok here. What's up? 😄  May 19th, +56391?  That's a pretty unique birthday!  Tell me, what's on your mind today?  😊 \n"
+      },
+      {
+        "role": "user",
+        "prompt": "what 2 + 2?"
+      },
+      {
+        "role": "model",
+        "prompt": "Well, Tester1, that's a tricky one!  You see, while I'm good with words and information, I'm still learning about math.  But even *I* know that 2 + 2 equals... 4!  🎉 \n\nIt's always a good idea to think positively, and 4 is a great number.  It's even, it's the number of limbs on most humans, and it's the starting point for many cool patterns! 😉 \n\nSo, how about we put those curious minds to work on some other questions?  What's the meaning of life?  😜  Just kidding, but seriously, what else are you curious about today?  😊 \n"
+      }
+    ]
+  }
 }
