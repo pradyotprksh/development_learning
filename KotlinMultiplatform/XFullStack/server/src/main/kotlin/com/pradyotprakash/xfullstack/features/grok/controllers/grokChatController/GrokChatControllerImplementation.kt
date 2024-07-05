@@ -6,6 +6,7 @@ import com.pradyotprakash.xfullstack.features.grok.resource.GrokResource
 import core.exception.InvalidParameter
 import core.exception.UserDetailsNotFound
 import core.models.request.GrokRequest
+import core.models.response.GrokResponse
 import core.models.response.XFullStackResponse
 import domain.repositories.gemini.GeminiRepository
 import io.ktor.http.HttpStatusCode
@@ -71,7 +72,13 @@ class GrokChatControllerImplementation(
                 status = XFullStackResponseStatus.Success,
                 code = null,
                 message = Localization.SUCCESS,
-                data = grokReply,
+                data = GrokResponse(
+                    response = grokReply,
+                    tweetResponse = emptyList(),
+                    chatResponse = emptyList(),
+                    messageResponse = emptyList(),
+                    userInfoResponse = emptyList(),
+                ),
             )
         )
     }
