@@ -5,6 +5,7 @@ import core.network.GeminiHttpClient
 import core.network.NetworkClient
 import core.network.XFullStackHttpClient
 import data.device.chat.ChatDBServiceImplementation
+import data.device.grok.GrokDBServiceImplementation
 import data.device.request.RequestDBServiceImplementation
 import data.device.tags.TagsDBServiceImplementation
 import data.device.tweet.TweetDBServiceImplementation
@@ -29,6 +30,8 @@ import domain.repositories.file.FileRepository
 import domain.repositories.file.FileRepositoryImplementation
 import domain.repositories.gemini.GeminiRepository
 import domain.repositories.gemini.GeminiRepositoryImplementation
+import domain.repositories.grok.GrokRepository
+import domain.repositories.grok.GrokRepositoryImplementation
 import domain.repositories.request.RequestRepository
 import domain.repositories.request.RequestRepositoryImplementation
 import domain.repositories.server.utils.ServerUtilsRepository
@@ -51,6 +54,7 @@ import domain.services.chat.ChatDBService
 import domain.services.chat.ChatRemoteService
 import domain.services.file.FileRemoteService
 import domain.services.gemini.GeminiRemoteService
+import domain.services.grok.GrokDBService
 import domain.services.request.RequestDBService
 import domain.services.server.utils.ServerUtilsRemoteService
 import domain.services.tags.TagsDBService
@@ -103,6 +107,8 @@ object SharedModulesDi {
         bindProvider<TagsDBService> { TagsDBServiceImplementation(instance()) }
 
         bindProvider<ChatDBService> { ChatDBServiceImplementation(instance()) }
+
+        bindProvider<GrokDBService> { GrokDBServiceImplementation(instance()) }
     }
 
     private val servicesRemoteModule = DI.Module("SERVICES_REMOTE") {
@@ -201,6 +207,10 @@ object SharedModulesDi {
         bind<FileRepository>() with singleton {
             FileRepositoryImplementation(instance())
         }
+
+        bind<GrokRepository>() with singleton {
+            GrokRepositoryImplementation(instance())
+        }
     }
 
     val di = DI {
@@ -226,5 +236,6 @@ object SharedModulesDi {
         val tagsRepository: TagsRepository by di.instance()
         val chatRepository: ChatRepository by di.instance()
         val fileRepository: FileRepository by di.instance()
+        val grokRepository: GrokRepository by di.instance()
     }
 }

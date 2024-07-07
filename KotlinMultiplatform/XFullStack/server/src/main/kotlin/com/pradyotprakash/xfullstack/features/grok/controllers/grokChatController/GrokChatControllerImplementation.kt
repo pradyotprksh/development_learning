@@ -73,6 +73,7 @@ class GrokChatControllerImplementation(
                 code = null,
                 message = Localization.SUCCESS,
                 data = GrokResponse(
+                    chatId = grokRequest.chatId,
                     response = grokReply,
                     tweetResponse = emptyList(),
                     chatResponse = emptyList(),

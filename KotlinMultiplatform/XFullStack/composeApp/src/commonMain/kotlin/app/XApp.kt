@@ -357,7 +357,9 @@ fun XApp(
                     HomeSearchScreen()
                 }
                 composable(Routes.HomeGrok.path()) {
-                    HomeGrokScreen()
+                    HomeGrokScreen(
+                        isPhone = isPhone,
+                    )
                 }
                 composable(Routes.HomeCommunities.path()) { }
                 composable(Routes.HomeNotifications.path()) { }

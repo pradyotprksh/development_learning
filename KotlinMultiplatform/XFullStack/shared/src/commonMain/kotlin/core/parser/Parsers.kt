@@ -2,6 +2,8 @@ package core.parser
 
 import core.models.realm.ChatResponseDB
 import core.models.realm.CurrentUserInfoDB
+import core.models.realm.GrokChatDB
+import core.models.realm.GrokMessageDB
 import core.models.realm.MessageRequestDB
 import core.models.realm.MessageResponseDB
 import core.models.realm.PollChoicesDB
@@ -13,6 +15,8 @@ import core.models.realm.UserInfoDB
 import core.models.request.MessageRequest
 import core.models.request.TweetRequest
 import core.models.response.ChatResponse
+import core.models.response.GrokChatResponse
+import core.models.response.GrokMessageResponse
 import core.models.response.MessageResponse
 import core.models.response.PollChoicesResponse
 import core.models.response.TagsResponse
@@ -332,3 +336,22 @@ fun MessageResponseDB.parseToMessageResponse(): MessageResponse = MessageRespons
     audio = this.audio,
     tweetDetails = this.tweetDetails?.parseToTweetResponse(),
 )
+
+fun GrokMessageDB.parseToGrokMessageResponse(): GrokMessageResponse = GrokMessageResponse(
+    id = this.id,
+    chatId = this.chatId,
+    message = this.message,
+    messageOn = this.messageOn,
+    role = this.role,
+)
+
+fun GrokChatDB.parseToGrokChatResponse(): GrokChatResponse {
+    return GrokChatResponse(
+        chatId = this.chatId,
+        chatTitle = this.chatTitle,
+        isArchived = this.isArchived,
+        createdOn = this.createdOn,
+        lastMessageOn = this.lastMessageOn,
+        messages = this.messages.map { it.parseToGrokMessageResponse() },
+    )
+}
