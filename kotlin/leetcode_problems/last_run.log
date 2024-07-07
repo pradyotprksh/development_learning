@@ -1,2 +1,9 @@
 Hello World!
-Program arguments: 
+------------------------------
+Top Interview 150
+Merge Sorted Array [1, 2, 3, 0, 0, 0] + [2, 5, 6] = [1, 2, 2, 3, 5, 6]
+Merge Sorted Array [1] + [] = [1]
+Merge Sorted Array [0] + [1] = [1]
+Remove Element [3, 2, 2, 3] 3 = [2, 2, 3, 3] 2
+Remove Element [0, 1, 2, 2, 3, 0, 4, 2] 2 = [0, 1, 4, 0, 3, 2, 2, 2] 5
+------------------------------
