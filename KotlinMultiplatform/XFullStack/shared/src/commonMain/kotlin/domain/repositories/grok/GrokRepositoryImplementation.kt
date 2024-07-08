@@ -9,7 +9,6 @@ import core.parser.parseToGrokChatResponse
 import core.parser.parseToGrokConversation
 import domain.services.grok.GrokDBService
 import domain.services.grok.GrokRemoteService
-import io.realm.kotlin.ext.toRealmList
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.lastOrNull
@@ -37,28 +36,38 @@ class GrokRepositoryImplementation(
     ): Flow<ClientResponse<out XFullStackResponse<Nothing>>> = flow {
         emit(ClientResponse.Loading)
         try {
+            val currentChatId = chatId.ifBlank {
+                val id = ObjectId().toHexString()
+                grokDBService.createChat(
+                    chatId = id,
+                    chatTitle = prompt,
+                    createdOn = UtilsMethod.Dates.getCurrentTimeStamp(),
+                )
+                id
+            }
+
             updateGrokConversation(
-                chatId,
-                listOf(prompt),
+                currentChatId,
+                prompt,
                 USER,
             )
 
-            val conversations = grokDBService.getAllConversation(chatId)
+            val conversations = grokDBService.getAllConversation(currentChatId)
                 .map { it.list.map { db -> db.parseToGrokConversation() } }.lastOrNull()
                 ?: emptyList()
             val response = grokRemoteService.sendPrompt(
                 grokRequest = GrokRequest(
                     prompt = prompt,
-                    chatId = chatId,
+                    chatId = currentChatId,
                     grokConversation = conversations,
                 )
             )
             if (response.status == XFullStackResponseStatus.Success) {
-                val prompts = response.data?.response ?: emptyList()
-                if (prompts.isNotEmpty()) {
+                val result = response.data?.response ?: ""
+                if (result.isNotBlank()) {
                     updateGrokConversation(
-                        chatId,
-                        prompts,
+                        currentChatId,
+                        result,
                         MODEL,
                     )
                 }
@@ -83,13 +92,13 @@ class GrokRepositoryImplementation(
 
     private suspend fun updateGrokConversation(
         chatId: String,
-        prompts: List<String>,
+        prompt: String,
         role: String,
     ) {
         val messageDB = GrokMessageDB().apply {
             this.id = ObjectId().toHexString()
             this.chatId = chatId
-            this.messages = prompts.toRealmList()
+            this.message = prompt
             this.role = role
             this.messageOn = UtilsMethod.Dates.getCurrentTimeStamp()
         }

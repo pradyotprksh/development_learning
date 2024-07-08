@@ -31,6 +31,20 @@ class GrokDBServiceImplementation(
         ).asFlow()
     }
 
+    override suspend fun createChat(chatId: String, chatTitle: String, createdOn: Long) {
+        realm.write {
+            val unmanagedObject = GrokChatDB().apply {
+                this.chatId = chatId
+                this.chatTitle = chatTitle
+                this.isArchived = false
+                this.createdOn = createdOn
+            }
+            copyToRealm(
+                unmanagedObject,
+            )
+        }
+    }
+
     override suspend fun updateConversation(chatId: String, grokMessageDB: GrokMessageDB) {
         realm.write {
             query<GrokChatDB>(

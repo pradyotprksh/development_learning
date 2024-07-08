@@ -10,5 +10,7 @@ interface GrokDBService {
 
     fun getAllConversation(chatId: String): Flow<ResultsChange<GrokMessageDB>>
 
+    suspend fun createChat(chatId: String, chatTitle: String, createdOn: Long)
+
     suspend fun updateConversation(chatId: String, grokMessageDB: GrokMessageDB)
 }

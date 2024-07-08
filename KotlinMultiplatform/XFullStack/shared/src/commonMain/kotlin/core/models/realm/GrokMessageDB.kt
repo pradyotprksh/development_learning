@@ -1,8 +1,6 @@
 package core.models.realm
 
-import io.realm.kotlin.ext.realmListOf
 import io.realm.kotlin.types.EmbeddedRealmObject
-import io.realm.kotlin.types.RealmList
 import io.realm.kotlin.types.annotations.PersistedName
 import utils.Constants.DbKeys.CHAT_ID
 import utils.Constants.DbKeys.ID
@@ -15,7 +13,7 @@ class GrokMessageDB : EmbeddedRealmObject {
     @PersistedName(CHAT_ID)
     var chatId: String = ""
 
-    var messages: RealmList<String> = realmListOf()
+    var message: String = ""
 
     @PersistedName(MESSAGE_ON)
     var messageOn: Long = 0
