@@ -1,6 +1,6 @@
 package domain.services.gemini
 
-import core.models.request.Conversation
+import core.models.request.GrokConversation
 import core.models.response.GeminiResponse
 
 interface GeminiRemoteService {
@@ -10,7 +10,7 @@ interface GeminiRemoteService {
 
     suspend fun getGrokReply(
         value: String,
-        pastConversation: List<Conversation>,
+        pastGrokConversation: List<GrokConversation>,
         apiKey: String,
     ): GeminiResponse?
 }

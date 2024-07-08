@@ -1,6 +1,6 @@
 package domain.repositories.gemini
 
-import core.models.request.Conversation
+import core.models.request.GrokConversation
 
 interface GeminiRepository {
     suspend fun getTweetEmotion(value: String, apiKey: String): List<String>
@@ -9,7 +9,7 @@ interface GeminiRepository {
 
     suspend fun getGrokReply(
         value: String,
-        pastConversation: List<Conversation>,
+        pastGrokConversation: List<GrokConversation>,
         apiKey: String,
     ): List<String>
 }

@@ -6,6 +6,6 @@ import kotlinx.serialization.Serializable
 data class GrokRequest(
     val chatId: String,
     val prompt: String,
-    val conversation: List<Conversation>,
+    val grokConversation: List<GrokConversation>,
 )
 

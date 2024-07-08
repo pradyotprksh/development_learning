@@ -213,7 +213,7 @@ object Localization {
     const val SPORTS = "Sports"
     const val ENTERTAINMENT = "Entertainment"
     const val TRENDS = "Trends"
-    const val NEED_TWO_USERS = "Need at least 2 users to start the conversation"
+    const val NEED_TWO_USERS = "Need at least 2 users to start the grokConversation"
     const val NOT_ABLE_TO_FIND_CHAT = "Chat details were not found"
     const val MESSAGE_IS_REQUIRED = "Message content is required"
     const val MESSAGE_DETAILS_NOT_FOUND = "Message details not found"

@@ -35,7 +35,7 @@ class GrokChatControllerImplementation(
     ) {
         val grokRequest = call.receive<GrokRequest>()
 
-        grokRequest.conversation.forEach {
+        grokRequest.grokConversation.forEach {
             if (!listOf(USER, MODEL).contains(it.role)) {
                 throw InvalidParameter(
                     errorCode = INVALID_ROLE_FOR_GROK_ERROR_CODE, message = Localization.format(
@@ -63,7 +63,7 @@ class GrokChatControllerImplementation(
 
         val grokReply = geminiRepository.getGrokReply(
             prompt,
-            grokRequest.conversation,
+            grokRequest.grokConversation,
             geminiHelper.getGeminiAPIKey(),
         )
 

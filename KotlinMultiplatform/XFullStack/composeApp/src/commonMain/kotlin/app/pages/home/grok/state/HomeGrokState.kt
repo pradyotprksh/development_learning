@@ -1,9 +1,9 @@
 package app.pages.home.grok.state
 
-import core.models.request.Conversation
+import core.models.request.GrokConversation
 
 data class HomeGrokState(
     val showLoading: Boolean = false,
     val snackBarMessage: String? = null,
-    val conversation: List<Conversation> = emptyList(),
+    val grokConversation: List<GrokConversation> = emptyList(),
 )

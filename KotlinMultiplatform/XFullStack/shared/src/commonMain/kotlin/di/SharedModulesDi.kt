@@ -15,6 +15,7 @@ import data.device.view.ViewDBServiceImplementation
 import data.remote.chat.ChatRemoteServiceImplementation
 import data.remote.file.FileRemoteServiceImplementation
 import data.remote.gemini.GeminiRemoteServiceImplementation
+import data.remote.grok.GrokRemoteServiceImplementation
 import data.remote.server.utils.ServerUtilsRemoteServiceImplementation
 import data.remote.tags.TagsRemoteServiceImplementation
 import data.remote.tweet.TweetRemoteServiceImplementation
@@ -55,6 +56,7 @@ import domain.services.chat.ChatRemoteService
 import domain.services.file.FileRemoteService
 import domain.services.gemini.GeminiRemoteService
 import domain.services.grok.GrokDBService
+import domain.services.grok.GrokRemoteService
 import domain.services.request.RequestDBService
 import domain.services.server.utils.ServerUtilsRemoteService
 import domain.services.tags.TagsDBService
@@ -150,6 +152,8 @@ object SharedModulesDi {
         bindProvider<ChatRemoteService> { ChatRemoteServiceImplementation(instance(tag = XFULLSTACK_NETWORK_CLIENT)) }
 
         bindProvider<FileRemoteService> { FileRemoteServiceImplementation(instance(tag = XFULLSTACK_NETWORK_CLIENT)) }
+
+        bindProvider<GrokRemoteService> { GrokRemoteServiceImplementation(instance(tag = XFULLSTACK_NETWORK_CLIENT)) }
     }
 
     private val repositoriesModule = DI.Module("REPOSITORIES") {
@@ -209,7 +213,7 @@ object SharedModulesDi {
         }
 
         bind<GrokRepository>() with singleton {
-            GrokRepositoryImplementation(instance())
+            GrokRepositoryImplementation(instance(), instance())
         }
     }
 

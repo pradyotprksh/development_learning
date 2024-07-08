@@ -12,6 +12,7 @@ import core.models.realm.TagsDB
 import core.models.realm.TweetDB
 import core.models.realm.TweetRequestDB
 import core.models.realm.UserInfoDB
+import core.models.request.GrokConversation
 import core.models.request.MessageRequest
 import core.models.request.TweetRequest
 import core.models.response.ChatResponse
@@ -337,7 +338,7 @@ fun MessageResponseDB.parseToMessageResponse(): MessageResponse = MessageRespons
     tweetDetails = this.tweetDetails?.parseToTweetResponse(),
 )
 
-fun GrokMessageDB.parseToGrokMessageResponse(): GrokMessageResponse = GrokMessageResponse(
+fun GrokMessageDB.parseToGrokMessageResponse() = GrokMessageResponse(
     id = this.id,
     chatId = this.chatId,
     message = this.message,
@@ -345,13 +346,16 @@ fun GrokMessageDB.parseToGrokMessageResponse(): GrokMessageResponse = GrokMessag
     role = this.role,
 )
 
-fun GrokChatDB.parseToGrokChatResponse(): GrokChatResponse {
-    return GrokChatResponse(
-        chatId = this.chatId,
-        chatTitle = this.chatTitle,
-        isArchived = this.isArchived,
-        createdOn = this.createdOn,
-        lastMessageOn = this.lastMessageOn,
-        messages = this.messages.map { it.parseToGrokMessageResponse() },
-    )
-}
+fun GrokChatDB.parseToGrokChatResponse() = GrokChatResponse(
+    chatId = this.chatId,
+    chatTitle = this.chatTitle,
+    isArchived = this.isArchived,
+    createdOn = this.createdOn,
+    lastMessageOn = this.lastMessageOn,
+    messages = this.messages.map { it.parseToGrokMessageResponse() },
+)
+
+fun GrokMessageDB.parseToGrokConversation() = GrokConversation(
+    role = this.role,
+    prompt = this.message,
+)

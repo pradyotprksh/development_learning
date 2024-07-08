@@ -1,6 +1,6 @@
 package domain.repositories.gemini
 
-import core.models.request.Conversation
+import core.models.request.GrokConversation
 import domain.services.gemini.GeminiRemoteService
 import utils.Constants.ConstValues.ENABLE_GEMINI
 import utils.Localization
@@ -32,13 +32,13 @@ class GeminiRepositoryImplementation(
 
     override suspend fun getGrokReply(
         value: String,
-        pastConversation: List<Conversation>,
+        pastGrokConversation: List<GrokConversation>,
         apiKey: String,
     ) = try {
         if (!ENABLE_GEMINI) {
             listOf(Localization.GROK_NOT_AVAILABLE)
         } else {
-            val response = geminiRemoteService.getGrokReply(value, pastConversation, apiKey)
+            val response = geminiRemoteService.getGrokReply(value, pastGrokConversation, apiKey)
             response?.grokReply ?: listOf(Localization.GROK_NOT_AVAILABLE)
         }
     } catch (_: Exception) {

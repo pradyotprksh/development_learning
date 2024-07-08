@@ -1,8 +1,8 @@
 package data.remote.gemini
 
 import core.models.request.Content
-import core.models.request.Conversation
 import core.models.request.GeminiRequest
+import core.models.request.GrokConversation
 import core.models.request.Part
 import core.models.request.XFullStackClientRequestDetails
 import core.models.response.GeminiResponse
@@ -81,7 +81,7 @@ class GeminiRemoteServiceImplementation(
 
     override suspend fun getGrokReply(
         value: String,
-        pastConversation: List<Conversation>,
+        pastGrokConversation: List<GrokConversation>,
         apiKey: String,
     ): GeminiResponse? {
         val response = geminiRemoteClient.post<GeminiResponse>(
@@ -91,7 +91,7 @@ class GeminiRemoteServiceImplementation(
                     KEY to apiKey,
                 ),
                 body = GeminiRequest(
-                    contents = pastConversation.map {
+                    contents = pastGrokConversation.map {
                         Content(
                             role = it.role,
                             parts = listOf(
