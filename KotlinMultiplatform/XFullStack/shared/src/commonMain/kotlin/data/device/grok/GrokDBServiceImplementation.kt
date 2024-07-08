@@ -22,13 +22,22 @@ class GrokDBServiceImplementation(
         ).asFlow()
     }
 
-    override fun getAllConversation(chatId: String): Flow<ResultsChange<GrokMessageDB>> {
+    override fun listenToConversation(chatId: String): Flow<ResultsChange<GrokMessageDB>> {
         return realm.query<GrokMessageDB>(
             "$CHAT_ID == $0", chatId
         ).sort(
             property = MESSAGE_ON,
             sortOrder = Sort.DESCENDING,
         ).asFlow()
+    }
+
+    override fun getAllConversation(chatId: String): List<GrokMessageDB> {
+        return realm.query<GrokMessageDB>(
+            "$CHAT_ID == $0", chatId
+        ).sort(
+            property = MESSAGE_ON,
+            sortOrder = Sort.DESCENDING,
+        ).find().toList()
     }
 
     override suspend fun createChat(chatId: String, chatTitle: String, createdOn: Long) {

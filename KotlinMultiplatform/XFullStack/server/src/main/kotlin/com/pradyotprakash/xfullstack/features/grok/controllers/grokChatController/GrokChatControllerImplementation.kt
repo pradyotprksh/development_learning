@@ -18,7 +18,8 @@ import io.ktor.server.response.respond
 import utils.Constants.ConstValues.MODEL
 import utils.Constants.ConstValues.USER
 import utils.Constants.ErrorCode.INVALID_ROLE_FOR_GROK_ERROR_CODE
-import utils.Constants.GeminiPrompt.GROK_PROMPT
+import utils.Constants.GeminiPrompt.GROK_PROMPT_FIRST
+import utils.Constants.GeminiPrompt.GROK_PROMPT_OTHER
 import utils.Constants.Keys.USER_ID
 import utils.Localization
 import utils.UtilsMethod
@@ -52,12 +53,15 @@ class GrokChatControllerImplementation(
 
         val userDetails = userDataSource.getUserByUserId(userId) ?: throw UserDetailsNotFound()
 
-        val prompt = Localization.format(
-            GROK_PROMPT,
+        val prompt = if (grokRequest.grokConversation.isEmpty()) Localization.format(
+            GROK_PROMPT_FIRST,
             userDetails.name,
             userDetails.username,
             UtilsMethod.Dates.convertLongToReadableDate(userDetails.dateOfBirth),
             userDetails.nature.joinToString(", "),
+            grokRequest.prompt,
+        ) else Localization.format(
+            GROK_PROMPT_OTHER,
             grokRequest.prompt,
         )
 
@@ -74,7 +78,7 @@ class GrokChatControllerImplementation(
                 message = Localization.SUCCESS,
                 data = GrokResponse(
                     chatId = grokRequest.chatId,
-                    response = grokReply.firstOrNull() ?: "",
+                    response = grokReply.firstOrNull()?.trim() ?: "",
                     tweetResponse = emptyList(),
                     chatResponse = emptyList(),
                     messageResponse = emptyList(),

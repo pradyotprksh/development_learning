@@ -225,4 +225,6 @@ object Localization {
     const val GROK_NOT_AVAILABLE =
         "Grok is not available at the moment. Please try again after sometime."
     const val INVALID_ROLE = "%s is an invalid role."
+    const val NEW = "New"
+    const val ASK_US_ANYTHING = "Ask us anything..."
 }

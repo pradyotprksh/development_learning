@@ -2,7 +2,7 @@ package app.pages.home.bottomBar
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Message
-import androidx.compose.material.icons.filled.Circle
+import androidx.compose.material.icons.filled.Explore
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.People
@@ -16,7 +16,7 @@ sealed class HomeBottomNavItems(
 ) {
     data object Home : HomeBottomNavItems(Routes.Home.path(), Icons.Default.Home)
     data object Search : HomeBottomNavItems(Routes.HomeSearch.path(), Icons.Default.Search)
-    data object Grok : HomeBottomNavItems(Routes.HomeGrok.path(), Icons.Default.Circle)
+    data object Grok : HomeBottomNavItems(Routes.HomeGrok.path(), Icons.Default.Explore)
     data object Communities :
         HomeBottomNavItems(Routes.HomeCommunities.path(), Icons.Default.People)
 

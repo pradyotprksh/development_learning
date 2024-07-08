@@ -322,7 +322,9 @@ object Constants {
             "can you tell the tag for the text \"%s\", like what's the tone or emotion give response in words, separated by comma."
         const val USER_NATURE =
             "user created posts with emotions \"%s\". can you tell what kind of nature this person has. give response in words, separated by comma."
-        const val GROK_PROMPT =
-            "your name is grok. a user, full name \"%s\" username \"%s\" born in \"%s\" with human nature \"%s\". is asking \"%s\""
+        const val GROK_PROMPT_FIRST =
+            "your name is grok. a user, full name \"%s\" username \"%s\" born in \"%s\" with human nature \"%s\". is asking \"%s\". don't use styling in your answer, keep it a plain text."
+        const val GROK_PROMPT_OTHER =
+            "%s. don't use styling in your answer, keep it a plain text."
     }
 }
