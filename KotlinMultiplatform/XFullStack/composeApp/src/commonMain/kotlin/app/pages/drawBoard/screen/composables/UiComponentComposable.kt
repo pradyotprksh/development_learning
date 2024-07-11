@@ -18,16 +18,16 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.input.pointer.PointerEventType
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.dp
-import app.pages.drawBoard.state.UiComponents
+import app.pages.drawBoard.state.UiComponent
 
 @Composable
 fun UiComponentComposable(
     modifier: Modifier = Modifier,
-    component: UiComponents,
+    component: UiComponent,
 ) {
     var thickness by remember { mutableStateOf(component.borderWidth) }
 
-    val eventModifier = Modifier.pointerInput(Unit) {
+    val eventModifier = modifier.pointerInput(Unit) {
         awaitPointerEventScope {
             while (true) {
                 val event = awaitPointerEvent()
@@ -42,7 +42,7 @@ fun UiComponentComposable(
 
     Column {
         Spacer(modifier = Modifier.height(5.dp))
-        if (component is UiComponents.LineComponent) {
+        if (component is UiComponent.LineComponent) {
             HorizontalDivider(
                 thickness = thickness,
                 color = MaterialTheme.colorScheme.onBackground,

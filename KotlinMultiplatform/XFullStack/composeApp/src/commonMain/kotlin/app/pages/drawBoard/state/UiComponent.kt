@@ -7,14 +7,14 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import utils.Localization
 
-sealed class UiComponents(
+sealed class UiComponent(
     val name: String,
     val height: Dp,
     val width: Dp,
     val borderWidth: Dp,
     val shape: Shape?,
 ) {
-    data object BoxComponent : UiComponents(
+    data object BoxComponent : UiComponent(
         name = Localization.BOX,
         height = 70.dp,
         width = 140.dp,
@@ -22,7 +22,7 @@ sealed class UiComponents(
         shape = RoundedCornerShape(size = 5.dp),
     )
 
-    data object OvalComponent : UiComponents(
+    data object OvalComponent : UiComponent(
         name = Localization.OVAL,
         height = 70.dp,
         width = 70.dp,
@@ -30,7 +30,7 @@ sealed class UiComponents(
         shape = CircleShape,
     )
 
-    data object LineComponent : UiComponents(
+    data object LineComponent : UiComponent(
         name = Localization.LINE,
         height = Dp.Hairline,
         width = 140.dp,
