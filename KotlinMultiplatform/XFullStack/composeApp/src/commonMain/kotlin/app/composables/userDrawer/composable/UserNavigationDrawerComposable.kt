@@ -14,6 +14,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.List
 import androidx.compose.material.icons.filled.Bookmarks
 import androidx.compose.material.icons.filled.DarkMode
+import androidx.compose.material.icons.filled.Draw
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.MonetizationOn
 import androidx.compose.material.icons.filled.People
@@ -41,6 +42,7 @@ import app.composables.userDrawer.viewModel.UserDrawerViewModel
 import utils.Constants.ConstValues.USERNAME_PREFIX
 import utils.Localization.BOOKMARKS
 import utils.Localization.COMMUNITIES
+import utils.Localization.DRAW_BOARD
 import utils.Localization.LISTS
 import utils.Localization.MONETISATION
 import utils.Localization.PREMIUM
@@ -50,9 +52,11 @@ import utils.Localization.SPACES
 @Composable
 fun UserNavigationDrawerComposable(
     modifier: Modifier = Modifier,
+    showDrawBoardOption: Boolean,
     userDrawerViewModel: UserDrawerViewModel = viewModel { UserDrawerViewModel() },
     openProfileDetails: (String) -> Unit,
     openBookmarkPage: () -> Unit,
+    openDrawBoard: () -> Unit,
 ) {
     LaunchedEffect(Unit) {
         userDrawerViewModel.initialSetup()
@@ -221,6 +225,25 @@ fun UserNavigationDrawerComposable(
                     },
                     onClick = {},
                 )
+            }
+            if (showDrawBoardOption) {
+                item {
+                    NavigationDrawerItem(
+                        label = {
+                            Text(
+                                DRAW_BOARD, style = MaterialTheme.typography.titleMedium
+                            )
+                        },
+                        selected = false,
+                        icon = {
+                            Icon(
+                                imageVector = Icons.Default.Draw,
+                                contentDescription = Icons.Default.Draw.name,
+                            )
+                        },
+                        onClick = openDrawBoard,
+                    )
+                }
             }
         }
         Spacer(modifier = Modifier.weight(1f))

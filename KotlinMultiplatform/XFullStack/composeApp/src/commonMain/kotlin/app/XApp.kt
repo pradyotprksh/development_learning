@@ -23,9 +23,6 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberDrawerState
-import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
-import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
-import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -62,6 +59,7 @@ import app.pages.auth.register.screen.RegisterScreen
 import app.pages.bookmarks.screen.BookmarksScreen
 import app.pages.createTweet.screen.CreateTweetScreen
 import app.pages.directMessage.screen.DirectMessageScreen
+import app.pages.drawBoard.screen.DrawBoardScreen
 import app.pages.home.bottomBar.HomeBottomNavItems
 import app.pages.home.grok.screen.HomeGrokScreen
 import app.pages.home.home.screen.HomeScreen
@@ -85,19 +83,15 @@ import utils.extensions.popUpToTop
 /**
  * XApp
  */
-@OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 @Composable
 fun XApp(
     navController: NavHostController = rememberNavController(),
     xAppViewModel: XAppViewModel = viewModel { XAppViewModel() },
+    isPhone: Boolean,
 ) {
     LaunchedEffect(Unit) {
         xAppViewModel.initSetup()
     }
-
-    val windowSizeClass = calculateWindowSizeClass()
-    val isPhone =
-        windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact || windowSizeClass.widthSizeClass == WindowWidthSizeClass.Medium
 
     val snackbarHostState = remember { SnackbarHostState() }
     val xAppState by xAppViewModel.xAppState.collectAsState()
@@ -159,6 +153,9 @@ fun XApp(
     val navigateToBookmarks = {
         navController.navigate(Routes.Bookmarks.path())
     }
+    val navigateToDrawBoard = {
+        navController.navigate(Routes.DrawBoard.path())
+    }
     val navigateToDirectMessage = { userId: String, chatId: String ->
         navController.navigate(
             "${Routes.DirectMessage.route}${userId}/${chatId}",
@@ -178,6 +175,7 @@ fun XApp(
                 showDrawer(currentDestination?.route ?: "")
             ) {
                 UserNavigationDrawerComposable(
+                    showDrawBoardOption = !isPhone,
                     openProfileDetails = { id ->
                         drawerOpenClose()
                         navigateToProfileDetails(id)
@@ -186,6 +184,10 @@ fun XApp(
                         drawerOpenClose()
                         navigateToBookmarks()
                     },
+                    openDrawBoard = {
+                        drawerOpenClose()
+                        navigateToDrawBoard()
+                    }
                 )
             }
         }, gesturesEnabled = showDrawer(currentDestination?.route ?: "")
@@ -497,6 +499,15 @@ fun XApp(
                             navController.popBackStack()
                         },
                     )
+                }
+                composable(
+                    Routes.DrawBoard.path(),
+                ) {
+                    DrawBoardScreen(
+                        showDrawBoardOption = !isPhone,
+                    ) {
+                        navController.popBackStack()
+                    }
                 }
             }
         }

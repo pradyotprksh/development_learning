@@ -227,4 +227,8 @@ object Localization {
     const val INVALID_ROLE = "%s is an invalid role."
     const val NEW = "New"
     const val ASK_US_ANYTHING = "Ask us anything..."
+    const val DRAW_BOARD = "Draw Board"
+    const val BOX = "Box"
+    const val OVAL = "Oval"
+    const val LINE = "Line"
 }
