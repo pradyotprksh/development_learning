@@ -4,6 +4,8 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.calculateEndPadding
@@ -28,9 +30,11 @@ import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import app.composables.draggable.DragTargetComposable
@@ -40,6 +44,7 @@ import app.pages.drawBoard.screen.composables.UiComponentComposable
 import app.pages.drawBoard.state.UiComponent
 import app.pages.drawBoard.viewModel.DrawBoardViewModel
 import utils.Localization
+import kotlin.math.roundToInt
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -143,13 +148,28 @@ fun DrawBoardScreen(
                         }
                     }
                 }
-                drawBoardState.value.addedUiComponents.forEach { componentDetails ->
-                    UiComponentComposable(
-                        modifier = Modifier.offset(
-                            x = componentDetails.offset.x.dp, y = componentDetails.offset.y.dp
-                        ),
-                        component = componentDetails.uiComponent,
-                    )
+                drawBoardState.value.addedUiComponents.forEachIndexed { index, componentDetails ->
+                    Box(
+                        modifier = Modifier.offset {
+                            IntOffset(
+                                componentDetails.offset.x.roundToInt(),
+                                componentDetails.offset.y.roundToInt(),
+                            )
+                        }
+                    ) {
+                        UiComponentComposable(
+                            modifier = Modifier.clickable(
+                                indication = null,
+                                interactionSource = remember { MutableInteractionSource() },
+                                onClick = {
+                                    drawBoardViewModel.updateSelectedUiComponent(index)
+                                },
+                            ),
+                            component = componentDetails.uiComponent,
+                            isSelected = index == drawBoardState.value.selectedUiComponentIndex,
+                            isOnBoard = true,
+                        )
+                    }
                 }
             }
         }

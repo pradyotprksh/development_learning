@@ -28,5 +28,18 @@ class DrawBoardViewModel : ViewModel() {
                 uiComponent = uiComponent,
             )
         )
+        _drawBoardState.update {
+            it.copy(
+                selectedUiComponentIndex = _drawBoardState.value.addedUiComponents.lastIndex,
+            )
+        }
+    }
+
+    fun updateSelectedUiComponent(index: Int) {
+        _drawBoardState.update {
+            it.copy(
+                selectedUiComponentIndex = index,
+            )
+        }
     }
 }
