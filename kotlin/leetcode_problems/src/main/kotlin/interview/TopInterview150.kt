@@ -11,18 +11,12 @@ object TopInterview150 {
          * https://leetcode.com/problems/merge-sorted-array/description/?envType=study-plan-v2&envId=top-interview-150
          */
         fun merge(nums1: IntArray, m: Int, nums2: IntArray, n: Int) {
-            val tempNums1 = nums1.clone()
-
-            /* CODE */
             var i = m - 1
             var j = n - 1
             var k = m + n - 1
             while (j >= 0) {
                 nums1[k--] = if (i < 0 || nums1[i] < nums2[j]) nums2[j--] else nums1[i--]
             }
-            /* CODE */
-
-            println("Merge Sorted Array ${tempNums1.toList()} + ${nums2.toList()} = ${nums1.toList()}")
         }
 
         merge(intArrayOf(1, 2, 3, 0, 0, 0), 3, intArrayOf(2, 5, 6), 3)
@@ -35,8 +29,6 @@ object TopInterview150 {
      */
     fun `Remove Element`() {
         fun removeElement(nums: IntArray, `val`: Int): Int {
-            val tempNums = nums.clone()
-
             var k = 0
 
             var start = 0
@@ -59,17 +51,57 @@ object TopInterview150 {
                 }
             }
 
-            println("Remove Element ${tempNums.toList()} $`val` = ${nums.toList()} $k")
-
             return k
         }
 
-        removeElement(intArrayOf(3, 2, 2, 3), 3)
-        removeElement(intArrayOf(0, 1, 2, 2, 3, 0, 4, 2), 2)
+
+        printMethodMessage(1, "${removeElement(intArrayOf(3, 2, 2, 3), 3)}")
+        printMethodMessage(1, "${removeElement(intArrayOf(0, 1, 2, 2, 3, 0, 4, 2), 2)}")
     }
 
     /**
      * https://leetcode.com/problems/remove-duplicates-from-sorted-array/description/?envType=study-plan-v2&envId=top-interview-150
      */
-    fun `Remove Duplicates from Sorted Array`() {}
+    fun `Remove Duplicates from Sorted Array`() {
+        fun removeDuplicates(nums: IntArray): Int {
+            var counter = 0
+
+            for (i in 1 until nums.size) {
+                if (nums[counter] != nums[i]) {
+                    ++counter
+                    nums[counter] = nums[i]
+                }
+            }
+
+            return counter + 1
+        }
+
+        printMethodMessage(2, "${removeDuplicates(intArrayOf(1, 1, 2))}")
+        printMethodMessage(2, "${removeDuplicates(intArrayOf(0, 0, 1, 1, 1, 2, 2, 3, 3, 4))}")
+    }
+
+    fun `Remove Duplicates from Sorted Array II`() {
+        fun removeDuplicates(nums: IntArray): Int {
+            var counter = 1
+
+            for (i in 2 until nums.size) {
+                if (nums[counter] != nums[i] || nums[counter - 1] != nums[i]) {
+                    ++counter
+                    nums[counter] = nums[i]
+                }
+            }
+
+            return counter + 1
+        }
+
+        printMethodMessage(3, "${removeDuplicates(intArrayOf(1, 1, 1, 2, 2, 3))}")
+        printMethodMessage(3, "${removeDuplicates(intArrayOf(0, 0, 1, 1, 1, 1, 2, 3, 3))}")
+    }
+
+    private fun printMethodMessage(index: Int, message: String) {
+        try {
+            println("${TopInterview150::class.java.methods[index].name}: $message")
+        } catch (_: Exception) {
+        }
+    }
 }
