@@ -21,9 +21,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.input.pointer.PointerEventType
+import androidx.compose.ui.input.pointer.PointerIcon
+import androidx.compose.ui.input.pointer.pointerHoverIcon
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.dp
 import app.pages.drawBoard.state.UiComponent
+import utils.getBottomResizePointerIcon
+import utils.getEndResizePointerIcon
+import utils.getSelectComponentPointerIcon
+import utils.getStartResizePointerIcon
+import utils.getTopResizePointerIcon
 
 @Composable
 fun UiComponentComposable(
@@ -45,7 +52,9 @@ fun UiComponentComposable(
                 }
             }
         }
-    }
+    }.pointerHoverIcon(
+        getSelectComponentPointerIcon() ?: PointerIcon.Default
+    )
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -56,7 +65,9 @@ fun UiComponentComposable(
             thickness = 2.dp,
             color = MaterialTheme.colorScheme.primaryContainer,
             modifier = Modifier.width(component.width)
-                .alpha(if (isOnBoard && isSelected) 1f else 0f),
+                .alpha(if (isOnBoard && isSelected) 1f else 0f).pointerHoverIcon(
+                    getTopResizePointerIcon() ?: PointerIcon.Default,
+                ),
         )
         Spacer(modifier = Modifier.height(5.dp))
         Row(
@@ -67,7 +78,9 @@ fun UiComponentComposable(
                 thickness = 2.dp,
                 color = MaterialTheme.colorScheme.primaryContainer,
                 modifier = Modifier.height(component.height)
-                    .alpha(if (isOnBoard && isSelected) 1f else 0f),
+                    .alpha(if (isOnBoard && isSelected) 1f else 0f).pointerHoverIcon(
+                        getStartResizePointerIcon() ?: PointerIcon.Default,
+                    ),
             )
             Spacer(modifier = Modifier.width(5.dp))
             if (component is UiComponent.LineComponent) {
@@ -90,7 +103,9 @@ fun UiComponentComposable(
                 thickness = 2.dp,
                 color = MaterialTheme.colorScheme.primaryContainer,
                 modifier = Modifier.height(component.height)
-                    .alpha(if (isOnBoard && isSelected) 1f else 0f),
+                    .alpha(if (isOnBoard && isSelected) 1f else 0f).pointerHoverIcon(
+                        getEndResizePointerIcon() ?: PointerIcon.Default,
+                    ),
             )
         }
         Spacer(modifier = Modifier.height(5.dp))
@@ -98,7 +113,9 @@ fun UiComponentComposable(
             thickness = 2.dp,
             color = MaterialTheme.colorScheme.primaryContainer,
             modifier = Modifier.width(component.width)
-                .alpha(if (isOnBoard && isSelected) 1f else 0f),
+                .alpha(if (isOnBoard && isSelected) 1f else 0f).pointerHoverIcon(
+                    getBottomResizePointerIcon() ?: PointerIcon.Default,
+                ),
         )
         Spacer(modifier = Modifier.height(5.dp))
     }
