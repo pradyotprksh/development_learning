@@ -1,6 +1,9 @@
 package app.pages.drawBoard.screen.composables
 
 import androidx.compose.foundation.border
+import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.gestures.draggable
+import androidx.compose.foundation.gestures.rememberDraggableState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -24,20 +27,23 @@ import androidx.compose.ui.input.pointer.PointerEventType
 import androidx.compose.ui.input.pointer.PointerIcon
 import androidx.compose.ui.input.pointer.pointerHoverIcon
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import app.pages.drawBoard.state.UiComponent
 import utils.getBottomResizePointerIcon
 import utils.getEndResizePointerIcon
 import utils.getSelectComponentPointerIcon
-import utils.getStartResizePointerIcon
-import utils.getTopResizePointerIcon
 
 @Composable
 fun UiComponentComposable(
     modifier: Modifier = Modifier,
     component: UiComponent,
+    updatedHeight: Dp? = null,
+    updatedWidth: Dp? = null,
     isSelected: Boolean = false,
     isOnBoard: Boolean = false,
+    onVerticalDrag: (Float) -> Unit = {},
+    onHorizontalDrag: (Float) -> Unit = {},
 ) {
     var thickness by remember { mutableStateOf(component.borderWidth) }
 
@@ -64,9 +70,15 @@ fun UiComponentComposable(
         HorizontalDivider(
             thickness = 2.dp,
             color = MaterialTheme.colorScheme.primaryContainer,
-            modifier = Modifier.width(component.width)
+            modifier = Modifier.width(updatedWidth ?: component.width)
                 .alpha(if (isOnBoard && isSelected) 1f else 0f).pointerHoverIcon(
-                    getTopResizePointerIcon() ?: PointerIcon.Default,
+                    getBottomResizePointerIcon() ?: PointerIcon.Default,
+                ).draggable(
+                    state = rememberDraggableState { delta ->
+                        onHorizontalDrag(delta)
+                    },
+                    orientation = Orientation.Vertical,
+                    reverseDirection = true,
                 ),
         )
         Spacer(modifier = Modifier.height(5.dp))
@@ -77,34 +89,45 @@ fun UiComponentComposable(
             VerticalDivider(
                 thickness = 2.dp,
                 color = MaterialTheme.colorScheme.primaryContainer,
-                modifier = Modifier.height(component.height)
+                modifier = Modifier.height(updatedHeight ?: component.height)
                     .alpha(if (isOnBoard && isSelected) 1f else 0f).pointerHoverIcon(
-                        getStartResizePointerIcon() ?: PointerIcon.Default,
+                        getEndResizePointerIcon() ?: PointerIcon.Default,
+                    ).draggable(
+                        state = rememberDraggableState { delta ->
+                            onVerticalDrag(delta)
+                        },
+                        orientation = Orientation.Horizontal,
                     ),
             )
-            Spacer(modifier = Modifier.width(5.dp))
+            Spacer(modifier = Modifier.width(5.dp).alpha(if (isOnBoard && isSelected) 1f else 0f))
             if (component is UiComponent.LineComponent) {
                 HorizontalDivider(
                     thickness = thickness + if (isSelected) 1.dp else 0.dp,
                     color = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onBackground,
-                    modifier = eventModifier.width(component.width),
+                    modifier = eventModifier.width(updatedWidth ?: component.width),
                 )
             } else {
                 Box(
-                    modifier = eventModifier.height(component.height).width(component.width).border(
-                        width = thickness + if (isSelected) 1.dp else 0.dp,
-                        color = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onBackground,
-                        shape = component.shape ?: RectangleShape,
-                    ),
+                    modifier = eventModifier.height(updatedHeight ?: component.height)
+                        .width(updatedWidth ?: component.width).border(
+                            width = thickness + if (isSelected) 1.dp else 0.dp,
+                            color = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onBackground,
+                            shape = component.shape ?: RectangleShape,
+                        ),
                 )
             }
             Spacer(modifier = Modifier.width(5.dp).alpha(if (isOnBoard && isSelected) 1f else 0f))
             VerticalDivider(
                 thickness = 2.dp,
                 color = MaterialTheme.colorScheme.primaryContainer,
-                modifier = Modifier.height(component.height)
+                modifier = Modifier.height(updatedHeight ?: component.height)
                     .alpha(if (isOnBoard && isSelected) 1f else 0f).pointerHoverIcon(
                         getEndResizePointerIcon() ?: PointerIcon.Default,
+                    ).draggable(
+                        state = rememberDraggableState { delta ->
+                            onVerticalDrag(delta)
+                        },
+                        orientation = Orientation.Horizontal,
                     ),
             )
         }
@@ -112,9 +135,14 @@ fun UiComponentComposable(
         HorizontalDivider(
             thickness = 2.dp,
             color = MaterialTheme.colorScheme.primaryContainer,
-            modifier = Modifier.width(component.width)
+            modifier = Modifier.width(updatedWidth ?: component.width)
                 .alpha(if (isOnBoard && isSelected) 1f else 0f).pointerHoverIcon(
                     getBottomResizePointerIcon() ?: PointerIcon.Default,
+                ).draggable(
+                    state = rememberDraggableState { delta ->
+                        onHorizontalDrag(delta)
+                    },
+                    orientation = Orientation.Vertical,
                 ),
         )
         Spacer(modifier = Modifier.height(5.dp))

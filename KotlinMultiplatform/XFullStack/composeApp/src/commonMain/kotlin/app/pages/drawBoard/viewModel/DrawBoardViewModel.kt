@@ -1,6 +1,7 @@
 package app.pages.drawBoard.viewModel
 
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
 import app.pages.drawBoard.state.DrawBoardState
 import app.pages.drawBoard.state.SelectedUiComponents
@@ -26,6 +27,8 @@ class DrawBoardViewModel : ViewModel() {
             SelectedUiComponents(
                 offset = offset,
                 uiComponent = uiComponent,
+                currentHeight = uiComponent.height,
+                currentWidth = uiComponent.width,
             )
         )
         _drawBoardState.update {
@@ -39,6 +42,39 @@ class DrawBoardViewModel : ViewModel() {
         _drawBoardState.update {
             it.copy(
                 selectedUiComponentIndex = index,
+            )
+        }
+    }
+
+    fun changeInSize(drag: Float, direction: DragDirection, index: Int) {
+        val mutableComponents = _drawBoardState.value.addedUiComponents.toMutableList()
+        val removedItem = mutableComponents.removeAt(index)
+
+        val width = if (direction == DragDirection.Vertical) {
+            val newWidth = removedItem.currentWidth + drag.dp
+            if (newWidth < removedItem.uiComponent.width) {
+                removedItem.currentWidth
+            } else {
+                newWidth
+            }
+        } else removedItem.currentWidth
+        val height = if (direction == DragDirection.Horizontal) {
+            val newHeight = removedItem.currentHeight + drag.dp
+            if (newHeight < removedItem.uiComponent.height) {
+                removedItem.currentHeight
+            } else {
+                newHeight
+            }
+        } else removedItem.currentHeight
+
+        val updatedComponent = removedItem.copy(
+            currentWidth = width,
+            currentHeight = height,
+        )
+        mutableComponents.add(index, updatedComponent)
+        _drawBoardState.update {
+            it.copy(
+                addedUiComponents = mutableComponents,
             )
         }
     }

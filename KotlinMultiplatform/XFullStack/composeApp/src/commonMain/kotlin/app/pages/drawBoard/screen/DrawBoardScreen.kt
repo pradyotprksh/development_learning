@@ -42,6 +42,7 @@ import app.composables.draggable.DraggableScreenComposable
 import app.composables.draggable.DropItemComposable
 import app.pages.drawBoard.screen.composables.UiComponentComposable
 import app.pages.drawBoard.state.UiComponent
+import app.pages.drawBoard.viewModel.DragDirection
 import app.pages.drawBoard.viewModel.DrawBoardViewModel
 import utils.Localization
 import kotlin.math.roundToInt
@@ -165,9 +166,17 @@ fun DrawBoardScreen(
                                     drawBoardViewModel.updateSelectedUiComponent(index)
                                 },
                             ),
+                            updatedHeight = componentDetails.currentHeight,
+                            updatedWidth = componentDetails.currentWidth,
                             component = componentDetails.uiComponent,
                             isSelected = index == drawBoardState.value.selectedUiComponentIndex,
                             isOnBoard = true,
+                            onVerticalDrag = {
+                                drawBoardViewModel.changeInSize(it, DragDirection.Vertical, index)
+                            },
+                            onHorizontalDrag = {
+                                drawBoardViewModel.changeInSize(it, DragDirection.Horizontal, index)
+                            },
                         )
                     }
                 }
