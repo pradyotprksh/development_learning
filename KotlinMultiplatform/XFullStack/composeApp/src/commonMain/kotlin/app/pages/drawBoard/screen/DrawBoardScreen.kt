@@ -7,11 +7,14 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.calculateEndPadding
 import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -40,9 +43,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import app.composables.draggable.DragTargetComposable
 import app.composables.draggable.DraggableScreenComposable
 import app.composables.draggable.DropItemComposable
-import app.pages.drawBoard.screen.composables.UiComponentComposable
+import app.pages.drawBoard.screen.composables.UIComponentCanvasComposable
 import app.pages.drawBoard.state.UiComponent
-import app.pages.drawBoard.viewModel.DragDirection
 import app.pages.drawBoard.viewModel.DrawBoardViewModel
 import utils.Localization
 import kotlin.math.roundToInt
@@ -104,9 +106,12 @@ fun DrawBoardScreen(
                                 drawBoardViewModel.updateDraggingState(true)
                             },
                         ) {
-                            UiComponentComposable(
-                                component = component,
-                            )
+                            Column {
+                                UIComponentCanvasComposable(
+                                    component = component,
+                                )
+                                Spacer(modifier = Modifier.height(15.dp))
+                            }
                         }
                     }
                 }
@@ -156,9 +161,9 @@ fun DrawBoardScreen(
                                 componentDetails.offset.x.roundToInt(),
                                 componentDetails.offset.y.roundToInt(),
                             )
-                        }
+                        },
                     ) {
-                        UiComponentComposable(
+                        UIComponentCanvasComposable(
                             modifier = Modifier.clickable(
                                 indication = null,
                                 interactionSource = remember { MutableInteractionSource() },
@@ -169,13 +174,12 @@ fun DrawBoardScreen(
                             updatedHeight = componentDetails.currentHeight,
                             updatedWidth = componentDetails.currentWidth,
                             component = componentDetails.uiComponent,
-                            isSelected = index == drawBoardState.value.selectedUiComponentIndex,
+                            isSelected = drawBoardState.value.selectedUiComponentIndex.contains(
+                                index
+                            ),
                             isOnBoard = true,
-                            onVerticalDrag = {
-                                drawBoardViewModel.changeInSize(it, DragDirection.Vertical, index)
-                            },
-                            onHorizontalDrag = {
-                                drawBoardViewModel.changeInSize(it, DragDirection.Horizontal, index)
+                            onDeleteComponent = {
+                                drawBoardViewModel.deleteTheComponent(index)
                             },
                         )
                     }

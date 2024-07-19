@@ -33,7 +33,7 @@ class DrawBoardViewModel : ViewModel() {
         )
         _drawBoardState.update {
             it.copy(
-                selectedUiComponentIndex = _drawBoardState.value.addedUiComponents.lastIndex,
+                selectedUiComponentIndex = mutableSetOf(it.addedUiComponents.lastIndex)
             )
         }
     }
@@ -41,8 +41,23 @@ class DrawBoardViewModel : ViewModel() {
     fun updateSelectedUiComponent(index: Int) {
         _drawBoardState.update {
             it.copy(
-                selectedUiComponentIndex = index,
+                selectedUiComponentIndex = mutableSetOf(index)
             )
+        }
+    }
+
+    fun deleteTheComponent(index: Int) {
+        _drawBoardState.value.let { state ->
+            val addedUiComponents = state.addedUiComponents
+            addedUiComponents.removeAt(index)
+            val selectedUiComponentIndex = state.selectedUiComponentIndex
+            selectedUiComponentIndex.remove(index)
+            _drawBoardState.update {
+                it.copy(
+                    addedUiComponents = addedUiComponents.toMutableList(),
+                    selectedUiComponentIndex = selectedUiComponentIndex.toMutableSet(),
+                )
+            }
         }
     }
 
