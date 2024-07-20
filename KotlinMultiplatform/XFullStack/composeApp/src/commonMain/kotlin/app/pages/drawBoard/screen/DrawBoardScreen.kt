@@ -45,6 +45,7 @@ import app.composables.draggable.DraggableScreenComposable
 import app.composables.draggable.DropItemComposable
 import app.pages.drawBoard.screen.composables.UIComponentCanvasComposable
 import app.pages.drawBoard.state.UiComponent
+import app.pages.drawBoard.viewModel.DragDirection
 import app.pages.drawBoard.viewModel.DrawBoardViewModel
 import utils.Localization
 import kotlin.math.roundToInt
@@ -180,6 +181,12 @@ fun DrawBoardScreen(
                             isOnBoard = true,
                             onDeleteComponent = {
                                 drawBoardViewModel.deleteTheComponent(index)
+                            },
+                            onVerticalDrag = {
+                                drawBoardViewModel.changeInSize(it, DragDirection.Vertical, index)
+                            },
+                            onHorizontalDrag = {
+                                drawBoardViewModel.changeInSize(it, DragDirection.Horizontal, index)
                             },
                         )
                     }
