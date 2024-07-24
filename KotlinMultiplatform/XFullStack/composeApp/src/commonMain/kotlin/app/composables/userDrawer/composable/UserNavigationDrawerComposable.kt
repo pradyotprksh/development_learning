@@ -20,6 +20,7 @@ import androidx.compose.material.icons.filled.MonetizationOn
 import androidx.compose.material.icons.filled.People
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.SpatialAudio
+import androidx.compose.material.icons.filled.Window
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -47,6 +48,7 @@ import utils.Localization.LISTS
 import utils.Localization.MONETISATION
 import utils.Localization.PREMIUM
 import utils.Localization.PROFILE
+import utils.Localization.SLIDES
 import utils.Localization.SPACES
 
 @Composable
@@ -57,6 +59,7 @@ fun UserNavigationDrawerComposable(
     openProfileDetails: (String) -> Unit,
     openBookmarkPage: () -> Unit,
     openDrawBoard: () -> Unit,
+    openSlides: () -> Unit,
 ) {
     LaunchedEffect(Unit) {
         userDrawerViewModel.initialSetup()
@@ -244,6 +247,23 @@ fun UserNavigationDrawerComposable(
                         onClick = openDrawBoard,
                     )
                 }
+            }
+            item {
+                NavigationDrawerItem(
+                    label = {
+                        Text(
+                            SLIDES, style = MaterialTheme.typography.titleMedium
+                        )
+                    },
+                    selected = false,
+                    icon = {
+                        Icon(
+                            imageVector = Icons.Default.Window,
+                            contentDescription = Icons.Default.Window.name,
+                        )
+                    },
+                    onClick = openSlides,
+                )
             }
         }
         Spacer(modifier = Modifier.weight(1f))

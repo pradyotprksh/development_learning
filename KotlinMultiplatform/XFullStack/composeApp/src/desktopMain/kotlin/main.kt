@@ -1,8 +1,10 @@
 import androidx.compose.ui.window.Notification
 import androidx.compose.ui.window.Tray
 import androidx.compose.ui.window.Window
+import androidx.compose.ui.window.WindowPlacement
 import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberTrayState
+import androidx.compose.ui.window.rememberWindowState
 import org.jetbrains.compose.resources.painterResource
 import utils.Localization
 import utils.OSLevelMethods
@@ -12,6 +14,7 @@ import xfullstack.composeapp.generated.resources.logo_light
 
 fun main() = application {
     val trayState = rememberTrayState()
+    val windowState = rememberWindowState(placement = WindowPlacement.Floating)
 
     Tray(
         state = trayState,
@@ -34,10 +37,15 @@ fun main() = application {
         )
     }
 
+    OSLevelMethods.makeWindowFullScreen = {
+        windowState.placement = WindowPlacement.Fullscreen
+    }
+
     Window(
         onCloseRequest = ::exitApplication,
         title = Localization.APP_NAME,
         icon = painterResource(Res.drawable.logo_dark),
+        state = windowState,
     ) {
         App()
     }

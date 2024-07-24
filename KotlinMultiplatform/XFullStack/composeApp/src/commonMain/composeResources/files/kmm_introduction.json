@@ -1,0 +1,57 @@
+{
+  "title": "KMM Presentation",
+  "showKeyMap": true,
+  "workOnAllPlatforms": false,
+  "allowSlideChangeOnTap": false,
+  "slides": [
+    {
+      "background": "primary",
+      "title": {
+        "value": "Kotlin Multiplatform Mobile (KMM)",
+        "styles": {
+          "style": "h1",
+          "alignment": "center"
+        }
+      },
+      "subtitle": {
+        "value": "Welcome to the talk related to Kotlin Multiplatform where we will be seeing what are the features does KMM provides and try to understand its usecases.",
+        "styles": {
+          "style": "subtitle",
+          "alignment": "center"
+        }
+      },
+      "footer": {
+        "value": "By Pradyot Prakash",
+        "styles": {
+          "style": "body",
+          "color": "onPrimary",
+          "alignment": "start"
+        }
+      }
+    },
+    {
+      "title": {
+        "value": "What is KMM?",
+        "styles": {
+          "style": "h1",
+          "alignment": "start"
+        }
+      },
+      "subtitle": {
+        "value": "Kotlin Multiplatform is a technology that allows you to create applications for various platforms and efficiently reuse code across them while retaining the benefits of native programming. Your multiplatform applications will work on different operating systems, such as iOS, Android, macOS, Windows, Linux, and others.",
+        "styles": {
+          "style": "subtitle",
+          "alignment": "center"
+        }
+      },
+      "image": {
+        "id": 1,
+        "styles": {
+          "height": 350,
+          "width": 200,
+          "alignment": "center"
+        }
+      }
+    }
+  ]
+}

@@ -66,6 +66,7 @@ import app.pages.home.home.screen.HomeScreen
 import app.pages.home.message.screen.HomeMessageScreen
 import app.pages.home.search.screen.HomeSearchScreen
 import app.pages.profileDetails.screen.ProfileDetailsScreen
+import app.pages.slides.screen.SlidesScreen
 import app.pages.splash.screen.SplashScreen
 import app.pages.tweetDetails.screen.TweetDetailsScreen
 import kotlinx.coroutines.launch
@@ -78,6 +79,7 @@ import utils.Constants.ConstValues.TWEET_ID
 import utils.Constants.ConstValues.USERNAME_EMAIL_PHONE
 import utils.Constants.ConstValues.USER_ID
 import utils.Localization
+import utils.OSLevelMethods
 import utils.extensions.popUpToTop
 
 /**
@@ -156,6 +158,10 @@ fun XApp(
     val navigateToDrawBoard = {
         navController.navigate(Routes.DrawBoard.path())
     }
+    val navigateToSlides = {
+        OSLevelMethods.makeWindowFullScreen?.invoke()
+        navController.navigate(Routes.Slides.path())
+    }
     val navigateToDirectMessage = { userId: String, chatId: String ->
         navController.navigate(
             "${Routes.DirectMessage.route}${userId}/${chatId}",
@@ -187,6 +193,10 @@ fun XApp(
                     openDrawBoard = {
                         drawerOpenClose()
                         navigateToDrawBoard()
+                    },
+                    openSlides = {
+                        drawerOpenClose()
+                        navigateToSlides()
                     }
                 )
             }
@@ -505,6 +515,15 @@ fun XApp(
                 ) {
                     DrawBoardScreen(
                         showDrawBoardOption = !isPhone,
+                    ) {
+                        navController.popBackStack()
+                    }
+                }
+                composable(
+                    Routes.Slides.path(),
+                ) {
+                    SlidesScreen(
+                        showBackButton = true,
                     ) {
                         navController.popBackStack()
                     }

@@ -232,4 +232,5 @@ object Localization {
     const val OVAL = "Oval"
     const val LINE = "Line"
     const val DROP_COMPONENT_HERE = "Drop the component here"
+    const val SLIDES = "Slides"
 }
