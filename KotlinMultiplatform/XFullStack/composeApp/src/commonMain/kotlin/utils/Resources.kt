@@ -10,11 +10,9 @@ enum class Resources(
     val contentDescription: String = "",
 ) {
     LogoDark(
-        resource = Res.drawable.logo_dark,
-        contentDescription = "LogoDark of the application"
+        resource = Res.drawable.logo_dark, contentDescription = "LogoDark of the application"
     ),
     LogoLight(
-        resource = Res.drawable.logo_light,
-        contentDescription = "LogoLight of the application"
+        resource = Res.drawable.logo_light, contentDescription = "LogoLight of the application"
     ),
 }

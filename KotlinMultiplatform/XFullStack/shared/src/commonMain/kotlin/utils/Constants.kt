@@ -3,7 +3,7 @@ package utils
 object Constants {
     object Server {
         const val PORT = 8080
-        const val HOST = "192.168.235.203"
+        const val HOST = "192.168.244.203"
     }
 
     object Database {
@@ -326,5 +326,9 @@ object Constants {
             "your name is grok. a user, full name \"%s\" username \"%s\" born in \"%s\" with human nature \"%s\". is asking \"%s\". don't use styling in your answer, keep it a plain text."
         const val GROK_PROMPT_OTHER =
             "%s. don't use styling in your answer, keep it a plain text."
+    }
+
+    object FilePath {
+        const val KMM_INTRODUCTION = "files/kmm_introduction.json"
     }
 }

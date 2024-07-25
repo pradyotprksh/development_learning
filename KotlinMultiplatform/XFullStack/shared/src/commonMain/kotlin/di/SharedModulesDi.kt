@@ -37,6 +37,8 @@ import domain.repositories.request.RequestRepository
 import domain.repositories.request.RequestRepositoryImplementation
 import domain.repositories.server.utils.ServerUtilsRepository
 import domain.repositories.server.utils.ServerUtilsRepositoryImplementation
+import domain.repositories.slides.SlidesRepository
+import domain.repositories.slides.SlidesRepositoryImplementation
 import domain.repositories.tags.TagsRepository
 import domain.repositories.tags.TagsRepositoryImplementation
 import domain.repositories.tweet.TweetRepository
@@ -215,6 +217,10 @@ object SharedModulesDi {
         bind<GrokRepository>() with singleton {
             GrokRepositoryImplementation(instance(), instance())
         }
+
+        bind<SlidesRepository>() with singleton {
+            SlidesRepositoryImplementation()
+        }
     }
 
     val di = DI {
@@ -241,5 +247,6 @@ object SharedModulesDi {
         val chatRepository: ChatRepository by di.instance()
         val fileRepository: FileRepository by di.instance()
         val grokRepository: GrokRepository by di.instance()
+        val slidesRepository: SlidesRepository by di.instance()
     }
 }

@@ -3,6 +3,7 @@
   "showKeyMap": true,
   "workOnAllPlatforms": false,
   "allowSlideChangeOnTap": false,
+  "showBackButton": false,
   "slides": [
     {
       "background": "primary",
@@ -41,14 +42,6 @@
         "value": "Kotlin Multiplatform is a technology that allows you to create applications for various platforms and efficiently reuse code across them while retaining the benefits of native programming. Your multiplatform applications will work on different operating systems, such as iOS, Android, macOS, Windows, Linux, and others.",
         "styles": {
           "style": "subtitle",
-          "alignment": "center"
-        }
-      },
-      "image": {
-        "id": 1,
-        "styles": {
-          "height": 350,
-          "width": 200,
           "alignment": "center"
         }
       }

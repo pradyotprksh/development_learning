@@ -78,6 +78,7 @@ import utils.Constants.ConstValues.PARENT_TWEET_ID
 import utils.Constants.ConstValues.TWEET_ID
 import utils.Constants.ConstValues.USERNAME_EMAIL_PHONE
 import utils.Constants.ConstValues.USER_ID
+import utils.Constants.FilePath.KMM_INTRODUCTION
 import utils.Localization
 import utils.OSLevelMethods
 import utils.extensions.popUpToTop
@@ -523,7 +524,7 @@ fun XApp(
                     Routes.Slides.path(),
                 ) {
                     SlidesScreen(
-                        showBackButton = true,
+                        slidesFilePath = KMM_INTRODUCTION,
                     ) {
                         navController.popBackStack()
                     }
