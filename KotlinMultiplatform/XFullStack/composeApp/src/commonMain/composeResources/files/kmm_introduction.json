@@ -3,7 +3,7 @@
   "showKeyMap": true,
   "workOnAllPlatforms": false,
   "allowSlideChangeOnTap": false,
-  "showBackButton": false,
+  "showBackButton": true,
   "slides": [
     {
       "background": "primary",
