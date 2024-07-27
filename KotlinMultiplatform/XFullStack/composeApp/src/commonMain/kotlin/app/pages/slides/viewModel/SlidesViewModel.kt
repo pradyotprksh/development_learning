@@ -13,6 +13,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import utils.Localization
+import utils.extensions.debounce
 import xfullstack.composeapp.generated.resources.Res
 
 class SlidesViewModel(
@@ -55,6 +56,30 @@ class SlidesViewModel(
                 showMessage(e.message ?: Localization.DEFAULT_ERROR_MESSAGE)
             }
             updateLoaderState(false)
+        }
+    }
+
+    fun updateKeyEventDetails(name: String?, symbol: String?) {
+        if (name != null || symbol != null) {
+            _slidesState.update {
+                it.copy(
+                    keyEvent = Pair(
+                        symbol,
+                        name,
+                    ),
+                    showKeyEvent = true,
+                )
+            }
+            debounce<Unit>(
+                waitMs = 1000,
+                scope = viewModelScope,
+            ) {
+                _slidesState.update {
+                    it.copy(
+                        showKeyEvent = false,
+                    )
+                }
+            }.invoke(Unit)
         }
     }
 }

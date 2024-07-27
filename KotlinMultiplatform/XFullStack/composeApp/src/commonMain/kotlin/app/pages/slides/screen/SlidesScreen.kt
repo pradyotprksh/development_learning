@@ -1,8 +1,19 @@
 package app.pages.slides.screen
 
-import androidx.compose.foundation.border
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.foundation.background
+import androidx.compose.foundation.focusable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -24,12 +35,18 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.input.key.key
+import androidx.compose.ui.input.key.onPreviewKeyEvent
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import app.composables.LoadingDialogComposable
 import app.pages.slides.viewModel.SlidesViewModel
 import kotlinx.coroutines.launch
 import utils.Localization
+import utils.getDisplayName
+import utils.getDisplaySymbol
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -45,6 +62,11 @@ fun SlidesScreen(
     val scope = rememberCoroutineScope()
     val snackbarHostState = remember { SnackbarHostState() }
     val slidesState by slidesViewModel.slidesState.collectAsState()
+    val requester = remember { FocusRequester() }
+
+    LaunchedEffect(Unit) {
+        requester.requestFocus()
+    }
 
     if (slidesState.showLoading) {
         LoadingDialogComposable()
@@ -66,7 +88,17 @@ fun SlidesScreen(
     }
 
     Scaffold(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize()
+            .focusRequester(requester)
+            .focusable()
+            .onPreviewKeyEvent { event ->
+                slidesViewModel.updateKeyEventDetails(
+                    name = event.key.getDisplayName(),
+                    symbol = event.key.getDisplaySymbol(),
+                )
+                true
+            },
         topBar = {
             TopAppBar(
                 title = {
@@ -88,19 +120,57 @@ fun SlidesScreen(
                 },
             )
         },
-    ) {
+    ) { paddingValues ->
         slidesState.slidesDetails?.let { details ->
-            Box {
-                if (details.showKeyMap) {
-                    Box(
-                        modifier = Modifier.align(
-                            Alignment.TopEnd,
-                        ).border(
-                            width = 0.dp,
-                            color = MaterialTheme.colorScheme.onBackground,
-                            shape = RoundedCornerShape(10.dp),
-                        )
-                    ) {}
+            Box(
+                modifier = Modifier.fillMaxSize().padding(
+                    paddingValues = paddingValues,
+                ),
+            ) {
+                AnimatedVisibility(
+                    visible = details.showKeyMap && slidesState.keyEvent != null && slidesState.showKeyEvent,
+                    enter = fadeIn(),
+                    exit = fadeOut(),
+                    modifier = Modifier.align(
+                        Alignment.TopEnd,
+                    )
+                ) {
+                    Column {
+                        Spacer(modifier = Modifier.height(10.dp))
+                        Row {
+                            Box(
+                                modifier = Modifier.background(
+                                    color = MaterialTheme.colorScheme.onBackground,
+                                    shape = RoundedCornerShape(10)
+                                )
+                            ) {
+                                Column(
+                                    horizontalAlignment = Alignment.CenterHorizontally,
+                                    verticalArrangement = Arrangement.Center,
+                                    modifier = Modifier.padding(10.dp),
+                                ) {
+                                    slidesState.keyEvent?.first?.let { symbol ->
+                                        Text(
+                                            symbol,
+                                            style = MaterialTheme.typography.headlineSmall.copy(
+                                                color = MaterialTheme.colorScheme.background,
+                                            ),
+                                        )
+                                        Spacer(modifier = Modifier.height(5.dp))
+                                    }
+                                    slidesState.keyEvent?.second?.let { name ->
+                                        Text(
+                                            name,
+                                            style = MaterialTheme.typography.bodyMedium.copy(
+                                                color = MaterialTheme.colorScheme.background,
+                                            ),
+                                        )
+                                    }
+                                }
+                            }
+                            Spacer(modifier = Modifier.width(10.dp))
+                        }
+                    }
                 }
             }
         }
