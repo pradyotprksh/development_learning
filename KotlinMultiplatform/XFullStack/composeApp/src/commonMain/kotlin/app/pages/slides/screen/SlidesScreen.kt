@@ -1,26 +1,14 @@
 package app.pages.slides.screen
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.foundation.background
 import androidx.compose.foundation.focusable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHostState
@@ -39,9 +27,9 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.input.key.key
 import androidx.compose.ui.input.key.onPreviewKeyEvent
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import app.composables.LoadingDialogComposable
+import app.pages.slides.screen.composables.KeyMapComposable
 import app.pages.slides.viewModel.SlidesViewModel
 import kotlinx.coroutines.launch
 import utils.Localization
@@ -127,51 +115,14 @@ fun SlidesScreen(
                     paddingValues = paddingValues,
                 ),
             ) {
-                AnimatedVisibility(
-                    visible = details.showKeyMap && slidesState.keyEvent != null && slidesState.showKeyEvent,
-                    enter = fadeIn(),
-                    exit = fadeOut(),
+                KeyMapComposable(
                     modifier = Modifier.align(
                         Alignment.TopEnd,
-                    )
-                ) {
-                    Column {
-                        Spacer(modifier = Modifier.height(10.dp))
-                        Row {
-                            Box(
-                                modifier = Modifier.background(
-                                    color = MaterialTheme.colorScheme.onBackground,
-                                    shape = RoundedCornerShape(10)
-                                )
-                            ) {
-                                Column(
-                                    horizontalAlignment = Alignment.CenterHorizontally,
-                                    verticalArrangement = Arrangement.Center,
-                                    modifier = Modifier.padding(10.dp),
-                                ) {
-                                    slidesState.keyEvent?.first?.let { symbol ->
-                                        Text(
-                                            symbol,
-                                            style = MaterialTheme.typography.headlineSmall.copy(
-                                                color = MaterialTheme.colorScheme.background,
-                                            ),
-                                        )
-                                        Spacer(modifier = Modifier.height(5.dp))
-                                    }
-                                    slidesState.keyEvent?.second?.let { name ->
-                                        Text(
-                                            name,
-                                            style = MaterialTheme.typography.bodyMedium.copy(
-                                                color = MaterialTheme.colorScheme.background,
-                                            ),
-                                        )
-                                    }
-                                }
-                            }
-                            Spacer(modifier = Modifier.width(10.dp))
-                        }
-                    }
-                }
+                    ),
+                    showKeyEvent = slidesState.showKeyEvent,
+                    keyEvent = slidesState.keyEvent,
+                    showKeyMap = details.showKeyMap,
+                )
             }
         }
     }
