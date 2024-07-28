@@ -2,8 +2,8 @@ package app.pages.slides.viewModel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import app.pages.slides.state.SlideChangeTap
 import app.pages.slides.state.SlidesState
+import app.pages.slides.utils.SlideChangeTap
 import di.SharedModulesDi
 import domain.repositories.slides.SlidesRepository
 import kotlinx.coroutines.Dispatchers
@@ -14,8 +14,6 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import utils.Localization
-import utils.Logger
-import utils.LoggerLevel
 import utils.extensions.debounce
 import xfullstack.composeapp.generated.resources.Res
 
@@ -86,7 +84,31 @@ class SlidesViewModel(
         }
     }
 
-    fun changeSlide(tapSide: SlideChangeTap) {
-        Logger.log(LoggerLevel.Info, tapSide.toString())
+    fun changeSlide(tapSide: SlideChangeTap): Int {
+        val currentIndex = _slidesState.value.currentPage
+        val slidesSize = _slidesState.value.slidesDetails?.slides?.size ?: 0
+        val nextIndex = if (tapSide == SlideChangeTap.Left) {
+            val previousIndex = currentIndex - 1
+            if (previousIndex < 0) {
+                0
+            } else {
+                previousIndex
+            }
+        } else if (tapSide == SlideChangeTap.Right) {
+            val nextIndex = currentIndex + 1
+            if (nextIndex >= slidesSize) {
+                currentIndex
+            } else {
+                nextIndex
+            }
+        } else {
+            0
+        }
+        _slidesState.update {
+            it.copy(
+                currentPage = nextIndex,
+            )
+        }
+        return nextIndex
     }
 }

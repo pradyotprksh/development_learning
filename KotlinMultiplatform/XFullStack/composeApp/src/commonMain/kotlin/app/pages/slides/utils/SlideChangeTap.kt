@@ -1,4 +1,4 @@
-package app.pages.slides.state
+package app.pages.slides.utils
 
 enum class SlideChangeTap {
     Left,

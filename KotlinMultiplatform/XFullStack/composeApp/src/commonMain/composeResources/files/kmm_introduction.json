@@ -1,24 +1,30 @@
 {
-  "title": "KMM Presentation",
+  "title": "Kotlin Multiplatform Presentation",
   "showKeyMap": true,
   "workOnAllPlatforms": false,
   "allowSlideChangeOnTap": true,
-  "showBackButton": true,
+  "showBackButton": false,
+  "showTitle": false,
   "slides": [
     {
-      "background": "primary",
       "title": {
-        "value": "Kotlin Multiplatform Mobile (KMM)",
+        "value": "Kotlin Multiplatform",
         "styles": {
-          "style": "h1",
+          "style": "headlineLarge",
+          "color": "primary",
           "alignment": "center"
         }
       },
       "subtitle": {
-        "value": "Welcome to the talk related to Kotlin Multiplatform where we will be seeing what are the features does KMM provides and try to understand its usecases.",
+        "value": "Welcome to the talk related to Kotlin Multiplatform where we will be seeing what are the features and try to understand its usecases.",
         "styles": {
-          "style": "subtitle",
           "alignment": "center"
+        }
+      },
+      "bottomImage": {
+        "value": "https://esfklrkndjodokvevjpr.supabase.co/storage/v1/object/sign/dump/Screenshot%202024-07-28%20at%201.42.11%20PM.png?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJkdW1wL1NjcmVlbnNob3QgMjAyNC0wNy0yOCBhdCAxLjQyLjExIFBNLnBuZyIsImlhdCI6MTcyMjE1NDQ2MSwiZXhwIjoyMDM3NTE0NDYxfQ.UOxvCcRLMz2ND456gr82IDPrcXmyo7WENlXiGr9nv8Q",
+        "styles": {
+          "height": 400
         }
       },
       "footer": {
@@ -32,16 +38,16 @@
     },
     {
       "title": {
-        "value": "What is KMM?",
+        "value": "What is Kotlin Multiplatform?",
         "styles": {
-          "style": "h1",
-          "alignment": "start"
+          "style": "headlineLarge",
+          "color": "primary",
+          "alignment": "center"
         }
       },
       "subtitle": {
         "value": "Kotlin Multiplatform is a technology that allows you to create applications for various platforms and efficiently reuse code across them while retaining the benefits of native programming. Your multiplatform applications will work on different operating systems, such as iOS, Android, macOS, Windows, Linux, and others.",
         "styles": {
-          "style": "subtitle",
           "alignment": "center"
         }
       }

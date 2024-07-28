@@ -126,3 +126,6 @@ fun Key.getDisplayName() = when (this) {
     Key.Apostrophe -> "Apostrophe"
     else -> null
 }
+
+inline fun <reified T : Enum<T>> String.asEnumOrDefault(defaultValue: T? = null): T? =
+    enumValues<T>().firstOrNull { it.name.equals(this, ignoreCase = true) } ?: defaultValue

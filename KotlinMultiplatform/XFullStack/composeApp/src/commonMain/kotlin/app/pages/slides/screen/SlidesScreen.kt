@@ -1,9 +1,12 @@
 package app.pages.slides.screen
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.focusable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -32,14 +35,15 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import app.composables.LoadingDialogComposable
 import app.pages.slides.screen.composables.KeyMapComposable
 import app.pages.slides.screen.composables.SlideChangeTapAreaComposable
-import app.pages.slides.state.SlideChangeTap
+import app.pages.slides.screen.composables.SlideComposable
+import app.pages.slides.utils.SlideChangeTap
 import app.pages.slides.viewModel.SlidesViewModel
 import kotlinx.coroutines.launch
 import utils.Localization
 import utils.getDisplayName
 import utils.getDisplaySymbol
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
 fun SlidesScreen(
     slidesFilePath: String,
@@ -54,6 +58,9 @@ fun SlidesScreen(
     val snackbarHostState = remember { SnackbarHostState() }
     val slidesState by slidesViewModel.slidesState.collectAsState()
     val requester = remember { FocusRequester() }
+    val horizontalPagerState = rememberPagerState(
+        pageCount = { slidesState.slidesDetails?.slides?.size ?: 0 },
+    )
 
     LaunchedEffect(Unit) {
         requester.requestFocus()
@@ -88,12 +95,20 @@ fun SlidesScreen(
 
                 when (event.key) {
                     Key.DirectionLeft -> {
-                        slidesViewModel.changeSlide(SlideChangeTap.Left)
+                        scope.launch {
+                            horizontalPagerState.animateScrollToPage(
+                                slidesViewModel.changeSlide(SlideChangeTap.Left),
+                            )
+                        }
                         true
                     }
 
                     Key.DirectionRight -> {
-                        slidesViewModel.changeSlide(SlideChangeTap.Right)
+                        scope.launch {
+                            horizontalPagerState.animateScrollToPage(
+                                slidesViewModel.changeSlide(SlideChangeTap.Right),
+                            )
+                        }
                         true
                     }
 
@@ -103,25 +118,27 @@ fun SlidesScreen(
                 }
             },
         topBar = {
-            TopAppBar(
-                title = {
-                    Text(
-                        slidesState.slidesDetails?.title ?: Localization.SLIDES,
-                    )
-                },
-                navigationIcon = {
-                    if (slidesState.slidesDetails?.showBackButton == true) {
-                        IconButton(
-                            onClick = navigateBack,
-                        ) {
-                            Icon(
-                                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                                contentDescription = Icons.AutoMirrored.Filled.ArrowBack.name,
-                            )
+            if (slidesState.slidesDetails?.showTitle == true) {
+                TopAppBar(
+                    title = {
+                        Text(
+                            slidesState.slidesDetails?.title ?: Localization.SLIDES,
+                        )
+                    },
+                    navigationIcon = {
+                        if (slidesState.slidesDetails?.showBackButton == true) {
+                            IconButton(
+                                onClick = navigateBack,
+                            ) {
+                                Icon(
+                                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                                    contentDescription = Icons.AutoMirrored.Filled.ArrowBack.name,
+                                )
+                            }
                         }
-                    }
-                },
-            )
+                    },
+                )
+            }
         },
     ) { paddingValues ->
         slidesState.slidesDetails?.let { details ->
@@ -130,6 +147,17 @@ fun SlidesScreen(
                     paddingValues = paddingValues,
                 ),
             ) {
+                HorizontalPager(
+                    state = horizontalPagerState,
+                    modifier = Modifier.fillMaxSize(),
+                ) { index ->
+                    val slide = details.slides[index]
+                    SlideComposable(
+                        modifier = Modifier
+                            .fillMaxSize(),
+                        slide = slide,
+                    )
+                }
                 KeyMapComposable(
                     modifier = Modifier.align(
                         Alignment.TopEnd,
@@ -142,10 +170,18 @@ fun SlidesScreen(
                     SlideChangeTapAreaComposable(
                         modifier = Modifier.fillMaxSize(),
                         onLeftTap = {
-                            slidesViewModel.changeSlide(SlideChangeTap.Left)
+                            scope.launch {
+                                horizontalPagerState.animateScrollToPage(
+                                    slidesViewModel.changeSlide(SlideChangeTap.Left),
+                                )
+                            }
                         },
                         onRightTap = {
-                            slidesViewModel.changeSlide(SlideChangeTap.Right)
+                            scope.launch {
+                                horizontalPagerState.animateScrollToPage(
+                                    slidesViewModel.changeSlide(SlideChangeTap.Right),
+                                )
+                            }
                         },
                     )
                 }

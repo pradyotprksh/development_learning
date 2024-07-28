@@ -8,4 +8,5 @@ data class SlidesState(
     val slidesDetails: SlidesDetails? = null,
     val keyEvent: Pair<String?, String?>? = null,
     val showKeyEvent: Boolean = false,
+    val currentPage: Int = 0,
 )

@@ -9,6 +9,7 @@ data class SlidesDetails(
     val workOnAllPlatforms: Boolean = false,
     val allowSlideChangeOnTap: Boolean = false,
     val showBackButton: Boolean = false,
+    val showTitle: Boolean = false,
     val slides: List<Slides> = emptyList(),
 )
 
