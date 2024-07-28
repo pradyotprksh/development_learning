@@ -25,11 +25,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.input.key.key
 import androidx.compose.ui.input.key.onPreviewKeyEvent
 import androidx.lifecycle.viewmodel.compose.viewModel
 import app.composables.LoadingDialogComposable
 import app.pages.slides.screen.composables.KeyMapComposable
+import app.pages.slides.screen.composables.SlideChangeTapAreaComposable
+import app.pages.slides.state.SlideChangeTap
 import app.pages.slides.viewModel.SlidesViewModel
 import kotlinx.coroutines.launch
 import utils.Localization
@@ -76,16 +79,28 @@ fun SlidesScreen(
     }
 
     Scaffold(
-        modifier = Modifier
-            .fillMaxSize()
-            .focusRequester(requester)
-            .focusable()
+        modifier = Modifier.fillMaxSize().focusRequester(requester).focusable()
             .onPreviewKeyEvent { event ->
                 slidesViewModel.updateKeyEventDetails(
                     name = event.key.getDisplayName(),
                     symbol = event.key.getDisplaySymbol(),
                 )
-                true
+
+                when (event.key) {
+                    Key.DirectionLeft -> {
+                        slidesViewModel.changeSlide(SlideChangeTap.Left)
+                        true
+                    }
+
+                    Key.DirectionRight -> {
+                        slidesViewModel.changeSlide(SlideChangeTap.Right)
+                        true
+                    }
+
+                    else -> {
+                        false
+                    }
+                }
             },
         topBar = {
             TopAppBar(
@@ -123,6 +138,17 @@ fun SlidesScreen(
                     keyEvent = slidesState.keyEvent,
                     showKeyMap = details.showKeyMap,
                 )
+                if (details.allowSlideChangeOnTap) {
+                    SlideChangeTapAreaComposable(
+                        modifier = Modifier.fillMaxSize(),
+                        onLeftTap = {
+                            slidesViewModel.changeSlide(SlideChangeTap.Left)
+                        },
+                        onRightTap = {
+                            slidesViewModel.changeSlide(SlideChangeTap.Right)
+                        },
+                    )
+                }
             }
         }
     }

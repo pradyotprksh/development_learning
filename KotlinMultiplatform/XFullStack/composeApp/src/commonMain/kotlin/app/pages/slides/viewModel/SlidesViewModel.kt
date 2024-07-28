@@ -2,6 +2,7 @@ package app.pages.slides.viewModel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import app.pages.slides.state.SlideChangeTap
 import app.pages.slides.state.SlidesState
 import di.SharedModulesDi
 import domain.repositories.slides.SlidesRepository
@@ -13,6 +14,8 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import utils.Localization
+import utils.Logger
+import utils.LoggerLevel
 import utils.extensions.debounce
 import xfullstack.composeapp.generated.resources.Res
 
@@ -81,5 +84,9 @@ class SlidesViewModel(
                 }
             }.invoke(Unit)
         }
+    }
+
+    fun changeSlide(tapSide: SlideChangeTap) {
+        Logger.log(LoggerLevel.Info, tapSide.toString())
     }
 }

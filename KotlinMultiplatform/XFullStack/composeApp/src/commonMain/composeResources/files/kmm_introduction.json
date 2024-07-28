@@ -2,7 +2,7 @@
   "title": "KMM Presentation",
   "showKeyMap": true,
   "workOnAllPlatforms": false,
-  "allowSlideChangeOnTap": false,
+  "allowSlideChangeOnTap": true,
   "showBackButton": true,
   "slides": [
     {
