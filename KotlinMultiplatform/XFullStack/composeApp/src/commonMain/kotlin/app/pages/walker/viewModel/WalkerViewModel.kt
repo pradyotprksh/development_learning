@@ -9,9 +9,6 @@ import app.pages.walker.utils.Directions
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
-import utils.Logger
-import utils.LoggerLevel
-import utils.OSLevelMethods
 import kotlin.math.PI
 import kotlin.math.atan2
 import kotlin.random.Random
@@ -40,14 +37,6 @@ class WalkerViewModel : ViewModel() {
             currentHumanPosition
         } else {
             getRandomBasedOffset()
-        }
-
-        OSLevelMethods.windowSize?.let { windowSize ->
-            val isInTheScreen = isOffsetInWindowSize(windowSize, newOffset)
-            Logger.log(
-                LoggerLevel.Info,
-                "windowSize $windowSize newOffset $newOffset isInTheScreen $isInTheScreen"
-            )
         }
 
         return newOffset
