@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.List
+import androidx.compose.material.icons.filled.AssistWalker
 import androidx.compose.material.icons.filled.Bookmarks
 import androidx.compose.material.icons.filled.DarkMode
 import androidx.compose.material.icons.filled.Draw
@@ -50,6 +51,7 @@ import utils.Localization.PREMIUM
 import utils.Localization.PROFILE
 import utils.Localization.SLIDES
 import utils.Localization.SPACES
+import utils.Localization.WALKER
 
 @Composable
 fun UserNavigationDrawerComposable(
@@ -60,6 +62,7 @@ fun UserNavigationDrawerComposable(
     openBookmarkPage: () -> Unit,
     openDrawBoard: () -> Unit,
     openSlides: () -> Unit,
+    openWalker: () -> Unit,
 ) {
     LaunchedEffect(Unit) {
         userDrawerViewModel.initialSetup()
@@ -263,6 +266,23 @@ fun UserNavigationDrawerComposable(
                         )
                     },
                     onClick = openSlides,
+                )
+            }
+            item {
+                NavigationDrawerItem(
+                    label = {
+                        Text(
+                            WALKER, style = MaterialTheme.typography.titleMedium
+                        )
+                    },
+                    selected = false,
+                    icon = {
+                        Icon(
+                            imageVector = Icons.Default.AssistWalker,
+                            contentDescription = Icons.Default.AssistWalker.name,
+                        )
+                    },
+                    onClick = openWalker,
                 )
             }
         }

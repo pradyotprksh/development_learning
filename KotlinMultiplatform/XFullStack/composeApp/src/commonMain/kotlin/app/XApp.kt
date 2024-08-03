@@ -69,6 +69,7 @@ import app.pages.profileDetails.screen.ProfileDetailsScreen
 import app.pages.slides.screen.SlidesScreen
 import app.pages.splash.screen.SplashScreen
 import app.pages.tweetDetails.screen.TweetDetailsScreen
+import app.pages.walker.screen.WalkerScreen
 import kotlinx.coroutines.launch
 import utils.Constants.ConstValues.CHAT_ID
 import utils.Constants.ConstValues.IS_REPLY
@@ -163,6 +164,10 @@ fun XApp(
         OSLevelMethods.makeWindowFullScreen?.invoke()
         navController.navigate(Routes.Slides.path())
     }
+    val navigateToWalker = {
+        OSLevelMethods.makeWindowFullScreen?.invoke()
+        navController.navigate(Routes.Walker.path())
+    }
     val navigateToDirectMessage = { userId: String, chatId: String ->
         navController.navigate(
             "${Routes.DirectMessage.route}${userId}/${chatId}",
@@ -198,7 +203,11 @@ fun XApp(
                     openSlides = {
                         drawerOpenClose()
                         navigateToSlides()
-                    }
+                    },
+                    openWalker = {
+                        drawerOpenClose()
+                        navigateToWalker()
+                    },
                 )
             }
         }, gesturesEnabled = showDrawer(currentDestination?.route ?: "")
@@ -314,7 +323,7 @@ fun XApp(
                 composable(Routes.Splash.path()) {
                     SplashScreen(
                         navigateToAuthOption = navigateToAuthOption,
-                        navigateToHome = navigateToSlides
+                        navigateToHome = navigateToWalker
                     )
                 }
                 composable(Routes.AuthenticationOption.path()) {
@@ -527,6 +536,13 @@ fun XApp(
                     SlidesScreen(
                         slidesFilePath = KMM_INTRODUCTION,
                     ) {
+                        navController.popBackStack()
+                    }
+                }
+                composable(
+                    Routes.Walker.path(),
+                ) {
+                    WalkerScreen {
                         navController.popBackStack()
                     }
                 }

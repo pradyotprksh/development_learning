@@ -16,6 +16,8 @@ fun main() = application {
     val trayState = rememberTrayState()
     val windowState = rememberWindowState(placement = WindowPlacement.Floating)
 
+    OSLevelMethods.windowSize = windowState.size
+
     Tray(
         state = trayState,
         icon = painterResource(Res.drawable.logo_light),

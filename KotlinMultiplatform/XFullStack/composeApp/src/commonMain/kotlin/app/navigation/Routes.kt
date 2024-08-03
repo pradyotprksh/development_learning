@@ -47,5 +47,6 @@ enum class Routes(
     Bookmarks("bookmarks/"),
     DrawBoard("draw-board/"),
     Slides("slides/"),
+    Walker("walker/"),
     DirectMessage("direct-message/", listOf(USER_ID, CHAT_ID)),
 }
