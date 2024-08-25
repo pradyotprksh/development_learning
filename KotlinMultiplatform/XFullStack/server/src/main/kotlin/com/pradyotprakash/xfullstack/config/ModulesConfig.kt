@@ -65,6 +65,9 @@ import com.pradyotprakash.xfullstack.features.tweet.controllers.tweetCreationUpd
 import com.pradyotprakash.xfullstack.features.tweet.controllers.tweetCreationUpdate.TweetCreateUpdateControllerImplementation
 import com.pradyotprakash.xfullstack.features.tweet.controllers.tweetFetch.TweetFetchController
 import com.pradyotprakash.xfullstack.features.tweet.controllers.tweetFetch.TweetFetchControllerImplementation
+import com.pradyotprakash.xfullstack.features.users.controllers.UsersController
+import com.pradyotprakash.xfullstack.features.users.controllers.info.UsersInfoController
+import com.pradyotprakash.xfullstack.features.users.controllers.info.UsersInfoControllerImplementation
 import com.pradyotprakash.xfullstack.features.utils.controllers.UtilsController
 import com.pradyotprakash.xfullstack.features.utils.controllers.serverDetails.ServerDetailsController
 import com.pradyotprakash.xfullstack.features.utils.controllers.serverDetails.ServerDetailsControllerImplementation
@@ -168,6 +171,8 @@ object ModulesConfig {
                 instance(),
             )
         }
+
+        bindProvider<UsersInfoController> { UsersInfoControllerImplementation() }
     }
 
     private val featuresModule = DI.Module("FEATURES") {
@@ -194,6 +199,8 @@ object ModulesConfig {
         bindProvider { FileController(instance()) }
 
         bindProvider { GrokController(instance()) }
+
+        bindProvider { UsersController(instance()) }
     }
 
     val di = DI {

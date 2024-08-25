@@ -110,6 +110,11 @@ object Constants {
             const val GROK = "/grok"
             const val CHAT = "/chat"
         }
+
+        object User {
+            const val USER = "/user"
+            const val INFO = "/info"
+        }
     }
 
     object Keys {
@@ -216,6 +221,7 @@ object Constants {
         const val SAME_FOLLOW_FOLLOWING_ID = "EC_XFS023"
         const val MESSAGE_VALIDITY_ERROR_CODE = "EC_XFS024"
         const val INVALID_ROLE_FOR_GROK_ERROR_CODE = "EC_XFS025"
+        const val INVALID_USER_ID_ERROR_CODE = "EC_XFS026"
     }
 
     object SuccessCode {

@@ -234,4 +234,5 @@ object Localization {
     const val DROP_COMPONENT_HERE = "Drop the component here"
     const val SLIDES = "Slides"
     const val WALKER = "Walker"
+    const val INVALID_USER_ID = "Invalid user id"
 }

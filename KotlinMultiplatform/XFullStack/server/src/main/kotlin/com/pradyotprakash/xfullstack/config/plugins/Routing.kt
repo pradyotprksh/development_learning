@@ -32,6 +32,8 @@ import com.pradyotprakash.xfullstack.features.tags.controllers.TagsController
 import com.pradyotprakash.xfullstack.features.tags.tags
 import com.pradyotprakash.xfullstack.features.tweet.controllers.TweetController
 import com.pradyotprakash.xfullstack.features.tweet.tweet
+import com.pradyotprakash.xfullstack.features.users.controllers.UsersController
+import com.pradyotprakash.xfullstack.features.users.users
 import com.pradyotprakash.xfullstack.features.utils.controllers.UtilsController
 import com.pradyotprakash.xfullstack.features.utils.utils
 import com.pradyotprakash.xfullstack.features.verification.controllers.VerificationController
@@ -70,6 +72,7 @@ fun Application.configureRouting() {
     val chatController by ModulesConfig.di.instance<ChatController>()
     val fileController by ModulesConfig.di.instance<FileController>()
     val grokController by ModulesConfig.di.instance<GrokController>()
+    val usersController by ModulesConfig.di.instance<UsersController>()
 
     routing {
         authentication(
@@ -145,6 +148,12 @@ fun Application.configureRouting() {
         grok(
             grokController = grokController,
             userDataSource = userDataSource,
+        )
+        users(
+            usersController = usersController,
+            userDataSource = userDataSource,
+            followDataSource = followDataSource,
+            chatDataSource = chatDataSource,
         )
     }
 }
