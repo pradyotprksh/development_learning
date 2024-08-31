@@ -1,17 +1,3 @@
 package com.pradyotprakash.xfullstack.features.users.controllers.canFollow
 
-import com.pradyotprakash.xfullstack.data.chat.ChatDataSource
-import com.pradyotprakash.xfullstack.data.follow.FollowDataSource
-import com.pradyotprakash.xfullstack.data.user.UserDataSource
-import com.pradyotprakash.xfullstack.features.users.resource.UsersResource
-import io.ktor.server.application.ApplicationCall
-
-interface UsersCanFollowController {
-    suspend fun getUserInfo(
-        call: ApplicationCall,
-        resource: UsersResource.Info,
-        userDataSource: UserDataSource,
-        followDataSource: FollowDataSource,
-        chatDataSource: ChatDataSource,
-    )
-}
+interface UsersCanFollowController {}
