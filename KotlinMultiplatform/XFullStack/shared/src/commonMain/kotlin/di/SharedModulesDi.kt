@@ -22,6 +22,7 @@ import data.remote.tweet.TweetRemoteServiceImplementation
 import data.remote.user.bookmark.UserBookmarkRemoteServiceImplementation
 import data.remote.user.current.CurrentUserRemoteServiceImplementation
 import data.remote.user.follow.UserFollowRemoteServiceImplementation
+import data.remote.user.user.UserRemoteServiceImplementation
 import data.remote.user.verification.UserVerificationRemoteServiceImplementation
 import data.remote.view.ViewRemoteServiceImplementation
 import data.remote.websocket.WebsocketRemoteServiceImplementation
@@ -70,6 +71,7 @@ import domain.services.user.current.CurrentUserDBService
 import domain.services.user.current.CurrentUserRemoteService
 import domain.services.user.follow.UserFollowRemoteService
 import domain.services.user.user.UserDBService
+import domain.services.user.user.UserRemoteService
 import domain.services.user.verification.UserVerificationRemoteService
 import domain.services.view.ViewDBService
 import domain.services.view.ViewRemoteService
@@ -149,6 +151,12 @@ object SharedModulesDi {
             )
         }
 
+        bindProvider<UserRemoteService> {
+            UserRemoteServiceImplementation(
+                instance(tag = XFULLSTACK_NETWORK_CLIENT)
+            )
+        }
+
         bindProvider<TagsRemoteService> { TagsRemoteServiceImplementation(instance(tag = XFULLSTACK_NETWORK_CLIENT)) }
 
         bindProvider<ChatRemoteService> { ChatRemoteServiceImplementation(instance(tag = XFULLSTACK_NETWORK_CLIENT)) }
@@ -189,7 +197,7 @@ object SharedModulesDi {
         }
 
         bind<UserRepository>() with singleton {
-            UserRepositoryImplementation(instance())
+            UserRepositoryImplementation(instance(), instance())
         }
 
         bind<RequestRepository>() with singleton {

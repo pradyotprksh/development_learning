@@ -1,3 +1,3 @@
 package com.pradyotprakash.xfullstack.features.users.controllers.canFollow
 
-interface UsersCanFollowController {}
+interface UsersCanFollowController
