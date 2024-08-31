@@ -305,7 +305,7 @@ class CreateTweetViewModel(
         if (currentFocusedTweetIndex >= 0) {
             viewModelScope.launch {
                 FileKit.pickFile(
-                    type = PickerType.ImageAndVideo, mode = PickerMode.Multiple, title = message
+                    type = PickerType.ImageAndVideo, mode = PickerMode.Multiple(), title = message
                 )?.let { files ->
                     updateMediaWithEmptyLinks(files.size, currentFocusedTweetIndex)
                     files.fastForEachIndexed { index, file ->

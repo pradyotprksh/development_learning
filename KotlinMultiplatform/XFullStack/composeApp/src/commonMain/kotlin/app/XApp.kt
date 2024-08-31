@@ -323,7 +323,7 @@ fun XApp(
                 composable(Routes.Splash.path()) {
                     SplashScreen(
                         navigateToAuthOption = navigateToAuthOption,
-                        navigateToHome = navigateToWalker
+                        navigateToHome = navigateToHome
                     )
                 }
                 composable(Routes.AuthenticationOption.path()) {
