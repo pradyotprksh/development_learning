@@ -4,7 +4,7 @@ import com.pradyotprakash.xfullstack.data.follow.Follow
 import com.pradyotprakash.xfullstack.data.follow.FollowDataSource
 import com.pradyotprakash.xfullstack.data.user.UserDataSource
 import com.pradyotprakash.xfullstack.features.follow.resource.FollowResource
-import com.pradyotprakash.xfullstack.features.websockets.Connections
+import com.pradyotprakash.xfullstack.features.websockets.connections.Connections
 import core.exception.DBWriteError
 import core.exception.InvalidParameter
 import core.exception.UserDetailsNotFound

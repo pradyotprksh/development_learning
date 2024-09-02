@@ -1,5 +1,6 @@
 package com.pradyotprakash.xfullstack.features.websockets
 
+import com.pradyotprakash.xfullstack.features.websockets.connections.Connections
 import core.exception.UserDetailsNotFound
 import io.ktor.server.auth.authenticate
 import io.ktor.server.auth.jwt.JWTPrincipal

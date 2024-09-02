@@ -34,4 +34,7 @@ dependencies {
     implementation(libs.kodein.di)
     implementation(libs.ktor.server.websockets)
     implementation(libs.supabase.storage.kt)
+
+    testImplementation(libs.konsist)
+    testImplementation(libs.kotlin.test)
 }

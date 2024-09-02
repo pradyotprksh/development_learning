@@ -12,6 +12,7 @@ filekt = "0.7.0"
 io-realm-kotlin = "2.1.0"
 kamel-image = "0.9.4"
 kodein-di = "7.22.0"
+konsist = "0.16.0"
 kotlin = "2.0.10"
 kotlin-serialization = "1.9.23"
 kotlinx-coroutines = "1.8.1"
@@ -61,6 +62,8 @@ ktor-client-websockets = { module = "io.ktor:ktor-client-websockets", version.re
 compose-window-size = { module = "dev.chrisbanes.material3:material3-window-size-class-multiplatform", version.ref = "compose-window-size" }
 filekt = { module = "io.github.vinceglb:filekit-compose", version.ref = "filekt" }
 supabase-storage-kt = { module = "io.github.jan-tennert.supabase:storage-kt", version.ref = "supabase-storage-kt" }
+konsist = { module = "com.lemonappdev:konsist", version.ref = "konsist" }
+kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

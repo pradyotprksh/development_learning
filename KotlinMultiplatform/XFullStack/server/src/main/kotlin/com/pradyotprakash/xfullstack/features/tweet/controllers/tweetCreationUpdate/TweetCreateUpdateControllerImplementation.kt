@@ -10,7 +10,7 @@ import com.pradyotprakash.xfullstack.data.tweet.data.PollVoterDetails
 import com.pradyotprakash.xfullstack.data.tweet.data.Tweet
 import com.pradyotprakash.xfullstack.data.user.UserDataSource
 import com.pradyotprakash.xfullstack.features.tweet.resource.TweetResource
-import com.pradyotprakash.xfullstack.features.websockets.Connections
+import com.pradyotprakash.xfullstack.features.websockets.connections.Connections
 import core.exception.DBWriteError
 import core.exception.InvalidTweet
 import core.exception.UserDetailsNotFound

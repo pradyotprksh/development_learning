@@ -6,7 +6,7 @@ import com.pradyotprakash.xfullstack.data.message.Message
 import com.pradyotprakash.xfullstack.data.message.MessageDataSource
 import com.pradyotprakash.xfullstack.data.tweet.TweetDataSource
 import com.pradyotprakash.xfullstack.data.user.UserDataSource
-import com.pradyotprakash.xfullstack.features.websockets.Connections
+import com.pradyotprakash.xfullstack.features.websockets.connections.Connections
 import core.exception.DBWriteError
 import core.exception.InvalidMessage
 import core.exception.InvalidTweet

@@ -5,7 +5,7 @@ import com.pradyotprakash.xfullstack.data.bookmark.BookmarkDataSource
 import com.pradyotprakash.xfullstack.data.tweet.TweetDataSource
 import com.pradyotprakash.xfullstack.data.user.UserDataSource
 import com.pradyotprakash.xfullstack.features.bookmark.resource.BookmarkResource
-import com.pradyotprakash.xfullstack.features.websockets.Connections
+import com.pradyotprakash.xfullstack.features.websockets.connections.Connections
 import core.exception.DBWriteError
 import core.exception.InvalidTweet
 import core.exception.UserDetailsNotFound

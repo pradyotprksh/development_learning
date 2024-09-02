@@ -1,4 +1,4 @@
-package com.pradyotprakash.xfullstack.features.websockets
+package com.pradyotprakash.xfullstack.features.websockets.connections
 
 import io.ktor.server.websocket.DefaultWebSocketServerSession
 import io.ktor.websocket.Frame
