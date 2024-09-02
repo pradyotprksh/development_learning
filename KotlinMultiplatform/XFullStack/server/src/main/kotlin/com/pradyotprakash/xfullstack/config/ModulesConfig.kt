@@ -66,6 +66,8 @@ import com.pradyotprakash.xfullstack.features.tweet.controllers.tweetCreationUpd
 import com.pradyotprakash.xfullstack.features.tweet.controllers.tweetFetch.TweetFetchController
 import com.pradyotprakash.xfullstack.features.tweet.controllers.tweetFetch.TweetFetchControllerImplementation
 import com.pradyotprakash.xfullstack.features.users.controllers.UsersController
+import com.pradyotprakash.xfullstack.features.users.controllers.canFollow.UsersCanFollowController
+import com.pradyotprakash.xfullstack.features.users.controllers.canFollow.UsersCanFollowControllerImplementation
 import com.pradyotprakash.xfullstack.features.users.controllers.info.UsersInfoController
 import com.pradyotprakash.xfullstack.features.users.controllers.info.UsersInfoControllerImplementation
 import com.pradyotprakash.xfullstack.features.utils.controllers.UtilsController
@@ -173,6 +175,7 @@ object ModulesConfig {
         }
 
         bindProvider<UsersInfoController> { UsersInfoControllerImplementation() }
+        bindProvider<UsersCanFollowController> { UsersCanFollowControllerImplementation() }
     }
 
     private val featuresModule = DI.Module("FEATURES") {
@@ -200,7 +203,7 @@ object ModulesConfig {
 
         bindProvider { GrokController(instance()) }
 
-        bindProvider { UsersController(instance()) }
+        bindProvider { UsersController(instance(), instance()) }
     }
 
     val di = DI {

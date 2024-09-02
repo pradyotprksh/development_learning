@@ -114,6 +114,7 @@ object Constants {
         object User {
             const val USER = "/user"
             const val INFO = "/info"
+            const val CAN_FOLLOW = "/can-follow"
         }
     }
 

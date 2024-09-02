@@ -10,13 +10,13 @@ enum class LoggerLevel {
 object Logger {
     fun log(
         loggerLevel: LoggerLevel,
-        message: String,
+        message: Any,
     ) {
         when (loggerLevel) {
-            LoggerLevel.Debug -> debug(message)
-            LoggerLevel.Warn -> warn(message)
-            LoggerLevel.Info -> info(message)
-            LoggerLevel.Error -> error(message)
+            LoggerLevel.Debug -> debug(message.toString())
+            LoggerLevel.Warn -> warn(message.toString())
+            LoggerLevel.Info -> info(message.toString())
+            LoggerLevel.Error -> error(message.toString())
         }
     }
 

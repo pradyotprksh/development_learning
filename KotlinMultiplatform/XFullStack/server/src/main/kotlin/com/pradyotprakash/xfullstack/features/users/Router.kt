@@ -25,5 +25,14 @@ fun Routing.users(
                 chatDataSource,
             )
         }
+
+        get<UsersResource.CanFollow> {
+            usersController.getUserCanBeFollowed(
+                this.context,
+                userDataSource,
+                followDataSource,
+                chatDataSource,
+            )
+        }
     }
 }

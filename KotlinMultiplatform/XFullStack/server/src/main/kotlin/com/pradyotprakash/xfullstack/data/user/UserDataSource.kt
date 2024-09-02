@@ -34,4 +34,6 @@ interface UserDataSource {
     suspend fun addNewFieldToAll(name: String, value: Any)
 
     suspend fun updateHumanNature(userId: String, nature: List<String>)
+
+    suspend fun getUsersWithNature(): List<User>
 }

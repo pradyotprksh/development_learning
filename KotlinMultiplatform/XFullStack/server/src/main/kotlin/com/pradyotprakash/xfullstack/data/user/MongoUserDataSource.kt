@@ -84,4 +84,10 @@ class MongoUserDataSource(
             Updates.set(NATURE, nature)
         )
     }
+
+    override suspend fun getUsersWithNature(): List<User> {
+        return usersCollection.find(
+            Filters.exists(NATURE),
+        ).toList().filter { it.nature.isNotEmpty() }
+    }
 }
