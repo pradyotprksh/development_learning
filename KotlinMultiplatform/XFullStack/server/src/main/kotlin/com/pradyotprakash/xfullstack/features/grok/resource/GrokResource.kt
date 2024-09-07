@@ -6,9 +6,10 @@ import utils.Constants.Paths.Grok.GROK
 
 @Resource(GROK)
 class GrokResource {
+    val asdf = 1
 
     @Resource(CHAT)
-    data class Chat(
+    data class ChatResource(
         private val parent: GrokResource = GrokResource(),
     )
 }

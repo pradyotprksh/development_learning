@@ -24,7 +24,7 @@ import utils.XFullStackResponseStatus
 class TweetFetchControllerImplementation : TweetFetchController {
     override suspend fun getAllTweets(
         call: ApplicationCall,
-        tweetPaginate: TweetResource.TweetPaginate,
+        tweetPaginate: TweetResource.TweetPaginateResource,
         userDataSource: UserDataSource,
         tweetDataSource: TweetDataSource,
         viewDataSource: ViewDataSource,

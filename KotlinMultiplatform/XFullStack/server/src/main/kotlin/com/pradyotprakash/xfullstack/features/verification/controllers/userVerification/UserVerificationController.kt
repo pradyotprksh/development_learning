@@ -7,7 +7,7 @@ import io.ktor.server.application.ApplicationCall
 interface UserVerificationController {
     suspend fun generateOtp(
         call: ApplicationCall,
-        resource: VerificationResource.GenerateOtp,
+        resource: VerificationResource.GenerateOtpResource,
     )
 
     suspend fun validateOtp(
@@ -16,7 +16,7 @@ interface UserVerificationController {
 
     suspend fun userPresent(
         call: ApplicationCall,
-        resource: VerificationResource.UserPresent,
+        resource: VerificationResource.UserPresentResource,
         userDataSource: UserDataSource,
     )
 }

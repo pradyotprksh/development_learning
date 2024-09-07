@@ -9,13 +9,13 @@ import utils.Constants.Paths.Utils.UTILS
 class UtilsResource {
 
     @Resource(USERNAME_VALID)
-    data class UsernameValid(
+    data class UsernameValidResource(
         private val parent: UtilsResource = UtilsResource(),
         val value: String,
     )
 
     @Resource(SERVER_AVAILABLE)
-    data class ServerAvailable(
+    data class ServerAvailableResource(
         private val parent: UtilsResource = UtilsResource(),
     )
 }

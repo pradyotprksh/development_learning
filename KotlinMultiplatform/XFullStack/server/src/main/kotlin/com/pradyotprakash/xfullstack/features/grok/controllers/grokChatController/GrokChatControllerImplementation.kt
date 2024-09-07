@@ -31,7 +31,7 @@ class GrokChatControllerImplementation(
 ) : GrokChatController {
     override suspend fun replyToPrompt(
         call: ApplicationCall,
-        resource: GrokResource.Chat,
+        resource: GrokResource.ChatResource,
         userDataSource: UserDataSource,
     ) {
         val grokRequest = call.receive<GrokRequest>()

@@ -10,7 +10,7 @@ fun Routing.utils(
     utilsController: UtilsController,
     userDataSource: UserDataSource,
 ) {
-    get<UtilsResource.UsernameValid> {
+    get<UtilsResource.UsernameValidResource> {
         utilsController.isUserNameValid(
             call = this.context,
             resource = it,
@@ -18,7 +18,7 @@ fun Routing.utils(
         )
     }
 
-    get<UtilsResource.ServerAvailable> {
+    get<UtilsResource.ServerAvailableResource> {
         utilsController.isServerAvailable(
             call = this.context,
         )

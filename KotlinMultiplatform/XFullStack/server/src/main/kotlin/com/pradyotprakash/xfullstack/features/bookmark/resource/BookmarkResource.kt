@@ -8,7 +8,7 @@ import utils.Constants.Paths.Bookmarks.UPDATE
 class BookmarkResource {
 
     @Resource(UPDATE)
-    data class Update(
+    data class UpdateResource(
         private val parent: BookmarkResource = BookmarkResource(),
         val tweetId: String,
     )

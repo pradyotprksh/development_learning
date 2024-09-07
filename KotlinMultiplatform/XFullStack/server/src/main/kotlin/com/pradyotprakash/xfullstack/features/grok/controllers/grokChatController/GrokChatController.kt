@@ -7,7 +7,7 @@ import io.ktor.server.application.ApplicationCall
 interface GrokChatController {
     suspend fun replyToPrompt(
         call: ApplicationCall,
-        resource: GrokResource.Chat,
+        resource: GrokResource.ChatResource,
         userDataSource: UserDataSource,
     )
 }

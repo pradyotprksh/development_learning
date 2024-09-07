@@ -12,7 +12,7 @@ fun Routing.grok(
     userDataSource: UserDataSource,
 ) {
     authenticate {
-        post<GrokResource.Chat> {
+        post<GrokResource.ChatResource> {
             grokController.replyToPrompt(
                 this.context,
                 it,

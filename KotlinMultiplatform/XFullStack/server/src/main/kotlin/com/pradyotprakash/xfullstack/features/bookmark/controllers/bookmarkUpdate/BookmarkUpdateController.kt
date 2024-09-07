@@ -9,7 +9,7 @@ import io.ktor.server.application.ApplicationCall
 interface BookmarkUpdateController {
     suspend fun updateFollower(
         call: ApplicationCall,
-        resource: BookmarkResource.Update,
+        resource: BookmarkResource.UpdateResource,
         userDataSource: UserDataSource,
         tweetDataSource: TweetDataSource,
         bookmarkDataSource: BookmarkDataSource,

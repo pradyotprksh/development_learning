@@ -25,7 +25,7 @@ import utils.XFullStackResponseStatus
 class FollowUpdateControllerImplementation : FollowUpdateController {
     override suspend fun updateFollower(
         call: ApplicationCall,
-        resource: FollowResource.Update,
+        resource: FollowResource.UpdateResource,
         userDataSource: UserDataSource,
         followDataSource: FollowDataSource,
     ) {

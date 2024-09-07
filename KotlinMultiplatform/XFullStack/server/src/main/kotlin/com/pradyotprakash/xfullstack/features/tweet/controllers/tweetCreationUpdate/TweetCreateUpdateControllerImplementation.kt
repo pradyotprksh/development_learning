@@ -188,7 +188,7 @@ class TweetCreateUpdateControllerImplementation(
 
     override suspend fun voteOnTweet(
         call: ApplicationCall,
-        resource: TweetResource.TweetVote,
+        resource: TweetResource.TweetVoteResource,
         userDataSource: UserDataSource,
         tweetDataSource: TweetDataSource,
     ) {

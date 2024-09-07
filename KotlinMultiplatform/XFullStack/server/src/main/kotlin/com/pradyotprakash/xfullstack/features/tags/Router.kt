@@ -16,7 +16,7 @@ fun Routing.tags(
     tagsDataSource: TagsDataSource,
 ) {
     authenticate {
-        get<TagsResource.Trending> {
+        get<TagsResource.TrendingResource> {
             tagsController.getTrendingTags(
                 this.context, userDataSource, tweetDataSource, tagsDataSource
             )

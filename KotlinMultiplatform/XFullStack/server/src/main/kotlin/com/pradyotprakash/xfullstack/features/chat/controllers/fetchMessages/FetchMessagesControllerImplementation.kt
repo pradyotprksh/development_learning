@@ -30,7 +30,7 @@ import utils.XFullStackResponseStatus
 class FetchMessagesControllerImplementation : FetchMessagesController {
     override suspend fun getMessages(
         call: ApplicationCall,
-        resource: ChatResource.GetMessages,
+        resource: ChatResource.GetMessagesResource,
         userDataSource: UserDataSource,
         tweetDataSource: TweetDataSource,
         chatDataSource: ChatDataSource,

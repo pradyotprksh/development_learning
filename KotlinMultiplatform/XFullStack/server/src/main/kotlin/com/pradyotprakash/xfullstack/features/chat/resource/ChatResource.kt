@@ -10,18 +10,18 @@ import utils.Constants.Paths.Chat.SEND_MESSAGE
 class ChatResource {
 
     @Resource(SEND_MESSAGE)
-    data class SendMessage(
+    data class SendMessageResource(
         private val parent: ChatResource = ChatResource(),
     )
 
     @Resource(GET_MESSAGES)
-    data class GetMessages(
+    data class GetMessagesResource(
         private val parent: ChatResource = ChatResource(),
         val chatId: String,
     )
 
     @Resource(GET_CHATS)
-    data class GetChats(
+    data class GetChatsResource(
         private val parent: ChatResource = ChatResource(),
     )
 }

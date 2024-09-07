@@ -25,7 +25,7 @@ fun Routing.chat(
     bookmarkDataSource: BookmarkDataSource,
 ) {
     authenticate {
-        post<ChatResource.SendMessage> {
+        post<ChatResource.SendMessageResource> {
             chatController.sendMessage(
                 this.context,
                 userDataSource,
@@ -35,7 +35,7 @@ fun Routing.chat(
             )
         }
 
-        get<ChatResource.GetMessages> {
+        get<ChatResource.GetMessagesResource> {
             chatController.getMessages(
                 this.context,
                 it,
@@ -49,7 +49,7 @@ fun Routing.chat(
             )
         }
 
-        get<ChatResource.GetChats> {
+        get<ChatResource.GetChatsResource> {
             chatController.getChats(
                 this.context,
                 userDataSource,

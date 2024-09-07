@@ -12,7 +12,7 @@ import io.ktor.server.application.ApplicationCall
 interface TweetFetchController {
     suspend fun getAllTweets(
         call: ApplicationCall,
-        tweetPaginate: TweetResource.TweetPaginate,
+        tweetPaginate: TweetResource.TweetPaginateResource,
         userDataSource: UserDataSource,
         tweetDataSource: TweetDataSource,
         viewDataSource: ViewDataSource,

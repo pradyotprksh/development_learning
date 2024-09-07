@@ -16,7 +16,7 @@ fun Routing.bookmark(
     bookmarkDataSource: BookmarkDataSource,
 ) {
     authenticate {
-        post<BookmarkResource.Update> {
+        post<BookmarkResource.UpdateResource> {
             bookmarkController.updateFollower(
                 this.context,
                 it,

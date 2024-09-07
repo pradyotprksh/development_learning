@@ -14,7 +14,7 @@ fun Routing.follow(
     followDataSource: FollowDataSource,
 ) {
     authenticate {
-        post<FollowResource.Update> {
+        post<FollowResource.UpdateResource> {
             followController.updateFollower(
                 this.context,
                 it,

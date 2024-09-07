@@ -16,7 +16,7 @@ fun Routing.users(
     chatDataSource: ChatDataSource,
 ) {
     authenticate {
-        get<UsersResource.Info> {
+        get<UsersResource.InfoResource> {
             usersController.getUserInfo(
                 this.context,
                 it,
@@ -26,7 +26,7 @@ fun Routing.users(
             )
         }
 
-        get<UsersResource.CanFollow> {
+        get<UsersResource.CanFollowResource> {
             usersController.getUserCanBeFollowed(
                 this.context,
                 userDataSource,

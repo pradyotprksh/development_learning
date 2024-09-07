@@ -15,7 +15,7 @@ import utils.XFullStackResponseStatus
 class UsernameValidControllerImplementation : UsernameValidController {
     override suspend fun isUserNameValid(
         call: ApplicationCall,
-        resource: UtilsResource.UsernameValid,
+        resource: UtilsResource.UsernameValidResource,
         userDataSource: UserDataSource,
     ) {
         val username = resource.value

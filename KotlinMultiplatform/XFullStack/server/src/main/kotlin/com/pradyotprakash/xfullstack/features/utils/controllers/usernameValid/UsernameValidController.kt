@@ -7,7 +7,7 @@ import io.ktor.server.application.ApplicationCall
 interface UsernameValidController {
     suspend fun isUserNameValid(
         call: ApplicationCall,
-        resource: UtilsResource.UsernameValid,
+        resource: UtilsResource.UsernameValidResource,
         userDataSource: UserDataSource,
     )
 }

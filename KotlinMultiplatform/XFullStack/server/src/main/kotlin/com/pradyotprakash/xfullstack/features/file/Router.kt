@@ -10,7 +10,7 @@ fun Routing.file(
     fileController: FileController,
     fileDataSource: FileDataSource,
 ) {
-    post<FileResource.Upload> {
+    post<FileResource.UploadResource> {
         fileController.uploadFile(
             this.context,
             fileDataSource = fileDataSource,

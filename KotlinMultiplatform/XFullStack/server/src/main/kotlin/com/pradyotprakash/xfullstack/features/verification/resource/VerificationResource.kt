@@ -9,18 +9,18 @@ import utils.Constants.Paths.Verification.VERIFICATION
 @Resource(VERIFICATION)
 class VerificationResource {
     @Resource(GENERATE_OTP)
-    data class GenerateOtp(
+    data class GenerateOtpResource(
         private val parent: VerificationResource = VerificationResource(),
         val value: String,
     )
 
     @Resource(VALIDATE_OTP)
-    data class ValidateOtp(
+    data class ValidateOtpResource(
         private val parent: VerificationResource = VerificationResource(),
     )
 
     @Resource(USER_PRESENT)
-    data class UserPresent(
+    data class UserPresentResource(
         private val parent: VerificationResource = VerificationResource(),
         val value: String,
     )

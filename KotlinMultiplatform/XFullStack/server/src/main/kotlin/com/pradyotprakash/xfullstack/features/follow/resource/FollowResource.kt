@@ -8,7 +8,7 @@ import utils.Constants.Paths.Follow.UPDATE
 class FollowResource {
 
     @Resource(UPDATE)
-    data class Update(
+    data class UpdateResource(
         private val parent: FollowResource = FollowResource(),
         val followingId: String,
     )

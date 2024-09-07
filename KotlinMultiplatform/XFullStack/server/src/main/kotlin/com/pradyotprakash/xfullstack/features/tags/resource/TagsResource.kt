@@ -8,7 +8,7 @@ import utils.Constants.Paths.Tags.TRENDING
 class TagsResource {
 
     @Resource(TRENDING)
-    data class Trending(
+    data class TrendingResource(
         private val parent: TagsResource = TagsResource(),
     )
 }

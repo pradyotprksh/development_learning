@@ -10,22 +10,22 @@ import utils.Constants.Paths.Authentication.USER_INFO
 @Resource(AUTH)
 class AuthenticationResource {
     @Resource(LOGIN)
-    data class Login(
+    data class LoginResource(
         private val parent: AuthenticationResource = AuthenticationResource(),
     )
 
     @Resource(REGISTER)
-    data class Register(
+    data class RegisterResource(
         private val parent: AuthenticationResource = AuthenticationResource(),
     )
 
     @Resource(AUTHENTICATE)
-    data class Authenticate(
+    data class AuthenticateResource(
         private val parent: AuthenticationResource = AuthenticationResource(),
     )
 
     @Resource(USER_INFO)
-    data class UserInfo(
+    data class UserInfoResource(
         private val parent: AuthenticationResource = AuthenticationResource(),
     )
 }

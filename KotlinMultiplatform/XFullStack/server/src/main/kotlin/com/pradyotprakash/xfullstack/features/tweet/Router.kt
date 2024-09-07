@@ -25,7 +25,7 @@ fun Routing.tweet(
     chatDataSource: ChatDataSource,
 ) {
     authenticate {
-        get<TweetResource.TweetPaginate> {
+        get<TweetResource.TweetPaginateResource> {
             tweetController.getAllTweets(
                 this.context,
                 it,
@@ -47,7 +47,7 @@ fun Routing.tweet(
             )
         }
 
-        post<TweetResource.TweetVote> {
+        post<TweetResource.TweetVoteResource> {
             tweetController.voteOnTweet(
                 this.context,
                 it,

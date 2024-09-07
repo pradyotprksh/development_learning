@@ -8,7 +8,7 @@ import io.ktor.server.application.ApplicationCall
 interface FollowUpdateController {
     suspend fun updateFollower(
         call: ApplicationCall,
-        resource: FollowResource.Update,
+        resource: FollowResource.UpdateResource,
         userDataSource: UserDataSource,
         followDataSource: FollowDataSource,
     )

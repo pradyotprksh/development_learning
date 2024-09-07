@@ -21,7 +21,7 @@ import utils.XFullStackResponseStatus
 class UsersInfoControllerImplementation : UsersInfoController {
     override suspend fun getUserInfo(
         call: ApplicationCall,
-        resource: UsersResource.Info,
+        resource: UsersResource.InfoResource,
         userDataSource: UserDataSource,
         followDataSource: FollowDataSource,
         chatDataSource: ChatDataSource,

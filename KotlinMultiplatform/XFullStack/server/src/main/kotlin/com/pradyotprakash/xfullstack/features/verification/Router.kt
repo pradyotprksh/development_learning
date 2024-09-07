@@ -11,14 +11,14 @@ fun Routing.verification(
     verificationController: VerificationController,
     userDataSource: UserDataSource,
 ) {
-    get<VerificationResource.GenerateOtp> {
+    get<VerificationResource.GenerateOtpResource> {
         verificationController.generateOtp(
             call = this.context,
             resource = it,
         )
     }
 
-    get<VerificationResource.UserPresent> {
+    get<VerificationResource.UserPresentResource> {
         verificationController.userPresent(
             call = this.context,
             resource = it,
@@ -26,7 +26,7 @@ fun Routing.verification(
         )
     }
 
-    post<VerificationResource.ValidateOtp> {
+    post<VerificationResource.ValidateOtpResource> {
         verificationController.validateOtp(
             call = this.context,
         )

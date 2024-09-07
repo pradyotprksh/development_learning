@@ -25,7 +25,7 @@ import utils.XFullStackResponseStatus
 class BookmarkUpdateControllerImplementation : BookmarkUpdateController {
     override suspend fun updateFollower(
         call: ApplicationCall,
-        resource: BookmarkResource.Update,
+        resource: BookmarkResource.UpdateResource,
         userDataSource: UserDataSource,
         tweetDataSource: TweetDataSource,
         bookmarkDataSource: BookmarkDataSource,

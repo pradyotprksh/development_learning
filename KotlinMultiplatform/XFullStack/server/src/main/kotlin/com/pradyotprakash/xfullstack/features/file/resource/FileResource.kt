@@ -8,7 +8,7 @@ import utils.Constants.Paths.File.UPLOAD
 class FileResource {
 
     @Resource(UPLOAD)
-    data class Upload(
+    data class UploadResource(
         private val parent: FileResource = FileResource(),
     )
 }
