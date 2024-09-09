@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"changelists": [
+		{
+			"guid": "00000000000000000000000000000000",
+			"description": "Default Uncontrolled Changelist",
+			"files": [
+				"/Users/pradyotprakash/Desktop/Data/Projects/development_learning/UnrealEngine/IntroProject/Content/__ExternalActors__/ThirdPerson/Maps/ThirdPersonMap/D/7A/XYQXTFRI4CAOVZQW46YL08.uasset",
+				"/Users/pradyotprakash/Desktop/Data/Projects/development_learning/UnrealEngine/IntroProject/Content/__ExternalActors__/ThirdPerson/Maps/ThirdPersonMap/9/U7/H8YL2PPHZPBTI74SUD0RNL.uasset"
+			]
+		}
+	]
+}
