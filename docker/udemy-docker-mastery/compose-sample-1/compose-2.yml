@@ -1,0 +1,32 @@
+# version isn't needed as of 2020 for docker compose CLI. 
+# All 2.x and 3.x features supported
+# version: '2'
+
+services:
+
+  wordpress:
+    image: wordpress
+    ports:
+      - 8080:80
+    environment:
+      WORDPRESS_DB_HOST: mysql
+      WORDPRESS_DB_NAME: wordpress
+      WORDPRESS_DB_USER: example
+      WORDPRESS_DB_PASSWORD: examplePW
+    volumes:
+      - ./wordpress-data:/var/www/html
+
+  mysql:
+    # we use mariadb here for arm support
+    # mariadb is a fork of MySQL that's often faster and better multi-platform
+    image: mariadb
+    environment:
+      MYSQL_ROOT_PASSWORD: examplerootPW
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: example
+      MYSQL_PASSWORD: examplePW
+    volumes:
+      - mysql-data:/var/lib/mysql
+
+volumes:
+  mysql-data:
