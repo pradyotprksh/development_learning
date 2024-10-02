@@ -12,9 +12,9 @@ FROM debian:bookworm-slim
 LABEL maintainer="NGINX Docker Maintainers <docker-maint@nginx.com>"
 
 # optional environment variable that's used in later lines and set as envvar when container is running
-ENV NGINX_VERSION   1.25.3
-ENV NJS_VERSION     0.8.2
-ENV PKG_RELEASE     1~bookworm
+ENV NGINX_VERSION=1.25.3
+ENV NJS_VERSION=0.8.2
+ENV PKG_RELEASE=1~bookworm
 
 
 RUN set -x \
@@ -117,7 +117,7 @@ RUN set -x \
 # COPY 30-tune-worker-processes.sh /docker-entrypoint.d
 # ENTRYPOINT ["/docker-entrypoint.sh"]
 
-EXPOSE 80
+EXPOSE 80 8080
 # expose these ports on the docker virtual network
 # you still need to use -p or -P to open/forward these ports on host
 
