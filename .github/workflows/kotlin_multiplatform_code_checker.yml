@@ -17,15 +17,12 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-java@v1
         with:
-          java-version: '11'
-          distribution: 'adopt'
-          cache: gradle
+          java-version: '17'
       - name: Checking Ecom
         working-directory: ./KotlinMultiplatform/Ecom
         run: |
           chmod +x ./gradlew
           ./gradlew build
-          ./gradlew composeApp:assembleDebug
       - name: Send Message
         if: always()
         uses: appleboy/telegram-action@master
@@ -45,15 +42,12 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-java@v1
         with:
-          java-version: '11'
-          distribution: 'adopt'
-          cache: gradle
+          java-version: '17'
       - name: Checking get_ip_address
         working-directory: ./KotlinMultiplatform/get_ip_address
         run: |
           chmod +x ./gradlew
           ./gradlew build
-          ./gradlew composeApp:assembleDebug
       - name: Send Message
         if: always()
         uses: appleboy/telegram-action@master
@@ -75,14 +69,11 @@ jobs:
       - uses: actions/setup-java@v1
         with:
           java-version: '17'
-          distribution: 'adopt'
-          cache: gradle
       - name: Checking GlassBridgeGame
         working-directory: ./KotlinMultiplatform/GlassBridgeGame
         run: |
           chmod +x ./gradlew
           ./gradlew build
-          ./gradlew composeApp:assembleDebug
       - name: Send Message
         if: always()
         uses: appleboy/telegram-action@master
@@ -102,14 +93,12 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-java@v1
         with:
-          java-version: '11'
-          distribution: 'adopt'
-          cache: gradle
+          java-version: '17'
       - name: Checking Jwitter
         working-directory: ./KotlinMultiplatform/Jwitter
         run: |
           chmod +x ./gradlew
-          ./gradlew assemble
+          ./gradlew build
       - name: Send Message
         if: always()
         uses: appleboy/telegram-action@master
@@ -129,14 +118,12 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-java@v1
         with:
-          java-version: '11'
-          distribution: 'adopt'
-          cache: gradle
+          java-version: '17'
       - name: Checking KotlinMultiplatformSandbox
         working-directory: ./KotlinMultiplatform/KotlinMultiplatformSandbox
         run: |
           chmod +x ./gradlew
-          ./gradlew assemble
+          ./gradlew build
       - name: Send Message
         if: always()
         uses: appleboy/telegram-action@master
@@ -156,14 +143,12 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-java@v1
         with:
-          java-version: '11'
-          distribution: 'adopt'
-          cache: gradle
+          java-version: '17'
       - name: Checking Pokdex
         working-directory: ./KotlinMultiplatform/Pokdex
         run: |
           chmod +x ./gradlew
-          ./gradlew assemble
+          ./gradlew build
       - name: Send Message
         if: always()
         uses: appleboy/telegram-action@master
@@ -183,14 +168,12 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-java@v1
         with:
-          java-version: '11'
-          distribution: 'adopt'
-          cache: gradle
+          java-version: '17'
       - name: Checking PokedexKMP
         working-directory: ./KotlinMultiplatform/PokedexKMP
         run: |
           chmod +x ./gradlew
-          ./gradlew assemble
+          ./gradlew build
       - name: Send Message
         if: always()
         uses: appleboy/telegram-action@master
@@ -210,14 +193,12 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-java@v1
         with:
-          java-version: '11'
-          distribution: 'adopt'
-          cache: gradle
+          java-version: '17'
       - name: Checking TheMovieDBKMM
         working-directory: ./KotlinMultiplatform/TheMovieDBKMM
         run: |
           chmod +x ./gradlew
-          ./gradlew assemble
+          ./gradlew build
       - name: Send Message
         if: always()
         uses: appleboy/telegram-action@master
@@ -237,15 +218,12 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-java@v1
         with:
-          java-version: '11'
-          distribution: 'adopt'
-          cache: gradle
+          java-version: '17'
       - name: Checking XFullStack
         working-directory: ./KotlinMultiplatform/XFullStack
         run: |
           chmod +x ./gradlew
           ./gradlew build
-          ./gradlew composeApp:assembleDebug
       - name: Send Message
         if: always()
         uses: appleboy/telegram-action@master
