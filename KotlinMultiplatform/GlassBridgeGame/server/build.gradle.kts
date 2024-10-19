@@ -5,7 +5,9 @@ plugins {
 }
 
 group = "com.pradyotprakash.glassbridgegame"
+
 version = "1.0.0"
+
 application {
     mainClass.set("com.pradyotprakash.glassbridgegame.ApplicationKt")
     applicationDefaultJvmArgs = listOf("-Dio.ktor.development=${extra["io.ktor.development"] ?: "false"}")
