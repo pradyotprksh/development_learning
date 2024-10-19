@@ -1,6 +1,7 @@
 package com.pradyotprakash.glassbridgegame
 
 import androidx.compose.runtime.Composable
+import com.pradyotprakash.glassbridgegame.app.GlassBridgeGameApp
 import com.pradyotprakash.glassbridgegame.app.theme.GlassBridgeGameTheme
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
@@ -8,6 +9,6 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 @Preview
 fun App() {
     GlassBridgeGameTheme {
-
+        GlassBridgeGameApp()
     }
 }
