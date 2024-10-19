@@ -6,8 +6,8 @@ on:
       - KotlinMultiplatform/**
 name: KotlinMultiplatform Projects
 jobs:
-  TheMovieDBKMM:
-    name: TheMovieDBKMM Code Checker
+  Ecom:
+    name: Ecom Code Checker
     runs-on: ubuntu-latest
     steps:
       - name: Cancel Previous Runs
@@ -20,11 +20,12 @@ jobs:
           java-version: '11'
           distribution: 'adopt'
           cache: gradle
-      - name: Checking TheMovieDBKMM
-        working-directory: ./KotlinMultiplatform/TheMovieDBKMM
+      - name: Checking Ecom
+        working-directory: ./KotlinMultiplatform/Ecom
         run: |
           chmod +x ./gradlew
-          ./gradlew assemble
+          ./gradlew build
+          ./gradlew composeApp:assembleDebug
       - name: Send Message
         if: always()
         uses: appleboy/telegram-action@master
@@ -32,9 +33,9 @@ jobs:
           to: ${{ secrets.TELEGRAM_TO }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
           message: |
-            GitHub Action for KotlinMultiplatform/TheMovieDBKMM is completed with status ${{ job.status }} for ${{ github.ref }}.
-  KotlinMultiplatformSandbox:
-    name: KotlinMultiplatformSandbox Code Checker
+            GitHub Action for KotlinMultiplatform/Ecom is completed with status ${{ job.status }} for ${{ github.ref }}.
+  get_ip_address:
+    name: get_ip_address Code Checker
     runs-on: ubuntu-latest
     steps:
       - name: Cancel Previous Runs
@@ -47,11 +48,12 @@ jobs:
           java-version: '11'
           distribution: 'adopt'
           cache: gradle
-      - name: Checking KotlinMultiplatformSandbox
-        working-directory: ./KotlinMultiplatform/KotlinMultiplatformSandbox
+      - name: Checking get_ip_address
+        working-directory: ./KotlinMultiplatform/get_ip_address
         run: |
           chmod +x ./gradlew
-          ./gradlew assemble
+          ./gradlew build
+          ./gradlew composeApp:assembleDebug
       - name: Send Message
         if: always()
         uses: appleboy/telegram-action@master
@@ -59,7 +61,36 @@ jobs:
           to: ${{ secrets.TELEGRAM_TO }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
           message: |
-            GitHub Action for KotlinMultiplatform/KotlinMultiplatformSandbox is completed with status ${{ job.status }} for ${{ github.ref }}.
+            GitHub Action for KotlinMultiplatform/get_ip_address is completed with status ${{ job.status }} for ${{ github.ref }}.
+
+  GlassBridgeGame:
+    name: GlassBridgeGame Code Checker
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cancel Previous Runs
+        uses: styfle/cancel-workflow-action@0.9.1
+        with:
+          access_token: ${{ github.token }}
+      - uses: actions/checkout@v2
+      - uses: actions/setup-java@v1
+        with:
+          java-version: '11'
+          distribution: 'adopt'
+          cache: gradle
+      - name: Checking GlassBridgeGame
+        working-directory: ./KotlinMultiplatform/GlassBridgeGame
+        run: |
+          chmod +x ./gradlew
+          ./gradlew build
+          ./gradlew composeApp:assembleDebug
+      - name: Send Message
+        if: always()
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+            GitHub Action for KotlinMultiplatform/GlassBridgeGame is completed with status ${{ job.status }} for ${{ github.ref }}.
   Jwitter:
     name: Jwitter Code Checker
     runs-on: ubuntu-latest
@@ -87,6 +118,60 @@ jobs:
           token: ${{ secrets.TELEGRAM_TOKEN }}
           message: |
             GitHub Action for KotlinMultiplatform/KotlinMultiplatformSandbox is completed with status ${{ job.status }} for ${{ github.ref }}.
+  KotlinMultiplatformSandbox:
+    name: KotlinMultiplatformSandbox Code Checker
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cancel Previous Runs
+        uses: styfle/cancel-workflow-action@0.9.1
+        with:
+          access_token: ${{ github.token }}
+      - uses: actions/checkout@v2
+      - uses: actions/setup-java@v1
+        with:
+          java-version: '11'
+          distribution: 'adopt'
+          cache: gradle
+      - name: Checking KotlinMultiplatformSandbox
+        working-directory: ./KotlinMultiplatform/KotlinMultiplatformSandbox
+        run: |
+          chmod +x ./gradlew
+          ./gradlew assemble
+      - name: Send Message
+        if: always()
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+            GitHub Action for KotlinMultiplatform/KotlinMultiplatformSandbox is completed with status ${{ job.status }} for ${{ github.ref }}.
+  Pokdex:
+    name: Pokdex Code Checker
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cancel Previous Runs
+        uses: styfle/cancel-workflow-action@0.9.1
+        with:
+          access_token: ${{ github.token }}
+      - uses: actions/checkout@v2
+      - uses: actions/setup-java@v1
+        with:
+          java-version: '11'
+          distribution: 'adopt'
+          cache: gradle
+      - name: Checking Pokdex
+        working-directory: ./KotlinMultiplatform/Pokdex
+        run: |
+          chmod +x ./gradlew
+          ./gradlew assemble
+      - name: Send Message
+        if: always()
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+            GitHub Action for KotlinMultiplatform/Pokdex is completed with status ${{ job.status }} for ${{ github.ref }}.
   PokedexKMP:
     name: PokedexKMP Code Checker
     runs-on: ubuntu-latest
@@ -114,6 +199,33 @@ jobs:
           token: ${{ secrets.TELEGRAM_TOKEN }}
           message: |
             GitHub Action for KotlinMultiplatform/PokedexKMP is completed with status ${{ job.status }} for ${{ github.ref }}.
+  TheMovieDBKMM:
+    name: TheMovieDBKMM Code Checker
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cancel Previous Runs
+        uses: styfle/cancel-workflow-action@0.9.1
+        with:
+          access_token: ${{ github.token }}
+      - uses: actions/checkout@v2
+      - uses: actions/setup-java@v1
+        with:
+          java-version: '11'
+          distribution: 'adopt'
+          cache: gradle
+      - name: Checking TheMovieDBKMM
+        working-directory: ./KotlinMultiplatform/TheMovieDBKMM
+        run: |
+          chmod +x ./gradlew
+          ./gradlew assemble
+      - name: Send Message
+        if: always()
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+            GitHub Action for KotlinMultiplatform/TheMovieDBKMM is completed with status ${{ job.status }} for ${{ github.ref }}.
   XFullStack:
     name: XFullStack Code Checker
     runs-on: ubuntu-latest
