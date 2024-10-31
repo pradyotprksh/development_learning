@@ -7,6 +7,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.pradyotprakash.glassbridgegame.app.navigation.Home
 import com.pradyotprakash.glassbridgegame.app.navigation.Splash
+import com.pradyotprakash.glassbridgegame.app.pages.home.screen.HomeScreen
 import com.pradyotprakash.glassbridgegame.app.pages.splash.screen.SplashScreen
 import com.pradyotprakash.glassbridgegame.utils.extensions.popUpToTop
 
@@ -29,6 +30,8 @@ fun GlassBridgeGameApp(
                 navigateToHome = navigateToHome,
             )
         }
-        composable<Home> {}
+        composable<Home> {
+            HomeScreen()
+        }
     }
 }
