@@ -23,11 +23,13 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.unit.dp
 import com.pradyotprakash.glassbridgegame.app.pages.bridgeGame.viewModel.state.GlassState
+import com.pradyotprakash.glassbridgegame.app.pages.bridgeGame.viewModel.state.PlayerState
 
 @Composable
 fun Glass(
     modifier: Modifier = Modifier,
     glass: GlassState,
+    player: PlayerState?,
     onBridgeGlassTap: () -> Unit,
 ) {
     val glassBreakEffect by animateFloatAsState(
@@ -38,7 +40,7 @@ fun Glass(
     Box(
         modifier = modifier,
     ) {
-        glass.player?.let {
+        player?.let {
             Player(
                 modifier = Modifier.align(Alignment.Center),
                 player = it,

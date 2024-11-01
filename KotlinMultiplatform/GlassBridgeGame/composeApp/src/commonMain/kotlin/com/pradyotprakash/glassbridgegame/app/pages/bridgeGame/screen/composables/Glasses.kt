@@ -13,12 +13,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.pradyotprakash.glassbridgegame.app.pages.bridgeGame.viewModel.state.GlassState
+import com.pradyotprakash.glassbridgegame.app.pages.bridgeGame.viewModel.state.PlayerState
 import com.pradyotprakash.glassbridgegame.utils.NUMBER_OF_TILES
 
 @Composable
 fun Glasses(
     modifier: Modifier = Modifier,
     glassesState: List<GlassState>,
+    players: List<PlayerState>,
     onBridgeGlassTap: (Int) -> Unit,
 ) {
     LazyColumn(
@@ -42,14 +44,16 @@ fun Glasses(
                     ) {
                         Glass(
                             glass = firstGlass,
-                            modifier = Modifier.weight(1f)
+                            modifier = Modifier.weight(1f),
+                            player = players.getOrNull(firstGlass.playerNumber),
                         ) {
                             onBridgeGlassTap(firstGlass.number)
                         }
                         Spacer(modifier = Modifier.width(10.dp))
                         Glass(
                             glass = secondGlass,
-                            modifier = Modifier.weight(1f)
+                            modifier = Modifier.weight(1f),
+                            player = players.getOrNull(firstGlass.playerNumber),
                         ) {
                             onBridgeGlassTap(secondGlass.number)
                         }

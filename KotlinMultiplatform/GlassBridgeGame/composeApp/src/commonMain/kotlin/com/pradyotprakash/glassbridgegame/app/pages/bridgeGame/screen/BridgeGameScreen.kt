@@ -59,6 +59,7 @@ fun BridgeGameScreen(
             Glasses(
                 modifier = Modifier.fillMaxWidth().weight(1f),
                 glassesState = bridgeGameState.glasses,
+                players = bridgeGameState.players,
             ) {
                 bridgeGameViewModel.onBridgeGlassTap(it)
             }

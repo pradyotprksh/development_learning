@@ -4,5 +4,5 @@ data class GlassState(
     val number: Int,
     val isBreakable: Boolean,
     val isBroken: Boolean,
-    val player: PlayerState?,
+    val playerNumber: Int,
 )

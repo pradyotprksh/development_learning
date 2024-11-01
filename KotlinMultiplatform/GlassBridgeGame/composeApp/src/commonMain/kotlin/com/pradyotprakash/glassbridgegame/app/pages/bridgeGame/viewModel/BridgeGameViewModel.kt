@@ -35,7 +35,7 @@ class BridgeGameViewModel : ViewModel() {
                     number = i,
                     isBreakable = isBreakable,
                     isBroken = false,
-                    player = null,
+                    playerNumber = -1,
                 )
             )
 
@@ -44,7 +44,7 @@ class BridgeGameViewModel : ViewModel() {
                     number = i + 1,
                     isBreakable = !isBreakable,
                     isBroken = false,
-                    player = null,
+                    playerNumber = -1,
                 )
             )
         }
