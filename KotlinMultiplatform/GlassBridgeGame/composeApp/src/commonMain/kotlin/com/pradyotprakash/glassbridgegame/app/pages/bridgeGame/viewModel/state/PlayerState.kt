@@ -7,4 +7,7 @@ data class PlayerState(
     val name: String,
     val isThePlayer: Boolean,
     val playerNumber: Int,
-)
+) {
+    val showInTheArena: Boolean
+        get() = !isDead && glassNumber == -1
+}

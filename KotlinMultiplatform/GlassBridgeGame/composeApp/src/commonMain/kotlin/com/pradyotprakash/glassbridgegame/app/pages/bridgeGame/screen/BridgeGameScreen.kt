@@ -43,6 +43,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.pradyotprakash.glassbridgegame.app.navigation.BridgeGame
+import com.pradyotprakash.glassbridgegame.app.pages.bridgeGame.screen.composables.PlayerSitArena
 import com.pradyotprakash.glassbridgegame.app.pages.bridgeGame.viewModel.BridgeGameViewModel
 import com.pradyotprakash.glassbridgegame.utils.NUMBER_OF_TILES
 
@@ -146,62 +147,8 @@ fun BridgeGameScreen(
                 }
             }
             if (bridgeGameState.isGameStarted) {
-                HorizontalDivider(
-                    thickness = 5.dp,
-                )
-                Column(
-                    verticalArrangement = Arrangement.SpaceEvenly,
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    modifier = Modifier.fillMaxWidth().padding(10.dp),
-                ) {
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceEvenly,
-                    ) {
-                        bridgeGameState.players.subList(0, 7).map {
-                            Column(
-                                verticalArrangement = Arrangement.Center,
-                                horizontalAlignment = Alignment.CenterHorizontally,
-                            ) {
-                                Icon(
-                                    Icons.Filled.Person,
-                                    contentDescription = Icons.Filled.Person.name,
-                                    tint = if (it.isThePlayer) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.secondary,
-                                )
-                                Spacer(modifier = Modifier.height(2.dp))
-                                Text(
-                                    it.name,
-                                    style = MaterialTheme.typography.labelSmall,
-                                )
-                            }
-                        }
-                    }
-                    Spacer(modifier = Modifier.height(5.dp))
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceEvenly,
-                    ) {
-                        bridgeGameState.players.subList(8, 15).map {
-                            Column(
-                                verticalArrangement = Arrangement.Center,
-                                horizontalAlignment = Alignment.CenterHorizontally,
-                            ) {
-                                Icon(
-                                    Icons.Filled.Person,
-                                    contentDescription = Icons.Filled.Person.name,
-                                    tint = if (it.isThePlayer) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.secondary,
-                                )
-                                Spacer(modifier = Modifier.height(2.dp))
-                                Text(
-                                    it.name,
-                                    style = MaterialTheme.typography.labelSmall,
-                                )
-                            }
-                        }
-                    }
-                }
-                HorizontalDivider(
-                    thickness = 5.dp,
+                PlayerSitArena(
+                    players = bridgeGameState.players,
                 )
             }
         }
