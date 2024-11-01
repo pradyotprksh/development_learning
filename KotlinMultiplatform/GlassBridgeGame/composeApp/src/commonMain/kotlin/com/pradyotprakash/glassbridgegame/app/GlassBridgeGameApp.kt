@@ -49,7 +49,9 @@ fun GlassBridgeGameApp(
         composable<BridgeGame> { backStackEntry ->
             val bridgeGameDetails = backStackEntry.toRoute<BridgeGame>()
 
-            BridgeGameScreen()
+            BridgeGameScreen(
+                bridgeGameDetails = bridgeGameDetails,
+            )
         }
     }
 }

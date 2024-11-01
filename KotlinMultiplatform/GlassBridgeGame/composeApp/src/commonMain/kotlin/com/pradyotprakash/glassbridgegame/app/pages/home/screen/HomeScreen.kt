@@ -77,7 +77,7 @@ fun HomeScreen(
             ) {
                 Icon(
                     imageVector = Icons.Filled.PlayArrow,
-                    contentDescription = Icons.Sharp.PlayArrow.name,
+                    contentDescription = Icons.Filled.PlayArrow.name,
                 )
             }
             Spacer(modifier = Modifier.weight(1f))
