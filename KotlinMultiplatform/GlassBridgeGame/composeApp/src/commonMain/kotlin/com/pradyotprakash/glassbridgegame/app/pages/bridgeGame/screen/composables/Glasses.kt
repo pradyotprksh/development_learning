@@ -53,7 +53,7 @@ fun Glasses(
                         Glass(
                             glass = secondGlass,
                             modifier = Modifier.weight(1f),
-                            player = players.getOrNull(firstGlass.playerNumber),
+                            player = players.getOrNull(secondGlass.playerNumber),
                         ) {
                             onBridgeGlassTap(secondGlass.number)
                         }
