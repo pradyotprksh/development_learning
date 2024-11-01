@@ -121,6 +121,7 @@ class BridgeGameViewModel : ViewModel() {
                     currentPlayerIndex = currentPlayerIndex,
                     currentPlayer = currentPlayer,
                 )
+                takeTheStep(null)
             }
         } else {
             glassNumber?.let {
@@ -133,7 +134,7 @@ class BridgeGameViewModel : ViewModel() {
     }
 
     private fun humanPlay(selectedGlass: Int, currentPlayerIndex: Int) {
-
+        takeTheStep(null)
     }
 
     private fun botPlay(currentPlayerIndex: Int, currentPlayer: PlayerState) {
