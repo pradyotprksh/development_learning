@@ -9,6 +9,7 @@ data class BridgeGameState(
     val isGameStarted: Boolean = false,
     val isGameFinished: Boolean = false,
     val gameTimeValue: Int = 0,
+    val currentPlayer: Int = 0,
 ) {
     val gameTimeString: String
         get() {

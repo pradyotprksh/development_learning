@@ -5,6 +5,8 @@ import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -30,6 +32,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.blur
@@ -112,7 +115,12 @@ fun BridgeGameScreen(
                                         ).graphicsLayer(
                                             scaleX = firstGlassBreakEffect,
                                             scaleY = firstGlassBreakEffect,
-                                        ).padding(16.dp).height(100.dp).weight(1f)
+                                        ).padding(16.dp).height(100.dp).weight(1f).clickable(
+                                            indication = null,
+                                            interactionSource = remember { MutableInteractionSource() },
+                                        ) {
+                                            bridgeGameViewModel.onBridgeGlassTap(firstGlass.number)
+                                        },
                                 ) { }
                                 Spacer(modifier = Modifier.width(10.dp))
                                 Box(
@@ -125,7 +133,12 @@ fun BridgeGameScreen(
                                         ).graphicsLayer(
                                             scaleX = secondGlassBreakEffect,
                                             scaleY = secondGlassBreakEffect,
-                                        ).padding(16.dp).height(100.dp).weight(1f)
+                                        ).padding(16.dp).height(100.dp).weight(1f).clickable(
+                                            indication = null,
+                                            interactionSource = remember { MutableInteractionSource() },
+                                        ) {
+                                            bridgeGameViewModel.onBridgeGlassTap(secondGlass.number)
+                                        },
                                 ) { }
                             }
                         }

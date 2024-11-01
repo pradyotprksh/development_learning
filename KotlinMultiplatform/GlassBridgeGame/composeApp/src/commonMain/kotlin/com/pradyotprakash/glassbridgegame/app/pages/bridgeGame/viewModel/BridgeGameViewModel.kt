@@ -35,6 +35,7 @@ class BridgeGameViewModel : ViewModel() {
                     number = i,
                     isBreakable = isBreakable,
                     isBroken = false,
+                    player = null,
                 )
             )
 
@@ -43,6 +44,7 @@ class BridgeGameViewModel : ViewModel() {
                     number = i + 1,
                     isBreakable = !isBreakable,
                     isBroken = false,
+                    player = null,
                 )
             )
         }
@@ -91,6 +93,7 @@ class BridgeGameViewModel : ViewModel() {
     private fun startTimer() {
         viewModelScope.launch {
             delay(5000)
+            takeTheStep(null)
             while (_bridgeGameState.value.gameTimeValue > 0) {
                 _bridgeGameState.update {
                     val remainingTime = it.gameTimeValue - 1
@@ -103,6 +106,44 @@ class BridgeGameViewModel : ViewModel() {
                 }
                 delay(1000)
             }
+        }
+    }
+
+    private fun takeTheStep(glassNumber: Int?) {
+        val players = _bridgeGameState.value.players
+        val currentPlayerIndex = _bridgeGameState.value.currentPlayer
+        val currentPlayer = players[currentPlayerIndex]
+
+        if (!currentPlayer.isThePlayer) {
+            viewModelScope.launch {
+                delay(800)
+                botPlay(
+                    currentPlayerIndex = currentPlayerIndex,
+                    currentPlayer = currentPlayer,
+                )
+            }
+        } else {
+            glassNumber?.let {
+                humanPlay(
+                    selectedGlass = it,
+                    currentPlayerIndex = currentPlayerIndex,
+                )
+            }
+        }
+    }
+
+    private fun humanPlay(selectedGlass: Int, currentPlayerIndex: Int) {
+
+    }
+
+    private fun botPlay(currentPlayerIndex: Int, currentPlayer: PlayerState) {
+
+    }
+
+    fun onBridgeGlassTap(glassNumber: Int) {
+        val isGameStarted = _bridgeGameState.value.isGameStarted
+        if (isGameStarted) {
+            takeTheStep(glassNumber)
         }
     }
 }
