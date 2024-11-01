@@ -5,8 +5,11 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.toRoute
+import com.pradyotprakash.glassbridgegame.app.navigation.BridgeGame
 import com.pradyotprakash.glassbridgegame.app.navigation.Home
 import com.pradyotprakash.glassbridgegame.app.navigation.Splash
+import com.pradyotprakash.glassbridgegame.app.pages.bridgeGame.screen.BridgeGameScreen
 import com.pradyotprakash.glassbridgegame.app.pages.home.screen.HomeScreen
 import com.pradyotprakash.glassbridgegame.app.pages.splash.screen.SplashScreen
 import com.pradyotprakash.glassbridgegame.utils.extensions.popUpToTop
@@ -21,6 +24,14 @@ fun GlassBridgeGameApp(
         }
     }
 
+    val navigateToBridgeGame = { isOffline: Boolean ->
+        navController.navigate(
+            BridgeGame(
+                isOffline = isOffline,
+            )
+        )
+    }
+
     NavHost(
         navController,
         startDestination = Splash,
@@ -31,7 +42,14 @@ fun GlassBridgeGameApp(
             )
         }
         composable<Home> {
-            HomeScreen()
+            HomeScreen(
+                navigateToBridgeGame = navigateToBridgeGame,
+            )
+        }
+        composable<BridgeGame> { backStackEntry ->
+            val bridgeGameDetails = backStackEntry.toRoute<BridgeGame>()
+
+            BridgeGameScreen()
         }
     }
 }
