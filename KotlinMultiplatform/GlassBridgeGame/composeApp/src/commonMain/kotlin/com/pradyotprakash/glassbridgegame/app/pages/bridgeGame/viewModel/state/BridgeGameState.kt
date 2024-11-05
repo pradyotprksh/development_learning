@@ -19,4 +19,10 @@ data class BridgeGameState(
                 remainingSeconds.toString().padStart(2, '0')
             }"
         }
+
+    val winnerPlayer: List<PlayerState>
+        get() = players.filter { it.showInTheWinnerArena }
+
+    val inArenaPlayer: List<PlayerState>
+        get() = players.filter { it.showInTheArena }
 }

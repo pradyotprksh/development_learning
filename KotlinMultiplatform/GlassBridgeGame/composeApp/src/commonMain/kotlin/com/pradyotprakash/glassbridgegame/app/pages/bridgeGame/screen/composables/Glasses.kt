@@ -14,7 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.pradyotprakash.glassbridgegame.app.pages.bridgeGame.viewModel.state.GlassState
 import com.pradyotprakash.glassbridgegame.app.pages.bridgeGame.viewModel.state.PlayerState
-import com.pradyotprakash.glassbridgegame.utils.NUMBER_OF_TILES
+import com.pradyotprakash.glassbridgegame.utils.NUMBER_OF_GLASSES
 
 @Composable
 fun Glasses(
@@ -35,7 +35,7 @@ fun Glasses(
                 Column(
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    if (g < NUMBER_OF_TILES - 2) {
+                    if (g < NUMBER_OF_GLASSES - 2) {
                         Spacer(modifier = Modifier.height(10.dp))
                     }
                     Row(
@@ -45,7 +45,7 @@ fun Glasses(
                         Glass(
                             glass = firstGlass,
                             modifier = Modifier.weight(1f),
-                            player = players.getOrNull(firstGlass.playerNumber),
+                            player = players.firstOrNull { it.playerNumber == firstGlass.playerNumber },
                         ) {
                             onBridgeGlassTap(firstGlass.number)
                         }
@@ -53,7 +53,7 @@ fun Glasses(
                         Glass(
                             glass = secondGlass,
                             modifier = Modifier.weight(1f),
-                            player = players.getOrNull(secondGlass.playerNumber),
+                            player = players.firstOrNull { it.playerNumber == secondGlass.playerNumber },
                         ) {
                             onBridgeGlassTap(secondGlass.number)
                         }

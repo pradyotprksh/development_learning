@@ -1,8 +1,15 @@
 package com.pradyotprakash.glassbridgegame.app.pages.bridgeGame.screen.composables
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.scaleIn
+import androidx.compose.animation.scaleOut
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -36,16 +43,21 @@ fun Glass(
         targetValue = if (glass.isBroken) 0.5f else 1f,
         animationSpec = tween(durationMillis = 300, easing = LinearEasing)
     )
-
     Box(
         modifier = modifier,
     ) {
-        player?.let {
-            Player(
-                modifier = Modifier.align(Alignment.Center),
-                player = it,
-                iconSize = 48.dp,
-            )
+        AnimatedVisibility(
+            visible = player != null,
+            enter = scaleIn(initialScale = 0.5f) + slideInVertically(initialOffsetY = { -40 }) + fadeIn(),
+            exit = slideOutVertically(targetOffsetY = { 40 }) + fadeOut() + scaleOut(targetScale = 0.5f),
+            modifier = Modifier.align(Alignment.Center),
+        ) {
+            player?.let {
+                Player(
+                    player = it,
+                    iconSize = 48.dp,
+                )
+            }
         }
         Box(
             modifier = Modifier.clip(RoundedCornerShape(16.dp))

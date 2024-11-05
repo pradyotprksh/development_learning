@@ -1,5 +1,6 @@
 package com.pradyotprakash.glassbridgegame.app.pages.bridgeGame.screen
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.calculateEndPadding
 import androidx.compose.foundation.layout.calculateStartPadding
@@ -22,6 +23,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.pradyotprakash.glassbridgegame.app.navigation.BridgeGame
 import com.pradyotprakash.glassbridgegame.app.pages.bridgeGame.screen.composables.Glasses
 import com.pradyotprakash.glassbridgegame.app.pages.bridgeGame.screen.composables.PlayerSitArena
+import com.pradyotprakash.glassbridgegame.app.pages.bridgeGame.screen.composables.PlayerWinnerArena
 import com.pradyotprakash.glassbridgegame.app.pages.bridgeGame.viewModel.BridgeGameViewModel
 
 @Composable
@@ -50,12 +52,23 @@ fun BridgeGameScreen(
                 bridgeGameState.gameTimeString,
                 style = MaterialTheme.typography.headlineLarge,
                 textAlign = TextAlign.Center,
-                color = MaterialTheme.colorScheme.primary,
+                color = if (bridgeGameState.isGameFinished) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.primary,
                 modifier = Modifier.fillMaxWidth().padding(10.dp),
             )
-            HorizontalDivider(
-                thickness = 5.dp, modifier = Modifier.padding(0.dp)
-            )
+            AnimatedVisibility(
+                visible = bridgeGameState.winnerPlayer.isEmpty(),
+            ) {
+                HorizontalDivider(
+                    thickness = 5.dp, modifier = Modifier.padding(0.dp)
+                )
+            }
+            AnimatedVisibility(
+                visible = bridgeGameState.winnerPlayer.isNotEmpty(),
+            ) {
+                PlayerWinnerArena(
+                    players = bridgeGameState.winnerPlayer,
+                )
+            }
             Glasses(
                 modifier = Modifier.fillMaxWidth().weight(1f),
                 glassesState = bridgeGameState.glasses,
@@ -63,7 +76,9 @@ fun BridgeGameScreen(
             ) {
                 bridgeGameViewModel.onBridgeGlassTap(it)
             }
-            if (bridgeGameState.isGameStarted) {
+            AnimatedVisibility(
+                visible = bridgeGameState.inArenaPlayer.isNotEmpty(),
+            ) {
                 PlayerSitArena(
                     players = bridgeGameState.players,
                 )

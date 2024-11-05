@@ -19,41 +19,50 @@ import com.pradyotprakash.glassbridgegame.app.pages.bridgeGame.viewModel.state.P
 fun PlayerSitArena(
     players: List<PlayerState>,
 ) {
-    HorizontalDivider(
-        thickness = 5.dp,
-    )
+    val size = players.size
+    val middle = size / 2 + size % 2
+    val firstHalf = players.subList(0, middle)
+    val secondHalf = players.subList(middle, size)
+
     Column(
-        verticalArrangement = Arrangement.SpaceEvenly,
-        horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier.fillMaxWidth().padding(10.dp),
+        modifier = Modifier.fillMaxWidth(),
     ) {
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceEvenly,
+        HorizontalDivider(
+            thickness = 5.dp,
+        )
+        Column(
+            verticalArrangement = Arrangement.SpaceEvenly,
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier.fillMaxWidth().padding(10.dp),
         ) {
-            players.subList(0, 7).map { player ->
-                AnimatedVisibility(
-                    player.showInTheArena
-                ) {
-                    Player(player = player)
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceEvenly,
+            ) {
+                firstHalf.map { player ->
+                    AnimatedVisibility(
+                        player.showInTheArena
+                    ) {
+                        Player(player = player)
+                    }
+                }
+            }
+            Spacer(modifier = Modifier.height(5.dp))
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceEvenly,
+            ) {
+                secondHalf.map { player ->
+                    AnimatedVisibility(
+                        player.showInTheArena
+                    ) {
+                        Player(player = player)
+                    }
                 }
             }
         }
-        Spacer(modifier = Modifier.height(5.dp))
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceEvenly,
-        ) {
-            players.subList(8, 15).map { player ->
-                AnimatedVisibility(
-                    player.showInTheArena
-                ) {
-                    Player(player = player)
-                }
-            }
-        }
+        HorizontalDivider(
+            thickness = 5.dp,
+        )
     }
-    HorizontalDivider(
-        thickness = 5.dp,
-    )
 }
