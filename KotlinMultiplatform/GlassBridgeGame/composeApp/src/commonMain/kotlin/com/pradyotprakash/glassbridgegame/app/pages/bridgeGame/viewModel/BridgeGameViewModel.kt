@@ -42,6 +42,32 @@ class BridgeGameViewModel : ViewModel() {
         startTimer()
     }
 
+    private fun getGlasses(): List<GlassState> {
+        val glasses = mutableListOf<GlassState>()
+        for (i in 0..<NUMBER_OF_GLASSES step 2) {
+            val isBreakable = Random.nextBoolean()
+
+            glasses.add(
+                GlassState(
+                    number = i,
+                    isBreakable = isBreakable,
+                    isBroken = false,
+                    playerNumber = -1,
+                )
+            )
+
+            glasses.add(
+                GlassState(
+                    number = i + 1,
+                    isBreakable = !isBreakable,
+                    isBroken = false,
+                    playerNumber = -1,
+                )
+            )
+        }
+        return glasses
+    }
+
     private fun getOfflinePlayers(): List<PlayerState> {
         val players = mutableListOf<PlayerState>()
         val thePlayerNumber = Random.nextInt(0, NUMBER_OF_PLAYERS)
@@ -74,32 +100,6 @@ class BridgeGameViewModel : ViewModel() {
         players.sortBy { it.playerNumber }
 
         return players
-    }
-
-    private fun getGlasses(): List<GlassState> {
-        val glasses = mutableListOf<GlassState>()
-        for (i in 0..<NUMBER_OF_GLASSES step 2) {
-            val isBreakable = Random.nextBoolean()
-
-            glasses.add(
-                GlassState(
-                    number = i,
-                    isBreakable = isBreakable,
-                    isBroken = false,
-                    playerNumber = -1,
-                )
-            )
-
-            glasses.add(
-                GlassState(
-                    number = i + 1,
-                    isBreakable = !isBreakable,
-                    isBroken = false,
-                    playerNumber = -1,
-                )
-            )
-        }
-        return glasses
     }
 
     private fun startTimer() {
@@ -156,89 +156,114 @@ class BridgeGameViewModel : ViewModel() {
         val newGlassNumberForBot = getNextGlassNumber(oldGlassNumberForBot)
 
         if (newGlassNumberForBot < NUMBER_OF_GLASSES) {
-            val isPlayerDead =
-                _bridgeGameState.value.glasses.first { it.number == newGlassNumberForBot }.isBreakable
-
-            _bridgeGameState.update { state ->
-                val updatedState = state.copy(
-                    players = state.players.map { player ->
-                        if (player.playerNumber == botNumber) {
-                            player.copy(
-                                glassNumber = newGlassNumberForBot,
-                                isDead = isPlayerDead,
-                            )
-                        } else {
-                            player
-                        }
-                    },
-                    glasses = state.glasses.map { glass ->
-                        when (glass.number) {
-                            newGlassNumberForBot -> {
-                                glass.copy(
-                                    playerNumber = botDetails.playerNumber,
-                                    isBroken = isPlayerDead,
-                                )
-                            }
-
-                            oldGlassNumberForBot -> {
-                                glass.copy(
-                                    playerNumber = -1,
-                                )
-                            }
-
-                            else -> {
-                                glass
-                            }
-                        }
-                    },
-                )
-
-                val currentPlayerIndex = getNextPlayerNumber(updatedState, isPlayerDead)
-                val hasAllPlayerPlayed = hasGameCompleted(updatedState)
-
-                updatedState.copy(
-                    currentPlayer = currentPlayerIndex,
-                    isGameFinished = hasAllPlayerPlayed,
-                )
-            }
+            jumpToNextGlass(
+                botNumber = botNumber,
+                botDetails = botDetails,
+                oldGlassNumberForBot = oldGlassNumberForBot,
+                newGlassNumberForBot = newGlassNumberForBot,
+            )
         } else {
-            val hasAllPlayerPlayed = hasGameCompleted()
-            val currentPlayedPlayer = _bridgeGameState.value.currentPlayer
-
-            _bridgeGameState.update { state ->
-                state.copy(
-                    glasses = state.glasses.map { glass ->
-                        when (glass.number) {
-                            oldGlassNumberForBot -> {
-                                glass.copy(
-                                    playerNumber = -1,
-                                )
-                            }
-
-                            else -> {
-                                glass
-                            }
-                        }
-                    },
-                    players = state.players.map { player ->
-                        if (player.playerNumber == botNumber) {
-                            player.copy(
-                                glassNumber = NUMBER_OF_GLASSES,
-                            )
-                        } else {
-                            player
-                        }
-                    },
-                    isGameFinished = hasAllPlayerPlayed,
-                    isGameStarted = !hasAllPlayerPlayed,
-                    currentPlayer = if (hasAllPlayerPlayed) -1 else currentPlayedPlayer + 1,
-                    gameTimeValue = if (hasAllPlayerPlayed) 0 else state.gameTimeValue,
-                )
-            }
+            checkForBotStatus(
+                botNumber = botNumber,
+                oldGlassNumberForBot = oldGlassNumberForBot,
+            )
         }
 
         if (!_bridgeGameState.value.isGameFinished) {
             takeTheStep(null)
+        }
+    }
+
+    private fun checkForBotStatus(
+        botNumber: Int,
+        oldGlassNumberForBot: Int,
+    ) {
+
+        val hasAllPlayerPlayed = hasGameCompleted()
+        val currentPlayedPlayer = _bridgeGameState.value.currentPlayer
+
+        _bridgeGameState.update { state ->
+            state.copy(
+                glasses = state.glasses.map { glass ->
+                    when (glass.number) {
+                        oldGlassNumberForBot -> {
+                            glass.copy(
+                                playerNumber = -1,
+                            )
+                        }
+
+                        else -> {
+                            glass
+                        }
+                    }
+                },
+                players = state.players.map { player ->
+                    if (player.playerNumber == botNumber) {
+                        player.copy(
+                            glassNumber = NUMBER_OF_GLASSES,
+                        )
+                    } else {
+                        player
+                    }
+                },
+                isGameFinished = hasAllPlayerPlayed,
+                isGameStarted = !hasAllPlayerPlayed,
+                currentPlayer = if (hasAllPlayerPlayed) -1 else currentPlayedPlayer + 1,
+                gameTimeValue = if (hasAllPlayerPlayed) 0 else state.gameTimeValue,
+            )
+        }
+    }
+
+    private fun jumpToNextGlass(
+        botNumber: Int,
+        botDetails: PlayerState,
+        oldGlassNumberForBot: Int,
+        newGlassNumberForBot: Int,
+    ) {
+        val isPlayerDead =
+            _bridgeGameState.value.glasses.first { it.number == newGlassNumberForBot }.isBreakable
+
+        _bridgeGameState.update { state ->
+            val updatedState = state.copy(
+                players = state.players.map { player ->
+                    if (player.playerNumber == botNumber) {
+                        player.copy(
+                            glassNumber = newGlassNumberForBot,
+                            isDead = isPlayerDead,
+                        )
+                    } else {
+                        player
+                    }
+                },
+                glasses = state.glasses.map { glass ->
+                    when (glass.number) {
+                        newGlassNumberForBot -> {
+                            glass.copy(
+                                playerNumber = botDetails.playerNumber,
+                                isBroken = isPlayerDead,
+                            )
+                        }
+
+                        oldGlassNumberForBot -> {
+                            glass.copy(
+                                playerNumber = -1,
+                            )
+                        }
+
+                        else -> {
+                            glass
+                        }
+                    }
+                },
+            )
+
+            val currentPlayerIndex = getNextPlayerNumber(updatedState, isPlayerDead)
+            val hasAllPlayerPlayed = hasGameCompleted(updatedState)
+
+            updatedState.copy(
+                currentPlayer = currentPlayerIndex,
+                isGameFinished = hasAllPlayerPlayed,
+            )
         }
     }
 
