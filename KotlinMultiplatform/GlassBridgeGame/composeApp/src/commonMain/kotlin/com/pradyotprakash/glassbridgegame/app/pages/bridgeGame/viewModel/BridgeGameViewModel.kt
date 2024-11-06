@@ -152,7 +152,7 @@ class BridgeGameViewModel : ViewModel() {
         val currentGlassNumber = playerDetails.glassNumber
 
         if (currentGlassNumber in NUMBER_OF_GLASSES - 2..<NUMBER_OF_GLASSES) {
-            
+
         }
     }
 
