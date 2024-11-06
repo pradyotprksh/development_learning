@@ -25,6 +25,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.blur
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.graphicsLayer
@@ -54,6 +55,9 @@ fun Glass(
         ) {
             player?.let {
                 Player(
+                    modifier = Modifier.alpha(
+                        if (glass.isBroken) 0.5f else 1f,
+                    ),
                     player = it,
                     iconSize = 48.dp,
                 )
