@@ -146,7 +146,14 @@ class BridgeGameViewModel : ViewModel() {
     }
 
     private fun humanPlay(selectedGlass: Int, currentPlayerIndex: Int) {
+        val playerDetails = _bridgeGameState.value.players.first {
+            it.playerNumber == currentPlayerIndex && it.isThePlayer
+        }
+        val currentGlassNumber = playerDetails.glassNumber
 
+        if (currentGlassNumber in NUMBER_OF_GLASSES - 2..<NUMBER_OF_GLASSES) {
+            
+        }
     }
 
     private fun botPlay() {
