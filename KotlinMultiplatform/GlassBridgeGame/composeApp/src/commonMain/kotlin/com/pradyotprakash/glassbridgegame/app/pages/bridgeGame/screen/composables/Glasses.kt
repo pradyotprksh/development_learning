@@ -47,7 +47,7 @@ fun Glasses(
                             modifier = Modifier.weight(1f),
                             player = players.firstOrNull { it.playerNumber == firstGlass.playerNumber },
                         ) {
-                            onBridgeGlassTap(firstGlass.number)
+                            onBridgeGlassTap(firstGlass.glassNumber)
                         }
                         Spacer(modifier = Modifier.width(10.dp))
                         Glass(
@@ -55,7 +55,7 @@ fun Glasses(
                             modifier = Modifier.weight(1f),
                             player = players.firstOrNull { it.playerNumber == secondGlass.playerNumber },
                         ) {
-                            onBridgeGlassTap(secondGlass.number)
+                            onBridgeGlassTap(secondGlass.glassNumber)
                         }
                     }
                 }

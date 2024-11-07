@@ -20,9 +20,18 @@ data class BridgeGameState(
             }"
         }
 
-    val winnerPlayer: List<PlayerState>
+    val winnerPlayers: List<PlayerState>
         get() = players.filter { it.showInTheWinnerArena }
 
-    val inArenaPlayer: List<PlayerState>
+    val inArenaPlayers: List<PlayerState>
         get() = players.filter { it.showInTheArena }
+
+    val currentPlayerDetails: PlayerState
+        get() = playerDetailsByIndex(currentPlayer)
+
+    fun playerDetailsByIndex(index: Int) = players.first { it.playerNumber == index }
+
+    fun humanPlayerDetailsByIndex(index: Int) = players.first { it.playerNumber == index && it.isThePlayer }
+
+    fun glassDetailsByIndex(index: Int) = glasses.first { it.glassNumber == index }
 }

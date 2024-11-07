@@ -56,17 +56,17 @@ fun BridgeGameScreen(
                 modifier = Modifier.fillMaxWidth().padding(10.dp),
             )
             AnimatedVisibility(
-                visible = bridgeGameState.winnerPlayer.isEmpty(),
+                visible = bridgeGameState.winnerPlayers.isEmpty(),
             ) {
                 HorizontalDivider(
                     thickness = 5.dp, modifier = Modifier.padding(0.dp)
                 )
             }
             AnimatedVisibility(
-                visible = bridgeGameState.winnerPlayer.isNotEmpty(),
+                visible = bridgeGameState.winnerPlayers.isNotEmpty(),
             ) {
                 PlayerWinnerArena(
-                    players = bridgeGameState.winnerPlayer,
+                    players = bridgeGameState.winnerPlayers,
                 )
             }
             Glasses(
@@ -77,7 +77,7 @@ fun BridgeGameScreen(
                 bridgeGameViewModel.onBridgeGlassTap(it)
             }
             AnimatedVisibility(
-                visible = bridgeGameState.inArenaPlayer.isNotEmpty(),
+                visible = bridgeGameState.inArenaPlayers.isNotEmpty(),
             ) {
                 PlayerSitArena(
                     players = bridgeGameState.players,
