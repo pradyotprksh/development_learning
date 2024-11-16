@@ -27,18 +27,20 @@ import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.pradyotprakash.glassbridgegame.app.navigation.BridgeGame
 import com.pradyotprakash.glassbridgegame.app.pages.home.viewModel.HomeScreenViewModel
 import glassbridgegame.composeapp.generated.resources.Res
 import glassbridgegame.composeapp.generated.resources.app_name
 import glassbridgegame.composeapp.generated.resources.lets_play
 import glassbridgegame.composeapp.generated.resources.multiplayer
 import glassbridgegame.composeapp.generated.resources.offline
+import glassbridgegame.composeapp.generated.resources.offline_infinite
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun HomeScreen(
     homeScreenViewModel: HomeScreenViewModel = viewModel(),
-    navigateToBridgeGame: (Boolean) -> Unit,
+    navigateToBridgeGame: (BridgeGame) -> Unit,
 ) {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -82,7 +84,12 @@ fun HomeScreen(
             Spacer(modifier = Modifier.weight(1f))
             Button(
                 onClick = {
-                    navigateToBridgeGame(true)
+                    navigateToBridgeGame(
+                        BridgeGame(
+                            isOffline = true,
+                            isOfflineInfinite = false,
+                        )
+                    )
                 },
                 modifier = Modifier.fillMaxWidth(),
             ) {
@@ -90,9 +97,29 @@ fun HomeScreen(
                     stringResource(Res.string.offline),
                 )
             }
+            Button(
+                onClick = {
+                    navigateToBridgeGame(
+                        BridgeGame(
+                            isOffline = true,
+                            isOfflineInfinite = true,
+                        )
+                    )
+                },
+                modifier = Modifier.fillMaxWidth(),
+            ) {
+                Text(
+                    stringResource(Res.string.offline_infinite),
+                )
+            }
             FilledTonalButton(
                 onClick = {
-                    navigateToBridgeGame(false)
+                    navigateToBridgeGame(
+                        BridgeGame(
+                            isOffline = true,
+                            isOfflineInfinite = false,
+                        )
+                    )
                 },
                 modifier = Modifier.fillMaxWidth(),
             ) {

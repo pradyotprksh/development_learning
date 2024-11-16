@@ -14,7 +14,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.pradyotprakash.glassbridgegame.app.pages.bridgeGame.viewModel.state.GlassState
 import com.pradyotprakash.glassbridgegame.app.pages.bridgeGame.viewModel.state.PlayerState
-import com.pradyotprakash.glassbridgegame.utils.NUMBER_OF_GLASSES
 
 @Composable
 fun Glasses(
@@ -35,7 +34,7 @@ fun Glasses(
                 Column(
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    if (g < NUMBER_OF_GLASSES - 2) {
+                    if (g < glassesState.count() - 2) {
                         Spacer(modifier = Modifier.height(10.dp))
                     }
                     Row(

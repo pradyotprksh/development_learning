@@ -7,9 +7,14 @@ import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SmallFloatingActionButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -39,6 +44,21 @@ fun BridgeGameScreen(
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
+        floatingActionButton = {
+            if (bridgeGameState.isGameFinished) {
+                SmallFloatingActionButton(
+                    onClick = {
+                        bridgeGameViewModel.initGame(bridgeGameDetails)
+                    },
+                ) {
+                    Icon(
+                        Icons.Filled.Refresh,
+                        contentDescription = Icons.Filled.Person.name,
+                        tint = MaterialTheme.colorScheme.primary,
+                    )
+                }
+            }
+        },
     ) { paddingValues ->
         Column(
             modifier = Modifier.fillMaxSize().padding(
@@ -48,13 +68,24 @@ fun BridgeGameScreen(
                 bottom = paddingValues.calculateBottomPadding(),
             ),
         ) {
-            Text(
-                bridgeGameState.gameTimeString,
-                style = MaterialTheme.typography.headlineLarge,
-                textAlign = TextAlign.Center,
-                color = if (bridgeGameState.isGameFinished) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.primary,
-                modifier = Modifier.fillMaxWidth().padding(10.dp),
-            )
+            if (bridgeGameState.showGameTime) {
+                Text(
+                    bridgeGameState.gameTimeString,
+                    style = MaterialTheme.typography.headlineLarge,
+                    textAlign = TextAlign.Center,
+                    color = if (bridgeGameState.isGameFinished) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.primary,
+                    modifier = Modifier.fillMaxWidth().padding(10.dp),
+                )
+            }
+            if (bridgeGameState.showGameScore) {
+                Text(
+                    "Score: ${bridgeGameState.gameScore}",
+                    style = MaterialTheme.typography.headlineLarge,
+                    textAlign = TextAlign.Center,
+                    color = if (bridgeGameState.isGameFinished) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.primary,
+                    modifier = Modifier.fillMaxWidth().padding(10.dp),
+                )
+            }
             AnimatedVisibility(
                 visible = bridgeGameState.winnerPlayers.isEmpty(),
             ) {

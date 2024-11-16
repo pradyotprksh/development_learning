@@ -3,11 +3,16 @@ package com.pradyotprakash.glassbridgegame.app.pages.bridgeGame.viewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.pradyotprakash.glassbridgegame.app.navigation.BridgeGame
+import com.pradyotprakash.glassbridgegame.app.pages.bridgeGame.viewModel.components.canJumpToTheSelectedGlass
+import com.pradyotprakash.glassbridgegame.app.pages.bridgeGame.viewModel.components.getGlasses
+import com.pradyotprakash.glassbridgegame.app.pages.bridgeGame.viewModel.components.getNextGlassNumber
+import com.pradyotprakash.glassbridgegame.app.pages.bridgeGame.viewModel.components.getNextPlayerNumber
+import com.pradyotprakash.glassbridgegame.app.pages.bridgeGame.viewModel.components.getOfflinePlayers
+import com.pradyotprakash.glassbridgegame.app.pages.bridgeGame.viewModel.components.hasGameCompleted
 import com.pradyotprakash.glassbridgegame.app.pages.bridgeGame.viewModel.state.BridgeGameState
 import com.pradyotprakash.glassbridgegame.app.pages.bridgeGame.viewModel.state.GlassState
 import com.pradyotprakash.glassbridgegame.app.pages.bridgeGame.viewModel.state.PlayerState
 import com.pradyotprakash.glassbridgegame.utils.NUMBER_OF_GLASSES
-import com.pradyotprakash.glassbridgegame.utils.NUMBER_OF_PLAYERS
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -21,30 +26,54 @@ class BridgeGameViewModel : ViewModel() {
     val bridgeGameState = _bridgeGameState.asStateFlow()
 
     fun initGame(bridgeGameDetails: BridgeGame) {
-        if (bridgeGameDetails.isOffline) {
+        if (bridgeGameDetails.isOffline && !bridgeGameDetails.isOfflineInfinite) {
             createOfflineGame()
+        } else if (bridgeGameDetails.isOffline && bridgeGameDetails.isOfflineInfinite) {
+            createOfflineInfiniteGame()
         }
     }
 
-    private fun createOfflineGame() {
-        val glasses = getGlasses()
+    private fun createOfflineInfiniteGame() {
+        val glasses = getInfiniteGlasses(isStart = true)
 
-        val players = getOfflinePlayers()
+        val player = listOf(
+            PlayerState(
+                isBot = false,
+                glassNumber = -1,
+                isDead = false,
+                name = "Pradyot",
+                isThePlayer = true,
+                playerNumber = 0,
+            )
+        )
 
         _bridgeGameState.update {
             it.copy(
                 glasses = glasses,
-                players = players,
-                gameTimeValue = 3 * 60,
+                players = player,
+                gameTimeValue = 0,
+                showGameScore = true,
+                isGameStarted = true,
+                isInfiniteGame = true,
+                isGameFinished = false,
+                glassPageNumber = 2,
+                gameScore = 0,
+                currentPlayer = 0,
             )
         }
 
-        startTimer()
+        takeTheStep()
     }
 
-    private fun getGlasses(): List<GlassState> {
+    private fun getInfiniteGlasses(isStart: Boolean): List<GlassState> {
+        val currentPage = if (isStart) 1 else _bridgeGameState.value.glassPageNumber
+        val startIndex =
+            if (isStart) 0 else _bridgeGameState.value.glasses.maxByOrNull { it.glassNumber }?.glassNumber?.run { this + 1 }
+                ?: 0
+
         val glasses = mutableListOf<GlassState>()
-        for (i in 0..<NUMBER_OF_GLASSES step 2) {
+
+        for (i in startIndex..<NUMBER_OF_GLASSES * currentPage step 2) {
             val isBreakable = Random.nextBoolean()
 
             glasses.add(
@@ -65,41 +94,27 @@ class BridgeGameViewModel : ViewModel() {
                 )
             )
         }
+
         return glasses
     }
 
-    private fun getOfflinePlayers(): List<PlayerState> {
-        val players = mutableListOf<PlayerState>()
-        val thePlayerNumber = Random.nextInt(1, NUMBER_OF_PLAYERS)
-        players.add(
-            PlayerState(
-                isBot = false,
-                glassNumber = -1,
-                isDead = false,
-                name = "Pradyot",
-                isThePlayer = true,
-                playerNumber = thePlayerNumber,
-            )
-        )
-        for (i in 0..<NUMBER_OF_PLAYERS) {
-            if (i == thePlayerNumber) {
-                continue
-            }
+    private fun createOfflineGame() {
+        val glasses = getGlasses()
 
-            players.add(
-                PlayerState(
-                    isBot = true,
-                    glassNumber = -1,
-                    isDead = false,
-                    name = "Bot $i",
-                    isThePlayer = false,
-                    playerNumber = i,
-                )
+        val players = getOfflinePlayers()
+
+        _bridgeGameState.update {
+            it.copy(
+                glasses = glasses,
+                players = players,
+                gameTimeValue = 3 * 60,
+                showGameTime = true,
+                isGameFinished = false,
+                currentPlayer = 0,
             )
         }
-        players.sortBy { it.playerNumber }
 
-        return players
+        startTimer()
     }
 
     private fun startTimer() {
@@ -109,7 +124,10 @@ class BridgeGameViewModel : ViewModel() {
             while (_bridgeGameState.value.gameTimeValue > 0 && !_bridgeGameState.value.isGameFinished) {
                 _bridgeGameState.update {
                     val remainingTime = it.gameTimeValue - 1
-                    val isGameFinished = remainingTime == 0 || hasGameCompleted()
+                    val isGameFinished = remainingTime == 0 || hasGameCompleted(
+                        newBridgeState = null,
+                        currentState = _bridgeGameState.value,
+                    )
 
                     it.copy(
                         gameTimeValue = remainingTime,
@@ -125,7 +143,7 @@ class BridgeGameViewModel : ViewModel() {
     private fun takeTheStep(glassNumber: Int? = null) {
         val currentPlayerIndex = _bridgeGameState.value.currentPlayer
 
-        if (currentPlayerIndex < NUMBER_OF_PLAYERS) {
+        if (currentPlayerIndex < getPlayersNumbers()) {
             val currentPlayer = _bridgeGameState.value.currentPlayerDetails
 
             if (currentPlayer.isThePlayer) {
@@ -139,6 +157,42 @@ class BridgeGameViewModel : ViewModel() {
                 viewModelScope.launch {
                     delay(800)
                     botPlay()
+                }
+            }
+
+            addNewGlassesForInfinite()
+            calculateScore()
+        }
+    }
+
+    private fun calculateScore() {
+        if (_bridgeGameState.value.isInfiniteGame && !_bridgeGameState.value.isGameFinished) {
+            val score =
+                if (_bridgeGameState.value.isInfiniteGame && _bridgeGameState.value.currentPlayerDetails.glassNumber != -1) {
+                    val currentPlayerGlass = _bridgeGameState.value.currentPlayerDetails.glassNumber
+                    (currentPlayerGlass / 2) + 1
+                } else {
+                    0
+                }
+
+            _bridgeGameState.update {
+                it.copy(
+                    gameScore = score,
+                )
+            }
+        }
+    }
+
+    private fun addNewGlassesForInfinite() {
+        if (_bridgeGameState.value.isInfiniteGame && _bridgeGameState.value.isGameStarted && !_bridgeGameState.value.isGameFinished) {
+            if (getGlassesNumbers() / 2 <= _bridgeGameState.value.currentPlayerDetails.glassNumber) {
+                val newGlasses = getInfiniteGlasses(isStart = false)
+
+                _bridgeGameState.update {
+                    it.copy(
+                        glasses = it.glasses + newGlasses,
+                        glassPageNumber = it.glassPageNumber + 1,
+                    )
                 }
             }
         }
@@ -155,13 +209,13 @@ class BridgeGameViewModel : ViewModel() {
                 _bridgeGameState.value.glasses.firstOrNull { it.glassNumber == currentGlassNumber }
 
             if (currentGlassDetails != null) {
-                if (currentGlassDetails.glassNumber in NUMBER_OF_GLASSES - 2..<NUMBER_OF_GLASSES) {
+                if (currentGlassDetails.glassNumber in getGlassesNumbers() - 2..<getGlassesNumbers()) {
                     _bridgeGameState.update { state ->
                         val updatedState = state.copy(
                             players = state.players.map { player ->
                                 if (player.playerNumber == currentPlayerIndex && !player.isDead) {
                                     player.copy(
-                                        glassNumber = NUMBER_OF_GLASSES,
+                                        glassNumber = getGlassesNumbers(),
                                     )
                                 } else {
                                     player
@@ -182,12 +236,17 @@ class BridgeGameViewModel : ViewModel() {
                             },
                         )
 
+                        val isGameFinished = hasGameCompleted(
+                            newBridgeState = updatedState,
+                            currentState = _bridgeGameState.value,
+                        )
+
                         updatedState.copy(
                             currentPlayer = getNextPlayerNumber(
                                 updatedState, false,
                             ),
-                            isGameStarted = !hasGameCompleted(updatedState),
-                            isGameFinished = hasGameCompleted(updatedState),
+                            isGameStarted = !isGameFinished,
+                            isGameFinished = isGameFinished,
                         )
                     }
                     takeTheStep()
@@ -242,13 +301,17 @@ class BridgeGameViewModel : ViewModel() {
                         }
                     },
                 )
+                val isGameFinished = hasGameCompleted(
+                    newBridgeState = updatedState,
+                    currentState = _bridgeGameState.value,
+                )
 
                 updatedState.copy(
                     currentPlayer = getNextPlayerNumber(
                         updatedState, selectedGlassDetails.isBreakable
                     ),
-                    isGameStarted = !hasGameCompleted(updatedState),
-                    isGameFinished = hasGameCompleted(updatedState),
+                    isGameStarted = !isGameFinished,
+                    isGameFinished = isGameFinished,
                 )
             }
         }
@@ -256,47 +319,16 @@ class BridgeGameViewModel : ViewModel() {
         takeTheStep()
     }
 
-    private fun canJumpToTheSelectedGlass(
-        playerDetails: PlayerState,
-        currentGlassDetails: GlassState?,
-        selectedGlassDetails: GlassState,
-    ): Boolean {
-        if (!playerDetails.isThePlayer) {
-            return false
-        }
-
-        if (currentGlassDetails == null) {
-            return selectedGlassDetails.glassNumber in 0..1
-        }
-
-        if (selectedGlassDetails.glassNumber <= currentGlassDetails.glassNumber) {
-            return false
-        }
-
-        if (currentGlassDetails.glassNumber % 2 == 0) {
-            if (selectedGlassDetails.glassNumber !in currentGlassDetails.glassNumber + 2..currentGlassDetails.glassNumber + 3) {
-                return false
-            }
-        } else {
-            if (selectedGlassDetails.glassNumber !in currentGlassDetails.glassNumber + 1..currentGlassDetails.glassNumber + 2) {
-                return false
-            }
-        }
-
-        if (selectedGlassDetails.playerNumber != -1) {
-            return false
-        }
-
-        return true
-    }
-
     private fun botPlay() {
         val botNumber = _bridgeGameState.value.currentPlayer
         val botDetails = _bridgeGameState.value.playerDetailsByIndex(botNumber)
         val oldGlassNumberForBot = botDetails.glassNumber
-        val newGlassNumberForBot = getNextGlassNumber(oldGlassNumberForBot)
+        val newGlassNumberForBot = getNextGlassNumber(
+            oldGlassNumber = oldGlassNumberForBot,
+            glasses = _bridgeGameState.value.glasses,
+        )
 
-        if (newGlassNumberForBot < NUMBER_OF_GLASSES) {
+        if (newGlassNumberForBot < getGlassesNumbers()) {
             jumpToNextGlass(
                 botNumber = botNumber,
                 botDetails = botDetails,
@@ -319,7 +351,10 @@ class BridgeGameViewModel : ViewModel() {
         botNumber: Int,
         oldGlassNumberForBot: Int,
     ) {
-        val hasAllPlayerPlayed = hasGameCompleted()
+        val hasAllPlayerPlayed = hasGameCompleted(
+            newBridgeState = null,
+            currentState = _bridgeGameState.value,
+        )
 
         _bridgeGameState.update { state ->
             val updatedState = state.copy(
@@ -339,7 +374,7 @@ class BridgeGameViewModel : ViewModel() {
                 players = state.players.map { player ->
                     if (player.playerNumber == botNumber && !player.isDead) {
                         player.copy(
-                            glassNumber = NUMBER_OF_GLASSES,
+                            glassNumber = getGlassesNumbers(),
                         )
                     } else {
                         player
@@ -402,97 +437,16 @@ class BridgeGameViewModel : ViewModel() {
             )
 
             val currentPlayerIndex = getNextPlayerNumber(updatedState, isPlayerDead)
-            val hasAllPlayerPlayed = hasGameCompleted(updatedState)
+            val hasAllPlayerPlayed = hasGameCompleted(
+                newBridgeState = updatedState,
+                currentState = _bridgeGameState.value,
+            )
 
             updatedState.copy(
                 currentPlayer = currentPlayerIndex,
                 isGameFinished = hasAllPlayerPlayed,
             )
         }
-    }
-
-    private fun hasGameCompleted(bridgeState: BridgeGameState? = null) =
-        (bridgeState ?: _bridgeGameState.value).players.none {
-            (it.showInTheArena || !it.showInTheWinnerArena) && !it.isDead
-        }
-
-
-    private fun getNextGlassNumber(oldGlassNumber: Int): Int {
-        val randomGlassNumber = if (oldGlassNumber % 2 == 0) {
-            Random.nextInt(oldGlassNumber + 2, oldGlassNumber + 4)
-        } else {
-            Random.nextInt(oldGlassNumber + 1, oldGlassNumber + 3)
-        }
-
-        if (randomGlassNumber % 2 == 0) {
-            val isFirstGlassBroken =
-                _bridgeGameState.value.glasses.firstOrNull { it.glassNumber == randomGlassNumber }?.isBroken == true
-
-            return if (isFirstGlassBroken) {
-                randomGlassNumber + 1
-            } else {
-                randomGlassNumber
-            }
-        } else {
-            val isSecondGlassBroken =
-                _bridgeGameState.value.glasses.firstOrNull { it.glassNumber == randomGlassNumber }?.isBroken == true
-
-            return if (isSecondGlassBroken) {
-                randomGlassNumber - 1
-            } else {
-                randomGlassNumber
-            }
-        }
-    }
-
-    private fun getNextPlayerNumber(updatedState: BridgeGameState, isPlayerDead: Boolean): Int {
-        val nextPlayerNumber = updatedState.currentPlayer
-        updatedState.players.filter { it.showInTheArena }.forEach { player ->
-            val firstGlass = updatedState.glassDetailsByIndex(0)
-            val secondGlass = updatedState.glassDetailsByIndex(1)
-
-            if (firstGlass.playerNumber == -1 && secondGlass.playerNumber == -1) {
-                return player.playerNumber
-            } else if (firstGlass.isBroken && secondGlass.playerNumber == -1) {
-                return player.playerNumber
-            } else if (secondGlass.isBroken && firstGlass.playerNumber == -1) {
-                return player.playerNumber
-            }
-        }
-
-        updatedState.players.filter { !it.isDead && !it.showInTheArena && !it.showInTheWinnerArena }
-            .sortedByDescending { it.playerNumber }.forEach { player ->
-                val currentGlass =
-                    updatedState.glassDetailsByIndex(player.glassNumber)
-
-                val nextFirstGlass = if (currentGlass.glassNumber % 2 == 0) {
-                    updatedState.glasses.firstOrNull { it.glassNumber == currentGlass.glassNumber + 2 }
-                } else {
-                    updatedState.glasses.firstOrNull { it.glassNumber == currentGlass.glassNumber + 1 }
-                }
-
-                if (nextFirstGlass == null) {
-                    return player.playerNumber
-                }
-
-                val nextSecondGlass =
-                    updatedState.glassDetailsByIndex(nextPlayerNumber + 1)
-
-                if (nextFirstGlass.playerNumber == -1 && nextSecondGlass.playerNumber == -1) {
-                    return player.playerNumber
-                } else if (nextFirstGlass.isBroken && nextSecondGlass.playerNumber == -1) {
-                    return player.playerNumber
-                } else if (nextSecondGlass.isBroken && nextFirstGlass.playerNumber == -1) {
-                    return player.playerNumber
-                }
-            }
-
-        updatedState.players.filter { !it.isDead && !it.showInTheArena && !it.showInTheWinnerArena }
-            .sortedBy { it.playerNumber }.forEach { player ->
-                return player.playerNumber
-            }
-
-        return if (isPlayerDead) nextPlayerNumber + 1 else nextPlayerNumber
     }
 
     fun onBridgeGlassTap(glassNumber: Int) {
@@ -504,4 +458,8 @@ class BridgeGameViewModel : ViewModel() {
             takeTheStep(glassNumber)
         }
     }
+
+    private fun getPlayersNumbers() = _bridgeGameState.value.players.count()
+
+    private fun getGlassesNumbers() = _bridgeGameState.value.glasses.count()
 }

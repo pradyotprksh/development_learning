@@ -24,12 +24,8 @@ fun GlassBridgeGameApp(
         }
     }
 
-    val navigateToBridgeGame = { isOffline: Boolean ->
-        navController.navigate(
-            BridgeGame(
-                isOffline = isOffline,
-            )
-        )
+    val navigateToBridgeGame = { bridgeGame: BridgeGame ->
+        navController.navigate(bridgeGame)
     }
 
     NavHost(
