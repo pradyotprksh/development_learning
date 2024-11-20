@@ -20,6 +20,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.text.style.TextAlign
@@ -29,6 +30,7 @@ import com.pradyotprakash.glassbridgegame.app.navigation.BridgeGame
 import com.pradyotprakash.glassbridgegame.app.pages.bridgeGame.screen.composables.Glasses
 import com.pradyotprakash.glassbridgegame.app.pages.bridgeGame.screen.composables.PlayerSitArena
 import com.pradyotprakash.glassbridgegame.app.pages.bridgeGame.screen.composables.PlayerWinnerArena
+import com.pradyotprakash.glassbridgegame.app.pages.bridgeGame.screen.composables.timer.Timer
 import com.pradyotprakash.glassbridgegame.app.pages.bridgeGame.viewModel.BridgeGameViewModel
 
 @Composable
@@ -69,12 +71,11 @@ fun BridgeGameScreen(
             ),
         ) {
             if (bridgeGameState.showGameTime) {
-                Text(
-                    bridgeGameState.gameTimeString,
-                    style = MaterialTheme.typography.headlineLarge,
-                    textAlign = TextAlign.Center,
-                    color = if (bridgeGameState.isGameFinished) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.primary,
-                    modifier = Modifier.fillMaxWidth().padding(10.dp),
+                Timer(
+                    modifier = Modifier.fillMaxWidth().padding(10.dp).align(Alignment.CenterHorizontally),
+                    timerDetails = bridgeGameState.timeDetails,
+                    isTimeStopped = bridgeGameState.isGameFinished,
+                    updateBlinker = bridgeGameState.updateGameBlinker,
                 )
             }
             if (bridgeGameState.showGameScore) {

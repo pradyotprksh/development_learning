@@ -133,6 +133,7 @@ class BridgeGameViewModel : ViewModel() {
                         gameTimeValue = remainingTime,
                         isGameStarted = remainingTime != 0 && !isGameFinished,
                         isGameFinished = isGameFinished,
+                        updateGameBlinker = !it.updateGameBlinker && !isGameFinished,
                     )
                 }
                 delay(1000)
