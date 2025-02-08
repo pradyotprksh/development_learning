@@ -53,6 +53,7 @@ README will be only updated when the project/learning is completed. So make sure
   - [Rental](https://github.com/pradyotprksh/development_learning/tree/main/android/Rental)
   - [ExhangeRate](https://github.com/pradyotprksh/development_learning/tree/main/android/ExchangeRate)
   - [Pose Detection](https://github.com/pradyotprksh/development_learning/tree/main/android/PoseDetection)
+    - For more details go to this [link](https://medium.com/@pradyotprksh4/pose-detection-in-android-with-ml-kit-jetpack-compose-real-time-pose-skeleton-ab9553f96587)
 
 [<img src="https://img.shields.io/badge/KotlinMulitplatform-3DDC84?style=for-the-badge&logo=android&logoColor=white" />](https://github.com/pradyotprksh/development_learning/tree/main/KotlinMultiplatform) [![Kotlin Mulitplatform](https://github.com/pradyotprksh/development_learning/actions/workflows/kotlin_multiplatform_code_checker.yml/badge.svg)](https://github.com/pradyotprksh/development_learning/actions/workflows/kotlin_multiplatform_code_checker.yml)
   - [TheMovieDBKMM](https://github.com/pradyotprksh/development_learning/tree/main/KotlinMultiplatform/TheMovieDBKMM)
