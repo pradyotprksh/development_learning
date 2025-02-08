@@ -116,6 +116,7 @@ private fun processImageProxy(
 
     val options = PoseDetectorOptions.Builder()
         .setDetectorMode(PoseDetectorOptions.STREAM_MODE)
+        .setPreferredHardwareConfigs(PoseDetectorOptions.CPU_GPU)
         .build()
 
     val poseDetector = PoseDetection.getClient(options)
