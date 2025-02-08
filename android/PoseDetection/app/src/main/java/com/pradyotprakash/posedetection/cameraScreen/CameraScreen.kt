@@ -1,5 +1,6 @@
 package com.pradyotprakash.posedetection.cameraScreen
 
+import android.content.Context
 import android.util.Log
 import androidx.annotation.OptIn
 import androidx.camera.core.CameraSelector
@@ -28,8 +29,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.compose.LocalLifecycleOwner
+import com.google.mlkit.common.model.CustomRemoteModel
+import com.google.mlkit.common.model.LocalModel
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.pose.PoseDetection
+import com.google.mlkit.vision.pose.PoseDetector
 import com.google.mlkit.vision.pose.PoseLandmark
 import com.google.mlkit.vision.pose.defaults.PoseDetectorOptions
 import java.util.concurrent.Executors
@@ -45,7 +49,9 @@ fun CameraScreen(modifier: Modifier = Modifier) {
     val imageWidth = remember { mutableIntStateOf(1) }
     val imageHeight = remember { mutableIntStateOf(1) }
 
-    Box {
+    Box(
+        modifier = modifier,
+    ) {
         AndroidView(factory = { previewView }, modifier = Modifier.fillMaxSize()) { view ->
             val cameraProviderFuture = ProcessCameraProvider.getInstance(context)
             cameraProviderFuture.addListener({
@@ -158,18 +164,45 @@ fun PoseOverlay(
         }
 
         val connections = listOf(
+            PoseLandmark.LEFT_EYE to PoseLandmark.RIGHT_EYE,
+            PoseLandmark.LEFT_EYE to PoseLandmark.LEFT_EAR,
+            PoseLandmark.RIGHT_EYE to PoseLandmark.RIGHT_EAR,
+            PoseLandmark.NOSE to PoseLandmark.LEFT_EYE,
+            PoseLandmark.NOSE to PoseLandmark.RIGHT_EYE,
+            PoseLandmark.NOSE to PoseLandmark.LEFT_MOUTH,
+            PoseLandmark.NOSE to PoseLandmark.RIGHT_MOUTH,
+
+            // **Torso**
             PoseLandmark.LEFT_SHOULDER to PoseLandmark.RIGHT_SHOULDER,
+            PoseLandmark.LEFT_SHOULDER to PoseLandmark.LEFT_HIP,
+            PoseLandmark.RIGHT_SHOULDER to PoseLandmark.RIGHT_HIP,
+            PoseLandmark.LEFT_HIP to PoseLandmark.RIGHT_HIP,
+
+            // **Arms**
             PoseLandmark.LEFT_SHOULDER to PoseLandmark.LEFT_ELBOW,
             PoseLandmark.LEFT_ELBOW to PoseLandmark.LEFT_WRIST,
             PoseLandmark.RIGHT_SHOULDER to PoseLandmark.RIGHT_ELBOW,
             PoseLandmark.RIGHT_ELBOW to PoseLandmark.RIGHT_WRIST,
-            PoseLandmark.LEFT_SHOULDER to PoseLandmark.LEFT_HIP,
-            PoseLandmark.RIGHT_SHOULDER to PoseLandmark.RIGHT_HIP,
-            PoseLandmark.LEFT_HIP to PoseLandmark.RIGHT_HIP,
+
+            // **Hands & Fingers (Basic)**
+            PoseLandmark.LEFT_WRIST to PoseLandmark.LEFT_INDEX,
+            PoseLandmark.LEFT_WRIST to PoseLandmark.LEFT_PINKY,
+            PoseLandmark.LEFT_WRIST to PoseLandmark.LEFT_THUMB,
+            PoseLandmark.RIGHT_WRIST to PoseLandmark.RIGHT_INDEX,
+            PoseLandmark.RIGHT_WRIST to PoseLandmark.RIGHT_PINKY,
+            PoseLandmark.RIGHT_WRIST to PoseLandmark.RIGHT_THUMB,
+
+            // **Legs**
             PoseLandmark.LEFT_HIP to PoseLandmark.LEFT_KNEE,
             PoseLandmark.LEFT_KNEE to PoseLandmark.LEFT_ANKLE,
             PoseLandmark.RIGHT_HIP to PoseLandmark.RIGHT_KNEE,
-            PoseLandmark.RIGHT_KNEE to PoseLandmark.RIGHT_ANKLE
+            PoseLandmark.RIGHT_KNEE to PoseLandmark.RIGHT_ANKLE,
+
+            // **Feet**
+            PoseLandmark.LEFT_ANKLE to PoseLandmark.LEFT_HEEL,
+            PoseLandmark.LEFT_ANKLE to PoseLandmark.LEFT_FOOT_INDEX,
+            PoseLandmark.RIGHT_ANKLE to PoseLandmark.RIGHT_HEEL,
+            PoseLandmark.RIGHT_ANKLE to PoseLandmark.RIGHT_FOOT_INDEX
         )
 
         for ((start, end) in connections) {
@@ -192,5 +225,3 @@ fun PoseOverlay(
         }
     }
 }
-
-
