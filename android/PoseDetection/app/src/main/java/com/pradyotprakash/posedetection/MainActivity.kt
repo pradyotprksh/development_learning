@@ -40,9 +40,11 @@ class MainActivity : ComponentActivity() {
             ContextCompat.checkSelfPermission(
                 this,
                 android.Manifest.permission.CAMERA,
-            ) -> {
+            ),
+                -> {
                 setCameraPreview()
             }
+
             else -> {
                 cameraPermissionRequest.launch(android.Manifest.permission.CAMERA)
             }
