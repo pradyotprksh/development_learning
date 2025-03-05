@@ -1,3 +1,5 @@
+from datetime import datetime
+import json
 import os
 import sys
 
@@ -54,9 +56,44 @@ def check_input():
     else:
         print(f"Please provide a valid instruction.")
 
+def get_next_highest_id():
+    try:
+        with open(TASK_FILE, "r", encoding="utf-8") as f:
+            tasks = json.load(f)
+    except (FileNotFoundError, json.JSONDecodeError):
+        print("Error: File not found or invalid JSON format.")
+        return 1
+
+    if not tasks:
+        return 1
+
+    tasks.sort(key=lambda x: int(x["id"]))
+
+    highest_id_task = tasks[-1]
+    return highest_id_task + 1
+
 def add_task(description):
-    with open(TASK_FILE, "w") as f:
-        pass      
+    try:
+        with open(TASK_FILE, "r", encoding="utf-8") as f:
+            data = json.load(f)
+    except (FileNotFoundError, json.JSONDecodeError):
+        data = []
+
+    id = get_next_highest_id()
+    timestamp = datetime.now().isoformat()
+
+    new_task = {
+        "id": id,
+        "description": description,
+        "status": TODO,
+        "createdAt": timestamp,
+        "updatedAt": timestamp
+    }
+
+    data.append(new_task)
+
+    with open(TASK_FILE, "w", encoding="utf-8") as f:
+        json.dump(data, f, indent=4)
 
 def perform_operation(command, id, description):    
     if command == ADD:
