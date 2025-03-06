@@ -25,14 +25,14 @@ def check_input():
         command = sys.argv[1]
         if command == ADD:
             if len(sys.argv) > 2:
-                description = sys.argv[2]
+                description = " ".join(sys.argv[2:])
                 return (command, None, description)
             else :
                 print(f"Please provide task description.")
         elif command == DELETE or command == MARK_IN_PROGRESS or command == MARK_DONE:
             if len(sys.argv) > 2:
                 id = sys.argv[2]
-                return (command, id)
+                return (command, id, None)
             else :
                 print(f"Please provide task id.")
         elif command == UPDATE:
@@ -43,14 +43,14 @@ def check_input():
             else :
                 print(f"Please provide task id and updated description.")
         elif command == LIST:
-            if len(sys.argv) > 2:
-                status = sys.argv[4]
+            if len(sys.argv) > 1:
+                status = sys.argv[2]
                 if status == DONE or status == TODO or status == IN_PROGRESS:
-                    return (status)
+                    return (status, None, None)
                 else:
                     print(f"Please provide a valid list option.")
             else:
-                return (command)
+                return (command, None, None)
         else:
             print(f"Please provide a valid instruction.")    
     else:
@@ -69,15 +69,15 @@ def get_next_highest_id():
 
     tasks.sort(key=lambda x: int(x["id"]))
 
-    highest_id_task = tasks[-1]
+    highest_id_task = tasks[-1]["id"]
     return highest_id_task + 1
 
 def add_task(description):
     try:
         with open(TASK_FILE, "r", encoding="utf-8") as f:
-            data = json.load(f)
+            tasks = json.load(f)
     except (FileNotFoundError, json.JSONDecodeError):
-        data = []
+        tasks = []
 
     id = get_next_highest_id()
     timestamp = datetime.now().isoformat()
@@ -90,14 +90,89 @@ def add_task(description):
         "updatedAt": timestamp
     }
 
-    data.append(new_task)
+    tasks.append(new_task)
 
     with open(TASK_FILE, "w", encoding="utf-8") as f:
-        json.dump(data, f, indent=4)
+        json.dump(tasks, f, indent=4)
+        print(f"Task with id {id} added successfully.")
+
+def delete_task(id):
+    try:
+        with open(TASK_FILE, "r", encoding="utf-8") as f:
+            tasks = json.load(f)
+    except (FileNotFoundError, json.JSONDecodeError):
+        print("Nothing to delete")
+        return
+
+    filtered_tasks = [task for task in tasks if str(task["id"]) != str(id)]
+
+    if len(filtered_tasks) == len(tasks):
+        print(f"No task found with id {id}.")
+        return
+
+    with open(TASK_FILE, "w", encoding="utf-8") as f:
+        json.dump(filtered_tasks, f, indent=4)
+
+    print(f"Task with id {id} removed successfully.")
+
+def list_tasks(command):
+    try:
+        with open(TASK_FILE, "r", encoding="utf-8") as f:
+            data = json.load(f)
+    except (FileNotFoundError, json.JSONDecodeError):
+        data = []
+
+    if (command == None):
+        for task in data:
+            print(f"Id: {task["id"]}\nStatus: {task["status"]}\nDescription: {task["description"]}\n\n")
+    else:
+        for task in data:
+            if (task["status"] == command):
+                print(f"Id: {task["id"]}\nStatus: {task["status"]}\nDescription: {task["description"]}\n\n")
+
+
+def update_task_status(id, new_status):
+    try:
+        with open(TASK_FILE, "r", encoding="utf-8") as f:
+            tasks = json.load(f)
+    except (FileNotFoundError, json.JSONDecodeError):
+        print("Nothing to mark in progress")
+        return
+    
+    task_id = str(id)
+    task_found = False
+
+    for task in tasks:
+        if str(task["id"]) == task_id:
+            task["status"] = new_status
+            task["updatedAt"] = datetime.now().isoformat()
+            task_found = True
+            break
+
+    if not task_found:
+        print(f"No task found with id {task_id}.")
+        return
+    
+    with open(TASK_FILE, "w", encoding="utf-8") as f:
+        json.dump(tasks, f, indent=4)
+
+    print(f"Task id {task_id} updated to status '{new_status}'.")
+
 
 def perform_operation(command, id, description):    
     if command == ADD:
         add_task(description)
+    elif command == DELETE:
+        delete_task(id)
+    elif command == LIST:
+        list_tasks(None)
+    elif command == MARK_IN_PROGRESS:
+        update_task_status(id, IN_PROGRESS)
+    elif command == MARK_DONE:
+        update_task_status(id, DONE)
+    elif command == DONE or command == TODO or command == IN_PROGRESS:
+        list_tasks(command)
+
 
 if __name__ == '__main__':
     # Check if json file exists, if not then create it

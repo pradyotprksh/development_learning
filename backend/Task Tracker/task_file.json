@@ -1,0 +1,23 @@
+[
+    {
+        "id": 1,
+        "description": "new",
+        "status": "todo",
+        "createdAt": "2025-03-06T15:53:26.651619",
+        "updatedAt": "2025-03-06T15:53:26.651619"
+    },
+    {
+        "id": 2,
+        "description": "add",
+        "status": "in-progress",
+        "createdAt": "2025-03-06T15:58:28.489551",
+        "updatedAt": "2025-03-06T16:06:59.722222"
+    },
+    {
+        "id": 3,
+        "description": "add list todo tasks",
+        "status": "todo",
+        "createdAt": "2025-03-06T16:00:11.734622",
+        "updatedAt": "2025-03-06T16:00:11.734622"
+    }
+]
