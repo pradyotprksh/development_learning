@@ -38,12 +38,12 @@ def check_input():
         elif command == UPDATE:
             if len(sys.argv) > 3:
                 id = sys.argv[2]
-                description = sys.argv[3]
+                description = " ".join(sys.argv[3:])
                 return (command, id, description)
             else :
                 print(f"Please provide task id and updated description.")
         elif command == LIST:
-            if len(sys.argv) > 1:
+            if len(sys.argv) > 2:
                 status = sys.argv[2]
                 if status == DONE or status == TODO or status == IN_PROGRESS:
                     return (status, None, None)
@@ -159,6 +159,34 @@ def update_task_status(id, new_status):
     print(f"Task id {task_id} updated to status '{new_status}'.")
 
 
+def update_task(id, description):
+    try:
+        with open(TASK_FILE, "r", encoding="utf-8") as f:
+            tasks = json.load(f)
+    except (FileNotFoundError, json.JSONDecodeError):
+        print("Nothing to mark in progress")
+        return
+    
+    task_id = str(id)
+    task_found = False
+
+    for task in tasks:
+        if str(task["id"]) == task_id:
+            task["description"] = description
+            task["updatedAt"] = datetime.now().isoformat()
+            task_found = True
+            break
+
+    if not task_found:
+        print(f"No task found with id {task_id}.")
+        return
+    
+    with open(TASK_FILE, "w", encoding="utf-8") as f:
+        json.dump(tasks, f, indent=4)
+
+    print(f"Task id {task_id} updated.")
+
+
 def perform_operation(command, id, description):    
     if command == ADD:
         add_task(description)
@@ -172,6 +200,8 @@ def perform_operation(command, id, description):
         update_task_status(id, DONE)
     elif command == DONE or command == TODO or command == IN_PROGRESS:
         list_tasks(command)
+    elif command == UPDATE:
+        update_task(id, description)
 
 
 if __name__ == '__main__':

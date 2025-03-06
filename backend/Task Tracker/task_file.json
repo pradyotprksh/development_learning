@@ -1,12 +1,5 @@
 [
     {
-        "id": 1,
-        "description": "new",
-        "status": "todo",
-        "createdAt": "2025-03-06T15:53:26.651619",
-        "updatedAt": "2025-03-06T15:53:26.651619"
-    },
-    {
         "id": 2,
         "description": "add",
         "status": "in-progress",
@@ -16,8 +9,15 @@
     {
         "id": 3,
         "description": "add list todo tasks",
-        "status": "todo",
+        "status": "done",
         "createdAt": "2025-03-06T16:00:11.734622",
-        "updatedAt": "2025-03-06T16:00:11.734622"
+        "updatedAt": "2025-03-06T16:20:46.555691"
+    },
+    {
+        "id": 4,
+        "description": "Buy  groceries",
+        "status": "todo",
+        "createdAt": "2025-03-06T16:20:05.570670",
+        "updatedAt": "2025-03-06T16:20:05.570670"
     }
 ]
