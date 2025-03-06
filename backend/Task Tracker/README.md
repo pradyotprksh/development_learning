@@ -1,7 +1,7 @@
-* Project Details
+# Project Details
 https://roadmap.sh/projects/task-tracker
 
-* How to run?
+# How to run?
 Use command `python3 task_tracker.py <command> <options>`
 
 - Adding a new task
