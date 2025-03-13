@@ -57,6 +57,7 @@ dependencies {
     implementation(libs.camera.camera2)
     implementation(libs.camera.view)
     implementation(libs.camera.lifecycle)
+    implementation(libs.image.labeling)
 
     testImplementation(libs.junit)
 
