@@ -426,8 +426,8 @@ jobs:
           token: ${{ secrets.TELEGRAM_TOKEN }}
           message: |
             GitHub Action for android/JenkinsLearning is completed with status ${{ job.status }} for ${{ github.ref }}.
-  PoseDetection:
-    name: PoseDetection Code Checker
+  ML Kit Examples:
+    name: ML Kit Examples Code Checker
     runs-on: ubuntu-latest
     steps:
       - name: Cancel Previous Runs
@@ -440,8 +440,8 @@ jobs:
           java-version: '12.x'
           distribution: 'adopt'
           cache: gradle
-      - name: Checking PoseDetection
-        working-directory: ./android/PoseDetection
+      - name: Checking ML Kit Examples
+        working-directory: ./android/ML Kit Examples
         run: |
           chmod +x ./gradlew
           ./gradlew lint
@@ -453,4 +453,4 @@ jobs:
           to: ${{ secrets.TELEGRAM_TO }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
           message: |
-            GitHub Action for android/PoseDetection is completed with status ${{ job.status }} for ${{ github.ref }}.
+            GitHub Action for android/ML Kit Examples is completed with status ${{ job.status }} for ${{ github.ref }}.
