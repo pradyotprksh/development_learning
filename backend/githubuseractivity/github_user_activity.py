@@ -39,7 +39,9 @@ def get_user_activity(username):
         return
     
     for activity in user_activity:
-        print(f"{activity["type"]} {activity["repo"]["name"]}")
+        type = activity["type"]
+        repo_name = activity["repo"]["name"]
+        print(f"{type} {repo_name}")
 
 if __name__ == '__main__':
     username = check_input()

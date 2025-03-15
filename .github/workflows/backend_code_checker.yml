@@ -6,14 +6,14 @@ on:
       - backend/**
 name: Backend Projects
 jobs:
-  TaskTracker:
-    name: TaskTracker Code Checker
+  tasktracker:
+    name: tasktracker Code Checker
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
       - uses: ricardochaves/python-lint@master
         with:
-          python-root-list: "backend/TaskTracker"
+          python-root-list: "backend/tasktracker"
       - name: Send Message
         if: always()
         uses: appleboy/telegram-action@master
