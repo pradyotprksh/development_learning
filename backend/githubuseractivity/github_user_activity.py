@@ -1,4 +1,3 @@
-import http.client
 import json
 import shlex
 import sys
@@ -13,8 +12,6 @@ def check_input():
         return None
     
 def get_request(path):
-    connection = http.client.HTTPSConnection("api.github.com")
-
     try:
         cmd = "curl -L " \
         "-H \"Accept: application/vnd.github+json\" " \
@@ -23,13 +20,11 @@ def get_request(path):
         "https://api.github.com/users/pradyotprksh/events"
         args = shlex.split(cmd)
         process = subprocess.Popen(args, shell=False, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        stdout, stderr = process.communicate()        
+        stdout, _ = process.communicate()        
         events = json.loads(stdout)
         return events
     except Exception as e:
         print(f'Exception occurred: {e}')
-    finally:
-        connection.close()
     
 def get_user_activity(username):
     user_activity = get_request(f"/users/{username}/events")
