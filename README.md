@@ -88,7 +88,7 @@ README will be only updated when the project/learning is completed. So make sure
     - [guessing_number](https://github.com/pradyotprksh/development_learning/tree/main/rust/guessing_number)
     - [hello-rust](https://github.com/pradyotprksh/development_learning/tree/main/rust/hello-rust)
 
-[<img src="https://img.shields.io/badge/backend?style=for-the-badge&logo=backend&logoColor=white" />](https://github.com/pradyotprksh/development_learning/tree/main/backend) [![Backend Projects](https://github.com/pradyotprksh/development_learning/actions/workflows/backend.yml/badge.svg)](https://github.com/pradyotprksh/development_learning/actions/workflows/backend.yml)
+[Backend Projects](https://github.com/pradyotprksh/development_learning/tree/main/backend)
   - [roadmap.sh](https://roadmap.sh)
     - [Task Tracker](https://github.com/pradyotprksh/development_learning/tree/main/backend/Task%20Tracker)
       - https://roadmap.sh/projects/task-tracker/solutions?u=6781060d70129741a8caef98
