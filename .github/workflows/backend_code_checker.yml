@@ -6,28 +6,6 @@ on:
       - backend/**
 name: Backend Projects
 jobs:
-  githubuseractivity:
-    name: githubuseractivity Code Checker
-    runs-on: ubuntu-latest
-    steps:
-      - name: Cancel Previous Runs
-        uses: styfle/cancel-workflow-action@0.9.1
-        with:
-          access_token: ${{ github.token }}
-      - uses: actions/checkout@v2
-      - name: Checking githubuseractivity
-        working-directory: ./backend/githubuseractivity
-        run: |
-          chmod +x ./gradlew
-          ./gradlew build
-      - name: Send Message
-        if: always()
-        uses: appleboy/telegram-action@master
-        with:
-          to: ${{ secrets.TELEGRAM_TO }}
-          token: ${{ secrets.TELEGRAM_TOKEN }}
-          message: |
-            GitHub Action for backend/githubuseractivity is completed with status ${{ job.status }} for ${{ github.ref }}.
   TaskTracker:
     name: Task Tracker Code Checker
     runs-on: ubuntu-latest
@@ -44,3 +22,19 @@ jobs:
           token: ${{ secrets.TELEGRAM_TOKEN }}
           message: |
             GitHub Action for backend/Task Tracker is completed with status ${{ job.status }} for ${{ github.ref }}.
+  githubuseractivity:
+    name: githubuseractivity Code Checker
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: ricardochaves/python-lint@master
+        with:
+          python-root-list: "backend/githubuseractivity"
+      - name: Send Message
+        if: always()
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+            GitHub Action for backend/githubuseractivity is completed with status ${{ job.status }} for ${{ github.ref }}.
