@@ -82,13 +82,13 @@ README will be only updated when the project/learning is completed. So make sure
   - [Kotlin](https://github.com/pradyotprksh/development_learning/blob/main/interview/KOTLIN_INTERVIEW_PREPERATION.md)
   - [Flutter](https://github.com/pradyotprksh/development_learning/blob/main/interview/FLUTTER_INTERVIEW_PREPERATION.md)
 
-[<img src="https://img.shields.io/badge/Rust?style=for-the-badge&logo=rust&logoColor=white" />](https://github.com/pradyotprksh/development_learning/tree/main/rust) [![Rust Projects](https://github.com/pradyotprksh/development_learning/actions/workflows/rust_code_checker.yml/badge.svg)](https://github.com/pradyotprksh/development_learning/actions/workflows/rust_code_checker.yml)
+[<img src="https://img.shields.io/badge/rust?style=for-the-badge&logo=rust&logoColor=white" />](https://github.com/pradyotprksh/development_learning/tree/main/rust) [![Rust Projects](https://github.com/pradyotprksh/development_learning/actions/workflows/rust_code_checker.yml/badge.svg)](https://github.com/pradyotprksh/development_learning/actions/workflows/rust_code_checker.yml)
   - Learning
     - [common_programming_concepts](https://github.com/pradyotprksh/development_learning/tree/main/rust/common_programming_concepts)
     - [guessing_number](https://github.com/pradyotprksh/development_learning/tree/main/rust/guessing_number)
     - [hello-rust](https://github.com/pradyotprksh/development_learning/tree/main/rust/hello-rust)
 
-[Backend Projects](https://github.com/pradyotprksh/development_learning/tree/main/backend)
+[<img src="https://img.shields.io/badge/serverless?style=for-the-badge&logo=serverless&logoColor=white" />](https://github.com/pradyotprksh/development_learning/tree/main/backend) [![Backend Projects](https://github.com/pradyotprksh/development_learning/actions/workflows/backend_code_checker.yml/badge.svg)](https://github.com/pradyotprksh/development_learning/actions/workflows/backend_code_checker.yml)
   - [roadmap.sh](https://roadmap.sh)
     - [Task Tracker](https://github.com/pradyotprksh/development_learning/tree/main/backend/Task%20Tracker)
       - https://roadmap.sh/projects/task-tracker/solutions?u=6781060d70129741a8caef98
