@@ -3,7 +3,7 @@ package utils
 object Constants {
     object Server {
         const val PORT = 8080
-        const val HOST = "192.168.64.203"
+        const val HOST = "192.168.0.101"
     }
 
     object Database {
