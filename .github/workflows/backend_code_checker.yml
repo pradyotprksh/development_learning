@@ -7,13 +7,13 @@ on:
 name: Backend Projects
 jobs:
   TaskTracker:
-    name: Task Tracker Code Checker
+    name: TaskTracker Code Checker
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
       - uses: ricardochaves/python-lint@master
         with:
-          python-root-list: "backend/Task Tracker"
+          python-root-list: "backend/TaskTracker"
       - name: Send Message
         if: always()
         uses: appleboy/telegram-action@master
@@ -21,7 +21,7 @@ jobs:
           to: ${{ secrets.TELEGRAM_TO }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
           message: |
-            GitHub Action for backend/Task Tracker is completed with status ${{ job.status }} for ${{ github.ref }}.
+            GitHub Action for backend/TaskTracker is completed with status ${{ job.status }} for ${{ github.ref }}.
   githubuseractivity:
     name: githubuseractivity Code Checker
     runs-on: ubuntu-latest
