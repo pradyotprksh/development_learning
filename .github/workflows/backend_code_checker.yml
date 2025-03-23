@@ -54,3 +54,19 @@ jobs:
           token: ${{ secrets.TELEGRAM_TOKEN }}
           message: |
             GitHub Action for backend/expensetracker is completed with status ${{ job.status }} for ${{ github.ref }}.
+  numberguessinggame:
+    name: numberguessinggame Code Checker
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: ricardochaves/python-lint@master
+        with:
+          python-root-list: "backend/numberguessinggame"
+      - name: Send Message
+        if: always()
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+            GitHub Action for backend/numberguessinggame is completed with status ${{ job.status }} for ${{ github.ref }}.
