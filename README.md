@@ -99,6 +99,8 @@ README will be only updated when the project/learning is completed. So make sure
     - [expensetracker](https://github.com/pradyotprksh/development_learning/tree/main/backend/expensetracker)
       - https://roadmap.sh/projects/expense-tracker/solutions?u=6781060d70129741a8caef98
       - https://roadmap.sh/projects/expense-tracker
+    - [numberguessinggame](https://github.com/pradyotprksh/development_learning/tree/main/backend/numberguessinggame)
+      - https://roadmap.sh/projects/number-guessing-game
   
 
 ---
