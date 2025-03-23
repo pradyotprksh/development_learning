@@ -9,6 +9,7 @@ def print_message():
     print("1. Easy (10 chances)")
     print("2. Medium (5 chances)")
     print("3. Hard (3 chances)")
+    print("")
 
 def check_input():
     option = 0
