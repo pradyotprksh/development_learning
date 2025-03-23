@@ -44,9 +44,12 @@ def check_input():
                 return (command, None, None, None, None)
             elif len(sys.argv) == 4:
                 month = sys.argv[3]
-                if month in range(1, 13):
-                    return (command, None, None, None, month)
-                else:
+                try:
+                    if int(month) in range(1, 13):
+                        return (command, None, None, None, month)
+                    else:
+                        print("Please provide a valid month number.")
+                except:
                     print("Please provide a valid month number.")
             else:
                 print(f"No such command present.")
@@ -62,9 +65,7 @@ def get_next_highest_id():
         if csvFile is not None:
             number = 0
             for lines in csvFile:
-                print(number)
                 try:
-                    print(lines)
                     number = int(lines[0])
                 except ValueError:
                     pass
@@ -78,12 +79,30 @@ def add_expense(description, amount):
 
     row = [id, date, description, amount]
 
-    with open(EXPENSE_FILE, "w") as f:
+    with open(EXPENSE_FILE, mode="a", newline="") as f:
         csvFile = csv.writer(f)
         csvFile.writerow(row)
 
 def delete_expense(id):
-    pass
+    id_found = False
+    expenses = []
+    with open(EXPENSE_FILE, mode="r") as file:
+        reader = csv.reader(file)
+        header = next(reader)
+        for row in reader:
+            if row[0] != id:
+                expenses.append(row)
+            else:
+                id_found = True
+
+    if id_found is False:
+        print(f"Expense with id {id} is not present")
+        return
+    
+    with open(EXPENSE_FILE, mode="w") as file:
+        writer = csv.writer(file)
+        writer.writerow(header)
+        writer.writerows(expenses)
 
 def list_expense():
     with open(EXPENSE_FILE, mode ='r') as file:
@@ -92,18 +111,58 @@ def list_expense():
             for lines in csvFile:
                 print(lines)
 
-def summary_expense(month):
-    pass
+def complete_summary_expense():
+    amount = 0
+    with open(EXPENSE_FILE, mode ='r') as file:
+        csvFile = csv.reader(file)
+        if csvFile is not None:
+            for lines in csvFile:
+                try:
+                    amount += int(lines[3])
+                except ValueError:
+                    pass
+    print(f"Total expenses: ${amount}")
 
-def perform_operation(command, description, amount, id):    
+
+def summary_expense(month):
+    if month is None:
+        complete_summary_expense()
+    else:
+        str_month = str(month).zfill(2)
+        expenses = []
+        with open(EXPENSE_FILE, mode ='r') as file:
+            csvFile = csv.reader(file)
+            for lines in csvFile:
+                try:
+                    date = lines[1]
+                    month = date.split("-")[1]
+                    if str_month == month:
+                        expenses.append(lines)
+                except:
+                    pass
+        
+        if len(expenses) == 0:
+            print(f"No expense for the month {month} is found.")
+            return
+        
+        amount = 0
+        for row in expenses:
+            try:
+                amount += int(row[3])
+            except ValueError:
+                pass
+
+        print(f"Total expenses: ${amount}")
+
+def perform_operation(command, description, amount, id, month):    
     if command == ADD:
         add_expense(description, amount)
     elif command == DELETE:
-        pass
+        delete_expense(id)
     elif command == LIST:
         list_expense()
     elif command == SUMMARY:
-        pass
+        summary_expense(month)
 
 if __name__ == '__main__':
     # Check if expense file exists, if not then create it
@@ -114,4 +173,4 @@ if __name__ == '__main__':
 
     if command != None:
         # Perform operations based on command
-        perform_operation(command, description, amount, id)
+        perform_operation(command, description, amount, id, month)
