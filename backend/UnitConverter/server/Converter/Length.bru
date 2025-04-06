@@ -1,0 +1,17 @@
+meta {
+  name: Length
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{BASE_URL}}/convert/length?value=1&from=METER&to=CENTIMETER
+  body: none
+  auth: none
+}
+
+query {
+  value: 1
+  from: METER
+  to: CENTIMETER
+}
