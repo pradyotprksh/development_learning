@@ -1,7 +1,7 @@
 package com.pradyotprakash.unitconverter.config
 
-import com.pradyotprakash.unitconverter.Constants.Server.HOST
-import com.pradyotprakash.unitconverter.Constants.Server.PORT
+import com.pradyotprakash.unitconverter.utils.Constants.Server.HOST
+import com.pradyotprakash.unitconverter.utils.Constants.Server.PORT
 import com.pradyotprakash.unitconverter.config.plugins.configureAdministration
 import com.pradyotprakash.unitconverter.config.plugins.configureMonitoring
 import com.pradyotprakash.unitconverter.config.plugins.configureResource

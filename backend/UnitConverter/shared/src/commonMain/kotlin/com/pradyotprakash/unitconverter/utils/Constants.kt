@@ -1,4 +1,4 @@
-package com.pradyotprakash.unitconverter
+package com.pradyotprakash.unitconverter.utils
 
 object Constants {
     object Server {
