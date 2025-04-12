@@ -1,12 +1,16 @@
 package com.pradyotprakash.unitconverter.app
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.material.Button
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Tab
 import androidx.compose.material.TabRow
@@ -17,6 +21,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.pradyotprakash.unitconverter.app.composables.UnitConverterComposable
 import com.pradyotprakash.unitconverter.core.models.request.Units
@@ -60,6 +65,7 @@ fun UnitConverterApp(
                             scope.launch {
                                 pagerState.animateScrollToPage(index)
                             }
+                            unitConverterViewModel.updateStateOnPageChange()
                         },
                         text = {
                             Text(text = tab.humanReadable)
@@ -67,7 +73,27 @@ fun UnitConverterApp(
                     )
                 }
             }
-            HorizontalPager(
+            unitConverterStateState.result?.let { result ->
+                Column(
+                    modifier = Modifier.padding(15.dp).fillMaxSize(),
+                ) {
+                    Text(
+                        Localization.RESULT,
+                        style = MaterialTheme.typography.h6,
+                    )
+                    Box(modifier = Modifier.height(15.dp))
+                    Text(
+                        result,
+                        style = MaterialTheme.typography.h3,
+                    )
+                    Box(modifier = Modifier.height(10.dp))
+                    Button(
+                        onClick = unitConverterViewModel::updateStateOnPageChange,
+                    ) {
+                        Text(Localization.RESET)
+                    }
+                }
+            } ?: HorizontalPager(
                 state = pagerState,
                 modifier = Modifier.fillMaxSize(),
             ) { index ->
@@ -87,8 +113,11 @@ fun UnitConverterApp(
                     weightToSelection = unitConverterStateState.weightToSelection,
                     temperatureFromSelection = unitConverterStateState.temperatureFromSelection,
                     temperatureToSelection = unitConverterStateState.temperatureToSelection,
+                    errorMessage = unitConverterStateState.errorMessage,
                     fromExpanded = unitConverterStateState.fromExpanded,
                     toExpanded = unitConverterStateState.toExpanded,
+                    loading = unitConverterStateState.showLoading,
+                    onValueChange = unitConverterViewModel::onValueChange,
                     onFromTapped = unitConverterViewModel::onFromTapped,
                     onToTapped = unitConverterViewModel::onToTapped,
                     onLengthFromSelection = unitConverterViewModel::onLengthFromSelection,

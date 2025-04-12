@@ -26,8 +26,8 @@ object Localization {
     const val CELSIUS = "°C"
     const val KELVIN = "K"
     const val FAHRENHEIT = "°F"
-    const val MILIGRAM = "°F"
-    const val GRAM = "mg"
+    const val MILIGRAM = "mg"
+    const val GRAM = "g"
     const val KILOGRAM = "kg"
     const val OUNCE = "oz"
     const val POUND = "pound"
@@ -40,4 +40,5 @@ object Localization {
     const val UNIT_TO_CONVERT_TO = "Unit to convert to"
     const val CONVERT = "Convert"
     const val RESULT = "Result of your conversion"
+    const val RESET = "Reset"
 }

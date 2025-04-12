@@ -6,11 +6,15 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Button
+import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.pradyotprakash.unitconverter.core.models.request.LengthTypes
 import com.pradyotprakash.unitconverter.core.models.request.TemperatureTypes
@@ -28,8 +32,11 @@ fun UnitConverterComposable(
     weightToSelection: WeightTypes,
     temperatureFromSelection: TemperatureTypes,
     temperatureToSelection: TemperatureTypes,
+    errorMessage: String?,
     fromExpanded: Boolean,
     toExpanded: Boolean,
+    loading: Boolean,
+    onValueChange: (String) -> Unit,
     onFromTapped: () -> Unit,
     onToTapped: () -> Unit,
     onLengthFromSelection: (LengthTypes) -> Unit,
@@ -48,7 +55,7 @@ fun UnitConverterComposable(
         item {
             OutlinedTextField(
                 value = value,
-                onValueChange = {},
+                onValueChange = onValueChange,
                 label = {
                     Text(
                         Localization.format(
@@ -57,6 +64,9 @@ fun UnitConverterComposable(
                         )
                     )
                 },
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Decimal,
+                ),
                 modifier = Modifier.fillMaxWidth(),
             )
         }
@@ -102,10 +112,23 @@ fun UnitConverterComposable(
             Box(modifier = Modifier.height(10.dp))
         }
         item {
-            Button(
-                onClick = convert,
-            ) {
-                Text(Localization.CONVERT)
+            if (loading) {
+                CircularProgressIndicator()
+            } else {
+                Button(
+                    onClick = convert,
+                ) {
+                    Text(Localization.CONVERT)
+                }
+            }
+        }
+        item {
+            Box(modifier = Modifier.height(10.dp))
+            errorMessage?.let {
+                Text(
+                    it,
+                    color = MaterialTheme.colors.error,
+                )
             }
         }
     }

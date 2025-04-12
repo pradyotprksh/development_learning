@@ -16,4 +16,7 @@ data class UnitConverterState(
     val weightToSelection: WeightTypes = WeightTypes.GRAM,
     val temperatureFromSelection: TemperatureTypes = TemperatureTypes.KELVIN,
     val temperatureToSelection: TemperatureTypes = TemperatureTypes.KELVIN,
+    val result: String? = null,
+    val errorMessage: String? = null,
+    val showLoading: Boolean = false,
 )

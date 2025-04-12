@@ -30,7 +30,7 @@ class LengthControllerImplementation : LengthController {
                     message = Localization.CONVERTED_SUCCESSFULLY,
                     data = UnitConversionResponse(
                         value = result,
-                        humanReadable = "$result ${to.abbreviation}"
+                        humanReadable = "$value ${from.abbreviation} = $result ${to.abbreviation}"
                     )
                 ),
             )

@@ -3,7 +3,7 @@ package com.pradyotprakash.unitconverter.utils
 object Constants {
     object Server {
         const val PORT = 8080
-        const val HOST = "192.168.0.103"
+        const val HOST = "192.168.191.17"
     }
 
     object Paths {
