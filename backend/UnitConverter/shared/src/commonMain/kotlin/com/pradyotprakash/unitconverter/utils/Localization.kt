@@ -32,4 +32,7 @@ object Localization {
     const val OUNCE = "oz"
     const val POUND = "pound"
     const val DEFAULT_ERROR_MESSAGE = "Something went wrong. Please try again later"
+    const val LENGTH = "Length"
+    const val WEIGHT = "Weight"
+    const val TEMPERATURE = "Temperature"
 }

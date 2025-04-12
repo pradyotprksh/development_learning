@@ -2,6 +2,12 @@ package com.pradyotprakash.unitconverter.core.models.request
 
 import com.pradyotprakash.unitconverter.utils.Localization
 
+enum class Units(val humanReadable: String) {
+    LENGTH(Localization.LENGTH),
+    WEIGHT(Localization.WEIGHT),
+    TEMPERATURE(Localization.TEMPERATURE),
+}
+
 enum class LengthTypes(val abbreviation: String) {
     MILIMETER(Localization.MILIMETER),
     CENTIMETER(Localization.CENTIMETER),
