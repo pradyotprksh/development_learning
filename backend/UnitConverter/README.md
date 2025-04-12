@@ -24,3 +24,12 @@ We would appreciate your feedback on Compose/Web and Kotlin/Wasm in the public S
 If you face any issues, please report them on [GitHub](https://github.com/JetBrains/compose-multiplatform/issues).
 
 You can open the web application by running the `:composeApp:wasmJsBrowserDevelopmentRun` Gradle task.
+
+# Results
+
+![Screenshot_20250412-222927](https://github.com/user-attachments/assets/99225979-404f-457b-8e15-c05fd00138df)
+![Screenshot_20250412-222916](https://github.com/user-attachments/assets/6a7eccee-3416-42ad-85fa-1b5885f50066)
+![Screenshot_20250412-222853](https://github.com/user-attachments/assets/6d6ded1b-3a52-457b-8690-d5bab9fd7390)
+![Screenshot_20250412-222839](https://github.com/user-attachments/assets/0aec7b82-da0e-412c-914e-a58643fe57ab)
+![Screenshot_20250412-222835](https://github.com/user-attachments/assets/4e7ed6fc-928b-43b3-b8b2-28010f86cc82)
+![Screenshot_20250412-222832](https://github.com/user-attachments/assets/709aaed0-e0c4-4be2-b9b9-9484c10ba3d0)
