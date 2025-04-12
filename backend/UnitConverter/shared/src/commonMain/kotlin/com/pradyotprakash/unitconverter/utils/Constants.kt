@@ -14,4 +14,9 @@ object Constants {
             const val TEMPERATURE = "/temperature"
         }
     }
+
+    object ConstValues {
+        const val TIMEOUT_VALUE = 15000L
+        const val BASE_URL = "http://${Server.HOST}:${Server.PORT}"
+    }
 }

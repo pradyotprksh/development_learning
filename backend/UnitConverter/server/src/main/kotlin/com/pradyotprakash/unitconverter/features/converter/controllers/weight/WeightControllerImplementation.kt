@@ -1,9 +1,8 @@
 package com.pradyotprakash.unitconverter.features.converter.controllers.weight
 
-import com.pradyotprakash.unitconverter.core.models.response.ConversionResponse
-import com.pradyotprakash.unitconverter.core.models.response.ConverterResponse
+import com.pradyotprakash.unitconverter.core.models.response.UnitConversionResponse
+import com.pradyotprakash.unitconverter.core.models.response.UnitConverterResponse
 import com.pradyotprakash.unitconverter.features.converter.resource.ConverterResource
-import com.pradyotprakash.unitconverter.features.converter.utils.TemperatureConverter
 import com.pradyotprakash.unitconverter.features.converter.utils.WeightConverter
 import com.pradyotprakash.unitconverter.utils.ConverterResponseStatus
 import com.pradyotprakash.unitconverter.utils.Localization
@@ -25,11 +24,11 @@ class WeightControllerImplementation: WeightController {
 
             call.respond(
                 status = HttpStatusCode.OK,
-                message = ConverterResponse(
+                message = UnitConverterResponse(
                     status = ConverterResponseStatus.Success,
                     code = null,
                     message = Localization.CONVERTED_SUCCESSFULLY,
-                    data = ConversionResponse(
+                    data = UnitConversionResponse(
                         value = result,
                         humanReadable = "$result ${to.abbreviation}"
                     )
@@ -38,7 +37,7 @@ class WeightControllerImplementation: WeightController {
         } catch (e: Exception) {
             call.respond(
                 status = HttpStatusCode.BadRequest,
-                message = ConverterResponse(
+                message = UnitConverterResponse(
                     status = ConverterResponseStatus.Error,
                     code = null,
                     message = e.localizedMessage ?: Localization.DEFAULT_ERROR_MESSAGE,

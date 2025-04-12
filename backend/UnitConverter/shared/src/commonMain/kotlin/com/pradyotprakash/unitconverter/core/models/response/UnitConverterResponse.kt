@@ -4,7 +4,7 @@ import com.pradyotprakash.unitconverter.utils.ConverterResponseStatus
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class ConverterResponse<T>(
+data class UnitConverterResponse<T>(
     val status: ConverterResponseStatus,
     val code: String?,
     val message: String?,
