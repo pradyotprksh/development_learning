@@ -35,4 +35,9 @@ object Localization {
     const val LENGTH = "Length"
     const val WEIGHT = "Weight"
     const val TEMPERATURE = "Temperature"
+    const val ENTER_THE_VALUE = "Enter the %s to convert"
+    const val UNIT_TO_CONVERT_FROM = "Unit to convert from"
+    const val UNIT_TO_CONVERT_TO = "Unit to convert to"
+    const val CONVERT = "Convert"
+    const val RESULT = "Result of your conversion"
 }

@@ -18,6 +18,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.pradyotprakash.unitconverter.app.composables.UnitConverterComposable
+import com.pradyotprakash.unitconverter.core.models.request.Units
 import com.pradyotprakash.unitconverter.utils.Localization
 import kotlinx.coroutines.launch
 
@@ -69,11 +71,36 @@ fun UnitConverterApp(
                 state = pagerState,
                 modifier = Modifier.fillMaxSize(),
             ) { index ->
-                when (index) {
-                    0 -> {}
-                    1 -> {}
-                    2 -> {}
+                val unitType = when (index) {
+                    0 -> Units.LENGTH
+                    1 -> Units.WEIGHT
+                    2 -> Units.TEMPERATURE
+                    else -> Units.LENGTH
                 }
+
+                UnitConverterComposable(
+                    unitType = unitType,
+                    value = unitConverterStateState.value,
+                    lengthFromSelection = unitConverterStateState.lengthFromSelection,
+                    lengthToSelection = unitConverterStateState.lengthToSelection,
+                    weightFromSelection = unitConverterStateState.weightFromSelection,
+                    weightToSelection = unitConverterStateState.weightToSelection,
+                    temperatureFromSelection = unitConverterStateState.temperatureFromSelection,
+                    temperatureToSelection = unitConverterStateState.temperatureToSelection,
+                    fromExpanded = unitConverterStateState.fromExpanded,
+                    toExpanded = unitConverterStateState.toExpanded,
+                    onFromTapped = unitConverterViewModel::onFromTapped,
+                    onToTapped = unitConverterViewModel::onToTapped,
+                    onLengthFromSelection = unitConverterViewModel::onLengthFromSelection,
+                    onWeightFromSelection = unitConverterViewModel::onWeightFromSelection,
+                    onTemperatureFromSelection = unitConverterViewModel::onTemperatureFromSelection,
+                    onLengthToSelection = unitConverterViewModel::onLengthToSelection,
+                    onWeightToSelection = unitConverterViewModel::onWeightToSelection,
+                    onTemperatureToSelection = unitConverterViewModel::onTemperatureToSelection,
+                    convert = {
+                        unitConverterViewModel.convert(unitType)
+                    },
+                )
             }
         }
     }
