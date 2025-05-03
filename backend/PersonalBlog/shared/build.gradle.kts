@@ -1,6 +1,4 @@
-import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
 
 plugins {
@@ -57,6 +55,7 @@ kotlin {
             implementation(libs.ktor.client.logging)
             implementation(libs.ktor.client.core)
             implementation(libs.kodein.di)
+            implementation(libs.kotlinx.datetime)
         }
 
         jvmMain.dependencies {

@@ -26,5 +26,4 @@ dependencies {
     implementation(libs.kodein.di)
     implementation(libs.supabase.postgrest)
     implementation(libs.ktor.client.cio)
-    implementation(libs.kotlinx.datetime)
 }

@@ -16,4 +16,6 @@ object Localization {
     const val APP_NAME = "Personal Blog"
     const val DETAILS_FOUND = "Details found"
     const val DEFAULT_ERROR_MESSAGE = "Something went wrong. Please try again later"
+    const val BLOG_CREATED_SUCCESSFULLY = "Blog created successfully"
+    const val BLOG_UPDATED_SUCCESSFULLY = "Blog updated successfully"
 }
