@@ -9,7 +9,8 @@ group = "com.pradyotprakash.personalblog"
 version = "1.0.0"
 application {
     mainClass.set("com.pradyotprakash.personalblog.ApplicationKt")
-    applicationDefaultJvmArgs = listOf("-Dio.ktor.development=${extra["io.ktor.development"] ?: "false"}")
+    applicationDefaultJvmArgs =
+        listOf("-Dio.ktor.development=${extra["io.ktor.development"] ?: "false"}")
 }
 
 dependencies {
