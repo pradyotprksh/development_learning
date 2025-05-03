@@ -3,7 +3,7 @@ package com.pradyotprakash.personalblog.utils
 object Constants {
     object Server {
         const val PORT = 8080
-        const val HOST = "192.168.191.17"
+        const val HOST = "192.168.0.116"
     }
 
     object Paths {
@@ -22,5 +22,11 @@ object Constants {
     object Keys {
         const val SUPABASE_API_KEY = "SUPABASE_API_KEY"
         const val SUPABASE_URL = "SUPABASE_URL"
+        const val DATABASE_NAME = "PersonalBlog"
+        const val ID = "id"
+        const val CREATED_AT = "created_at"
+        const val PUBLICATION_AT = "publication_at"
+        const val TITLE = "title"
+        const val CONTENT = "content"
     }
 }
