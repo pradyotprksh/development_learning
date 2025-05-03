@@ -23,4 +23,5 @@ dependencies {
     implementation(libs.ktor.server.content.negotiation)
     implementation(libs.ktor.serialization.kotlinx.json.jvm)
     implementation(libs.kodein.di)
+    implementation(libs.supabase.postgrest)
 }

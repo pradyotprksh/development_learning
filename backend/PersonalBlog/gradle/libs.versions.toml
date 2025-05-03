@@ -14,6 +14,7 @@ kodein-di = "7.22.0"
 kotlin-serialization = "1.9.23"
 ktor_client = "3.1.1"
 navigation-compose = "2.7.0-alpha07"
+supabase-postgrest = "3.1.4"
 
 [libraries]
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activityCompose" }
@@ -37,6 +38,7 @@ kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutine
 ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor_client" }
 ktor-client-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktor_client" }
 navigation-compose = { module = "org.jetbrains.androidx.navigation:navigation-compose", version.ref = "navigation-compose" }
+supabase-postgrest = { module = "io.github.jan-tennert.supabase:postgrest-kt", version.ref = "supabase-postgrest" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
