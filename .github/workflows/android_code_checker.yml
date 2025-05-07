@@ -426,7 +426,7 @@ jobs:
           token: ${{ secrets.TELEGRAM_TOKEN }}
           message: |
             GitHub Action for android/JenkinsLearning is completed with status ${{ job.status }} for ${{ github.ref }}.
-  ML Kit Examples:
+  MLKitExamples:
     name: ML Kit Examples Code Checker
     runs-on: ubuntu-latest
     steps:
