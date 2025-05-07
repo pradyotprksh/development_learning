@@ -454,3 +454,31 @@ jobs:
           token: ${{ secrets.TELEGRAM_TOKEN }}
           message: |
             GitHub Action for android/ML Kit Examples is completed with status ${{ job.status }} for ${{ github.ref }}.
+  CustomAnnotations:
+    name: CustomAnnotations Code Checker
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cancel Previous Runs
+        uses: styfle/cancel-workflow-action@0.9.1
+        with:
+          access_token: ${{ github.token }}
+      - uses: actions/checkout@v2
+      - uses: actions/setup-java@v1
+        with:
+          java-version: '12.x'
+          distribution: 'adopt'
+          cache: gradle
+      - name: Checking CustomAnnotations
+        working-directory: ./android/CustomAnnotations
+        run: |
+          chmod +x ./gradlew
+          ./gradlew lint
+          ./gradlew build
+      - name: Send Message
+        if: always()
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+            GitHub Action for android/CustomAnnotations is completed with status ${{ job.status }} for ${{ github.ref }}.
