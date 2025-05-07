@@ -43,6 +43,10 @@ class MainActivity : ComponentActivity() {
                                 model = "Tesla Model X",
                                 licenseNumber = "PQR012",
                             ),
+                            Car(
+                                model = "Tesla Roadster",
+                                licenseNumber = "DEF345",
+                            ),
                         )
                     )
 
