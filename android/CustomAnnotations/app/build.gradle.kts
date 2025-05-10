@@ -43,6 +43,12 @@ android {
     }
 }
 
+kotlin {
+    sourceSets.main {
+        kotlin.srcDir("build/generated/ksp/main/kotlin")
+    }
+}
+
 dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
@@ -54,6 +60,8 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(kotlin("reflect"))
     implementation(project(":annotations"))
+    implementation(project(":processor"))
+    ksp(project(":processor"))
 
     testImplementation(libs.junit)
 

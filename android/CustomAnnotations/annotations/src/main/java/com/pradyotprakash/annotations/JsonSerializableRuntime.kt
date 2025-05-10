@@ -1,4 +1,4 @@
-package com.pradyotprakash.customannotations.annotations
+package com.pradyotprakash.annotations
 
 @Target(AnnotationTarget.CLASS)
 @Retention(AnnotationRetention.RUNTIME)

@@ -6,7 +6,7 @@ import com.google.devtools.ksp.processing.SymbolProcessorProvider
 
 class JsonSerializerProcessorProvider : SymbolProcessorProvider {
     override fun create(environment: SymbolProcessorEnvironment): SymbolProcessor {
-        return JsonSerializerProccessor(
+        return JsonSerializerProcessor(
             environment.codeGenerator,
             environment.logger,
         )

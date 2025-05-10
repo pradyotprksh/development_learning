@@ -1,7 +1,8 @@
 package com.pradyotprakash.customannotations.utils
 
-import com.pradyotprakash.customannotations.annotations.JsonElementRuntime
-import com.pradyotprakash.customannotations.annotations.JsonSerializableRuntime
+import com.pradyotprakash.annotations.JsonSerializableCompiler
+import com.pradyotprakash.annotations.JsonElement
+import com.pradyotprakash.annotations.JsonSerializableRuntime
 import kotlin.reflect.full.findAnnotation
 import kotlin.reflect.full.memberProperties
 
@@ -16,13 +17,13 @@ object JsonUtil {
 
     private fun objectToJson(obj: Any): String {
         val kClass = obj::class
-        if (!kClass.annotations.any { it is JsonSerializableRuntime }) {
-            throw RuntimeException("The class ${kClass.simpleName} is not annotated with JsonSerializable")
+        if (!kClass.annotations.any { it is JsonSerializableRuntime || it is JsonSerializableCompiler }) {
+            throw RuntimeException("The class ${kClass.simpleName} is not annotated")
         }
 
         val jsonBuilder = StringBuilder("{")
         kClass.memberProperties.forEach { property ->
-            val annotation = property.findAnnotation<JsonElementRuntime>()
+            val annotation = property.findAnnotation<JsonElement>()
             if (annotation != null) {
                 val key = annotation.key.ifEmpty { property.name }
                 val value = property.call(obj)
