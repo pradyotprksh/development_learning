@@ -21,3 +21,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "CustomAnnotations"
 include(":app")
+include(":annotations")
