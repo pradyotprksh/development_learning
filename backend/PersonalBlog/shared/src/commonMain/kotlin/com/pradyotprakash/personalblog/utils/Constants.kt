@@ -11,6 +11,7 @@ object Constants {
             const val BLOG = "/blog"
             const val ADD = "/add"
             const val UPDATE = "/update"
+            const val DELETE = "/delete"
         }
     }
 

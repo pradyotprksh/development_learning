@@ -13,7 +13,7 @@ logback = "1.5.17"
 kodein-di = "7.22.0"
 kotlin-serialization = "1.9.23"
 ktor_client = "3.1.2"
-navigation-compose = "2.7.0-alpha07"
+navigation-compose = "2.9.0-beta01"
 supabase-postgrest = "3.1.4"
 kotlinx-datetime = "0.6.2"
 

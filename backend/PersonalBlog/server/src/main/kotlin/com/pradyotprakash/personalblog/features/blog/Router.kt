@@ -29,4 +29,11 @@ fun Routing.blog(
             it,
         )
     }
+
+    post<BlogResource.BlogDeleteResource> {
+        blogController.deleteBlog(
+            this.call,
+            it,
+        )
+    }
 }

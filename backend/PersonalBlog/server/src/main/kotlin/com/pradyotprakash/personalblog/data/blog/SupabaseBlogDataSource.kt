@@ -37,4 +37,12 @@ class SupabaseBlogDataSource(
             }
         }
     }
+
+    override suspend fun deleteBlog(blogId: String) {
+        postgrest.from(DATABASE_NAME).delete {
+            filter {
+                eq(ID, blogId)
+            }
+        }
+    }
 }

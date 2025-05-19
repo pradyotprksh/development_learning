@@ -8,14 +8,16 @@ class BlogResource {
     @Resource(Constants.Paths.PersonalBlog.ADD)
     data class BlogAddResource(
         private val parent: BlogResource = BlogResource(),
-        val page: Int = 1,
-        val limit: Int = 10,
     )
 
     @Resource(Constants.Paths.PersonalBlog.UPDATE)
     data class BlogUpdateResource(
         private val parent: BlogResource = BlogResource(),
-        val tweetId: String,
-        val optionId: String,
+    )
+
+    @Resource(Constants.Paths.PersonalBlog.DELETE)
+    data class BlogDeleteResource(
+        private val parent: BlogResource = BlogResource(),
+        val blogId: String,
     )
 }

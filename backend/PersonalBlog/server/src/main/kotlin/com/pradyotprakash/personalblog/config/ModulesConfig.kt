@@ -6,6 +6,8 @@ import com.pradyotprakash.personalblog.data.blog.SupabaseBlogDataSource
 import com.pradyotprakash.personalblog.features.blog.controllers.BlogController
 import com.pradyotprakash.personalblog.features.blog.controllers.add.BlogAddController
 import com.pradyotprakash.personalblog.features.blog.controllers.add.BlogAddControllerImplementation
+import com.pradyotprakash.personalblog.features.blog.controllers.delete.BlogDeleteController
+import com.pradyotprakash.personalblog.features.blog.controllers.delete.BlogDeleteControllerImplementation
 import com.pradyotprakash.personalblog.features.blog.controllers.fetch.BlogFetchController
 import com.pradyotprakash.personalblog.features.blog.controllers.fetch.BlogFetchControllerImplementation
 import com.pradyotprakash.personalblog.features.blog.controllers.update.BlogUpdateController
@@ -26,10 +28,11 @@ object ModulesConfig {
         bindProvider<BlogAddController> { BlogAddControllerImplementation(instance()) }
         bindProvider<BlogFetchController> { BlogFetchControllerImplementation(instance()) }
         bindProvider<BlogUpdateController> { BlogUpdateControllerImplementation(instance()) }
+        bindProvider<BlogDeleteController> { BlogDeleteControllerImplementation(instance()) }
     }
 
     private val featuresModule = DI.Module("FEATURES") {
-        bindProvider { BlogController(instance(), instance(), instance()) }
+        bindProvider { BlogController(instance(), instance(), instance(), instance()) }
     }
 
     val di = DI {

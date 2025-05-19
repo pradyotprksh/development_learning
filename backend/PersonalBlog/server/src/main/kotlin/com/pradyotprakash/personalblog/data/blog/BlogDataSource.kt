@@ -9,4 +9,6 @@ interface BlogDataSource {
     suspend fun addBlog(blog: Blog)
 
     suspend fun updateBlog(blog: UpdateBlog)
+
+    suspend fun deleteBlog(blogId: String)
 }
