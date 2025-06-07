@@ -32,9 +32,9 @@ fun PersonalBlogApp(
         navController.navigate(
             Home(admin = admin),
         ) {
-            popUpTo(AuthenticationOption) {
-                inclusive = true
-            }
+//            popUpTo(AuthenticationOption) {
+//                inclusive = true
+//            }
         }
     }
 

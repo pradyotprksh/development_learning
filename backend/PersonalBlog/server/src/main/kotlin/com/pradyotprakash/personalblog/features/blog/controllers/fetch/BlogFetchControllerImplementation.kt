@@ -1,6 +1,6 @@
 package com.pradyotprakash.personalblog.features.blog.controllers.fetch
 
-import com.pradyotprakash.personalblog.core.model.response.PersonalBlogResponse
+import com.pradyotprakash.personalblog.core.models.response.PersonalBlogResponse
 import com.pradyotprakash.personalblog.data.blog.BlogDataSource
 import com.pradyotprakash.personalblog.features.blog.resource.BlogResource
 import com.pradyotprakash.personalblog.utils.Localization

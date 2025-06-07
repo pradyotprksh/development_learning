@@ -1,4 +1,4 @@
-package com.pradyotprakash.personalblog.core.model.response
+package com.pradyotprakash.personalblog.core.models.response
 
 import com.pradyotprakash.personalblog.utils.PersonalBlogResponseStatus
 import kotlinx.serialization.Serializable

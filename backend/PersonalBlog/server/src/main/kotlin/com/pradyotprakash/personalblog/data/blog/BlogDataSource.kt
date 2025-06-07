@@ -1,7 +1,7 @@
 package com.pradyotprakash.personalblog.data.blog
 
-import com.pradyotprakash.personalblog.core.model.request.Blog
-import com.pradyotprakash.personalblog.core.model.request.UpdateBlog
+import com.pradyotprakash.personalblog.core.models.request.Blog
+import com.pradyotprakash.personalblog.core.models.request.UpdateBlog
 
 interface BlogDataSource {
     suspend fun fetchAllBlogs(): List<Blog>
