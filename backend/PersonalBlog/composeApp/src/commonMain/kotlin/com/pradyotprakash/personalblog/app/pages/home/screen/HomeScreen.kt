@@ -61,6 +61,12 @@ fun HomeScreen(
         Box(
             modifier = Modifier.fillMaxSize()
         ) {
+            AnimatedVisibility(state.value.showLoading) {
+                CircularProgressIndicator(
+                    modifier = Modifier.align(Alignment.Center)
+                )
+            }
+
             LazyColumn(
                 modifier = Modifier.fillMaxSize(),
             ) {
@@ -76,11 +82,6 @@ fun HomeScreen(
                         Text(it.publicationDate.toString())
                     }
                 }
-            }
-            AnimatedVisibility(state.value.showLoading) {
-                CircularProgressIndicator(
-                    modifier = Modifier.align(Alignment.Center)
-                )
             }
         }
     }

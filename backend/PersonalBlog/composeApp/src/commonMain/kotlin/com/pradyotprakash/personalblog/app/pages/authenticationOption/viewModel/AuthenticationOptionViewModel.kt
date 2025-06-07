@@ -8,11 +8,11 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 
 class AuthenticationOptionViewModel : ViewModel() {
-    private val _state = MutableStateFlow(AuthenticationOptionState())
-    val state = _state.asStateFlow()
+    private val _authenticationOptionState = MutableStateFlow(AuthenticationOptionState())
+    val authenticationOptionState = _authenticationOptionState.asStateFlow()
 
     fun onIsAdminCheckChange() {
-        _state.update {
+        _authenticationOptionState.update {
             it.copy(
                 isAdmin = !it.isAdmin,
             )
@@ -23,7 +23,7 @@ class AuthenticationOptionViewModel : ViewModel() {
         value: String,
         fieldType: FieldType,
     ) {
-        _state.update {
+        _authenticationOptionState.update {
             when (fieldType) {
                 FieldType.Username -> it.copy(
                     username = value,
@@ -38,11 +38,11 @@ class AuthenticationOptionViewModel : ViewModel() {
     }
 
     fun checkAuthenticationOption(navigateToHome: (Boolean) -> Unit) {
-        if (_state.value.isAdmin) {
+        if (_authenticationOptionState.value.isAdmin) {
             if (checkAdminCredentials()) {
                 navigateToHome(true)
             } else {
-                _state.update {
+                _authenticationOptionState.update {
                     it.copy(
                         isAdminError = true,
                     )
@@ -53,7 +53,7 @@ class AuthenticationOptionViewModel : ViewModel() {
         }
     }
 
-    private fun checkAdminCredentials() = _state.value.isFieldsValid &&
-            _state.value.username == "admin" &&
-            _state.value.password == "admin"
+    private fun checkAdminCredentials() = _authenticationOptionState.value.isFieldsValid &&
+            _authenticationOptionState.value.username == "admin" &&
+            _authenticationOptionState.value.password == "admin"
 }

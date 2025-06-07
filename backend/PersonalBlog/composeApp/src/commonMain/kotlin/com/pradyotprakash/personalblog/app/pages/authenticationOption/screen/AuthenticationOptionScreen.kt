@@ -34,7 +34,7 @@ fun AuthenticationOptionScreen(
     authenticationOptionViewModel: AuthenticationOptionViewModel = viewModel { AuthenticationOptionViewModel() },
     navigateToHome: (Boolean) -> Unit,
 ) {
-    val state = authenticationOptionViewModel.state.collectAsState()
+    val state = authenticationOptionViewModel.authenticationOptionState.collectAsState()
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
