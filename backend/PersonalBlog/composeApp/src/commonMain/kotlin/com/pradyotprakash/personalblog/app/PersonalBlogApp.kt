@@ -5,6 +5,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.toRoute
 import com.pradyotprakash.personalblog.app.navigation.AuthenticationOption
 import com.pradyotprakash.personalblog.app.navigation.BlogDetails
 import com.pradyotprakash.personalblog.app.navigation.BlogNew
@@ -12,6 +13,7 @@ import com.pradyotprakash.personalblog.app.navigation.BlogUpdate
 import com.pradyotprakash.personalblog.app.navigation.Home
 import com.pradyotprakash.personalblog.app.navigation.Splash
 import com.pradyotprakash.personalblog.app.pages.authenticationOption.screen.AuthenticationOptionScreen
+import com.pradyotprakash.personalblog.app.pages.home.screen.HomeScreen
 import com.pradyotprakash.personalblog.app.pages.splash.screen.SplashScreen
 
 @Composable
@@ -50,7 +52,13 @@ fun PersonalBlogApp(
                 navigateToHome = navigateToHome,
             )
         }
-        composable<Home> { }
+        composable<Home> {
+            val home = it.toRoute<Home>()
+
+            HomeScreen(
+                isAdmin = home.admin,
+            )
+        }
         composable<BlogNew> { }
         composable<BlogDetails> { }
         composable<BlogUpdate> { }
