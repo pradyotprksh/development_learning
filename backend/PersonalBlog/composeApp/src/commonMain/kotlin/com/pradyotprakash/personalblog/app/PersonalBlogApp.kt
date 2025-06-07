@@ -27,6 +27,13 @@ fun PersonalBlogApp(
     }
 
     val navigateToHome = { admin: Boolean ->
+        navController.navigate(
+            Home(admin = admin),
+        ) {
+            popUpTo(AuthenticationOption) {
+                inclusive = true
+            }
+        }
     }
 
     NavHost(
@@ -43,9 +50,9 @@ fun PersonalBlogApp(
                 navigateToHome = navigateToHome,
             )
         }
-        composable<Home> {  }
-        composable<BlogNew> {  }
-        composable<BlogDetails> {  }
-        composable<BlogUpdate> {  }
+        composable<Home> { }
+        composable<BlogNew> { }
+        composable<BlogDetails> { }
+        composable<BlogUpdate> { }
     }
 }

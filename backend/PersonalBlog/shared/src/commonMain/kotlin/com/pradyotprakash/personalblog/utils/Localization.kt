@@ -19,4 +19,8 @@ object Localization {
     const val BLOG_CREATED_SUCCESSFULLY = "Blog created successfully"
     const val BLOG_DELETED_SUCCESSFULLY = "Blog deleted successfully"
     const val BLOG_UPDATED_SUCCESSFULLY = "Blog updated successfully"
+    const val ARE_YOU_ADMIN = "Are you an admin?"
+    const val CONTINUE = "Continue"
+    const val USERNAME = "Username"
+    const val PASSWORD = "Password"
 }

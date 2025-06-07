@@ -21,7 +21,7 @@ fun SplashScreen(
     navigateToAuthenticationOption: () -> Unit,
 ) {
     LaunchedEffect(Unit) {
-        delay(2000)
+        delay(1000)
         navigateToAuthenticationOption()
     }
 
