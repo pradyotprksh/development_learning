@@ -1,21 +1,22 @@
 [versions]
-agp = "8.5.2"
+agp = "8.6.1"
 android-compileSdk = "35"
 android-minSdk = "24"
 android-targetSdk = "35"
 androidx-activityCompose = "1.10.1"
-androidx-lifecycle = "2.8.4"
-compose-multiplatform = "1.7.3"
-kotlin = "2.1.20"
-kotlinx-coroutines = "1.10.1"
-ktor = "3.1.2"
-logback = "1.5.17"
+androidx-lifecycle = "2.9.0"
+compose-multiplatform = "1.8.1"
+kotlin = "2.1.21"
+kotlinx-coroutines = "1.10.2"
+ktor = "3.1.3"
+logback = "1.5.18"
 kodein-di = "7.22.0"
 kotlin-serialization = "1.9.23"
-ktor_client = "3.1.2"
+ktor_client = "3.1.3"
 navigation-compose = "2.9.0-beta01"
 supabase-postgrest = "3.1.4"
 kotlinx-datetime = "0.6.2"
+lifecycle-viewmodel-compose = "2.9.0"
 
 [libraries]
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activityCompose" }
@@ -42,6 +43,7 @@ ktor-client-logging = { module = "io.ktor:ktor-client-logging", version.ref = "k
 navigation-compose = { module = "org.jetbrains.androidx.navigation:navigation-compose", version.ref = "navigation-compose" }
 supabase-postgrest = { module = "io.github.jan-tennert.supabase:postgrest-kt", version.ref = "supabase-postgrest" }
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinx-datetime" }
+lifecycle-viewmodel-compose = { module = "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycle-viewmodel-compose" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
