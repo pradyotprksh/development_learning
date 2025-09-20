@@ -19,7 +19,7 @@ jobs:
         with:
           python-version: '3.10'
       - name: Run Python script
-        run: python ./freecodecamp/magic-gamma/fcc_magic_example.py
+        run: python machinelearning/freecodecamp/magic-gamma/fcc_magic_example.py
       - name: Send Message
         if: always()
         uses: appleboy/telegram-action@master
