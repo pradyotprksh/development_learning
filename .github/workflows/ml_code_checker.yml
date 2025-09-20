@@ -1,0 +1,30 @@
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - machinelearning/**
+concurrency:
+  group: ${{ github.ref }}
+  cancel-in-progress: true
+name: Machine Learning Projects
+jobs:
+  magic-gamma:
+    name: magic-gamma Code Checker
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Run Python script
+        run: python ./freecodecamp/magic-gamma/fcc_magic_example.py
+      - name: Send Message
+        if: always()
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+            GitHub Action for machinelearning/magic-gamma is completed with status ${{ job.status }} for ${{ github.ref }}.
