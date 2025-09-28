@@ -9,8 +9,8 @@ concurrency:
   cancel-in-progress: true
 name: Machine Learning Projects
 jobs:
-  magic-gamma:
-    name: magic-gamma Code Checker
+  fcc_magic_example:
+    name: fcc_magic_example Code Checker
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
@@ -19,7 +19,7 @@ jobs:
         with:
           python-version: '3.10'
       - name: Run Python script
-        run: python machinelearning/freecodecamp/magic-gamma/fcc_magic_example.py
+        run: python machinelearning/freecodecamp/fcc_magic_example/fcc_magic_example.py
       - name: Send Message
         if: always()
         uses: appleboy/telegram-action@master
@@ -27,4 +27,42 @@ jobs:
           to: ${{ secrets.TELEGRAM_TO }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
           message: |
-            GitHub Action for machinelearning/magic-gamma is completed with status ${{ job.status }} for ${{ github.ref }}.
+            GitHub Action for machinelearning/fcc_magic_example is completed with status ${{ job.status }} for ${{ github.ref }}.
+  fcc-bikes-regression:
+    name: fcc-bikes-regression Code Checker
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Run Python script
+        run: python machinelearning/freecodecamp/fcc-bikes-regression/fcc_bikes_regression.py
+      - name: Send Message
+        if: always()
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+            GitHub Action for machinelearning/fcc-bikes-regression is completed with status ${{ job.status }} for ${{ github.ref }}.
+  fcc-seeds-unsupervised:
+    name: fcc-seeds-unsupervised Code Checker
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Run Python script
+        run: python machinelearning/freecodecamp/fcc-seeds-unsupervised/fcc-seeds-unsupervised.py
+      - name: Send Message
+        if: always()
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+            GitHub Action for machinelearning/fcc-seeds-unsupervised is completed with status ${{ job.status }} for ${{ github.ref }}.
