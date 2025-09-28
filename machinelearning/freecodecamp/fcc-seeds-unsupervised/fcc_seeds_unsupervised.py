@@ -13,7 +13,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 cols = ["area", "perimeter", "compactness", "length", "width", "assymetry", "groove", "class"]
-df = pd.read_csv("seeds_dataset.txt", names=cols, sep="\s+")
+df = pd.read_csv("machinelearning/freecodecamp/fcc-seeds-unsupervised/seeds_dataset.txt", names=cols, sep="\s+")
 
 df.head()
 

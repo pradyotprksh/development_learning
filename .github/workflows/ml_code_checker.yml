@@ -41,6 +41,10 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.10'
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r machinelearning/freecodecamp/fcc-bikes-regression/requirements.txt
       - name: Run Python script
         run: python machinelearning/freecodecamp/fcc-bikes-regression/fcc_bikes_regression.py
       - name: Send Message
@@ -60,6 +64,10 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.10'
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r machinelearning/freecodecamp/fcc-seeds-unsupervised/requirements.txt
       - name: Run Python script
         run: python machinelearning/freecodecamp/fcc-seeds-unsupervised/fcc-seeds-unsupervised.py
       - name: Send Message

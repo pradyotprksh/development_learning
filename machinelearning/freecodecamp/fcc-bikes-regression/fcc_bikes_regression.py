@@ -20,7 +20,7 @@ from sklearn.linear_model import LinearRegression
 """Dataset from https://archive.ics.uci.edu/dataset/560/seoul+bike+sharing+demand"""
 
 dataset_cols = ["bike_count", "hour", "temp", "humidity", "wind", "visibility", "dew_pt_temp", "radiation", "rain", "snow", "functional"]
-df = pd.read_csv("SeoulBikeData.csv").drop(["Date", "Holiday", "Seasons"], axis = 1)
+df = pd.read_csv("machinelearning/freecodecamp/fcc-bikes-regression/SeoulBikeData.csv").drop(["Date", "Holiday", "Seasons"], axis = 1)
 
 df.head()
 
