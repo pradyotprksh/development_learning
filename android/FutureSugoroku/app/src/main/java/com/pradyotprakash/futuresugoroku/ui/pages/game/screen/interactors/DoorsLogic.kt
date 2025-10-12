@@ -8,7 +8,7 @@ interface DoorsLogic {
         coordinates: Pair<String, Int>,
         containsExitDoor: Boolean,
     ): List<Door> {
-        val columns = Constants.roomRowName
+        val columns = Constants.roomColName
         val minRow = 1
         val maxRow = 5
 

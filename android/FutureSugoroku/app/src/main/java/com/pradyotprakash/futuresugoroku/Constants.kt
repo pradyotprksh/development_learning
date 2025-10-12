@@ -8,8 +8,8 @@ object Constants {
     const val NUMBER_OF_TURNS = 15
     const val START_PLAYER_POINTS = 15
     const val EXIT_DOOR = "EXIT_DOOR"
-    val roomRowName = listOf("A", "B", "C", "D", "E")
-    val roomColName = listOf(1, 2, 3, 4, 5)
+    val roomRowName = listOf(1, 2, 3, 4, 5)
+    val roomColName = listOf("A", "B", "C", "D", "E")
     val RANDOM_PENALTY = listOf(
         1,
         2,

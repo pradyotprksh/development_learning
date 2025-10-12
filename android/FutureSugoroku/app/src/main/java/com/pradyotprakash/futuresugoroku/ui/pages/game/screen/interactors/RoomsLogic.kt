@@ -11,12 +11,12 @@ interface RoomsLogic: DoorsLogic {
 
         var roomNumber = 0
 
-        for (col in 0 until Constants.MAX_COL) {
+        for (row in 0 until Constants.MAX_COL) {
             val columnRooms = mutableListOf<Room>()
-            for (row in 0 until Constants.MAX_ROW) {
+            for (col in 0 until Constants.MAX_ROW) {
                 val coordinates = Pair(
-                    first = Constants.roomRowName[row],
-                    second = Constants.roomColName[col]
+                    first = Constants.roomColName[col],
+                    second = Constants.roomRowName[row]
                 )
                 val containsExitDoor = exitRoom == roomNumber
                 val isStart = startRoom == roomNumber
