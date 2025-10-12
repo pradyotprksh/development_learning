@@ -6,4 +6,5 @@ data class Player(
     val name: String,
     val roomPosition: RoomCoordinate,
     val status: PlayerStatus,
+    val score: Int,
 )

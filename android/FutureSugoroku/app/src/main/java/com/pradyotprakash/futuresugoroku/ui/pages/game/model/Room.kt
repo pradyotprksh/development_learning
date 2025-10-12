@@ -5,7 +5,6 @@ import com.pradyotprakash.futuresugoroku.RoomCoordinate
 data class Room(
     val position: Int,
     val coordinates: RoomCoordinate,
-    val players: List<Player>,
     val isStart: Boolean,
     val containsExitDoor: Boolean,
     val penalty: Penalty,
