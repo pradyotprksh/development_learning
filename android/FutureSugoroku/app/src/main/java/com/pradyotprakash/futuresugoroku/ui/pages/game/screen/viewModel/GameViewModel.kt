@@ -1,16 +1,9 @@
-package com.pradyotprakash.futuresugoroku.ui.pages.game.screen
+package com.pradyotprakash.futuresugoroku.ui.pages.game.screen.viewModel
 
 import androidx.lifecycle.ViewModel
-import com.pradyotprakash.futuresugoroku.Constants.EXIT_DOOR
-import com.pradyotprakash.futuresugoroku.Constants.EXIT_ROOM_POSITION
-import com.pradyotprakash.futuresugoroku.Constants.MAX_COL
-import com.pradyotprakash.futuresugoroku.Constants.MAX_ROW
-import com.pradyotprakash.futuresugoroku.Constants.NUMBER_OF_ROOMS
+import com.pradyotprakash.futuresugoroku.Constants
 import com.pradyotprakash.futuresugoroku.Constants.RANDOM_NAMES
-import com.pradyotprakash.futuresugoroku.Constants.RANDOM_PENALTY
 import com.pradyotprakash.futuresugoroku.Constants.START_PLAYER_POINTS
-import com.pradyotprakash.futuresugoroku.Constants.roomColName
-import com.pradyotprakash.futuresugoroku.Constants.roomRowName
 import com.pradyotprakash.futuresugoroku.ui.pages.game.model.Door
 import com.pradyotprakash.futuresugoroku.ui.pages.game.model.GameScreenContent
 import com.pradyotprakash.futuresugoroku.ui.pages.game.model.GameStatus
@@ -26,7 +19,7 @@ class GameViewModel : ViewModel() {
     }
 
     private fun setupGame() {
-        val startRoom = Random.nextInt(0, NUMBER_OF_ROOMS)
+        val startRoom = Random.Default.nextInt(0, Constants.NUMBER_OF_ROOMS)
         val exitRoom = getExitRoom(startRoom)
 
         val rooms = getRoomsDetails(startRoom, exitRoom)
@@ -47,12 +40,12 @@ class GameViewModel : ViewModel() {
 
         var roomNumber = 0
 
-        for (col in 0 until MAX_COL) {
+        for (col in 0 until Constants.MAX_COL) {
             val columnRooms = mutableListOf<Room>()
-            for (row in 0 until MAX_ROW) {
+            for (row in 0 until Constants.MAX_ROW) {
                 val coordinates = Pair(
-                    first = roomRowName[row],
-                    second = roomColName[col]
+                    first = Constants.roomRowName[row],
+                    second = Constants.roomColName[col]
                 )
                 val containsExitDoor = exitRoom == roomNumber
                 val isStart = startRoom == roomNumber
@@ -89,8 +82,8 @@ class GameViewModel : ViewModel() {
         isStart: Boolean,
         containsExitDoor: Boolean,
     ) = Penalty(
-        scoreDeduction = if (Random.nextBoolean() && !isStart && !containsExitDoor) {
-            RANDOM_PENALTY.random()
+        scoreDeduction = if (Random.Default.nextBoolean() && !isStart && !containsExitDoor) {
+            Constants.RANDOM_PENALTY.random()
         } else {
             0
         },
@@ -123,12 +116,12 @@ class GameViewModel : ViewModel() {
         coordinates: Pair<String, Int>,
         containsExitDoor: Boolean,
     ): List<Door> {
-        val columns = roomRowName
+        val columns = Constants.roomRowName
         val minRow = 1
         val maxRow = 5
 
         if (containsExitDoor) {
-            return listOf(Door(EXIT_DOOR to 0))
+            return listOf(Door(Constants.EXIT_DOOR to 0))
         }
 
         val doors = mutableListOf<Door>()
@@ -154,7 +147,7 @@ class GameViewModel : ViewModel() {
     private fun getExitRoom(startRoom: Int): Int {
         var randomRoom = startRoom
         while (randomRoom == startRoom) {
-            randomRoom = EXIT_ROOM_POSITION.random()
+            randomRoom = Constants.EXIT_ROOM_POSITION.random()
         }
         return randomRoom
     }
