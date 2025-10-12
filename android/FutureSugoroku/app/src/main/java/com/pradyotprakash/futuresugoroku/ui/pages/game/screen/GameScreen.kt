@@ -12,7 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.pradyotprakash.futuresugoroku.R
-import com.pradyotprakash.futuresugoroku.ui.pages.game.screen.viewModel.GameViewModel
+import com.pradyotprakash.futuresugoroku.ui.pages.game.screen.GameViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

@@ -1,4 +1,4 @@
-package com.pradyotprakash.futuresugoroku.ui.pages.game.screen.viewModel
+package com.pradyotprakash.futuresugoroku.ui.pages.game.screen.interactors
 
 import com.pradyotprakash.futuresugoroku.Constants.RANDOM_NAMES
 import com.pradyotprakash.futuresugoroku.Constants.START_PLAYER_POINTS

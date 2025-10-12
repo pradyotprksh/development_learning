@@ -1,16 +1,11 @@
-package com.pradyotprakash.futuresugoroku.ui.pages.game.screen.viewModel
+package com.pradyotprakash.futuresugoroku.ui.pages.game.screen
 
 import androidx.lifecycle.ViewModel
 import com.pradyotprakash.futuresugoroku.Constants
-import com.pradyotprakash.futuresugoroku.Constants.RANDOM_NAMES
-import com.pradyotprakash.futuresugoroku.Constants.START_PLAYER_POINTS
-import com.pradyotprakash.futuresugoroku.ui.pages.game.model.Door
 import com.pradyotprakash.futuresugoroku.ui.pages.game.model.GameScreenContent
 import com.pradyotprakash.futuresugoroku.ui.pages.game.model.GameStatus
-import com.pradyotprakash.futuresugoroku.ui.pages.game.model.Penalty
-import com.pradyotprakash.futuresugoroku.ui.pages.game.model.Player
-import com.pradyotprakash.futuresugoroku.ui.pages.game.model.PlayerStatus
-import com.pradyotprakash.futuresugoroku.ui.pages.game.model.Room
+import com.pradyotprakash.futuresugoroku.ui.pages.game.screen.interactors.PlayersLogic
+import com.pradyotprakash.futuresugoroku.ui.pages.game.screen.interactors.RoomsLogic
 import kotlin.random.Random
 
 class GameViewModel : ViewModel(), RoomsLogic, PlayersLogic {
