@@ -32,7 +32,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.pradyotprakash.futuresugoroku.R
 import com.pradyotprakash.futuresugoroku.ui.pages.game.screen.components.PlayerComposable
 import com.pradyotprakash.futuresugoroku.ui.pages.game.screen.components.RoomComposable
-import com.pradyotprakash.futuresugoroku.ui.pages.game.screen.components.RoomGameComposable
+import com.pradyotprakash.futuresugoroku.ui.pages.game.screen.components.RoomGameDetailsSheet
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -61,7 +61,7 @@ fun GameScreen(
             },
             sheetState = sheetState,
         ) {
-            RoomGameComposable(
+            RoomGameDetailsSheet(
                 room = gameViewModel.getSelectedRoomDetails(),
                 rollDiceValues = gameState.value.selectedRoomDices,
                 players = gameViewModel.getSelectedRoomPlayers(),

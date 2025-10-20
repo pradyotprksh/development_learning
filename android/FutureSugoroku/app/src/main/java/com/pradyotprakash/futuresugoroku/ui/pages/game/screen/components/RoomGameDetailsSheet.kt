@@ -35,7 +35,7 @@ import com.pradyotprakash.futuresugoroku.ui.pages.game.model.Room
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun RoomGameComposable(
+fun RoomGameDetailsSheet(
     modifier: Modifier = Modifier,
     room: Room,
     rollDiceValues: List<DiceToDoor>?,
