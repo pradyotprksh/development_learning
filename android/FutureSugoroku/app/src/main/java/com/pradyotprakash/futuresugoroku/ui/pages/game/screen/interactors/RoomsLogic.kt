@@ -20,6 +20,10 @@ interface RoomsLogic: DoorsLogic {
                 )
                 val containsExitDoor = exitRoom == roomNumber
                 val isStart = startRoom == roomNumber
+                val doors = getDoors(
+                    coordinates,
+                    containsExitDoor,
+                )
 
                 val room = Room(
                     position = roomNumber,
@@ -30,11 +34,8 @@ interface RoomsLogic: DoorsLogic {
                         isStart = isStart,
                         containsExitDoor = containsExitDoor,
                     ),
-                    dice = emptyList(),
-                    doors = getDoors(
-                        coordinates,
-                        containsExitDoor,
-                    ),
+                    dice = doors.size,
+                    doors = doors,
                     isRedRoom = false,
                     cameFromRoom = null,
                 )

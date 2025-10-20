@@ -8,7 +8,7 @@ data class Room(
     val isStart: Boolean,
     val containsExitDoor: Boolean,
     val penalty: Penalty,
-    val dice: List<Dice>,
+    val dice: Int,
     val doors: List<Door>,
     val isRedRoom: Boolean,
     val cameFromRoom: Room?,
