@@ -2,10 +2,12 @@ package com.pradyotprakash.futuresugoroku.ui.pages.game.screen
 
 import androidx.lifecycle.ViewModel
 import com.pradyotprakash.futuresugoroku.Constants
-import com.pradyotprakash.futuresugoroku.RoomCoordinate
 import com.pradyotprakash.futuresugoroku.ui.pages.game.model.CurrentTurnDetails
+import com.pradyotprakash.futuresugoroku.ui.pages.game.model.DiceToDoor
 import com.pradyotprakash.futuresugoroku.ui.pages.game.model.GameScreenContent
 import com.pradyotprakash.futuresugoroku.ui.pages.game.model.GameStatus
+import com.pradyotprakash.futuresugoroku.ui.pages.game.model.RoomCoordinate
+import com.pradyotprakash.futuresugoroku.ui.pages.game.model.RoomToDice
 import com.pradyotprakash.futuresugoroku.ui.pages.game.screen.interactors.PlayersLogic
 import com.pradyotprakash.futuresugoroku.ui.pages.game.screen.interactors.RoomsLogic
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -74,7 +76,13 @@ class GameViewModel : ViewModel(), RoomsLogic, PlayersLogic {
             }
             val roll = Random.nextInt(1, 7)
             diceRolls.add(
-                selectedRoom.coordinates to Pair(roll, door.nextRoom)
+                RoomToDice(
+                    roomCoordinate = selectedRoom.coordinates,
+                    diceToDoor = DiceToDoor(
+                        dice = roll,
+                        toRoomCoordinate = door.nextRoom,
+                    )
+                )
             )
         }
 

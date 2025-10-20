@@ -2,10 +2,11 @@ package com.pradyotprakash.futuresugoroku.ui.pages.game.screen.interactors
 
 import com.pradyotprakash.futuresugoroku.Constants
 import com.pradyotprakash.futuresugoroku.ui.pages.game.model.Door
+import com.pradyotprakash.futuresugoroku.ui.pages.game.model.RoomCoordinate
 
 interface DoorsLogic {
     fun getDoors(
-        coordinates: Pair<String, Int>,
+        coordinates: RoomCoordinate,
         containsExitDoor: Boolean,
     ): List<Door> {
         val columns = Constants.roomColName
@@ -13,7 +14,14 @@ interface DoorsLogic {
         val maxRow = 5
 
         if (containsExitDoor) {
-            return listOf(Door(Constants.EXIT_DOOR to 0))
+            return listOf(
+                Door(
+                    RoomCoordinate(
+                        name = Constants.EXIT_DOOR,
+                        number = 0,
+                    )
+                )
+            )
         }
 
         val doors = mutableListOf<Door>()
@@ -21,16 +29,44 @@ interface DoorsLogic {
         val colIndex = columns.indexOf(col)
 
         if (colIndex > 0) {
-            doors.add(Door(columns[colIndex - 1] to row))
+            doors.add(
+                Door(
+                    RoomCoordinate(
+                        name = columns[colIndex - 1],
+                        number = row,
+                    )
+                )
+            )
         }
         if (colIndex < columns.size - 1) {
-            doors.add(Door(columns[colIndex + 1] to row))
+            doors.add(
+                Door(
+                    RoomCoordinate(
+                        name = columns[colIndex + 1],
+                        number = row,
+                    )
+                )
+            )
         }
         if (row > minRow) {
-            doors.add(Door(col to (row - 1)))
+            doors.add(
+                Door(
+                    RoomCoordinate(
+                        name = col,
+                        number = (row - 1),
+                    )
+                )
+            )
         }
         if (row < maxRow) {
-            doors.add(Door(col to (row + 1)))
+            doors.add(
+                Door(
+                    RoomCoordinate(
+                        name = col,
+                        number = (row + 1),
+                    )
+                )
+            )
         }
 
         return doors

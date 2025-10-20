@@ -10,8 +10,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.pradyotprakash.futuresugoroku.RoomCoordinate
-import com.pradyotprakash.futuresugoroku.roomHumanReadable
+import com.pradyotprakash.futuresugoroku.ui.pages.game.model.RoomCoordinate
 
 @Composable
 fun RoomNumberComposable(
@@ -29,7 +28,7 @@ fun RoomNumberComposable(
     ) {
         Text(
             modifier = Modifier.align(Alignment.Center),
-            text = roomCoordinate.roomHumanReadable,
+            text = roomCoordinate.humanReadableName,
         )
     }
 }

@@ -26,10 +26,8 @@ import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.pradyotprakash.futuresugoroku.DiceToDoor
 import com.pradyotprakash.futuresugoroku.R
-import com.pradyotprakash.futuresugoroku.diceHumanReadable
-import com.pradyotprakash.futuresugoroku.roomHumanReadable
+import com.pradyotprakash.futuresugoroku.ui.pages.game.model.DiceToDoor
 import com.pradyotprakash.futuresugoroku.ui.pages.game.model.Player
 import com.pradyotprakash.futuresugoroku.ui.pages.game.model.Room
 
@@ -49,7 +47,7 @@ fun RoomGameDetailsSheet(
                 title = {
                     Text(
                         modifier = Modifier.fillMaxWidth(),
-                        text = "${stringResource(R.string.room)} ${room.coordinates.roomHumanReadable}",
+                        text = "${stringResource(R.string.room)} ${room.coordinates.humanReadableName}",
                         textAlign = TextAlign.Center,
                     )
                 }
@@ -89,7 +87,7 @@ fun RoomGameDetailsSheet(
                             ) {
                                 Text(
                                     modifier = Modifier.align(Alignment.Center),
-                                    text = roll.diceHumanReadable,
+                                    text = roll.humanReadableName,
                                 )
                             }
                         }
@@ -117,7 +115,7 @@ fun RoomGameDetailsSheet(
                     rollDiceValues?.let { rolls ->
                         rolls.forEach { roll ->
                             RoomNumberComposable(
-                                roomCoordinate = roll.second,
+                                roomCoordinate = roll.toRoomCoordinate,
                                 size = 70.dp,
                             )
                         }

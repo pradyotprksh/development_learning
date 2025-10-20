@@ -42,11 +42,7 @@ class MainActivity : ComponentActivity() {
                             )
                         }
                         composable<Routes.Game> {
-                            GameScreen(
-                                goBack = {
-                                    navController.popBackStack()
-                                },
-                            )
+                            GameScreen()
                         }
                     }
                 }

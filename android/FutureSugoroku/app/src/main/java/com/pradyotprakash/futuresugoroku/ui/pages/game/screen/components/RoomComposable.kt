@@ -15,7 +15,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.unit.dp
 import com.pradyotprakash.futuresugoroku.R
-import com.pradyotprakash.futuresugoroku.roomHumanReadable
 import com.pradyotprakash.futuresugoroku.ui.pages.game.model.Room
 
 @Composable
@@ -45,7 +44,7 @@ fun RoomComposable(
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Text(
-                text = room.coordinates.roomHumanReadable,
+                text = room.coordinates.humanReadableName,
             )
             numberOfPlayer.takeIf {
                 it > 0

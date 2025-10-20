@@ -12,7 +12,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.pradyotprakash.futuresugoroku.roomHumanReadable
 import com.pradyotprakash.futuresugoroku.ui.pages.game.model.Player
 
 @Composable
@@ -37,7 +36,7 @@ fun PlayerComposable(
                 text = player.name,
             )
             Text(
-                text = player.roomPosition.roomHumanReadable
+                text = player.roomPosition.humanReadableName
             )
             Text(
                 text = "${player.score}"

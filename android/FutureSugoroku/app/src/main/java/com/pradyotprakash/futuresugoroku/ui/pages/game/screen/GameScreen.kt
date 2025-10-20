@@ -40,7 +40,6 @@ import kotlinx.coroutines.launch
 fun GameScreen(
     modifier: Modifier = Modifier,
     gameViewModel: GameViewModel = viewModel(),
-    goBack: () -> Unit,
 ) {
     val gameState = gameViewModel.gameState.collectAsState()
 

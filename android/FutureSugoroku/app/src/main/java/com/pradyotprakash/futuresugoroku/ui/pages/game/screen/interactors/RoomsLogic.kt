@@ -3,6 +3,7 @@ package com.pradyotprakash.futuresugoroku.ui.pages.game.screen.interactors
 import com.pradyotprakash.futuresugoroku.Constants
 import com.pradyotprakash.futuresugoroku.ui.pages.game.model.Penalty
 import com.pradyotprakash.futuresugoroku.ui.pages.game.model.Room
+import com.pradyotprakash.futuresugoroku.ui.pages.game.model.RoomCoordinate
 import kotlin.random.Random
 
 interface RoomsLogic : DoorsLogic {
@@ -14,9 +15,9 @@ interface RoomsLogic : DoorsLogic {
         for (row in 0 until Constants.MAX_COL) {
             val columnRooms = mutableListOf<Room>()
             for (col in 0 until Constants.MAX_ROW) {
-                val coordinates = Pair(
-                    first = Constants.roomColName[col],
-                    second = Constants.roomRowName[row]
+                val coordinates = RoomCoordinate(
+                    name = Constants.roomColName[col],
+                    number = Constants.roomRowName[row]
                 )
                 val containsExitDoor = exitRoom == roomNumber
                 val isStart = startRoom == roomNumber

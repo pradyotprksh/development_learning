@@ -4,10 +4,11 @@ import com.pradyotprakash.futuresugoroku.Constants.PLAYER_NAMES
 import com.pradyotprakash.futuresugoroku.Constants.START_PLAYER_POINTS
 import com.pradyotprakash.futuresugoroku.ui.pages.game.model.Player
 import com.pradyotprakash.futuresugoroku.ui.pages.game.model.PlayerStatus
+import com.pradyotprakash.futuresugoroku.ui.pages.game.model.RoomCoordinate
 
 interface PlayersLogic {
     fun getPlayers(
-        startCoordinates: Pair<String, Int>,
+        startCoordinates: RoomCoordinate,
     ): List<Player> {
         val players = mutableListOf<Player>()
 

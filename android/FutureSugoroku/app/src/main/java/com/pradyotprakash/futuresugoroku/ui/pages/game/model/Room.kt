@@ -1,7 +1,5 @@
 package com.pradyotprakash.futuresugoroku.ui.pages.game.model
 
-import com.pradyotprakash.futuresugoroku.RoomCoordinate
-
 data class Room(
     val position: Int,
     val coordinates: RoomCoordinate,

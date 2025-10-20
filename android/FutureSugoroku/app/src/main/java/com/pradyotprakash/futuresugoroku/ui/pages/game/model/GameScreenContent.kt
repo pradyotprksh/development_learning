@@ -1,8 +1,6 @@
 package com.pradyotprakash.futuresugoroku.ui.pages.game.model
 
 import com.pradyotprakash.futuresugoroku.Constants.NUMBER_OF_TURNS
-import com.pradyotprakash.futuresugoroku.DiceToDoor
-import com.pradyotprakash.futuresugoroku.RoomCoordinate
 
 data class GameScreenContent(
     val players: List<Player> = emptyList(),
@@ -13,10 +11,10 @@ data class GameScreenContent(
     val currentTurnDetails: CurrentTurnDetails = CurrentTurnDetails(),
 ) {
     val selectedRoomDices: List<DiceToDoor>?
-        get() = currentTurnDetails.currentRollDice.filter { it.first == selectedRoomCoordinate }
+        get() = currentTurnDetails.currentRollDice.filter { it.roomCoordinate == selectedRoomCoordinate }
             .takeIf {
                 it.isNotEmpty()
-            }?.map { it.second }
+            }?.map { it.diceToDoor }
 
     val remainingTurns: Int
         get() = NUMBER_OF_TURNS - currentTurnDetails.currentTurn
