@@ -28,9 +28,11 @@ fun HomeScreen(
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,
-            modifier = Modifier.padding(
-                paddingValues = innerPadding,
-            ).fillMaxSize()
+            modifier = Modifier
+                .padding(
+                    paddingValues = innerPadding,
+                )
+                .fillMaxSize()
         ) {
             Text(
                 text = stringResource(R.string.welcome_to),

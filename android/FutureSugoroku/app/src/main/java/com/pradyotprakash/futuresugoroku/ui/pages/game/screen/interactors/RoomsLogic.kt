@@ -5,7 +5,7 @@ import com.pradyotprakash.futuresugoroku.ui.pages.game.model.Penalty
 import com.pradyotprakash.futuresugoroku.ui.pages.game.model.Room
 import kotlin.random.Random
 
-interface RoomsLogic: DoorsLogic {
+interface RoomsLogic : DoorsLogic {
     fun getRoomsDetails(startRoom: Int, exitRoom: Int): List<List<Room>> {
         val rooms = mutableListOf<List<Room>>()
 
