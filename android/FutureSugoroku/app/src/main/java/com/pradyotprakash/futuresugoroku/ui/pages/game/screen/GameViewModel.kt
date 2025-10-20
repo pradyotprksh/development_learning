@@ -2,13 +2,19 @@ package com.pradyotprakash.futuresugoroku.ui.pages.game.screen
 
 import androidx.lifecycle.ViewModel
 import com.pradyotprakash.futuresugoroku.Constants
+import com.pradyotprakash.futuresugoroku.RoomCoordinate
 import com.pradyotprakash.futuresugoroku.ui.pages.game.model.GameScreenContent
 import com.pradyotprakash.futuresugoroku.ui.pages.game.model.GameStatus
 import com.pradyotprakash.futuresugoroku.ui.pages.game.screen.interactors.PlayersLogic
 import com.pradyotprakash.futuresugoroku.ui.pages.game.screen.interactors.RoomsLogic
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlin.random.Random
 
 class GameViewModel : ViewModel(), RoomsLogic, PlayersLogic {
+    private val _gameState = MutableStateFlow(GameScreenContent())
+    val gameState = _gameState.asStateFlow()
+
     init {
         setupGame()
     }
@@ -18,15 +24,23 @@ class GameViewModel : ViewModel(), RoomsLogic, PlayersLogic {
         val exitRoom = getExitRoom(startRoom)
 
         val rooms = getRoomsDetails(startRoom, exitRoom)
+        val startRoomCoordinate = rooms.flatten().first { it.isStart }.coordinates
         val players = getPlayers(
             startCoordinates = rooms.flatten().first { it.isStart }.coordinates
         )
 
-        val gameContent = GameScreenContent(
+        _gameState.value = GameScreenContent(
             players = players,
             rooms = rooms,
             gameStatus = GameStatus.InProgress,
             currentTurn = 0,
+            remainingRoomTurns = listOf(
+                startRoomCoordinate,
+            ),
         )
     }
+
+    fun numberOfPlayerIn(roomCoordinate: RoomCoordinate) = _gameState.value.players.filter {
+        it.roomPosition == roomCoordinate
+    }.size
 }

@@ -35,6 +35,7 @@ interface RoomsLogic: DoorsLogic {
                         coordinates,
                         containsExitDoor,
                     ),
+                    isRedRoom = false,
                 )
 
                 columnRooms.add(

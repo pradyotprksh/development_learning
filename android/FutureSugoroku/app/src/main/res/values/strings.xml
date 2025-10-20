@@ -2,4 +2,10 @@
     <string name="app_name">Future Sugoroku</string>
     <string name="welcome_to">Welcome To</string>
     <string name="start_game">Start Game</string>
+    <string name="player">player</string>
+    <string name="players">players</string>
+    <plurals name="players">
+        <item quantity="one">@string/player</item>
+        <item quantity="other">@string/players</item>
+    </plurals>
 </resources>
