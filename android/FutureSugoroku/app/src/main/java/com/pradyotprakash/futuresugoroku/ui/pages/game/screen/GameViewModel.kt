@@ -7,9 +7,8 @@ import com.pradyotprakash.futuresugoroku.ui.pages.game.model.DiceToDoor
 import com.pradyotprakash.futuresugoroku.ui.pages.game.model.GameScreenContent
 import com.pradyotprakash.futuresugoroku.ui.pages.game.model.GameStatus
 import com.pradyotprakash.futuresugoroku.ui.pages.game.model.Player
-import com.pradyotprakash.futuresugoroku.ui.pages.game.model.PlayerToRoom
 import com.pradyotprakash.futuresugoroku.ui.pages.game.model.RoomCoordinate
-import com.pradyotprakash.futuresugoroku.ui.pages.game.model.RoomToDice
+import com.pradyotprakash.futuresugoroku.ui.pages.game.screen.interactors.DiceLogic
 import com.pradyotprakash.futuresugoroku.ui.pages.game.screen.interactors.PlayersLogic
 import com.pradyotprakash.futuresugoroku.ui.pages.game.screen.interactors.RoomsLogic
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,7 +16,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlin.random.Random
 
-class GameViewModel : ViewModel(), RoomsLogic, PlayersLogic {
+class GameViewModel : ViewModel(), RoomsLogic, PlayersLogic, DiceLogic {
     private val _gameState = MutableStateFlow(GameScreenContent())
     val gameState = _gameState.asStateFlow()
 
@@ -69,71 +68,33 @@ class GameViewModel : ViewModel(), RoomsLogic, PlayersLogic {
         getPlayersIn(it)
     } ?: emptyList()
 
-    fun getDiceRoll() {
+    fun performDiceRoll() {
         val selectedRoom = getSelectedRoomDetails()
-
-        val diceRolls = _gameState.value.currentTurnDetails.currentDiceRolls.toMutableList()
-        for (door in selectedRoom.doors) {
-            if (door.nextRoom == selectedRoom.cameFromRoom) {
-                continue
-            }
-            val roll = Random.nextInt(1, 7)
-            diceRolls.add(
-                RoomToDice(
-                    roomCoordinate = selectedRoom.coordinates,
-                    diceToDoor = DiceToDoor(
-                        dice = roll,
-                        toRoomCoordinate = door.nextRoom,
-                    )
-                )
-            )
-        }
 
         _gameState.update {
             it.copy(
                 currentTurnDetails = it.currentTurnDetails.copy(
-                    currentDiceRolls = diceRolls,
+                    currentDiceRolls = performDiceRoll(
+                        selectedRoom = selectedRoom,
+                        currentDiceRolls = _gameState.value.currentTurnDetails.currentDiceRolls,
+                    ),
                 )
             )
         }
     }
 
-    fun onRoomSelection(player: Player, door: DiceToDoor) {
+    fun performPlayerDoorSelection(player: Player, door: DiceToDoor) {
         with(_gameState.value.currentTurnDetails) {
-            val selectedRoomCoordinate = _gameState.value.selectedRoomCoordinate
-            require(selectedRoomCoordinate != null)
-
-            val playerToRoom = playersToRoom.toMutableList()
-
-            val selectedDoorDiceRoll = _gameState.value.selectedRoomDices?.first {
-                it.toRoomCoordinate == door.toRoomCoordinate
-            }?.dice
-            require(selectedDoorDiceRoll != null)
-
-            val currentNumberOfSelection = playerToRoom.count {
-                it.toRoomCoordinate == door.toRoomCoordinate && it.fromRoomCoordinate == selectedRoomCoordinate
-            }
-
-            val currentPlayerSelection = playerToRoom.firstOrNull { it.name == player.name }
-
-            if (currentPlayerSelection != null && currentPlayerSelection.toRoomCoordinate == door.toRoomCoordinate) {
-                playerToRoom.removeIf { it.name == player.name }
-            } else if (currentNumberOfSelection >= selectedDoorDiceRoll) {
-                return
-            } else {
-                playerToRoom.removeIf { it.name == player.name }
-                playerToRoom.add(
-                    PlayerToRoom(
-                        name = player.name,
-                        toRoomCoordinate = door.toRoomCoordinate,
-                        fromRoomCoordinate = selectedRoomCoordinate,
-                    )
-                )
-            }
             _gameState.update {
                 it.copy(
                     currentTurnDetails = it.currentTurnDetails.copy(
-                        playersToRoom = playerToRoom,
+                        playersToRoom = performPlayerDoorSelection(
+                            currentTurnDetails = this,
+                            selectedRoomCoordinate = _gameState.value.selectedRoomCoordinate,
+                            player = player,
+                            door = door,
+                            selectedRoomDices = _gameState.value.selectedRoomDices,
+                        ),
                     )
                 )
             }

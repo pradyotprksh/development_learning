@@ -1,7 +1,11 @@
 package com.pradyotprakash.futuresugoroku.ui.pages.game.screen.interactors
 
 import com.pradyotprakash.futuresugoroku.Constants
+import com.pradyotprakash.futuresugoroku.ui.pages.game.model.CurrentTurnDetails
+import com.pradyotprakash.futuresugoroku.ui.pages.game.model.DiceToDoor
 import com.pradyotprakash.futuresugoroku.ui.pages.game.model.Door
+import com.pradyotprakash.futuresugoroku.ui.pages.game.model.Player
+import com.pradyotprakash.futuresugoroku.ui.pages.game.model.PlayerToRoom
 import com.pradyotprakash.futuresugoroku.ui.pages.game.model.RoomCoordinate
 
 interface DoorsLogic {
@@ -70,5 +74,46 @@ interface DoorsLogic {
         }
 
         return doors
+    }
+
+    fun performPlayerDoorSelection(
+        currentTurnDetails: CurrentTurnDetails,
+        selectedRoomCoordinate: RoomCoordinate?,
+        player: Player,
+        door: DiceToDoor,
+        selectedRoomDices: List<DiceToDoor>?,
+    ): List<PlayerToRoom> {
+        with(currentTurnDetails) {
+            require(selectedRoomCoordinate != null)
+
+            val playerToRoom = playersToRoom.toMutableList()
+
+            val selectedDoorDiceRoll = selectedRoomDices?.first {
+                it.toRoomCoordinate == door.toRoomCoordinate
+            }?.dice
+            require(selectedDoorDiceRoll != null)
+
+            val currentNumberOfSelection = playerToRoom.count {
+                it.toRoomCoordinate == door.toRoomCoordinate && it.fromRoomCoordinate == selectedRoomCoordinate
+            }
+
+            val currentPlayerSelection = playerToRoom.firstOrNull { it.name == player.name }
+
+            if (currentPlayerSelection != null && currentPlayerSelection.toRoomCoordinate == door.toRoomCoordinate) {
+                playerToRoom.removeIf { it.name == player.name }
+            } else if (currentNumberOfSelection >= selectedDoorDiceRoll) {
+                return playerToRoom
+            } else {
+                playerToRoom.removeIf { it.name == player.name }
+                playerToRoom.add(
+                    PlayerToRoom(
+                        name = player.name,
+                        toRoomCoordinate = door.toRoomCoordinate,
+                        fromRoomCoordinate = selectedRoomCoordinate,
+                    )
+                )
+            }
+            return playerToRoom
+        }
     }
 }

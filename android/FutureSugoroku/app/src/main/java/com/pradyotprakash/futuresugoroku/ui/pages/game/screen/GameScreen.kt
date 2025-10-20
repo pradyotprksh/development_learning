@@ -65,9 +65,9 @@ fun GameScreen(
                 rollDiceValues = gameState.value.selectedRoomDices,
                 players = gameViewModel.getSelectedRoomPlayers(),
                 playerSelection = gameState.value.selectedRoomPlayerSelection,
-                onRollDice = gameViewModel::getDiceRoll,
+                onRollDice = gameViewModel::performDiceRoll,
                 onRoomSelection = { player, door ->
-                    gameViewModel.onRoomSelection(player, door)
+                    gameViewModel.performPlayerDoorSelection(player, door)
                 }
             )
         }
