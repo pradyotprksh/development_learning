@@ -52,7 +52,6 @@ class GameViewModel : ViewModel(), RoomsLogic, PlayersLogic {
         _gameState.update { state ->
             state.copy(
                 selectedRoomCoordinate = roomCoordinate,
-                rollDice = null,
             )
         }
     }
@@ -68,14 +67,14 @@ class GameViewModel : ViewModel(), RoomsLogic, PlayersLogic {
     fun getDiceRoll() {
         val selectedRoom = getSelectedRoomDetails()
 
-        val diceRolls = mutableListOf<DiceToDoor>()
+        val diceRolls = _gameState.value.rollDice.toMutableList()
         for (door in selectedRoom.doors) {
             if (door.nextRoom == selectedRoom.cameFromRoom) {
                 continue
             }
             val roll = Random.nextInt(1, 7)
             diceRolls.add(
-                roll to door.nextRoom
+                selectedRoom.coordinates to Pair(roll, door.nextRoom)
             )
         }
 

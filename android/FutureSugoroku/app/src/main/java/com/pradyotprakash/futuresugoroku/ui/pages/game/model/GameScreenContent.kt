@@ -11,8 +11,13 @@ data class GameScreenContent(
     val currentTurn: Int = 0,
     val remainingRoomTurns: List<RoomCoordinate> = emptyList(),
     val selectedRoomCoordinate: RoomCoordinate? = null,
-    val rollDice: List<DiceToDoor>? = null,
+    val rollDice: List<Pair<RoomCoordinate, DiceToDoor>> = emptyList(),
 ) {
+    val selectedRoomDices: List<DiceToDoor>?
+        get() = rollDice.filter { it.first == selectedRoomCoordinate }.takeIf {
+            it.isNotEmpty()
+        }?.map { it.second }
+
     val remainingTurns: Int
         get() = NUMBER_OF_TURNS - currentTurn
 }

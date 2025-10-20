@@ -63,7 +63,7 @@ fun GameScreen(
         ) {
             RoomGameComposable(
                 room = gameViewModel.getSelectedRoomDetails(),
-                rollDiceValues = gameState.value.rollDice,
+                rollDiceValues = gameState.value.selectedRoomDices,
                 players = gameViewModel.getSelectedRoomPlayers(),
                 onRollDice = gameViewModel::getDiceRoll
             )
