@@ -8,4 +8,10 @@
         <item quantity="one">@string/player</item>
         <item quantity="other">@string/players</item>
     </plurals>
+    <string name="turn_remaining">turn remaining</string>
+    <string name="turns_remaining">turns remaining</string>
+    <plurals name="turns_remaining">
+        <item quantity="one">@string/turn_remaining</item>
+        <item quantity="other">@string/turns_remaining</item>
+    </plurals>
 </resources>

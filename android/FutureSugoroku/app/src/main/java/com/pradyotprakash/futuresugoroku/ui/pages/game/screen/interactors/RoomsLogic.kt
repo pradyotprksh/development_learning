@@ -36,6 +36,7 @@ interface RoomsLogic: DoorsLogic {
                         containsExitDoor,
                     ),
                     isRedRoom = false,
+                    cameFromRoom = null,
                 )
 
                 columnRooms.add(

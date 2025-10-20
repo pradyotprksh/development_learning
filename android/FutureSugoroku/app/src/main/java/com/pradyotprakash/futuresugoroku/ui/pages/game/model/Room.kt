@@ -11,4 +11,5 @@ data class Room(
     val dice: List<Dice>,
     val doors: List<Door>,
     val isRedRoom: Boolean,
+    val cameFromRoom: Room?,
 )
