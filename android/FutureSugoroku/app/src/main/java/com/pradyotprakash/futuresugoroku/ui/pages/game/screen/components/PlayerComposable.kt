@@ -39,7 +39,6 @@ fun PlayerComposable(
             Text(
                 text = player.roomPosition.roomHumanReadable
             )
-
             Text(
                 text = "${player.score}"
             )
