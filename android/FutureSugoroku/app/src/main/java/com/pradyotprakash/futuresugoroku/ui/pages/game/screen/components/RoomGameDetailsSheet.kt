@@ -30,6 +30,7 @@ import androidx.compose.ui.unit.dp
 import com.pradyotprakash.futuresugoroku.R
 import com.pradyotprakash.futuresugoroku.ui.pages.game.model.DiceToDoor
 import com.pradyotprakash.futuresugoroku.ui.pages.game.model.Player
+import com.pradyotprakash.futuresugoroku.ui.pages.game.model.PlayerToRoom
 import com.pradyotprakash.futuresugoroku.ui.pages.game.model.Room
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -38,6 +39,7 @@ fun RoomGameDetailsSheet(
     modifier: Modifier = Modifier,
     room: Room,
     rollDiceValues: List<DiceToDoor>?,
+    playerSelection: List<PlayerToRoom>,
     players: List<Player>,
     onRollDice: () -> Unit,
     onRoomSelection: (Player, DiceToDoor) -> Unit,
@@ -106,6 +108,8 @@ fun RoomGameDetailsSheet(
             }
 
             items(players) { player ->
+                val roomSelection = playerSelection.find { it.name == player.name }?.toRoomCoordinate
+
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically,
@@ -124,6 +128,7 @@ fun RoomGameDetailsSheet(
                                 ),
                                 roomCoordinate = roll.toRoomCoordinate,
                                 size = 70.dp,
+                                isSelected = roll.toRoomCoordinate == roomSelection,
                             )
                         }
                     }

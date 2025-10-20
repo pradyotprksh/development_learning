@@ -7,6 +7,7 @@ import com.pradyotprakash.futuresugoroku.ui.pages.game.model.DiceToDoor
 import com.pradyotprakash.futuresugoroku.ui.pages.game.model.GameScreenContent
 import com.pradyotprakash.futuresugoroku.ui.pages.game.model.GameStatus
 import com.pradyotprakash.futuresugoroku.ui.pages.game.model.Player
+import com.pradyotprakash.futuresugoroku.ui.pages.game.model.PlayerToRoom
 import com.pradyotprakash.futuresugoroku.ui.pages.game.model.RoomCoordinate
 import com.pradyotprakash.futuresugoroku.ui.pages.game.model.RoomToDice
 import com.pradyotprakash.futuresugoroku.ui.pages.game.screen.interactors.PlayersLogic
@@ -71,7 +72,7 @@ class GameViewModel : ViewModel(), RoomsLogic, PlayersLogic {
     fun getDiceRoll() {
         val selectedRoom = getSelectedRoomDetails()
 
-        val diceRolls = _gameState.value.currentTurnDetails.currentRollDice.toMutableList()
+        val diceRolls = _gameState.value.currentTurnDetails.currentDiceRolls.toMutableList()
         for (door in selectedRoom.doors) {
             if (door.nextRoom == selectedRoom.cameFromRoom) {
                 continue
@@ -91,13 +92,51 @@ class GameViewModel : ViewModel(), RoomsLogic, PlayersLogic {
         _gameState.update {
             it.copy(
                 currentTurnDetails = it.currentTurnDetails.copy(
-                    currentRollDice = diceRolls,
+                    currentDiceRolls = diceRolls,
                 )
             )
         }
     }
 
     fun onRoomSelection(player: Player, door: DiceToDoor) {
-        
+        with(_gameState.value.currentTurnDetails) {
+            val selectedRoomCoordinate = _gameState.value.selectedRoomCoordinate
+            require(selectedRoomCoordinate != null)
+
+            val playerToRoom = playersToRoom.toMutableList()
+
+            val selectedDoorDiceRoll = _gameState.value.selectedRoomDices?.first {
+                it.toRoomCoordinate == door.toRoomCoordinate
+            }?.dice
+            require(selectedDoorDiceRoll != null)
+
+            val currentNumberOfSelection = playerToRoom.count {
+                it.toRoomCoordinate == door.toRoomCoordinate && it.fromRoomCoordinate == selectedRoomCoordinate
+            }
+
+            val currentPlayerSelection = playerToRoom.firstOrNull { it.name == player.name }
+
+            if (currentPlayerSelection != null && currentPlayerSelection.toRoomCoordinate == door.toRoomCoordinate) {
+                playerToRoom.removeIf { it.name == player.name }
+            } else if (currentNumberOfSelection >= selectedDoorDiceRoll) {
+                return
+            } else {
+                playerToRoom.removeIf { it.name == player.name }
+                playerToRoom.add(
+                    PlayerToRoom(
+                        name = player.name,
+                        toRoomCoordinate = door.toRoomCoordinate,
+                        fromRoomCoordinate = selectedRoomCoordinate,
+                    )
+                )
+            }
+            _gameState.update {
+                it.copy(
+                    currentTurnDetails = it.currentTurnDetails.copy(
+                        playersToRoom = playerToRoom,
+                    )
+                )
+            }
+        }
     }
 }

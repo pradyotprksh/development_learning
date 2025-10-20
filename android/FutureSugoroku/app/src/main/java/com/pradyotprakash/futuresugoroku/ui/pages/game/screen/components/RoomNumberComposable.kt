@@ -1,5 +1,6 @@
 package com.pradyotprakash.futuresugoroku.ui.pages.game.screen.components
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.size
@@ -16,6 +17,7 @@ import com.pradyotprakash.futuresugoroku.ui.pages.game.model.RoomCoordinate
 fun RoomNumberComposable(
     modifier: Modifier = Modifier,
     roomCoordinate: RoomCoordinate,
+    isSelected: Boolean,
     size: Dp,
 ) {
     Box(
@@ -23,6 +25,13 @@ fun RoomNumberComposable(
             .border(
                 width = 1.dp,
                 color = MaterialTheme.colorScheme.primaryContainer,
+            )
+            .background(
+                color = if (isSelected) {
+                    MaterialTheme.colorScheme.primaryContainer
+                } else {
+                    MaterialTheme.colorScheme.background
+                }
             )
             .size(size),
     ) {

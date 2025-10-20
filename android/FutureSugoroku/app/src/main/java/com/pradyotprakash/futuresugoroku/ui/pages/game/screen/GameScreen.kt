@@ -64,6 +64,7 @@ fun GameScreen(
                 room = gameViewModel.getSelectedRoomDetails(),
                 rollDiceValues = gameState.value.selectedRoomDices,
                 players = gameViewModel.getSelectedRoomPlayers(),
+                playerSelection = gameState.value.selectedRoomPlayerSelection,
                 onRollDice = gameViewModel::getDiceRoll,
                 onRoomSelection = { player, door ->
                     gameViewModel.onRoomSelection(player, door)

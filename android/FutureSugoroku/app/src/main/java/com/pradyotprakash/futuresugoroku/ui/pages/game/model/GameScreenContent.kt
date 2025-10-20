@@ -10,10 +10,17 @@ data class GameScreenContent(
     val currentTurnDetails: CurrentTurnDetails = CurrentTurnDetails(),
 ) {
     val selectedRoomDices: List<DiceToDoor>?
-        get() = currentTurnDetails.currentRollDice.filter { it.roomCoordinate == selectedRoomCoordinate }
+        get() = currentTurnDetails.currentDiceRolls.filter { it.roomCoordinate == selectedRoomCoordinate }
             .takeIf {
                 it.isNotEmpty()
             }?.map { it.diceToDoor }
+
+    val selectedRoomPlayerSelection: List<PlayerToRoom>
+        get() = currentTurnDetails.playersToRoom.filter { playersToRoom ->
+            players.filter { player ->
+                player.roomPosition == selectedRoomCoordinate
+            }.map { it.name }.contains(playersToRoom.name)
+        }
 
     val remainingTurns: Int
         get() = NUMBER_OF_TURNS - currentTurnDetails.currentTurn
