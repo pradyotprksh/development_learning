@@ -1,6 +1,7 @@
 package com.pradyotprakash.futuresugoroku.ui.pages.game.screen.components
 
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -13,8 +14,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.unit.dp
+import com.pradyotprakash.futuresugoroku.Constants.EXIT_DOOR
 import com.pradyotprakash.futuresugoroku.R
-import com.pradyotprakash.futuresugoroku.RoomCoordinate
 import com.pradyotprakash.futuresugoroku.humanReadableName
 import com.pradyotprakash.futuresugoroku.ui.pages.game.model.Room
 
@@ -22,7 +23,8 @@ import com.pradyotprakash.futuresugoroku.ui.pages.game.model.Room
 fun RoomComposable(
     modifier: Modifier = Modifier,
     room: Room,
-    numberOfPlayerIn: (RoomCoordinate) -> Int,
+    numberOfPlayer: Int,
+    onRoomTap: () -> Unit,
 ) {
     Box(
         modifier = modifier
@@ -32,6 +34,10 @@ fun RoomComposable(
             )
             .height(
                 80.dp,
+            )
+            .clickable(
+                onClick = onRoomTap,
+                enabled = numberOfPlayer > 0,
             ),
     ) {
         Column(
@@ -42,7 +48,7 @@ fun RoomComposable(
             Text(
                 text = room.coordinates.humanReadableName,
             )
-            numberOfPlayerIn(room.coordinates).takeIf {
+            numberOfPlayer.takeIf {
                 it > 0
             }?.let {
                 Text(

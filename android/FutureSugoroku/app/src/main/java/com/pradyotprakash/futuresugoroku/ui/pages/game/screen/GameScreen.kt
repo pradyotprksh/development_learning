@@ -90,7 +90,10 @@ fun GameScreen(
                         RoomComposable(
                             modifier = Modifier.weight(1f),
                             room = room,
-                            numberOfPlayerIn = gameViewModel::numberOfPlayerIn
+                            numberOfPlayer = gameViewModel.numberOfPlayerIn(
+                                room.coordinates
+                            ),
+                            onRoomTap = {}
                         )
                     }
                 }
