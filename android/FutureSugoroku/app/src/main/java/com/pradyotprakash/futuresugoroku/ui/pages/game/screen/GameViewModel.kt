@@ -3,6 +3,7 @@ package com.pradyotprakash.futuresugoroku.ui.pages.game.screen
 import androidx.lifecycle.ViewModel
 import com.pradyotprakash.futuresugoroku.Constants
 import com.pradyotprakash.futuresugoroku.RoomCoordinate
+import com.pradyotprakash.futuresugoroku.ui.pages.game.model.CurrentTurnDetails
 import com.pradyotprakash.futuresugoroku.ui.pages.game.model.GameScreenContent
 import com.pradyotprakash.futuresugoroku.ui.pages.game.model.GameStatus
 import com.pradyotprakash.futuresugoroku.ui.pages.game.screen.interactors.PlayersLogic
@@ -34,10 +35,10 @@ class GameViewModel : ViewModel(), RoomsLogic, PlayersLogic {
             players = players,
             rooms = rooms,
             gameStatus = GameStatus.InProgress,
-            currentTurn = 0,
             remainingRoomTurns = listOf(
                 startRoomCoordinate,
             ),
+            currentTurnDetails = CurrentTurnDetails(),
         )
     }
 
@@ -66,7 +67,7 @@ class GameViewModel : ViewModel(), RoomsLogic, PlayersLogic {
     fun getDiceRoll() {
         val selectedRoom = getSelectedRoomDetails()
 
-        val diceRolls = _gameState.value.rollDice.toMutableList()
+        val diceRolls = _gameState.value.currentTurnDetails.currentRollDice.toMutableList()
         for (door in selectedRoom.doors) {
             if (door.nextRoom == selectedRoom.cameFromRoom) {
                 continue
@@ -79,7 +80,9 @@ class GameViewModel : ViewModel(), RoomsLogic, PlayersLogic {
 
         _gameState.update {
             it.copy(
-                rollDice = diceRolls,
+                currentTurnDetails = it.currentTurnDetails.copy(
+                    currentRollDice = diceRolls,
+                )
             )
         }
     }

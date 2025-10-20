@@ -68,27 +68,6 @@ fun RoomGameComposable(
                 ) + 15.dp,
             ),
         ) {
-            items(players) { player ->
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    Text(
-                        text = player.name,
-                    )
-                    Spacer(modifier = Modifier.weight(1f))
-                    rollDiceValues?.let { rolls ->
-                        rolls.forEach { roll ->
-                            RoomNumberComposable(
-                                roomCoordinate = roll.second,
-                                size = 70.dp,
-                            )
-                        }
-                    }
-                }
-                Spacer(modifier = Modifier.height(10.dp))
-            }
-
             item {
                 rollDiceValues?.let { rolls ->
                     Row(
@@ -122,6 +101,27 @@ fun RoomGameComposable(
                     Text(
                         text = stringResource(R.string.roll_dice),
                     )
+                }
+                Spacer(modifier = Modifier.height(10.dp))
+            }
+
+            items(players) { player ->
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Text(
+                        text = player.name,
+                    )
+                    Spacer(modifier = Modifier.weight(1f))
+                    rollDiceValues?.let { rolls ->
+                        rolls.forEach { roll ->
+                            RoomNumberComposable(
+                                roomCoordinate = roll.second,
+                                size = 70.dp,
+                            )
+                        }
+                    }
                 }
                 Spacer(modifier = Modifier.height(10.dp))
             }
