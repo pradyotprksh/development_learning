@@ -1,24 +1,23 @@
 package com.pradyotprakash.futuresugoroku.ui.pages.game.screen.components
 
 import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.pradyotprakash.futuresugoroku.RoomCoordinate
 import com.pradyotprakash.futuresugoroku.roomHumanReadable
-import com.pradyotprakash.futuresugoroku.ui.pages.game.model.Player
 
 @Composable
-fun PlayerComposable(
+fun RoomNumberComposable(
     modifier: Modifier = Modifier,
-    player: Player,
+    roomCoordinate: RoomCoordinate,
+    size: Dp,
 ) {
     Box(
         modifier = modifier
@@ -26,23 +25,11 @@ fun PlayerComposable(
                 width = 1.dp,
                 color = MaterialTheme.colorScheme.primaryContainer,
             )
-            .size(120.dp),
+            .size(size),
     ) {
-        Column(
-            modifier = Modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-            Text(
-                text = player.name,
-            )
-            Text(
-                text = player.roomPosition.roomHumanReadable
-            )
-
-            Text(
-                text = "${player.score}"
-            )
-        }
+        Text(
+            modifier = Modifier.align(Alignment.Center),
+            text = roomCoordinate.roomHumanReadable,
+        )
     }
 }

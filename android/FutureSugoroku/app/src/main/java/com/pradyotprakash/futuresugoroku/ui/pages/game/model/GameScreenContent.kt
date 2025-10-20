@@ -1,6 +1,7 @@
 package com.pradyotprakash.futuresugoroku.ui.pages.game.model
 
 import com.pradyotprakash.futuresugoroku.Constants.NUMBER_OF_TURNS
+import com.pradyotprakash.futuresugoroku.DiceToDoor
 import com.pradyotprakash.futuresugoroku.RoomCoordinate
 
 data class GameScreenContent(
@@ -10,7 +11,7 @@ data class GameScreenContent(
     val currentTurn: Int = 0,
     val remainingRoomTurns: List<RoomCoordinate> = emptyList(),
     val selectedRoomCoordinate: RoomCoordinate? = null,
-    val rollDice: List<Int>? = null,
+    val rollDice: List<DiceToDoor>? = null,
 ) {
     val remainingTurns: Int
         get() = NUMBER_OF_TURNS - currentTurn

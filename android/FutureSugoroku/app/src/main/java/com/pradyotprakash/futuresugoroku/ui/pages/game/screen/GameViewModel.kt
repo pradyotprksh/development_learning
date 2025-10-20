@@ -2,6 +2,7 @@ package com.pradyotprakash.futuresugoroku.ui.pages.game.screen
 
 import androidx.lifecycle.ViewModel
 import com.pradyotprakash.futuresugoroku.Constants
+import com.pradyotprakash.futuresugoroku.DiceToDoor
 import com.pradyotprakash.futuresugoroku.RoomCoordinate
 import com.pradyotprakash.futuresugoroku.ui.pages.game.model.GameScreenContent
 import com.pradyotprakash.futuresugoroku.ui.pages.game.model.GameStatus
@@ -41,9 +42,11 @@ class GameViewModel : ViewModel(), RoomsLogic, PlayersLogic {
         )
     }
 
-    fun numberOfPlayerIn(roomCoordinate: RoomCoordinate) = _gameState.value.players.filter {
+    fun getPlayersIn(roomCoordinate: RoomCoordinate) = _gameState.value.players.filter {
         it.roomPosition == roomCoordinate
-    }.size
+    }
+
+    fun numberOfPlayerIn(roomCoordinate: RoomCoordinate) = getPlayersIn(roomCoordinate).size
 
     fun toggleRoomGameSheet(roomCoordinate: RoomCoordinate?) {
         _gameState.update { state ->
@@ -58,21 +61,24 @@ class GameViewModel : ViewModel(), RoomsLogic, PlayersLogic {
         it.coordinates == _gameState.value.selectedRoomCoordinate
     }
 
+    fun getSelectedRoomPlayers() = _gameState.value.selectedRoomCoordinate?.let {
+        getPlayersIn(it)
+    } ?: emptyList()
+
     fun getDiceRoll() {
         val selectedRoom = getSelectedRoomDetails()
 
-        val numberOfRoll = selectedRoom.numberOfDice - if (selectedRoom.cameFromRoom != null) {
-            1
-        } else {
-            0
-        }
-
-        val diceRolls = mutableListOf<Int>()
-        repeat(numberOfRoll) {
+        val diceRolls = mutableListOf<DiceToDoor>()
+        for (door in selectedRoom.doors) {
+            if (door.nextRoom == selectedRoom.cameFromRoom) {
+                continue
+            }
+            val roll = Random.nextInt(1, 7)
             diceRolls.add(
-                Random.nextInt(1, 7)
+                roll to door.nextRoom
             )
         }
+
         _gameState.update {
             it.copy(
                 rollDice = diceRolls,

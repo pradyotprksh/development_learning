@@ -1,6 +1,7 @@
 package com.pradyotprakash.futuresugoroku.ui.pages.game.screen.interactors
 
-import com.pradyotprakash.futuresugoroku.Constants.RANDOM_NAMES
+import com.pradyotprakash.futuresugoroku.Constants.NUMBER_OF_PLAYERS
+import com.pradyotprakash.futuresugoroku.Constants.PLAYER_NAMES
 import com.pradyotprakash.futuresugoroku.Constants.START_PLAYER_POINTS
 import com.pradyotprakash.futuresugoroku.ui.pages.game.model.Player
 import com.pradyotprakash.futuresugoroku.ui.pages.game.model.PlayerStatus
@@ -13,13 +14,11 @@ interface PlayersLogic {
         val players = mutableListOf<Player>()
 
         repeat(
-            RANDOM_NAMES.random(
-                Random(10)
-            ).length
+            PLAYER_NAMES.size
         ) {
             players.add(
                 Player(
-                    name = RANDOM_NAMES[it],
+                    name = PLAYER_NAMES[it],
                     roomPosition = startCoordinates,
                     status = PlayerStatus.Playing,
                     score = START_PLAYER_POINTS,
