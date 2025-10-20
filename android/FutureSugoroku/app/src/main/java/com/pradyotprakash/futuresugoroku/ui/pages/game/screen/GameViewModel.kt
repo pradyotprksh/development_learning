@@ -6,6 +6,7 @@ import com.pradyotprakash.futuresugoroku.ui.pages.game.model.CurrentTurnDetails
 import com.pradyotprakash.futuresugoroku.ui.pages.game.model.DiceToDoor
 import com.pradyotprakash.futuresugoroku.ui.pages.game.model.GameScreenContent
 import com.pradyotprakash.futuresugoroku.ui.pages.game.model.GameStatus
+import com.pradyotprakash.futuresugoroku.ui.pages.game.model.Player
 import com.pradyotprakash.futuresugoroku.ui.pages.game.model.RoomCoordinate
 import com.pradyotprakash.futuresugoroku.ui.pages.game.model.RoomToDice
 import com.pradyotprakash.futuresugoroku.ui.pages.game.screen.interactors.PlayersLogic
@@ -37,10 +38,11 @@ class GameViewModel : ViewModel(), RoomsLogic, PlayersLogic {
             players = players,
             rooms = rooms,
             gameStatus = GameStatus.InProgress,
-            remainingRoomTurns = listOf(
-                startRoomCoordinate,
+            currentTurnDetails = CurrentTurnDetails(
+                remainingRoomTurns = listOf(
+                    startRoomCoordinate,
+                ),
             ),
-            currentTurnDetails = CurrentTurnDetails(),
         )
     }
 
@@ -93,5 +95,9 @@ class GameViewModel : ViewModel(), RoomsLogic, PlayersLogic {
                 )
             )
         }
+    }
+
+    fun onRoomSelection(player: Player, door: DiceToDoor) {
+        
     }
 }

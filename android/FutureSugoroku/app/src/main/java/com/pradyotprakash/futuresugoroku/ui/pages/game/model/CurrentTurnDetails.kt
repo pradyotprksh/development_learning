@@ -4,4 +4,5 @@ data class CurrentTurnDetails(
     val playerToRoom: List<PlayerToRoom> = emptyList(),
     val currentRollDice: List<RoomToDice> = emptyList(),
     val currentTurn: Int = 0,
+    val remainingRoomTurns: List<RoomCoordinate> = emptyList(),
 )

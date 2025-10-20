@@ -1,6 +1,7 @@
 package com.pradyotprakash.futuresugoroku.ui.pages.game.screen.components
 
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -39,6 +40,7 @@ fun RoomGameDetailsSheet(
     rollDiceValues: List<DiceToDoor>?,
     players: List<Player>,
     onRollDice: () -> Unit,
+    onRoomSelection: (Player, DiceToDoor) -> Unit,
 ) {
     Scaffold(
         modifier = modifier.fillMaxWidth(),
@@ -115,6 +117,11 @@ fun RoomGameDetailsSheet(
                     rollDiceValues?.let { rolls ->
                         rolls.forEach { roll ->
                             RoomNumberComposable(
+                                modifier = Modifier.clickable(
+                                    onClick = {
+                                        onRoomSelection(player, roll)
+                                    },
+                                ),
                                 roomCoordinate = roll.toRoomCoordinate,
                                 size = 70.dp,
                             )

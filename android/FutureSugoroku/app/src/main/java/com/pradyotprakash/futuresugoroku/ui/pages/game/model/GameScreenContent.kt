@@ -6,7 +6,6 @@ data class GameScreenContent(
     val players: List<Player> = emptyList(),
     val rooms: List<List<Room>> = emptyList(),
     val gameStatus: GameStatus = GameStatus.Start,
-    val remainingRoomTurns: List<RoomCoordinate> = emptyList(),
     val selectedRoomCoordinate: RoomCoordinate? = null,
     val currentTurnDetails: CurrentTurnDetails = CurrentTurnDetails(),
 ) {
