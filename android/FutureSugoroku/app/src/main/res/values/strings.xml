@@ -14,4 +14,6 @@
         <item quantity="one">@string/turn_remaining</item>
         <item quantity="other">@string/turns_remaining</item>
     </plurals>
+    <string name="room">Room</string>
+    <string name="roll_dice">Roll Dice</string>
 </resources>

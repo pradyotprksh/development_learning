@@ -9,6 +9,7 @@ import com.pradyotprakash.futuresugoroku.ui.pages.game.screen.interactors.Player
 import com.pradyotprakash.futuresugoroku.ui.pages.game.screen.interactors.RoomsLogic
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlin.random.Random
 
 class GameViewModel : ViewModel(), RoomsLogic, PlayersLogic {
@@ -43,4 +44,39 @@ class GameViewModel : ViewModel(), RoomsLogic, PlayersLogic {
     fun numberOfPlayerIn(roomCoordinate: RoomCoordinate) = _gameState.value.players.filter {
         it.roomPosition == roomCoordinate
     }.size
+
+    fun toggleRoomGameSheet(roomCoordinate: RoomCoordinate?) {
+        _gameState.update { state ->
+            state.copy(
+                selectedRoomCoordinate = roomCoordinate,
+                rollDice = null,
+            )
+        }
+    }
+
+    fun getSelectedRoomDetails() = _gameState.value.rooms.flatten().first {
+        it.coordinates == _gameState.value.selectedRoomCoordinate
+    }
+
+    fun getDiceRoll() {
+        val selectedRoom = getSelectedRoomDetails()
+
+        val numberOfRoll = selectedRoom.numberOfDice - if (selectedRoom.cameFromRoom != null) {
+            1
+        } else {
+            0
+        }
+
+        val diceRolls = mutableListOf<Int>()
+        repeat(numberOfRoll) {
+            diceRolls.add(
+                Random.nextInt(1, 7)
+            )
+        }
+        _gameState.update {
+            it.copy(
+                rollDice = diceRolls,
+            )
+        }
+    }
 }

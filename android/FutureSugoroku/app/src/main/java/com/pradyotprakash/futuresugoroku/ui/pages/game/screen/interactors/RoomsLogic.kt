@@ -34,7 +34,7 @@ interface RoomsLogic: DoorsLogic {
                         isStart = isStart,
                         containsExitDoor = containsExitDoor,
                     ),
-                    dice = doors.size,
+                    numberOfDice = doors.size,
                     doors = doors,
                     isRedRoom = false,
                     cameFromRoom = null,

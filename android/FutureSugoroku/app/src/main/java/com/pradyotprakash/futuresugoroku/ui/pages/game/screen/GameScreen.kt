@@ -14,11 +14,14 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLayoutDirection
@@ -29,6 +32,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.pradyotprakash.futuresugoroku.R
 import com.pradyotprakash.futuresugoroku.ui.pages.game.screen.components.PlayerComposable
 import com.pradyotprakash.futuresugoroku.ui.pages.game.screen.components.RoomComposable
+import com.pradyotprakash.futuresugoroku.ui.pages.game.screen.components.RoomGameComposable
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -38,6 +43,31 @@ fun GameScreen(
     goBack: () -> Unit,
 ) {
     val gameState = gameViewModel.gameState.collectAsState()
+
+    val scope = rememberCoroutineScope()
+    val sheetState = rememberModalBottomSheetState()
+    val hideAndDismiss = {
+        scope.launch {
+            sheetState.hide()
+        }.invokeOnCompletion {
+            gameViewModel.toggleRoomGameSheet(null)
+        }
+    }
+
+    gameState.value.selectedRoomCoordinate?.let {
+        ModalBottomSheet(
+            onDismissRequest = {
+                hideAndDismiss()
+            },
+            sheetState = sheetState,
+        ) {
+            RoomGameComposable(
+                room = gameViewModel.getSelectedRoomDetails(),
+                rollDiceValues = gameState.value.rollDice,
+                onRollDice = gameViewModel::getDiceRoll
+            )
+        }
+    }
 
     Scaffold(
         modifier = modifier.fillMaxSize(),
@@ -93,7 +123,11 @@ fun GameScreen(
                             numberOfPlayer = gameViewModel.numberOfPlayerIn(
                                 room.coordinates
                             ),
-                            onRoomTap = {}
+                            onRoomTap = {
+                                gameViewModel.toggleRoomGameSheet(
+                                    room.coordinates,
+                                )
+                            }
                         )
                     }
                 }
