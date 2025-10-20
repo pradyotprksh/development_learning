@@ -2,7 +2,6 @@ package com.pradyotprakash.futuresugoroku.ui.pages.game.screen
 
 import androidx.lifecycle.ViewModel
 import com.pradyotprakash.futuresugoroku.Constants
-import com.pradyotprakash.futuresugoroku.DiceToDoor
 import com.pradyotprakash.futuresugoroku.RoomCoordinate
 import com.pradyotprakash.futuresugoroku.ui.pages.game.model.GameScreenContent
 import com.pradyotprakash.futuresugoroku.ui.pages.game.model.GameStatus
