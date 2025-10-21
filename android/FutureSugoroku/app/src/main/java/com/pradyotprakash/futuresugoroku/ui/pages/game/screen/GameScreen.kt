@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
@@ -101,6 +102,16 @@ fun GameScreen(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
+            Text(
+                text = "${gameState.value.remainingTurns} ${
+                    pluralStringResource(
+                        R.plurals.turns_remaining,
+                        gameState.value.remainingTurns,
+                    )
+                }",
+                style = MaterialTheme.typography.titleLarge,
+            )
+            Spacer(modifier = Modifier.weight(1f))
             LazyRow(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -124,6 +135,7 @@ fun GameScreen(
                         RoomComposable(
                             modifier = Modifier.weight(1f),
                             room = room,
+                            exitRoomFound = gameState.value.exitRoomFound,
                             numberOfPlayer = gameViewModel.numberOfPlayerIn(
                                 room.coordinates
                             ),
@@ -137,15 +149,13 @@ fun GameScreen(
                 }
             }
             Spacer(modifier = Modifier.weight(1f))
-            Text(
-                text = "${gameState.value.remainingTurns} ${
-                    pluralStringResource(
-                        R.plurals.turns_remaining,
-                        gameState.value.remainingTurns,
-                    )
-                }",
-                style = MaterialTheme.typography.titleLarge,
-            )
+            ElevatedButton(
+                onClick = gameViewModel::checkAndCompleteCurrentTurn
+            ) {
+                Text(
+                    text = stringResource(R.string.complete_turn)
+                )
+            }
             Spacer(modifier = Modifier.weight(1f))
         }
     }

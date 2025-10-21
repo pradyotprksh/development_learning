@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.pluralStringResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.pradyotprakash.futuresugoroku.R
 import com.pradyotprakash.futuresugoroku.ui.pages.game.model.Room
@@ -21,6 +22,7 @@ import com.pradyotprakash.futuresugoroku.ui.pages.game.model.Room
 fun RoomComposable(
     modifier: Modifier = Modifier,
     room: Room,
+    exitRoomFound: Boolean,
     numberOfPlayer: Int,
     onRoomTap: () -> Unit,
 ) {
@@ -44,7 +46,11 @@ fun RoomComposable(
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Text(
-                text = room.coordinates.humanReadableName,
+                text = if (exitRoomFound && room.containsExitDoor) {
+                    stringResource(R.string.exit_room)
+                } else {
+                    room.coordinates.humanReadableName
+                },
             )
             numberOfPlayer.takeIf {
                 it > 0

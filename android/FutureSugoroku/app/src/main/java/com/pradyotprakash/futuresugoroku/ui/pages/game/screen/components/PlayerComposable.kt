@@ -13,6 +13,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.pradyotprakash.futuresugoroku.ui.pages.game.model.Player
+import com.pradyotprakash.futuresugoroku.ui.pages.game.model.PlayerStatus
 
 @Composable
 fun PlayerComposable(
@@ -23,7 +24,17 @@ fun PlayerComposable(
         modifier = modifier
             .border(
                 width = 1.dp,
-                color = MaterialTheme.colorScheme.primaryContainer,
+                color = when (player.status) {
+                    PlayerStatus.Playing -> {
+                        MaterialTheme.colorScheme.primaryContainer
+                    }
+                    PlayerStatus.Won -> {
+                        MaterialTheme.colorScheme.primaryFixed
+                    }
+                    else -> {
+                        MaterialTheme.colorScheme.error
+                    }
+                },
             )
             .size(120.dp),
     ) {

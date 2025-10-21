@@ -68,7 +68,7 @@ interface RoomsLogic : DoorsLogic {
         scoreDeduction = if (Random.Default.nextBoolean() && !isStart && !containsExitDoor) {
             Constants.RANDOM_PENALTY.random()
         } else {
-            0
+            1
         },
     )
 }

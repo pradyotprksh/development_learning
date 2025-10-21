@@ -1,13 +1,14 @@
 package com.pradyotprakash.futuresugoroku.ui.pages.game.model
 
 import com.pradyotprakash.futuresugoroku.Constants.NUMBER_OF_TURNS
+import com.pradyotprakash.futuresugoroku.toJson
 
 data class GameScreenContent(
     val players: List<Player> = emptyList(),
     val rooms: List<List<Room>> = emptyList(),
-    val gameStatus: GameStatus = GameStatus.Start,
     val selectedRoomCoordinate: RoomCoordinate? = null,
     val currentTurnDetails: CurrentTurnDetails = CurrentTurnDetails(),
+    val exitRoomFound: Boolean = false,
 ) {
     val selectedRoomDices: List<DiceToDoor>?
         get() = currentTurnDetails.currentDiceRolls.filter { it.roomCoordinate == selectedRoomCoordinate }
@@ -23,5 +24,7 @@ data class GameScreenContent(
         }
 
     val remainingTurns: Int
-        get() = NUMBER_OF_TURNS - currentTurnDetails.currentTurn
+        get() = (NUMBER_OF_TURNS - currentTurnDetails.currentTurn).takeIf { it >= 0 } ?: 0
+
+    override fun toString() = toJson()
 }
