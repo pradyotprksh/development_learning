@@ -119,9 +119,10 @@ class GameViewModel : ViewModel(), RoomsLogic, PlayersLogic, DiceLogic {
                         playerToRoom.name == player.name
                     }?.toRoomCoordinate
                 if (selection != null) {
-                    val selectionContainsExitDoor = getRoomDetails(selection)
+                    val selectionRoomDetails = getRoomDetails(selection)
+                    val selectionContainsExitDoor = selectionRoomDetails
                         .doors.first().nextRoom.name == EXIT_DOOR
-                    val roomPenalty = getRoomDetails(selection).penalty
+                    val roomPenalty = selectionRoomDetails.penalty
                     val newScore = player.score.minus(roomPenalty.scoreDeduction)
                     val playerStatus = if (selectionContainsExitDoor) {
                         PlayerStatus.Won
