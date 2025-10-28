@@ -107,7 +107,10 @@ README will be only updated when the project/learning is completed. So make sure
     - [UnitConverter](https://github.com/pradyotprksh/development_learning/tree/main/backend/UnitConverter)
       - https://roadmap.sh/projects/unit-converter/solutions?u=6781060d70129741a8caef98
       - https://roadmap.sh/projects/unit-converter
-  
+     
+[<img src="https://img.shields.io/badge/serverless?style=for-the-badge&logo=machinelearning&logoColor=white" />]([https://github.com/pradyotprksh/development_learning/tree/main/backend](https://github.com/pradyotprksh/development_learning/tree/main/machinelearning)) [![Machine Learning Projects](https://github.com/pradyotprksh/development_learning/actions/workflows/ml_code_checker.yml/badge.svg)](https://github.com/pradyotprksh/development_learning/actions/workflows/ml_code_checker.yml)
+  - [freecodecamp](https://github.com/pradyotprksh/development_learning/tree/main/machinelearning/freecodecamp)
+      - For more details go to [this](https://medium.com/@pradyotprksh4/machine-learning-for-everybody-ebae246707a4)
 
 ---
 
