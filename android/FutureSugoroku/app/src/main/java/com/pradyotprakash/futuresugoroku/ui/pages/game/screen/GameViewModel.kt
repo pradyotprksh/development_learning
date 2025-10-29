@@ -150,9 +150,7 @@ class GameViewModel : ViewModel(), RoomsLogic, PlayersLogic, DiceLogic {
                         currentTurn = it.currentTurnDetails.currentTurn.plus(1),
                         roomsTurns = it.currentTurnDetails.playersToRoom.map { player ->
                             player.toRoomCoordinate
-                        }.toSet().toList().filter { roomCoordinate ->
-                            !roomHasExitDoor(getRoomDetails(roomCoordinate))
-                        },
+                        }.toSet().toList(),
                     ),
                     players = playerNewRooms,
                     exitRoomFound = playerNewRooms.any { player -> player.status == PlayerStatus.Won },
