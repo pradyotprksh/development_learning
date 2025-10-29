@@ -1,10 +1,8 @@
 package com.pradyotprakash.futuresugoroku.ui.pages.game.screen
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.pradyotprakash.futuresugoroku.Constants
 import com.pradyotprakash.futuresugoroku.Constants.EXIT_DOOR
-import com.pradyotprakash.futuresugoroku.toJson
 import com.pradyotprakash.futuresugoroku.ui.pages.game.model.CurrentTurnDetails
 import com.pradyotprakash.futuresugoroku.ui.pages.game.model.DiceToDoor
 import com.pradyotprakash.futuresugoroku.ui.pages.game.model.GameScreenContent
@@ -111,17 +109,19 @@ class GameViewModel : ViewModel(), RoomsLogic, PlayersLogic, DiceLogic {
         }
     }
 
+    private fun roomHasExitDoor(room: Room) =
+        room.doors.first().nextRoom.name == EXIT_DOOR
+
     fun checkAndCompleteCurrentTurn() {
         if (isSelectionProcessStarted()) {
-            val newPlayerRooms = _gameState.value.players.toMutableList().map { player ->
+            val playerNewRooms = _gameState.value.players.toMutableList().map { player ->
                 val selection =
                     _gameState.value.currentTurnDetails.playersToRoom.firstOrNull { playerToRoom ->
                         playerToRoom.name == player.name
                     }?.toRoomCoordinate
                 if (selection != null) {
                     val selectionRoomDetails = getRoomDetails(selection)
-                    val selectionContainsExitDoor = selectionRoomDetails
-                        .doors.first().nextRoom.name == EXIT_DOOR
+                    val selectionContainsExitDoor = roomHasExitDoor(selectionRoomDetails)
                     val roomPenalty = selectionRoomDetails.penalty
                     val newScore = player.score.minus(roomPenalty.scoreDeduction)
                     val playerStatus = if (selectionContainsExitDoor) {
@@ -150,10 +150,14 @@ class GameViewModel : ViewModel(), RoomsLogic, PlayersLogic, DiceLogic {
                         currentTurn = it.currentTurnDetails.currentTurn.plus(1),
                         roomsTurns = it.currentTurnDetails.playersToRoom.map { player ->
                             player.toRoomCoordinate
-                        }.toSet().toList(),
+                        }.toSet().toList().filter { roomCoordinate ->
+                            !roomHasExitDoor(
+                                getRoomDetails(roomCoordinate)
+                            )
+                        },
                     ),
-                    players = newPlayerRooms,
-                    exitRoomFound = newPlayerRooms.any { player -> player.status == PlayerStatus.Won },
+                    players = playerNewRooms,
+                    exitRoomFound = playerNewRooms.any { player -> player.status == PlayerStatus.Won },
                 )
             }
         }

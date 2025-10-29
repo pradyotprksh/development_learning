@@ -26,6 +26,8 @@ fun RoomComposable(
     numberOfPlayer: Int,
     onRoomTap: () -> Unit,
 ) {
+    val showExitRoom = exitRoomFound && room.containsExitDoor
+
     Box(
         modifier = modifier
             .border(
@@ -37,7 +39,7 @@ fun RoomComposable(
             )
             .clickable(
                 onClick = onRoomTap,
-                enabled = numberOfPlayer > 0,
+                enabled = numberOfPlayer > 0 && !showExitRoom,
             ),
     ) {
         Column(
@@ -46,7 +48,7 @@ fun RoomComposable(
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Text(
-                text = if (exitRoomFound && room.containsExitDoor) {
+                text = if (showExitRoom) {
                     stringResource(R.string.exit_room)
                 } else {
                     room.coordinates.humanReadableName
