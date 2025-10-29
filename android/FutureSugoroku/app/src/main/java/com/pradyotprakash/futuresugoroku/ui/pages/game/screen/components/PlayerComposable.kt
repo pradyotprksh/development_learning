@@ -31,7 +31,7 @@ fun PlayerComposable(
                     PlayerStatus.Won -> {
                         MaterialTheme.colorScheme.primaryFixed
                     }
-                    else -> {
+                    PlayerStatus.Dead -> {
                         MaterialTheme.colorScheme.error
                     }
                 },
@@ -47,10 +47,13 @@ fun PlayerComposable(
                 text = player.name,
             )
             Text(
-                text = player.roomPosition.humanReadableName
+                text = player.roomPosition.humanReadableName,
             )
             Text(
-                text = "${player.score}"
+                text = when (player.status) {
+                    PlayerStatus.Playing -> "${player.score}"
+                    else -> player.status.name
+                }
             )
         }
     }

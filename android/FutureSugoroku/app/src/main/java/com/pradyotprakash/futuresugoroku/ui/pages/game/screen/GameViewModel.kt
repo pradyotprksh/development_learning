@@ -48,7 +48,7 @@ class GameViewModel : ViewModel(), RoomsLogic, PlayersLogic, DiceLogic {
     }
 
     fun getPlayersIn(roomCoordinate: RoomCoordinate) = _gameState.value.players.filter {
-        it.roomPosition == roomCoordinate
+        it.roomPosition == roomCoordinate && it.status != PlayerStatus.Dead
     }
 
     fun numberOfPlayerIn(roomCoordinate: RoomCoordinate) = getPlayersIn(roomCoordinate).size
@@ -151,9 +151,7 @@ class GameViewModel : ViewModel(), RoomsLogic, PlayersLogic, DiceLogic {
                         roomsTurns = it.currentTurnDetails.playersToRoom.map { player ->
                             player.toRoomCoordinate
                         }.toSet().toList().filter { roomCoordinate ->
-                            !roomHasExitDoor(
-                                getRoomDetails(roomCoordinate)
-                            )
+                            !roomHasExitDoor(getRoomDetails(roomCoordinate))
                         },
                     ),
                     players = playerNewRooms,

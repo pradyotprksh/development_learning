@@ -118,7 +118,9 @@ fun GameScreen(
                     .height(120.dp),
                 horizontalArrangement = Arrangement.SpaceEvenly,
             ) {
-                items(gameState.value.players) { player ->
+                items(
+                    gameState.value.players.sortedBy { it.score }
+                ) { player ->
                     PlayerComposable(
                         player = player,
                     )
