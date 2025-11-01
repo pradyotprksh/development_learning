@@ -114,7 +114,7 @@ class GameViewModel : ViewModel(), RoomsLogic, PlayersLogic, DiceLogic {
 
     fun checkAndCompleteCurrentTurn() {
         if (isSelectionProcessStarted()) {
-            val playerNewRooms = _gameState.value.players.toMutableList().map { player ->
+            val playerNewRooms = _gameState.value.players.map { player ->
                 val selection =
                     _gameState.value.currentTurnDetails.playersToRoom.firstOrNull { playerToRoom ->
                         playerToRoom.name == player.name
@@ -131,14 +131,16 @@ class GameViewModel : ViewModel(), RoomsLogic, PlayersLogic, DiceLogic {
                     } else {
                         PlayerStatus.Playing
                     }
-
                     player.copy(
                         roomPosition = selection,
                         score = player.score.minus(roomPenalty.scoreDeduction),
                         status = playerStatus,
+                        fromRoomPosition = player.roomPosition,
                     )
                 } else {
-                    player
+                    player.copy(
+                        score = player.score.minus(1),
+                    )
                 }
             }
 

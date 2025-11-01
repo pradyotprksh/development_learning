@@ -21,6 +21,7 @@ interface PlayersLogic {
                     roomPosition = startCoordinates,
                     status = PlayerStatus.Playing,
                     score = START_PLAYER_POINTS,
+                    fromRoomPosition = null,
                 )
             )
         }

@@ -23,6 +23,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -108,7 +109,8 @@ fun RoomGameDetailsSheet(
             }
 
             items(players) { player ->
-                val roomSelection = playerSelection.find { it.name == player.name }?.toRoomCoordinate
+                val roomSelection =
+                    playerSelection.find { it.name == player.name }?.toRoomCoordinate
 
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -121,11 +123,19 @@ fun RoomGameDetailsSheet(
                     rollDiceValues?.let { rolls ->
                         rolls.forEach { roll ->
                             RoomNumberComposable(
-                                modifier = Modifier.clickable(
-                                    onClick = {
-                                        onRoomSelection(player, roll)
-                                    },
-                                ),
+                                modifier = Modifier
+                                    .clickable(
+                                        onClick = {
+                                            onRoomSelection(player, roll)
+                                        },
+                                    )
+                                    .alpha(
+                                        if (player.fromRoomPosition == roll.toRoomCoordinate) {
+                                            0f
+                                        } else {
+                                            1f
+                                        }
+                                    ),
                                 roomCoordinate = roll.toRoomCoordinate,
                                 size = 70.dp,
                                 isSelected = roll.toRoomCoordinate == roomSelection,
