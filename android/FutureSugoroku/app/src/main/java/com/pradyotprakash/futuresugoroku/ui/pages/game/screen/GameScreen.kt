@@ -31,6 +31,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.pradyotprakash.futuresugoroku.R
+import com.pradyotprakash.futuresugoroku.ui.pages.game.model.GameStatus
 import com.pradyotprakash.futuresugoroku.ui.pages.game.screen.components.PlayerComposable
 import com.pradyotprakash.futuresugoroku.ui.pages.game.screen.components.RoomComposable
 import com.pradyotprakash.futuresugoroku.ui.pages.game.screen.components.RoomGameDetailsSheet
@@ -127,36 +128,46 @@ fun GameScreen(
                 }
             }
             Spacer(modifier = Modifier.weight(1f))
-            gameState.value.rooms.forEach { rowRoom ->
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceEvenly,
-                ) {
-                    rowRoom.forEach { room ->
-                        RoomComposable(
-                            modifier = Modifier.weight(1f),
-                            room = room,
-                            exitRoomFound = gameState.value.exitRoomFound,
-                            numberOfPlayer = gameViewModel.numberOfPlayerIn(
-                                room.coordinates
-                            ),
-                            onRoomTap = {
-                                gameViewModel.toggleRoomGameSheet(
-                                    room.coordinates,
+            when (gameState.value.gameStatus) {
+                GameStatus.InProgress -> {
+                    gameState.value.rooms.forEach { rowRoom ->
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.SpaceEvenly,
+                        ) {
+                            rowRoom.forEach { room ->
+                                RoomComposable(
+                                    modifier = Modifier.weight(1f),
+                                    room = room,
+                                    exitRoomFound = gameState.value.exitRoomFound,
+                                    numberOfPlayer = gameViewModel.numberOfPlayerIn(
+                                        room.coordinates
+                                    ),
+                                    onRoomTap = {
+                                        gameViewModel.toggleRoomGameSheet(
+                                            room.coordinates,
+                                        )
+                                    }
                                 )
                             }
+                        }
+                    }
+                    Spacer(modifier = Modifier.weight(1f))
+                    ElevatedButton(
+                        onClick = gameViewModel::checkAndCompleteCurrentTurn
+                    ) {
+                        Text(
+                            text = stringResource(R.string.complete_turn)
                         )
                     }
                 }
-            }
-            Spacer(modifier = Modifier.weight(1f))
-            ElevatedButton(
-                onClick = gameViewModel::checkAndCompleteCurrentTurn
-            ) {
-                Text(
-                    text = stringResource(R.string.complete_turn)
-                )
+                GameStatus.End -> {
+                    Text(
+                        text = stringResource(R.string.game_ended),
+                        style = MaterialTheme.typography.titleLarge,
+                    )
+                }
             }
             Spacer(modifier = Modifier.weight(1f))
         }

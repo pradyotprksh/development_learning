@@ -148,15 +148,21 @@ class GameViewModel : ViewModel(), RoomsLogic, PlayersLogic, DiceLogic {
                         playersToRoom = emptyList(),
                         currentDiceRolls = emptyList(),
                         currentTurn = it.currentTurnDetails.currentTurn.plus(1),
-                        roomsTurns = it.currentTurnDetails.playersToRoom.map { player ->
-                            player.toRoomCoordinate
-                        }.toSet().toList(),
+                        roomsTurns = getRoomsWithoutExitDoor(
+                            it.currentTurnDetails.playersToRoom.map { player ->
+                                player.toRoomCoordinate
+                            }.toSet().toList()
+                        ),
                     ),
                     players = playerNewRooms,
                     exitRoomFound = playerNewRooms.any { player -> player.status == PlayerStatus.Won },
                 )
             }
         }
+    }
+
+    private fun getRoomsWithoutExitDoor(rooms: List<RoomCoordinate>) = rooms.filter {
+        !getRoomDetails(it).containsExitDoor
     }
 
     fun isSelectionProcessStarted(): Boolean {

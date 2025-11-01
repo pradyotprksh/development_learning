@@ -51,9 +51,7 @@ fun HomeScreen(
                 onClick = goToGameScreen,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(
-                        horizontal = 15.dp,
-                    ),
+                    .padding(all = 15.dp),
             ) {
                 Text(
                     text = stringResource(R.string.start_game),

@@ -18,4 +18,5 @@
     <string name="roll_dice">Roll Dice</string>
     <string name="complete_turn">Complete Turn</string>
     <string name="exit_room">Exit Room</string>
+    <string name="game_ended">Game Over</string>
 </resources>

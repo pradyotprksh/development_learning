@@ -31,15 +31,15 @@ object Constants {
         24,
     )
     val PLAYER_NAMES = listOf(
-        "Pradyot",
-        "Shubham",
-        "Manu",
-        "Yash M",
-        "Yash P",
-        "Vikash",
-        "Manan",
-        "Karan",
-        "Vikrant",
-        "Sonu"
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F",
+        "G",
+        "H",
+        "K",
+        "L"
     )
 }

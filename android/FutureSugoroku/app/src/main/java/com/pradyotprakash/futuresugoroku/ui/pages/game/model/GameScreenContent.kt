@@ -10,6 +10,11 @@ data class GameScreenContent(
     val currentTurnDetails: CurrentTurnDetails = CurrentTurnDetails(),
     val exitRoomFound: Boolean = false,
 ) {
+    val gameStatus: GameStatus
+        get() = if (remainingTurns > 0 && players.any { it.status == PlayerStatus.Playing })
+            GameStatus.InProgress
+        else GameStatus.End
+
     val selectedRoomDices: List<DiceToDoor>?
         get() = currentTurnDetails.currentDiceRolls.filter { it.roomCoordinate == selectedRoomCoordinate }
             .takeIf {
