@@ -120,7 +120,7 @@ fun GameScreen(
                 horizontalArrangement = Arrangement.SpaceEvenly,
             ) {
                 items(
-                    gameState.value.players.sortedBy { it.score }
+                    gameState.value.players
                 ) { player ->
                     PlayerComposable(
                         player = player,

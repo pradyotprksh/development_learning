@@ -131,15 +131,24 @@ class GameViewModel : ViewModel(), RoomsLogic, PlayersLogic, DiceLogic {
                     } else {
                         PlayerStatus.Playing
                     }
+                    val fromRoomPosition = if (player.roomPosition == player.fromRoomPosition) {
+                        null
+                    } else {
+                        player.roomPosition
+                    }
+
                     player.copy(
                         roomPosition = selection,
                         score = player.score.minus(roomPenalty.scoreDeduction),
                         status = playerStatus,
-                        fromRoomPosition = player.roomPosition,
+                        fromRoomPosition = fromRoomPosition,
+                        stayingInSameRoom = false,
                     )
                 } else {
                     player.copy(
                         score = player.score.minus(1),
+                        stayingInSameRoom = !player.stayingInSameRoom,
+                        fromRoomPosition = player.roomPosition,
                     )
                 }
             }
@@ -150,10 +159,12 @@ class GameViewModel : ViewModel(), RoomsLogic, PlayersLogic, DiceLogic {
                         playersToRoom = emptyList(),
                         currentDiceRolls = emptyList(),
                         currentTurn = it.currentTurnDetails.currentTurn.plus(1),
-                        roomsTurns = getRoomsWithoutExitDoor(
-                            it.currentTurnDetails.playersToRoom.map { player ->
-                                player.toRoomCoordinate
-                            }.toSet().toList()
+                        roomsTurns = removeRoomWithOnlyDeadPlayers(
+                            getRoomsWithoutExitDoor(
+                                it.currentTurnDetails.playersToRoom.map { player ->
+                                    player.toRoomCoordinate
+                                }.toSet().toList()
+                            )
                         ),
                     ),
                     players = playerNewRooms,
@@ -163,24 +174,23 @@ class GameViewModel : ViewModel(), RoomsLogic, PlayersLogic, DiceLogic {
         }
     }
 
+    private fun removeRoomWithOnlyDeadPlayers(rooms: List<RoomCoordinate>) = rooms.filter { room ->
+        getPlayersIn(room).any { player -> player.status == PlayerStatus.Playing }
+    }
+
     private fun getRoomsWithoutExitDoor(rooms: List<RoomCoordinate>) = rooms.filter {
         !getRoomDetails(it).containsExitDoor
     }
 
     fun isSelectionProcessStarted(): Boolean {
         with(_gameState.value.currentTurnDetails) {
-            if (roomsTurns.isEmpty()) {
-                return false
-            } else {
-                roomsTurns.forEach { roomTurns ->
-                    val players = playersToRoom.filter {
-                        it.fromRoomCoordinate == roomTurns
-                    }
+            if (roomsTurns.isNotEmpty()) {
+                roomsTurns.forEach { roomTurn ->
                     val dices = currentDiceRolls.filter {
-                        it.roomCoordinate == roomTurns
+                        it.roomCoordinate == roomTurn
                     }
 
-                    if (players.isEmpty() || dices.isEmpty()) {
+                    if (dices.isEmpty()) {
                         return false
                     }
                 }

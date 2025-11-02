@@ -15,7 +15,10 @@ interface DiceLogic {
             if (door.nextRoom == selectedRoom.cameFromRoom) {
                 continue
             }
-            val roll = Random.nextInt(1, 7)
+            val roll = Random.nextInt(
+                listOf(0, 1).random(),
+                listOf(2, 3, 4, 5, 6).random().plus(1),
+            )
             diceRolls.add(
                 RoomToDice(
                     roomCoordinate = selectedRoom.coordinates,

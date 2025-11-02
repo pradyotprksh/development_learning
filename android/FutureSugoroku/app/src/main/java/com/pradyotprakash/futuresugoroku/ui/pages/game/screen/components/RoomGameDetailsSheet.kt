@@ -122,18 +122,21 @@ fun RoomGameDetailsSheet(
                     Spacer(modifier = Modifier.weight(1f))
                     rollDiceValues?.let { rolls ->
                         rolls.forEach { roll ->
+                            val allowRoomSelection = !(player.fromRoomPosition == roll.toRoomCoordinate || player.stayingInSameRoom)
+
                             RoomNumberComposable(
                                 modifier = Modifier
                                     .clickable(
                                         onClick = {
                                             onRoomSelection(player, roll)
                                         },
+                                        enabled = allowRoomSelection,
                                     )
                                     .alpha(
-                                        if (player.fromRoomPosition == roll.toRoomCoordinate) {
-                                            0f
-                                        } else {
+                                        if (allowRoomSelection) {
                                             1f
+                                        } else {
+                                            0f
                                         }
                                     ),
                                 roomCoordinate = roll.toRoomCoordinate,

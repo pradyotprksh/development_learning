@@ -6,4 +6,5 @@ data class Player(
     val fromRoomPosition: RoomCoordinate?,
     val status: PlayerStatus,
     val score: Int,
+    val stayingInSameRoom: Boolean,
 )

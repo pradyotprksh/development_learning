@@ -11,6 +11,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.pradyotprakash.futuresugoroku.ui.pages.game.model.Player
 import com.pradyotprakash.futuresugoroku.ui.pages.game.model.PlayerStatus
@@ -20,21 +21,23 @@ fun PlayerComposable(
     modifier: Modifier = Modifier,
     player: Player,
 ) {
+    val color = when (player.status) {
+        PlayerStatus.Playing -> {
+            MaterialTheme.colorScheme.primaryContainer
+        }
+        PlayerStatus.Won -> {
+            Color.Green
+        }
+        PlayerStatus.Dead -> {
+            Color.Red
+        }
+    }
+
     Box(
         modifier = modifier
             .border(
                 width = 1.dp,
-                color = when (player.status) {
-                    PlayerStatus.Playing -> {
-                        MaterialTheme.colorScheme.primaryContainer
-                    }
-                    PlayerStatus.Won -> {
-                        MaterialTheme.colorScheme.primaryFixed
-                    }
-                    PlayerStatus.Dead -> {
-                        MaterialTheme.colorScheme.error
-                    }
-                },
+                color = color,
             )
             .size(120.dp),
     ) {
@@ -53,7 +56,8 @@ fun PlayerComposable(
                 text = when (player.status) {
                     PlayerStatus.Playing -> "${player.score}"
                     else -> player.status.name
-                }
+                },
+                color = color,
             )
         }
     }

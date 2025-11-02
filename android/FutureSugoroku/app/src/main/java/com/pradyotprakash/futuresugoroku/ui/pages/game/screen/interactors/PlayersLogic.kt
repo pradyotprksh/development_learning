@@ -22,6 +22,7 @@ interface PlayersLogic {
                     status = PlayerStatus.Playing,
                     score = START_PLAYER_POINTS,
                     fromRoomPosition = null,
+                    stayingInSameRoom = false,
                 )
             )
         }
